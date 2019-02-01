@@ -3,7 +3,7 @@
  */
 package mame056;
 
-import static common.libc.cstring.strlen;
+import static old.common.libc.cstring.strlen;
 import static old.arcadeflex.input.*;
 import static old.arcadeflex.libc_old.*;
 import static mame056.inptport.input_port_type_seq;

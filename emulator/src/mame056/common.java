@@ -6,8 +6,8 @@ package mame056;
 import static arcadeflex056.debug.*;
 import arcadeflex.libc.ptr.UBytePtr;
 
-import static common.libc.cstdio.*;
-import static common.libc.cstring.*;
+import static old.common.libc.cstdio.*;
+import static old.common.libc.cstring.*;
 
 import static mame056.commonH.*;
 import static mame056.driverH.*;

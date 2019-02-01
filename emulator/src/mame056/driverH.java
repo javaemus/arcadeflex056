@@ -10,8 +10,7 @@ import static mame.drawgfxH.GfxDecodeInfo;
 import static mame.drawgfxH.rectangle;
 import static mame056.inptportH.InputPortTiny;
 import static mame056.inptportH.input_macro;
-import static old2.mame.memoryH.*;
-import static mame.sndintrfH.MachineSound;
+import static mame056.sndintrfH.*;
 import static mame056.cpuexecH.*;
 
 public class driverH {
