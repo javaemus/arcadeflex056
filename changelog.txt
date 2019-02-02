@@ -1,4 +1,9 @@
+02/02/2019
+==========
+-Ported drawgfxH to mame0.56
+
 01/02/2019
 ==========
 -Copied ported files from the other test repos here
 -Ported sndintrf and added dac,samples,sn76477,sn76496,tms36xx driver in it
+-Added ported bankp driver (not vidhrdw part yet)

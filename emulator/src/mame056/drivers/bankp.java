@@ -14,7 +14,7 @@ import static mame056.cpuintrfH.*;
 import static mame056.driverH.*;
 import static mame056.memoryH.*;
 import static mame056.inptport.*;
-import static mame.drawgfxH.*;
+import static mame056.drawgfxH.*;
 import static mame056.sndintrfH.*;
 
 import static mame056.sound.sn76496H.*;

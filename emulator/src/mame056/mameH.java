@@ -5,8 +5,7 @@ package mame056;
 
 import arcadeflex.libc.ptr.UBytePtr;
 import old.common.subArrays.IntArray;
-import mame.drawgfxH.GfxElement;
-import mame.drawgfxH.rectangle;
+import mame056.drawgfxH.*;
 import mame056.driverH.GameDriver;
 import mame056.driverH.MachineDriver;
 import mame056.commonH.GameSamples;

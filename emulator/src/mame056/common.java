@@ -77,8 +77,8 @@ public class common {
     public static /*unsigned*/ int[] lastcoin = new int[COIN_COUNTERS];
     public static /*unsigned*/ int[] coinlockedout = new int[COIN_COUNTERS];
 
-    /*TODO*///    public static int[] flip_screen_x = new int[1];
-/*TODO*///    public static int[] flip_screen_y = new int[1];
+    public static int[] flip_screen_x = new int[1];
+    public static int[] flip_screen_y = new int[1];
     public static int snapno;
 
     /**

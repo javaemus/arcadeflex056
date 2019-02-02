@@ -5,6 +5,7 @@ package mame056;
 
 import arcadeflex.libc.ptr.UBytePtr;
 import java.util.ArrayList;
+import static mame056.common.*;
 
 public class commonH {
 
@@ -446,9 +447,9 @@ public class commonH {
 /*TODO*///
     public static final int COIN_COUNTERS = 4;/* total # of coin counters */
 
- /*TODO*///    public static int flip_screen() {
-/*TODO*///        return flip_screen_x[0];
-/*TODO*///    }
+    public static int flip_screen() {
+        return flip_screen_x[0];
+    }
     /*TODO*////***************************************************************************
 /*TODO*///
 /*TODO*///	Useful macros to deal with bit shuffling encryptions
