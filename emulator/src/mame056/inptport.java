@@ -21,18 +21,16 @@ import java.util.HashMap;
 
 import static old.arcadeflex.osdepend.logerror;
 import static mame056.common.*;
-import static mame056.commonH.COIN_COUNTERS;
+import static mame056.commonH.*;
 import static arcadeflex.fucPtr.ReadHandlerPtr;
 import static mame056.inptportH.*;
 import static mame056.input.*;
 import static mame056.inputH.*;
 import static old2.mame.mame.Machine;
 import static old2.mame.mame.options;
-import static mame056.commonH.*;
-import static mame056.cpuexec.cpu_scalebyfcount;
-import static mame056.cpuexec.cpu_set_reset_line;
-import static mame056.cpuintrfH.PULSE_LINE;
-import static mame.osdependH.*;
+import static mame056.cpuexec.*;
+import static mame056.cpuintrfH.*;
+import static mame056.osdependH.*;
 import static old2.mame.mame.playback;
 
 public class inptport {

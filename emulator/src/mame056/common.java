@@ -11,8 +11,7 @@ import static old.common.libc.cstring.*;
 
 import static mame056.commonH.*;
 import static mame056.driverH.*;
-import static mame.osdependH.OSD_FILETYPE_ROM;
-import static mame.osdependH.OSD_FILETYPE_SAMPLE;
+import static mame056.osdependH.*;
 import static old.arcadeflex.fileio.*;
 import old.arcadeflex.libc_old.FILE;
 import static old.arcadeflex.libc_old.*;
