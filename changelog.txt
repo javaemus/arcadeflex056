@@ -2,6 +2,7 @@
 ==========
 -Ported drawgfxH to mame0.56
 -Ported osdependH to mame0.56
+-Ported mixerH to mame0.56
 
 01/02/2019
 ==========

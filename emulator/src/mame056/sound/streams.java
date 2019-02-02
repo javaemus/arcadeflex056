@@ -7,7 +7,7 @@ import static old.common.ptr.*;
 import static old2.mame.mame.*;
 import static mame056.sndintrf.*;
 import static old.sound.mixer.*;
-import static old.sound.mixerH.*;
+import static mame056.sound.mixerH.*;
 
 public class streams {
 

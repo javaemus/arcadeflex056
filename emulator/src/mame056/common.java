@@ -5,6 +5,7 @@ package mame056;
 
 import static arcadeflex056.debug.*;
 import arcadeflex.libc.ptr.UBytePtr;
+import static arcadeflex.video.osd_set_visible_area;
 
 import static old.common.libc.cstdio.*;
 import static old.common.libc.cstring.*;
@@ -21,6 +22,7 @@ import static mame056.cpuexecH.CPU_FLAGS_MASK;
 import static mame056.cpuintrf.cputype_databus_width;
 import static mame056.cpuintrf.cputype_endianess;
 import static mame056.cpuintrfH.CPU_IS_LE;
+import mame056.drawgfxH.rectangle;
 import static old2.arcadeflex.libc_v2.charArrayToInt;
 import static old2.arcadeflex.libc_v2.charArrayToLong;
 
@@ -567,60 +569,58 @@ public class common {
 /*TODO*///	}
 /*TODO*///}
 /*TODO*///
-/*TODO*///
-/*TODO*////*-------------------------------------------------
-/*TODO*///	set_visible_area - adjusts the visible portion
-/*TODO*///	of the bitmap area dynamically
-/*TODO*///-------------------------------------------------*/
-/*TODO*///
-/*TODO*///void set_visible_area(int min_x,int max_x,int min_y,int max_y)
-/*TODO*///{
-/*TODO*///	Machine->visible_area.min_x = min_x;
-/*TODO*///	Machine->visible_area.max_x = max_x;
-/*TODO*///	Machine->visible_area.min_y = min_y;
-/*TODO*///	Machine->visible_area.max_y = max_y;
-/*TODO*///
-/*TODO*///	/* vector games always use the whole bitmap */
-/*TODO*///	if (Machine->drv->video_attributes & VIDEO_TYPE_VECTOR)
-/*TODO*///	{
-/*TODO*///		min_x = 0;
-/*TODO*///		max_x = Machine->scrbitmap->width - 1;
-/*TODO*///		min_y = 0;
-/*TODO*///		max_y = Machine->scrbitmap->height - 1;
-/*TODO*///	}
-/*TODO*///	else
-/*TODO*///	{
-/*TODO*///		int temp;
-/*TODO*///
-/*TODO*///		if (Machine->orientation & ORIENTATION_SWAP_XY)
-/*TODO*///		{
-/*TODO*///			temp = min_x; min_x = min_y; min_y = temp;
-/*TODO*///			temp = max_x; max_x = max_y; max_y = temp;
-/*TODO*///		}
-/*TODO*///		if (Machine->orientation & ORIENTATION_FLIP_X)
-/*TODO*///		{
-/*TODO*///			temp = Machine->scrbitmap->width - min_x - 1;
-/*TODO*///			min_x = Machine->scrbitmap->width - max_x - 1;
-/*TODO*///			max_x = temp;
-/*TODO*///		}
-/*TODO*///		if (Machine->orientation & ORIENTATION_FLIP_Y)
-/*TODO*///		{
-/*TODO*///			temp = Machine->scrbitmap->height - min_y - 1;
-/*TODO*///			min_y = Machine->scrbitmap->height - max_y - 1;
-/*TODO*///			max_y = temp;
-/*TODO*///		}
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	osd_set_visible_area(min_x,max_x,min_y,max_y);
-/*TODO*///
-/*TODO*///	Machine->absolute_visible_area.min_x = min_x;
-/*TODO*///	Machine->absolute_visible_area.max_x = max_x;
-/*TODO*///	Machine->absolute_visible_area.min_y = min_y;
-/*TODO*///	Machine->absolute_visible_area.max_y = max_y;
-/*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*///
+
+    /*-------------------------------------------------
+	set_visible_area - adjusts the visible portion
+	of the bitmap area dynamically
+    -------------------------------------------------*/
+    public static void set_visible_area(int min_x, int max_x, int min_y, int max_y) {
+        Machine.visible_area = new rectangle();
+        Machine.visible_area.min_x = min_x;
+        Machine.visible_area.max_x = max_x;
+        Machine.visible_area.min_y = min_y;
+        Machine.visible_area.max_y = max_y;
+
+        /* vector games always use the whole bitmap */
+        if ((Machine.drv.video_attributes & VIDEO_TYPE_VECTOR) != 0) {
+            min_x = 0;
+            max_x = Machine.scrbitmap.width - 1;
+            min_y = 0;
+            max_y = Machine.scrbitmap.height - 1;
+        } else {
+            int temp;
+
+            if ((Machine.orientation & ORIENTATION_SWAP_XY) != 0) {
+                temp = min_x;
+                min_x = min_y;
+                min_y = temp;
+                temp = max_x;
+                max_x = max_y;
+                max_y = temp;
+            }
+            if ((Machine.orientation & ORIENTATION_FLIP_X) != 0) {
+                temp = Machine.scrbitmap.width - min_x - 1;
+                min_x = Machine.scrbitmap.width - max_x - 1;
+                max_x = temp;
+            }
+            if ((Machine.orientation & ORIENTATION_FLIP_Y) != 0) {
+                temp = Machine.scrbitmap.height - min_y - 1;
+                min_y = Machine.scrbitmap.height - max_y - 1;
+                max_y = temp;
+            }
+        }
+
+        osd_set_visible_area(min_x, max_x, min_y, max_y);
+
+        Machine.absolute_visible_area = new rectangle();
+        Machine.absolute_visible_area.min_x = min_x;
+        Machine.absolute_visible_area.max_x = max_x;
+        Machine.absolute_visible_area.min_y = min_y;
+        Machine.absolute_visible_area.max_y = max_y;
+    }
+
+
+    /*TODO*///
 /*TODO*////***************************************************************************
 /*TODO*///
 /*TODO*///	Bitmap allocation/freeing code
