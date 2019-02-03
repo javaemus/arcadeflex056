@@ -1,6 +1,7 @@
 03/02/2019
 ==========
 -Impemented some functions (decodechar,gfxdecode) in 0.56 drawgfx class
+-Skeleton for plot , pixel function in 0.56 drawgfx class
 
 02/02/2019
 ==========

@@ -51,7 +51,7 @@ import static mame056.usrintrfH.UI_COLOR_NORMAL;
 import static mame056.version.build_version;
 import static old.arcadeflex.libc_old.strlen;
 import static old.arcadeflex.sound.osd_sound_enable;
-import static mame056.drawgfx.*;
+import static mame056.drawgfx.decodegfx;
 
 public class usrintrf {
 

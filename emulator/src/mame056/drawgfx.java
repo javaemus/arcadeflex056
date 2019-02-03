@@ -6,9 +6,11 @@ package mame056;
 import static arcadeflex.libc.cstring.memset;
 import arcadeflex.libc.ptr.UBytePtr;
 import java.util.Arrays;
+import mame056.commonH.mame_bitmap;
 import static mame056.drawgfxH.*;
-import static mame056.driverH.ORIENTATION_SWAP_XY;
+import static mame056.driverH.*;
 import static old2.mame.mame.Machine;
+import static arcadeflex.video.*;
 
 public class drawgfx {
 
@@ -31,11 +33,12 @@ public class drawgfx {
 /*TODO*///
 /*TODO*///
 /*TODO*///UINT8 gfx_drawmode_table[256];
-/*TODO*///plot_pixel_proc plot_pixel;
-/*TODO*///read_pixel_proc read_pixel;
-/*TODO*///plot_box_proc plot_box;
-/*TODO*///mark_dirty_proc mark_dirty;
-/*TODO*///
+    public static plot_pixel_procPtr plot_pixel;
+    public static read_pixel_procPtr read_pixel;
+    public static plot_box_procPtr plot_box;
+    public static mark_dirty_procPtr mark_dirty;
+
+    /*TODO*///
 /*TODO*///static UINT8 is_raw[TRANSPARENCY_MODES];
 /*TODO*///
 /*TODO*///
@@ -265,7 +268,7 @@ public class drawgfx {
         }
     }
 
-/*TODO*///
+    /*TODO*///
 /*TODO*///INLINE void blockmove_NtoN_transpen_noremap8(
 /*TODO*///		const UINT8 *srcdata,int srcwidth,int srcheight,int srcmodulo,
 /*TODO*///		UINT8 *dstdata,int dstmodulo,
@@ -3541,155 +3544,804 @@ public class drawgfx {
 /*TODO*///	plot_pixel(bitmap2, x, y, pen);
 /*TODO*///}
 /*TODO*///
-/*TODO*///static void pp_8_nd(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT8 *)b->line[y])[x] = p; }
-/*TODO*///static void pp_8_nd_fx(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT8 *)b->line[y])[b->width-1-x] = p; }
-/*TODO*///static void pp_8_nd_fy(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT8 *)b->line[b->height-1-y])[x] = p; }
-/*TODO*///static void pp_8_nd_fxy(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT8 *)b->line[b->height-1-y])[b->width-1-x] = p; }
-/*TODO*///static void pp_8_nd_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT8 *)b->line[x])[y] = p; }
-/*TODO*///static void pp_8_nd_fx_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT8 *)b->line[x])[b->width-1-y] = p; }
-/*TODO*///static void pp_8_nd_fy_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT8 *)b->line[b->height-1-x])[y] = p; }
-/*TODO*///static void pp_8_nd_fxy_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT8 *)b->line[b->height-1-x])[b->width-1-y] = p; }
-/*TODO*///
-/*TODO*///static void pp_8_d(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT8 *)b->line[y])[x] = p; osd_mark_dirty(x,y,x,y); }
-/*TODO*///static void pp_8_d_fx(struct mame_bitmap *b,int x,int y,UINT32 p)  { x = b->width-1-x; ((UINT8 *)b->line[y])[x] = p; osd_mark_dirty(x,y,x,y); }
-/*TODO*///static void pp_8_d_fy(struct mame_bitmap *b,int x,int y,UINT32 p)  { y = b->height-1-y; ((UINT8 *)b->line[y])[x] = p; osd_mark_dirty(x,y,x,y); }
-/*TODO*///static void pp_8_d_fxy(struct mame_bitmap *b,int x,int y,UINT32 p)  { x = b->width-1-x; y = b->height-1-y; ((UINT8 *)b->line[y])[x] = p; osd_mark_dirty(x,y,x,y); }
-/*TODO*///static void pp_8_d_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT8 *)b->line[x])[y] = p; osd_mark_dirty(y,x,y,x); }
-/*TODO*///static void pp_8_d_fx_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { y = b->width-1-y; ((UINT8 *)b->line[x])[y] = p; osd_mark_dirty(y,x,y,x); }
-/*TODO*///static void pp_8_d_fy_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { x = b->height-1-x; ((UINT8 *)b->line[x])[y] = p; osd_mark_dirty(y,x,y,x); }
-/*TODO*///static void pp_8_d_fxy_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { x = b->height-1-x; y = b->width-1-y; ((UINT8 *)b->line[x])[y] = p; osd_mark_dirty(y,x,y,x); }
-/*TODO*///
-/*TODO*///static void pp_16_nd(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT16 *)b->line[y])[x] = p; }
-/*TODO*///static void pp_16_nd_fx(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT16 *)b->line[y])[b->width-1-x] = p; }
-/*TODO*///static void pp_16_nd_fy(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT16 *)b->line[b->height-1-y])[x] = p; }
-/*TODO*///static void pp_16_nd_fxy(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT16 *)b->line[b->height-1-y])[b->width-1-x] = p; }
-/*TODO*///static void pp_16_nd_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT16 *)b->line[x])[y] = p; }
-/*TODO*///static void pp_16_nd_fx_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT16 *)b->line[x])[b->width-1-y] = p; }
-/*TODO*///static void pp_16_nd_fy_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT16 *)b->line[b->height-1-x])[y] = p; }
-/*TODO*///static void pp_16_nd_fxy_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT16 *)b->line[b->height-1-x])[b->width-1-y] = p; }
-/*TODO*///
-/*TODO*///static void pp_16_d(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT16 *)b->line[y])[x] = p; osd_mark_dirty(x,y,x,y); }
-/*TODO*///static void pp_16_d_fx(struct mame_bitmap *b,int x,int y,UINT32 p)  { x = b->width-1-x;  ((UINT16 *)b->line[y])[x] = p; osd_mark_dirty(x,y,x,y); }
-/*TODO*///static void pp_16_d_fy(struct mame_bitmap *b,int x,int y,UINT32 p)  { y = b->height-1-y; ((UINT16 *)b->line[y])[x] = p; osd_mark_dirty(x,y,x,y); }
-/*TODO*///static void pp_16_d_fxy(struct mame_bitmap *b,int x,int y,UINT32 p)  { x = b->width-1-x; y = b->height-1-y; ((UINT16 *)b->line[y])[x] = p; osd_mark_dirty(x,y,x,y); }
-/*TODO*///static void pp_16_d_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT16 *)b->line[x])[y] = p; osd_mark_dirty(y,x,y,x); }
-/*TODO*///static void pp_16_d_fx_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { y = b->width-1-y; ((UINT16 *)b->line[x])[y] = p; osd_mark_dirty(y,x,y,x); }
-/*TODO*///static void pp_16_d_fy_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { x = b->height-1-x; ((UINT16 *)b->line[x])[y] = p; osd_mark_dirty(y,x,y,x); }
-/*TODO*///static void pp_16_d_fxy_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { x = b->height-1-x; y = b->width-1-y; ((UINT16 *)b->line[x])[y] = p; osd_mark_dirty(y,x,y,x); }
-/*TODO*///
-/*TODO*///static void pp_32_nd(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT32 *)b->line[y])[x] = p; }
-/*TODO*///static void pp_32_nd_fx(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT32 *)b->line[y])[b->width-1-x] = p; }
-/*TODO*///static void pp_32_nd_fy(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT32 *)b->line[b->height-1-y])[x] = p; }
-/*TODO*///static void pp_32_nd_fxy(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT32 *)b->line[b->height-1-y])[b->width-1-x] = p; }
-/*TODO*///static void pp_32_nd_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT32 *)b->line[x])[y] = p; }
-/*TODO*///static void pp_32_nd_fx_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT32 *)b->line[x])[b->width-1-y] = p; }
-/*TODO*///static void pp_32_nd_fy_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT32 *)b->line[b->height-1-x])[y] = p; }
-/*TODO*///static void pp_32_nd_fxy_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT32 *)b->line[b->height-1-x])[b->width-1-y] = p; }
-/*TODO*///
-/*TODO*///static void pp_32_d(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT32 *)b->line[y])[x] = p; osd_mark_dirty(x,y,x,y); }
-/*TODO*///static void pp_32_d_fx(struct mame_bitmap *b,int x,int y,UINT32 p)  { x = b->width-1-x;  ((UINT32 *)b->line[y])[x] = p; osd_mark_dirty(x,y,x,y); }
-/*TODO*///static void pp_32_d_fy(struct mame_bitmap *b,int x,int y,UINT32 p)  { y = b->height-1-y; ((UINT32 *)b->line[y])[x] = p; osd_mark_dirty(x,y,x,y); }
-/*TODO*///static void pp_32_d_fxy(struct mame_bitmap *b,int x,int y,UINT32 p)  { x = b->width-1-x; y = b->height-1-y; ((UINT32 *)b->line[y])[x] = p; osd_mark_dirty(x,y,x,y); }
-/*TODO*///static void pp_32_d_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { ((UINT32 *)b->line[x])[y] = p; osd_mark_dirty(y,x,y,x); }
-/*TODO*///static void pp_32_d_fx_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { y = b->width-1-y; ((UINT32 *)b->line[x])[y] = p; osd_mark_dirty(y,x,y,x); }
-/*TODO*///static void pp_32_d_fy_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { x = b->height-1-x; ((UINT32 *)b->line[x])[y] = p; osd_mark_dirty(y,x,y,x); }
-/*TODO*///static void pp_32_d_fxy_s(struct mame_bitmap *b,int x,int y,UINT32 p)  { x = b->height-1-x; y = b->width-1-y; ((UINT32 *)b->line[x])[y] = p; osd_mark_dirty(y,x,y,x); }
-/*TODO*///
-/*TODO*///
-/*TODO*///static int rp_8(struct mame_bitmap *b,int x,int y)  { return ((UINT8 *)b->line[y])[x]; }
-/*TODO*///static int rp_8_fx(struct mame_bitmap *b,int x,int y)  { return ((UINT8 *)b->line[y])[b->width-1-x]; }
-/*TODO*///static int rp_8_fy(struct mame_bitmap *b,int x,int y)  { return ((UINT8 *)b->line[b->height-1-y])[x]; }
-/*TODO*///static int rp_8_fxy(struct mame_bitmap *b,int x,int y)  { return ((UINT8 *)b->line[b->height-1-y])[b->width-1-x]; }
-/*TODO*///static int rp_8_s(struct mame_bitmap *b,int x,int y)  { return ((UINT8 *)b->line[x])[y]; }
-/*TODO*///static int rp_8_fx_s(struct mame_bitmap *b,int x,int y)  { return ((UINT8 *)b->line[x])[b->width-1-y]; }
-/*TODO*///static int rp_8_fy_s(struct mame_bitmap *b,int x,int y)  { return ((UINT8 *)b->line[b->height-1-x])[y]; }
-/*TODO*///static int rp_8_fxy_s(struct mame_bitmap *b,int x,int y)  { return ((UINT8 *)b->line[b->height-1-x])[b->width-1-y]; }
-/*TODO*///
-/*TODO*///static int rp_16(struct mame_bitmap *b,int x,int y)  { return ((UINT16 *)b->line[y])[x]; }
-/*TODO*///static int rp_16_fx(struct mame_bitmap *b,int x,int y)  { return ((UINT16 *)b->line[y])[b->width-1-x]; }
-/*TODO*///static int rp_16_fy(struct mame_bitmap *b,int x,int y)  { return ((UINT16 *)b->line[b->height-1-y])[x]; }
-/*TODO*///static int rp_16_fxy(struct mame_bitmap *b,int x,int y)  { return ((UINT16 *)b->line[b->height-1-y])[b->width-1-x]; }
-/*TODO*///static int rp_16_s(struct mame_bitmap *b,int x,int y)  { return ((UINT16 *)b->line[x])[y]; }
-/*TODO*///static int rp_16_fx_s(struct mame_bitmap *b,int x,int y)  { return ((UINT16 *)b->line[x])[b->width-1-y]; }
-/*TODO*///static int rp_16_fy_s(struct mame_bitmap *b,int x,int y)  { return ((UINT16 *)b->line[b->height-1-x])[y]; }
-/*TODO*///static int rp_16_fxy_s(struct mame_bitmap *b,int x,int y)  { return ((UINT16 *)b->line[b->height-1-x])[b->width-1-y]; }
-/*TODO*///
-/*TODO*///static int rp_32(struct mame_bitmap *b,int x,int y)  { return ((UINT32 *)b->line[y])[x]; }
-/*TODO*///static int rp_32_fx(struct mame_bitmap *b,int x,int y)  { return ((UINT32 *)b->line[y])[b->width-1-x]; }
-/*TODO*///static int rp_32_fy(struct mame_bitmap *b,int x,int y)  { return ((UINT32 *)b->line[b->height-1-y])[x]; }
-/*TODO*///static int rp_32_fxy(struct mame_bitmap *b,int x,int y)  { return ((UINT32 *)b->line[b->height-1-y])[b->width-1-x]; }
-/*TODO*///static int rp_32_s(struct mame_bitmap *b,int x,int y)  { return ((UINT32 *)b->line[x])[y]; }
-/*TODO*///static int rp_32_fx_s(struct mame_bitmap *b,int x,int y)  { return ((UINT32 *)b->line[x])[b->width-1-y]; }
-/*TODO*///static int rp_32_fy_s(struct mame_bitmap *b,int x,int y)  { return ((UINT32 *)b->line[b->height-1-x])[y]; }
-/*TODO*///static int rp_32_fxy_s(struct mame_bitmap *b,int x,int y)  { return ((UINT32 *)b->line[b->height-1-x])[b->width-1-y]; }
-/*TODO*///
-/*TODO*///
-/*TODO*///static void pb_8_nd(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x++; } y++; } }
-/*TODO*///static void pb_8_nd_fx(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->width-1-x; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x--; } y++; } }
-/*TODO*///static void pb_8_nd_fy(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; y = b->height-1-y; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x++; } y--; } }
-/*TODO*///static void pb_8_nd_fxy(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->width-1-x; y = b->height-1-y; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x--; } y--; } }
-/*TODO*///static void pb_8_nd_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x++; } y++; } }
-/*TODO*///static void pb_8_nd_fx_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; y = b->width-1-y; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x++; } y--; } }
-/*TODO*///static void pb_8_nd_fy_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->height-1-x; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x--; } y++; } }
-/*TODO*///static void pb_8_nd_fxy_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->height-1-x; y = b->width-1-y; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x--; } y--; } }
-/*TODO*///
-/*TODO*///static void pb_8_d(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; osd_mark_dirty(t,y,t+w-1,y+h-1); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x++; } y++; } }
-/*TODO*///static void pb_8_d_fx(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->width-1-x;  osd_mark_dirty(t-w+1,y,t,y+h-1); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x--; } y++; } }
-/*TODO*///static void pb_8_d_fy(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; y = b->height-1-y; osd_mark_dirty(t,y-h+1,t+w-1,y); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x++; } y--; } }
-/*TODO*///static void pb_8_d_fxy(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->width-1-x; y = b->height-1-y; osd_mark_dirty(t-w+1,y-h+1,t,y); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x--; } y--; } }
-/*TODO*///static void pb_8_d_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; osd_mark_dirty(y,t,y+h-1,t+w-1); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x++; } y++; } }
-/*TODO*///static void pb_8_d_fx_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; y = b->width-1-y;  osd_mark_dirty(y-h+1,t,y,t+w-1); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x++; } y--; } }
-/*TODO*///static void pb_8_d_fy_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->height-1-x; osd_mark_dirty(y,t-w+1,y+h-1,t); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x--; } y++; } }
-/*TODO*///static void pb_8_d_fxy_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->height-1-x; y = b->width-1-y; osd_mark_dirty(y-h+1,t-w+1,y,t); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x--; } y--; } }
-/*TODO*///
-/*TODO*///static void pb_16_nd(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT16 *)b->line[y])[x] = p; x++; } y++; } }
-/*TODO*///static void pb_16_nd_fx(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->width-1-x; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT16 *)b->line[y])[x] = p; x--; } y++; } }
-/*TODO*///static void pb_16_nd_fy(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; y = b->height-1-y; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT16 *)b->line[y])[x] = p; x++; } y--; } }
-/*TODO*///static void pb_16_nd_fxy(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->width-1-x; y = b->height-1-y; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT16 *)b->line[y])[x] = p; x--; } y--; } }
-/*TODO*///static void pb_16_nd_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT16 *)b->line[x])[y] = p; x++; } y++; } }
-/*TODO*///static void pb_16_nd_fx_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; y = b->width-1-y; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT16 *)b->line[x])[y] = p; x++; } y--; } }
-/*TODO*///static void pb_16_nd_fy_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->height-1-x; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT16 *)b->line[x])[y] = p; x--; } y++; } }
-/*TODO*///static void pb_16_nd_fxy_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->height-1-x; y = b->width-1-y; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT16 *)b->line[x])[y] = p; x--; } y--; } }
-/*TODO*///
-/*TODO*///static void pb_16_d(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; osd_mark_dirty(t,y,t+w-1,y+h-1); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT16 *)b->line[y])[x] = p; x++; } y++; } }
-/*TODO*///static void pb_16_d_fx(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->width-1-x;  osd_mark_dirty(t-w+1,y,t,y+h-1); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT16 *)b->line[y])[x] = p; x--; } y++; } }
-/*TODO*///static void pb_16_d_fy(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; y = b->height-1-y; osd_mark_dirty(t,y-h+1,t+w-1,y); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT16 *)b->line[y])[x] = p; x++; } y--; } }
-/*TODO*///static void pb_16_d_fxy(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->width-1-x; y = b->height-1-y; osd_mark_dirty(t-w+1,y-h+1,t,y); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT16 *)b->line[y])[x] = p; x--; } y--; } }
-/*TODO*///static void pb_16_d_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; osd_mark_dirty(y,t,y+h-1,t+w-1); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT16 *)b->line[x])[y] = p; x++; } y++; } }
-/*TODO*///static void pb_16_d_fx_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; y = b->width-1-y; osd_mark_dirty(y-h+1,t,y,t+w-1); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT16 *)b->line[x])[y] = p; x++; } y--; } }
-/*TODO*///static void pb_16_d_fy_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->height-1-x; osd_mark_dirty(y,t-w+1,y+h-1,t); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT16 *)b->line[x])[y] = p; x--; } y++; } }
-/*TODO*///static void pb_16_d_fxy_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->height-1-x; y = b->width-1-y; osd_mark_dirty(y-h+1,t-w+1,y,t); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT16 *)b->line[x])[y] = p; x--; } y--; } }
-/*TODO*///
-/*TODO*///
-/*TODO*///static void pb_32_nd(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT32 *)b->line[y])[x] = p; x++; } y++; } }
-/*TODO*///static void pb_32_nd_fx(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->width-1-x; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT32 *)b->line[y])[x] = p; x--; } y++; } }
-/*TODO*///static void pb_32_nd_fy(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; y = b->height-1-y; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT32 *)b->line[y])[x] = p; x++; } y--; } }
-/*TODO*///static void pb_32_nd_fxy(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->width-1-x; y = b->height-1-y; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT32 *)b->line[y])[x] = p; x--; } y--; } }
-/*TODO*///static void pb_32_nd_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT32 *)b->line[x])[y] = p; x++; } y++; } }
-/*TODO*///static void pb_32_nd_fx_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; y = b->width-1-y; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT32 *)b->line[x])[y] = p; x++; } y--; } }
-/*TODO*///static void pb_32_nd_fy_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->height-1-x; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT32 *)b->line[x])[y] = p; x--; } y++; } }
-/*TODO*///static void pb_32_nd_fxy_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->height-1-x; y = b->width-1-y; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT32 *)b->line[x])[y] = p; x--; } y--; } }
-/*TODO*///
-/*TODO*///static void pb_32_d(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; osd_mark_dirty(t,y,t+w-1,y+h-1); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT32 *)b->line[y])[x] = p; x++; } y++; } }
-/*TODO*///static void pb_32_d_fx(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->width-1-x;  osd_mark_dirty(t-w+1,y,t,y+h-1); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT32 *)b->line[y])[x] = p; x--; } y++; } }
-/*TODO*///static void pb_32_d_fy(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; y = b->height-1-y; osd_mark_dirty(t,y-h+1,t+w-1,y); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT32 *)b->line[y])[x] = p; x++; } y--; } }
-/*TODO*///static void pb_32_d_fxy(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->width-1-x; y = b->height-1-y; osd_mark_dirty(t-w+1,y-h+1,t,y); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT32 *)b->line[y])[x] = p; x--; } y--; } }
-/*TODO*///static void pb_32_d_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; osd_mark_dirty(y,t,y+h-1,t+w-1); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT32 *)b->line[x])[y] = p; x++; } y++; } }
-/*TODO*///static void pb_32_d_fx_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=x; y = b->width-1-y; osd_mark_dirty(y-h+1,t,y,t+w-1); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT32 *)b->line[x])[y] = p; x++; } y--; } }
-/*TODO*///static void pb_32_d_fy_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->height-1-x; osd_mark_dirty(y,t-w+1,y+h-1,t); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT32 *)b->line[x])[y] = p; x--; } y++; } }
-/*TODO*///static void pb_32_d_fxy_s(struct mame_bitmap *b,int x,int y,int w,int h,UINT32 p)  { int t=b->height-1-x; y = b->width-1-y; osd_mark_dirty(y-h+1,t-w+1,y,t); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT32 *)b->line[x])[y] = p; x--; } y--; } }
-/*TODO*///
-/*TODO*///
-/*TODO*///static void md(int sx,int sy,int ex,int ey)  { osd_mark_dirty(sx,sy,ex,ey); }
-/*TODO*///static void md_fx(int sx,int sy,int ex,int ey)  { osd_mark_dirty(Machine->scrbitmap->width-1-ex,sy,Machine->scrbitmap->width-1-sx,ey); }
-/*TODO*///static void md_fy(int sx,int sy,int ex,int ey)  { osd_mark_dirty(sx,Machine->scrbitmap->height-1-ey,ex,Machine->scrbitmap->height-1-sy); }
-/*TODO*///static void md_fxy(int sx,int sy,int ex,int ey)  { osd_mark_dirty(Machine->scrbitmap->width-1-ex,Machine->scrbitmap->height-1-ey,Machine->scrbitmap->width-1-sx,Machine->scrbitmap->height-1-sy); }
-/*TODO*///static void md_s(int sx,int sy,int ex,int ey)  { osd_mark_dirty(sy,sx,ey,ex); }
-/*TODO*///static void md_fx_s(int sx,int sy,int ex,int ey)  { osd_mark_dirty(Machine->scrbitmap->width-1-ey,sx,Machine->scrbitmap->width-1-sy,ex); }
-/*TODO*///static void md_fy_s(int sx,int sy,int ex,int ey)  { osd_mark_dirty(sy,Machine->scrbitmap->height-1-ex,ey,Machine->scrbitmap->height-1-sx); }
-/*TODO*///static void md_fxy_s(int sx,int sy,int ex,int ey)  { osd_mark_dirty(Machine->scrbitmap->width-1-ey,Machine->scrbitmap->height-1-ex,Machine->scrbitmap->width-1-sy,Machine->scrbitmap->height-1-sx); }
-/*TODO*///
-/*TODO*///
+    public static plot_pixel_procPtr pp_16_nd = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT16 *)b -> line[y])[x] = p;
+        }
+    };
+    public static plot_pixel_procPtr pp_16_nd_fx = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT16 *)b -> line[y])[b -> width - 1 - x] = p;
+        }
+    };
+    public static plot_pixel_procPtr pp_16_nd_fy = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT16 *)b -> line[b -> height - 1 - y])[x] = p;
+        }
+    };
+    public static plot_pixel_procPtr pp_16_nd_fxy = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT16 *)b -> line[b -> height - 1 - y])[b -> width - 1 - x] = p;
+        }
+    };
+    public static plot_pixel_procPtr pp_16_nd_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT16 *)b -> line[x])[y] = p;
+        }
+    };
+    public static plot_pixel_procPtr pp_16_nd_fx_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT16 *)b -> line[x])[b -> width - 1 - y] = p;
+        }
+    };
+    public static plot_pixel_procPtr pp_16_nd_fy_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT16 *)b -> line[b -> height - 1 - x])[y] = p;
+        }
+    };
+    public static plot_pixel_procPtr pp_16_nd_fxy_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT16 *)b -> line[b -> height - 1 - x])[b -> width - 1 - y] = p;
+        }
+    };
+
+    public static plot_pixel_procPtr pp_16_d = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT16 *)b -> line[y])[x] = p;
+            //osd_mark_dirty(x, y, x, y);
+        }
+    };
+    public static plot_pixel_procPtr pp_16_d_fx = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//x = b -> width - 1 - x;((UINT16 *)b -> line[y])[x] = p;
+            //osd_mark_dirty(x, y, x, y);
+        }
+    };
+    public static plot_pixel_procPtr pp_16_d_fy = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//y = b -> height - 1 - y;((UINT16 *)b -> line[y])[x] = p;
+            //osd_mark_dirty(x, y, x, y);
+        }
+    };
+    public static plot_pixel_procPtr pp_16_d_fxy = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//x = b -> width - 1 - x;
+            //y = b -> height - 1 - y;((UINT16 *)b -> line[y])[x] = p;
+            //osd_mark_dirty(x, y, x, y);
+        }
+    };
+    public static plot_pixel_procPtr pp_16_d_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT16 *)b -> line[x])[y] = p;
+            //osd_mark_dirty(y, x, y, x);
+        }
+    };
+    public static plot_pixel_procPtr pp_16_d_fx_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//y = b -> width - 1 - y;((UINT16 *)b -> line[x])[y] = p;
+            //osd_mark_dirty(y, x, y, x);
+        }
+    };
+    public static plot_pixel_procPtr pp_16_d_fy_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//x = b -> height - 1 - x;((UINT16 *)b -> line[x])[y] = p;
+            //osd_mark_dirty(y, x, y, x);
+        }
+    };
+    public static plot_pixel_procPtr pp_16_d_fxy_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//x = b -> height - 1 - x;
+            //y = b -> width - 1 - y;((UINT16 *)b -> line[x])[y] = p;
+            //osd_mark_dirty(y, x, y, x);
+        }
+    };
+
+    public static plot_pixel_procPtr pp_32_nd = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b -> line[y])[x] = p;
+        }
+    };
+    public static plot_pixel_procPtr pp_32_nd_fx = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b -> line[y])[b -> width - 1 - x] = p;
+        }
+    };
+    public static plot_pixel_procPtr pp_32_nd_fy = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b -> line[b -> height - 1 - y])[x] = p;
+        }
+    };
+    public static plot_pixel_procPtr pp_32_nd_fxy = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b -> line[b -> height - 1 - y])[b -> width - 1 - x] = p;
+        }
+    };
+    public static plot_pixel_procPtr pp_32_nd_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b -> line[x])[y] = p;
+        }
+    };
+    public static plot_pixel_procPtr pp_32_nd_fx_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b -> line[x])[b -> width - 1 - y] = p;
+        }
+    };
+    public static plot_pixel_procPtr pp_32_nd_fy_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b -> line[b -> height - 1 - x])[y] = p;
+        }
+    };
+    public static plot_pixel_procPtr pp_32_nd_fxy_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b -> line[b -> height - 1 - x])[b -> width - 1 - y] = p;
+        }
+    };
+
+    public static plot_pixel_procPtr pp_32_d = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b -> line[y])[x] = p;
+            //osd_mark_dirty(x, y, x, y);
+        }
+    };
+    public static plot_pixel_procPtr pp_32_d_fx = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//x = b -> width - 1 - x;((UINT32 *)b -> line[y])[x] = p;
+            //osd_mark_dirty(x, y, x, y);
+        }
+    };
+    public static plot_pixel_procPtr pp_32_d_fy = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//y = b -> height - 1 - y;((UINT32 *)b -> line[y])[x] = p;
+            //osd_mark_dirty(x, y, x, y);
+        }
+    };
+    public static plot_pixel_procPtr pp_32_d_fxy = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//x = b -> width - 1 - x;
+            //y = b -> height - 1 - y;((UINT32 *)b -> line[y])[x] = p;
+            //osd_mark_dirty(x, y, x, y);
+        }
+    };
+    public static plot_pixel_procPtr pp_32_d_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b -> line[x])[y] = p;
+            //osd_mark_dirty(y, x, y, x);
+        }
+    };
+    public static plot_pixel_procPtr pp_32_d_fx_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//y = b -> width - 1 - y;((UINT32 *)b -> line[x])[y] = p;
+            //osd_mark_dirty(y, x, y, x);
+        }
+    };
+    public static plot_pixel_procPtr pp_32_d_fy_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//x = b -> height - 1 - x;((UINT32 *)b -> line[x])[y] = p;
+            //osd_mark_dirty(y, x, y, x);
+        }
+    };
+    public static plot_pixel_procPtr pp_32_d_fxy_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//x = b -> height - 1 - x;
+            //y = b -> width - 1 - y;((UINT32 *)b -> line[x])[y] = p;
+            //osd_mark_dirty(y, x, y, x);
+        }
+    };
+
+    public static read_pixel_procPtr rp_16 = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//return ((UINT16 *)b -> line[y])[x]; 
+        }
+    };
+    public static read_pixel_procPtr rp_16_fx = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//return ((UINT16 *)b -> line[y])[b -> width - 1 - x];
+        }
+    };
+    public static read_pixel_procPtr rp_16_fy = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//return ((UINT16 *)b -> line[b -> height - 1 - y])[x];
+        }
+    };
+    public static read_pixel_procPtr rp_16_fxy = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//return ((UINT16 *)b -> line[b -> height - 1 - y])[b -> width - 1 - x];
+        }
+    };
+    public static read_pixel_procPtr rp_16_s = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//return ((UINT16 *)b -> line[x])[y];
+        }
+    };
+    public static read_pixel_procPtr rp_16_fx_s = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//            return ((UINT16 *)b -> line[x])[b -> width - 1 - y];
+        }
+    };
+    public static read_pixel_procPtr rp_16_fy_s = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//            return ((UINT16 *)b -> line[b -> height - 1 - x])[y];
+        }
+    };
+    public static read_pixel_procPtr rp_16_fxy_s = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//            return ((UINT16 *)b -> line[b -> height - 1 - x])[b -> width - 1 - y];
+        }
+    };
+
+    public static read_pixel_procPtr rp_32 = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//            return ((UINT32 *)b -> line[y])[x];
+        }
+    };
+    public static read_pixel_procPtr rp_32_fx = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//            return ((UINT32 *)b -> line[y])[b -> width - 1 - x];
+
+        }
+    };
+    public static read_pixel_procPtr rp_32_fy = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//            return ((UINT32 *)b -> line[b -> height - 1 - y])[x]; 
+        }
+    };
+    public static read_pixel_procPtr rp_32_fxy = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//           return ((UINT32 *)b -> line[b -> height - 1 - y])[b -> width - 1 - x];
+
+        }
+    };
+    public static read_pixel_procPtr rp_32_s = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//            return ((UINT32 *)b -> line[x])[y];
+
+        }
+    };
+    public static read_pixel_procPtr rp_32_fx_s = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//           return ((UINT32 *)b -> line[x])[b -> width - 1 - y];
+
+        }
+    };
+    public static read_pixel_procPtr rp_32_fy_s = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//            return ((UINT32 *)b -> line[b -> height - 1 - x])[y];
+
+        }
+    };
+    public static read_pixel_procPtr rp_32_fxy_s = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//          return ((UINT32 *)b -> line[b -> height - 1 - x])[b -> width - 1 - y];
+        }
+    };
+
+    public static plot_box_procPtr pb_16_nd = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = x;
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT16 *)b -> line[y])[x] = p;
+                    x++;
+                }
+                y++;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_16_nd_fx = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = b -> width - 1 - x;
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT16 *)b -> line[y])[x] = p;
+                    x--;
+                }
+                y++;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_16_nd_fy = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = x;
+            y = b -> height - 1 - y;
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT16 *)b -> line[y])[x] = p;
+                    x++;
+                }
+                y--;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_16_nd_fxy = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = b -> width - 1 - x;
+            y = b -> height - 1 - y;
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT16 *)b -> line[y])[x] = p;
+                    x--;
+                }
+                y--;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_16_nd_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = x;
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT16 *)b -> line[x])[y] = p;
+                    x++;
+                }
+                y++;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_16_nd_fx_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = x;
+            y = b -> width - 1 - y;
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT16 *)b -> line[x])[y] = p;
+                    x++;
+                }
+                y--;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_16_nd_fy_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = b -> height - 1 - x;
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT16 *)b -> line[x])[y] = p;
+                    x--;
+                }
+                y++;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_16_nd_fxy_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = b -> height - 1 - x;
+            y = b -> width - 1 - y;
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT16 *)b -> line[x])[y] = p;
+                    x--;
+                }
+                y--;
+            }*/
+        }
+    };
+
+    public static plot_box_procPtr pb_16_d = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = x;
+            osd_mark_dirty(t, y, t + w - 1, y + h - 1);
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT16 *)b -> line[y])[x] = p;
+                    x++;
+                }
+                y++;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_16_d_fx = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = b -> width - 1 - x;
+            osd_mark_dirty(t - w + 1, y, t, y + h - 1);
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT16 *)b -> line[y])[x] = p;
+                    x--;
+                }
+                y++;
+            }
+             */
+        }
+    };
+    public static plot_box_procPtr pb_16_d_fy = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = x;
+            y = b -> height - 1 - y;
+            osd_mark_dirty(t, y - h + 1, t + w - 1, y);
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT16 *)b -> line[y])[x] = p;
+                    x++;
+                }
+                y--;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_16_d_fxy = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = b -> width - 1 - x;
+            y = b -> height - 1 - y;
+            osd_mark_dirty(t - w + 1, y - h + 1, t, y);
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT16 *)b -> line[y])[x] = p;
+                    x--;
+                }
+                y--;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_16_d_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = x;
+            osd_mark_dirty(y, t, y + h - 1, t + w - 1);
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT16 *)b -> line[x])[y] = p;
+                    x++;
+                }
+                y++;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_16_d_fx_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = x;
+            y = b -> width - 1 - y;
+            osd_mark_dirty(y - h + 1, t, y, t + w - 1);
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT16 *)b -> line[x])[y] = p;
+                    x++;
+                }
+                y--;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_16_d_fy_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = b -> height - 1 - x;
+            osd_mark_dirty(y, t - w + 1, y + h - 1, t);
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT16 *)b -> line[x])[y] = p;
+                    x--;
+                }
+                y++;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_16_d_fxy_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = b -> height - 1 - x;
+            y = b -> width - 1 - y;
+            osd_mark_dirty(y - h + 1, t - w + 1, y, t);
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT16 *)b -> line[x])[y] = p;
+                    x--;
+                }
+                y--;
+            }*/
+        }
+    };
+
+    public static plot_box_procPtr pb_32_nd = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = x;
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT32 *)b -> line[y])[x] = p;
+                    x++;
+                }
+                y++;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_32_nd_fx = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = b -> width - 1 - x;
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT32 *)b -> line[y])[x] = p;
+                    x--;
+                }
+                y++;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_32_nd_fy = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = x;
+            y = b -> height - 1 - y;
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT32 *)b -> line[y])[x] = p;
+                    x++;
+                }
+                y--;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_32_nd_fxy = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = b -> width - 1 - x;
+            y = b -> height - 1 - y;
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT32 *)b -> line[y])[x] = p;
+                    x--;
+                }
+                y--;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_32_nd_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = x;
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT32 *)b -> line[x])[y] = p;
+                    x++;
+                }
+                y++;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_32_nd_fx_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = x;
+            y = b -> width - 1 - y;
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT32 *)b -> line[x])[y] = p;
+                    x++;
+                }
+                y--;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_32_nd_fy_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = b -> height - 1 - x;
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT32 *)b -> line[x])[y] = p;
+                    x--;
+                }
+                y++;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_32_nd_fxy_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = b -> height - 1 - x;
+            y = b -> width - 1 - y;
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT32 *)b -> line[x])[y] = p;
+                    x--;
+                }
+                y--;
+            }*/
+        }
+    };
+
+    public static plot_box_procPtr pb_32_d = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = x;
+            osd_mark_dirty(t, y, t + w - 1, y + h - 1);
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT32 *)b -> line[y])[x] = p;
+                    x++;
+                }
+                y++;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_32_d_fx = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = b -> width - 1 - x;
+            osd_mark_dirty(t - w + 1, y, t, y + h - 1);
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT32 *)b -> line[y])[x] = p;
+                    x--;
+                }
+                y++;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_32_d_fy = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = x;
+            y = b -> height - 1 - y;
+            osd_mark_dirty(t, y - h + 1, t + w - 1, y);
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT32 *)b -> line[y])[x] = p;
+                    x++;
+                }
+                y--;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_32_d_fxy = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = b -> width - 1 - x;
+            y = b -> height - 1 - y;
+            osd_mark_dirty(t - w + 1, y - h + 1, t, y);
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT32 *)b -> line[y])[x] = p;
+                    x--;
+                }
+                y--;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_32_d_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = x;
+            osd_mark_dirty(y, t, y + h - 1, t + w - 1);
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT32 *)b -> line[x])[y] = p;
+                    x++;
+                }
+                y++;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_32_d_fx_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = x;
+            y = b -> width - 1 - y;
+            osd_mark_dirty(y - h + 1, t, y, t + w - 1);
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT32 *)b -> line[x])[y] = p;
+                    x++;
+                }
+                y--;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_32_d_fy_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = b -> height - 1 - x;
+            osd_mark_dirty(y, t - w + 1, y + h - 1, t);
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT32 *)b -> line[x])[y] = p;
+                    x--;
+                }
+                y++;
+            }*/
+        }
+    };
+    public static plot_box_procPtr pb_32_d_fxy_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");/*
+            int t = b -> height - 1 - x;
+            y = b -> width - 1 - y;
+            osd_mark_dirty(y - h + 1, t - w + 1, y, t);
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {((UINT32 *)b -> line[x])[y] = p;
+                    x--;
+                }
+                y--;
+            }*/
+        }
+    };
+
+    public static mark_dirty_procPtr md = new mark_dirty_procPtr() {
+        public void handler(int sx, int sy, int ex, int ey) {
+            osd_mark_dirty(sx, sy, ex, ey);
+        }
+    };
+    public static mark_dirty_procPtr md_fx = new mark_dirty_procPtr() {
+        public void handler(int sx, int sy, int ex, int ey) {
+            osd_mark_dirty(Machine.scrbitmap.width - 1 - ex, sy, Machine.scrbitmap.width - 1 - sx, ey);
+        }
+    };
+    public static mark_dirty_procPtr md_fy = new mark_dirty_procPtr() {
+        public void handler(int sx, int sy, int ex, int ey) {
+            osd_mark_dirty(sx, Machine.scrbitmap.height - 1 - ey, ex, Machine.scrbitmap.height - 1 - sy);
+        }
+    };
+    public static mark_dirty_procPtr md_fxy = new mark_dirty_procPtr() {
+        public void handler(int sx, int sy, int ex, int ey) {
+            osd_mark_dirty(Machine.scrbitmap.width - 1 - ex, Machine.scrbitmap.height - 1 - ey, Machine.scrbitmap.width - 1 - sx, Machine.scrbitmap.height - 1 - sy);
+        }
+    };
+    public static mark_dirty_procPtr md_s = new mark_dirty_procPtr() {
+        public void handler(int sx, int sy, int ex, int ey) {
+            osd_mark_dirty(sy, sx, ey, ex);
+        }
+    };
+    public static mark_dirty_procPtr md_fx_s = new mark_dirty_procPtr() {
+        public void handler(int sx, int sy, int ex, int ey) {
+            osd_mark_dirty(Machine.scrbitmap.width - 1 - ey, sx, Machine.scrbitmap.width - 1 - sy, ex);
+        }
+    };
+    public static mark_dirty_procPtr md_fy_s = new mark_dirty_procPtr() {
+        public void handler(int sx, int sy, int ex, int ey) {
+            osd_mark_dirty(sy, Machine.scrbitmap.height - 1 - ex, ey, Machine.scrbitmap.height - 1 - sx);
+        }
+    };
+    public static mark_dirty_procPtr md_fxy_s = new mark_dirty_procPtr() {
+        public void handler(int sx, int sy, int ex, int ey) {
+            osd_mark_dirty(Machine.scrbitmap.width - 1 - ey, Machine.scrbitmap.height - 1 - ex, Machine.scrbitmap.width - 1 - sy, Machine.scrbitmap.height - 1 - sx);
+        }
+    };
+
+    /*TODO*///
 /*TODO*///static plot_pixel_proc pps_8_nd[] =
 /*TODO*///		{ pp_8_nd, 	 pp_8_nd_fx,   pp_8_nd_fy, 	 pp_8_nd_fxy,
 /*TODO*///		  pp_8_nd_s, pp_8_nd_fx_s, pp_8_nd_fy_s, pp_8_nd_fxy_s };
