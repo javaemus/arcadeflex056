@@ -544,28 +544,23 @@ public class cpuintrf {
         return 0;
     }
 
-    /*TODO*///
-/*TODO*///
-/*TODO*///
-/*TODO*////*************************************
-/*TODO*/// *
-/*TODO*/// *	Exit/free a single CPU
-/*TODO*/// *
-/*TODO*/// *************************************/
-/*TODO*///
-/*TODO*///void cpuintrf_exit_cpu(int cpunum)
-/*TODO*///{
-/*TODO*///	/* if the CPU core defines an exit function, call it now */
-/*TODO*///	if (cpu[cpunum].intf.exit)
-/*TODO*///		(*cpu[cpunum].intf.exit)();
-/*TODO*///
-/*TODO*///	/* free the context buffer for that CPU */
-/*TODO*///	if (cpu[cpunum].context)
-/*TODO*///		free(cpu[cpunum].context);
-/*TODO*///	cpu[cpunum].context = NULL;
-/*TODO*///}
-/*TODO*///
-/*TODO*///
+    /**
+     * ***********************************
+     *
+     * Exit/free a single CPU
+     *
+     ************************************
+     */
+    public static void cpuintrf_exit_cpu(int cpunum) {
+        /* if the CPU core defines an exit function, call it now */
+        cpu[cpunum].intf.exit();
+
+        /* free the context buffer for that CPU */
+        if (cpu[cpunum].context != null) {
+            cpu[cpunum].context = null;
+        }
+    }
+
     /**
      * ***********************************
      *

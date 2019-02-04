@@ -380,23 +380,23 @@ public class cpuexec {
         }
     }
 
-    /*TODO*///
-/*TODO*///
-/*TODO*///
-/*TODO*////*************************************
-/*TODO*/// *
-/*TODO*/// *	Deinitialize all the CPUs
-/*TODO*/// *
-/*TODO*/// *************************************/
-/*TODO*///
-/*TODO*///void cpu_exit(void)
-/*TODO*///{
-/*TODO*///	int cpunum;
-/*TODO*///
-/*TODO*///	/* shut down the CPU cores */
-/*TODO*///	for (cpunum = 0; cpunum < cpu_gettotalcpu(); cpunum++)
-/*TODO*///		cpuintrf_exit_cpu(cpunum);
-/*TODO*///}
+    
+
+
+    /*************************************
+     *
+     *	Deinitialize all the CPUs
+     *
+     *************************************/
+
+    public static void cpu_exit()
+    {
+            int cpunum;
+
+            /* shut down the CPU cores */
+            for (cpunum = 0; cpunum < cpu_gettotalcpu(); cpunum++)
+                    cpuintrf_exit_cpu(cpunum);
+    }
     /**
      * ***********************************
      *
