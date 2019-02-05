@@ -20,7 +20,7 @@ import static mame056.sndintrfH.*;
 import static mame056.sound.sn76496H.*;
 import static mame056.sound.sn76496.*;
 
-import static vidhrdw.bankp.*;
+import static mame056.vidhrdw.bankp.*;
 import static vidhrdw.generic.*;
 
 public class bankp {

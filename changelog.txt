@@ -1,6 +1,7 @@
 06/02/2019
 ==========
 -Intial palette porting to 0.56 . Seems to work
+-Ported bankp vidhrdw to 0.56
 
 04/02/2019
 ==========
