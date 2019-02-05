@@ -1,3 +1,11 @@
+06/02/2019
+==========
+-Intial palette porting to 0.56 . Seems to work
+
+04/02/2019
+==========
+-Added cpu_exit in cpuexec,cpuintrf
+
 03/02/2019
 ==========
 -Impemented some functions (decodechar,gfxdecode) in 0.56 drawgfx class

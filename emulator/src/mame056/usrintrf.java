@@ -5,29 +5,21 @@ package mame056;
 
 import static arcadeflex.libc.cstdio.sprintf;
 import arcadeflex.libc.ptr.UBytePtr;
-import static arcadeflex.video.osd_get_brightness;
-import static arcadeflex.video.osd_mark_dirty;
-import static arcadeflex.video.osd_pause;
-import static arcadeflex.video.osd_save_snapshot;
-import static arcadeflex.video.osd_set_brightness;
-import static arcadeflex.video.osd_skip_this_frame;
+import static arcadeflex.video.*;
 import static old.common.libc.cstring.memset;
 import static old.common.libc.expressions.sizeof;
 import old.common.subArrays.IntArray;
-import static mame.cheat.DisplayWatches;
-import static mame.cheat.DoCheat;
-import static mame.cheat.cheat_menu;
+import static mame.cheat.*;
 import static mame056.drawgfxH.*;
-import static mame.driver.drivers;
+import static mame.driver.*;
 import static mame056.sndintrf.*;
 import static mame056.driverH.*;
 import static mame056.common.*;
 import static mame056.commonH.*;
 import static mame056.inputH.*;
 import static mame056.input.*;
-import static old.mame.drawgfx.*;
 import static mame056.inptportH.*;
-import static old2.mame.common.schedule_full_refresh;
+import static old2.mame.common.*;
 import static old2.mame.mame.*;
 import static mame056.mameH.*;
 import static mame056.common.snapno;
@@ -52,6 +44,10 @@ import static mame056.version.build_version;
 import static old.arcadeflex.libc_old.strlen;
 import static old.arcadeflex.sound.osd_sound_enable;
 import static mame056.drawgfx.decodegfx;
+import static old.mame.drawgfx.drawgfx;
+import static old.mame.drawgfx.fillbitmap;
+import static old.mame.drawgfx.plot_box;
+import static old.mame.drawgfx.set_pixel_functions;
 
 public class usrintrf {
 

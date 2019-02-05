@@ -38,9 +38,9 @@ public class drawgfx {
     public static plot_box_procPtr plot_box;
     public static mark_dirty_procPtr mark_dirty;
 
+    static int[] is_raw = new int[TRANSPARENCY_MODES];
+
     /*TODO*///
-/*TODO*///static UINT8 is_raw[TRANSPARENCY_MODES];
-/*TODO*///
 /*TODO*///
 /*TODO*///#ifdef ALIGN_INTS /* GSL 980108 read/write nonaligned dword routine for ARM processor etc */
 /*TODO*///
@@ -514,7 +514,7 @@ public class drawgfx {
 /*TODO*///
 /*TODO*///
 /*TODO*///static int afterdrawmask = 31;
-/*TODO*///int pdrawgfx_shadow_lowpri = 0;
+public static int pdrawgfx_shadow_lowpri = 0;
 /*TODO*///
 /*TODO*///
 /*TODO*////* 8-bit version */
@@ -3816,13 +3816,14 @@ public class drawgfx {
     };
 
     public static plot_box_procPtr pb_16_nd = new plot_box_procPtr() {
-        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {   
             throw new UnsupportedOperationException("unsupported");/*
             int t = x;
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT16 *)b -> line[y])[x] = p;
+                while (c-- > 0) {
+                    ((UINT16 *)b -> line[y])[x] = p;
                     x++;
                 }
                 y++;
@@ -4341,134 +4342,84 @@ public class drawgfx {
         }
     };
 
+    static plot_pixel_procPtr pps_16_nd[]
+            = {pp_16_nd, pp_16_nd_fx, pp_16_nd_fy, pp_16_nd_fxy,
+                pp_16_nd_s, pp_16_nd_fx_s, pp_16_nd_fy_s, pp_16_nd_fxy_s};
+
+    static plot_pixel_procPtr pps_16_d[]
+            = {pp_16_d, pp_16_d_fx, pp_16_d_fy, pp_16_d_fxy,
+                pp_16_d_s, pp_16_d_fx_s, pp_16_d_fy_s, pp_16_d_fxy_s};
+
+    static plot_pixel_procPtr pps_32_nd[]
+            = {pp_32_nd, pp_32_nd_fx, pp_32_nd_fy, pp_32_nd_fxy,
+                pp_32_nd_s, pp_32_nd_fx_s, pp_32_nd_fy_s, pp_32_nd_fxy_s};
+
+    static plot_pixel_procPtr pps_32_d[]
+            = {pp_32_d, pp_32_d_fx, pp_32_d_fy, pp_32_d_fxy,
+                pp_32_d_s, pp_32_d_fx_s, pp_32_d_fy_s, pp_32_d_fxy_s};
+
+    static read_pixel_procPtr rps_16[]
+            = {rp_16, rp_16_fx, rp_16_fy, rp_16_fxy,
+                rp_16_s, rp_16_fx_s, rp_16_fy_s, rp_16_fxy_s};
+
+    static read_pixel_procPtr rps_32[]
+            = {rp_32, rp_32_fx, rp_32_fy, rp_32_fxy,
+                rp_32_s, rp_32_fx_s, rp_32_fy_s, rp_32_fxy_s};
+
+    static plot_box_procPtr pbs_16_nd[]
+            = {pb_16_nd, pb_16_nd_fx, pb_16_nd_fy, pb_16_nd_fxy,
+                pb_16_nd_s, pb_16_nd_fx_s, pb_16_nd_fy_s, pb_16_nd_fxy_s};
+
+    static plot_box_procPtr pbs_16_d[]
+            = {pb_16_d, pb_16_d_fx, pb_16_d_fy, pb_16_d_fxy,
+                pb_16_d_s, pb_16_d_fx_s, pb_16_d_fy_s, pb_16_d_fxy_s};
+
+    static plot_box_procPtr pbs_32_nd[]
+            = {pb_32_nd, pb_32_nd_fx, pb_32_nd_fy, pb_32_nd_fxy,
+                pb_32_nd_s, pb_32_nd_fx_s, pb_32_nd_fy_s, pb_32_nd_fxy_s};
+
+    static plot_box_procPtr pbs_32_d[]
+            = {pb_32_d, pb_32_d_fx, pb_32_d_fy, pb_32_d_fxy,
+                pb_32_d_s, pb_32_d_fx_s, pb_32_d_fy_s, pb_32_d_fxy_s};
+
+    static mark_dirty_procPtr mds[]
+            = {md, md_fx, md_fy, md_fxy,
+                md_s, md_fx_s, md_fy_s, md_fxy_s};
+
+    public static void set_pixel_functions() {
+        mark_dirty = mds[Machine.orientation];
+
+        if (Machine.color_depth == 15 || Machine.color_depth == 16) {
+            read_pixel = rps_16[Machine.orientation];
+
+            if ((Machine.drv.video_attributes & VIDEO_SUPPORTS_DIRTY) != 0) {
+                plot_pixel = pps_16_d[Machine.orientation];
+                plot_box = pbs_16_d[Machine.orientation];
+            } else {
+                plot_pixel = pps_16_nd[Machine.orientation];
+                plot_box = pbs_16_nd[Machine.orientation];
+            }
+        } else {
+            read_pixel = rps_32[Machine.orientation];
+
+            if ((Machine.drv.video_attributes & VIDEO_SUPPORTS_DIRTY) != 0) {
+                plot_pixel = pps_32_d[Machine.orientation];
+                plot_box = pbs_32_d[Machine.orientation];
+            } else {
+                plot_pixel = pps_32_nd[Machine.orientation];
+                plot_box = pbs_32_nd[Machine.orientation];
+            }
+        }
+
+        /* while we're here, fill in the raw drawing mode table as well */
+        is_raw[TRANSPARENCY_NONE_RAW] = 1;
+        is_raw[TRANSPARENCY_PEN_RAW] = 1;
+        is_raw[TRANSPARENCY_PENS_RAW] = 1;
+        is_raw[TRANSPARENCY_PEN_TABLE_RAW] = 1;
+        is_raw[TRANSPARENCY_BLEND_RAW] = 1;
+    }
+
     /*TODO*///
-/*TODO*///static plot_pixel_proc pps_8_nd[] =
-/*TODO*///		{ pp_8_nd, 	 pp_8_nd_fx,   pp_8_nd_fy, 	 pp_8_nd_fxy,
-/*TODO*///		  pp_8_nd_s, pp_8_nd_fx_s, pp_8_nd_fy_s, pp_8_nd_fxy_s };
-/*TODO*///
-/*TODO*///static plot_pixel_proc pps_8_d[] =
-/*TODO*///		{ pp_8_d, 	pp_8_d_fx,   pp_8_d_fy,	  pp_8_d_fxy,
-/*TODO*///		  pp_8_d_s, pp_8_d_fx_s, pp_8_d_fy_s, pp_8_d_fxy_s };
-/*TODO*///
-/*TODO*///static plot_pixel_proc pps_16_nd[] =
-/*TODO*///		{ pp_16_nd,   pp_16_nd_fx,   pp_16_nd_fy, 	pp_16_nd_fxy,
-/*TODO*///		  pp_16_nd_s, pp_16_nd_fx_s, pp_16_nd_fy_s, pp_16_nd_fxy_s };
-/*TODO*///
-/*TODO*///static plot_pixel_proc pps_16_d[] =
-/*TODO*///		{ pp_16_d,   pp_16_d_fx,   pp_16_d_fy, 	 pp_16_d_fxy,
-/*TODO*///		  pp_16_d_s, pp_16_d_fx_s, pp_16_d_fy_s, pp_16_d_fxy_s };
-/*TODO*///
-/*TODO*///static plot_pixel_proc pps_32_nd[] =
-/*TODO*///		{ pp_32_nd,   pp_32_nd_fx,   pp_32_nd_fy, 	pp_32_nd_fxy,
-/*TODO*///		  pp_32_nd_s, pp_32_nd_fx_s, pp_32_nd_fy_s, pp_32_nd_fxy_s };
-/*TODO*///
-/*TODO*///static plot_pixel_proc pps_32_d[] =
-/*TODO*///		{ pp_32_d,   pp_32_d_fx,   pp_32_d_fy, 	 pp_32_d_fxy,
-/*TODO*///		  pp_32_d_s, pp_32_d_fx_s, pp_32_d_fy_s, pp_32_d_fxy_s };
-/*TODO*///
-/*TODO*///
-/*TODO*///static read_pixel_proc rps_8[] =
-/*TODO*///		{ rp_8,	  rp_8_fx,   rp_8_fy,	rp_8_fxy,
-/*TODO*///		  rp_8_s, rp_8_fx_s, rp_8_fy_s, rp_8_fxy_s };
-/*TODO*///
-/*TODO*///static read_pixel_proc rps_16[] =
-/*TODO*///		{ rp_16,   rp_16_fx,   rp_16_fy,   rp_16_fxy,
-/*TODO*///		  rp_16_s, rp_16_fx_s, rp_16_fy_s, rp_16_fxy_s };
-/*TODO*///
-/*TODO*///static read_pixel_proc rps_32[] =
-/*TODO*///		{ rp_32,   rp_32_fx,   rp_32_fy,   rp_32_fxy,
-/*TODO*///		  rp_32_s, rp_32_fx_s, rp_32_fy_s, rp_32_fxy_s };
-/*TODO*///
-/*TODO*///
-/*TODO*///static plot_box_proc pbs_8_nd[] =
-/*TODO*///		{ pb_8_nd, 	 pb_8_nd_fx,   pb_8_nd_fy, 	 pb_8_nd_fxy,
-/*TODO*///		  pb_8_nd_s, pb_8_nd_fx_s, pb_8_nd_fy_s, pb_8_nd_fxy_s };
-/*TODO*///
-/*TODO*///static plot_box_proc pbs_8_d[] =
-/*TODO*///		{ pb_8_d, 	pb_8_d_fx,   pb_8_d_fy,	  pb_8_d_fxy,
-/*TODO*///		  pb_8_d_s, pb_8_d_fx_s, pb_8_d_fy_s, pb_8_d_fxy_s };
-/*TODO*///
-/*TODO*///static plot_box_proc pbs_16_nd[] =
-/*TODO*///		{ pb_16_nd,   pb_16_nd_fx,   pb_16_nd_fy, 	pb_16_nd_fxy,
-/*TODO*///		  pb_16_nd_s, pb_16_nd_fx_s, pb_16_nd_fy_s, pb_16_nd_fxy_s };
-/*TODO*///
-/*TODO*///static plot_box_proc pbs_16_d[] =
-/*TODO*///		{ pb_16_d,   pb_16_d_fx,   pb_16_d_fy, 	 pb_16_d_fxy,
-/*TODO*///		  pb_16_d_s, pb_16_d_fx_s, pb_16_d_fy_s, pb_16_d_fxy_s };
-/*TODO*///
-/*TODO*///static plot_box_proc pbs_32_nd[] =
-/*TODO*///		{ pb_32_nd,   pb_32_nd_fx,   pb_32_nd_fy, 	pb_32_nd_fxy,
-/*TODO*///		  pb_32_nd_s, pb_32_nd_fx_s, pb_32_nd_fy_s, pb_32_nd_fxy_s };
-/*TODO*///
-/*TODO*///static plot_box_proc pbs_32_d[] =
-/*TODO*///		{ pb_32_d,   pb_32_d_fx,   pb_32_d_fy, 	 pb_32_d_fxy,
-/*TODO*///		  pb_32_d_s, pb_32_d_fx_s, pb_32_d_fy_s, pb_32_d_fxy_s };
-/*TODO*///
-/*TODO*///
-/*TODO*///static mark_dirty_proc mds[] =
-/*TODO*///		{ md,   md_fx,   md_fy,   md_fxy,
-/*TODO*///		  md_s, md_fx_s, md_fy_s, md_fxy_s };
-/*TODO*///
-/*TODO*///
-/*TODO*///void set_pixel_functions(void)
-/*TODO*///{
-/*TODO*///	mark_dirty = mds[Machine->orientation];
-/*TODO*///
-/*TODO*///	if (Machine->color_depth == 8)
-/*TODO*///	{
-/*TODO*///		read_pixel = rps_8[Machine->orientation];
-/*TODO*///
-/*TODO*///		if (Machine->drv->video_attributes & VIDEO_SUPPORTS_DIRTY)
-/*TODO*///		{
-/*TODO*///			plot_pixel = pps_8_d[Machine->orientation];
-/*TODO*///			plot_box = pbs_8_d[Machine->orientation];
-/*TODO*///		}
-/*TODO*///		else
-/*TODO*///		{
-/*TODO*///			plot_pixel = pps_8_nd[Machine->orientation];
-/*TODO*///			plot_box = pbs_8_nd[Machine->orientation];
-/*TODO*///		}
-/*TODO*///	}
-/*TODO*///	else if(Machine->color_depth == 15 || Machine->color_depth == 16)
-/*TODO*///	{
-/*TODO*///		read_pixel = rps_16[Machine->orientation];
-/*TODO*///
-/*TODO*///		if (Machine->drv->video_attributes & VIDEO_SUPPORTS_DIRTY)
-/*TODO*///		{
-/*TODO*///			plot_pixel = pps_16_d[Machine->orientation];
-/*TODO*///			plot_box = pbs_16_d[Machine->orientation];
-/*TODO*///		}
-/*TODO*///		else
-/*TODO*///		{
-/*TODO*///			plot_pixel = pps_16_nd[Machine->orientation];
-/*TODO*///			plot_box = pbs_16_nd[Machine->orientation];
-/*TODO*///		}
-/*TODO*///	}
-/*TODO*///	else
-/*TODO*///	{
-/*TODO*///		read_pixel = rps_32[Machine->orientation];
-/*TODO*///
-/*TODO*///		if (Machine->drv->video_attributes & VIDEO_SUPPORTS_DIRTY)
-/*TODO*///		{
-/*TODO*///			plot_pixel = pps_32_d[Machine->orientation];
-/*TODO*///			plot_box = pbs_32_d[Machine->orientation];
-/*TODO*///		}
-/*TODO*///		else
-/*TODO*///		{
-/*TODO*///			plot_pixel = pps_32_nd[Machine->orientation];
-/*TODO*///			plot_box = pbs_32_nd[Machine->orientation];
-/*TODO*///		}
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	/* while we're here, fill in the raw drawing mode table as well */
-/*TODO*///	is_raw[TRANSPARENCY_NONE_RAW]      = 1;
-/*TODO*///	is_raw[TRANSPARENCY_PEN_RAW]       = 1;
-/*TODO*///	is_raw[TRANSPARENCY_PENS_RAW]      = 1;
-/*TODO*///	is_raw[TRANSPARENCY_PEN_TABLE_RAW] = 1;
-/*TODO*///	is_raw[TRANSPARENCY_BLEND_RAW]     = 1;
-/*TODO*///}
-/*TODO*///
-/*TODO*///
 /*TODO*///INLINE void plotclip(struct mame_bitmap *bitmap,int x,int y,int pen,const struct rectangle *clip)
 /*TODO*///{
 /*TODO*///	if (x >= clip->min_x && x <= clip->max_x && y >= clip->min_y && y <= clip->max_y)
