@@ -11,7 +11,7 @@ import static old.common.ptr.*;
 
 import static mame056.sndintrf.*;
 import static mame056.sndintrfH.*;
-import static old2.mame.mame.*;
+import static mame056.mame.Machine;
 
 import static mame056.sound.sn76496H.*;
 import static mame056.sound.streams.*;

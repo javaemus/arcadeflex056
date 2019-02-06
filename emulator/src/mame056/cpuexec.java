@@ -11,7 +11,7 @@ import static mame056.hiscore.*;
 import static mame056.sndintrf.*;
 import static mame056.cpuintrf.*;
 import static mame056.cpuintrfH.*;
-import static old2.mame.mame.*;
+import static mame056.mame.*;
 import static mame056.timer.*;
 import static mame056.timerH.*;
 import static old.arcadeflex.osdepend.*;

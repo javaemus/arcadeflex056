@@ -14,7 +14,7 @@ import static old.common.libc.expressions.*;
 import static old.common.libc.cstring.*;
 import static old.common.libc.cstdio.*;
 import static old.common.ptr.*;
-import static old2.mame.mame.Machine;
+import static mame056.mame.Machine;
 
 public class sn76477 extends snd_interface {
 

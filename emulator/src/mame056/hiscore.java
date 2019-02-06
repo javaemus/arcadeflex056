@@ -6,7 +6,7 @@
 package mame056;
 
 import static arcadeflex.libc.ptr.*;
-import static old2.mame.mame.Machine;
+import static mame056.mame.Machine;
 import arcadeflex056.util.hiscoreFileParser;
 import static mame056.osdependH.*;
 import static old.arcadeflex.fileio.*;

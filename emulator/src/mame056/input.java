@@ -6,10 +6,10 @@ package mame056;
 import static old.common.libc.cstring.strlen;
 import static old.arcadeflex.input.*;
 import static old.arcadeflex.libc_old.*;
-import static mame056.inptport.input_port_type_seq;
+import static mame056.inptport.*;
 import static mame056.inptportH.*;
 import static mame056.inputH.*;
-import static old2.mame.mame.*;
+import static mame056.mame.Machine;
 
 public class input {
 

@@ -4,6 +4,7 @@
 -Ported bankp vidhrdw to 0.56
 -Ported generic vidhrdw to 0.56
 -Refactored function pointers file to arcadeflex0.56 package
+-Ported main mame class to 0.56 
 
 04/02/2019
 ==========

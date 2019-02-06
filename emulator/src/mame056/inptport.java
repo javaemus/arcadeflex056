@@ -26,12 +26,10 @@ import static arcadeflex056.fucPtr.ReadHandlerPtr;
 import static mame056.inptportH.*;
 import static mame056.input.*;
 import static mame056.inputH.*;
-import static old2.mame.mame.Machine;
-import static old2.mame.mame.options;
+import static mame056.mame.*;
 import static mame056.cpuexec.*;
 import static mame056.cpuintrfH.*;
 import static mame056.osdependH.*;
-import static old2.mame.mame.playback;
 
 public class inptport {
 

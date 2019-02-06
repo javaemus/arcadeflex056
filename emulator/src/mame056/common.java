@@ -16,13 +16,12 @@ import static mame056.osdependH.*;
 import static old.arcadeflex.fileio.*;
 import old.arcadeflex.libc_old.FILE;
 import static old.arcadeflex.libc_old.*;
-import static old2.mame.mame.*;
+import static mame056.mame.*;
 import static mame056.mameH.*;
-import static mame056.cpuexecH.CPU_FLAGS_MASK;
-import static mame056.cpuintrf.cputype_databus_width;
-import static mame056.cpuintrf.cputype_endianess;
-import static mame056.cpuintrfH.CPU_IS_LE;
-import mame056.drawgfxH.rectangle;
+import static mame056.cpuexecH.*;
+import static mame056.cpuintrf.*;
+import static mame056.cpuintrfH.*;
+import static mame056.drawgfxH.*;
 import static old2.arcadeflex.libc_v2.charArrayToInt;
 import static old2.arcadeflex.libc_v2.charArrayToLong;
 

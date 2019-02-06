@@ -13,7 +13,7 @@ import static mame056.timer.*;
 import static mame056.timerH.*;
 import static old.arcadeflex.osdepend.*;
 import static old.sound.mixer.*;
-import static old2.mame.mame.Machine;
+import static mame056.mame.Machine;
 
 //sound chips
 import mame056.sound.CustomSound;

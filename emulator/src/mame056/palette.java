@@ -10,7 +10,7 @@ import static mame056.commonH.REGION_PROMS;
 import static mame056.common.memory_region;
 import static mame056.usrintrf.usrintf_showmessage;
 import static old.arcadeflex.osdepend.logerror;
-import static old2.mame.mame.*;
+import static mame056.mame.Machine;
 
 public class palette {
 

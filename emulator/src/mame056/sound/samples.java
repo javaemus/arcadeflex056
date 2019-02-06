@@ -9,7 +9,7 @@ import static old.common.libc.cstdio.*;
 import static old.common.ptr.*;
 import static old.arcadeflex.osdepend.logerror;
 import static mame056.common.*;
-import static old2.mame.mame.Machine;
+import static mame056.mame.Machine;
 import static mame056.sndintrf.*;
 import static mame056.sndintrfH.*;
 import static old.sound.mixer.*;

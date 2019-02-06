@@ -3,8 +3,7 @@
  */
 package mame056;
 
-import arcadeflex056.fucPtr.ReadHandlerPtr;
-import arcadeflex056.fucPtr.WriteHandlerPtr;
+import arcadeflex056.fucPtr.*;
 import arcadeflex.libc.ptr.UBytePtr;
 import static old.common.libc.cstring.*;
 import static old.arcadeflex.osdepend.*;
@@ -14,7 +13,7 @@ import static mame056.cpuexecH.*;
 import static mame056.common.*;
 import static mame056.commonH.*;
 import static mame056.driverH.*;
-import static old2.mame.mame.*;
+import static mame056.mame.Machine;
 import static mame056.memoryH.*;
 import static old.arcadeflex.libc_old.*;
 

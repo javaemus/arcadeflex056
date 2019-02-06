@@ -9,7 +9,7 @@ import static arcadeflex.libc.ptr.*;
 import static old2.mame.common.*;
 import static old.mame.drawgfx.*;
 import static mame056.drawgfxH.*;
-import static old2.mame.mame.Machine;
+import static mame056.mame.Machine;
 import static mame056.commonH.*;
 import static mame056.vidhrdw.generic.*;
 import static old.common.libc.cstring.*;

@@ -8,7 +8,7 @@ import static mame056.sndintrf.*;
 import static old.common.libc.cstdio.*;
 import static old.common.libc.cstring.*;
 import static old.common.ptr.*;
-import static old2.mame.mame.Machine;
+import static mame056.mame.Machine;
 import static old.arcadeflex.osdepend.logerror;
 import static mame056.sndintrfH.*;
 import static mame056.sound.tms36xxH.*;

@@ -9,7 +9,7 @@ import java.util.Arrays;
 import mame056.commonH.mame_bitmap;
 import static mame056.drawgfxH.*;
 import static mame056.driverH.*;
-import static old2.mame.mame.Machine;
+import static mame056.mame.Machine;
 import static arcadeflex.video.*;
 
 public class drawgfx {

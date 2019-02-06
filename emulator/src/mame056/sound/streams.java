@@ -4,7 +4,7 @@
 package mame056.sound;
 
 import static old.common.ptr.*;
-import static old2.mame.mame.*;
+import static mame056.mame.Machine;
 import static mame056.sndintrf.*;
 import static old.sound.mixer.*;
 import static mame056.sound.mixerH.*;
