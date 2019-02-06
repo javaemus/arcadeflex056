@@ -3,8 +3,8 @@
  */
 package mame056;
 
-import arcadeflex.fucPtr.ReadHandlerPtr;
-import arcadeflex.fucPtr.WriteHandlerPtr;
+import arcadeflex056.fucPtr.ReadHandlerPtr;
+import arcadeflex056.fucPtr.WriteHandlerPtr;
 import arcadeflex.libc.ptr.UBytePtr;
 import static old.common.libc.cstring.*;
 import static old.arcadeflex.osdepend.*;

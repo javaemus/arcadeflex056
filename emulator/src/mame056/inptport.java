@@ -22,7 +22,7 @@ import java.util.HashMap;
 import static old.arcadeflex.osdepend.logerror;
 import static mame056.common.*;
 import static mame056.commonH.*;
-import static arcadeflex.fucPtr.ReadHandlerPtr;
+import static arcadeflex056.fucPtr.ReadHandlerPtr;
 import static mame056.inptportH.*;
 import static mame056.input.*;
 import static mame056.inputH.*;

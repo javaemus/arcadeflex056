@@ -4,7 +4,7 @@
  */
 package mame056.drivers;
 
-import static arcadeflex.fucPtr.*;
+import static arcadeflex056.fucPtr.*;
 
 import static mame056.commonH.*;
 import static mame056.cpuexec.*;
@@ -16,12 +16,10 @@ import static mame056.memoryH.*;
 import static mame056.inptport.*;
 import static mame056.drawgfxH.*;
 import static mame056.sndintrfH.*;
-
 import static mame056.sound.sn76496H.*;
 import static mame056.sound.sn76496.*;
-
 import static mame056.vidhrdw.bankp.*;
-import static vidhrdw.generic.*;
+import static mame056.vidhrdw.generic.*;
 
 public class bankp {
 

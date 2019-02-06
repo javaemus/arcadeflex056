@@ -3,7 +3,7 @@
  */
 package mame056;
 
-import static arcadeflex.fucPtr.*;
+import static arcadeflex056.fucPtr.*;
 import static old.arcadeflex.libc_old.CopyArray;
 import static mame056.commonH.*;
 import static mame056.drawgfxH.*;

@@ -3,7 +3,7 @@
  */
 package mame056;
 
-import static arcadeflex.fucPtr.*;
+import static arcadeflex056.fucPtr.*;
 
 import static mame056.cpuexecH.*;
 import static mame056.driverH.*;

@@ -4,7 +4,7 @@
  */
 package mame056.sound;
 
-import static arcadeflex.fucPtr.*;
+import static arcadeflex056.fucPtr.*;
 
 import static old.common.libc.cstdio.*;
 import static old.common.ptr.*;

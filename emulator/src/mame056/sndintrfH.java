@@ -3,7 +3,7 @@
  */
 package mame056;
 
-import arcadeflex.fucPtr.*;
+import arcadeflex056.fucPtr.*;
 
 public class sndintrfH {
 

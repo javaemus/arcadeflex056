@@ -3,7 +3,7 @@
  */
 package mame056;
 
-import arcadeflex.fucPtr.*;
+import arcadeflex056.fucPtr.*;
 import static mame056.cpuexec.cpu_set_irq_line;
 import static mame056.cpuintrfH.*;
 

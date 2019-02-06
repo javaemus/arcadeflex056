@@ -3,7 +3,7 @@
  */
 package mame056;
 
-import static arcadeflex.fucPtr.*;
+import static arcadeflex056.fucPtr.*;
 import arcadeflex.libc.ptr.UBytePtr;
 import static mame056.cpuintrfH.*;
 import static mame056.memory.*;
