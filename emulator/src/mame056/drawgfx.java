@@ -514,8 +514,8 @@ public class drawgfx {
 /*TODO*///
 /*TODO*///
 /*TODO*///static int afterdrawmask = 31;
-public static int pdrawgfx_shadow_lowpri = 0;
-/*TODO*///
+    public static int pdrawgfx_shadow_lowpri = 0;
+    /*TODO*///
 /*TODO*///
 /*TODO*////* 8-bit version */
 /*TODO*///#define DATA_TYPE UINT8
@@ -3544,6 +3544,88 @@ public static int pdrawgfx_shadow_lowpri = 0;
 /*TODO*///	plot_pixel(bitmap2, x, y, pen);
 /*TODO*///}
 /*TODO*///
+    public static plot_pixel_procPtr pp_8_nd = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b->line[y])[x] = p; 
+        }
+    };
+    public static plot_pixel_procPtr pp_8_nd_fx = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b->line[y])[b->width-1-x] = p; 
+        }
+    };
+    public static plot_pixel_procPtr pp_8_nd_fy = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b->line[b->height-1-y])[x] = p; 
+        }
+    };
+    public static plot_pixel_procPtr pp_8_nd_fxy = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b->line[b->height-1-y])[b->width-1-x] = p; 
+        }
+    };
+    public static plot_pixel_procPtr pp_8_nd_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b->line[x])[y] = p; 
+        }
+    };
+    public static plot_pixel_procPtr pp_8_nd_fx_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b->line[x])[b->width-1-y] = p; 
+        }
+    };
+    public static plot_pixel_procPtr pp_8_nd_fy_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b->line[b->height-1-x])[y] = p; 
+        }
+    };
+    public static plot_pixel_procPtr pp_8_nd_fxy_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b->line[b->height-1-x])[b->width-1-y] = p; 
+        }
+    };
+
+    public static plot_pixel_procPtr pp_8_d = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b->line[y])[x] = p; osd_mark_dirty(x,y,x,y); 
+        }
+    };
+    public static plot_pixel_procPtr pp_8_d_fx = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//x = b->width-1-x; ((UINT8 *)b->line[y])[x] = p; osd_mark_dirty(x,y,x,y); 
+        }
+    };
+    public static plot_pixel_procPtr pp_8_d_fy = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//y = b->height-1-y; ((UINT8 *)b->line[y])[x] = p; osd_mark_dirty(x,y,x,y); 
+        }
+    };
+    public static plot_pixel_procPtr pp_8_d_fxy = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");// x = b->width-1-x; y = b->height-1-y; ((UINT8 *)b->line[y])[x] = p; osd_mark_dirty(x,y,x,y); 
+        }
+    };
+    public static plot_pixel_procPtr pp_8_d_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b->line[x])[y] = p; osd_mark_dirty(y,x,y,x); 
+        }
+    };
+    public static plot_pixel_procPtr pp_8_d_fx_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//y = b->width-1-y; ((UINT8 *)b->line[x])[y] = p; osd_mark_dirty(y,x,y,x); 
+        }
+    };
+    public static plot_pixel_procPtr pp_8_d_fy_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//x = b->height-1-x; ((UINT8 *)b->line[x])[y] = p; osd_mark_dirty(y,x,y,x); 
+        }
+    };
+    public static plot_pixel_procPtr pp_8_d_fxy_s = new plot_pixel_procPtr() {
+        public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//x = b->height-1-x; y = b->width-1-y; ((UINT8 *)b->line[x])[y] = p; osd_mark_dirty(y,x,y,x); 
+        }
+    };
+
     public static plot_pixel_procPtr pp_16_nd = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");//((UINT16 *)b -> line[y])[x] = p;
@@ -3728,6 +3810,47 @@ public static int pdrawgfx_shadow_lowpri = 0;
         }
     };
 
+    public static read_pixel_procPtr rp_8 = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b->line[y])[x]; 
+        }
+    };
+    public static read_pixel_procPtr rp_8_fx = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b->line[y])[b->width-1-x]; 
+        }
+    };
+    public static read_pixel_procPtr rp_8_fy = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b->line[b->height-1-y])[x]; 
+        }
+    };
+    public static read_pixel_procPtr rp_8_fxy = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b->line[b->height-1-y])[b->width-1-x]; 
+        }
+    };
+    public static read_pixel_procPtr rp_8_s = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b->line[x])[y]; 
+        }
+    };
+    public static read_pixel_procPtr rp_8_fx_s = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b->line[x])[b->width-1-y]; 
+        }
+    };
+    public static read_pixel_procPtr rp_8_fy_s = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b->line[b->height-1-x])[y]; 
+        }
+    };
+    public static read_pixel_procPtr rp_8_fxy_s = new read_pixel_procPtr() {
+        public int handler(mame_bitmap bitmap, int x, int y) {
+            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b->line[b->height-1-x])[b->width-1-y]; 
+        }
+    };
+
     public static read_pixel_procPtr rp_16 = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
             throw new UnsupportedOperationException("unsupported");//return ((UINT16 *)b -> line[y])[x]; 
@@ -3814,9 +3937,90 @@ public static int pdrawgfx_shadow_lowpri = 0;
             throw new UnsupportedOperationException("unsupported");//          return ((UINT32 *)b -> line[b -> height - 1 - x])[b -> width - 1 - y];
         }
     };
+    public static plot_box_procPtr pb_8_nd = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//int t=x; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x++; } y++; } 
+        }
+    };
+    public static plot_box_procPtr pb_8_nd_fx = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//int t=b->width-1-x; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x--; } y++; } 
+        }
+    };
+    public static plot_box_procPtr pb_8_nd_fy = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//int t=x; y = b->height-1-y; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x++; } y--; } 
+        }
+    };
+    public static plot_box_procPtr pb_8_nd_fxy = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//int t=b->width-1-x; y = b->height-1-y; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x--; } y--; } 
+        }
+    };
+    public static plot_box_procPtr pb_8_nd_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//int t=x; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x++; } y++; } 
+        }
+    };
+    public static plot_box_procPtr pb_8_nd_fx_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//int t=x; y = b->width-1-y; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x++; } y--; } 
+        }
+    };
+    public static plot_box_procPtr pb_8_nd_fy_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//int t=b->height-1-x; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x--; } y++; } 
+        }
+    };
+    public static plot_box_procPtr pb_8_nd_fxy_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//int t=b->height-1-x; y = b->width-1-y; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x--; } y--; } 
+        }
+    };
+
+    public static plot_box_procPtr pb_8_d = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//int t=x; osd_mark_dirty(t,y,t+w-1,y+h-1); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x++; } y++; } 
+        }
+    };
+    public static plot_box_procPtr pb_8_d_fx = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//int t=b->width-1-x;  osd_mark_dirty(t-w+1,y,t,y+h-1); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x--; } y++; } 
+        }
+    };
+    public static plot_box_procPtr pb_8_d_fy = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//int t=x; y = b->height-1-y; osd_mark_dirty(t,y-h+1,t+w-1,y); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x++; } y--; } 
+        }
+    };
+    public static plot_box_procPtr pb_8_d_fxy = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//int t=b->width-1-x; y = b->height-1-y; osd_mark_dirty(t-w+1,y-h+1,t,y); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x--; } y--; }
+        }
+    };
+    public static plot_box_procPtr pb_8_d_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//int t=x; osd_mark_dirty(y,t,y+h-1,t+w-1); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x++; } y++; } 
+        }
+    };
+    public static plot_box_procPtr pb_8_d_fx_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//int t=x; y = b->width-1-y;  osd_mark_dirty(y-h+1,t,y,t+w-1); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x++; } y--; } 
+        }
+    };
+    public static plot_box_procPtr pb_8_d_fy_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//int t=b->height-1-x; osd_mark_dirty(y,t-w+1,y+h-1,t); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x--; } y++; } 
+        }
+    };
+    public static plot_box_procPtr pb_8_d_fxy_s = new plot_box_procPtr() {
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
+            throw new UnsupportedOperationException("unsupported");//int t=b->height-1-x; y = b->width-1-y; osd_mark_dirty(y-h+1,t-w+1,y,t); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x--; } y--; } 
+        }
+    };
 
     public static plot_box_procPtr pb_16_nd = new plot_box_procPtr() {
-        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {   
+        public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
             int t = x;
             while (h-- > 0) {
@@ -4342,6 +4546,14 @@ public static int pdrawgfx_shadow_lowpri = 0;
         }
     };
 
+    static plot_pixel_procPtr pps_8_nd[]
+            = {pp_8_nd, pp_8_nd_fx, pp_8_nd_fy, pp_8_nd_fxy,
+                pp_8_nd_s, pp_8_nd_fx_s, pp_8_nd_fy_s, pp_8_nd_fxy_s};
+
+    static plot_pixel_procPtr pps_8_d[]
+            = {pp_8_d, pp_8_d_fx, pp_8_d_fy, pp_8_d_fxy,
+                pp_8_d_s, pp_8_d_fx_s, pp_8_d_fy_s, pp_8_d_fxy_s};
+
     static plot_pixel_procPtr pps_16_nd[]
             = {pp_16_nd, pp_16_nd_fx, pp_16_nd_fy, pp_16_nd_fxy,
                 pp_16_nd_s, pp_16_nd_fx_s, pp_16_nd_fy_s, pp_16_nd_fxy_s};
@@ -4358,6 +4570,10 @@ public static int pdrawgfx_shadow_lowpri = 0;
             = {pp_32_d, pp_32_d_fx, pp_32_d_fy, pp_32_d_fxy,
                 pp_32_d_s, pp_32_d_fx_s, pp_32_d_fy_s, pp_32_d_fxy_s};
 
+    static read_pixel_procPtr rps_8[]
+            = {rp_8, rp_8_fx, rp_8_fy, rp_8_fxy,
+                rp_8_s, rp_8_fx_s, rp_8_fy_s, rp_8_fxy_s};
+
     static read_pixel_procPtr rps_16[]
             = {rp_16, rp_16_fx, rp_16_fy, rp_16_fxy,
                 rp_16_s, rp_16_fx_s, rp_16_fy_s, rp_16_fxy_s};
@@ -4365,6 +4581,14 @@ public static int pdrawgfx_shadow_lowpri = 0;
     static read_pixel_procPtr rps_32[]
             = {rp_32, rp_32_fx, rp_32_fy, rp_32_fxy,
                 rp_32_s, rp_32_fx_s, rp_32_fy_s, rp_32_fxy_s};
+
+    static plot_box_procPtr pbs_8_nd[]
+            = {pb_8_nd, pb_8_nd_fx, pb_8_nd_fy, pb_8_nd_fxy,
+                pb_8_nd_s, pb_8_nd_fx_s, pb_8_nd_fy_s, pb_8_nd_fxy_s};
+
+    static plot_box_procPtr pbs_8_d[]
+            = {pb_8_d, pb_8_d_fx, pb_8_d_fy, pb_8_d_fxy,
+                pb_8_d_s, pb_8_d_fx_s, pb_8_d_fy_s, pb_8_d_fxy_s};
 
     static plot_box_procPtr pbs_16_nd[]
             = {pb_16_nd, pb_16_nd_fx, pb_16_nd_fy, pb_16_nd_fxy,
@@ -4389,7 +4613,17 @@ public static int pdrawgfx_shadow_lowpri = 0;
     public static void set_pixel_functions() {
         mark_dirty = mds[Machine.orientation];
 
-        if (Machine.color_depth == 15 || Machine.color_depth == 16) {
+        if (Machine.color_depth == 8) {
+            read_pixel = rps_8[Machine.orientation];
+
+            if ((Machine.drv.video_attributes & VIDEO_SUPPORTS_DIRTY) != 0) {
+                plot_pixel = pps_8_d[Machine.orientation];
+                plot_box = pbs_8_d[Machine.orientation];
+            } else {
+                plot_pixel = pps_8_nd[Machine.orientation];
+                plot_box = pbs_8_nd[Machine.orientation];
+            }
+        } else if (Machine.color_depth == 15 || Machine.color_depth == 16) {
             read_pixel = rps_16[Machine.orientation];
 
             if ((Machine.drv.video_attributes & VIDEO_SUPPORTS_DIRTY) != 0) {

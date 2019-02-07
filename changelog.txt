@@ -1,3 +1,7 @@
+07/02/2019
+==========
+-Added 8bit pixel functions in drawgfx
+
 06/02/2019
 ==========
 -Intial palette porting to 0.56 . Seems to work
