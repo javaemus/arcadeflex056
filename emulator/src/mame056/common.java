@@ -26,23 +26,24 @@ import static arcadeflex.video.osd_set_visible_area;
 import static old.arcadeflex.fileio.*;
 import old.arcadeflex.libc_old.FILE;
 import static old.arcadeflex.libc_old.*;
+import static old.arcadeflex.osdepend.logerror;
 
 public class common {
 
+    /**
+     * *************************************************************************
+     *
+     * Constants
+     *
+     **************************************************************************
+     */
+// VERY IMPORTANT: osd_alloc_bitmap must allocate also a "safety area" 16 pixels wide all
+// around the bitmap. This is required because, for performance reasons, some graphic
+// routines don't clip at boundaries of the bitmap.
+    public static final int BITMAP_SAFETY = 16;
+
+
     /*TODO*///
-/*TODO*////***************************************************************************
-/*TODO*///
-/*TODO*///	Constants
-/*TODO*///
-/*TODO*///***************************************************************************/
-/*TODO*///
-/*TODO*///// VERY IMPORTANT: osd_alloc_bitmap must allocate also a "safety area" 16 pixels wide all
-/*TODO*///// around the bitmap. This is required because, for performance reasons, some graphic
-/*TODO*///// routines don't clip at boundaries of the bitmap.
-/*TODO*///#define BITMAP_SAFETY			16
-/*TODO*///
-/*TODO*///
-/*TODO*///
     /**
      * *************************************************************************
      *
@@ -620,130 +621,119 @@ public class common {
         Machine.absolute_visible_area.max_y = max_y;
     }
 
+    /**
+     * *************************************************************************
+     *
+     * Bitmap allocation/freeing code
+     *
+     **************************************************************************
+     */
+
+    /*-------------------------------------------------
+            bitmap_alloc - allocate a bitmap at the
+            current screen depth
+    -------------------------------------------------*/
+    public static mame_bitmap bitmap_alloc(int width, int height) {
+        return bitmap_alloc_depth(width, height, Machine.scrbitmap.depth);
+    }
+
+
+    /*-------------------------------------------------
+	bitmap_alloc_depth - allocate a bitmap for a
+	specific depth
+    -------------------------------------------------*/
+    public static mame_bitmap bitmap_alloc_depth(int width, int height, int depth) {
+        mame_bitmap bitmap;
+
+        /* cheesy kludge: pass in negative depth to prevent orientation swapping */
+        if (depth < 0) {
+            depth = -depth;
+        } /* adjust for orientation */ else if ((Machine.orientation & ORIENTATION_SWAP_XY) != 0) {
+            int temp = width;
+            width = height;
+            height = temp;
+        }
+
+        /* verify it's a depth we can handle */
+        if (depth != 8 && depth != 15 && depth != 16 && depth != 32) {
+            logerror("osd_alloc_bitmap() unknown depth %d\n", depth);
+            return null;
+        }
+
+        /* allocate memory for the bitmap struct */
+        bitmap = new mame_bitmap();
+        if (bitmap != null) {
+            int i, rowlen, rdwidth, bitmapsize, linearraysize, pixelsize;
+            UBytePtr bm;
+
+            /* initialize the basic parameters */
+            bitmap.depth = depth;
+            bitmap.width = width;
+            bitmap.height = height;
+
+            /* determine pixel size in bytes */
+            pixelsize = 1;
+            if (depth == 15 || depth == 16) {
+                pixelsize = 2;
+            } else if (depth == 32) {
+                pixelsize = 4;
+            }
+
+            /* round the width to a multiple of 8 */
+            rdwidth = (width + 7) & ~7;
+            rowlen = rdwidth + 2 * BITMAP_SAFETY;
+            bitmap.rowpixels = rowlen;
+
+            /* now convert from pixels to bytes */
+            rowlen *= pixelsize;
+            bitmap.rowbytes = rowlen;
+
+            /* determine total memory for bitmap and line arrays */
+            bitmapsize = (height + 2 * BITMAP_SAFETY) * rowlen;
+            linearraysize = (height + 2 * BITMAP_SAFETY);
+
+            /* allocate the bitmap data plus an array of line pointers */
+            bitmap.line = new UBytePtr[linearraysize + bitmapsize];
+            if (bitmap.line == null) {
+                bitmap = null;
+                return null;
+            }
+
+            /* clear ALL bitmap, including safety area, to avoid garbage on right */
+            bm = new UBytePtr(bitmap.line.length + linearraysize);
+            memset(bm, 0, (height + 2 * BITMAP_SAFETY) * rowlen);
+
+            /* initialize the line pointers */
+            for (i = 0; i < height + 2 * BITMAP_SAFETY; i++) {
+                bitmap.line[i] = new UBytePtr(bm, i * rowlen + BITMAP_SAFETY * pixelsize);
+                /* adjust for the safety rows */
+                bitmap.line[i].offset += BITMAP_SAFETY;//bitmap->line += BITMAP_SAFETY;
+            }
+            bitmap.base = bitmap.line[0];
+        }
+
+        /* return the result */
+        return bitmap;
+    }
+
+    /*-------------------------------------------------
+	bitmap_free - free a bitmap
+    -------------------------------------------------*/
+    public static void bitmap_free(mame_bitmap bitmap) {
+        /* skip if NULL */
+        if (bitmap == null) {
+            return;
+        }
+
+        /* unadjust for the safety rows */
+        //bitmap->line -= BITMAP_SAFETY;
+
+        /* free the memory */
+        bitmap.line = null;
+        bitmap = null;
+    }
 
     /*TODO*///
-/*TODO*////***************************************************************************
-/*TODO*///
-/*TODO*///	Bitmap allocation/freeing code
-/*TODO*///
-/*TODO*///***************************************************************************/
-/*TODO*///
-/*TODO*////*-------------------------------------------------
-/*TODO*///	bitmap_alloc - allocate a bitmap at the
-/*TODO*///	current screen depth
-/*TODO*///-------------------------------------------------*/
-/*TODO*///
-/*TODO*///struct mame_bitmap *bitmap_alloc(int width,int height)
-/*TODO*///{
-/*TODO*///	return bitmap_alloc_depth(width,height,Machine->scrbitmap->depth);
-/*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*////*-------------------------------------------------
-/*TODO*///	bitmap_alloc_depth - allocate a bitmap for a
-/*TODO*///	specific depth
-/*TODO*///-------------------------------------------------*/
-/*TODO*///
-/*TODO*///struct mame_bitmap *bitmap_alloc_depth(int width,int height,int depth)
-/*TODO*///{
-/*TODO*///	struct mame_bitmap *bitmap;
-/*TODO*///
-/*TODO*///	/* cheesy kludge: pass in negative depth to prevent orientation swapping */
-/*TODO*///	if (depth < 0)
-/*TODO*///	{
-/*TODO*///		depth = -depth;
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	/* adjust for orientation */
-/*TODO*///	else if (Machine->orientation & ORIENTATION_SWAP_XY)
-/*TODO*///	{
-/*TODO*///		int temp = width; width = height; height = temp;
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	/* verify it's a depth we can handle */
-/*TODO*///	if (depth != 8 && depth != 15 && depth != 16 && depth != 32)
-/*TODO*///	{
-/*TODO*///		logerror("osd_alloc_bitmap() unknown depth %d\n",depth);
-/*TODO*///		return NULL;
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	/* allocate memory for the bitmap struct */
-/*TODO*///	bitmap = malloc(sizeof(struct mame_bitmap));
-/*TODO*///	if (bitmap != NULL)
-/*TODO*///	{
-/*TODO*///		int i, rowlen, rdwidth, bitmapsize, linearraysize, pixelsize;
-/*TODO*///		unsigned char *bm;
-/*TODO*///
-/*TODO*///		/* initialize the basic parameters */
-/*TODO*///		bitmap->depth = depth;
-/*TODO*///		bitmap->width = width;
-/*TODO*///		bitmap->height = height;
-/*TODO*///
-/*TODO*///		/* determine pixel size in bytes */
-/*TODO*///		pixelsize = 1;
-/*TODO*///		if (depth == 15 || depth == 16)
-/*TODO*///			pixelsize = 2;
-/*TODO*///		else if (depth == 32)
-/*TODO*///			pixelsize = 4;
-/*TODO*///
-/*TODO*///		/* round the width to a multiple of 8 */
-/*TODO*///		rdwidth = (width + 7) & ~7;
-/*TODO*///		rowlen = rdwidth + 2 * BITMAP_SAFETY;
-/*TODO*///		bitmap->rowpixels = rowlen;
-/*TODO*///
-/*TODO*///		/* now convert from pixels to bytes */
-/*TODO*///		rowlen *= pixelsize;
-/*TODO*///		bitmap->rowbytes = rowlen;
-/*TODO*///
-/*TODO*///		/* determine total memory for bitmap and line arrays */
-/*TODO*///		bitmapsize = (height + 2 * BITMAP_SAFETY) * rowlen;
-/*TODO*///		linearraysize = (height + 2 * BITMAP_SAFETY) * sizeof(unsigned char *);
-/*TODO*///
-/*TODO*///		/* allocate the bitmap data plus an array of line pointers */
-/*TODO*///		bitmap->line = malloc(linearraysize + bitmapsize);
-/*TODO*///		if (bitmap->line == NULL)
-/*TODO*///		{
-/*TODO*///			free(bitmap);
-/*TODO*///			return NULL;
-/*TODO*///		}
-/*TODO*///
-/*TODO*///		/* clear ALL bitmap, including safety area, to avoid garbage on right */
-/*TODO*///		bm = (unsigned char *)bitmap->line + linearraysize;
-/*TODO*///		memset(bm, 0, (height + 2 * BITMAP_SAFETY) * rowlen);
-/*TODO*///
-/*TODO*///		/* initialize the line pointers */
-/*TODO*///		for (i = 0; i < height + 2 * BITMAP_SAFETY; i++)
-/*TODO*///			bitmap->line[i] = &bm[i * rowlen + BITMAP_SAFETY * pixelsize];
-/*TODO*///
-/*TODO*///		/* adjust for the safety rows */
-/*TODO*///		bitmap->line += BITMAP_SAFETY;
-/*TODO*///		bitmap->base = bitmap->line[0];
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	/* return the result */
-/*TODO*///	return bitmap;
-/*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*////*-------------------------------------------------
-/*TODO*///	bitmap_free - free a bitmap
-/*TODO*///-------------------------------------------------*/
-/*TODO*///
-/*TODO*///void bitmap_free(struct mame_bitmap *bitmap)
-/*TODO*///{
-/*TODO*///	/* skip if NULL */
-/*TODO*///	if (!bitmap)
-/*TODO*///		return;
-/*TODO*///
-/*TODO*///	/* unadjust for the safety rows */
-/*TODO*///	bitmap->line -= BITMAP_SAFETY;
-/*TODO*///
-/*TODO*///	/* free the memory */
-/*TODO*///	free(bitmap->line);
-/*TODO*///	free(bitmap);
-/*TODO*///}
-/*TODO*///
-/*TODO*///
 /*TODO*///
 /*TODO*////***************************************************************************
 /*TODO*///

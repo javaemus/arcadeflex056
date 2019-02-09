@@ -21,11 +21,11 @@ public class commonH {
         public int width, height;/* width and height of the bitmap */
         public int depth;/* bits per pixel */
         public UBytePtr[] line;/* pointers to the start of each line - can be UINT8 **, UINT16 ** or UINT32 ** */
- /*TODO*///
-/*TODO*///	/* alternate way of accessing the pixels */
-/*TODO*///	void *base;			/* pointer to pixel (0,0) (adjusted for padding) */
-/*TODO*///	int rowpixels;		/* pixels per row (including padding) */
-/*TODO*///	int rowbytes;		/* bytes per row (including padding) */
+ 
+	/* alternate way of accessing the pixels */
+	public UBytePtr base;/* pointer to pixel (0,0) (adjusted for padding) */
+	public int rowpixels;/* pixels per row (including padding) */
+	public int rowbytes;/* bytes per row (including padding) */
     }
 
     public static class RomModule {

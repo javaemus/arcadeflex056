@@ -2,6 +2,7 @@
 ==========
 -Refactoring common library 
 -More common library refactoring
+-Implementation of bitmap functions in common.java
 
 07/02/2019
 ==========

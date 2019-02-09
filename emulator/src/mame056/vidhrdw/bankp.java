@@ -13,12 +13,12 @@ import static common.ptr.*;
 import static mame056.drawgfxH.*;
 import static mame056.mame.*;
 import static mame056.commonH.*;
+import static mame056.common.*;
 import static mame056.cpuexec.*;
 import static mame056.palette.*;
 import static mame056.vidhrdw.generic.*;
 
 //to refactor
-import static old2.mame.common.*;
 import static old.mame.drawgfx.*;
 
 public class bankp {

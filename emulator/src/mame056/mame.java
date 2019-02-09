@@ -31,14 +31,13 @@ import static mame.cheat.StopCheat;
 import static mame.cheat.he_did_cheat;
 import static old.arcadeflex.libc_old.*;
 import static old.arcadeflex.osdepend.*;
-import static old2.mame.common.bitmap_free;
 import static mame056.vidhrdw.generic.*;
 import static mame.driver.*;
 
 import static old.arcadeflex.fileio.osd_fclose;
 import static old.arcadeflex.fileio.osd_fopen;
 import common.subArrays.IntArray;
-import static old2.mame.common.bitmap_alloc_depth;
+import static mame056.common.bitmap_alloc_depth;
 
 public class mame {
 
