@@ -4,11 +4,11 @@
 package mame056;
 
 import static common.libc.cstdio.*;
-import static common.libc.cstring.memset;
+import static common.libc.cstring.*;
 import static common.libc.expressions.*;
 import static common.subArrays.*;
+import static common.ptr.*;
 
-import arcadeflex.libc.ptr.UBytePtr;
 import static arcadeflex.video.*;
 import static mame.cheat.*;
 import static mame056.drawgfxH.*;
@@ -36,7 +36,6 @@ import static old.arcadeflex.sound.osd_set_mastervolume;
 import static mame056.inptport.*;
 import mame056.usrintrfH.DisplayText;
 import static mame056.version.build_version;
-import static old.arcadeflex.libc_old.strlen;
 import static old.arcadeflex.sound.osd_sound_enable;
 import static mame056.drawgfx.decodegfx;
 import static old.mame.drawgfx.drawgfx;

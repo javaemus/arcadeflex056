@@ -5,6 +5,7 @@ package mame056;
 
 import static arcadeflex056.debug.*;
 
+import static common.ptr.*;
 import static common.util.*;
 import static common.libc.cstdio.*;
 import static common.libc.cstdlib.*;
@@ -21,7 +22,6 @@ import static mame056.cpuintrfH.*;
 import static mame056.drawgfxH.*;
 
 //to refactor
-import arcadeflex.libc.ptr.UBytePtr;
 import static arcadeflex.video.osd_set_visible_area;
 import static old.arcadeflex.fileio.*;
 import old.arcadeflex.libc_old.FILE;

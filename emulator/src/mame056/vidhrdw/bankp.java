@@ -8,6 +8,7 @@ import static arcadeflex056.fucPtr.*;
 
 import static common.libc.cstring.*;
 import static common.libc.expressions.*;
+import static common.ptr.*;
 
 import static mame056.drawgfxH.*;
 import static mame056.mame.*;
@@ -17,7 +18,6 @@ import static mame056.palette.*;
 import static mame056.vidhrdw.generic.*;
 
 //to refactor
-import static arcadeflex.libc.ptr.*;
 import static old2.mame.common.*;
 import static old.mame.drawgfx.*;
 

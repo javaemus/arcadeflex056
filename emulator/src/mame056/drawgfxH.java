@@ -3,7 +3,7 @@
  */
 package mame056;
 
-import arcadeflex.libc.ptr.UBytePtr;
+import static common.ptr.*;
 import java.util.Arrays;
 import mame056.commonH.mame_bitmap;
 import common.subArrays.IntArray;

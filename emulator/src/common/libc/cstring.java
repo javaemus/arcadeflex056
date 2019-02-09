@@ -1,6 +1,6 @@
 package common.libc;
 
-import arcadeflex.libc.ptr.UBytePtr;
+import static common.ptr.*;
 
 /**
  *
@@ -87,7 +87,7 @@ public class cstring {
             dst.write(i + dstoffs, src[i]);
         }
     }
-    
+
     public static void memcpy(UBytePtr dst, int dstoffs, char[] src, int size) {
         for (int i = 0; i < Math.min(size, src.length); i++) {
             dst.write(i + dstoffs, src[i]);
@@ -117,5 +117,35 @@ public class cstring {
             }
         }
         return 0;
+    }
+
+    public static int memcmp(char[] dist, int dstoffs, String src, int size) {
+        char[] srcc = src.toCharArray();
+        for (int i = 0; i < size; i++) {
+            if (dist[(dstoffs + i)] != srcc[i]) {
+                return -1;
+
+            }
+        }
+        return 0;
+    }
+    /**
+     * STRCMP function
+     */
+    public static int strcmp(String str1, String str2) {
+        return str1.compareTo(str2);
+    }
+
+    /**
+     * Compares string1 and string2 without sensitivity to case
+     *
+     * @param string1
+     * @param string2
+     * @return a negative integer, zero, or a positive integer as the specified
+     * String is greater than, equal to, or less than this String, ignoring case
+     * considerations.
+     */
+    public static int stricmp(String str1, String str2) {
+        return str1.compareToIgnoreCase(str2);
     }
 }

@@ -1,6 +1,6 @@
 package arcadeflex056;
 
-import static arcadeflex.libc.ptr.*;
+import static common.ptr.*;
 import static mame056.sndintrfH.*;
 import static mame056.commonH.*;
 

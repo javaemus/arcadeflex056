@@ -3,7 +3,7 @@
  */
 package mame056;
 
-import arcadeflex.libc.ptr.UBytePtr;
+import static common.ptr.*;
 import java.util.ArrayList;
 import static mame056.common.*;
 

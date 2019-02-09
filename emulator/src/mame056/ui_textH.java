@@ -4,7 +4,7 @@
  */
 package mame056;
 
-import static arcadeflex.libc.ptr.*;
+import static common.ptr.*;
 
 public class ui_textH {
 

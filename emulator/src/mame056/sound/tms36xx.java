@@ -11,8 +11,8 @@ import static common.ptr.*;
 import static mame056.mame.Machine;
 import static old.arcadeflex.osdepend.logerror;
 import static mame056.sndintrfH.*;
-import static mame056.sound.tms36xxH.*;
 import static mame056.sound.streams.*;
+import static mame056.sound.tms36xxH.*;
 
 public class tms36xx extends snd_interface {
 

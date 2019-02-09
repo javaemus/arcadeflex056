@@ -3,7 +3,7 @@
  */
 package mame056;
 
-import arcadeflex.libc.ptr.UBytePtr;
+import static common.ptr.*;
 import common.subArrays.IntArray;
 import mame056.drawgfxH.*;
 import mame056.driverH.GameDriver;

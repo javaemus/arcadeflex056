@@ -3,7 +3,7 @@
  */
 package mame056;
 
-import static arcadeflex.libc.cstring.strcmp;
+import static common.libc.cstring.strcmp;
 import static old.arcadeflex.osdepend.*;
 
 import static mame056.cpuintrfH.*;

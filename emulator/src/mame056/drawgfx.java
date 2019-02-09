@@ -3,8 +3,8 @@
  */
 package mame056;
 
-import static arcadeflex.libc.cstring.memset;
-import arcadeflex.libc.ptr.UBytePtr;
+import static common.libc.cstring.memset;
+import static common.ptr.*;
 import java.util.Arrays;
 import mame056.commonH.mame_bitmap;
 import static mame056.drawgfxH.*;

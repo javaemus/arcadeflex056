@@ -19,7 +19,7 @@ import static mame056.osdependH.*;
 import static mame056.sndintrf.*;
 import static mame056.palette.*;
 
-import arcadeflex.libc.ptr.UBytePtr;
+import static common.ptr.*;
 import static arcadeflex.video.osd_close_display;
 import static arcadeflex.video.osd_create_display;
 import static arcadeflex.video.osd_mark_dirty;
