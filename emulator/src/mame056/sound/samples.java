@@ -5,8 +5,8 @@
 package mame056.sound;
 
 import static arcadeflex.libc.ptr.*;
-import static old.common.libc.cstdio.*;
-import static old.common.ptr.*;
+import static common.libc.cstdio.*;
+import static common.ptr.*;
 import static old.arcadeflex.osdepend.logerror;
 import static mame056.common.*;
 import static mame056.mame.Machine;

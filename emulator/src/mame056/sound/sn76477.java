@@ -10,10 +10,10 @@ import static mame056.sound.sn76477H.*;
 import static mame056.sound.streams.*;
 import static mame056.timer.*;
 import static mame056.timerH.*;
-import static old.common.libc.expressions.*;
-import static old.common.libc.cstring.*;
-import static old.common.libc.cstdio.*;
-import static old.common.ptr.*;
+import static common.libc.expressions.*;
+import static common.libc.cstring.*;
+import static common.libc.cstdio.*;
+import static common.ptr.*;
 import static mame056.mame.Machine;
 
 public class sn76477 extends snd_interface {

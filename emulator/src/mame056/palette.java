@@ -5,7 +5,7 @@ package mame056;
 
 import static arcadeflex.video.osd_allocate_colors;
 import static arcadeflex.video.osd_modify_pen;
-import old.common.subArrays.IntArray;
+import common.subArrays.IntArray;
 import static mame056.commonH.REGION_PROMS;
 import static mame056.common.memory_region;
 import static mame056.usrintrf.usrintf_showmessage;

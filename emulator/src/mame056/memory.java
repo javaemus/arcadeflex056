@@ -5,7 +5,7 @@ package mame056;
 
 import arcadeflex056.fucPtr.*;
 import arcadeflex.libc.ptr.UBytePtr;
-import static old.common.libc.cstring.*;
+import static common.libc.cstring.*;
 import static old.arcadeflex.osdepend.*;
 import static mame056.cpuintrfH.*;
 import static mame056.cpuintrf.*;

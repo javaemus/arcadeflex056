@@ -3,13 +3,15 @@
  */
 package mame056;
 
-import static old.common.libc.cstring.strlen;
-import static old.arcadeflex.input.*;
-import static old.arcadeflex.libc_old.*;
+import static common.libc.cstring.*;
+import static common.libc.ctime.*;
 import static mame056.inptport.*;
 import static mame056.inptportH.*;
 import static mame056.inputH.*;
-import static mame056.mame.Machine;
+import static mame056.mame.*;
+
+//to refactor
+import static old.arcadeflex.input.*;
 
 public class input {
 

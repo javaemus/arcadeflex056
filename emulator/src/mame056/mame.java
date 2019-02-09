@@ -25,6 +25,7 @@ import static arcadeflex.video.osd_create_display;
 import static arcadeflex.video.osd_mark_dirty;
 import static arcadeflex.video.osd_skip_this_frame;
 import static arcadeflex.video.osd_update_video_and_audio;
+import static common.libc.cstdlib.rand;
 import static mame.cheat.InitCheat;
 import static mame.cheat.StopCheat;
 import static mame.cheat.he_did_cheat;
@@ -36,7 +37,7 @@ import static mame.driver.*;
 
 import static old.arcadeflex.fileio.osd_fclose;
 import static old.arcadeflex.fileio.osd_fopen;
-import old.common.subArrays.IntArray;
+import common.subArrays.IntArray;
 import static old2.mame.common.bitmap_alloc_depth;
 
 public class mame {

@@ -5,17 +5,21 @@
 package mame056.vidhrdw;
 
 import static arcadeflex056.fucPtr.*;
+
+import static common.libc.cstring.*;
+import static common.libc.expressions.*;
+
+import static mame056.drawgfxH.*;
+import static mame056.mame.*;
+import static mame056.commonH.*;
+import static mame056.cpuexec.*;
+import static mame056.palette.*;
+import static mame056.vidhrdw.generic.*;
+
+//to refactor
 import static arcadeflex.libc.ptr.*;
 import static old2.mame.common.*;
 import static old.mame.drawgfx.*;
-import static mame056.drawgfxH.*;
-import static mame056.mame.Machine;
-import static mame056.commonH.*;
-import static mame056.vidhrdw.generic.*;
-import static old.common.libc.cstring.*;
-import static old.common.libc.expressions.*;
-import static mame056.cpuexec.interrupt_enable_w;
-import static mame056.palette.*;
 
 public class bankp {
 

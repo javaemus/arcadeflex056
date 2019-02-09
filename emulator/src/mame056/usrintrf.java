@@ -3,12 +3,13 @@
  */
 package mame056;
 
-import static arcadeflex.libc.cstdio.sprintf;
+import static common.libc.cstdio.*;
+import static common.libc.cstring.memset;
+import static common.libc.expressions.*;
+import static common.subArrays.*;
+
 import arcadeflex.libc.ptr.UBytePtr;
 import static arcadeflex.video.*;
-import static old.common.libc.cstring.memset;
-import static old.common.libc.expressions.sizeof;
-import old.common.subArrays.IntArray;
 import static mame.cheat.*;
 import static mame056.drawgfxH.*;
 import static mame.driver.*;
@@ -26,19 +27,14 @@ import static mame056.commonH.COIN_COUNTERS;
 import static mame056.cpuexec.machine_reset;
 import static mame056.cpuexecH.CPU_AUDIO_CPU;
 import static mame056.cpuintrf.cputype_name;
-import static mame056.driverH.MAX_CPU;
-import static mame056.driverH.MAX_SOUND;
-import static mame056.driverH.SOUND_SUPPORTS_STEREO;
+import static mame056.driverH.*;
 import static mame056.ui_text.*;
 import static mame056.ui_textH.*;
-import static mame056.usrintrfH.SEL_BITS;
-import static mame056.usrintrfH.SEL_MASK;
+import static mame056.usrintrfH.*;
 import static old.arcadeflex.sound.osd_get_mastervolume;
 import static old.arcadeflex.sound.osd_set_mastervolume;
 import static mame056.inptport.*;
 import mame056.usrintrfH.DisplayText;
-import static mame056.usrintrfH.UI_COLOR_INVERSE;
-import static mame056.usrintrfH.UI_COLOR_NORMAL;
 import static mame056.version.build_version;
 import static old.arcadeflex.libc_old.strlen;
 import static old.arcadeflex.sound.osd_sound_enable;

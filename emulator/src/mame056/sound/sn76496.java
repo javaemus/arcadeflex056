@@ -6,8 +6,8 @@ package mame056.sound;
 
 import static arcadeflex056.fucPtr.*;
 
-import static old.common.libc.cstdio.*;
-import static old.common.ptr.*;
+import static common.libc.cstdio.*;
+import static common.ptr.*;
 
 import static mame056.sndintrf.*;
 import static mame056.sndintrfH.*;

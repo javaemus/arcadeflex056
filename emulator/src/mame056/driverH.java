@@ -4,7 +4,7 @@
 package mame056;
 
 import static arcadeflex056.fucPtr.*;
-import static old.arcadeflex.libc_old.CopyArray;
+import static common.util.*;
 import static mame056.commonH.*;
 import static mame056.drawgfxH.*;
 import static mame056.inptportH.InputPortTiny;
@@ -26,7 +26,7 @@ public class driverH {
         } //null implementation
 
         public MachineDriver(MachineCPU[] mcp, float fps, int vblank, int cpu_slices, InitMachinePtr im, int sw, int sh, rectangle va, GfxDecodeInfo[] gdi, int tc, int ctl, VhConvertColorPromPtr vccp, int vattr, VhEofCallbackPtr veof, VhStartPtr vsta, VhStopPtr vsto, VhUpdatePtr vup, int sattr, int obs1, int obs2, int obs3, MachineSound[] snd) {
-            CopyArray(cpu, mcp);
+            copyArray(cpu, mcp);
             frames_per_second = fps;
             vblank_duration = vblank;
             cpu_slices_per_frame = cpu_slices;
@@ -47,7 +47,7 @@ public class driverH {
             obsolete1 = obs1;
             obsolete2 = obs2;
             obsolete3 = obs3;
-            CopyArray(sound, snd);
+            copyArray(sound, snd);
             nvram_handler = null;
         }
 

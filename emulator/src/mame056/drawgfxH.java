@@ -6,7 +6,7 @@ package mame056;
 import arcadeflex.libc.ptr.UBytePtr;
 import java.util.Arrays;
 import mame056.commonH.mame_bitmap;
-import old.common.subArrays.IntArray;
+import common.subArrays.IntArray;
 
 public class drawgfxH {
 

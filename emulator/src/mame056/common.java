@@ -4,26 +4,28 @@
 package mame056;
 
 import static arcadeflex056.debug.*;
-import arcadeflex.libc.ptr.UBytePtr;
-import static arcadeflex.video.osd_set_visible_area;
 
-import static old.common.libc.cstdio.*;
-import static old.common.libc.cstring.*;
+import static common.util.*;
+import static common.libc.cstdio.*;
+import static common.libc.cstdlib.*;
+import static common.libc.cstring.*;
 
 import static mame056.commonH.*;
 import static mame056.driverH.*;
 import static mame056.osdependH.*;
-import static old.arcadeflex.fileio.*;
-import old.arcadeflex.libc_old.FILE;
-import static old.arcadeflex.libc_old.*;
 import static mame056.mame.*;
 import static mame056.mameH.*;
 import static mame056.cpuexecH.*;
 import static mame056.cpuintrf.*;
 import static mame056.cpuintrfH.*;
 import static mame056.drawgfxH.*;
-import static old2.arcadeflex.libc_v2.charArrayToInt;
-import static old2.arcadeflex.libc_v2.charArrayToLong;
+
+//to refactor
+import arcadeflex.libc.ptr.UBytePtr;
+import static arcadeflex.video.osd_set_visible_area;
+import static old.arcadeflex.fileio.*;
+import old.arcadeflex.libc_old.FILE;
+import static old.arcadeflex.libc_old.*;
 
 public class common {
 

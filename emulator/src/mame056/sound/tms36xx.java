@@ -5,9 +5,9 @@
 package mame056.sound;
 
 import static mame056.sndintrf.*;
-import static old.common.libc.cstdio.*;
-import static old.common.libc.cstring.*;
-import static old.common.ptr.*;
+import static common.libc.cstdio.*;
+import static common.libc.cstring.*;
+import static common.ptr.*;
 import static mame056.mame.Machine;
 import static old.arcadeflex.osdepend.logerror;
 import static mame056.sndintrfH.*;
