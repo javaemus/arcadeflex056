@@ -16,7 +16,6 @@ import static mame056.mame.*;
 //to refactor
 import static old.arcadeflex.osdepend.*;
 import static old.mame.drawgfx.copybitmap;
-import static old.arcadeflex.libc_old.memcpy;
 
 public class generic {
 

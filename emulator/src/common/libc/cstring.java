@@ -106,6 +106,13 @@ public class cstring {
         }
     }
 
+    public static void memcpy(char[] dst, int dstofs, char[] src, int srcofs, int size) {
+        for (int mem = 0; mem < size; mem++) {
+            dst[dstofs + mem] = src[srcofs + mem];
+
+        }
+    }
+
     /**
      * memcmp
      */
@@ -129,6 +136,7 @@ public class cstring {
         }
         return 0;
     }
+
     /**
      * STRCMP function
      */
