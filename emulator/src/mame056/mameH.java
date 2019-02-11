@@ -11,7 +11,7 @@ import mame056.driverH.MachineDriver;
 import mame056.commonH.GameSamples;
 import mame056.commonH.mame_bitmap;
 import mame056.inptportH.InputPort;
-import old.arcadeflex.libc_old.FILE;
+import arcadeflex036.libc_old.FILE;
 
 public class mameH {
 

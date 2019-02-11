@@ -10,7 +10,7 @@ import mame056.commonH.mame_bitmap;
 import static mame056.drawgfxH.*;
 import static mame056.driverH.*;
 import static mame056.mame.Machine;
-import static arcadeflex.video.*;
+import static arcadeflex037b7.video.*;
 
 public class drawgfx {
 

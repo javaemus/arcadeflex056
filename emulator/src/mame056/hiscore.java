@@ -9,8 +9,8 @@ import static common.ptr.*;
 import static mame056.mame.Machine;
 import arcadeflex056.util.hiscoreFileParser;
 import static mame056.osdependH.*;
-import static old.arcadeflex.fileio.*;
-import static old.arcadeflex.osdepend.logerror;
+import static arcadeflex036.fileio.*;
+import static arcadeflex036.osdepend.logerror;
 import static mame056.cpuintrf.*;
 
 public class hiscore {

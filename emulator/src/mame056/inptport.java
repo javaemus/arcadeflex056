@@ -19,7 +19,7 @@ package mame056;
  */
 import java.util.HashMap;
 
-import static old.arcadeflex.osdepend.logerror;
+import static arcadeflex036.osdepend.logerror;
 import static mame056.common.*;
 import static mame056.commonH.*;
 import static arcadeflex056.fucPtr.ReadHandlerPtr;

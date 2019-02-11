@@ -20,22 +20,22 @@ import static mame056.sndintrf.*;
 import static mame056.palette.*;
 
 import static common.ptr.*;
-import static arcadeflex.video.osd_close_display;
-import static arcadeflex.video.osd_create_display;
-import static arcadeflex.video.osd_mark_dirty;
-import static arcadeflex.video.osd_skip_this_frame;
-import static arcadeflex.video.osd_update_video_and_audio;
+import static arcadeflex037b7.video.osd_close_display;
+import static arcadeflex037b7.video.osd_create_display;
+import static arcadeflex037b7.video.osd_mark_dirty;
+import static arcadeflex037b7.video.osd_skip_this_frame;
+import static arcadeflex037b7.video.osd_update_video_and_audio;
 import static common.libc.cstdlib.rand;
-import static mame.cheat.InitCheat;
-import static mame.cheat.StopCheat;
-import static mame.cheat.he_did_cheat;
-import static old.arcadeflex.libc_old.*;
-import static old.arcadeflex.osdepend.*;
+import static mame037b7.cheat.InitCheat;
+import static mame037b7.cheat.StopCheat;
+import static mame037b7.cheat.he_did_cheat;
+import static arcadeflex036.libc_old.*;
+import static arcadeflex036.osdepend.*;
 import static mame056.vidhrdw.generic.*;
-import static mame.driver.*;
+import static mame037b7.driver.*;
 
-import static old.arcadeflex.fileio.osd_fclose;
-import static old.arcadeflex.fileio.osd_fopen;
+import static arcadeflex036.fileio.osd_fclose;
+import static arcadeflex036.fileio.osd_fopen;
 import common.subArrays.IntArray;
 import static mame056.common.bitmap_alloc_depth;
 

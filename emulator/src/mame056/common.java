@@ -22,11 +22,11 @@ import static mame056.cpuintrfH.*;
 import static mame056.drawgfxH.*;
 
 //to refactor
-import static arcadeflex.video.osd_set_visible_area;
-import static old.arcadeflex.fileio.*;
-import old.arcadeflex.libc_old.FILE;
-import static old.arcadeflex.libc_old.*;
-import static old.arcadeflex.osdepend.logerror;
+import static arcadeflex037b7.video.osd_set_visible_area;
+import static arcadeflex036.fileio.*;
+import arcadeflex036.libc_old.FILE;
+import static arcadeflex036.libc_old.*;
+import static arcadeflex036.osdepend.logerror;
 
 public class common {
 

@@ -11,8 +11,8 @@ import static mame056.driverH.*;
 import static mame056.sound.streams.*;
 import static mame056.timer.*;
 import static mame056.timerH.*;
-import static old.arcadeflex.osdepend.*;
-import static old.sound.mixer.*;
+import static arcadeflex036.osdepend.*;
+import static mame037b5.sound.mixer.*;
 import static mame056.mame.Machine;
 
 //sound chips

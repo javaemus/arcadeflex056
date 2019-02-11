@@ -13,7 +13,7 @@ import static mame056.cpuexecH.*;
 import static mame056.cpuintrfH.*;
 import static mame056.memory.*;
 import static mame056.memoryH.*;
-import static old.arcadeflex.osdepend.*;
+import static arcadeflex036.osdepend.*;
 
 public class z80 extends cpu_interface {
 

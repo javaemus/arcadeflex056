@@ -14,8 +14,8 @@ import static mame056.commonH.*;
 import static mame056.mame.*;
 
 //to refactor
-import static old.arcadeflex.osdepend.*;
-import static old.mame.drawgfx.copybitmap;
+import static arcadeflex036.osdepend.*;
+import static mame037b5.drawgfx.copybitmap;
 
 public class generic {
 

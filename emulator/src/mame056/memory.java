@@ -6,7 +6,7 @@ package mame056;
 import arcadeflex056.fucPtr.*;
 import static common.ptr.*;
 import static common.libc.cstring.*;
-import static old.arcadeflex.osdepend.*;
+import static arcadeflex036.osdepend.*;
 import static mame056.cpuintrfH.*;
 import static mame056.cpuintrf.*;
 import static mame056.cpuexecH.*;
@@ -15,7 +15,7 @@ import static mame056.commonH.*;
 import static mame056.driverH.*;
 import static mame056.mame.Machine;
 import static mame056.memoryH.*;
-import static old.arcadeflex.libc_old.*;
+import static arcadeflex036.libc_old.*;
 
 public class memory {
 

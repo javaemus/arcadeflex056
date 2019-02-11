@@ -9,10 +9,10 @@ import static common.libc.expressions.*;
 import static common.subArrays.*;
 import static common.ptr.*;
 
-import static arcadeflex.video.*;
-import static mame.cheat.*;
+import static arcadeflex037b7.video.*;
+import static mame037b7.cheat.*;
 import static mame056.drawgfxH.*;
-import static mame.driver.*;
+import static mame037b7.driver.*;
 import static mame056.sndintrf.*;
 import static mame056.driverH.*;
 import static mame056.common.*;
@@ -31,17 +31,17 @@ import static mame056.driverH.*;
 import static mame056.ui_text.*;
 import static mame056.ui_textH.*;
 import static mame056.usrintrfH.*;
-import static old.arcadeflex.sound.osd_get_mastervolume;
-import static old.arcadeflex.sound.osd_set_mastervolume;
+import static arcadeflex036.sound.osd_get_mastervolume;
+import static arcadeflex036.sound.osd_set_mastervolume;
 import static mame056.inptport.*;
 import mame056.usrintrfH.DisplayText;
 import static mame056.version.build_version;
-import static old.arcadeflex.sound.osd_sound_enable;
+import static arcadeflex036.sound.osd_sound_enable;
 import static mame056.drawgfx.decodegfx;
-import static old.mame.drawgfx.drawgfx;
-import static old.mame.drawgfx.fillbitmap;
-import static old.mame.drawgfx.plot_box;
-import static old.mame.drawgfx.set_pixel_functions;
+import static mame037b5.drawgfx.drawgfx;
+import static mame037b5.drawgfx.fillbitmap;
+import static mame037b5.drawgfx.plot_box;
+import static mame037b5.drawgfx.set_pixel_functions;
 
 public class usrintrf {
 

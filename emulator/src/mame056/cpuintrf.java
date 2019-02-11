@@ -4,7 +4,7 @@
 package mame056;
 
 import static common.libc.cstring.strcmp;
-import static old.arcadeflex.osdepend.*;
+import static arcadeflex036.osdepend.*;
 
 import static mame056.cpuintrfH.*;
 import static mame056.driverH.*;

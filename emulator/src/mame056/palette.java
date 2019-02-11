@@ -3,13 +3,13 @@
  */
 package mame056;
 
-import static arcadeflex.video.osd_allocate_colors;
-import static arcadeflex.video.osd_modify_pen;
+import static arcadeflex037b7.video.osd_allocate_colors;
+import static arcadeflex037b7.video.osd_modify_pen;
 import common.subArrays.IntArray;
 import static mame056.commonH.REGION_PROMS;
 import static mame056.common.memory_region;
 import static mame056.usrintrf.usrintf_showmessage;
-import static old.arcadeflex.osdepend.logerror;
+import static arcadeflex036.osdepend.logerror;
 import static mame056.mame.Machine;
 
 public class palette {

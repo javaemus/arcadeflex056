@@ -19,7 +19,7 @@ import static mame056.palette.*;
 import static mame056.vidhrdw.generic.*;
 
 //to refactor
-import static old.mame.drawgfx.*;
+import static mame037b5.drawgfx.*;
 
 public class bankp {
 

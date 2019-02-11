@@ -10,7 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import mame056.hiscore.mem_range;
 import static mame056.hiscore.state;
-import static old.arcadeflex.osdepend.logerror;
+import static arcadeflex036.osdepend.logerror;
 
 public class hiscoreFileParser {
 

@@ -11,7 +11,7 @@ import static mame056.inputH.*;
 import static mame056.mame.*;
 
 //to refactor
-import static old.arcadeflex.input.*;
+import static arcadeflex036.input.*;
 
 public class input {
 
