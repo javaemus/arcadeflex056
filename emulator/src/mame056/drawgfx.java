@@ -515,6 +515,7 @@ public class drawgfx {
 /*TODO*///
 /*TODO*///static int afterdrawmask = 31;
     public static int pdrawgfx_shadow_lowpri = 0;
+
     /*TODO*///
 /*TODO*///
 /*TODO*////* 8-bit version */
@@ -1124,15 +1125,14 @@ public class drawgfx {
 /*TODO*///		drawgfx_core32(dest,gfx,code,color,flipx,flipy,sx,sy,clip,transparency,transparent_color,pri_buffer,pri_mask);
 /*TODO*///}
 /*TODO*///
-/*TODO*///void drawgfx(struct mame_bitmap *dest,const struct GfxElement *gfx,
-/*TODO*///		unsigned int code,unsigned int color,int flipx,int flipy,int sx,int sy,
-/*TODO*///		const struct rectangle *clip,int transparency,int transparent_color)
-/*TODO*///{
-/*TODO*///	profiler_mark(PROFILER_DRAWGFX);
+    public static void drawgfx(mame_bitmap dest, GfxElement gfx,/*unsigned*/ int code,/*unsigned*/ int color, int flipx, int flipy, int sx, int sy, rectangle clip, int transparency, int transparent_color) {
+        System.out.println("drawgfx function TODO");
+        /*TODO*///	profiler_mark(PROFILER_DRAWGFX);
 /*TODO*///	common_drawgfx(dest,gfx,code,color,flipx,flipy,sx,sy,clip,transparency,transparent_color,NULL,0);
 /*TODO*///	profiler_mark(PROFILER_END);
-/*TODO*///}
-/*TODO*///
+    }
+
+    /*TODO*///
 /*TODO*///void pdrawgfx(struct mame_bitmap *dest,const struct GfxElement *gfx,
 /*TODO*///		unsigned int code,unsigned int color,int flipx,int flipy,int sx,int sy,
 /*TODO*///		const struct rectangle *clip,int transparency,int transparent_color,UINT32 priority_mask)
@@ -1158,10 +1158,9 @@ public class drawgfx {
 /*TODO*///  This function will very likely change in the future.
 /*TODO*///
 /*TODO*///***************************************************************************/
-/*TODO*///void copybitmap(struct mame_bitmap *dest,struct mame_bitmap *src,int flipx,int flipy,int sx,int sy,
-/*TODO*///		const struct rectangle *clip,int transparency,int transparent_color)
-/*TODO*///{
-/*TODO*///	/* translate to proper transparency here */
+    public static void copybitmap(mame_bitmap dest, mame_bitmap src, int flipx, int flipy, int sx, int sy, rectangle clip, int transparency, int transparent_color) {
+        System.out.println("copybitmap drawgfx TODO");
+        /*TODO*///	/* translate to proper transparency here */
 /*TODO*///	if (transparency == TRANSPARENCY_NONE)
 /*TODO*///		transparency = TRANSPARENCY_NONE_RAW;
 /*TODO*///	else if (transparency == TRANSPARENCY_PEN)
@@ -1173,8 +1172,9 @@ public class drawgfx {
 /*TODO*///	}
 /*TODO*///
 /*TODO*///	copybitmap_remap(dest,src,flipx,flipy,sx,sy,clip,transparency,transparent_color);
-/*TODO*///}
-/*TODO*///
+    }
+
+    /*TODO*///
 /*TODO*///
 /*TODO*///void copybitmap_remap(struct mame_bitmap *dest,struct mame_bitmap *src,int flipx,int flipy,int sx,int sy,
 /*TODO*///		const struct rectangle *clip,int transparency,int transparent_color)
@@ -1268,11 +1268,9 @@ public class drawgfx {
 /*TODO*///  scrolls as a whole in at least one direction.
 /*TODO*///
 /*TODO*///***************************************************************************/
-/*TODO*///void copyscrollbitmap(struct mame_bitmap *dest,struct mame_bitmap *src,
-/*TODO*///		int rows,const int *rowscroll,int cols,const int *colscroll,
-/*TODO*///		const struct rectangle *clip,int transparency,int transparent_color)
-/*TODO*///{
-/*TODO*///	/* translate to proper transparency here */
+    public static void copyscrollbitmap(mame_bitmap dest, mame_bitmap src, int rows, int[] rowscroll, int cols, int[] colscroll, rectangle clip, int transparency, int transparent_color) {
+        System.out.println("copyscrollbitmap drawgfx TODO");
+        /*TODO*///	/* translate to proper transparency here */
 /*TODO*///	if (transparency == TRANSPARENCY_NONE)
 /*TODO*///		transparency = TRANSPARENCY_NONE_RAW;
 /*TODO*///	else if (transparency == TRANSPARENCY_PEN)
@@ -1284,8 +1282,9 @@ public class drawgfx {
 /*TODO*///	}
 /*TODO*///
 /*TODO*///	copyscrollbitmap_remap(dest,src,rows,rowscroll,cols,colscroll,clip,transparency,transparent_color);
-/*TODO*///}
-/*TODO*///
+    }
+
+    /*TODO*///
 /*TODO*///void copyscrollbitmap_remap(struct mame_bitmap *dest,struct mame_bitmap *src,
 /*TODO*///		int rows,const int *rowscroll,int cols,const int *colscroll,
 /*TODO*///		const struct rectangle *clip,int transparency,int transparent_color)
@@ -1572,8 +1571,10 @@ public class drawgfx {
 /*TODO*///
 /*TODO*///
 /*TODO*///
-/*TODO*////* fill a bitmap using the specified pen */
-/*TODO*///void fillbitmap(struct mame_bitmap *dest,int pen,const struct rectangle *clip)
+    /* fill a bitmap using the specified pen */
+    public static void fillbitmap(mame_bitmap dest, int pen, rectangle clip) {
+        System.out.println("fillbitmap drawgfx TODO");
+        /*TODO*///void fillbitmap(struct mame_bitmap *dest,int pen,const struct rectangle *clip)
 /*TODO*///{
 /*TODO*///	int sx,sy,ex,ey,y;
 /*TODO*///	struct rectangle myclip;
@@ -1680,8 +1681,8 @@ public class drawgfx {
 /*TODO*///		for (y = sy;y <= ey;y++)
 /*TODO*///			memset(((UINT8 *)dest->line[y]) + sx,pen,ex-sx+1);
 /*TODO*///	}
-/*TODO*///}
-/*TODO*///
+    }
+    /*TODO*///
 /*TODO*///
 /*TODO*///INLINE void common_drawgfxzoom( struct mame_bitmap *dest_bmp,const struct GfxElement *gfx,
 /*TODO*///		unsigned int code,unsigned int color,int flipx,int flipy,int sx,int sy,
@@ -4021,7 +4022,7 @@ public class drawgfx {
 
     public static plot_box_procPtr pb_16_nd = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");/*
+            /*
             int t = x;
             while (h-- > 0) {
                 int c = w;
@@ -4032,6 +4033,16 @@ public class drawgfx {
                 }
                 y++;
             }*/
+            int t = x;
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {
+                    new UShortPtr(b.line[y]).write(x,(char)p);
+                    x++;
+                }
+                y++;
+            }
         }
     };
     public static plot_box_procPtr pb_16_nd_fx = new plot_box_procPtr() {

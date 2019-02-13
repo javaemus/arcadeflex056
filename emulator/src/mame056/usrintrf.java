@@ -9,10 +9,9 @@ import static common.libc.expressions.*;
 import static common.subArrays.*;
 import static common.ptr.*;
 
-import static arcadeflex037b7.video.*;
-import static mame037b7.cheat.*;
+import static mame056.drawgfx.*;
 import static mame056.drawgfxH.*;
-import static mame037b7.driver.*;
+import static mame037b7.cheat.*;
 import static mame056.sndintrf.*;
 import static mame056.driverH.*;
 import static mame056.common.*;
@@ -22,26 +21,19 @@ import static mame056.input.*;
 import static mame056.inptportH.*;
 import static mame056.mame.*;
 import static mame056.mameH.*;
-import static mame056.common.snapno;
-import static mame056.commonH.COIN_COUNTERS;
-import static mame056.cpuexec.machine_reset;
-import static mame056.cpuexecH.CPU_AUDIO_CPU;
-import static mame056.cpuintrf.cputype_name;
-import static mame056.driverH.*;
+import static mame056.cpuexec.*;
+import static mame056.cpuexecH.*;
+import static mame056.cpuintrf.*;
 import static mame056.ui_text.*;
 import static mame056.ui_textH.*;
 import static mame056.usrintrfH.*;
-import static arcadeflex036.sound.osd_get_mastervolume;
-import static arcadeflex036.sound.osd_set_mastervolume;
 import static mame056.inptport.*;
-import mame056.usrintrfH.DisplayText;
-import static mame056.version.build_version;
-import static arcadeflex036.sound.osd_sound_enable;
-import static mame056.drawgfx.decodegfx;
-import static mame037b5.drawgfx.drawgfx;
-import static mame037b5.drawgfx.fillbitmap;
-import static mame037b5.drawgfx.plot_box;
-import static mame037b5.drawgfx.set_pixel_functions;
+import static mame056.version.*;
+
+//to refactor
+import static arcadeflex037b7.video.*;
+import static mame037b7.driver.*;
+import static arcadeflex036.sound.*;
 
 public class usrintrf {
 

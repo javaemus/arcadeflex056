@@ -10,6 +10,7 @@ import static common.libc.cstring.*;
 import static common.libc.expressions.*;
 import static common.ptr.*;
 
+import static mame056.drawgfx.*;
 import static mame056.drawgfxH.*;
 import static mame056.mame.*;
 import static mame056.commonH.*;
@@ -17,9 +18,6 @@ import static mame056.common.*;
 import static mame056.cpuexec.*;
 import static mame056.palette.*;
 import static mame056.vidhrdw.generic.*;
-
-//to refactor
-import static mame037b5.drawgfx.*;
 
 public class bankp {
 

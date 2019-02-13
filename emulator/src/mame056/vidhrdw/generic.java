@@ -9,13 +9,14 @@ import static common.libc.cstring.*;
 import static common.ptr.*;
 
 import static mame056.drawgfxH.*;
+import static mame056.drawgfx.*;
 import static mame056.common.*;
 import static mame056.commonH.*;
 import static mame056.mame.*;
 
 //to refactor
 import static arcadeflex036.osdepend.*;
-import static mame037b5.drawgfx.copybitmap;
+
 
 public class generic {
 
