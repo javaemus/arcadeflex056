@@ -4041,7 +4041,7 @@ public class drawgfx {
                     x = t;
                     while (c-- > 0) {
                         
-                        (b.line[y]).write(x,(char)p);
+                        new UShortPtr(b.line[y]).write(x,(char)p);
                         x++;
                     }
                     y++;
