@@ -4019,7 +4019,7 @@ public class drawgfx {
             throw new UnsupportedOperationException("unsupported");//int t=b->height-1-x; y = b->width-1-y; osd_mark_dirty(y-h+1,t-w+1,y,t); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x--; } y--; } 
         }
     };
-
+ 
     public static plot_box_procPtr pb_16_nd = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             /*
@@ -4033,18 +4033,24 @@ public class drawgfx {
                 }
                 y++;
             }*/
-            int t = x;
-            while (h-- > 0) {
-                int c = w;
-                x = t;
-                while (c-- > 0) {
-                    (b.line[y]).write(x,p);
-                    x++;
+             
+            
+                int t = x;
+                while (h-- > 0) {
+                    int c = w;
+                    x = t;
+                    while (c-- > 0) {
+                        
+                        new UShortPtr(b.line[y]).write(x,(char)p);
+                        x++;
+                    }
+                    y++;
                 }
-                y++;
-            }
+                
+            
         }
     };
+    
     public static plot_box_procPtr pb_16_nd_fx = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
