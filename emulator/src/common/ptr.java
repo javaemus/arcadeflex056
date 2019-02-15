@@ -256,7 +256,25 @@ public class ptr {
             memory[offset + index * 2] = (char) (value & 0xFF);
             memory[offset + index * 2 + 1] = (char) ((value >> 8) & 0xFF);
         }
+        public void write(char value) {
+            memory[offset] = (char) (value & 0xFF);
+            memory[offset + 1] = (char) ((value >> 8) & 0xFF);
+        }
+        public void inc() {
+            offset += bsize;
+        }
 
+        public void dec() {
+            offset -= bsize;
+        }
+
+        public void inc(int count) {
+            offset += count * bsize;
+        }
+
+        public void dec(int count) {
+            offset -= count * bsize;
+        }
     }
 
     /**
