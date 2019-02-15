@@ -1,6 +1,7 @@
 15/02/2019
 ==========
 -Intial drawgfx for 8bit (only blockmove_8toN_opaque8 implemented and working properly)
+-Implemented the rest of drawgfx functions for bankp in order to work on 8bit mode atm
 
 14/02/2019
 ==========

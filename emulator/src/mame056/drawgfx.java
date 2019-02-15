@@ -3,6 +3,7 @@
  */
 package mame056;
 
+import arcadeflex036.libc_old.IntPtr;
 import java.util.Arrays;
 
 import static common.libc.cstring.*;
@@ -22,25 +23,12 @@ import common.subArrays.IntArray;
 
 public class drawgfx {
 
-    /*TODO*///#ifndef DECLARE
-/*TODO*///
-/*TODO*///#include "driver.h"
-/*TODO*///
-/*TODO*///
-/*TODO*///#ifdef LSB_FIRST
-/*TODO*///#define SHIFT0 0
-/*TODO*///#define SHIFT1 8
-/*TODO*///#define SHIFT2 16
-/*TODO*///#define SHIFT3 24
-/*TODO*///#else
-/*TODO*///#define SHIFT3 0
-/*TODO*///#define SHIFT2 8
-/*TODO*///#define SHIFT1 16
-/*TODO*///#define SHIFT0 24
-/*TODO*///#endif
-/*TODO*///
-/*TODO*///
-/*TODO*///UINT8 gfx_drawmode_table[256];
+    public static final int SHIFT0 = 0;
+    public static final int SHIFT1 = 8;
+    public static final int SHIFT2 = 16;
+    public static final int SHIFT3 = 24;
+
+    /*TODO*///UINT8 gfx_drawmode_table[256];
     public static plot_pixel_procPtr plot_pixel;
     public static read_pixel_procPtr read_pixel;
     public static plot_box_procPtr plot_box;
@@ -66,20 +54,14 @@ public class drawgfx {
 /*TODO*///}
 /*TODO*///
 /*TODO*///
-/*TODO*///INLINE void write_dword(void *address, UINT32 data)
-/*TODO*///{
-/*TODO*///  	if ((long)address & 3)
-/*TODO*///	{
-/*TODO*///		*((UINT8 *)address)   = (data>>SHIFT0);
-/*TODO*///		*((UINT8 *)address+1) = (data>>SHIFT1);
-/*TODO*///		*((UINT8 *)address+2) = (data>>SHIFT2);
-/*TODO*///		*((UINT8 *)address+3) = (data>>SHIFT3);
-/*TODO*///		return;
-/*TODO*///  	}
-/*TODO*///  	else
-/*TODO*///		*(UINT32 *)address = data;
-/*TODO*///}
-/*TODO*///#else
+    static void write_dword(UBytePtr address, int data) {
+        address.write(0, data & 0xff);
+        address.write(1, (data >> 8) & 0xff);
+        address.write(2, (data >> 16) & 0xff);
+        address.write(3, (data >> 24) & 0xff);
+    }
+
+    /*TODO*///#else
 /*TODO*///#define read_dword(address) *(int *)address
 /*TODO*///#define write_dword(address,data) *(int *)address=data
 /*TODO*///#endif
@@ -276,73 +258,74 @@ public class drawgfx {
         }
     }
 
+    public static void blockmove_NtoN_transpen_noremap8(UBytePtr srcdata, int srcwidth, int srcheight, int srcmodulo, UBytePtr dstdata, int dstmodulo, int transpen) {
+        int end;//UINT8 *end;
+        int trans4;
+        IntPtr sd4;//UINT32 *sd4;
+
+        srcmodulo -= srcwidth;
+        dstmodulo -= srcwidth;
+        trans4 = transpen * 0x01010101;
+
+        while (srcheight != 0) {
+            end = dstdata.offset + srcwidth;
+            while (((long) srcdata.offset & 3) != 0 && dstdata.offset < end) /* longword align */ {
+                int col;
+
+                col = srcdata.readinc();
+                if (col != transpen) {
+                    dstdata.write(0, col);
+                }
+                dstdata.inc();
+            }
+            sd4 = new IntPtr(srcdata);
+            while (dstdata.offset <= end - 4) {
+                int/*UINT32*/ col4;
+
+                if ((col4 = (sd4.read(0))) != trans4) {
+                    /*UINT32*/
+                    int xod4;
+
+                    xod4 = col4 ^ trans4;
+                    if ((xod4 & 0x000000ff) != 0 && (xod4 & 0x0000ff00) != 0
+                            && (xod4 & 0x00ff0000) != 0 && (xod4 & 0xff000000) != 0) {
+                        write_dword(dstdata, (int) col4);//write_dword((UINT32 *)dstdata,col4);
+                    } else {
+                        if ((xod4 & (0xff << SHIFT0)) != 0) {
+                            dstdata.write(0, (col4 >> SHIFT0));
+                        }
+                        if ((xod4 & (0xff << SHIFT1)) != 0) {
+                            dstdata.write(1, col4 >> SHIFT1);
+                        }
+                        if ((xod4 & (0xff << SHIFT2)) != 0) {
+                            dstdata.write(2, col4 >> SHIFT2);
+                        }
+                        if ((xod4 & (0xff << SHIFT3)) != 0) {
+                            dstdata.write(3, col4 >> SHIFT3);
+                        }
+                    }
+                }
+                sd4.base += 4;
+                dstdata.offset += 4;
+            }
+            srcdata.set(sd4.readCA(), sd4.getBase());
+            while (dstdata.offset < end) {
+                int col;
+
+                col = (srcdata.readinc());
+                if (col != transpen) {
+                    dstdata.write(0, col);
+                }
+                dstdata.inc();
+            }
+
+            srcdata.inc(srcmodulo);
+            dstdata.inc(dstmodulo);
+            srcheight--;
+        }
+
+    }
     /*TODO*///
-/*TODO*///INLINE void blockmove_NtoN_transpen_noremap8(
-/*TODO*///		const UINT8 *srcdata,int srcwidth,int srcheight,int srcmodulo,
-/*TODO*///		UINT8 *dstdata,int dstmodulo,
-/*TODO*///		int transpen)
-/*TODO*///{
-/*TODO*///	UINT8 *end;
-/*TODO*///	int trans4;
-/*TODO*///	UINT32 *sd4;
-/*TODO*///
-/*TODO*///	srcmodulo -= srcwidth;
-/*TODO*///	dstmodulo -= srcwidth;
-/*TODO*///
-/*TODO*///	trans4 = transpen * 0x01010101;
-/*TODO*///
-/*TODO*///	while (srcheight)
-/*TODO*///	{
-/*TODO*///		end = dstdata + srcwidth;
-/*TODO*///		while (((long)srcdata & 3) && dstdata < end)	/* longword align */
-/*TODO*///		{
-/*TODO*///			int col;
-/*TODO*///
-/*TODO*///			col = *(srcdata++);
-/*TODO*///			if (col != transpen) *dstdata = col;
-/*TODO*///			dstdata++;
-/*TODO*///		}
-/*TODO*///		sd4 = (UINT32 *)srcdata;
-/*TODO*///		while (dstdata <= end - 4)
-/*TODO*///		{
-/*TODO*///			UINT32 col4;
-/*TODO*///
-/*TODO*///			if ((col4 = *(sd4++)) != trans4)
-/*TODO*///			{
-/*TODO*///				UINT32 xod4;
-/*TODO*///
-/*TODO*///				xod4 = col4 ^ trans4;
-/*TODO*///				if( (xod4&0x000000ff) && (xod4&0x0000ff00) &&
-/*TODO*///					(xod4&0x00ff0000) && (xod4&0xff000000) )
-/*TODO*///				{
-/*TODO*///					write_dword((UINT32 *)dstdata,col4);
-/*TODO*///				}
-/*TODO*///				else
-/*TODO*///				{
-/*TODO*///					if (xod4 & (0xff<<SHIFT0)) dstdata[0] = col4>>SHIFT0;
-/*TODO*///					if (xod4 & (0xff<<SHIFT1)) dstdata[1] = col4>>SHIFT1;
-/*TODO*///					if (xod4 & (0xff<<SHIFT2)) dstdata[2] = col4>>SHIFT2;
-/*TODO*///					if (xod4 & (0xff<<SHIFT3)) dstdata[3] = col4>>SHIFT3;
-/*TODO*///				}
-/*TODO*///			}
-/*TODO*///			dstdata += 4;
-/*TODO*///		}
-/*TODO*///		srcdata = (UINT8 *)sd4;
-/*TODO*///		while (dstdata < end)
-/*TODO*///		{
-/*TODO*///			int col;
-/*TODO*///
-/*TODO*///			col = *(srcdata++);
-/*TODO*///			if (col != transpen) *dstdata = col;
-/*TODO*///			dstdata++;
-/*TODO*///		}
-/*TODO*///
-/*TODO*///		srcdata += srcmodulo;
-/*TODO*///		dstdata += dstmodulo;
-/*TODO*///		srcheight--;
-/*TODO*///	}
-/*TODO*///}
-/*TODO*///
 /*TODO*///INLINE void blockmove_NtoN_transpen_noremap_flipx8(
 /*TODO*///		const UINT8 *srcdata,int srcwidth,int srcheight,int srcmodulo,
 /*TODO*///		UINT8 *dstdata,int dstmodulo,
@@ -1135,384 +1118,389 @@ public class drawgfx {
 /*TODO*///	profiler_mark(PROFILER_END);
 /*TODO*///}
 /*TODO*///
-/*TODO*///
-/*TODO*////***************************************************************************
-/*TODO*///
-/*TODO*///  Use drawgfx() to copy a bitmap onto another at the given position.
-/*TODO*///  This function will very likely change in the future.
-/*TODO*///
-/*TODO*///***************************************************************************/
+    /**
+     * *************************************************************************
+     *
+     * Use drawgfx() to copy a bitmap onto another at the given position. This
+     * function will very likely change in the future.
+     *
+     **************************************************************************
+     */
     public static void copybitmap(mame_bitmap dest, mame_bitmap src, int flipx, int flipy, int sx, int sy, rectangle clip, int transparency, int transparent_color) {
-        System.out.println("copybitmap drawgfx TODO");
-        /*TODO*///	/* translate to proper transparency here */
-/*TODO*///	if (transparency == TRANSPARENCY_NONE)
-/*TODO*///		transparency = TRANSPARENCY_NONE_RAW;
-/*TODO*///	else if (transparency == TRANSPARENCY_PEN)
-/*TODO*///		transparency = TRANSPARENCY_PEN_RAW;
-/*TODO*///	else if (transparency == TRANSPARENCY_COLOR)
-/*TODO*///	{
-/*TODO*///		transparent_color = Machine->pens[transparent_color];
-/*TODO*///		transparency = TRANSPARENCY_PEN_RAW;
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	copybitmap_remap(dest,src,flipx,flipy,sx,sy,clip,transparency,transparent_color);
+        /* translate to proper transparency here */
+        if (transparency == TRANSPARENCY_NONE) {
+            transparency = TRANSPARENCY_NONE_RAW;
+        } else if (transparency == TRANSPARENCY_PEN) {
+            transparency = TRANSPARENCY_PEN_RAW;
+        } else if (transparency == TRANSPARENCY_COLOR) {
+            transparent_color = Machine.pens[transparent_color];
+            transparency = TRANSPARENCY_PEN_RAW;
+        }
+
+        copybitmap_remap(dest, src, flipx, flipy, sx, sy, clip, transparency, transparent_color);
     }
 
-    /*TODO*///
-/*TODO*///
-/*TODO*///void copybitmap_remap(struct mame_bitmap *dest,struct mame_bitmap *src,int flipx,int flipy,int sx,int sy,
-/*TODO*///		const struct rectangle *clip,int transparency,int transparent_color)
-/*TODO*///{
-/*TODO*///	struct rectangle myclip;
-/*TODO*///
-/*TODO*///
-/*TODO*///	profiler_mark(PROFILER_COPYBITMAP);
-/*TODO*///
-/*TODO*///	if (Machine->orientation & ORIENTATION_SWAP_XY)
-/*TODO*///	{
-/*TODO*///		int temp;
-/*TODO*///
-/*TODO*///		temp = sx;
-/*TODO*///		sx = sy;
-/*TODO*///		sy = temp;
-/*TODO*///
-/*TODO*///		temp = flipx;
-/*TODO*///		flipx = flipy;
-/*TODO*///		flipy = temp;
-/*TODO*///
-/*TODO*///		if (clip)
-/*TODO*///		{
-/*TODO*///			/* clip and myclip might be the same, so we need a temporary storage */
-/*TODO*///			temp = clip->min_x;
-/*TODO*///			myclip.min_x = clip->min_y;
-/*TODO*///			myclip.min_y = temp;
-/*TODO*///			temp = clip->max_x;
-/*TODO*///			myclip.max_x = clip->max_y;
-/*TODO*///			myclip.max_y = temp;
-/*TODO*///			clip = &myclip;
-/*TODO*///		}
-/*TODO*///	}
-/*TODO*///	if (Machine->orientation & ORIENTATION_FLIP_X)
-/*TODO*///	{
-/*TODO*///		sx = dest->width - src->width - sx;
-/*TODO*///		if (clip)
-/*TODO*///		{
-/*TODO*///			int temp;
-/*TODO*///
-/*TODO*///
-/*TODO*///			/* clip and myclip might be the same, so we need a temporary storage */
-/*TODO*///			temp = clip->min_x;
-/*TODO*///			myclip.min_x = dest->width-1 - clip->max_x;
-/*TODO*///			myclip.max_x = dest->width-1 - temp;
-/*TODO*///			myclip.min_y = clip->min_y;
-/*TODO*///			myclip.max_y = clip->max_y;
-/*TODO*///			clip = &myclip;
-/*TODO*///		}
-/*TODO*///	}
-/*TODO*///	if (Machine->orientation & ORIENTATION_FLIP_Y)
-/*TODO*///	{
-/*TODO*///		sy = dest->height - src->height - sy;
-/*TODO*///		if (clip)
-/*TODO*///		{
-/*TODO*///			int temp;
-/*TODO*///
-/*TODO*///
-/*TODO*///			myclip.min_x = clip->min_x;
-/*TODO*///			myclip.max_x = clip->max_x;
-/*TODO*///			/* clip and myclip might be the same, so we need a temporary storage */
-/*TODO*///			temp = clip->min_y;
-/*TODO*///			myclip.min_y = dest->height-1 - clip->max_y;
-/*TODO*///			myclip.max_y = dest->height-1 - temp;
-/*TODO*///			clip = &myclip;
-/*TODO*///		}
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	if (dest->depth == 8)
-/*TODO*///		copybitmap_core8(dest,src,flipx,flipy,sx,sy,clip,transparency,transparent_color);
-/*TODO*///	else if(dest->depth == 15 || dest->depth == 16)
-/*TODO*///		copybitmap_core16(dest,src,flipx,flipy,sx,sy,clip,transparency,transparent_color);
-/*TODO*///	else
-/*TODO*///		copybitmap_core32(dest,src,flipx,flipy,sx,sy,clip,transparency,transparent_color);
-/*TODO*///
-/*TODO*///	profiler_mark(PROFILER_END);
-/*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*///
-/*TODO*////***************************************************************************
-/*TODO*///
-/*TODO*///  Copy a bitmap onto another with scroll and wraparound.
-/*TODO*///  This function supports multiple independently scrolling rows/columns.
-/*TODO*///  "rows" is the number of indepentently scrolling rows. "rowscroll" is an
-/*TODO*///  array of integers telling how much to scroll each row. Same thing for
-/*TODO*///  "cols" and "colscroll".
-/*TODO*///  If the bitmap cannot scroll in one direction, set rows or columns to 0.
-/*TODO*///  If the bitmap scrolls as a whole, set rows and/or cols to 1.
-/*TODO*///  Bidirectional scrolling is, of course, supported only if the bitmap
-/*TODO*///  scrolls as a whole in at least one direction.
-/*TODO*///
-/*TODO*///***************************************************************************/
+    public static void copybitmap_remap(mame_bitmap dest, mame_bitmap src, int flipx, int flipy, int sx, int sy, rectangle clip, int transparency, int transparent_color) {
+        rectangle myclip = new rectangle();
+
+        if ((Machine.orientation & ORIENTATION_SWAP_XY) != 0) {
+            int temp;
+
+            temp = sx;
+            sx = sy;
+            sy = temp;
+
+            temp = flipx;
+            flipx = flipy;
+            flipy = temp;
+
+            if (clip != null) {
+                /* clip and myclip might be the same, so we need a temporary storage */
+                temp = clip.min_x;
+                myclip.min_x = clip.min_y;
+                myclip.min_y = temp;
+                temp = clip.max_x;
+                myclip.max_x = clip.max_y;
+                myclip.max_y = temp;
+                clip = myclip;
+            }
+        }
+        if ((Machine.orientation & ORIENTATION_FLIP_X) != 0) {
+            sx = dest.width - src.width - sx;
+            if (clip != null) {
+                int temp;
+
+
+                /* clip and myclip might be the same, so we need a temporary storage */
+                temp = clip.min_x;
+                myclip.min_x = dest.width - 1 - clip.max_x;
+                myclip.max_x = dest.width - 1 - temp;
+                myclip.min_y = clip.min_y;
+                myclip.max_y = clip.max_y;
+                clip = myclip;
+            }
+        }
+        if ((Machine.orientation & ORIENTATION_FLIP_Y) != 0) {
+            sy = dest.height - src.height - sy;
+            if (clip != null) {
+                int temp;
+
+                myclip.min_x = clip.min_x;
+                myclip.max_x = clip.max_x;
+                /* clip and myclip might be the same, so we need a temporary storage */
+                temp = clip.min_y;
+                myclip.min_y = dest.height - 1 - clip.max_y;
+                myclip.max_y = dest.height - 1 - temp;
+                clip = myclip;
+            }
+        }
+
+        if (dest.depth == 8) {
+            copybitmap_core8(dest, src, flipx, flipy, sx, sy, clip, transparency, transparent_color);
+        } else if (dest.depth == 15 || dest.depth == 16) {
+            System.out.println("copybitmap_core16 todo");
+            /*TODO*///		copybitmap_core16(dest,src,flipx,flipy,sx,sy,clip,transparency,transparent_color);
+        } else {
+            System.out.println("copybitmap_core32 todo");
+            /*TODO*///		copybitmap_core32(dest,src,flipx,flipy,sx,sy,clip,transparency,transparent_color);
+        }
+
+    }
+
+    /**
+     * *************************************************************************
+     *
+     * Copy a bitmap onto another with scroll and wraparound. This function
+     * supports multiple independently scrolling rows/columns. "rows" is the
+     * number of indepentently scrolling rows. "rowscroll" is an array of
+     * integers telling how much to scroll each row. Same thing for "cols" and
+     * "colscroll". If the bitmap cannot scroll in one direction, set rows or
+     * columns to 0. If the bitmap scrolls as a whole, set rows and/or cols to
+     * 1. Bidirectional scrolling is, of course, supported only if the bitmap
+     * scrolls as a whole in at least one direction.
+     *
+     **************************************************************************
+     */
     public static void copyscrollbitmap(mame_bitmap dest, mame_bitmap src, int rows, int[] rowscroll, int cols, int[] colscroll, rectangle clip, int transparency, int transparent_color) {
-        System.out.println("copyscrollbitmap drawgfx TODO");
-        /*TODO*///	/* translate to proper transparency here */
-/*TODO*///	if (transparency == TRANSPARENCY_NONE)
-/*TODO*///		transparency = TRANSPARENCY_NONE_RAW;
-/*TODO*///	else if (transparency == TRANSPARENCY_PEN)
-/*TODO*///		transparency = TRANSPARENCY_PEN_RAW;
-/*TODO*///	else if (transparency == TRANSPARENCY_COLOR)
-/*TODO*///	{
-/*TODO*///		transparent_color = Machine->pens[transparent_color];
-/*TODO*///		transparency = TRANSPARENCY_PEN_RAW;
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	copyscrollbitmap_remap(dest,src,rows,rowscroll,cols,colscroll,clip,transparency,transparent_color);
+        /* translate to proper transparency here */
+        if (transparency == TRANSPARENCY_NONE) {
+            transparency = TRANSPARENCY_NONE_RAW;
+        } else if (transparency == TRANSPARENCY_PEN) {
+            transparency = TRANSPARENCY_PEN_RAW;
+        } else if (transparency == TRANSPARENCY_COLOR) {
+            transparent_color = Machine.pens[transparent_color];
+            transparency = TRANSPARENCY_PEN_RAW;
+        }
+
+        copyscrollbitmap_remap(dest, src, rows, rowscroll, cols, colscroll, clip, transparency, transparent_color);
+    }
+
+    public static void copyscrollbitmap_remap(mame_bitmap dest, mame_bitmap src, int rows, int[] rowscroll, int cols, int[] colscroll, rectangle clip, int transparency, int transparent_color) {
+        int srcwidth, srcheight, destwidth, destheight;
+        rectangle orig_clip = new rectangle();
+
+        if (clip != null) {
+            orig_clip.min_x = clip.min_x;
+            orig_clip.max_x = clip.max_x;
+            orig_clip.min_y = clip.min_y;
+            orig_clip.max_y = clip.max_y;
+        } else {
+            orig_clip.min_x = 0;
+            orig_clip.max_x = dest.width - 1;
+            orig_clip.min_y = 0;
+            orig_clip.max_y = dest.height - 1;
+        }
+        clip = orig_clip;
+
+        if (rows == 0 && cols == 0) {
+            copybitmap(dest, src, 0, 0, 0, 0, clip, transparency, transparent_color);
+            return;
+        }
+
+        if ((Machine.orientation & ORIENTATION_SWAP_XY) != 0) {
+            srcwidth = src.height;
+            srcheight = src.width;
+            destwidth = dest.height;
+            destheight = dest.width;
+        } else {
+            srcwidth = src.width;
+            srcheight = src.height;
+            destwidth = dest.width;
+            destheight = dest.height;
+        }
+
+        if (rows == 0) {
+            /* scrolling columns */
+            int col, colwidth;
+            rectangle myclip = new rectangle();
+
+            colwidth = srcwidth / cols;
+
+            myclip.min_y = clip.min_y;
+            myclip.max_y = clip.max_y;
+
+            col = 0;
+            while (col < cols) {
+                int cons, scroll;
+
+
+                /* count consecutive columns scrolled by the same amount */
+                scroll = colscroll[col];
+                cons = 1;
+                while (col + cons < cols && colscroll[col + cons] == scroll) {
+                    cons++;
+                }
+
+                if (scroll < 0) {
+                    scroll = srcheight - (-scroll) % srcheight;
+                } else {
+                    scroll %= srcheight;
+                }
+
+                myclip.min_x = col * colwidth;
+                if (myclip.min_x < clip.min_x) {
+                    myclip.min_x = clip.min_x;
+                }
+                myclip.max_x = (col + cons) * colwidth - 1;
+                if (myclip.max_x > clip.max_x) {
+                    myclip.max_x = clip.max_x;
+                }
+
+                copybitmap(dest, src, 0, 0, 0, scroll, myclip, transparency, transparent_color);
+                copybitmap(dest, src, 0, 0, 0, scroll - srcheight, myclip, transparency, transparent_color);
+
+                col += cons;
+            }
+        } else if (cols == 0) {
+            /* scrolling rows */
+            int row, rowheight;
+            rectangle myclip = new rectangle();
+
+            rowheight = srcheight / rows;
+
+            myclip.min_x = clip.min_x;
+            myclip.max_x = clip.max_x;
+
+            row = 0;
+            while (row < rows) {
+                int cons, scroll;
+
+
+                /* count consecutive rows scrolled by the same amount */
+                scroll = rowscroll[row];
+                cons = 1;
+                while (row + cons < rows && rowscroll[row + cons] == scroll) {
+                    cons++;
+                }
+
+                if (scroll < 0) {
+                    scroll = srcwidth - (-scroll) % srcwidth;
+                } else {
+                    scroll %= srcwidth;
+                }
+
+                myclip.min_y = row * rowheight;
+                if (myclip.min_y < clip.min_y) {
+                    myclip.min_y = clip.min_y;
+                }
+                myclip.max_y = (row + cons) * rowheight - 1;
+                if (myclip.max_y > clip.max_y) {
+                    myclip.max_y = clip.max_y;
+                }
+
+                copybitmap(dest, src, 0, 0, scroll, 0, myclip, transparency, transparent_color);
+                copybitmap(dest, src, 0, 0, scroll - srcwidth, 0, myclip, transparency, transparent_color);
+
+                row += cons;
+            }
+        } else if (rows == 1 && cols == 1) {
+            /* XY scrolling playfield */
+            int scrollx, scrolly, sx, sy;
+
+            if (rowscroll[0] < 0) {
+                scrollx = srcwidth - (-rowscroll[0]) % srcwidth;
+            } else {
+                scrollx = rowscroll[0] % srcwidth;
+            }
+
+            if (colscroll[0] < 0) {
+                scrolly = srcheight - (-colscroll[0]) % srcheight;
+            } else {
+                scrolly = colscroll[0] % srcheight;
+            }
+
+            for (sx = scrollx - srcwidth; sx < destwidth; sx += srcwidth) {
+                for (sy = scrolly - srcheight; sy < destheight; sy += srcheight) {
+                    copybitmap(dest, src, 0, 0, sx, sy, clip, transparency, transparent_color);
+                }
+            }
+        } else if (rows == 1) {
+            /* scrolling columns + horizontal scroll */
+            int col, colwidth;
+            int scrollx;
+            rectangle myclip = new rectangle();
+
+            if (rowscroll[0] < 0) {
+                scrollx = srcwidth - (-rowscroll[0]) % srcwidth;
+            } else {
+                scrollx = rowscroll[0] % srcwidth;
+            }
+
+            colwidth = srcwidth / cols;
+
+            myclip.min_y = clip.min_y;
+            myclip.max_y = clip.max_y;
+
+            col = 0;
+            while (col < cols) {
+                int cons, scroll;
+
+
+                /* count consecutive columns scrolled by the same amount */
+                scroll = colscroll[col];
+                cons = 1;
+                while (col + cons < cols && colscroll[col + cons] == scroll) {
+                    cons++;
+                }
+
+                if (scroll < 0) {
+                    scroll = srcheight - (-scroll) % srcheight;
+                } else {
+                    scroll %= srcheight;
+                }
+
+                myclip.min_x = col * colwidth + scrollx;
+                if (myclip.min_x < clip.min_x) {
+                    myclip.min_x = clip.min_x;
+                }
+                myclip.max_x = (col + cons) * colwidth - 1 + scrollx;
+                if (myclip.max_x > clip.max_x) {
+                    myclip.max_x = clip.max_x;
+                }
+
+                copybitmap(dest, src, 0, 0, scrollx, scroll, myclip, transparency, transparent_color);
+                copybitmap(dest, src, 0, 0, scrollx, scroll - srcheight, myclip, transparency, transparent_color);
+
+                myclip.min_x = col * colwidth + scrollx - srcwidth;
+                if (myclip.min_x < clip.min_x) {
+                    myclip.min_x = clip.min_x;
+                }
+                myclip.max_x = (col + cons) * colwidth - 1 + scrollx - srcwidth;
+                if (myclip.max_x > clip.max_x) {
+                    myclip.max_x = clip.max_x;
+                }
+
+                copybitmap(dest, src, 0, 0, scrollx - srcwidth, scroll, myclip, transparency, transparent_color);
+                copybitmap(dest, src, 0, 0, scrollx - srcwidth, scroll - srcheight, myclip, transparency, transparent_color);
+
+                col += cons;
+            }
+        } else if (cols == 1) {
+            /* scrolling rows + vertical scroll */
+            int row, rowheight;
+            int scrolly;
+            rectangle myclip = new rectangle();
+
+            if (colscroll[0] < 0) {
+                scrolly = srcheight - (-colscroll[0]) % srcheight;
+            } else {
+                scrolly = colscroll[0] % srcheight;
+            }
+
+            rowheight = srcheight / rows;
+
+            myclip.min_x = clip.min_x;
+            myclip.max_x = clip.max_x;
+
+            row = 0;
+            while (row < rows) {
+                int cons, scroll;
+
+
+                /* count consecutive rows scrolled by the same amount */
+                scroll = rowscroll[row];
+                cons = 1;
+                while (row + cons < rows && rowscroll[row + cons] == scroll) {
+                    cons++;
+                }
+
+                if (scroll < 0) {
+                    scroll = srcwidth - (-scroll) % srcwidth;
+                } else {
+                    scroll %= srcwidth;
+                }
+
+                myclip.min_y = row * rowheight + scrolly;
+                if (myclip.min_y < clip.min_y) {
+                    myclip.min_y = clip.min_y;
+                }
+                myclip.max_y = (row + cons) * rowheight - 1 + scrolly;
+                if (myclip.max_y > clip.max_y) {
+                    myclip.max_y = clip.max_y;
+                }
+
+                copybitmap(dest, src, 0, 0, scroll, scrolly, myclip, transparency, transparent_color);
+                copybitmap(dest, src, 0, 0, scroll - srcwidth, scrolly, myclip, transparency, transparent_color);
+
+                myclip.min_y = row * rowheight + scrolly - srcheight;
+                if (myclip.min_y < clip.min_y) {
+                    myclip.min_y = clip.min_y;
+                }
+                myclip.max_y = (row + cons) * rowheight - 1 + scrolly - srcheight;
+                if (myclip.max_y > clip.max_y) {
+                    myclip.max_y = clip.max_y;
+                }
+
+                copybitmap(dest, src, 0, 0, scroll, scrolly - srcheight, myclip, transparency, transparent_color);
+                copybitmap(dest, src, 0, 0, scroll - srcwidth, scrolly - srcheight, myclip, transparency, transparent_color);
+
+                row += cons;
+            }
+        }
+
     }
 
     /*TODO*///
-/*TODO*///void copyscrollbitmap_remap(struct mame_bitmap *dest,struct mame_bitmap *src,
-/*TODO*///		int rows,const int *rowscroll,int cols,const int *colscroll,
-/*TODO*///		const struct rectangle *clip,int transparency,int transparent_color)
-/*TODO*///{
-/*TODO*///	int srcwidth,srcheight,destwidth,destheight;
-/*TODO*///	struct rectangle orig_clip;
-/*TODO*///
-/*TODO*///
-/*TODO*///	if (clip)
-/*TODO*///	{
-/*TODO*///		orig_clip.min_x = clip->min_x;
-/*TODO*///		orig_clip.max_x = clip->max_x;
-/*TODO*///		orig_clip.min_y = clip->min_y;
-/*TODO*///		orig_clip.max_y = clip->max_y;
-/*TODO*///	}
-/*TODO*///	else
-/*TODO*///	{
-/*TODO*///		orig_clip.min_x = 0;
-/*TODO*///		orig_clip.max_x = dest->width-1;
-/*TODO*///		orig_clip.min_y = 0;
-/*TODO*///		orig_clip.max_y = dest->height-1;
-/*TODO*///	}
-/*TODO*///	clip = &orig_clip;
-/*TODO*///
-/*TODO*///	if (rows == 0 && cols == 0)
-/*TODO*///	{
-/*TODO*///		copybitmap(dest,src,0,0,0,0,clip,transparency,transparent_color);
-/*TODO*///		return;
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	profiler_mark(PROFILER_COPYBITMAP);
-/*TODO*///
-/*TODO*///	if (Machine->orientation & ORIENTATION_SWAP_XY)
-/*TODO*///	{
-/*TODO*///		srcwidth = src->height;
-/*TODO*///		srcheight = src->width;
-/*TODO*///		destwidth = dest->height;
-/*TODO*///		destheight = dest->width;
-/*TODO*///	}
-/*TODO*///	else
-/*TODO*///	{
-/*TODO*///		srcwidth = src->width;
-/*TODO*///		srcheight = src->height;
-/*TODO*///		destwidth = dest->width;
-/*TODO*///		destheight = dest->height;
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	if (rows == 0)
-/*TODO*///	{
-/*TODO*///		/* scrolling columns */
-/*TODO*///		int col,colwidth;
-/*TODO*///		struct rectangle myclip;
-/*TODO*///
-/*TODO*///
-/*TODO*///		colwidth = srcwidth / cols;
-/*TODO*///
-/*TODO*///		myclip.min_y = clip->min_y;
-/*TODO*///		myclip.max_y = clip->max_y;
-/*TODO*///
-/*TODO*///		col = 0;
-/*TODO*///		while (col < cols)
-/*TODO*///		{
-/*TODO*///			int cons,scroll;
-/*TODO*///
-/*TODO*///
-/*TODO*///			/* count consecutive columns scrolled by the same amount */
-/*TODO*///			scroll = colscroll[col];
-/*TODO*///			cons = 1;
-/*TODO*///			while (col + cons < cols &&	colscroll[col + cons] == scroll)
-/*TODO*///				cons++;
-/*TODO*///
-/*TODO*///			if (scroll < 0) scroll = srcheight - (-scroll) % srcheight;
-/*TODO*///			else scroll %= srcheight;
-/*TODO*///
-/*TODO*///			myclip.min_x = col * colwidth;
-/*TODO*///			if (myclip.min_x < clip->min_x) myclip.min_x = clip->min_x;
-/*TODO*///			myclip.max_x = (col + cons) * colwidth - 1;
-/*TODO*///			if (myclip.max_x > clip->max_x) myclip.max_x = clip->max_x;
-/*TODO*///
-/*TODO*///			copybitmap(dest,src,0,0,0,scroll,&myclip,transparency,transparent_color);
-/*TODO*///			copybitmap(dest,src,0,0,0,scroll - srcheight,&myclip,transparency,transparent_color);
-/*TODO*///
-/*TODO*///			col += cons;
-/*TODO*///		}
-/*TODO*///	}
-/*TODO*///	else if (cols == 0)
-/*TODO*///	{
-/*TODO*///		/* scrolling rows */
-/*TODO*///		int row,rowheight;
-/*TODO*///		struct rectangle myclip;
-/*TODO*///
-/*TODO*///
-/*TODO*///		rowheight = srcheight / rows;
-/*TODO*///
-/*TODO*///		myclip.min_x = clip->min_x;
-/*TODO*///		myclip.max_x = clip->max_x;
-/*TODO*///
-/*TODO*///		row = 0;
-/*TODO*///		while (row < rows)
-/*TODO*///		{
-/*TODO*///			int cons,scroll;
-/*TODO*///
-/*TODO*///
-/*TODO*///			/* count consecutive rows scrolled by the same amount */
-/*TODO*///			scroll = rowscroll[row];
-/*TODO*///			cons = 1;
-/*TODO*///			while (row + cons < rows &&	rowscroll[row + cons] == scroll)
-/*TODO*///				cons++;
-/*TODO*///
-/*TODO*///			if (scroll < 0) scroll = srcwidth - (-scroll) % srcwidth;
-/*TODO*///			else scroll %= srcwidth;
-/*TODO*///
-/*TODO*///			myclip.min_y = row * rowheight;
-/*TODO*///			if (myclip.min_y < clip->min_y) myclip.min_y = clip->min_y;
-/*TODO*///			myclip.max_y = (row + cons) * rowheight - 1;
-/*TODO*///			if (myclip.max_y > clip->max_y) myclip.max_y = clip->max_y;
-/*TODO*///
-/*TODO*///			copybitmap(dest,src,0,0,scroll,0,&myclip,transparency,transparent_color);
-/*TODO*///			copybitmap(dest,src,0,0,scroll - srcwidth,0,&myclip,transparency,transparent_color);
-/*TODO*///
-/*TODO*///			row += cons;
-/*TODO*///		}
-/*TODO*///	}
-/*TODO*///	else if (rows == 1 && cols == 1)
-/*TODO*///	{
-/*TODO*///		/* XY scrolling playfield */
-/*TODO*///		int scrollx,scrolly,sx,sy;
-/*TODO*///
-/*TODO*///
-/*TODO*///		if (rowscroll[0] < 0) scrollx = srcwidth - (-rowscroll[0]) % srcwidth;
-/*TODO*///		else scrollx = rowscroll[0] % srcwidth;
-/*TODO*///
-/*TODO*///		if (colscroll[0] < 0) scrolly = srcheight - (-colscroll[0]) % srcheight;
-/*TODO*///		else scrolly = colscroll[0] % srcheight;
-/*TODO*///
-/*TODO*///		for (sx = scrollx - srcwidth;sx < destwidth;sx += srcwidth)
-/*TODO*///			for (sy = scrolly - srcheight;sy < destheight;sy += srcheight)
-/*TODO*///				copybitmap(dest,src,0,0,sx,sy,clip,transparency,transparent_color);
-/*TODO*///	}
-/*TODO*///	else if (rows == 1)
-/*TODO*///	{
-/*TODO*///		/* scrolling columns + horizontal scroll */
-/*TODO*///		int col,colwidth;
-/*TODO*///		int scrollx;
-/*TODO*///		struct rectangle myclip;
-/*TODO*///
-/*TODO*///
-/*TODO*///		if (rowscroll[0] < 0) scrollx = srcwidth - (-rowscroll[0]) % srcwidth;
-/*TODO*///		else scrollx = rowscroll[0] % srcwidth;
-/*TODO*///
-/*TODO*///		colwidth = srcwidth / cols;
-/*TODO*///
-/*TODO*///		myclip.min_y = clip->min_y;
-/*TODO*///		myclip.max_y = clip->max_y;
-/*TODO*///
-/*TODO*///		col = 0;
-/*TODO*///		while (col < cols)
-/*TODO*///		{
-/*TODO*///			int cons,scroll;
-/*TODO*///
-/*TODO*///
-/*TODO*///			/* count consecutive columns scrolled by the same amount */
-/*TODO*///			scroll = colscroll[col];
-/*TODO*///			cons = 1;
-/*TODO*///			while (col + cons < cols &&	colscroll[col + cons] == scroll)
-/*TODO*///				cons++;
-/*TODO*///
-/*TODO*///			if (scroll < 0) scroll = srcheight - (-scroll) % srcheight;
-/*TODO*///			else scroll %= srcheight;
-/*TODO*///
-/*TODO*///			myclip.min_x = col * colwidth + scrollx;
-/*TODO*///			if (myclip.min_x < clip->min_x) myclip.min_x = clip->min_x;
-/*TODO*///			myclip.max_x = (col + cons) * colwidth - 1 + scrollx;
-/*TODO*///			if (myclip.max_x > clip->max_x) myclip.max_x = clip->max_x;
-/*TODO*///
-/*TODO*///			copybitmap(dest,src,0,0,scrollx,scroll,&myclip,transparency,transparent_color);
-/*TODO*///			copybitmap(dest,src,0,0,scrollx,scroll - srcheight,&myclip,transparency,transparent_color);
-/*TODO*///
-/*TODO*///			myclip.min_x = col * colwidth + scrollx - srcwidth;
-/*TODO*///			if (myclip.min_x < clip->min_x) myclip.min_x = clip->min_x;
-/*TODO*///			myclip.max_x = (col + cons) * colwidth - 1 + scrollx - srcwidth;
-/*TODO*///			if (myclip.max_x > clip->max_x) myclip.max_x = clip->max_x;
-/*TODO*///
-/*TODO*///			copybitmap(dest,src,0,0,scrollx - srcwidth,scroll,&myclip,transparency,transparent_color);
-/*TODO*///			copybitmap(dest,src,0,0,scrollx - srcwidth,scroll - srcheight,&myclip,transparency,transparent_color);
-/*TODO*///
-/*TODO*///			col += cons;
-/*TODO*///		}
-/*TODO*///	}
-/*TODO*///	else if (cols == 1)
-/*TODO*///	{
-/*TODO*///		/* scrolling rows + vertical scroll */
-/*TODO*///		int row,rowheight;
-/*TODO*///		int scrolly;
-/*TODO*///		struct rectangle myclip;
-/*TODO*///
-/*TODO*///
-/*TODO*///		if (colscroll[0] < 0) scrolly = srcheight - (-colscroll[0]) % srcheight;
-/*TODO*///		else scrolly = colscroll[0] % srcheight;
-/*TODO*///
-/*TODO*///		rowheight = srcheight / rows;
-/*TODO*///
-/*TODO*///		myclip.min_x = clip->min_x;
-/*TODO*///		myclip.max_x = clip->max_x;
-/*TODO*///
-/*TODO*///		row = 0;
-/*TODO*///		while (row < rows)
-/*TODO*///		{
-/*TODO*///			int cons,scroll;
-/*TODO*///
-/*TODO*///
-/*TODO*///			/* count consecutive rows scrolled by the same amount */
-/*TODO*///			scroll = rowscroll[row];
-/*TODO*///			cons = 1;
-/*TODO*///			while (row + cons < rows &&	rowscroll[row + cons] == scroll)
-/*TODO*///				cons++;
-/*TODO*///
-/*TODO*///			if (scroll < 0) scroll = srcwidth - (-scroll) % srcwidth;
-/*TODO*///			else scroll %= srcwidth;
-/*TODO*///
-/*TODO*///			myclip.min_y = row * rowheight + scrolly;
-/*TODO*///			if (myclip.min_y < clip->min_y) myclip.min_y = clip->min_y;
-/*TODO*///			myclip.max_y = (row + cons) * rowheight - 1 + scrolly;
-/*TODO*///			if (myclip.max_y > clip->max_y) myclip.max_y = clip->max_y;
-/*TODO*///
-/*TODO*///			copybitmap(dest,src,0,0,scroll,scrolly,&myclip,transparency,transparent_color);
-/*TODO*///			copybitmap(dest,src,0,0,scroll - srcwidth,scrolly,&myclip,transparency,transparent_color);
-/*TODO*///
-/*TODO*///			myclip.min_y = row * rowheight + scrolly - srcheight;
-/*TODO*///			if (myclip.min_y < clip->min_y) myclip.min_y = clip->min_y;
-/*TODO*///			myclip.max_y = (row + cons) * rowheight - 1 + scrolly - srcheight;
-/*TODO*///			if (myclip.max_y > clip->max_y) myclip.max_y = clip->max_y;
-/*TODO*///
-/*TODO*///			copybitmap(dest,src,0,0,scroll,scrolly - srcheight,&myclip,transparency,transparent_color);
-/*TODO*///			copybitmap(dest,src,0,0,scroll - srcwidth,scrolly - srcheight,&myclip,transparency,transparent_color);
-/*TODO*///
-/*TODO*///			row += cons;
-/*TODO*///		}
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	profiler_mark(PROFILER_END);
-/*TODO*///}
-/*TODO*///
-/*TODO*///
 /*TODO*////* notes:
 /*TODO*///   - startx and starty MUST be UINT32 for calculations to work correctly
 /*TODO*///   - srcbitmap->width and height are assumed to be a power of 2 to speed up wraparound
@@ -5808,7 +5796,17 @@ public class drawgfx {
 /*TODO*///		srcheight--;
 /*TODO*///	}
 /*TODO*///})
-/*TODO*///
+    public static void blockmove_NtoN_opaque_noremap8(UBytePtr srcdata, int srcwidth, int srcheight, int srcmodulo, UBytePtr dstdata, int dstmodulo) {
+
+        while (srcheight != 0) {
+            System.arraycopy(srcdata.memory, (int) srcdata.offset, dstdata.memory, (int) dstdata.offset, srcwidth);
+            srcdata.inc(srcmodulo);
+            dstdata.inc(dstmodulo);
+            srcheight--;
+        }
+    }
+
+    /*TODO*///
 /*TODO*///DECLARE(blockmove_NtoN_opaque_noremap_flipx,(
 /*TODO*///		const DATA_TYPE *srcdata,int srcwidth,int srcheight,int srcmodulo,
 /*TODO*///		DATA_TYPE *dstdata,int dstmodulo),
@@ -6774,6 +6772,115 @@ public class drawgfx {
         }
     }
 
+    public static void copybitmap_core8(mame_bitmap dest, mame_bitmap src, int flipx, int flipy, int sx, int sy, rectangle clip, int transparency, int transparent_color) {
+        int ox;
+        int oy;
+        int ex;
+        int ey;
+
+
+        /* check bounds */
+        ox = sx;
+        oy = sy;
+
+        ex = sx + src.width - 1;
+        if (sx < 0) {
+            sx = 0;
+        }
+        if (clip != null && sx < clip.min_x) {
+            sx = clip.min_x;
+        }
+        if (ex >= dest.width) {
+            ex = dest.width - 1;
+        }
+        if (clip != null && ex > clip.max_x) {
+            ex = clip.max_x;
+        }
+        if (sx > ex) {
+            return;
+        }
+
+        ey = sy + src.height - 1;
+        if (sy < 0) {
+            sy = 0;
+        }
+        if (clip != null && sy < clip.min_y) {
+            sy = clip.min_y;
+        }
+        if (ey >= dest.height) {
+            ey = dest.height - 1;
+        }
+        if (clip != null && ey > clip.max_y) {
+            ey = clip.max_y;
+        }
+        if (sy > ey) {
+            return;
+        }
+
+        UBytePtr sd = new UBytePtr(src.line[0]);/* source data */
+        int sw = ex - sx + 1;/* source width */
+        int sh = ey - sy + 1;/* source height */
+        int sm = src.line[1].offset - (src.line[0].offset);/* source modulo */
+        UBytePtr dd = new UBytePtr(dest.line[sy], sx);/* dest data */
+        int dm = (dest.line[1].offset) - (dest.line[0].offset);/* dest modulo */
+
+        if (flipx != 0) {
+            //if ((sx-ox) == 0) sd += gfx->width - sw;
+            sd.inc(src.width - 1 - (sx - ox));
+        } else {
+            sd.inc(sx - ox);
+        }
+
+        if (flipy != 0) {
+            //if ((sy-oy) == 0) sd += sm * (gfx->height - sh);
+            //dd += dm * (sh - 1);
+            //dm = -dm;
+            sd.inc(sm * (src.height - 1 - (sy - oy)));
+            sm = -sm;
+        } else {
+            sd.inc(sm * (sy - oy));
+        }
+
+        switch (transparency) {
+            case TRANSPARENCY_NONE:
+                throw new UnsupportedOperationException("Unsupported");
+            /*TODO*///				BLOCKMOVE(NtoN_opaque_remap,flipx,(sd,sw,sh,sm,dd,dm,Machine->pens));
+/*TODO*///				break;
+/*TODO*///
+            case TRANSPARENCY_NONE_RAW:
+                if (flipx != 0) {
+                    throw new UnsupportedOperationException("Unsupported");
+                    //blockmove_##function##_flipx##8 args ;//BLOCKMOVE(NtoN_opaque_noremap,flipx,(sd,sw,sh,sm,dd,dm));
+                } else {
+                    blockmove_NtoN_opaque_noremap8(sd, sw, sh, sm, dd, dm);
+                }
+                break;
+            /*TODO*///
+            case TRANSPARENCY_PEN_RAW:
+                if (flipx != 0) {
+                    throw new UnsupportedOperationException("Unsupported");
+                    //BLOCKMOVE(NtoN_transpen_noremap,flipx,(sd,sw,sh,sm,dd,dm,transparent_color));
+                } else {
+                    blockmove_NtoN_transpen_noremap8(sd, sw, sh, sm, dd, dm, transparent_color);
+                }
+                break;
+
+            case TRANSPARENCY_BLEND:
+                throw new UnsupportedOperationException("Unsupported");
+            /*TODO*///				BLOCKMOVE(NtoN_blend_remap,flipx,(sd,sw,sh,sm,dd,dm,Machine->pens,transparent_color));
+/*TODO*///				break;
+/*TODO*///
+            case TRANSPARENCY_BLEND_RAW:
+                throw new UnsupportedOperationException("Unsupported");
+            /*TODO*///				BLOCKMOVE(NtoN_blend_noremap,flipx,(sd,sw,sh,sm,dd,dm,transparent_color));
+/*TODO*///				break;
+
+            default:
+                usrintf_showmessage("copybitmap pen mode not supported");
+                break;
+        }
+    }
+
     /*TODO*///DECLARE(copybitmap_core,(
 /*TODO*///		struct mame_bitmap *dest,struct mame_bitmap *src,
 /*TODO*///		int flipx,int flipy,int sx,int sy,
@@ -7630,7 +7737,7 @@ public class drawgfx {
 /*TODO*///
 /*TODO*///#endif /* DECLARE */
 /*TODO*///    
-        public static void blockmove_8toN_opaque8(UBytePtr srcdata, int srcwidth, int srcheight, int srcmodulo, int leftskip, int topskip, int flipx, int flipy, UBytePtr dstdata, int dstwidth, int dstheight, int dstmodulo, IntArray paldata) {
+    public static void blockmove_8toN_opaque8(UBytePtr srcdata, int srcwidth, int srcheight, int srcmodulo, int leftskip, int topskip, int flipx, int flipy, UBytePtr dstdata, int dstwidth, int dstheight, int dstmodulo, IntArray paldata) {
         int ydir;
         if (flipy != 0) {
             throw new UnsupportedOperationException("unsupported");
@@ -7642,64 +7749,60 @@ public class drawgfx {
             ydir = 1;
         }
         if (flipx != 0) {
-            throw new UnsupportedOperationException("unsupported");
-            /*TODO*///		INCREMENT_DST(HMODULO * (dstwidth-1))						
-/*TODO*///		srcdata += (srcwidth - dstwidth - leftskip);				
+            dstdata.inc(dstwidth - 1);
+            srcdata.inc((srcwidth - dstwidth - leftskip));
         } else {
             srcdata.inc(leftskip);
         }
         srcmodulo -= dstwidth;
 
         if (flipx != 0) {
-            throw new UnsupportedOperationException("unsupported");
-            /*TODO*///		DATA_TYPE *end;
-/*TODO*///
-/*TODO*///		while (dstheight)
-/*TODO*///		{
-/*TODO*///			end = dstdata - dstwidth*HMODULO;
-/*TODO*///			while (dstdata >= end + 8*HMODULO)
-/*TODO*///			{
-/*TODO*///				INCREMENT_DST(-8*HMODULO)
-/*TODO*///				SETPIXELCOLOR(8*HMODULO,LOOKUP(srcdata[0]))
-/*TODO*///				SETPIXELCOLOR(7*HMODULO,LOOKUP(srcdata[1]))
-/*TODO*///				SETPIXELCOLOR(6*HMODULO,LOOKUP(srcdata[2]))
-/*TODO*///				SETPIXELCOLOR(5*HMODULO,LOOKUP(srcdata[3]))
-/*TODO*///				SETPIXELCOLOR(4*HMODULO,LOOKUP(srcdata[4]))
-/*TODO*///				SETPIXELCOLOR(3*HMODULO,LOOKUP(srcdata[5]))
-/*TODO*///				SETPIXELCOLOR(2*HMODULO,LOOKUP(srcdata[6]))
-/*TODO*///				SETPIXELCOLOR(1*HMODULO,LOOKUP(srcdata[7]))
-/*TODO*///				srcdata += 8;
-/*TODO*///			}
-/*TODO*///			while (dstdata > end)
-/*TODO*///			{
-/*TODO*///				SETPIXELCOLOR(0,LOOKUP(*srcdata))
-/*TODO*///				srcdata++;
-/*TODO*///				INCREMENT_DST(-HMODULO)
-/*TODO*///			}
-/*TODO*///
-/*TODO*///			srcdata += srcmodulo;
-/*TODO*///			INCREMENT_DST(ydir*VMODULO + dstwidth*HMODULO)
-/*TODO*///			dstheight--;
-/*TODO*///		}
+            int end;
+
+            while (dstheight != 0) {
+                end = dstdata.offset - dstwidth;
+                while (dstdata.offset >= end + 8) {
+                    dstdata.dec(8);
+                    dstdata.write(8, paldata.read(srcdata.read(0)));
+                    dstdata.write(7, paldata.read(srcdata.read(1)));
+                    dstdata.write(6, paldata.read(srcdata.read(2)));
+                    dstdata.write(5, paldata.read(srcdata.read(3)));
+                    dstdata.write(4, paldata.read(srcdata.read(4)));
+                    dstdata.write(3, paldata.read(srcdata.read(5)));
+                    dstdata.write(2, paldata.read(srcdata.read(6)));
+                    dstdata.write(1, paldata.read(srcdata.read(7)));
+
+                    srcdata.inc(8);
+                }
+                while (dstdata.offset > end) {
+                    dstdata.write(0, paldata.read(srcdata.read(0)));
+                    srcdata.inc();
+                    dstdata.dec();
+                }
+
+                srcdata.inc(srcmodulo);
+                dstdata.inc((ydir * dstmodulo + dstwidth * 1));
+                dstheight--;
+            }
         } else {
             int end;//DATA_TYPE *end;
 
             while (dstheight != 0) {
                 end = dstdata.offset + dstwidth;
                 while (dstdata.offset <= end - 8) {
-                    dstdata.write(0, (char) paldata.read(srcdata.read(0)));
-                    dstdata.write(1, (char) paldata.read(srcdata.read(1)));
-                    dstdata.write(2, (char) paldata.read(srcdata.read(2)));
-                    dstdata.write(3, (char) paldata.read(srcdata.read(3)));
-                    dstdata.write(4, (char) paldata.read(srcdata.read(4)));
-                    dstdata.write(5, (char) paldata.read(srcdata.read(5)));
-                    dstdata.write(6, (char) paldata.read(srcdata.read(6)));
-                    dstdata.write(7, (char) paldata.read(srcdata.read(7)));
+                    dstdata.write(0, paldata.read(srcdata.read(0)));
+                    dstdata.write(1, paldata.read(srcdata.read(1)));
+                    dstdata.write(2, paldata.read(srcdata.read(2)));
+                    dstdata.write(3, paldata.read(srcdata.read(3)));
+                    dstdata.write(4, paldata.read(srcdata.read(4)));
+                    dstdata.write(5, paldata.read(srcdata.read(5)));
+                    dstdata.write(6, paldata.read(srcdata.read(6)));
+                    dstdata.write(7, paldata.read(srcdata.read(7)));
                     srcdata.inc(8);
                     dstdata.inc(8);
                 }
                 while (dstdata.offset < end) {
-                    dstdata.write(0, (char) paldata.read(srcdata.read(0)));
+                    dstdata.write(0, paldata.read(srcdata.read(0)));
                     srcdata.inc();
                     dstdata.inc();
                 }
@@ -7710,6 +7813,7 @@ public class drawgfx {
             }
         }
     }
+
     public static void blockmove_8toN_opaque16(UBytePtr srcdata, int srcwidth, int srcheight, int srcmodulo, int leftskip, int topskip, int flipx, int flipy, UShortPtr dstdata, int dstwidth, int dstheight, int dstmodulo, IntArray paldata) {
         int ydir;
         if (flipy != 0) {
