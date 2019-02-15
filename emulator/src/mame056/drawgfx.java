@@ -1103,8 +1103,7 @@ public class drawgfx {
         }
 
         if (dest.depth == 8) {
-            System.out.println("drawgfx_core8 TODO");
-            /*TODO*///		drawgfx_core8(dest,gfx,code,color,flipx,flipy,sx,sy,clip,transparency,transparent_color,pri_buffer,pri_mask);
+            drawgfx_core8(dest, gfx, code, color, flipx, flipy, sx, sy, clip, transparency, transparent_color, pri_buffer, pri_mask);
         } else if (dest.depth == 15 || dest.depth == 16) {
             drawgfx_core16(dest, gfx, code, color, flipx, flipy, sx, sy, clip, transparency, transparent_color, pri_buffer, pri_mask);
         } else {
@@ -3924,7 +3923,16 @@ public class drawgfx {
     };
     public static plot_box_procPtr pb_8_nd = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//int t=x; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x++; } y++; } 
+            int t = x;
+            while (h-- > 0) {
+                int c = w;
+                x = t;
+                while (c-- > 0) {
+                    b.line[y].write(x, p);
+                    x++;
+                }
+                y++;
+            }
         }
     };
     public static plot_box_procPtr pb_8_nd_fx = new plot_box_procPtr() {
@@ -6281,6 +6289,248 @@ public class drawgfx {
 /*TODO*///	}
 /*TODO*///})
 /*TODO*///
+    public static void drawgfx_core8(mame_bitmap dest, GfxElement gfx,/*unsigned*/ int code,/*unsigned*/ int color, int flipx, int flipy, int sx, int sy, rectangle clip, int transparency, int transparent_color, mame_bitmap pri_buffer, int/*UINT32*/ pri_mask) {
+        int ox;
+        int oy;
+        int ex;
+        int ey;
+
+
+        /* check bounds */
+        ox = sx;
+        oy = sy;
+
+        ex = sx + gfx.width - 1;
+        if (sx < 0) {
+            sx = 0;
+        }
+        if (clip != null && sx < clip.min_x) {
+            sx = clip.min_x;
+        }
+        if (ex >= dest.width) {
+            ex = dest.width - 1;
+        }
+        if (clip != null && ex > clip.max_x) {
+            ex = clip.max_x;
+        }
+        if (sx > ex) {
+            return;
+        }
+
+        ey = sy + gfx.height - 1;
+        if (sy < 0) {
+            sy = 0;
+        }
+        if (clip != null && sy < clip.min_y) {
+            sy = clip.min_y;
+        }
+        if (ey >= dest.height) {
+            ey = dest.height - 1;
+        }
+        if (clip != null && ey > clip.max_y) {
+            ey = clip.max_y;
+        }
+        if (sy > ey) {
+            return;
+        }
+
+        if ((Machine.drv.video_attributes & VIDEO_SUPPORTS_DIRTY) != 0) {
+            osd_mark_dirty(sx, sy, ex, ey);
+        }
+
+        UBytePtr sd = new UBytePtr(gfx.gfxdata, code * gfx.char_modulo);/* source data */
+        int sw = gfx.width;/* source width */
+        int sh = gfx.height;/* source height */
+        int sm = gfx.line_modulo;/* source modulo */
+        int ls = sx - ox;/* left skip */
+        int ts = sy - oy;/* top skip */
+        UBytePtr dd = new UBytePtr(dest.line[sy], sx);/* dest data */
+        int dw = ex - sx + 1;/* dest width */
+        int dh = ey - sy + 1;/* dest height */
+        int dm = (dest.line[1].offset) - (dest.line[0].offset);/* dest modulo */
+
+        IntArray paldata = null;
+        if (gfx.colortable != null) {
+            paldata = new IntArray(gfx.colortable, gfx.color_granularity * color);
+        }
+        UBytePtr pribuf = null;/*TODO*///		UINT8 *pribuf = (pri_buffer) ? ((UINT8 *)pri_buffer->line[sy]) + sx : NULL;
+        /* optimizations for 1:1 mapping */
+//		if (Machine.drv.color_table_len == 0 && gfx != Machine.uifont)
+        if (Machine.drv.color_table_len == 0
+                && (Machine.drv.video_attributes & VIDEO_RGB_DIRECT) == 0
+                && paldata.offset >= Machine.remapped_colortable.offset && paldata.offset < Machine.remapped_colortable.offset + Machine.drv.total_colors) {
+            throw new UnsupportedOperationException("Unsupported");
+            /*TODO*///			switch (transparency)
+/*TODO*///			{
+/*TODO*///				case TRANSPARENCY_NONE:
+/*TODO*///					transparency = TRANSPARENCY_NONE_RAW;
+/*TODO*///					color = paldata - Machine->remapped_colortable;
+/*TODO*///					break;
+/*TODO*///				case TRANSPARENCY_PEN:
+/*TODO*///					transparency = TRANSPARENCY_PEN_RAW;
+/*TODO*///					color = paldata - Machine->remapped_colortable;
+/*TODO*///					break;
+/*TODO*///				case TRANSPARENCY_PENS:
+/*TODO*///					transparency = TRANSPARENCY_PENS_RAW;
+/*TODO*///					color = paldata - Machine->remapped_colortable;
+/*TODO*///					break;
+/*TODO*///				case TRANSPARENCY_PEN_TABLE:
+/*TODO*///					transparency = TRANSPARENCY_PEN_TABLE_RAW;
+/*TODO*///					color = paldata - Machine->remapped_colortable;
+/*TODO*///					break;
+/*TODO*///			}
+        }
+
+        switch (transparency) {
+            case TRANSPARENCY_NONE:
+                if ((gfx.flags & GFX_PACKED) != 0) {
+                    throw new UnsupportedOperationException("Unsupported");
+                    /*TODO*///					if (pribuf)
+/*TODO*///						BLOCKMOVEPRI(4toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask));
+/*TODO*///					else
+/*TODO*///						BLOCKMOVELU(4toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata));
+                } else {
+                    if (pribuf != null) {
+                        throw new UnsupportedOperationException("Unsupported");
+                        /*TODO*///						BLOCKMOVEPRI(8toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask));
+                    } else {
+                        if ((gfx.flags & GFX_SWAPXY) != 0) {
+                            throw new UnsupportedOperationException("unsupported");//blockmove_##function##_swapxy##8 args ;
+                        } else {
+                            blockmove_8toN_opaque8(sd, sw, sh, sm, ls, ts, flipx, flipy, dd, dw, dh, dm, paldata);
+                        }
+                    }
+                }
+                break;
+            /*TODO*///
+/*TODO*///			case TRANSPARENCY_NONE_RAW:
+/*TODO*///				if (gfx->flags & GFX_PACKED)
+/*TODO*///				{
+/*TODO*///					if (pribuf)
+/*TODO*///						BLOCKMOVERAWPRI(4toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask));
+/*TODO*///					else
+/*TODO*///						BLOCKMOVERAW(4toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color));
+/*TODO*///				}
+/*TODO*///				else
+/*TODO*///				{
+/*TODO*///					if (pribuf)
+/*TODO*///						BLOCKMOVERAWPRI(8toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask));
+/*TODO*///					else
+/*TODO*///						BLOCKMOVERAW(8toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color));
+/*TODO*///				}
+/*TODO*///				break;
+/*TODO*///
+/*TODO*///			case TRANSPARENCY_PEN:
+/*TODO*///				if (gfx->flags & GFX_PACKED)
+/*TODO*///				{
+/*TODO*///					if (pribuf)
+/*TODO*///						BLOCKMOVEPRI(4toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
+/*TODO*///					else
+/*TODO*///						BLOCKMOVELU(4toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
+/*TODO*///				}
+/*TODO*///				else
+/*TODO*///				{
+/*TODO*///					if (pribuf)
+/*TODO*///						BLOCKMOVEPRI(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
+/*TODO*///					else
+/*TODO*///						BLOCKMOVELU(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
+/*TODO*///				}
+/*TODO*///				break;
+/*TODO*///
+/*TODO*///			case TRANSPARENCY_PEN_RAW:
+/*TODO*///				if (gfx->flags & GFX_PACKED)
+/*TODO*///				{
+/*TODO*///					if (pribuf)
+/*TODO*///						BLOCKMOVERAWPRI(4toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask,transparent_color));
+/*TODO*///					else
+/*TODO*///						BLOCKMOVERAW(4toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,transparent_color));
+/*TODO*///				}
+/*TODO*///				else
+/*TODO*///				{
+/*TODO*///					if (pribuf)
+/*TODO*///						BLOCKMOVERAWPRI(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask,transparent_color));
+/*TODO*///					else
+/*TODO*///						BLOCKMOVERAW(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,transparent_color));
+/*TODO*///				}
+/*TODO*///				break;
+/*TODO*///
+/*TODO*///			case TRANSPARENCY_PENS:
+/*TODO*///				if (pribuf)
+/*TODO*///					BLOCKMOVEPRI(8toN_transmask,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
+/*TODO*///				else
+/*TODO*///					BLOCKMOVELU(8toN_transmask,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
+/*TODO*///				break;
+/*TODO*///
+/*TODO*///			case TRANSPARENCY_PENS_RAW:
+/*TODO*///				if (pribuf)
+/*TODO*///					BLOCKMOVERAWPRI(8toN_transmask,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask,transparent_color));
+/*TODO*///				else
+/*TODO*///					BLOCKMOVERAW(8toN_transmask,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,transparent_color));
+/*TODO*///				break;
+/*TODO*///
+/*TODO*///			case TRANSPARENCY_COLOR:
+/*TODO*///				if (gfx->flags & GFX_PACKED)
+/*TODO*///				{
+/*TODO*///					if (pribuf)
+/*TODO*///						BLOCKMOVEPRI(4toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
+/*TODO*///					else
+/*TODO*///						BLOCKMOVELU(4toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
+/*TODO*///				}
+/*TODO*///				else
+/*TODO*///				{
+/*TODO*///					if (pribuf)
+/*TODO*///						BLOCKMOVEPRI(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
+/*TODO*///					else
+/*TODO*///						BLOCKMOVELU(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
+/*TODO*///				}
+/*TODO*///				break;
+/*TODO*///
+/*TODO*///			case TRANSPARENCY_PEN_TABLE:
+/*TODO*///				if (pribuf)
+/*TODO*///					BLOCKMOVEPRI(8toN_pen_table,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
+/*TODO*///				else
+/*TODO*///					BLOCKMOVELU(8toN_pen_table,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
+/*TODO*///				break;
+/*TODO*///
+/*TODO*///			case TRANSPARENCY_PEN_TABLE_RAW:
+/*TODO*///				if (pribuf)
+/*TODO*///					BLOCKMOVERAWPRI(8toN_pen_table,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask,transparent_color));
+/*TODO*///				else
+/*TODO*///					BLOCKMOVERAW(8toN_pen_table,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,transparent_color));
+/*TODO*///				break;
+/*TODO*///
+/*TODO*///			case TRANSPARENCY_BLEND_RAW:
+/*TODO*///				if (pribuf)
+/*TODO*///					BLOCKMOVERAWPRI(8toN_transblend,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask,transparent_color));
+/*TODO*///				else
+/*TODO*///					BLOCKMOVERAW(8toN_transblend,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,transparent_color));
+/*TODO*///				break;
+/*TODO*///
+/*TODO*///			case TRANSPARENCY_ALPHAONE:
+/*TODO*///				if (pribuf)
+/*TODO*///					BLOCKMOVEPRI(8toN_alphaone,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color & 0xff, (transparent_color>>8) & 0xff));
+/*TODO*///				else
+/*TODO*///					BLOCKMOVELU(8toN_alphaone,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color & 0xff, (transparent_color>>8) & 0xff));
+/*TODO*///				break;
+/*TODO*///
+/*TODO*///			case TRANSPARENCY_ALPHA:
+/*TODO*///				if (pribuf)
+/*TODO*///					BLOCKMOVEPRI(8toN_alpha,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
+/*TODO*///				else
+/*TODO*///					BLOCKMOVELU(8toN_alpha,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
+/*TODO*///				break;
+/*TODO*///
+            default:
+                throw new UnsupportedOperationException("Unsupported");
+            /*TODO*///				if (pribuf)
+/*TODO*///					usrintf_showmessage("pdrawgfx pen mode not supported");
+/*TODO*///				else
+/*TODO*///					usrintf_showmessage("drawgfx pen mode not supported");
+/*TODO*///				break;
+        }
+
+    }
+
     public static void drawgfx_core16(mame_bitmap dest, GfxElement gfx,/*unsigned*/ int code,/*unsigned*/ int color, int flipx, int flipy, int sx, int sy, rectangle clip, int transparency, int transparent_color, mame_bitmap pri_buffer, int/*UINT32*/ pri_mask) {
         int ox;
         int oy;
@@ -7380,6 +7630,86 @@ public class drawgfx {
 /*TODO*///
 /*TODO*///#endif /* DECLARE */
 /*TODO*///    
+        public static void blockmove_8toN_opaque8(UBytePtr srcdata, int srcwidth, int srcheight, int srcmodulo, int leftskip, int topskip, int flipx, int flipy, UBytePtr dstdata, int dstwidth, int dstheight, int dstmodulo, IntArray paldata) {
+        int ydir;
+        if (flipy != 0) {
+            throw new UnsupportedOperationException("unsupported");
+            /*TODO*///		INCREMENT_DST(VMODULO * (dstheight-1))						
+/*TODO*///		srcdata += (srcheight - dstheight - topskip) * srcmodulo;	
+/*TODO*///		ydir = -1;													
+        } else {
+            srcdata.inc(topskip * srcmodulo);
+            ydir = 1;
+        }
+        if (flipx != 0) {
+            throw new UnsupportedOperationException("unsupported");
+            /*TODO*///		INCREMENT_DST(HMODULO * (dstwidth-1))						
+/*TODO*///		srcdata += (srcwidth - dstwidth - leftskip);				
+        } else {
+            srcdata.inc(leftskip);
+        }
+        srcmodulo -= dstwidth;
+
+        if (flipx != 0) {
+            throw new UnsupportedOperationException("unsupported");
+            /*TODO*///		DATA_TYPE *end;
+/*TODO*///
+/*TODO*///		while (dstheight)
+/*TODO*///		{
+/*TODO*///			end = dstdata - dstwidth*HMODULO;
+/*TODO*///			while (dstdata >= end + 8*HMODULO)
+/*TODO*///			{
+/*TODO*///				INCREMENT_DST(-8*HMODULO)
+/*TODO*///				SETPIXELCOLOR(8*HMODULO,LOOKUP(srcdata[0]))
+/*TODO*///				SETPIXELCOLOR(7*HMODULO,LOOKUP(srcdata[1]))
+/*TODO*///				SETPIXELCOLOR(6*HMODULO,LOOKUP(srcdata[2]))
+/*TODO*///				SETPIXELCOLOR(5*HMODULO,LOOKUP(srcdata[3]))
+/*TODO*///				SETPIXELCOLOR(4*HMODULO,LOOKUP(srcdata[4]))
+/*TODO*///				SETPIXELCOLOR(3*HMODULO,LOOKUP(srcdata[5]))
+/*TODO*///				SETPIXELCOLOR(2*HMODULO,LOOKUP(srcdata[6]))
+/*TODO*///				SETPIXELCOLOR(1*HMODULO,LOOKUP(srcdata[7]))
+/*TODO*///				srcdata += 8;
+/*TODO*///			}
+/*TODO*///			while (dstdata > end)
+/*TODO*///			{
+/*TODO*///				SETPIXELCOLOR(0,LOOKUP(*srcdata))
+/*TODO*///				srcdata++;
+/*TODO*///				INCREMENT_DST(-HMODULO)
+/*TODO*///			}
+/*TODO*///
+/*TODO*///			srcdata += srcmodulo;
+/*TODO*///			INCREMENT_DST(ydir*VMODULO + dstwidth*HMODULO)
+/*TODO*///			dstheight--;
+/*TODO*///		}
+        } else {
+            int end;//DATA_TYPE *end;
+
+            while (dstheight != 0) {
+                end = dstdata.offset + dstwidth;
+                while (dstdata.offset <= end - 8) {
+                    dstdata.write(0, (char) paldata.read(srcdata.read(0)));
+                    dstdata.write(1, (char) paldata.read(srcdata.read(1)));
+                    dstdata.write(2, (char) paldata.read(srcdata.read(2)));
+                    dstdata.write(3, (char) paldata.read(srcdata.read(3)));
+                    dstdata.write(4, (char) paldata.read(srcdata.read(4)));
+                    dstdata.write(5, (char) paldata.read(srcdata.read(5)));
+                    dstdata.write(6, (char) paldata.read(srcdata.read(6)));
+                    dstdata.write(7, (char) paldata.read(srcdata.read(7)));
+                    srcdata.inc(8);
+                    dstdata.inc(8);
+                }
+                while (dstdata.offset < end) {
+                    dstdata.write(0, (char) paldata.read(srcdata.read(0)));
+                    srcdata.inc();
+                    dstdata.inc();
+                }
+
+                srcdata.inc(srcmodulo);
+                dstdata.inc((ydir * dstmodulo - dstwidth * 1));
+                dstheight--;
+            }
+        }
+    }
     public static void blockmove_8toN_opaque16(UBytePtr srcdata, int srcwidth, int srcheight, int srcmodulo, int leftskip, int topskip, int flipx, int flipy, UShortPtr dstdata, int dstwidth, int dstheight, int dstmodulo, IntArray paldata) {
         int ydir;
         if (flipy != 0) {

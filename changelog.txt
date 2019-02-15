@@ -1,3 +1,7 @@
+15/02/2019
+==========
+-Intial drawgfx for 8bit (only blockmove_8toN_opaque8 implemented and working properly)
+
 14/02/2019
 ==========
 -Intial drawgfx for 16bit (only blockmove_8toN_opaque16 implemented and not working properly)
