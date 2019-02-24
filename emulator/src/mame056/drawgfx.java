@@ -3641,8 +3641,8 @@ public class drawgfx {
 
     public static plot_pixel_procPtr pp_16_d = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT16 *)b -> line[y])[x] = p;
-            //osd_mark_dirty(x, y, x, y);
+            new UShortPtr(b.line[y]).write(x, (char) p);
+            osd_mark_dirty(x, y, x, y);
         }
     };
     public static plot_pixel_procPtr pp_16_d_fx = new plot_pixel_procPtr() {
@@ -4002,17 +4002,6 @@ public class drawgfx {
 
     public static plot_box_procPtr pb_16_nd = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
-            /*
-            int t = x;
-            while (h-- > 0) {
-                int c = w;
-                x = t;
-                while (c-- > 0) {
-                    ((UINT16 *)b -> line[y])[x] = p;
-                    x++;
-                }
-                y++;
-            }*/
             int t = x;
             while (h-- > 0) {
                 int c = w;
@@ -4130,17 +4119,17 @@ public class drawgfx {
 
     public static plot_box_procPtr pb_16_d = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");/*
             int t = x;
             osd_mark_dirty(t, y, t + w - 1, y + h - 1);
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT16 *)b -> line[y])[x] = p;
+                while (c-- > 0) {
+                    new UShortPtr(b.line[y]).write(x, (char) p);
                     x++;
                 }
                 y++;
-            }*/
+            }
         }
     };
     public static plot_box_procPtr pb_16_d_fx = new plot_box_procPtr() {
@@ -6601,26 +6590,25 @@ public class drawgfx {
         if (Machine.drv.color_table_len == 0
                 && (Machine.drv.video_attributes & VIDEO_RGB_DIRECT) == 0
                 && paldata.offset >= Machine.remapped_colortable.offset && paldata.offset < Machine.remapped_colortable.offset + Machine.drv.total_colors) {
-            throw new UnsupportedOperationException("Unsupported");
-            /*TODO*///			switch (transparency)
-/*TODO*///			{
-/*TODO*///				case TRANSPARENCY_NONE:
-/*TODO*///					transparency = TRANSPARENCY_NONE_RAW;
-/*TODO*///					color = paldata - Machine->remapped_colortable;
-/*TODO*///					break;
-/*TODO*///				case TRANSPARENCY_PEN:
-/*TODO*///					transparency = TRANSPARENCY_PEN_RAW;
-/*TODO*///					color = paldata - Machine->remapped_colortable;
-/*TODO*///					break;
-/*TODO*///				case TRANSPARENCY_PENS:
-/*TODO*///					transparency = TRANSPARENCY_PENS_RAW;
-/*TODO*///					color = paldata - Machine->remapped_colortable;
-/*TODO*///					break;
-/*TODO*///				case TRANSPARENCY_PEN_TABLE:
-/*TODO*///					transparency = TRANSPARENCY_PEN_TABLE_RAW;
-/*TODO*///					color = paldata - Machine->remapped_colortable;
-/*TODO*///					break;
-/*TODO*///			}
+			switch (transparency)
+			{
+				case TRANSPARENCY_NONE:
+					transparency = TRANSPARENCY_NONE_RAW;
+					color = paldata.offset - Machine.remapped_colortable.offset;//color = paldata - Machine->remapped_colortable;
+					break;
+				case TRANSPARENCY_PEN:
+					transparency = TRANSPARENCY_PEN_RAW;
+					color = paldata.offset - Machine.remapped_colortable.offset;//color = paldata - Machine->remapped_colortable;
+					break;
+				case TRANSPARENCY_PENS:
+					transparency = TRANSPARENCY_PENS_RAW;
+					color = paldata.offset - Machine.remapped_colortable.offset;//color = paldata - Machine->remapped_colortable;
+					break;
+				case TRANSPARENCY_PEN_TABLE:
+					transparency = TRANSPARENCY_PEN_TABLE_RAW;
+					color = paldata.offset - Machine.remapped_colortable.offset;//color = paldata - Machine->remapped_colortable;
+					break;
+			}
         }
 
         switch (transparency) {
@@ -6644,23 +6632,25 @@ public class drawgfx {
                     }
                 }
                 break;
-            /*TODO*///
-/*TODO*///			case TRANSPARENCY_NONE_RAW:
-/*TODO*///				if (gfx->flags & GFX_PACKED)
-/*TODO*///				{
+            
+			case TRANSPARENCY_NONE_RAW:
+				if ((gfx.flags & GFX_PACKED)!=0)
+				{
+                                    throw new UnsupportedOperationException("unsupported");
 /*TODO*///					if (pribuf)
 /*TODO*///						BLOCKMOVERAWPRI(4toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask));
 /*TODO*///					else
 /*TODO*///						BLOCKMOVERAW(4toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color));
-/*TODO*///				}
-/*TODO*///				else
-/*TODO*///				{
+				}
+				else
+				{
+                                    System.out.println("Unsupported drawgfx TRANSPARENCY_NONE_RAW");
 /*TODO*///					if (pribuf)
 /*TODO*///						BLOCKMOVERAWPRI(8toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask));
 /*TODO*///					else
 /*TODO*///						BLOCKMOVERAW(8toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color));
-/*TODO*///				}
-/*TODO*///				break;
+				}
+				break;
 /*TODO*///
 /*TODO*///			case TRANSPARENCY_PEN:
 /*TODO*///				if (gfx->flags & GFX_PACKED)
