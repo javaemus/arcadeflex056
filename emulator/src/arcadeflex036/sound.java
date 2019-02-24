@@ -1,7 +1,7 @@
 package arcadeflex036;
 
 import static mame056.mame.Machine;
-import static mame037b5.sound.mixer.samples_this_frame;
+import static mame056.sound.mixer.samples_this_frame;
 
 public class sound {
     static int attenuation = 0;

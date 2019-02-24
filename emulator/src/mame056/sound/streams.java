@@ -4,9 +4,10 @@
 package mame056.sound;
 
 import static common.ptr.*;
+
 import static mame056.mame.Machine;
 import static mame056.sndintrf.*;
-import static mame037b5.sound.mixer.*;
+import static mame056.sound.mixer.*;
 import static mame056.sound.mixerH.*;
 
 public class streams {

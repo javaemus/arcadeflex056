@@ -5,14 +5,15 @@ package mame056;
 
 import static arcadeflex056.fucPtr.*;
 
+import static arcadeflex036.osdepend.*;
+
 import static mame056.sndintrfH.*;
 import static mame056.common.*;
 import static mame056.driverH.*;
 import static mame056.sound.streams.*;
 import static mame056.timer.*;
 import static mame056.timerH.*;
-import static arcadeflex036.osdepend.*;
-import static mame037b5.sound.mixer.*;
+import static mame056.sound.mixer.*;
 import static mame056.mame.Machine;
 
 //sound chips

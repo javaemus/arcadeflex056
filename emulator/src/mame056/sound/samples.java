@@ -6,12 +6,14 @@ package mame056.sound;
 
 import static common.ptr.*;
 import static common.libc.cstdio.*;
+
 import static arcadeflex036.osdepend.logerror;
+
 import static mame056.common.*;
 import static mame056.mame.Machine;
 import static mame056.sndintrf.*;
 import static mame056.sndintrfH.*;
-import static mame037b5.sound.mixer.*;
+import static mame056.sound.mixer.*;
 import static mame056.sound.mixerH.*;
 
 public class samples extends snd_interface {

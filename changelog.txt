@@ -1,6 +1,7 @@
 24/02/2019
 ==========
 -Ported minivadr driver to 0.58. It appears to work correctly
+-Added new mixer (partial implementation to 0.56) (works ok with bankp)
 
 18/02/2019
 ==========

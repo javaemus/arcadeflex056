@@ -482,6 +482,7 @@ public class config {
             /*TODO*///
             /*TODO*///	/* misc configuration */
             options.cheat=1;
+            options.use_filter=1;
             /*TODO*///	options.cheat      = get_bool ("config", "cheat", NULL, 0);
             /*TODO*///	options.mame_debug = get_bool ("config", "debug", NULL, 0);
             /*TODO*///	cheatfile  = get_string ("config", "cheatfile", "cf", "CHEAT.DAT");    /* JCK 980917 */
