@@ -6341,32 +6341,33 @@ public class drawgfx {
             paldata = new IntArray(gfx.colortable, gfx.color_granularity * color);
         }
         UBytePtr pribuf = null;/*TODO*///		UINT8 *pribuf = (pri_buffer) ? ((UINT8 *)pri_buffer->line[sy]) + sx : NULL;
+
         /* optimizations for 1:1 mapping */
-//		if (Machine.drv.color_table_len == 0 && gfx != Machine.uifont)
-        if (Machine.drv.color_table_len == 0
-                && (Machine.drv.video_attributes & VIDEO_RGB_DIRECT) == 0
-                && paldata.offset >= Machine.remapped_colortable.offset && paldata.offset < Machine.remapped_colortable.offset + Machine.drv.total_colors) {
-            throw new UnsupportedOperationException("Unsupported");
-            /*TODO*///			switch (transparency)
-/*TODO*///			{
-/*TODO*///				case TRANSPARENCY_NONE:
-/*TODO*///					transparency = TRANSPARENCY_NONE_RAW;
-/*TODO*///					color = paldata - Machine->remapped_colortable;
-/*TODO*///					break;
-/*TODO*///				case TRANSPARENCY_PEN:
-/*TODO*///					transparency = TRANSPARENCY_PEN_RAW;
-/*TODO*///					color = paldata - Machine->remapped_colortable;
-/*TODO*///					break;
-/*TODO*///				case TRANSPARENCY_PENS:
-/*TODO*///					transparency = TRANSPARENCY_PENS_RAW;
-/*TODO*///					color = paldata - Machine->remapped_colortable;
-/*TODO*///					break;
-/*TODO*///				case TRANSPARENCY_PEN_TABLE:
-/*TODO*///					transparency = TRANSPARENCY_PEN_TABLE_RAW;
-/*TODO*///					color = paldata - Machine->remapped_colortable;
-/*TODO*///					break;
-/*TODO*///			}
-        }
+//		if (Machine->drv->color_table_len == 0 && gfx != Machine->uifont)
+/*TODO*///        if (Machine->drv->color_table_len == 0 &&
+/*TODO*/// 				!(Machine->drv->video_attributes & VIDEO_RGB_DIRECT) &&
+/*TODO*/// 				paldata >= Machine->remapped_colortable && paldata < Machine->remapped_colortable + Machine->drv->total_colors)
+/*TODO*/// 		{
+/*TODO*///             	switch (transparency)
+/*TODO*///  			{
+/*TODO*/// 				case TRANSPARENCY_NONE:
+/*TODO*/// 					transparency = TRANSPARENCY_NONE_RAW;	
+/*TODO*///                                         color = paldata - Machine->remapped_colortable;
+/*TODO*/// 					break;
+/*TODO*/// 				case TRANSPARENCY_PEN:
+/*TODO*/// 					transparency = TRANSPARENCY_PEN_RAW;
+/*TODO*/// 					color = paldata - Machine->remapped_colortable;
+/*TODO*/// 					break;
+/*TODO*/// 				case TRANSPARENCY_PENS:
+/*TODO*/// 					transparency = TRANSPARENCY_PENS_RAW;
+/*TODO*/// 					color = paldata - Machine->remapped_colortable;
+/*TODO*/// 					break;
+/*TODO*/// 				case TRANSPARENCY_PEN_TABLE:
+/*TODO*/// 					transparency = TRANSPARENCY_PEN_TABLE_RAW;
+/*TODO*/// 					color = paldata - Machine->remapped_colortable;
+/*TODO*/// 					break;
+/*TODO*/// 			}
+/*TODO*///         }
 
         switch (transparency) {
             case TRANSPARENCY_NONE:
@@ -6573,10 +6574,10 @@ public class drawgfx {
         int sm = gfx.line_modulo;/* source modulo */
         int ls = sx - ox;/* left skip */
         int ts = sy - oy;/* top skip */
-        UShortPtr dd = new UShortPtr(dest.line[sy], sx);/* dest data */
+        UShortPtr dd = new UShortPtr(dest.line[sy], sx * 2);/* dest data */
         int dw = ex - sx + 1;/* dest width */
         int dh = ey - sy + 1;/* dest height */
-        int dm = dest.line[1].offset - dest.line[0].offset;/* dest modulo */
+        int dm = (dest.line[1].offset / 2 - dest.line[0].offset / 2);/* dest modulo */
 
         IntArray paldata = null;
         if (gfx.colortable != null) {
@@ -6587,30 +6588,30 @@ public class drawgfx {
 
         /* optimizations for 1:1 mapping */
 //		if (Machine->drv->color_table_len == 0 && gfx != Machine->uifont)
-        if (Machine.drv.color_table_len == 0
-                && (Machine.drv.video_attributes & VIDEO_RGB_DIRECT) == 0
-                && paldata.offset >= Machine.remapped_colortable.offset && paldata.offset < Machine.remapped_colortable.offset + Machine.drv.total_colors) {
-			switch (transparency)
-			{
-				case TRANSPARENCY_NONE:
-					transparency = TRANSPARENCY_NONE_RAW;
-					color = paldata.offset - Machine.remapped_colortable.offset;//color = paldata - Machine->remapped_colortable;
-					break;
-				case TRANSPARENCY_PEN:
-					transparency = TRANSPARENCY_PEN_RAW;
-					color = paldata.offset - Machine.remapped_colortable.offset;//color = paldata - Machine->remapped_colortable;
-					break;
-				case TRANSPARENCY_PENS:
-					transparency = TRANSPARENCY_PENS_RAW;
-					color = paldata.offset - Machine.remapped_colortable.offset;//color = paldata - Machine->remapped_colortable;
-					break;
-				case TRANSPARENCY_PEN_TABLE:
-					transparency = TRANSPARENCY_PEN_TABLE_RAW;
-					color = paldata.offset - Machine.remapped_colortable.offset;//color = paldata - Machine->remapped_colortable;
-					break;
-			}
-        }
-
+/*TODO*///        if (Machine->drv->color_table_len == 0 &&
+/*TODO*/// 				!(Machine->drv->video_attributes & VIDEO_RGB_DIRECT) &&
+/*TODO*/// 				paldata >= Machine->remapped_colortable && paldata < Machine->remapped_colortable + Machine->drv->total_colors)
+/*TODO*/// 		{
+/*TODO*///             	switch (transparency)
+/*TODO*///  			{
+/*TODO*/// 				case TRANSPARENCY_NONE:
+/*TODO*/// 					transparency = TRANSPARENCY_NONE_RAW;	
+/*TODO*///                                         color = paldata - Machine->remapped_colortable;
+/*TODO*/// 					break;
+/*TODO*/// 				case TRANSPARENCY_PEN:
+/*TODO*/// 					transparency = TRANSPARENCY_PEN_RAW;
+/*TODO*/// 					color = paldata - Machine->remapped_colortable;
+/*TODO*/// 					break;
+/*TODO*/// 				case TRANSPARENCY_PENS:
+/*TODO*/// 					transparency = TRANSPARENCY_PENS_RAW;
+/*TODO*/// 					color = paldata - Machine->remapped_colortable;
+/*TODO*/// 					break;
+/*TODO*/// 				case TRANSPARENCY_PEN_TABLE:
+/*TODO*/// 					transparency = TRANSPARENCY_PEN_TABLE_RAW;
+/*TODO*/// 					color = paldata - Machine->remapped_colortable;
+/*TODO*/// 					break;
+/*TODO*/// 			}
+/*TODO*///         }
         switch (transparency) {
             case TRANSPARENCY_NONE:
                 if ((gfx.flags & GFX_PACKED) != 0) {
@@ -6632,26 +6633,23 @@ public class drawgfx {
                     }
                 }
                 break;
-            
-			case TRANSPARENCY_NONE_RAW:
-				if ((gfx.flags & GFX_PACKED)!=0)
-				{
-                                    throw new UnsupportedOperationException("unsupported");
-/*TODO*///					if (pribuf)
+
+            case TRANSPARENCY_NONE_RAW:
+                if ((gfx.flags & GFX_PACKED) != 0) {
+                    throw new UnsupportedOperationException("unsupported");
+                    /*TODO*///					if (pribuf)
 /*TODO*///						BLOCKMOVERAWPRI(4toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask));
 /*TODO*///					else
 /*TODO*///						BLOCKMOVERAW(4toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color));
-				}
-				else
-				{
-                                    System.out.println("Unsupported drawgfx TRANSPARENCY_NONE_RAW");
-/*TODO*///					if (pribuf)
+                } else {
+                    System.out.println("Unsupported drawgfx TRANSPARENCY_NONE_RAW");
+                    /*TODO*///					if (pribuf)
 /*TODO*///						BLOCKMOVERAWPRI(8toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask));
 /*TODO*///					else
 /*TODO*///						BLOCKMOVERAW(8toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color));
-				}
-				break;
-/*TODO*///
+                }
+                break;
+            /*TODO*///
 /*TODO*///			case TRANSPARENCY_PEN:
 /*TODO*///				if (gfx->flags & GFX_PACKED)
 /*TODO*///				{
@@ -7859,8 +7857,8 @@ public class drawgfx {
             int end;//DATA_TYPE *end;
 
             while (dstheight != 0) {
-                end = dstdata.offset + dstwidth;
-                while (dstdata.offset <= end - 8) {
+                end = dstdata.offset / 2 + dstwidth;
+                while (dstdata.offset / 2 <= end - 8) {
                     dstdata.write(0, (char) paldata.read(srcdata.read(0)));
                     dstdata.write(1, (char) paldata.read(srcdata.read(1)));
                     dstdata.write(2, (char) paldata.read(srcdata.read(2)));
@@ -7872,7 +7870,7 @@ public class drawgfx {
                     srcdata.inc(8);
                     dstdata.inc(8);
                 }
-                while (dstdata.offset < end) {
+                while (dstdata.offset / 2 < end) {
                     dstdata.write(0, (char) paldata.read(srcdata.read(0)));
                     srcdata.inc();
                     dstdata.inc();
