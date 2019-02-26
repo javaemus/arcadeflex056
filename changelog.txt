@@ -1,6 +1,7 @@
 26/02/2019
 ==========
 -Ported ay8910 to mame0.56
+-Fixed fillbitmap for 16bit in drawgfx
 
 25/02/2019
 ==========

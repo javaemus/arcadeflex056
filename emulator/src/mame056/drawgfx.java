@@ -124,15 +124,15 @@ public class drawgfx {
         int plane, x, y;
         UBytePtr dp;
         int baseoffs;
-        //const UINT32 *xoffset,*yoffset;
         int[] xoffset;
         int[] yoffset;
 
         xoffset = Arrays.copyOf(gl.xoffset, gl.xoffset.length);
         yoffset = Arrays.copyOf(gl.yoffset, gl.yoffset.length);
         if ((Machine.orientation & ORIENTATION_SWAP_XY) != 0) {
-            throw new UnsupportedOperationException("unsupported");
-            /*TODO*///		const UINT32 *t = xoffset; xoffset = yoffset; yoffset = t;
+            int[] t = xoffset;
+            xoffset = Arrays.copyOf(yoffset, yoffset.length);
+            yoffset = Arrays.copyOf(t, t.length);
         }
         if ((gfx.flags & GFX_SWAPXY) != 0) {
             throw new UnsupportedOperationException("unsupported");
@@ -1637,14 +1637,17 @@ public class drawgfx {
                 UShortPtr sp = new UShortPtr(dest.line[sy]);
                 int x;
 
-                for (x = sx; x <= ex; x++) {
+                for (x = sx; x <= ex * 2; x++) {
                     sp.write(x, (char) pen);
                 }
-                sp.inc(sx);//sp+=sx;
-                for (y = sy + 1; y <= ey; y++) {
-                    System.arraycopy(sp.memory, sp.offset, dest.line[y].memory, sx * 2, (ex - sx + 1) * 2);//memcpy(((UINT16 *)dest.line[y]) + sx,sp,(ex-sx+1)*2);
-                }
+                sp.inc(sx);
 
+                for (y = sy + 1; y <= ey; y++) {
+                    UShortPtr z = new UShortPtr(dest.line[y], sx);
+                    for (int i = 0; i < (ex - sx + 1) * 2; i++) {
+                        z.write(i, sp.read(i));
+                    }
+                }
             }
         } else {
             for (y = sy; y <= ey; y++) {
@@ -7805,10 +7808,9 @@ public class drawgfx {
     public static void blockmove_8toN_opaque16(UBytePtr srcdata, int srcwidth, int srcheight, int srcmodulo, int leftskip, int topskip, int flipx, int flipy, UShortPtr dstdata, int dstwidth, int dstheight, int dstmodulo, IntArray paldata) {
         int ydir;
         if (flipy != 0) {
-            throw new UnsupportedOperationException("unsupported");
-            /*TODO*///		INCREMENT_DST(VMODULO * (dstheight-1))						
-/*TODO*///		srcdata += (srcheight - dstheight - topskip) * srcmodulo;	
-/*TODO*///		ydir = -1;													
+            dstdata.inc(dstmodulo * (dstheight - 1));
+            srcdata.inc((srcheight - dstheight - topskip) * srcmodulo);
+            ydir = -1;
         } else {
             srcdata.inc(topskip * srcmodulo);
             ydir = 1;
