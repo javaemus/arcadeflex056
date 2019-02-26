@@ -325,6 +325,7 @@ public class drawgfx {
         }
 
     }
+
     /*TODO*///
 /*TODO*///INLINE void blockmove_NtoN_transpen_noremap_flipx8(
 /*TODO*///		const UINT8 *srcdata,int srcwidth,int srcheight,int srcmodulo,
@@ -389,34 +390,31 @@ public class drawgfx {
 /*TODO*///}
 /*TODO*///
 /*TODO*///
-/*TODO*///INLINE void blockmove_NtoN_transpen_noremap16(
-/*TODO*///		const UINT16 *srcdata,int srcwidth,int srcheight,int srcmodulo,
-/*TODO*///		UINT16 *dstdata,int dstmodulo,
-/*TODO*///		int transpen)
-/*TODO*///{
-/*TODO*///	UINT16 *end;
-/*TODO*///
-/*TODO*///	srcmodulo -= srcwidth;
-/*TODO*///	dstmodulo -= srcwidth;
-/*TODO*///
-/*TODO*///	while (srcheight)
-/*TODO*///	{
-/*TODO*///		end = dstdata + srcwidth;
-/*TODO*///		while (dstdata < end)
-/*TODO*///		{
-/*TODO*///			int col;
-/*TODO*///
-/*TODO*///			col = *(srcdata++);
-/*TODO*///			if (col != transpen) *dstdata = col;
-/*TODO*///			dstdata++;
-/*TODO*///		}
-/*TODO*///
-/*TODO*///		srcdata += srcmodulo;
-/*TODO*///		dstdata += dstmodulo;
-/*TODO*///		srcheight--;
-/*TODO*///	}
-/*TODO*///}
-/*TODO*///
+    public static void blockmove_NtoN_transpen_noremap16(UShortPtr srcdata, int srcwidth, int srcheight, int srcmodulo, UShortPtr dstdata, int dstmodulo, int transpen) {
+        int /*UINT16 */ end;
+
+        srcmodulo -= srcwidth;
+        dstmodulo -= srcwidth;
+
+        while (srcheight != 0) {
+            end = dstdata.offset / 2 + srcwidth;
+            while (dstdata.offset / 2 < end) {
+                int col;
+
+                col = srcdata.read(0);
+                srcdata.inc();
+                if (col != transpen) {
+                    dstdata.write((char) col);
+                }
+                dstdata.inc();
+            }
+
+            srcdata.inc(srcmodulo);
+            dstdata.inc(dstmodulo);
+            srcheight--;
+        }
+    }
+    /*TODO*///
 /*TODO*///INLINE void blockmove_NtoN_transpen_noremap_flipx16(
 /*TODO*///		const UINT16 *srcdata,int srcwidth,int srcheight,int srcmodulo,
 /*TODO*///		UINT16 *dstdata,int dstmodulo,
@@ -1198,8 +1196,7 @@ public class drawgfx {
         if (dest.depth == 8) {
             copybitmap_core8(dest, src, flipx, flipy, sx, sy, clip, transparency, transparent_color);
         } else if (dest.depth == 15 || dest.depth == 16) {
-            System.out.println("copybitmap_core16 todo");
-            /*TODO*///		copybitmap_core16(dest,src,flipx,flipy,sx,sy,clip,transparency,transparent_color);
+            copybitmap_core16(dest, src, flipx, flipy, sx, sy, clip, transparency, transparent_color);
         } else {
             System.out.println("copybitmap_core32 todo");
             /*TODO*///		copybitmap_core32(dest,src,flipx,flipy,sx,sy,clip,transparency,transparent_color);
@@ -1637,7 +1634,7 @@ public class drawgfx {
                 UShortPtr sp = new UShortPtr(dest.line[sy]);
                 int x;
 
-                for (x = sx; x <= ex * 2; x++) {
+                for (x = sx; x <= ex; x++) {
                     sp.write(x, (char) pen);
                 }
                 sp.inc(sx);
@@ -5798,6 +5795,17 @@ public class drawgfx {
         }
     }
 
+    public static void blockmove_NtoN_opaque_noremap16(UShortPtr srcdata, int srcwidth, int srcheight, int srcmodulo, UShortPtr dstdata, int dstmodulo) {
+
+        while (srcheight != 0) {
+            System.arraycopy(srcdata.memory, (int) srcdata.offset, dstdata.memory, (int) dstdata.offset, srcwidth * 2);
+
+            srcdata.inc(srcmodulo);
+            dstdata.inc(dstmodulo);
+            srcheight--;
+        }
+    }
+
     /*TODO*///
 /*TODO*///DECLARE(blockmove_NtoN_opaque_noremap_flipx,(
 /*TODO*///		const DATA_TYPE *srcdata,int srcwidth,int srcheight,int srcmodulo,
@@ -6872,6 +6880,113 @@ public class drawgfx {
         }
     }
 
+    public static void copybitmap_core16(mame_bitmap dest, mame_bitmap src, int flipx, int flipy, int sx, int sy, rectangle clip, int transparency, int transparent_color) {
+        int ox;
+        int oy;
+        int ex;
+        int ey;
+
+
+        /* check bounds */
+        ox = sx;
+        oy = sy;
+
+        ex = sx + src.width - 1;
+        if (sx < 0) {
+            sx = 0;
+        }
+        if (clip != null && sx < clip.min_x) {
+            sx = clip.min_x;
+        }
+        if (ex >= dest.width) {
+            ex = dest.width - 1;
+        }
+        if (clip != null && ex > clip.max_x) {
+            ex = clip.max_x;
+        }
+        if (sx > ex) {
+            return;
+        }
+
+        ey = sy + src.height - 1;
+        if (sy < 0) {
+            sy = 0;
+        }
+        if (clip != null && sy < clip.min_y) {
+            sy = clip.min_y;
+        }
+        if (ey >= dest.height) {
+            ey = dest.height - 1;
+        }
+        if (clip != null && ey > clip.max_y) {
+            ey = clip.max_y;
+        }
+        if (sy > ey) {
+            return;
+        }
+        UShortPtr sd = new UShortPtr(src.line[0]);/* source data */
+        int sw = ex - sx + 1;/* source width */
+        int sh = ey - sy + 1;/* source height */
+        int sm = src.line[1].offset / 2 - src.line[0].offset / 2;/* source modulo */
+        UShortPtr dd = new UShortPtr(dest.line[sy], sx * 2);/* dest data */
+        int dm = dest.line[1].offset / 2 - dest.line[0].offset / 2;/* dest modulo */
+
+
+        if (flipx != 0) {
+            //if ((sx-ox) == 0) sd += gfx->width - sw;
+            sd.inc(src.width - 1 - (sx - ox));
+        } else {
+            sd.inc(sx - ox);
+        }
+
+        if (flipy != 0) {
+            //if ((sy-oy) == 0) sd += sm * (gfx->height - sh);
+            //dd += dm * (sh - 1);
+            //dm = -dm;
+            sd.inc(sm * (src.height - 1 - (sy - oy)));
+            sm = -sm;
+        } else {
+            sd.inc(sm * (sy - oy));
+        }
+
+        switch (transparency) {
+            case TRANSPARENCY_NONE:
+                throw new UnsupportedOperationException("Unsupported");
+            /*TODO*///				BLOCKMOVE(NtoN_opaque_remap,flipx,(sd,sw,sh,sm,dd,dm,Machine->pens));
+/*TODO*///				break;
+/*TODO*///
+            case TRANSPARENCY_NONE_RAW:
+                if (flipx != 0) {
+                    throw new UnsupportedOperationException("Unsupported");//BLOCKMOVE(NtoN_opaque_noremap,flipx,(sd,sw,sh,sm,dd,dm));
+                } else {
+                    blockmove_NtoN_opaque_noremap16(sd, sw, sh, sm, dd, dm);
+                }
+                break;
+            case TRANSPARENCY_PEN_RAW:
+                if (flipx != 0) {
+                    throw new UnsupportedOperationException("Unsupported");//BLOCKMOVE(NtoN_transpen_noremap,flipx,(sd,sw,sh,sm,dd,dm,transparent_color));
+                } else {
+                    blockmove_NtoN_transpen_noremap16(sd, sw, sh, sm, dd, dm, transparent_color);
+                }
+                break;
+
+            case TRANSPARENCY_BLEND:
+                throw new UnsupportedOperationException("Unsupported");
+            /*TODO*///				BLOCKMOVE(NtoN_blend_remap,flipx,(sd,sw,sh,sm,dd,dm,Machine->pens,transparent_color));
+/*TODO*///				break;
+/*TODO*///
+            case TRANSPARENCY_BLEND_RAW:
+                throw new UnsupportedOperationException("Unsupported");
+            /*TODO*///				BLOCKMOVE(NtoN_blend_noremap,flipx,(sd,sw,sh,sm,dd,dm,transparent_color));
+/*TODO*///				break;
+/*TODO*///
+            default:
+                usrintf_showmessage("copybitmap pen mode not supported");
+                break;
+        }
+
+    }
+
     /*TODO*///DECLARE(copybitmap_core,(
 /*TODO*///		struct mame_bitmap *dest,struct mame_bitmap *src,
 /*TODO*///		int flipx,int flipy,int sx,int sy,
@@ -7816,45 +7931,40 @@ public class drawgfx {
             ydir = 1;
         }
         if (flipx != 0) {
-            throw new UnsupportedOperationException("unsupported");
-            /*TODO*///		INCREMENT_DST(HMODULO * (dstwidth-1))						
-/*TODO*///		srcdata += (srcwidth - dstwidth - leftskip);				
+            dstdata.inc(dstwidth - 1);
+            srcdata.inc(srcwidth - dstwidth - leftskip);
         } else {
             srcdata.inc(leftskip);
         }
         srcmodulo -= dstwidth;
 
         if (flipx != 0) {
-            throw new UnsupportedOperationException("unsupported");
-            /*TODO*///		DATA_TYPE *end;
-/*TODO*///
-/*TODO*///		while (dstheight)
-/*TODO*///		{
-/*TODO*///			end = dstdata - dstwidth*HMODULO;
-/*TODO*///			while (dstdata >= end + 8*HMODULO)
-/*TODO*///			{
-/*TODO*///				INCREMENT_DST(-8*HMODULO)
-/*TODO*///				SETPIXELCOLOR(8*HMODULO,LOOKUP(srcdata[0]))
-/*TODO*///				SETPIXELCOLOR(7*HMODULO,LOOKUP(srcdata[1]))
-/*TODO*///				SETPIXELCOLOR(6*HMODULO,LOOKUP(srcdata[2]))
-/*TODO*///				SETPIXELCOLOR(5*HMODULO,LOOKUP(srcdata[3]))
-/*TODO*///				SETPIXELCOLOR(4*HMODULO,LOOKUP(srcdata[4]))
-/*TODO*///				SETPIXELCOLOR(3*HMODULO,LOOKUP(srcdata[5]))
-/*TODO*///				SETPIXELCOLOR(2*HMODULO,LOOKUP(srcdata[6]))
-/*TODO*///				SETPIXELCOLOR(1*HMODULO,LOOKUP(srcdata[7]))
-/*TODO*///				srcdata += 8;
-/*TODO*///			}
-/*TODO*///			while (dstdata > end)
-/*TODO*///			{
-/*TODO*///				SETPIXELCOLOR(0,LOOKUP(*srcdata))
-/*TODO*///				srcdata++;
-/*TODO*///				INCREMENT_DST(-HMODULO)
-/*TODO*///			}
-/*TODO*///
-/*TODO*///			srcdata += srcmodulo;
-/*TODO*///			INCREMENT_DST(ydir*VMODULO + dstwidth*HMODULO)
-/*TODO*///			dstheight--;
-/*TODO*///		}
+            int end;
+
+            while (dstheight != 0) {
+                end = dstdata.offset / 2 - dstwidth;
+                while (dstdata.offset / 2 >= end + 8) {
+                    dstdata.dec(8);
+                    dstdata.write(8, (char) paldata.read(srcdata.read(0)));
+                    dstdata.write(7, (char) paldata.read(srcdata.read(1)));
+                    dstdata.write(6, (char) paldata.read(srcdata.read(2)));
+                    dstdata.write(5, (char) paldata.read(srcdata.read(3)));
+                    dstdata.write(4, (char) paldata.read(srcdata.read(4)));
+                    dstdata.write(3, (char) paldata.read(srcdata.read(5)));
+                    dstdata.write(2, (char) paldata.read(srcdata.read(6)));
+                    dstdata.write(1, (char) paldata.read(srcdata.read(7)));
+                    srcdata.inc(8);
+                }
+                while (dstdata.offset / 2 > end) {
+                    dstdata.write(0, (char) paldata.read(srcdata.read(0)));
+                    srcdata.inc();
+                    dstdata.dec();
+                }
+
+                srcdata.inc(srcmodulo);
+                dstdata.inc(ydir * dstmodulo + dstwidth);
+                dstheight--;
+            }
         } else {
             int end;//DATA_TYPE *end;
 
