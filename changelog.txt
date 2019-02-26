@@ -2,6 +2,7 @@
 ==========
 -Ported ay8910 to mame0.56
 -Fixed fillbitmap for 16bit in drawgfx
+-Fixed the rest of stuff for bankp drawing.Now it works on 16bit mode
 
 25/02/2019
 ==========
