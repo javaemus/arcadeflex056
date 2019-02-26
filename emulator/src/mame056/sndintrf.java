@@ -5,14 +5,13 @@ package mame056;
 
 import static arcadeflex056.fucPtr.*;
 
-import static arcadeflex036.osdepend.*;
-
 import static mame056.sndintrfH.*;
 import static mame056.common.*;
 import static mame056.driverH.*;
 import static mame056.sound.streams.*;
 import static mame056.timer.*;
 import static mame056.timerH.*;
+import static arcadeflex036.osdepend.*;
 import static mame056.sound.mixer.*;
 import static mame056.mame.Machine;
 
@@ -24,6 +23,7 @@ import mame056.sound.samples;
 import mame056.sound.sn76477;
 import mame056.sound.sn76496;
 import mame056.sound.tms36xx;
+import mame056.sound.ay8910;
 
 public class sndintrf {
 
@@ -255,10 +255,6 @@ public class sndintrf {
 /*TODO*///#if (HAS_K007232)
 /*TODO*///int K007232_num(const struct MachineSound *msound) { return ((struct K007232_interface*)msound->sound_interface)->num_chips; }
 /*TODO*///#endif
-/*TODO*///#if (HAS_AY8910)
-/*TODO*///int AY8910_clock(const struct MachineSound *msound) { return ((struct AY8910interface*)msound->sound_interface)->baseclock; }
-/*TODO*///int AY8910_num(const struct MachineSound *msound) { return ((struct AY8910interface*)msound->sound_interface)->num; }
-/*TODO*///#endif
 /*TODO*///#if (HAS_YM2203)
 /*TODO*///int YM2203_clock(const struct MachineSound *msound) { return ((struct YM2203interface*)msound->sound_interface)->baseclock; }
 /*TODO*///int YM2203_num(const struct MachineSound *msound) { return ((struct YM2203interface*)msound->sound_interface)->num; }
@@ -383,19 +379,7 @@ public class sndintrf {
                 /*TODO*///		discrete_sh_reset
                 /*TODO*///	},
                 new Dummy_snd(),
-                /*TODO*///#endif
-                /*TODO*///#if (HAS_AY8910)
-                /*TODO*///    {
-                /*TODO*///		SOUND_AY8910,
-                /*TODO*///		"AY-8910",
-                /*TODO*///		AY8910_num,
-                /*TODO*///		AY8910_clock,
-                /*TODO*///		AY8910_sh_start,
-                /*TODO*///		0,
-                /*TODO*///		0,
-                /*TODO*///		AY8910_sh_reset
-                /*TODO*///	},
-                new Dummy_snd(),
+                new ay8910(),
                 /*TODO*///#endif
                 /*TODO*///#if (HAS_YM2203)
                 /*TODO*///    {

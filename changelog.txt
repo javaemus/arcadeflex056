@@ -1,3 +1,7 @@
+26/02/2019
+==========
+-Ported ay8910 to mame0.56
+
 25/02/2019
 ==========
 -Fixes to drawgfx . Now text draws correctly in 16bit
