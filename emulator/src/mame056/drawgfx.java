@@ -20,6 +20,7 @@ import static mame056.cpuexec.*;
 import static arcadeflex037b7.video.*;
 import static common.libc.expressions.NOT;
 import common.subArrays.IntArray;
+import common.subArrays.UShortArray;
 
 public class drawgfx {
 
@@ -6709,23 +6710,26 @@ public class drawgfx {
 /*TODO*///					BLOCKMOVERAW(8toN_transmask,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,transparent_color));
 /*TODO*///				break;
 /*TODO*///
-/*TODO*///			case TRANSPARENCY_COLOR:
-/*TODO*///				if (gfx->flags & GFX_PACKED)
-/*TODO*///				{
-/*TODO*///					if (pribuf)
+            case TRANSPARENCY_COLOR:
+                if ((gfx.flags & GFX_PACKED) != 0) {
+                    throw new UnsupportedOperationException("Unsupported");
+                    /*TODO*///					if (pribuf)
 /*TODO*///						BLOCKMOVEPRI(4toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
 /*TODO*///					else
 /*TODO*///						BLOCKMOVELU(4toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
-/*TODO*///				}
-/*TODO*///				else
-/*TODO*///				{
-/*TODO*///					if (pribuf)
-/*TODO*///						BLOCKMOVEPRI(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
-/*TODO*///					else
-/*TODO*///						BLOCKMOVELU(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
-/*TODO*///				}
-/*TODO*///				break;
-/*TODO*///
+                } else {
+                    if (pribuf != null) {
+                        throw new UnsupportedOperationException("Unsupported");/*TODO*///						BLOCKMOVEPRI(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
+                    } else {
+                        if ((gfx.flags & GFX_SWAPXY) != 0) {
+                            throw new UnsupportedOperationException("Unsupported");//BLOCKMOVELU(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
+                        } else {
+                            blockmove_8toN_transcolor16(sd, sw, sh, sm, ls, ts, flipx, flipy, dd, dw, dh, dm, paldata, new UShortArray(Machine.game_colortable, (paldata.offset - Machine.remapped_colortable.offset)), transparent_color);
+                        }
+                    }
+                }
+                break;
+            /*TODO*///
 /*TODO*///			case TRANSPARENCY_PEN_TABLE:
 /*TODO*///				if (pribuf)
 /*TODO*///					BLOCKMOVEPRI(8toN_pen_table,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
@@ -7990,6 +7994,61 @@ public class drawgfx {
 
                 srcdata.inc(srcmodulo);
                 dstdata.inc((ydir * dstmodulo - dstwidth * 1));
+                dstheight--;
+            }
+        }
+    }
+
+    public static void blockmove_8toN_transcolor16(UBytePtr srcdata, int srcwidth, int srcheight, int srcmodulo, int leftskip, int topskip, int flipx, int flipy, UShortPtr dstdata, int dstwidth, int dstheight, int dstmodulo, IntArray paldata, UShortArray colortable, int transcolor) {
+        int ydir;
+        if (flipy != 0) {
+            dstdata.inc(dstmodulo * (dstheight - 1));
+            srcdata.inc((srcheight - dstheight - topskip) * srcmodulo);
+            ydir = -1;
+        } else {
+            srcdata.inc(topskip * srcmodulo);
+            ydir = 1;
+        }
+        if (flipx != 0) {
+            dstdata.inc(dstwidth - 1);
+            srcdata.inc(srcwidth - dstwidth - leftskip);
+        } else {
+            srcdata.inc(leftskip);
+        }
+        srcmodulo -= dstwidth;
+
+        if (flipx != 0) {
+            int end;
+
+            while (dstheight != 0) {
+                end = dstdata.offset / 2 - dstwidth;
+                while (dstdata.offset / 2 > end) {
+                    if (colortable.read(srcdata.read()) != transcolor) {
+                        dstdata.write(0, (char) paldata.read(srcdata.read()));
+                    }
+                    srcdata.inc();
+                    dstdata.dec();
+                }
+
+                srcdata.inc(srcmodulo);
+                dstdata.inc(ydir * dstmodulo + dstwidth * 1);
+                dstheight--;
+            }
+        } else {
+            int end;
+
+            while (dstheight != 0) {
+                end = dstdata.offset / 2 + dstwidth;
+                while (dstdata.offset / 2 < end) {
+                    if (colortable.read(srcdata.read()) != transcolor) {
+                        dstdata.write(0, (char) paldata.read(srcdata.read()));
+                    }
+                    srcdata.inc();
+                    dstdata.inc();
+                }
+
+                srcdata.inc(srcmodulo);
+                dstdata.inc(ydir * dstmodulo - dstwidth * 1);
                 dstheight--;
             }
         }
