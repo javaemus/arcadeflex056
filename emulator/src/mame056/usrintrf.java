@@ -29,10 +29,10 @@ import static mame056.ui_textH.*;
 import static mame056.usrintrfH.*;
 import static mame056.inptport.*;
 import static mame056.version.*;
+import static mame056.driver.*;
 
 //to refactor
 import static arcadeflex037b7.video.*;
-import static mame037b7.driver.*;
 import static arcadeflex036.sound.*;
 
 public class usrintrf {

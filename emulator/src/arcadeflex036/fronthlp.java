@@ -24,7 +24,7 @@ import arcadeflex056.settings;
 import static arcadeflex036.libc_old.*;
 import static mame056.common.*;
 import static mame056.commonH.*;
-import static mame037b7.driver.drivers;
+import static mame056.driver.drivers;
 import static mame056.driverH.*;
 import static mame056.sndintrf.*;
 import static mame056.version.build_version;

@@ -1,3 +1,7 @@
+27/02/2019
+==========
+-Ported driver class to 0.56
+
 26/02/2019
 ==========
 -Ported ay8910 to mame0.56
