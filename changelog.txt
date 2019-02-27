@@ -1,6 +1,7 @@
 28/02/2019
 ==========
 -Implemented blockmove_8toN_transcolor16 in drawgfx
+-Added working pingpong driver
 
 27/02/2019
 ==========

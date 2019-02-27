@@ -7,6 +7,7 @@ import static mame056.driverH.*;
 
 import static mame056.drivers.minivadr.*;
 import static mame056.drivers.bankp.*;
+import static mame056.drivers.pingpong.*;
 
 public class driver {
 
@@ -15,7 +16,9 @@ public class driver {
          * Working
          */
         /*minivadr*/driver_minivadr,
-        /*bankp*/ driver_bankp, /**
+        /*bankp*/ driver_bankp,
+        /*pingpong*/driver_pingpong, //////////////////
+    /**
      * TODO
      */
     /*TODO*///	/* "Pacman hardware" games */
@@ -2586,7 +2589,6 @@ public class driver {
     /*TODO*///	driver_yiear2,	/* GX407 (c) 1985 */
     /*TODO*///	driver_kicker,	/* GX477 (c) 1985 */
     /*TODO*///	driver_shaolins,	/* GX477 (c) 1985 */
-    /*TODO*///	driver_pingpong,	/* GX555 (c) 1985 */
     /*TODO*///	driver_gberet,	/* GX577 (c) 1985 */
     /*TODO*///	driver_rushatck,	/* GX577 (c) 1985 */
     /*TODO*///	driver_gberetb,	/* bootleg on different hardware */
