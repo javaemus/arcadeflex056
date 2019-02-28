@@ -24,6 +24,7 @@ import mame056.sound.sn76477;
 import mame056.sound.sn76496;
 import mame056.sound.tms36xx;
 import mame056.sound.ay8910;
+import mame056.sound.namco;
 
 public class sndintrf {
 
@@ -577,19 +578,7 @@ public class sndintrf {
                 /*TODO*///		0
                 /*TODO*///	},
                 new Dummy_snd(),
-                /*TODO*///#endif
-                /*TODO*///#if (HAS_NAMCO)
-                /*TODO*///    {
-                /*TODO*///		SOUND_NAMCO,
-                /*TODO*///		"Namco",
-                /*TODO*///		0,
-                /*TODO*///		0,
-                /*TODO*///		namco_sh_start,
-                /*TODO*///		namco_sh_stop,
-                /*TODO*///		0,
-                /*TODO*///		0
-                /*TODO*///	},
-                new Dummy_snd(),
+                new namco(),
                 new tms36xx(),
                 /*TODO*///#endif
                 /*TODO*///#if (HAS_TMS5110)
