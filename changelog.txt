@@ -3,6 +3,7 @@
 -Implemented blockmove_8toN_transcolor16 in drawgfx
 -Added working pingpong driver
 -Added namco sound to 0.56
+-Some more work on mixer,filter
 
 27/02/2019
 ==========

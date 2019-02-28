@@ -21,28 +21,16 @@ public class filterH {
         int/*unsigned*/ prev_mac;
         int[] xprev = new int[FILTER_ORDER_MAX];
     }
-    /*TODO*///
-/*TODO*////* Allocate a FIR Low Pass filter */
-/*TODO*///filter* filter_lp_fir_alloc(double freq, int order);
-/*TODO*///void filter_free(filter* f);
-/*TODO*///
-/*TODO*////* Allocate a filter state */
-/*TODO*///filter_state* filter_state_alloc(void);
-/*TODO*///
-/*TODO*////* Free the filter state */
-/*TODO*///void filter_state_free(filter_state* s);
-/*TODO*///
-/*TODO*////* Clear the filter state */
-/*TODO*///void filter_state_reset(filter* f, filter_state* s);
-/*TODO*///
-/*TODO*////* Insert a value in the filter state */
-/*TODO*///INLINE void filter_insert(filter* f, filter_state* s, filter_real x) {
-/*TODO*///	/* next state */
-/*TODO*///	++s->prev_mac;
-/*TODO*///	if (s->prev_mac >= f->order)
-/*TODO*///		s->prev_mac = 0;
-/*TODO*///
-/*TODO*///	/* set x[0] */
-/*TODO*///	s->xprev[s->prev_mac] = x;
-/*TODO*///}    
+
+    /* Insert a value in the filter state */
+    public static void filter_insert(_filter f, filter_state s, int x) {
+        /* next state */
+        ++s.prev_mac;
+        if (s.prev_mac >= f.order) {
+            s.prev_mac = 0;
+        }
+
+        /* set x[0] */
+        s.xprev[s.prev_mac] = x;
+    }
 }

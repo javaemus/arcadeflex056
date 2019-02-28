@@ -38,43 +38,42 @@ public class filter {
 /*TODO*///void filter_state_free(filter_state* s) {
 /*TODO*///	free(s);
 /*TODO*///}
-/*TODO*///
-/*TODO*////****************************************************************************/
-/*TODO*////* FIR */
-/*TODO*///
-/*TODO*///filter_real filter_compute(filter* f, filter_state* s) {
-/*TODO*///	unsigned order = f->order;
-/*TODO*///	unsigned midorder = f->order / 2;
-/*TODO*///	filter_real y = 0;
-/*TODO*///	unsigned i,j,k;
-/*TODO*///
-/*TODO*///	/* i == [0] */
-/*TODO*///	/* j == [-2*midorder] */
-/*TODO*///	i = s->prev_mac;
-/*TODO*///	j = i + 1;
-/*TODO*///	if (j == order)
-/*TODO*///		j = 0;
-/*TODO*///
-/*TODO*///	/* x */
-/*TODO*///	for(k=0;k<midorder;++k) {
-/*TODO*///		y += f->xcoeffs[midorder-k] * (s->xprev[i] + s->xprev[j]);
-/*TODO*///		++j;
-/*TODO*///		if (j == order)
-/*TODO*///			j = 0;
-/*TODO*///		if (i == 0)
-/*TODO*///			i = order - 1;
-/*TODO*///		else
-/*TODO*///			--i;
-/*TODO*///	}
-/*TODO*///	y += f->xcoeffs[0] * s->xprev[i];
-/*TODO*///
-/*TODO*///#ifdef FILTER_USE_INT
-/*TODO*///	return y >> FILTER_INT_FRACT;
-/*TODO*///#else
-/*TODO*///	return y;
-/*TODO*///#endif
-/*TODO*///}
-/*TODO*///
+    /**
+     * *************************************************************************
+     */
+    /* FIR */
+    public static int filter_compute(_filter f, filter_state s) {
+        int/*unsigned*/ order = f.order;
+        int/*unsigned*/ midorder = f.order / 2;
+        int y = 0;
+        int/*unsigned*/ i, j, k;
+
+        /* i == [0] */
+ /* j == [-2*midorder] */
+        i = s.prev_mac;
+        j = i + 1;
+        if (j == order) {
+            j = 0;
+        }
+
+        /* x */
+        for (k = 0; k < midorder; ++k) {
+            y += f.xcoeffs[midorder - k] * (s.xprev[i] + s.xprev[j]);
+            ++j;
+            if (j == order) {
+                j = 0;
+            }
+            if (i == 0) {
+                i = order - 1;
+            } else {
+                --i;
+            }
+        }
+        y += f.xcoeffs[0] * s.xprev[i];
+
+        return y >> FILTER_INT_FRACT;
+    }
+
     public static _filter filter_lp_fir_alloc(double freq, int order) {
         _filter f = filter_alloc();
         int/*unsigned*/ midorder = (order - 1) / 2;

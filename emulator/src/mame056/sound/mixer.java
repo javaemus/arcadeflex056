@@ -300,52 +300,46 @@ public class mixer {
         } else if (channel.from_frequency == 0) {
             dst_pos = (dst_pos + dst_len) & ACCUMULATOR_MASK;
         } else {
-            throw new UnsupportedOperationException("Unsupported");
-            /*TODO*///		int pivot = channel->pivot;
-/*TODO*///
-/*TODO*///		/* end address */
-/*TODO*///		INT16* src_end = src + src_len;
-/*TODO*///		unsigned dst_pos_end = (dst_pos + dst_len) & ACCUMULATOR_MASK;
-/*TODO*///
-/*TODO*///		/* volume */
-/*TODO*///		filter_real v = volume;
-/*TODO*///
-/*TODO*///		if (channel->from_frequency < channel->to_frequency)
-/*TODO*///		{
-/*TODO*///			/* upsampling */
-/*TODO*///			while (src != src_end && dst_pos != dst_pos_end)
-/*TODO*///			{
-/*TODO*///				/* source */
-/*TODO*///				filter_insert(channel->filter,state,*src * v / 256.0);
-/*TODO*///				pivot += channel->from_frequency;
-/*TODO*///				if (pivot > 0)
-/*TODO*///				{
-/*TODO*///					pivot -= channel->to_frequency;
-/*TODO*///					++src;
-/*TODO*///				}
-/*TODO*///				/* dest */
-/*TODO*///				dst[dst_pos] += filter_compute(channel->filter,state);
-/*TODO*///				dst_pos = (dst_pos + 1) & ACCUMULATOR_MASK;
-/*TODO*///			}
-/*TODO*///		} else {
-/*TODO*///			/* downsampling */
-/*TODO*///			while (src != src_end && dst_pos != dst_pos_end)
-/*TODO*///			{
-/*TODO*///				/* source */
-/*TODO*///				filter_insert(channel->filter,state,*src * v / 256.0);
-/*TODO*///				pivot -= channel->to_frequency;
-/*TODO*///				++src;
-/*TODO*///				/* dest */
-/*TODO*///				if (pivot < 0)
-/*TODO*///				{
-/*TODO*///					pivot += channel->from_frequency;
-/*TODO*///					dst[dst_pos] += filter_compute(channel->filter,state);
-/*TODO*///					dst_pos = (dst_pos + 1) & ACCUMULATOR_MASK;
-/*TODO*///				}
-/*TODO*///			}
-/*TODO*///		}
-/*TODO*///
-/*TODO*///		channel->pivot = pivot;
+            int pivot = channel.pivot;
+
+            /* end address */
+            int src_end = (src.offset + src_len) * 2;
+            int/*unsigned*/ dst_pos_end = (dst_pos + dst_len) & ACCUMULATOR_MASK;
+
+            /* volume */
+            int v = volume;
+
+            if (channel.from_frequency < channel.to_frequency) {
+                /* upsampling */
+                while (src.offset != src_end && dst_pos != dst_pos_end) {
+                    /* source */
+                    filter_insert(channel.filter, state, (int) (src.read() * v / 256.0));
+                    pivot += channel.from_frequency;
+                    if (pivot > 0) {
+                        pivot -= channel.to_frequency;
+                        src.inc();
+                    }
+                    /* dest */
+                    dst[dst_pos] += filter_compute(channel.filter, state);
+                    dst_pos = (dst_pos + 1) & ACCUMULATOR_MASK;
+                }
+            } else {
+                /* downsampling */
+                while (src.offset != src_end && dst_pos != dst_pos_end) {
+                    /* source */
+                    filter_insert(channel.filter, state, (int) (src.read() * v / 256.0));
+                    pivot -= channel.to_frequency;
+                    src.inc();
+                    /* dest */
+                    if (pivot < 0) {
+                        pivot += channel.from_frequency;
+                        dst[dst_pos] += filter_compute(channel.filter, state);
+                        dst_pos = (dst_pos + 1) & ACCUMULATOR_MASK;
+                    }
+                }
+            }
+
+            channel.pivot = pivot;
         }
 
         psrc.offset = psrc_offset;//*psrc = src;
