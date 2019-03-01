@@ -8,6 +8,7 @@ import static mame056.driverH.*;
 import static mame056.drivers.minivadr.*;
 import static mame056.drivers.bankp.*;
 import static mame056.drivers.pingpong.*;
+import static mame056.drivers.pengo.*;
 
 public class driver {
 
@@ -17,7 +18,11 @@ public class driver {
          */
         /*minivadr*/driver_minivadr,
         /*bankp*/ driver_bankp,
-        /*pingpong*/driver_pingpong, //////////////////
+        /*pingpong*/ driver_pingpong,
+        /*pengo*/ driver_pengo,
+        /*pengo*/ driver_pengo2,
+        /*pengo*/ driver_pengo2u,
+        /*pengo*/ driver_penta,//////////////////
     /**
      * TODO
      */
@@ -57,10 +62,6 @@ public class driver {
     /*TODO*///	driver_vanvan,	/* (c) 1983 Karateco (bootleg?) */
     /*TODO*///	driver_vanvans,	/* (c) 1983 Sanritsu */
     /*TODO*///	driver_alibaba,	/* (c) 1982 Sega */
-    /*TODO*///	driver_pengo,		/* 834-0386 (c) 1982 Sega */
-    /*TODO*///	driver_pengo2,	/* 834-0386 (c) 1982 Sega */
-    /*TODO*///	driver_pengo2u,	/* 834-0386 (c) 1982 Sega */
-    /*TODO*///	driver_penta,		/* bootleg */
     /*TODO*///	driver_jrpacman,	/* (c) 1983 Midway */
     /*TODO*///	driver_jumpshot,	/* (c) 1985 Bally Midway */
     /*TODO*///	driver_shootbul,	/* (c) 1985 Bally Midway */
