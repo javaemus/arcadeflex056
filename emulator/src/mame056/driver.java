@@ -62,17 +62,26 @@ public class driver {
         /*pacman*/ driver_shootbul,
         /*pacman*/ driver_theglobp,
         /*pacman*/ driver_beastf,
+        /**
+         * GAME NOT WORKING FLAG
+         */
+        /*epos*/driver_theglob3,
+        /**
+         * GAME WRONG COLORS
+         */
+        /*epos*/driver_igmo,
+        /**
+         * GAMES WITH issues
+         */
+        /*epos*/driver_suprglob, //screen doesn't clear blue color in left and right of screen
+        /*epos*/driver_theglob, //screen doesn't clear blue color in left and right of screen
+        /*epos*/driver_theglob2,//screen doesn't clear blue color in left and right of screen
         //////////////////
         /**
          * TODO
          */
-        /*TODO*///    	driver_jrpacman,	/* (c) 1983 Midway */
-        /*TODO*///	/* Epos games */
-        driver_suprglob, /* (c) 1983 */
-        driver_theglob, /* (c) 1983 */
-        driver_theglob2, /* (c) 1983 */
-        driver_theglob3, /* (c) 1983 */
-        driver_igmo, /* (c) 1984 */ /*TODO*///
+
+         /* (c) 1984 */ /*TODO*///
     /*TODO*///	/* "Galaxian hardware" games */
     /*TODO*///	driver_galaxian,	/* (c) Namco */
     /*TODO*///	driver_galaxiaj,	/* (c) Namco */
