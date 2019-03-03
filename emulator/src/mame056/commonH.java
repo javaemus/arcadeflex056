@@ -21,11 +21,11 @@ public class commonH {
         public int width, height;/* width and height of the bitmap */
         public int depth;/* bits per pixel */
         public UBytePtr[] line;/* pointers to the start of each line - can be UINT8 **, UINT16 ** or UINT32 ** */
- 
-	/* alternate way of accessing the pixels */
-	public UBytePtr base;/* pointer to pixel (0,0) (adjusted for padding) */
-	public int rowpixels;/* pixels per row (including padding) */
-	public int rowbytes;/* bytes per row (including padding) */
+
+ /* alternate way of accessing the pixels */
+        public UBytePtr base;/* pointer to pixel (0,0) (adjusted for padding) */
+        public int rowpixels;/* pixels per row (including padding) */
+        public int rowbytes;/* bytes per row (including padding) */
     }
 
     public static class RomModule {
@@ -424,7 +424,10 @@ public class commonH {
         ROMX_LOAD(name, offset, length, crc, ROM_OPTIONAL);
     }
 
-    /*TODO*///#define ROM_CONTINUE(offset,length)					ROMX_LOAD(ROMENTRY_CONTINUE, offset, length, 0, ROM_INHERITFLAGS)
+    public static void ROM_CONTINUE(int offset, int length) {
+        ROMX_LOAD(ROMENTRY_CONTINUE, offset, length, 0, ROM_INHERITFLAGS);
+    }
+
     public static void ROM_RELOAD(int offset, int length) {
         ROMX_LOAD(ROMENTRY_RELOAD, offset, length, 0, ROM_INHERITFLAGS);
     }

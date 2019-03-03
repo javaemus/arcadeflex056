@@ -743,7 +743,7 @@ public class mame {
         return 1;
     }
 
-    void set_led_status(int num, int on) {
+    public static void set_led_status(int num, int on) {
         if (on != 0) {
             leds_status |= (1 << num);
         } else {

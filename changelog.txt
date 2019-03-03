@@ -1,3 +1,7 @@
+03/03/2019
+==========
+-Ported pacman driver to 0.56 (all games playable)
+
 01/03/2019
 ==========
 -Ported pengo driver to 0.56

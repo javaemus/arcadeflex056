@@ -264,14 +264,17 @@ public class cpuintrfH {
     	{ 18, cpu_readmem18bedw }*/
     }
 
+    /**
+     * ***********************************
+     *
+     * Macros
+     *
+     ************************************
+     */
+    public static int activecpu_get_previouspc() {
+        return activecpu_get_reg(REG_PREVIOUSPC);
+    }
 
-    /*TODO*////*************************************
-/*TODO*/// *
-/*TODO*/// *	 Macros
-/*TODO*/// *
-/*TODO*/// *************************************/
-/*TODO*///
-/*TODO*///#define		activecpu_get_previouspc()	activecpu_get_reg(REG_PREVIOUSPC)
     public static int activecpu_get_pc() {
         return activecpu_get_reg(REG_PC);
     }
@@ -301,8 +304,7 @@ public class cpuintrfH {
 
     /*TODO*///#define		cpu_set_reg					activecpu_set_reg
     public static int cpu_getpreviouspc() {
-        throw new UnsupportedOperationException("Unsupported");
-        /*TODO*///    activecpu_get_previouspc
+        return activecpu_get_previouspc();
     }
 
     public static void cpu_set_op_base(int val) {

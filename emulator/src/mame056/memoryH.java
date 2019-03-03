@@ -202,8 +202,8 @@ public class memoryH {
 /*TODO*///
 /*TODO*////* 8-bit reads */
     public static final int MRA_BANK1 = STATIC_BANK1;
-    /*TODO*///#define MRA_BANK2				((mem_read_handler)STATIC_BANK2)
-/*TODO*///#define MRA_BANK3				((mem_read_handler)STATIC_BANK3)
+    public static final int MRA_BANK2 = STATIC_BANK2;
+    /*TODO*///#define MRA_BANK3				((mem_read_handler)STATIC_BANK3)
 /*TODO*///#define MRA_BANK4				((mem_read_handler)STATIC_BANK4)
 /*TODO*///#define MRA_BANK5				((mem_read_handler)STATIC_BANK5)
 /*TODO*///#define MRA_BANK6				((mem_read_handler)STATIC_BANK6)
@@ -231,10 +231,9 @@ public class memoryH {
 
     public static final int MRA_RAMROM = STATIC_RAMROM;
 
-    /*TODO*///
-/*TODO*////* 8-bit writes */
-/*TODO*///#define MWA_BANK1				((mem_write_handler)STATIC_BANK1)
-/*TODO*///#define MWA_BANK2				((mem_write_handler)STATIC_BANK2)
+    /* 8-bit writes */
+    public static final int MWA_BANK1 = STATIC_BANK1;
+    /*TODO*///#define MWA_BANK2				((mem_write_handler)STATIC_BANK2)
 /*TODO*///#define MWA_BANK3				((mem_write_handler)STATIC_BANK3)
 /*TODO*///#define MWA_BANK4				((mem_write_handler)STATIC_BANK4)
 /*TODO*///#define MWA_BANK5				((mem_write_handler)STATIC_BANK5)

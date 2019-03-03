@@ -371,30 +371,28 @@ public class memory {
 /*TODO*///	return old;
 /*TODO*///}
 /*TODO*///
-/*TODO*///
-/*TODO*////*-------------------------------------------------
-/*TODO*///	install_mem_read_handler - install dynamic
-/*TODO*///	read handler for 8-bit case
-/*TODO*///-------------------------------------------------*/
-/*TODO*///
-/*TODO*///data8_t *install_mem_read_handler(int cpunum, offs_t start, offs_t end, mem_read_handler handler)
-/*TODO*///{
-/*TODO*///	/* sanity check */
-/*TODO*///	if (cpudata[cpunum].mem.dbits != 8)
-/*TODO*///	{
-/*TODO*///		printf("fatal: install_mem_read_handler called on %d-bit cpu\n",cpudata[cpunum].mem.dbits);
-/*TODO*///		exit(1);
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	/* install the handler */
-/*TODO*///	install_mem_handler(&cpudata[cpunum].mem, 0, start, end, (void *)handler);
-/*TODO*///#ifdef MEM_DUMP
-/*TODO*///	/* dump the new memory configuration */
-/*TODO*///	mem_dump();
-/*TODO*///#endif
-/*TODO*///	return memory_find_base(cpunum, start);
-/*TODO*///}
-/*TODO*///
+
+    /*-------------------------------------------------
+	install_mem_read_handler - install dynamic
+	read handler for 8-bit case
+    -------------------------------------------------*/
+    public static UBytePtr install_mem_read_handler(int cpunum, int start, int end, ReadHandlerPtr handler) {
+        /* sanity check */
+        if (cpudata[cpunum].mem.dbits != 8) {
+            printf("fatal: install_mem_read_handler called on %d-bit cpu\n", cpudata[cpunum].mem.dbits);
+            throw new UnsupportedOperationException("Unsupported");
+        }
+
+        /* install the handler */
+        install_mem_handler(cpudata[cpunum].mem, 0, start, end, -15000, handler);
+
+        /* dump the new memory configuration */
+        mem_dump();
+
+        return memory_find_base(cpunum, start);
+    }
+
+    /*TODO*///
 /*TODO*///
 /*TODO*////*-------------------------------------------------
 /*TODO*///	install_mem_read16_handler - install dynamic
@@ -3064,7 +3062,7 @@ public class memory {
         /*TODO*///	memset(wporthandler32, 0, sizeof(wporthandler32));
         /*TODO*///
         set_static_handler(STATIC_BANK1, mrh8_bank1, mwh8_bank1);/*TODO*///	set_static_handler(STATIC_BANK1,  mrh8_bank1,  NULL,         NULL,         mwh8_bank1,  NULL,         NULL);
-        /*TODO*///	set_static_handler(STATIC_BANK2,  mrh8_bank2,  NULL,         NULL,         mwh8_bank2,  NULL,         NULL);
+        set_static_handler(STATIC_BANK2, mrh8_bank2, mwh8_bank2);/*TODO*///	set_static_handler(STATIC_BANK2,  mrh8_bank2,  NULL,         NULL,         mwh8_bank2,  NULL,         NULL);
         /*TODO*///	set_static_handler(STATIC_BANK3,  mrh8_bank3,  NULL,         NULL,         mwh8_bank3,  NULL,         NULL);
         /*TODO*///	set_static_handler(STATIC_BANK4,  mrh8_bank4,  NULL,         NULL,         mwh8_bank4,  NULL,         NULL);
         /*TODO*///	set_static_handler(STATIC_BANK5,  mrh8_bank5,  NULL,         NULL,         mwh8_bank5,  NULL,         NULL);

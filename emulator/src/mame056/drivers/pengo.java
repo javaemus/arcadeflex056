@@ -17,7 +17,6 @@ import static mame056.drawgfxH.*;
 import static mame056.driverH.*;
 import static mame056.inptport.*;
 import static mame056.inptportH.*;
-import static mame056.input.*;
 import static mame056.inputH.*;
 import static mame056.memory.*;
 import static mame056.memoryH.*;

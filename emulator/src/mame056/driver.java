@@ -9,6 +9,7 @@ import static mame056.drivers.minivadr.*;
 import static mame056.drivers.bankp.*;
 import static mame056.drivers.pingpong.*;
 import static mame056.drivers.pengo.*;
+import static mame056.drivers.pacman.*;
 
 public class driver {
 
@@ -22,50 +23,48 @@ public class driver {
         /*pengo*/ driver_pengo,
         /*pengo*/ driver_pengo2,
         /*pengo*/ driver_pengo2u,
-        /*pengo*/ driver_penta,//////////////////
+        /*pengo*/ driver_penta,
+        /*pacman*/ driver_puckman,
+        /*pacman*/ driver_puckmana,
+        /*pacman*/ driver_pacman,
+        /*pacman*/ driver_puckmod,
+        /*pacman*/ driver_pacmod,
+        /*pacman*/ driver_hangly,
+        /*pacman*/ driver_hangly2,
+        /*pacman*/ driver_newpuckx,
+        /*pacman*/ driver_pacheart,
+        /*pacman*/ driver_piranha,
+        /*pacman*/ driver_pacplus,
+        /*pacman*/ driver_mspacman,
+        /*pacman*/ driver_mspacmab,
+        /*pacman*/ driver_mspacmat,
+        /*pacman*/ driver_mspacpls,
+        /*pacman*/ driver_pacgal,
+        /*pacman*/ driver_mschamp,
+        /*pacman*/ driver_maketrax,
+        /*pacman*/ driver_crush,
+        /*pacman*/ driver_crush2,
+        /*pacman*/ driver_crush3,
+        /*pacman*/ driver_mbrush,
+        /*pacman*/ driver_paintrlr,
+        /*pacman*/ driver_eyes,
+        /*pacman*/ driver_eyes2,
+        /*pacman*/ driver_mrtnt,
+        /*pacman*/ driver_ponpoko,
+        /*pacman*/ driver_ponpokov,
+        /*pacman*/ driver_lizwiz,
+        /*pacman*/ driver_dremshpr,
+        /*pacman*/ driver_vanvan,
+        /*pacman*/ driver_vanvans,
+        /*pacman*/ driver_alibaba,
+        /*pacman*/ driver_jumpshot,
+        /*pacman*/ driver_shootbul, //////////////////
     /**
      * TODO
      */
-    /*TODO*///	/* "Pacman hardware" games */
-    /*TODO*///	driver_puckman,	/* (c) 1980 Namco */
-    /*TODO*///	driver_puckmana,	/* (c) 1980 Namco */
-    /*TODO*///	driver_pacman,	/* (c) 1980 Midway */
-    /*TODO*///	driver_puckmod,	/* (c) 1981 Namco */
-    /*TODO*///	driver_pacmod,	/* (c) 1981 Midway */
-    /*TODO*///	driver_hangly,	/* hack */
-    /*TODO*///	driver_hangly2,	/* hack */
-    /*TODO*///	driver_newpuckx,	/* hack */
-    /*TODO*///	driver_pacheart,	/* hack */
-    /*TODO*///	driver_piranha,	/* hack */
-    /*TODO*///	driver_pacplus,
-    /*TODO*///	driver_mspacman,	/* (c) 1981 Midway */	/* made by Gencomp */
-    /*TODO*///	driver_mspacmab,	/* bootleg */
-    /*TODO*///	driver_mspacmat,	/* hack */
-    /*TODO*///	driver_mspacpls,	/* hack */
-    /*TODO*///	driver_pacgal,	/* hack */
-    /*TODO*///	driver_mschamp,	/* hack */
-    /*TODO*///	driver_maketrax,	/* (c) 1981 Williams, high score table says KRL (fur Kural) */
-    /*TODO*///	driver_crush,		/* (c) 1981 Kural Samno Electric Ltd */
-    /*TODO*///	driver_crush2,	/* (c) 1981 Kural Esco Electric Ltd - bootleg? */
-    /*TODO*///	driver_crush3,	/* Kural Electric Ltd - bootleg? */
-    /*TODO*///	driver_mbrush,	/* 1981 bootleg */
-    /*TODO*///	driver_paintrlr,	/* 1981 bootleg */
-    /*TODO*///	driver_eyes,		/* (c) 1982 Digitrex Techstar + "Rockola presents" */
-    /*TODO*///	driver_eyes2,		/* (c) 1982 Techstar + "Rockola presents" */
-    /*TODO*///	driver_mrtnt,		/* (c) 1983 Telko */
-    /*TODO*///	driver_ponpoko,	/* (c) 1982 Sigma Ent. Inc. */
-    /*TODO*///	driver_ponpokov,	/* (c) 1982 Sigma Ent. Inc. + Venture Line license */
-    /*TODO*///	driver_lizwiz,	/* (c) 1985 Techstar + "Sunn presents" */
-    /*TODO*///	driver_theglobp,	/* (c) 1983 Epos Corporation */
-    /*TODO*///	driver_beastf,	/* (c) 1984 Epos Corporation */
-    /*TODO*///	driver_dremshpr,	/* (c) 1982 Sanritsu */
-    /*TODO*///	driver_vanvan,	/* (c) 1983 Karateco (bootleg?) */
-    /*TODO*///	driver_vanvans,	/* (c) 1983 Sanritsu */
-    /*TODO*///	driver_alibaba,	/* (c) 1982 Sega */
-    /*TODO*///	driver_jrpacman,	/* (c) 1983 Midway */
-    /*TODO*///	driver_jumpshot,	/* (c) 1985 Bally Midway */
-    /*TODO*///	driver_shootbul,	/* (c) 1985 Bally Midway */
-    /*TODO*///
+    /*TODO*///    	driver_theglobp,	/* (c) 1983 Epos Corporation */
+    /*TODO*///    	driver_beastf,	/* (c) 1984 Epos Corporation */
+    /*TODO*///    	driver_jrpacman,	/* (c) 1983 Midway */
     /*TODO*///	/* Epos games */
     /*TODO*///	driver_suprglob,	/* (c) 1983 */
     /*TODO*///	driver_theglob,	/* (c) 1983 */
