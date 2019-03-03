@@ -1,6 +1,8 @@
 03/03/2019
 ==========
 -Ported pacman driver to 0.56 (all games playable)
+-Added epos driver to 0.56 (small screen issues , blue color doesn't clear properly left and right of screen)
+
 
 01/03/2019
 ==========

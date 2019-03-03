@@ -3631,7 +3631,7 @@ public class drawgfx {
     };
     public static plot_pixel_procPtr pp_16_nd_fy_s = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT16 *)b -> line[b -> height - 1 - x])[y] = p;
+            new UShortPtr(b.line[b.height - 1 - x]).write(y, (char) p);
         }
     };
     public static plot_pixel_procPtr pp_16_nd_fxy_s = new plot_pixel_procPtr() {

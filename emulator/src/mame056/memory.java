@@ -2448,11 +2448,9 @@ public class memory {
             } /* banked memory */ else if (entry >= STATIC_BANK1 && entry <= STATIC_RAM) {
                 base = cpu_bankbase[entry];
             } /* other memory -- could be very slow! */ else {
-                throw new UnsupportedOperationException("Unsupported");
-                /*TODO*///		logerror("cpu #%d (PC=%08X): warning - op-code execute on mapped I/O\n",		
-/*TODO*///					cpu_getactivecpu(), activecpu_get_pc());									
-/*TODO*///		/*base = memory_find_base(cpu_getactivecpu(), pc);*/							
-/*TODO*///		return;																			
+                logerror("cpu #%d (PC=%08X): warning - op-code execute on mapped I/O\n", cpu_getactivecpu(), activecpu_get_pc());
+                /*base = memory_find_base(cpu_getactivecpu(), pc);*/
+                return;
             }
 
             /* compute the adjusted base */

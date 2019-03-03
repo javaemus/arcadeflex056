@@ -25,6 +25,8 @@ import static mame056.memoryH.*;
 import static mame056.sndintrfH.*;
 import static mame056.cpuexec.*;
 
+import static mame056.drivers.epos.*;
+
 import static mame056.machine.mspacman.*;
 import static mame056.machine.theglobp.*;
 import static mame056.machine.pacplus.*;
@@ -2888,8 +2890,8 @@ public class pacman {
     public static GameDriver driver_eyes2 = new GameDriver("1982", "eyes2", "pacman.java", rom_eyes2, driver_eyes, machine_driver_pacman, input_ports_eyes, init_eyes, ROT90, "Techstar Inc. (Rock-ola license)", "Eyes (Techstar Inc.)");
     public static GameDriver driver_mrtnt = new GameDriver("1983", "mrtnt", "pacman.java", rom_mrtnt, null, machine_driver_pacman, input_ports_mrtnt, init_eyes, ROT90, "Telko", "Mr. TNT");
     public static GameDriver driver_lizwiz = new GameDriver("1985", "lizwiz", "pacman.java", rom_lizwiz, null, machine_driver_pacman, input_ports_lizwiz, null, ROT90, "Techstar (Sunn license)", "Lizard Wizard");
-/*TODO*///    public static GameDriver driver_theglobp = new GameDriver("1983", "theglobp", "pacman.java", rom_theglobp, driver_suprglob, machine_driver_theglobp, input_ports_theglobp, null, ROT90, "Epos Corporation", "The Glob (Pac-Man hardware)");
-/*TODO*///    public static GameDriver driver_beastf = new GameDriver("1984", "beastf", "pacman.java", rom_beastf, driver_suprglob, machine_driver_theglobp, input_ports_theglobp, null, ROT90, "Epos Corporation", "Beastie Feastie");
+    public static GameDriver driver_theglobp = new GameDriver("1983", "theglobp", "pacman.java", rom_theglobp, driver_suprglob, machine_driver_theglobp, input_ports_theglobp, null, ROT90, "Epos Corporation", "The Glob (Pac-Man hardware)");
+    public static GameDriver driver_beastf = new GameDriver("1984", "beastf", "pacman.java", rom_beastf, driver_suprglob, machine_driver_theglobp, input_ports_theglobp, null, ROT90, "Epos Corporation", "Beastie Feastie");
     public static GameDriver driver_dremshpr = new GameDriver("1982", "dremshpr", "pacman.java", rom_dremshpr, null, machine_driver_dremshpr, input_ports_dremshpr, null, ROT270, "Sanritsu", "Dream Shopper");
     public static GameDriver driver_vanvan = new GameDriver("1983", "vanvan", "pacman.java", rom_vanvan, null, machine_driver_vanvan, input_ports_vanvan, null, ROT270, "Karateco", "Van Van Car");
     public static GameDriver driver_vanvans = new GameDriver("1983", "vanvans", "pacman.java", rom_vanvans, driver_vanvan, machine_driver_vanvan, input_ports_vanvans, null, ROT270, "Sanritsu", "Van Van Car (Sanritsu)");

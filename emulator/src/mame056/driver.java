@@ -10,6 +10,7 @@ import static mame056.drivers.bankp.*;
 import static mame056.drivers.pingpong.*;
 import static mame056.drivers.pengo.*;
 import static mame056.drivers.pacman.*;
+import static mame056.drivers.epos.*;
 
 public class driver {
 
@@ -58,20 +59,20 @@ public class driver {
         /*pacman*/ driver_vanvans,
         /*pacman*/ driver_alibaba,
         /*pacman*/ driver_jumpshot,
-        /*pacman*/ driver_shootbul, //////////////////
-    /**
-     * TODO
-     */
-    /*TODO*///    	driver_theglobp,	/* (c) 1983 Epos Corporation */
-    /*TODO*///    	driver_beastf,	/* (c) 1984 Epos Corporation */
-    /*TODO*///    	driver_jrpacman,	/* (c) 1983 Midway */
-    /*TODO*///	/* Epos games */
-    /*TODO*///	driver_suprglob,	/* (c) 1983 */
-    /*TODO*///	driver_theglob,	/* (c) 1983 */
-    /*TODO*///	driver_theglob2,	/* (c) 1983 */
-    /*TODO*///	driver_theglob3,	/* (c) 1983 */
-    /*TODO*///	driver_igmo,		/* (c) 1984 */
-    /*TODO*///
+        /*pacman*/ driver_shootbul,
+        /*pacman*/ driver_theglobp,
+        /*pacman*/ driver_beastf,
+        //////////////////
+        /**
+         * TODO
+         */
+        /*TODO*///    	driver_jrpacman,	/* (c) 1983 Midway */
+        /*TODO*///	/* Epos games */
+        driver_suprglob, /* (c) 1983 */
+        driver_theglob, /* (c) 1983 */
+        driver_theglob2, /* (c) 1983 */
+        driver_theglob3, /* (c) 1983 */
+        driver_igmo, /* (c) 1984 */ /*TODO*///
     /*TODO*///	/* "Galaxian hardware" games */
     /*TODO*///	driver_galaxian,	/* (c) Namco */
     /*TODO*///	driver_galaxiaj,	/* (c) Namco */

@@ -16,7 +16,7 @@ import static mame056.drivers.pacman.*;
 
 public class theglobp {
 
-    static int counter = 0;
+    static int counter_glob = 0;
 
     static void theglobp_decrypt_rom_8() {
         int oldbyte, inverted_oldbyte, newbyte;
@@ -155,29 +155,29 @@ public class theglobp {
             UBytePtr RAM = memory_region(REGION_CPU1);
 
             if ((offset & 0x01) != 0) {
-                counter = counter - 1;
-                if (counter < 0) {
-                    counter = 0x0F;
+                counter_glob = counter_glob - 1;
+                if (counter_glob < 0) {
+                    counter_glob = 0x0F;
                 }
             } else {
-                counter = (counter + 1) & 0x0F;
+                counter_glob = (counter_glob + 1) & 0x0F;
             }
 
-            switch (counter) {
+            switch (counter_glob) {
                 case 0x08:
                     cpu_setbank(1, new UBytePtr(RAM, 0x10000));
                     break;
                 case 0x09:
-                    cpu_setbank(1, new UBytePtr(0x14000));
+                    cpu_setbank(1, new UBytePtr(RAM,0x14000));
                     break;
                 case 0x0A:
-                    cpu_setbank(1, new UBytePtr(0x18000));
+                    cpu_setbank(1, new UBytePtr(RAM,0x18000));
                     break;
                 case 0x0B:
-                    cpu_setbank(1, new UBytePtr(0x1C000));
+                    cpu_setbank(1, new UBytePtr(RAM,0x1C000));
                     break;
                 default:
-                    logerror("Invalid counter = %02X\n", counter);
+                    logerror("Invalid counter = %02X\n", counter_glob);
                     break;
             }
 
@@ -199,7 +199,7 @@ public class theglobp {
             theglobp_decrypt_rom_B();
 
             /* The initial state of the counter is 0x0A */
-            counter = 0x0A;
+            counter_glob = 0x0A;
             cpu_setbank(1, new UBytePtr(RAM, 0x18000));
 
             pacman_init_machine.handler();
