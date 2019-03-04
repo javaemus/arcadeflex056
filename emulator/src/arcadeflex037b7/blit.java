@@ -48,7 +48,7 @@ public class blit {
     /*TODO*/////extern int mmxlfb;
     
     // OLD VARIABLES
-    public static int[] palette = new int[256];
+    public static int[] palette = new int[1024*4];
     public static char[] back_buffer;
     
     public static int[] doublepixel=new int[256];
@@ -66,7 +66,7 @@ public class blit {
     public static void set_color(int index,RGB entry)
     {
         int rgb =  entry.r<<16 | entry.g<<8 | entry.b;
-        /*TODO*/////palette_16bit_lookup[index]=rgb;
+        //palette_16bit_lookup[index]=rgb;
         palette[index]=rgb;
     }
     
@@ -152,109 +152,32 @@ public class blit {
 		}
     }
     
-    public static void blitscreen_dirty1_vga_old()
-        {
-            
-            int w, h;
-            
-            /*System.out.println("----------------------------------------");
-            System.out.println("Width: "+Machine.scrbitmap.width);
-            System.out.println("gfx_width: "+gfx_width);
-            System.out.println("gfx_display_columns: "+gfx_display_columns);*/
-            //Machine.scrbitmap.width = 256;
-           /* while (true)
-            {*/
-                for (int i = 0; i < Machine.scrbitmap.height; i++)
-                {
-                    /*UShortPtr myArr = new UShortPtr(Machine.scrbitmap.line[i].memory);
-                    back_buffer = new char[Machine.scrbitmap.line[i].memory.length];
-                    
-                    for (int r=0 ; r<(Machine.scrbitmap.width *4) ; r++){
-                        back_buffer[r] = myArr.read(r);
-                    }*/
-                    System.arraycopy(Machine.scrbitmap.line[i].memory, 
-                            Machine.scrbitmap.line[i].offset, 
-                            
-                            back_buffer, 
-                            i * Machine.scrbitmap.width,
-                            
-                            Machine.scrbitmap.width);
-                    
-                    //for (int j=0 ; j<(Machine.scrbitmap.width *2) ; j++)
-                    //    System.out.print(((int)back_buffer[j])+" ");
-                    
-                    //System.out.println();
-                }
-                
-                //System.out.println("----------------------------------------");
-                
-                
-
-                {
-                    //int sbi = Machine.scrbitmap.line[skiplines].offset + skipcolumns;
-                    int sbi = 0;
-                    //w = drv.screen_width;// gfx_display_columns;
-                    //h = drv.screen_height;// gfx_display_lines;
-                    //w =  gfx_display_columns;
-                    //h =  gfx_display_lines;
-
-                    w = Machine.scrbitmap.width;                    
-                    //w=video.gfx_width;
-                    h = Machine.scrbitmap.height;
-                    
-                    /*System.out.println("W:"+w);
-                    System.out.println("H:"+h);
-                    System.out.println("W*H: "+w*h);
-                    System.out.println("back_buffer_lenght: "+back_buffer.length);
-                    System.out.println("screen pixels lenght: "+screen._pixels.length);*/
-                    //h=video.gfx_height;
-                //System.out.println("Screen pixels long: "+screen._pixels.length);
-                for (int y = 0; y < h; y++) {
-                    if (Machine.color_depth == 16){
-                        int posi = 0;
-                        //for (int x = 0; x < (w); x++){
-                        int x = 0;
-                        while (x<(w*2)){
-                            
-                            if ((posi + (y * w))<(screen._pixels.length)){
-                                if ((x%2)==1){
-                                    int p = ((int)back_buffer[sbi + x + (y * w)]<<8)+((int)back_buffer[sbi + x - 1 + (y * w)]);
-                                    //System.out.print(p+"-");
-                                    screen._pixels[posi + (y * w)] = ( palette[p] ) ;
-                                    
-                                    posi++;
-                                }
-                                //screen._pixels[x + (y * w)] = (palette[back_buffer[sbi + x + (y * w)]] ) ;
-                                //posi=posi+2;
-                                //System.out.print(((int)back_buffer[sbi + x + (y * w)])+"-");
-                            }
-                            x++;
-                        }
-                        //System.out.println("X="+x);
-                        //System.out.println();
-                        //screen._pixels[42012]= 16777215;
-                        //screen._pixels[41520]= 16777215;
-                    } else {
-                        for (int x = 0; x < w; x++)
-                        {
-                            
-                            if ((x + (y * w))<(screen._pixels.length))
-                            screen._pixels[x + (y * w)] = 
-                                    palette[back_buffer[sbi + x + (y * w)]];
-                            
-                        }
-                    }
-                }
-                    screen.blit();
-                    
-
-                //}
-            }
-        }
+    public static void blitscreen_dirty0_palettized16(mame_bitmap bitmap) 
+    { 
+        
+        int x,y; 
+        int width=(bitmap.line[1].read() - bitmap.line[0].read())>>1; 
+        int columns=gfx_display_columns; 
+        UShortPtr lb = new UShortPtr(bitmap.line[skiplines], skipcolumns);
+        UShortPtr address = new UShortPtr(screen._pixels, gfx_xoffset + (gfx_yoffset * gfx_width)); 
+ 
+ 
+        for (y = 0; y < gfx_display_lines; y++) 
+        { 
+            for (x = 0; x < columns; x++) 
+            { 
+                address.write(x, (char) palette_16bit_lookup[lb.read(x)]); 
+            } 
+            lb.inc(width); 
+            address.inc(gfx_width); 
+        } 
+	 
+        screen.blit(); 
+    } 
     
     public static void blitscreen_dirty1_vga()
     {
-
+        //blitscreen_dirty0_palettized16(Machine.scrbitmap);
         int w, h;
 
 
@@ -298,13 +221,7 @@ public class blit {
                 w = Machine.scrbitmap.width;                    
                 h = Machine.scrbitmap.height;
 
-                /*System.out.println("W:"+w);
-                System.out.println("H:"+h);
-                System.out.println("W*H: "+w*h);
-                System.out.println("palette_lenght: "+palette.length);
-                System.out.println("back_buffer_lenght: "+back_buffer.length);
-                System.out.println("screen pixels lenght: "+screen._pixels.length);*/
-
+          
             for (int y = 0; y < h; y++) {
 
                     for (int x = 0; x < w; x++)
@@ -320,7 +237,7 @@ public class blit {
 
             }
                 screen.blit();
-
+                
 
     }
     
