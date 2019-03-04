@@ -237,10 +237,24 @@ public class ptr {
         public UShortPtr(UBytePtr cp, int b) {
             set(cp.memory, cp.offset + b);
         }
+        
+        public UShortPtr(int[] cp, int b) {
+            set(cp, b);
+        }
 
         public void set(char[] m, int b) {
             memory = m;
             offset = b;
+        }
+        
+        public void set(int[] m, int b) {
+            //memory = m;
+            //System.out.println(m);
+            //System.out.println(memory);
+            if (m!=null && memory!=null){
+                System.arraycopy(m, 0, memory, 0, m.length);
+                offset = b;
+            }
         }
 
         public void set(char[] m) {
