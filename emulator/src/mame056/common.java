@@ -20,6 +20,7 @@ import static mame056.cpuexecH.*;
 import static mame056.cpuintrf.*;
 import static mame056.cpuintrfH.*;
 import static mame056.drawgfxH.*;
+import static mame056.tilemapH.*;
 
 //to refactor
 import static arcadeflex037b7.video.osd_set_visible_area;
@@ -27,6 +28,7 @@ import static arcadeflex036.fileio.*;
 import arcadeflex036.libc_old.FILE;
 import static arcadeflex036.libc_old.*;
 import static arcadeflex036.osdepend.logerror;
+
 
 public class common {
 
@@ -472,105 +474,105 @@ public class common {
         }
     }
 
-    /*TODO*///
-/*TODO*///
-/*TODO*////***************************************************************************
-/*TODO*///
-/*TODO*///	Global video attribute handling code
-/*TODO*///
-/*TODO*///***************************************************************************/
-/*TODO*///
-/*TODO*////*-------------------------------------------------
-/*TODO*///	updateflip - handle global flipping
-/*TODO*///-------------------------------------------------*/
-/*TODO*///
-/*TODO*///static void updateflip(void)
-/*TODO*///{
-/*TODO*///	int min_x,max_x,min_y,max_y;
-/*TODO*///
-/*TODO*///	tilemap_set_flip(ALL_TILEMAPS,(TILEMAP_FLIPX & flip_screen_x) | (TILEMAP_FLIPY & flip_screen_y));
-/*TODO*///
-/*TODO*///	min_x = Machine->drv->default_visible_area.min_x;
-/*TODO*///	max_x = Machine->drv->default_visible_area.max_x;
-/*TODO*///	min_y = Machine->drv->default_visible_area.min_y;
-/*TODO*///	max_y = Machine->drv->default_visible_area.max_y;
-/*TODO*///
-/*TODO*///	if (flip_screen_x)
-/*TODO*///	{
-/*TODO*///		int temp;
-/*TODO*///
-/*TODO*///		temp = Machine->drv->screen_width - min_x - 1;
-/*TODO*///		min_x = Machine->drv->screen_width - max_x - 1;
-/*TODO*///		max_x = temp;
-/*TODO*///	}
-/*TODO*///	if (flip_screen_y)
-/*TODO*///	{
-/*TODO*///		int temp;
-/*TODO*///
-/*TODO*///		temp = Machine->drv->screen_height - min_y - 1;
-/*TODO*///		min_y = Machine->drv->screen_height - max_y - 1;
-/*TODO*///		max_y = temp;
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	set_visible_area(min_x,max_x,min_y,max_y);
-/*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*////*-------------------------------------------------
-/*TODO*///	flip_screen_set - set global flip
-/*TODO*///-------------------------------------------------*/
-/*TODO*///
-/*TODO*///void flip_screen_set(int on)
-/*TODO*///{
-/*TODO*///	flip_screen_x_set(on);
-/*TODO*///	flip_screen_y_set(on);
-/*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*////*-------------------------------------------------
-/*TODO*///	flip_screen_x_set - set global horizontal flip
-/*TODO*///-------------------------------------------------*/
-/*TODO*///
-/*TODO*///void flip_screen_x_set(int on)
-/*TODO*///{
-/*TODO*///	if (on) on = ~0;
-/*TODO*///	if (flip_screen_x != on)
-/*TODO*///	{
-/*TODO*///		set_vh_global_attribute(&flip_screen_x,on);
-/*TODO*///		updateflip();
-/*TODO*///	}
-/*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*////*-------------------------------------------------
-/*TODO*///	flip_screen_y_set - set global vertical flip
-/*TODO*///-------------------------------------------------*/
-/*TODO*///
-/*TODO*///void flip_screen_y_set(int on)
-/*TODO*///{
-/*TODO*///	if (on) on = ~0;
-/*TODO*///	if (flip_screen_y != on)
-/*TODO*///	{
-/*TODO*///		set_vh_global_attribute(&flip_screen_y,on);
-/*TODO*///		updateflip();
-/*TODO*///	}
-/*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*////*-------------------------------------------------
-/*TODO*///	set_vh_global_attribute - set an arbitrary
-/*TODO*///	global video attribute
-/*TODO*///-------------------------------------------------*/
-/*TODO*///
-/*TODO*///void set_vh_global_attribute( int *addr, int data )
-/*TODO*///{
-/*TODO*///	if (*addr != data)
-/*TODO*///	{
-/*TODO*///		schedule_full_refresh();
-/*TODO*///		*addr = data;
-/*TODO*///	}
-/*TODO*///}
-/*TODO*///
+    
+
+    /***************************************************************************
+
+            Global video attribute handling code
+
+    ***************************************************************************/
+
+    /*-------------------------------------------------
+            updateflip - handle global flipping
+    -------------------------------------------------*/
+
+    public static void updateflip()
+    {
+            int min_x,max_x,min_y,max_y;
+
+            /*TODO*///tilemap_set_flip(ALL_TILEMAPS,(TILEMAP_FLIPX & flip_screen_x[0]) | (TILEMAP_FLIPY & flip_screen_y[0]));
+
+            min_x = Machine.drv.default_visible_area.min_x;
+            max_x = Machine.drv.default_visible_area.max_x;
+            min_y = Machine.drv.default_visible_area.min_y;
+            max_y = Machine.drv.default_visible_area.max_y;
+
+            if (flip_screen_x != null)
+            {
+                    int temp;
+
+                    temp = Machine.drv.screen_width - min_x - 1;
+                    min_x = Machine.drv.screen_width - max_x - 1;
+                    max_x = temp;
+            }
+            if (flip_screen_y != null)
+            {
+                    int temp;
+
+                    temp = Machine.drv.screen_height - min_y - 1;
+                    min_y = Machine.drv.screen_height - max_y - 1;
+                    max_y = temp;
+            }
+
+            set_visible_area(min_x,max_x,min_y,max_y);
+    }
+
+
+    /*-------------------------------------------------
+            flip_screen_set - set global flip
+    -------------------------------------------------*/
+
+    public static void flip_screen_set(int on)
+    {
+            flip_screen_x_set(on);
+            flip_screen_y_set(on);
+    }
+
+
+    /*-------------------------------------------------
+            flip_screen_x_set - set global horizontal flip
+    -------------------------------------------------*/
+
+    public static void flip_screen_x_set(int on)
+    {
+            if (on != 0) on = ~0;
+            if (flip_screen_x[0] != on)
+            {
+                    set_vh_global_attribute(flip_screen_x[0],on);
+                    updateflip();
+            }
+    }
+
+
+    /*-------------------------------------------------
+            flip_screen_y_set - set global vertical flip
+    -------------------------------------------------*/
+
+    public static void flip_screen_y_set(int on)
+    {
+            if (on != 0) on = ~0;
+            if (flip_screen_y[0] != on)
+            {
+                    set_vh_global_attribute(flip_screen_y[0],on);
+                    updateflip();
+            }
+    }
+
+
+    /*-------------------------------------------------
+            set_vh_global_attribute - set an arbitrary
+            global video attribute
+    -------------------------------------------------*/
+
+    public static void set_vh_global_attribute( int addr, int data )
+    {
+            if (addr != data)
+            {
+                    schedule_full_refresh();
+                    addr = data;
+            }
+    }
+
 
     /*-------------------------------------------------
 	set_visible_area - adjusts the visible portion

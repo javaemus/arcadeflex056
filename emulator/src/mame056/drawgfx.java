@@ -1628,9 +1628,12 @@ public class drawgfx {
 /*TODO*///		}
         } else if (dest.depth == 15 || dest.depth == 16) {
             if ((pen >> 8) == (pen & 0xff)) {
-                throw new UnsupportedOperationException("Unsupported");
-                /*TODO*///			for (y = sy;y <= ey;y++)
-/*TODO*///				memset(((UINT16 *)dest.line[y]) + sx,pen&0xff,(ex-sx+1)*2);
+                //throw new UnsupportedOperationException("Unsupported");
+                for (y = sy;y <= ey;y++)
+				memset(
+                                        new UBytePtr(dest.line[y], sx),
+                                        (pen&0xff),
+                                        ((ex-sx+1)*2));
             } else {
                 UShortPtr sp = new UShortPtr(dest.line[sy]);
                 int x;
@@ -3601,7 +3604,8 @@ public class drawgfx {
 
     public static plot_pixel_procPtr pp_16_nd = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT16 *)b -> line[y])[x] = p;
+            //throw new UnsupportedOperationException("unsupported");//((UINT16 *)b -> line[y])[x] = p;
+            (new UShortPtr(b.line[y])).write(x, (char) p);
         }
     };
     public static plot_pixel_procPtr pp_16_nd_fx = new plot_pixel_procPtr() {
@@ -6624,6 +6628,7 @@ public class drawgfx {
 /*TODO*/// 					break;
 /*TODO*/// 			}
 /*TODO*///         }
+//System.out.println("transparency: "+transparency);
         switch (transparency) {
             case TRANSPARENCY_NONE:
                 if ((gfx.flags & GFX_PACKED) != 0) {
@@ -6661,24 +6666,32 @@ public class drawgfx {
 /*TODO*///						BLOCKMOVERAW(8toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color));
                 }
                 break;
-            /*TODO*///
-/*TODO*///			case TRANSPARENCY_PEN:
-/*TODO*///				if (gfx->flags & GFX_PACKED)
-/*TODO*///				{
-/*TODO*///					if (pribuf)
-/*TODO*///						BLOCKMOVEPRI(4toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
-/*TODO*///					else
-/*TODO*///						BLOCKMOVELU(4toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
-/*TODO*///				}
-/*TODO*///				else
-/*TODO*///				{
-/*TODO*///					if (pribuf)
-/*TODO*///						BLOCKMOVEPRI(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
-/*TODO*///					else
-/*TODO*///						BLOCKMOVELU(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
-/*TODO*///				}
-/*TODO*///				break;
-/*TODO*///
+            
+                case TRANSPARENCY_PEN:
+                        if ((gfx.flags & GFX_PACKED) != 0)
+                        {
+                            System.out.println("1");
+                            if (pribuf != null){
+                                System.out.println("1-1");
+                                /*TODO*///BLOCKMOVEPRI(4toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
+                            } else {
+                                System.out.println("1-2");
+                                /*TODO*///BLOCKMOVELU(4toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
+                            }
+                        }
+                        else
+                        {
+                            System.out.println("2");
+                            if (pribuf != null){
+                                System.out.println("2-1");
+                                /*TODO*///BLOCKMOVEPRI(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
+                            } else {
+                                System.out.println("2-2");
+                                /*TODO*///BLOCKMOVELU(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
+                            }
+                        }
+                        break;
+
 /*TODO*///			case TRANSPARENCY_PEN_RAW:
 /*TODO*///				if (gfx->flags & GFX_PACKED)
 /*TODO*///				{

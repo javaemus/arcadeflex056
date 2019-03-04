@@ -80,6 +80,7 @@ public class mame {
         } else {
             Machine.color_depth = 16;
         }
+        
 
         switch (options.color_depth) {
             case 16:
