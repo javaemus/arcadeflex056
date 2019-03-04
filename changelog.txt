@@ -1,7 +1,7 @@
 04/03/2019
 ==========
 -Ported System1 driver to 0.56 (WIP-full playable; perfect sound; wrong colors)
-- Decoded System1 games
+-Decoded System1 games
 
 03/03/2019
 ==========
