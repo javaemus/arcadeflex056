@@ -10,6 +10,7 @@ import static mame056.commonH.REGION_PROMS;
 import static mame056.common.memory_region;
 import static mame056.usrintrf.usrintf_showmessage;
 import static arcadeflex036.osdepend.logerror;
+import common.ptr.UBytePtr;
 import static mame056.mame.Machine;
 
 public class palette {
@@ -453,7 +454,7 @@ public class palette {
 /*TODO*///
 /*TODO*///******************************************************************************/
 /*TODO*///
-/*TODO*///data8_t *paletteram;
+    public static UBytePtr paletteram=new UBytePtr();
 /*TODO*///data8_t *paletteram_2;	/* use when palette RAM is split in two parts */
 /*TODO*///data16_t *paletteram16;
 /*TODO*///data16_t *paletteram16_2;
