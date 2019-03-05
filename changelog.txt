@@ -1,3 +1,8 @@
+05/03/2019
+==========
+-Added blockmove_8toN_transpen16 in drawgfx
+-Ported pkunwar,nova2001 to 0.56
+
 04/03/2019
 ==========
 -Ported System1 driver to 0.56 (WIP-full playable; perfect sound; wrong colors)

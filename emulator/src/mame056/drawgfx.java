@@ -1628,12 +1628,12 @@ public class drawgfx {
 /*TODO*///		}
         } else if (dest.depth == 15 || dest.depth == 16) {
             if ((pen >> 8) == (pen & 0xff)) {
-                //throw new UnsupportedOperationException("Unsupported");
-                for (y = sy;y <= ey;y++)
-				memset(
-                                        new UBytePtr(dest.line[y], sx),
-                                        (pen&0xff),
-                                        ((ex-sx+1)*2));
+                for (y = sy; y <= ey; y++) {
+                    UShortPtr z = new UShortPtr(dest.line[y], sx);
+                    for (int i = 0; i < (ex - sx + 1) * 2; i++) {
+                        z.write(i, (char) (pen & 0xff));////memset(((UINT16 *)dest.line[y]) + sx,pen&0xff,(ex-sx+1)*2);
+                    }
+                }
             } else {
                 UShortPtr sp = new UShortPtr(dest.line[sy]);
                 int x;
@@ -3604,8 +3604,7 @@ public class drawgfx {
 
     public static plot_pixel_procPtr pp_16_nd = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            //throw new UnsupportedOperationException("unsupported");//((UINT16 *)b -> line[y])[x] = p;
-            (new UShortPtr(b.line[y])).write(x, (char) p);
+            new UShortPtr(b.line[y]).write(x, (char) p);
         }
     };
     public static plot_pixel_procPtr pp_16_nd_fx = new plot_pixel_procPtr() {
@@ -6628,7 +6627,6 @@ public class drawgfx {
 /*TODO*/// 					break;
 /*TODO*/// 			}
 /*TODO*///         }
-//System.out.println("transparency: "+transparency);
         switch (transparency) {
             case TRANSPARENCY_NONE:
                 if ((gfx.flags & GFX_PACKED) != 0) {
@@ -6666,32 +6664,29 @@ public class drawgfx {
 /*TODO*///						BLOCKMOVERAW(8toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color));
                 }
                 break;
-            
-                case TRANSPARENCY_PEN:
-                        if ((gfx.flags & GFX_PACKED) != 0)
-                        {
-                            System.out.println("1");
-                            if (pribuf != null){
-                                System.out.println("1-1");
-                                /*TODO*///BLOCKMOVEPRI(4toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
-                            } else {
-                                System.out.println("1-2");
-                                /*TODO*///BLOCKMOVELU(4toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
-                            }
-                        }
-                        else
-                        {
-                            System.out.println("2");
-                            if (pribuf != null){
-                                System.out.println("2-1");
-                                /*TODO*///BLOCKMOVEPRI(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
-                            } else {
-                                System.out.println("2-2");
-                                /*TODO*///BLOCKMOVELU(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
-                            }
-                        }
-                        break;
 
+            case TRANSPARENCY_PEN:
+                if ((gfx.flags & GFX_PACKED) != 0) {
+                    throw new UnsupportedOperationException("Unsupported");
+                    /*TODO*///					if (pribuf)
+/*TODO*///						BLOCKMOVEPRI(4toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
+/*TODO*///					else
+/*TODO*///						BLOCKMOVELU(4toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
+                } else {
+                    if (pribuf != null) {
+                        throw new UnsupportedOperationException("Unsupported");
+                        /*TODO*///						BLOCKMOVEPRI(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
+                    } else {
+                        if ((gfx.flags & GFX_SWAPXY) != 0) {
+                            throw new UnsupportedOperationException("Unsupported");//blockmove_##function##_swapxy##16 args ;
+                            //BLOCKMOVELU(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
+                        } else {
+                            blockmove_8toN_transpen16(sd, sw, sh, sm, ls, ts, flipx, flipy, dd, dw, dh, dm, paldata, transparent_color);
+                        }
+                    }
+                }
+                break;
+            /*TODO*///
 /*TODO*///			case TRANSPARENCY_PEN_RAW:
 /*TODO*///				if (gfx->flags & GFX_PACKED)
 /*TODO*///				{
@@ -8062,6 +8057,142 @@ public class drawgfx {
 
                 srcdata.inc(srcmodulo);
                 dstdata.inc(ydir * dstmodulo - dstwidth * 1);
+                dstheight--;
+            }
+        }
+    }
+
+    public static void blockmove_8toN_transpen16(UBytePtr srcdata, int srcwidth, int srcheight, int srcmodulo, int leftskip, int topskip, int flipx, int flipy, UShortPtr dstdata, int dstwidth, int dstheight, int dstmodulo, IntArray paldata, int transpen) {
+        int ydir;
+        if (flipy != 0) {
+            dstdata.inc(dstmodulo * (dstheight - 1));
+            srcdata.inc((srcheight - dstheight - topskip) * srcmodulo);
+            ydir = -1;
+        } else {
+            srcdata.inc(topskip * srcmodulo);
+            ydir = 1;
+        }
+        if (flipx != 0) {
+            dstdata.inc(dstwidth - 1);
+            srcdata.inc(srcwidth - dstwidth - leftskip);
+        } else {
+            srcdata.inc(leftskip);
+        }
+        srcmodulo -= dstwidth;
+        if (flipx != 0) {
+            int end;
+            int trans4;
+            IntPtr sd4;
+
+            trans4 = transpen * 0x01010101;
+
+            while (dstheight != 0) {
+
+                end = dstdata.offset / 2 - dstwidth;
+                while (((long) srcdata.offset & 3) != 0 && dstdata.offset / 2 > end) /* longword align */ {
+                    int col;
+
+                    col = srcdata.readinc();
+                    if (col != transpen) {
+                        dstdata.write(0, (char) col);
+                    }
+                    dstdata.dec();
+                }
+
+                sd4 = new IntPtr(srcdata);
+                while (dstdata.offset / 2 >= end + 4) {
+                    int col4;
+
+                    dstdata.dec(4);
+                    if ((col4 = sd4.read(0)) != trans4) {
+                        int xod4;
+
+                        xod4 = col4 ^ trans4;
+                        if ((xod4 & (0xff << SHIFT0)) != 0) {
+                            dstdata.write(4, (char) ((col4 >> SHIFT0) & 0xff));
+                        }
+                        if ((xod4 & (0xff << SHIFT1)) != 0) {
+                            dstdata.write(3, (char) (((col4 >> SHIFT1) & 0xff)));
+                        }
+                        if ((xod4 & (0xff << SHIFT2)) != 0) {
+                            dstdata.write(2, (char) (((col4 >> SHIFT2) & 0xff)));
+                        }
+                        if ((xod4 & (0xff << SHIFT3)) != 0) {
+                            dstdata.write(1, (char) (((col4 >> SHIFT3) & 0xff)));
+                        }
+                    }
+                    sd4.base += 4;
+                }
+                srcdata.set(sd4.readCA(), sd4.getBase());
+                while (dstdata.offset / 2 > end) {
+                    int col;
+
+                    col = srcdata.readinc();
+                    if (col != transpen) {
+                        dstdata.write(0, (char) col);
+                    }
+                    dstdata.dec();
+                }
+
+                srcdata.inc(srcmodulo);
+                dstdata.inc(ydir * dstmodulo + dstwidth);
+                dstheight--;
+            }
+        } else {
+            int end;
+            int trans4;
+            IntPtr sd4;
+
+            trans4 = transpen * 0x01010101;
+
+            while (dstheight != 0) {
+                end = dstdata.offset / 2 + dstwidth;
+                while (((long) srcdata.offset & 3) != 0 && dstdata.offset / 2 < end) /* longword align */ {
+                    int col;
+
+                    col = srcdata.readinc();
+                    if (col != transpen) {
+                        dstdata.write(0, (char) col);
+                    }
+                    dstdata.inc();
+                }
+                sd4 = new IntPtr(srcdata);
+                while (dstdata.offset / 2 <= end - 4) {
+                    int col4;
+
+                    if ((col4 = sd4.read(0)) != trans4) {
+                        int xod4;
+
+                        xod4 = col4 ^ trans4;
+                        if ((xod4 & (0xff << SHIFT0)) != 0) {
+                            dstdata.write(0, (char) ((col4 >> SHIFT0) & 0xff));
+                        }
+                        if ((xod4 & (0xff << SHIFT1)) != 0) {
+                            dstdata.write(1, (char) (((col4 >> SHIFT1) & 0xff)));
+                        }
+                        if ((xod4 & (0xff << SHIFT2)) != 0) {
+                            dstdata.write(2, (char) (((col4 >> SHIFT2) & 0xff)));
+                        }
+                        if ((xod4 & (0xff << SHIFT3)) != 0) {
+                            dstdata.write(3, (char) (((col4 >> SHIFT3) & 0xff)));
+                        }
+                    }
+                    dstdata.inc(4);
+                    sd4.base += 4;
+                }
+                srcdata.set(sd4.readCA(), sd4.getBase());
+                while (dstdata.offset / 2 < end) {
+                    int col;
+
+                    col = srcdata.readinc();
+                    if (col != transpen) {
+                        dstdata.write(0, (char) col);
+                    }
+                    dstdata.inc();
+                }
+
+                srcdata.inc(srcmodulo);
+                dstdata.inc(ydir * dstmodulo - dstwidth);
                 dstheight--;
             }
         }

@@ -12,6 +12,8 @@ import static mame056.drivers.pengo.*;
 import static mame056.drivers.pacman.*;
 import static mame056.drivers.epos.*;
 import static mame056.drivers.system1.*;
+import static mame056.drivers.pkunwar.*;
+import static mame056.drivers.nova2001.*;
 
 public class driver {
 
@@ -63,2072 +65,2074 @@ public class driver {
         /*pacman*/ driver_shootbul,
         /*pacman*/ driver_theglobp,
         /*pacman*/ driver_beastf,
+        /*nova2001*/ driver_nova2001,
+        /*nova2001*/ driver_nov2001u,
+        /*pkunwar*/ driver_pkunwar,
+        /*pkunwar*/ driver_pkunwarj,
         /**
          * GAME NOT WORKING FLAG
          */
-        /*epos*/driver_theglob3,
+        /*epos*/ driver_theglob3,
         /**
          * GAME WRONG COLORS
          */
-        /*epos*/driver_igmo,
+        /*epos*/ driver_igmo,
         /**
          * GAMES WITH issues
          */
-        /*epos*/driver_suprglob, //screen doesn't clear blue color in left and right of screen
-        /*epos*/driver_theglob, //screen doesn't clear blue color in left and right of screen
-        /*epos*/driver_theglob2,//screen doesn't clear blue color in left and right of screen
+        /*epos*/ driver_suprglob, //screen doesn't clear blue color in left and right of screen
+        /*epos*/ driver_theglob, //screen doesn't clear blue color in left and right of screen
+        /*epos*/ driver_theglob2,//screen doesn't clear blue color in left and right of screen
         //////////////////
         /**
          * TODO
          */
-
-         /* (c) 1984 */ /*TODO*///
-    /*TODO*///	/* "Galaxian hardware" games */
-    /*TODO*///	driver_galaxian,	/* (c) Namco */
-    /*TODO*///	driver_galaxiaj,	/* (c) Namco */
-    /*TODO*///	driver_galmidw,	/* (c) Midway */
-    /*TODO*///	driver_superg,	/* hack */
-    /*TODO*///	driver_galapx,	/* hack */
-    /*TODO*///	driver_galap1,	/* hack */
-    /*TODO*///	driver_galap4,	/* hack */
-    /*TODO*///	driver_galturbo,	/* hack */
-    /*TODO*///	driver_swarm,		/* hack */
-    /*TODO*///	driver_zerotime,	/* hack */
-    /*TODO*///	driver_pisces,	/* ? */
-    /*TODO*///	driver_uniwars,	/* (c) Irem */
-    /*TODO*///	driver_gteikoku,	/* (c) Irem */
-    /*TODO*///	driver_gteikokb,	/* bootleg */
-    /*TODO*///	driver_gteikob2,	/* bootleg */
-    /*TODO*///	driver_spacbatt,	/* bootleg */
-    /*TODO*///	driver_batman2,	/* bootleg */
-    /*TODO*///	driver_warofbug,	/* (c) 1981 Armenia */
-    /*TODO*///	driver_redufo,	/* bootleg - original should be (c) Artic */
-    /*TODO*///	driver_exodus,	/* Subelectro - bootleg? */
-    /*TODO*///	driver_streakng,	/* [1980] Shoei */
-    /*TODO*///	driver_pacmanbl,	/* bootleg */
-    /*TODO*///	driver_ghostmun,	/* bootleg */
-    /*TODO*///	driver_devilfsg,	/* (c) 1984 Vision / Artic (bootleg?) */
-    /*TODO*///	driver_zigzag,	/* (c) 1982 LAX */
-    /*TODO*///	driver_zigzag2,	/* (c) 1982 LAX */
-    /*TODO*///	driver_jumpbug,	/* (c) 1981 Rock-ola */
-    /*TODO*///	driver_jumpbugb,	/* (c) 1981 Sega */
-    /*TODO*///	driver_levers,	/* (c) 1983 Rock-ola */
-    /*TODO*///	driver_azurian,	/* (c) 1982 Rait Electronics Ltd */
-    /*TODO*///	driver_orbitron,	/* Signatron USA */
-    /*TODO*///	driver_mooncrgx,	/* bootleg */
-    /*TODO*///	driver_mooncrst,	/* (c) 1980 Nichibutsu */
-    /*TODO*///	driver_mooncrsg,	/* (c) 1980 Gremlin */
-    /*TODO*///	driver_smooncrs,	/* Gremlin */
-    /*TODO*///	driver_mooncrsb,	/* bootleg */
-    /*TODO*///	driver_mooncrs2,	/* bootleg */
-    /*TODO*///	driver_fantazia,	/* bootleg */
-    /*TODO*///	driver_eagle,		/* (c) Centuri */
-    /*TODO*///	driver_eagle2,	/* (c) Centuri */
-    /*TODO*///	driver_moonqsr,	/* (c) 1980 Nichibutsu */
-    /*TODO*///	driver_checkman,	/* (c) 1982 Zilec-Zenitone */
-    /*TODO*///	driver_checkmaj,	/* (c) 1982 Jaleco (Zenitone/Zilec in ROM CM4, and the programmer names) */
-    /*TODO*///	driver_blkhole,	/* TDS (Tokyo Denshi Sekkei) */
-    /*TODO*///	driver_moonal2,	/* Nichibutsu */
-    /*TODO*///	driver_moonal2b,	/* Nichibutsu */
-    /*TODO*///	driver_kingball,	/* (c) 1980 Namco */
-    /*TODO*///	driver_kingbalj,	/* (c) 1980 Namco */
-    /*TODO*///
-    /*TODO*///	/* "Scramble hardware" (and variations) games */
-    /*TODO*///	driver_scramble,	/* GX387 (c) 1981 Konami */
-    /*TODO*///	driver_scrambls,	/* GX387 (c) 1981 Stern */
-    /*TODO*///	driver_scramblb,	/* bootleg */
-    /*TODO*///	driver_atlantis,	/* (c) 1981 Comsoft */
-    /*TODO*///	driver_atlants2,	/* (c) 1981 Comsoft */
-    /*TODO*///	driver_theend,	/* (c) 1980 Konami */
-    /*TODO*///	driver_theends,	/* (c) 1980 Stern */
-    /*TODO*///	driver_omega,		/* bootleg */
-    /*TODO*///	driver_ckongs,	/* bootleg */
-    /*TODO*///	driver_froggers,	/* bootleg */
-    /*TODO*///	driver_amidars,	/* (c) 1982 Konami */
-    /*TODO*///	driver_triplep,	/* (c) 1982 KKI */
-    /*TODO*///	driver_knockout,	/* (c) 1982 KKK */
-    /*TODO*///	driver_mariner,	/* (c) 1981 Amenip */
-    /*TODO*///	driver_800fath,	/* (c) 1981 Amenip + U.S. Billiards license */
-    /*TODO*///	driver_mars,		/* (c) 1981 Artic */
-    /*TODO*///	driver_devilfsh,	/* (c) 1982 Artic */
-    /*TODO*///	driver_newsin7,	/* (c) 1983 ATW USA, Inc. */
-    /*TODO*///	driver_hotshock,	/* (c) 1982 E.G. Felaco */
-    /*TODO*///	driver_hunchbks,	/* (c) 1983 Century */
-    /*TODO*///	driver_cavelon,	/* (c) 1983 Jetsoft */
-    /*TODO*///	driver_scobra,	/* GX316 (c) 1981 Konami */
-    /*TODO*///	driver_scobras,	/* GX316 (c) 1981 Stern */
-    /*TODO*///	driver_scobrab,	/* GX316 (c) 1981 Karateco (bootleg?) */
-    /*TODO*///	driver_stratgyx,	/* GX306 (c) 1981 Konami */
-    /*TODO*///	driver_stratgys,	/* GX306 (c) 1981 Stern */
-    /*TODO*///	driver_armorcar,	/* (c) 1981 Stern */
-    /*TODO*///	driver_armorca2,	/* (c) 1981 Stern */
-    /*TODO*///	driver_moonwar,	/* (c) 1981 Stern */
-    /*TODO*///	driver_moonwara,	/* (c) 1981 Stern */
-    /*TODO*///	driver_spdcoin,	/* (c) 1984 Stern */
-    /*TODO*///	driver_darkplnt,	/* (c) 1982 Stern */
-    /*TODO*///	driver_tazmania,	/* (c) 1982 Stern */
-    /*TODO*///	driver_tazmani2,	/* (c) 1982 Stern */
-    /*TODO*///	driver_calipso,	/* (c) 1982 Tago */
-    /*TODO*///	driver_anteater,	/* (c) 1982 Tago */
-    /*TODO*///	driver_rescue,	/* (c) 1982 Stern */
-    /*TODO*///	driver_minefld,	/* (c) 1983 Stern */
-    /*TODO*///	driver_losttomb,	/* (c) 1982 Stern */
-    /*TODO*///	driver_losttmbh,	/* (c) 1982 Stern */
-    /*TODO*///	driver_superbon,	/* bootleg */
-    /*TODO*///	driver_hustler,	/* GX343 (c) 1981 Konami */
-    /*TODO*///	driver_billiard,	/* bootleg */
-    /*TODO*///	driver_hustlerb,	/* bootleg */
-    /*TODO*///	driver_frogger,	/* GX392 (c) 1981 Konami */
-    /*TODO*///	driver_frogseg1,	/* (c) 1981 Sega */
-    /*TODO*///	driver_frogseg2,	/* 834-0068 (c) 1981 Sega */
-    /*TODO*///	driver_froggrmc,	/* 800-3110 (c) 1981 Sega */
-    /*TODO*///	driver_amidar,	/* GX337 (c) 1981 Konami */
-    /*TODO*///	driver_amidaru,	/* GX337 (c) 1982 Konami + Stern license */
-    /*TODO*///	driver_amidaro,	/* GX337 (c) 1982 Konami + Olympia license */
-    /*TODO*///	driver_amigo,		/* bootleg */
-    /*TODO*///	driver_turtles,	/* (c) 1981 Stern */
-    /*TODO*///	driver_turpin,	/* (c) 1981 Sega */
-    /*TODO*///	driver_600,		/* GX353 (c) 1981 Konami */
-    /*TODO*///	driver_flyboy,	/* (c) 1982 Kaneko */
-    /*TODO*///	driver_flyboyb,	/* bootleg */
-    /*TODO*///	driver_fastfred,	/* (c) 1982 Atari */
-    /*TODO*///	driver_jumpcoas,	/* (c) 1983 Kaneko */
-    /*TODO*///
-    /*TODO*///	/* "Crazy Climber hardware" games */
-    /*TODO*///	driver_cclimber,	/* (c) 1980 Nichibutsu */
-    /*TODO*///	driver_cclimbrj,	/* (c) 1980 Nichibutsu */
-    /*TODO*///	driver_ccboot,	/* bootleg */
-    /*TODO*///	driver_ccboot2,	/* bootleg */
-    /*TODO*///	driver_ckong,		/* (c) 1981 Falcon */
-    /*TODO*///	driver_ckonga,	/* (c) 1981 Falcon */
-    /*TODO*///	driver_ckongjeu,	/* bootleg */
-    /*TODO*///	driver_ckongo,	/* bootleg */
-    /*TODO*///	driver_ckongalc,	/* bootleg */
-    /*TODO*///	driver_monkeyd,	/* bootleg */
-    /*TODO*///	driver_rpatrolb,	/* bootleg */
-    /*TODO*///	driver_silvland,	/* Falcon */
-    /*TODO*///	driver_yamato,	/* (c) 1983 Sega */
-    /*TODO*///	driver_yamato2,	/* (c) 1983 Sega */
-    /*TODO*///	driver_swimmer,	/* (c) 1982 Tehkan */
-    /*TODO*///	driver_swimmera,	/* (c) 1982 Tehkan */
-    /*TODO*///	driver_swimmerb,	/* (c) 1982 Tehkan */
-    /*TODO*///	driver_guzzler,	/* (c) 1983 Tehkan */
-    /*TODO*///
-    /*TODO*///	/* Nichibutsu games */
-    /*TODO*///	driver_friskyt,	/* (c) 1981 */
-    /*TODO*///	driver_radrad,	/* (c) 1982 Nichibutsu USA */
-    /*TODO*///	driver_seicross,	/* (c) 1984 + Alice */
-    /*TODO*///	driver_sectrzon,	/* (c) 1984 + Alice */
-    /*TODO*///	driver_wiping,	/* (c) 1982 */
-    /*TODO*///	driver_rugrats,	/* (c) 1983 */
-    /*TODO*///TESTdriver_firebatl,	/* (c) 1984 Taito */
-    /*TODO*///	driver_clshroad,	/* (c) 1986 Woodplace Inc. */
-    /*TODO*///TESTdriver_tubep,		/* (c) 1984 + Fujitek */
-    /*TODO*///TESTdriver_rjammer,	/* (c) 1984 + Alice */
-    /*TODO*///	driver_magmax,	/* (c) 1985 */
-    /*TODO*///	driver_cop01,		/* (c) 1985 */
-    /*TODO*///	driver_cop01a,	/* (c) 1985 */
-    /*TODO*///	driver_mightguy,	/* (c) 1986 */
-    /*TODO*///	driver_terracre,	/* (c) 1985 */
-    /*TODO*///	driver_terracrb,	/* (c) 1985 */
-    /*TODO*///	driver_terracra,	/* (c) 1985 */
-    /*TODO*///	driver_galivan,	/* (c) 1985 */
-    /*TODO*///	driver_galivan2,	/* (c) 1985 */
-    /*TODO*///	driver_dangar,	/* (c) 1986 */
-    /*TODO*///	driver_dangar2,	/* (c) 1986 */
-    /*TODO*///	driver_dangarb,	/* bootleg */
-    /*TODO*///	driver_ninjemak,	/* (c) 1986 (US?) */
-    /*TODO*///	driver_youma,		/* (c) 1986 (Japan) */
-    /*TODO*///	driver_terraf,	/* (c) 1987 */
-    /*TODO*///	driver_terrafu,	/* (c) 1987 Nichibutsu USA */
-    /*TODO*///	driver_kodure,	/* (c) 1987 (Japan) */
-    /*TODO*///	driver_armedf,	/* (c) 1988 */
-    /*TODO*///	driver_cclimbr2,	/* (c) 1988 (Japan) */
-    /*TODO*///
-    /*TODO*///	/* Nichibutsu Mahjong games */
-    /*TODO*///	driver_hyhoo,		/* (c) 1987 */
-    /*TODO*///	driver_hyhoo2,	/* (c) 1987 */
-    /*TODO*///
-    /*TODO*///	driver_pastelgl,	/* (c) 1985 */
-    /*TODO*///
-    /*TODO*///	driver_mjsikaku,	/* (c) 1988 */
-    /*TODO*///	driver_mjsikakb,	/* (c) 1988 */
-    /*TODO*///	driver_otonano,	/* (c) 1988 Apple */
-    /*TODO*///	driver_mjcamera,	/* (c) 1988 MIKI SYOUJI */
-    /*TODO*///	driver_secolove,	/* (c) 1986 */
-    /*TODO*///	driver_citylove,	/* (c) 1986 */
-    /*TODO*///	driver_seiha,		/* (c) 1987 */
-    /*TODO*///	driver_seiham,	/* (c) 1987 */
-    /*TODO*///	driver_iemoto,	/* (c) 1987 */
-    /*TODO*///	driver_ojousan,	/* (c) 1987 */
-    /*TODO*///	driver_bijokkoy,	/* (c) 1987 */
-    /*TODO*///	driver_bijokkog,	/* (c) 1988 */
-    /*TODO*///	driver_housemnq,	/* (c) 1987 */
-    /*TODO*///	driver_housemn2,	/* (c) 1987 */
-    /*TODO*///	driver_kaguya,	/* (c) 1988 MIKI SYOUJI */
-    /*TODO*///	driver_crystal2,	/* (c) 1986 */
-    /*TODO*///	driver_apparel,	/* (c) 1986 Central Denshi */
-    /*TODO*///
-    /*TODO*///	driver_hanamomo,	/* (c) 1988 */
-    /*TODO*///	driver_msjiken,	/* (c) 1988 */
-    /*TODO*///	driver_telmahjn,	/* (c) 1988 */
-    /*TODO*///	driver_gionbana,	/* (c) 1989 */
-    /*TODO*///	driver_mgmen89,	/* (c) 1989 */
-    /*TODO*///	driver_mjfocus,	/* (c) 1989 */
-    /*TODO*///	driver_mjfocusm,	/* (c) 1989 */
-    /*TODO*///	driver_peepshow,	/* (c) 1989 AC */
-    /*TODO*///	driver_scandal,	/* (c) 1989 */
-    /*TODO*///	driver_scandalm,	/* (c) 1989 */
-    /*TODO*///	driver_mjnanpas,	/* (c) 1989 BROOKS */
-    /*TODO*///	driver_mjnanpaa,	/* (c) 1989 BROOKS (old version) */
-    /*TODO*///	driver_bananadr,	/* (c) 1989 DIGITAL SOFT */
-    /*TODO*///	driver_club90s,	/* (c) 1990 */
-    /*TODO*///	driver_mladyhtr,	/* (c) 1990 */
-    /*TODO*///	driver_chinmoku,	/* (c) 1990 */
-    /*TODO*///	driver_maiko,		/* (c) 1990 */
-    /*TODO*///	driver_hanaoji,	/* (c) 1991 */
-    /*TODO*///
-    /*TODO*///	driver_pstadium,	/* (c) 1990 */
-    /*TODO*///	driver_triplew1,	/* (c) 1989 */
-    /*TODO*///	driver_triplew2,	/* (c) 1990 */
-    /*TODO*///	driver_ntopstar,	/* (c) 1990 */
-    /*TODO*///	driver_mjlstory,	/* (c) 1991 */
-    /*TODO*///	driver_vanilla,	/* (c) 1991 */
-    /*TODO*///	driver_finalbny,	/* (c) 1991 */
-    /*TODO*///	driver_qmhayaku,	/* (c) 1991 */
-    /*TODO*///	driver_galkoku,	/* (c) 1989 Nichibutsu/T.R.TEC */
-    /*TODO*///	driver_hyouban,	/* (c) 1989 Nichibutsu/T.R.TEC */
-    /*TODO*///	driver_galkaika,	/* (c) 1989 Nichibutsu/T.R.TEC */
-    /*TODO*///	driver_tokyogal,	/* (c) 1989 */
-    /*TODO*///	driver_tokimbsj,	/* (c) 1989 */
-    /*TODO*///	driver_mcontest,	/* (c) 1989 */
-    /*TODO*///	driver_av2mj1,	/* (c) 1991 MIKI SYOUJI/AV JAPAN */
-    /*TODO*///
-    /*TODO*///	driver_mjuraden,	/* (c) 1992 Nichibutsu/Yubis */
-    /*TODO*///	driver_koinomp,	/* (c) 1992 */
-    /*TODO*///	driver_patimono,	/* (c) 1992 */
-    /*TODO*///	driver_mjanbari,	/* (c) 1992 Nichibutsu/Yubis/AV JAPAN */
-    /*TODO*///	driver_gal10ren,	/* (c) 1993 FUJIC */
-    /*TODO*///	driver_mjlaman,	/* (c) 1993 Nichibutsu/AV JAPAN */
-    /*TODO*///	driver_mkeibaou,	/* (c) 1993 */
-    /*TODO*///	driver_pachiten,	/* (c) 1993 Nichibutsu/MIKI SYOUJI/AV JAPAN */
-    /*TODO*///	driver_sailorws,	/* (c) 1993 */
-    /*TODO*///	driver_sailorwr,	/* (c) 1993 */
-    /*TODO*///	driver_psailor1,	/* (c) 1994 SPHINX */
-    /*TODO*///	driver_psailor2,	/* (c) 1994 SPHINX */
-    /*TODO*///	driver_otatidai,	/* (c) 1995 SPHINX */
-    /*TODO*///	driver_ngpgal,	/* (c) 1991 */
-    /*TODO*///	driver_mjgottsu,	/* (c) 1991 */
-    /*TODO*///	driver_bakuhatu,	/* (c) 1991 */
-    /*TODO*///	driver_cmehyou,	/* (c) 1992 Nichibutsu/Kawakusu */
-    /*TODO*///	driver_mmehyou,	/* (c) 1992 Nichibutsu/Kawakusu */
-    /*TODO*///	driver_mjkoiura,	/* (c) 1992 */
-    /*TODO*///	driver_imekura,	/* (c) 1994 SPHINX/AV JAPAN */
-    /*TODO*///	driver_mscoutm,	/* (c) 1994 SPHINX/AV JAPAN */
-    /*TODO*///	driver_mjegolf,	/* (c) 1994 FUJIC/AV JAPAN */
-    /*TODO*///
-    /*TODO*///	driver_niyanpai,	/* (c) 1996 */
-    /*TODO*///
-    /*TODO*///	/* "Phoenix hardware" (and variations) games */
-    /*TODO*///	driver_safarir,	/* Shin Nihon Kikaku (SNK) */
-    /*TODO*///	driver_phoenix,	/* (c) 1980 Amstar */
-    /*TODO*///	driver_phoenixa,	/* (c) 1980 Amstar + Centuri license */
-    /*TODO*///	driver_phoenixt,	/* (c) 1980 Taito */
-    /*TODO*///	driver_phoenix3,	/* bootleg */
-    /*TODO*///	driver_phoenixc,	/* bootleg */
-    /*TODO*///	driver_pleiads,	/* (c) 1981 Tehkan */
-    /*TODO*///	driver_pleiadbl,	/* bootleg */
-    /*TODO*///	driver_pleiadce,	/* (c) 1981 Centuri + Tehkan */
-    /*TODO*///TESTdriver_survival,	/* (c) 1982 Rock-ola */
-    /*TODO*///	driver_naughtyb,	/* (c) 1982 Jaleco */
-    /*TODO*///	driver_naughtya,	/* bootleg */
-    /*TODO*///	driver_naughtyc,	/* (c) 1982 Jaleco + Cinematronics */
-    /*TODO*///	driver_popflame,	/* (c) 1982 Jaleco */
-    /*TODO*///	driver_popflama,	/* (c) 1982 Jaleco */
-    /*TODO*///TESTdriver_popflamb,
-    /*TODO*///
-    /*TODO*///	/* Namco games (plus some intruders on similar hardware) */
-    /*TODO*///	driver_geebee,	/* [1978] Namco */
-    /*TODO*///	driver_geebeeg,	/* [1978] Gremlin */
-    /*TODO*///	driver_bombbee,	/* [1979] Namco */
-    /*TODO*///	driver_cutieq,	/* (c) 1979 Namco */
-    /*TODO*///	driver_navalone,	/* (c) 1980 Namco */
-    /*TODO*///	driver_kaitei,	/* [1980] K.K. Tokki */
-    /*TODO*///	driver_kaitein,	/* [1980] Namco */
-    /*TODO*///	driver_sos,		/* [1980] Namco */
-    /*TODO*///	driver_tankbatt,	/* (c) 1980 Namco */
-    /*TODO*///	driver_warpwarp,	/* (c) 1981 Namco */
-    /*TODO*///	driver_warpwarr,	/* (c) 1981 Rock-ola - the high score table says "NAMCO" */
-    /*TODO*///	driver_warpwar2,	/* (c) 1981 Rock-ola - the high score table says "NAMCO" */
-    /*TODO*///	driver_rallyx,	/* (c) 1980 Namco */
-    /*TODO*///	driver_rallyxm,	/* (c) 1980 Midway */
-    /*TODO*///	driver_nrallyx,	/* (c) 1981 Namco */
-    /*TODO*///	driver_jungler,	/* GX327 (c) 1981 Konami */
-    /*TODO*///	driver_junglers,	/* GX327 (c) 1981 Stern */
-    /*TODO*///	driver_locomotn,	/* GX359 (c) 1982 Konami + Centuri license */
-    /*TODO*///	driver_gutangtn,	/* GX359 (c) 1982 Konami + Sega license */
-    /*TODO*///	driver_cottong,	/* bootleg */
-    /*TODO*///	driver_commsega,	/* (c) 1983 Sega */
-    /*TODO*///	/* the following ones all have a custom I/O chip */
-    /*TODO*///	driver_bosco,		/* (c) 1981 */
-    /*TODO*///	driver_boscoo,	/* (c) 1981 */
-    /*TODO*///	driver_boscoo2,	/* (c) 1981 */
-    /*TODO*///	driver_boscomd,	/* (c) 1981 Midway */
-    /*TODO*///	driver_boscomdo,	/* (c) 1981 Midway */
-    /*TODO*///	driver_galaga,	/* (c) 1981 */
-    /*TODO*///	driver_galagamw,	/* (c) 1981 Midway */
-    /*TODO*///	driver_galagads,	/* hack */
-    /*TODO*///	driver_gallag,	/* bootleg */
-    /*TODO*///	driver_galagab2,	/* bootleg */
-    /*TODO*///	driver_galaga84,	/* hack */
-    /*TODO*///	driver_nebulbee,	/* hack */
-    /*TODO*///	driver_digdug,	/* (c) 1982 */
-    /*TODO*///	driver_digdugb,	/* (c) 1982 */
-    /*TODO*///	driver_digdugat,	/* (c) 1982 Atari */
-    /*TODO*///	driver_dzigzag,	/* bootleg */
-    /*TODO*///	driver_xevious,	/* (c) 1982 */
-    /*TODO*///	driver_xeviousa,	/* (c) 1982 + Atari license */
-    /*TODO*///	driver_xevios,	/* bootleg */
-    /*TODO*///	driver_sxevious,	/* (c) 1984 */
-    /*TODO*///	driver_superpac,	/* (c) 1982 */
-    /*TODO*///	driver_superpcm,	/* (c) 1982 Midway */
-    /*TODO*///	driver_pacnpal,	/* (c) 1983 */
-    /*TODO*///	driver_pacnpal2,	/* (c) 1983 */
-    /*TODO*///	driver_pacnchmp,	/* (c) 1983 */
-    /*TODO*///	driver_phozon,	/* (c) 1983 */
-    /*TODO*///	driver_mappy,		/* (c) 1983 */
-    /*TODO*///	driver_mappyjp,	/* (c) 1983 */
-    /*TODO*///	driver_digdug2,	/* (c) 1985 */
-    /*TODO*///	driver_digdug2a,	/* (c) 1985 */
-    /*TODO*///	driver_todruaga,	/* (c) 1984 */
-    /*TODO*///	driver_todruagb,	/* (c) 1984 */
-    /*TODO*///	driver_motos,		/* (c) 1985 */
-    /*TODO*///	driver_grobda,	/* (c) 1984 */
-    /*TODO*///	driver_grobda2,	/* (c) 1984 */
-    /*TODO*///	driver_grobda3,	/* (c) 1984 */
-    /*TODO*///	driver_gaplus,	/* (c) 1984 */
-    /*TODO*///	driver_gaplusa,	/* (c) 1984 */
-    /*TODO*///	driver_galaga3,	/* (c) 1984 */
-    /*TODO*///	driver_galaga3a,	/* (c) 1984 */
-    /*TODO*///	driver_galaga3b,	/* (c) 1984 */
-    /*TODO*///	/* Libble Rabble board (first Japanese game using a 68000) */
-    /*TODO*///	driver_liblrabl,	/* (c) 1983 */
-    /*TODO*///	driver_toypop,	/* (c) 1986 */
-    /*TODO*///	/* Z8000 games */
-    /*TODO*///	driver_polepos,	/* (c) 1982  */
-    /*TODO*///	driver_poleposa,	/* (c) 1982 + Atari license */
-    /*TODO*///	driver_polepos1,	/* (c) 1982 Atari */
-    /*TODO*///	driver_topracer,	/* bootleg */
-    /*TODO*///	driver_polepos2,	/* (c) 1983 */
-    /*TODO*///	driver_poleps2a,	/* (c) 1983 + Atari license */
-    /*TODO*///	driver_poleps2b,	/* bootleg */
-    /*TODO*///	driver_poleps2c,	/* bootleg */
-    /*TODO*///	/* no custom I/O in the following, HD63701 (or compatible) microcontroller instead */
-    /*TODO*///	driver_pacland,	/* (c) 1984 */
-    /*TODO*///	driver_pacland2,	/* (c) 1984 */
-    /*TODO*///	driver_pacland3,	/* (c) 1984 */
-    /*TODO*///	driver_paclandm,	/* (c) 1984 Midway */
-    /*TODO*///	driver_drgnbstr,	/* (c) 1984 */
-    /*TODO*///	driver_skykid,	/* (c) 1985 */
-    /*TODO*///	driver_skykidb,	/* (c) 1985 */
-    /*TODO*///	driver_baraduke,	/* (c) 1985 */
-    /*TODO*///	driver_metrocrs,	/* (c) 1985 */
-    /*TODO*///
-    /*TODO*///	/* Namco System 86 games */
-    /*TODO*///	driver_hopmappy,	/* (c) 1986 */
-    /*TODO*///	driver_skykiddx,	/* (c) 1986 */
-    /*TODO*///	driver_skykiddo,	/* (c) 1986 */
-    /*TODO*///	driver_roishtar,	/* (c) 1986 */
-    /*TODO*///	driver_genpeitd,	/* (c) 1986 */
-    /*TODO*///	driver_rthunder,	/* (c) 1986 new version */
-    /*TODO*///	driver_rthundro,	/* (c) 1986 old version */
-    /*TODO*///	driver_wndrmomo,	/* (c) 1987 */
-    /*TODO*///
-    /*TODO*///	/* Namco System 1 games */
-    /*TODO*///	driver_shadowld,	/* (c) 1987 */
-    /*TODO*///	driver_youkaidk,	/* (c) 1987 (Japan new version) */
-    /*TODO*///	driver_yokaidko,	/* (c) 1987 (Japan old version) */
-    /*TODO*///	driver_dspirit,	/* (c) 1987 new version */
-    /*TODO*///	driver_dspirito,	/* (c) 1987 old version */
-    /*TODO*///	driver_blazer,	/* (c) 1987 (Japan) */
-    /*TODO*///	driver_quester,	/* (c) 1987 (Japan) */
-    /*TODO*///	driver_pacmania,	/* (c) 1987 */
-    /*TODO*///	driver_pacmanij,	/* (c) 1987 (Japan) */
-    /*TODO*///	driver_galaga88,	/* (c) 1987 */
-    /*TODO*///	driver_galag88b,	/* (c) 1987 */
-    /*TODO*///	driver_galag88j,	/* (c) 1987 (Japan) */
-    /*TODO*///	driver_ws,		/* (c) 1988 (Japan) */
-    /*TODO*///	driver_berabohm,	/* (c) 1988 (Japan) */
-    /*TODO*///	/* 1988 Alice in Wonderland (English version of Marchen maze) */
-    /*TODO*///	driver_mmaze,		/* (c) 1988 (Japan) */
-    /*TODO*///TESTdriver_bakutotu,	/* (c) 1988 */
-    /*TODO*///	driver_wldcourt,	/* (c) 1988 (Japan) */
-    /*TODO*///	driver_splatter,	/* (c) 1988 (Japan) */
-    /*TODO*///	driver_faceoff,	/* (c) 1988 (Japan) */
-    /*TODO*///	driver_rompers,	/* (c) 1989 (Japan) */
-    /*TODO*///	driver_romperso,	/* (c) 1989 (Japan) */
-    /*TODO*///	driver_blastoff,	/* (c) 1989 (Japan) */
-    /*TODO*///	driver_ws89,		/* (c) 1989 (Japan) */
-    /*TODO*///	driver_dangseed,	/* (c) 1989 (Japan) */
-    /*TODO*///	driver_ws90,		/* (c) 1990 (Japan) */
-    /*TODO*///	driver_pistoldm,	/* (c) 1990 (Japan) */
-    /*TODO*///	driver_boxyboy,	/* (c) 1990 (US) */
-    /*TODO*///	driver_soukobdx,	/* (c) 1990 (Japan) */
-    /*TODO*///	driver_puzlclub,	/* (c) 1990 (Japan) */
-    /*TODO*///	driver_tankfrce,	/* (c) 1991 (US) */
-    /*TODO*///	driver_tankfrcj,	/* (c) 1991 (Japan) */
-    /*TODO*///
-    /*TODO*///	/* Namco System 2 games */
-    /*TODO*///TESTdriver_finallap,	/* 87.12 Final Lap */
-    /*TODO*///TESTdriver_finalapd,	/* 87.12 Final Lap */
-    /*TODO*///TESTdriver_finalapc,	/* 87.12 Final Lap */
-    /*TODO*///TESTdriver_finlapjc,	/* 87.12 Final Lap */
-    /*TODO*///TESTdriver_finlapjb,	/* 87.12 Final Lap */
-    /*TODO*///	driver_assault,	/* (c) 1988 */
-    /*TODO*///	driver_assaultj,	/* (c) 1988 (Japan) */
-    /*TODO*///	driver_assaultp,	/* (c) 1988 (Japan) */
-    /*TODO*///TESTdriver_metlhawk,	/* (c) 1988 */
-    /*TODO*///	driver_ordyne,	/* (c) 1988 */
-    /*TODO*///	driver_mirninja,	/* (c) 1988 (Japan) */
-    /*TODO*///	driver_phelios,	/* (c) 1988 (Japan) */
-    /*TODO*///	driver_dirtfoxj,	/* (c) 1989 (Japan) */
-    /*TODO*///TESTdriver_fourtrax,	/* 89.11 */
-    /*TODO*///	driver_valkyrie,	/* (c) 1989 (Japan) */
-    /*TODO*///	driver_finehour,	/* (c) 1989 (Japan) */
-    /*TODO*///	driver_burnforc,	/* (c) 1989 (Japan) */
-    /*TODO*///	driver_marvland,	/* (c) 1989 (US) */
-    /*TODO*///	driver_marvlanj,	/* (c) 1989 (Japan) */
-    /*TODO*///	driver_kyukaidk,	/* (c) 1990 (Japan) */
-    /*TODO*///	driver_kyukaido,	/* (c) 1990 (Japan) */
-    /*TODO*///	driver_dsaber,	/* (c) 1990 */
-    /*TODO*///	driver_dsaberj,	/* (c) 1990 (Japan) */
-    /*TODO*///TESTdriver_finalap2,	/* 90.8  Final Lap 2 */
-    /*TODO*///TESTdriver_finalp2j,	/* 90.8  Final Lap 2 (Japan) */
-    /*TODO*///	driver_rthun2,	/* (c) 1990 */
-    /*TODO*///	driver_rthun2j,	/* (c) 1990 (Japan) */
-    /*TODO*///	/* 91.3  Steel Gunner */
-    /*TODO*///	/* 91.7  Golly Ghost */
-    /*TODO*///	/* 91.9  Super World Stadium */
-    /*TODO*///TESTdriver_sgunner2,	/* (c) 1991 (Japan) */
-    /*TODO*///	driver_cosmogng,	/* (c) 1991 (US) */
-    /*TODO*///	driver_cosmognj,	/* (c) 1991 (Japan) */
-    /*TODO*///TESTdriver_finalap3,	/* 92.9  Final Lap 3 */
-    /*TODO*///TESTdriver_suzuka8h,
-    /*TODO*///	/* 92.8  Bubble Trouble */
-    /*TODO*///	driver_sws92,		/* (c) 1992 (Japan) */
-    /*TODO*///	driver_sws92g,	/* (c) 1992 (Japan) */
-    /*TODO*///	/* 93.4  Lucky & Wild */
-    /*TODO*///TESTdriver_suzuk8h2,
-    /*TODO*///	driver_sws93,		/* (c) 1993 (Japan) */
-    /*TODO*///	/* 93.6  Super World Stadium '93 */
-    /*TODO*///
-    /*TODO*///	/* Namco System 21 games */
-    /*TODO*///	/* 1988, Winning Run */
-    /*TODO*///	/* 1989, Winning Run Suzuka Grand Prix */
-    /*TODO*///TESTdriver_winrun91,
-    /*TODO*///TESTdriver_solvalou,
-    /*TODO*///TESTdriver_starblad,
-    /*TODO*///	/* 199?, Driver's Eyes */
-    /*TODO*///	/* 1992, ShimDrive */
-    /*TODO*///TESTdriver_aircombj,
-    /*TODO*///TESTdriver_aircombu,
-    /*TODO*///	/* 1993, Rhinoceros Berth Lead-Lead */
-    /*TODO*///TESTdriver_cybsled,
-    /*TODO*///
-    /*TODO*///	/* Namco NA-1 / NA-2 System games */
-    /*TODO*///	driver_bkrtmaq,	/* (c) 1992 (Japan) */
-    /*TODO*///	driver_cgangpzl,	/* (c) 1992 (US) */
-    /*TODO*///	driver_cgangpzj,	/* (c) 1992 (Japan) */
-    /*TODO*///	driver_exvania,	/* (c) 1992 (Japan) */
-    /*TODO*///TESTdriver_fa,		/* (c) 1992 (Japan) */
-    /*TODO*///	driver_knckhead,	/* (c) 1992 (Japan) */
-    /*TODO*///	driver_swcourt,	/* (c) 1992 (Japan) */
-    /*TODO*///	driver_emeralda,	/* (c) 1993 (Japan) */
-    /*TODO*///TESTdriver_numanath,	/* (c) 1993 (Japan) */
-    /*TODO*///	driver_quiztou,	/* (c) 1993 (Japan) */
-    /*TODO*///	driver_tinklpit,	/* (c) 1993 (Japan) */
-    /*TODO*///
-    /*TODO*///	/* Namco NB-1 System games */
-    /*TODO*///	driver_nebulray,	/* (c) 1994 (Japan) */
-    /*TODO*///	driver_ptblank,	/* (c) 1994 */
-    /*TODO*///	driver_gunbulet,	/* (c) 1994 (Japan) */
-    /*TODO*///	driver_gslgr94u,	/* (c) 1994 */
-    /*TODO*///	driver_sws96,		/* (c) 1996 (Japan) */
-    /*TODO*///	driver_sws97,		/* (c) 1997 (Japan) */
-    /*TODO*///
-    /*TODO*///	/* Namco ND-1 games */
-    /*TODO*///	driver_ncv1,		/* (c) 1995 */
-    /*TODO*///	driver_ncv1j,		/* (c) 1995 (Japan) */
-    /*TODO*///	driver_ncv1j2,	/* (c) 1995 (Japan) */
-    /*TODO*///TESTdriver_ncv2,		/* (c) 1996 */
-    /*TODO*///TESTdriver_ncv2j,		/* (c) 1996 (Japan) */
-    /*TODO*///
-    /*TODO*///	/* Universal games */
-    /*TODO*///	driver_cosmicg,	/* 7907 (c) 1979 */
-    /*TODO*///	driver_cosmica,	/* 7910 (c) [1979] */
-    /*TODO*///	driver_cosmica2,	/* 7910 (c) 1979 */
-    /*TODO*///	driver_panic,		/* (c) 1980 */
-    /*TODO*///	driver_panica,	/* (c) 1980 */
-    /*TODO*///	driver_panicger,	/* (c) 1980 */
-    /*TODO*///	driver_zerohour,	/* 8011 (c) Universal */
-    /*TODO*///	driver_redclash,	/* (c) 1981 Tehkan */
-    /*TODO*///	driver_redclask,	/* (c) Kaneko (bootleg?) */
-    /*TODO*///	driver_magspot2,	/* 8013 (c) [1980] */
-    /*TODO*///	driver_devzone,	/* 8022 (c) [1980] */
-    /*TODO*///	driver_nomnlnd,	/* (c) [1980?] */
-    /*TODO*///	driver_nomnlndg,	/* (c) [1980?] + Gottlieb */
-    /*TODO*///	driver_cheekyms,	/* (c) [1980?] */
-    /*TODO*///	driver_ladybug,	/* (c) 1981 */
-    /*TODO*///	driver_ladybugb,	/* bootleg */
-    /*TODO*///	driver_snapjack,	/* (c) */
-    /*TODO*///	driver_cavenger,	/* (c) 1981 */
-    /*TODO*///	driver_mrdo,		/* (c) 1982 */
-    /*TODO*///	driver_mrdot,		/* (c) 1982 + Taito license */
-    /*TODO*///	driver_mrdofix,	/* (c) 1982 + Taito license */
-    /*TODO*///	driver_mrlo,		/* bootleg */
-    /*TODO*///	driver_mrdu,		/* bootleg */
-    /*TODO*///	driver_mrdoy,		/* bootleg */
-    /*TODO*///	driver_yankeedo,	/* bootleg */
-    /*TODO*///	driver_docastle,	/* (c) 1983 */
-    /*TODO*///	driver_docastl2,	/* (c) 1983 */
-    /*TODO*///	driver_douni,		/* (c) 1983 */
-    /*TODO*///	driver_dorunrun,	/* (c) 1984 */
-    /*TODO*///	driver_dorunru2,	/* (c) 1984 */
-    /*TODO*///	driver_dorunruc,	/* (c) 1984 */
-    /*TODO*///	driver_spiero,	/* (c) 1987 */
-    /*TODO*///	driver_dowild,	/* (c) 1984 */
-    /*TODO*///	driver_jjack,		/* (c) 1984 */
-    /*TODO*///	driver_kickridr,	/* (c) 1984 */
-    /*TODO*///
-    /*TODO*///	/* Nintendo games */
-    /*TODO*///	driver_radarscp,	/* (c) 1980 Nintendo */
-    /*TODO*///	driver_dkong,		/* (c) 1981 Nintendo of America */
-    /*TODO*///	driver_dkongjp,	/* (c) 1981 Nintendo */
-    /*TODO*///	driver_dkongjo,	/* (c) 1981 Nintendo */
-    /*TODO*///	driver_dkongjo1,	/* (c) 1981 Nintendo */
-    /*TODO*///	driver_dkongjr,	/* (c) 1982 Nintendo of America */
-    /*TODO*///	driver_dkongjrj,	/* (c) 1982 Nintendo */
-    /*TODO*///	driver_dkngjnrj,	/* (c) 1982 Nintendo */
-    /*TODO*///	driver_dkongjrb,	/* bootleg */
-    /*TODO*///	driver_dkngjnrb,	/* (c) 1982 Nintendo of America */
-    /*TODO*///	driver_dkong3,	/* (c) 1983 Nintendo of America */
-    /*TODO*///	driver_dkong3j,	/* (c) 1983 Nintendo */
-    /*TODO*///	driver_mario,		/* (c) 1983 Nintendo of America */
-    /*TODO*///	driver_mariojp,	/* (c) 1983 Nintendo */
-    /*TODO*///	driver_masao,		/* bootleg */
-    /*TODO*///	driver_hunchbkd,	/* (c) 1983 Century */
-    /*TODO*///	driver_herbiedk,	/* (c) 1984 CVS */
-    /*TODO*///TESTdriver_herocast,
-    /*TODO*///	driver_popeye,	/* (c) 1982 */
-    /*TODO*///	driver_popeyeu,	/* (c) 1982 */
-    /*TODO*///	driver_popeyef,	/* (c) 1982 */
-    /*TODO*///	driver_popeyebl,	/* bootleg */
-    /*TODO*///	driver_punchout,	/* (c) 1984 */
-    /*TODO*///	driver_spnchout,	/* (c) 1984 */
-    /*TODO*///	driver_spnchotj,	/* (c) 1984 (Japan) */
-    /*TODO*///	driver_armwrest,	/* (c) 1985 */
-    /*TODO*///
-    /*TODO*///	/* Nintendo Playchoice 10 games */
-    /*TODO*///	driver_pc_tenis,	/* (c) 1983 Nintendo */
-    /*TODO*///	driver_pc_mario,	/* (c) 1983 Nintendo */
-    /*TODO*///	driver_pc_bball,	/* (c) 1984 Nintendo of America */
-    /*TODO*///	driver_pc_bfght,	/* (c) 1984 Nintendo */
-    /*TODO*///	driver_pc_ebike,	/* (c) 1984 Nintendo */
-    /*TODO*///	driver_pc_golf	)	/* (c) 1984 Nintendo */
-    /*TODO*///	driver_pc_kngfu,	/* (c) 1984 Irem (Nintendo license) */
-    /*TODO*///	driver_pc_1942,	/* (c) 1985 Capcom */
-    /*TODO*///	driver_pc_smb,	/* (c) 1985 Nintendo */
-    /*TODO*///	driver_pc_vball,	/* (c) 1986 Nintendo */
-    /*TODO*///	driver_pc_duckh,	/* (c) 1984 Nintendo */
-    /*TODO*///	driver_pc_hgaly,	/* (c) 1984 Nintendo */
-    /*TODO*///	driver_pc_wgnmn,	/* (c) 1984 Nintendo */
-    /*TODO*///	driver_pc_grdus,	/* (c) 1986 Konami */
-    /*TODO*///	driver_pc_tkfld,	/* (c) 1987 Konami (Nintendo of America license) */
-    /*TODO*///	driver_pc_pwrst,	/* (c) 1986 Nintendo */
-    /*TODO*///	driver_pc_trjan,	/* (c) 1986 Capcom USA (Nintendo of America license) */
-    /*TODO*///	driver_pc_cvnia,	/* (c) 1987 Konami (Nintendo of America license) */
-    /*TODO*///	driver_pc_dbldr,	/* (c) 1987 Konami (Nintendo of America license) */
-    /*TODO*///	driver_pc_rnatk,	/* (c) 1987 Konami (Nintendo of America license) */
-    /*TODO*///	driver_pc_rygar,	/* (c) 1987 Tecmo (Nintendo of America license) */
-    /*TODO*///	driver_pc_cntra,	/* (c) 1988 Konami (Nintendo of America license) */
-    /*TODO*///	driver_pc_goons,	/* (c) 1986 Konami */
-    /*TODO*///	driver_pc_mtoid,	/* (c) 1986 Nintendo */
-    /*TODO*///	driver_pc_radrc,	/* (c) 1987 Square */
-    /*TODO*///	driver_pc_miket,	/* (c) 1987 Nintendo */
-    /*TODO*///	driver_pc_rcpam,	/* (c) 1987 Rare */
-    /*TODO*///	driver_pc_ngaid,	/* (c) 1989 Tecmo (Nintendo of America license) */
-    /*TODO*///	driver_pc_tmnt,	/* (c) 1989 Konami (Nintendo of America license) */
-    /*TODO*///	driver_pc_ftqst,	/* (c) 1989 Sunsoft (Nintendo of America license) */
-    /*TODO*///	driver_pc_bstar,	/* (c) 1989 SNK (Nintendo of America license) */
-    /*TODO*///	driver_pc_tbowl,	/* (c) 1989 Tecmo (Nintendo of America license) */
-    /*TODO*///	driver_pc_drmro,	/* (c) 1990 Nintendo */
-    /*TODO*///	driver_pc_ynoid,	/* (c) 1990 Capcom USA (Nintendo of America license) */
-    /*TODO*///	driver_pc_rrngr,	/* (c) Capcom USA (Nintendo of America license) */
-    /*TODO*///	driver_pc_ddrgn,
-    /*TODO*///	driver_pc_gntlt,	/* (c) 1985 Atari/Tengen (Nintendo of America license) */
-    /*TODO*///	driver_pc_smb2,	/* (c) 1988 Nintendo */
-    /*TODO*///	driver_pc_smb3,	/* (c) 1988 Nintendo */
-    /*TODO*///	driver_pc_mman3,	/* (c) 1990 Capcom USA (Nintendo of America license) */
-    /*TODO*///	driver_pc_radr2,	/* (c) 1990 Square (Nintendo of America license) */
-    /*TODO*///	driver_pc_suprc,	/* (c) 1990 Konami (Nintendo of America license) */
-    /*TODO*///	driver_pc_tmnt2,	/* (c) 1990 Konami (Nintendo of America license) */
-    /*TODO*///	driver_pc_wcup,	/* (c) 1990 Technos (Nintendo license) */
-    /*TODO*///	driver_pc_ngai2,	/* (c) 1990 Tecmo (Nintendo of America license) */
-    /*TODO*///	driver_pc_ngai3,	/* (c) 1991 Tecmo (Nintendo of America license) */
-    /*TODO*///	driver_pc_pwbld,	/* (c) 1991 Taito (Nintendo of America license) */
-    /*TODO*///	driver_pc_rkats,	/* (c) 1991 Atlus (Nintendo of America license) */
-    /*TODO*///TESTdriver_pc_pinbt,	/* (c) 1988 Rare (Nintendo of America license) */
-    /*TODO*///	driver_pc_cshwk,	/* (c) 1989 Rare (Nintendo of America license) */
-    /*TODO*///	driver_pc_sjetm,	/* (c) 1990 Rare */
-    /*TODO*///	driver_pc_moglf,	/* (c) 1991 Nintendo */
-    /*TODO*///
-    /*TODO*///	/* Nintendo VS games */
-    /*TODO*///	driver_btlecity,	/* (c) 1985 Namco */
-    /*TODO*///	driver_starlstr,	/* (c) 1985 Namco */
-    /*TODO*///	driver_cstlevna,	/* (c) 1987 Konami */
-    /*TODO*///	driver_cluclu,	/* (c) 1984 Nintendo */
-    /*TODO*///	driver_drmario,	/* (c) 1990 Nintendo */
-    /*TODO*///	driver_duckhunt,	/* (c) 1985 Nintendo */
-    /*TODO*///	driver_excitebk,	/* (c) 1984 Nintendo */
-    /*TODO*///	driver_excitbkj,	/* (c) 1984 Nintendo */
-    /*TODO*///	driver_goonies,	/* (c) 1986 Konami */
-    /*TODO*///	driver_hogalley,	/* (c) 1985 Nintendo */
-    /*TODO*///	driver_iceclimb,	/* (c) 1984 Nintendo */
-    /*TODO*///	driver_ladygolf,	/* (c) 1984 Nintendo */
-    /*TODO*///	driver_machridr,	/* (c) 1985 Nintendo */
-    /*TODO*///	driver_rbibb,		/* (c) 1987 Namco */
-    /*TODO*///	driver_suprmrio,	/* (c) 1986 Nintendo */
-    /*TODO*///	driver_vsskykid,	/* (c) 1986 Namco */
-    /*TODO*///	driver_tkoboxng,	/* (c) 1987 Data East */
-    /*TODO*///	driver_smgolf,	/* (c) 1984 Nintendo */
-    /*TODO*///	driver_smgolfj,	/* (c) 1984 Nintendo */
-    /*TODO*///	driver_vspinbal,	/* (c) 1984 Nintendo */
-    /*TODO*///	driver_vspinblj,	/* (c) 1984 Nintendo */
-    /*TODO*///	driver_vsslalom,	/* (c) 1986 Nintendo */
-    /*TODO*///	driver_vssoccer,	/* (c) 1985 Nintendo */
-    /*TODO*///	driver_vsgradus,	/* (c) 1986 Konami */
-    /*TODO*///	driver_platoon,	/* (c) 1987 Ocean */
-    /*TODO*///	driver_vstetris,	/* (c) 1988 Atari */
-    /*TODO*///	driver_vstennis,	/* (c) 1984 Nintendo */
-    /*TODO*///	driver_wrecking,	/* (c) 1984 Nintendo */
-    /*TODO*///	driver_balonfgt,	/* (c) 1984 Nintendo */
-    /*TODO*///	driver_vsmahjng,	/* (c) 1984 Nintendo */
-    /*TODO*///	driver_vsbball,	/* (c) 1984 Nintendo */
-    /*TODO*///	driver_vsbballj,	/* (c) 1984 Nintendo */
-    /*TODO*///	driver_vsbbalja,	/* (c) 1984 Nintendo */
-    /*TODO*///	driver_iceclmrj,	/* (c) 1984 Nintendo */
-    /*TODO*///TESTdriver_topgun,
-    /*TODO*///TESTdriver_jajamaru,
-    /*TODO*///TESTdriver_vsxevus,
-    /*TODO*///
-    /*TODO*///	/* Midway 8080 b/w games */
-    /*TODO*///	driver_seawolf,	/* 596 [1976] */
-    /*TODO*///	driver_gunfight,	/* 597 [1975] */
-    /*TODO*///	/* 603 - Top Gun [1976] */
-    /*TODO*///	driver_tornbase,	/* 605 [1976] */
-    /*TODO*///	driver_280zzzap,	/* 610 [1976] */
-    /*TODO*///	driver_maze,		/* 611 [1976] */
-    /*TODO*///	driver_boothill,	/* 612 [1977] */
-    /*TODO*///	driver_checkmat,	/* 615 [1977] */
-    /*TODO*///	driver_desertgu,	/* 618 [1977] */
-    /*TODO*///	driver_dplay,		/* 619 [1977] */
-    /*TODO*///	driver_lagunar,	/* 622 [1977] */
-    /*TODO*///	driver_gmissile,	/* 623 [1977] */
-    /*TODO*///	driver_m4,		/* 626 [1977] */
-    /*TODO*///	driver_clowns,	/* 630 [1978] */
-    /*TODO*///	/* 640 - Space Walk [1978] */
-    /*TODO*///	driver_einnings,	/* 642 [1978] Midway */
-    /*TODO*///	driver_shuffle,	/* 643 [1978] */
-    /*TODO*///	driver_dogpatch,	/* 644 [1977] */
-    /*TODO*///	driver_spcenctr,	/* 645 (c) 1980 Midway */
-    /*TODO*///	driver_phantom2,	/* 652 [1979] */
-    /*TODO*///	driver_bowler,	/* 730 [1978] Midway */
-    /*TODO*///	driver_invaders,	/* 739 [1979] */
-    /*TODO*///	driver_blueshrk,	/* 742 [1978] */
-    /*TODO*///	driver_invad2ct,	/* 851 (c) 1980 Midway */
-    /*TODO*///	driver_invadpt2,	/* 852 [1980] Taito */
-    /*TODO*///	driver_invaddlx,	/* 852 [1980] Midway */
-    /*TODO*///	driver_moonbase,	/* Zeta - Nichibutsu */
-    /*TODO*///	/* 870 - Space Invaders Deluxe cocktail */
-    /*TODO*///	driver_earthinv,
-    /*TODO*///	driver_spaceatt,
-    /*TODO*///	driver_spaceat2,
-    /*TODO*///	driver_sinvzen,
-    /*TODO*///	driver_superinv,
-    /*TODO*///	driver_sstrangr,
-    /*TODO*///	driver_sstrngr2,
-    /*TODO*///	driver_sinvemag,
-    /*TODO*///	driver_jspecter,
-    /*TODO*///	driver_jspectr2,
-    /*TODO*///	driver_invrvnge,
-    /*TODO*///	driver_invrvnga,
-    /*TODO*///	driver_galxwars,
-    /*TODO*///	driver_galxwar2,
-    /*TODO*///	driver_galxwart,
-    /*TODO*///	driver_starw,
-    /*TODO*///	driver_lrescue,	/* LR  (c) 1979 Taito */
-    /*TODO*///	driver_grescue,	/* bootleg? */
-    /*TODO*///	driver_desterth,	/* bootleg */
-    /*TODO*///	driver_cosmicmo,	/* Universal */
-    /*TODO*///	driver_rollingc,	/* Nichibutsu */
-    /*TODO*///	driver_sheriff,	/* (c) Nintendo */
-    /*TODO*///	driver_bandido,	/* (c) Exidy */
-    /*TODO*///	driver_ozmawars,	/* Shin Nihon Kikaku (SNK) */
-    /*TODO*///	driver_ozmawar2,	/* Shin Nihon Kikaku (SNK) */
-    /*TODO*///	driver_solfight,	/* bootleg */
-    /*TODO*///	driver_spaceph,	/* Zilec Games */
-    /*TODO*///	driver_schaser,	/* RT  Taito */
-    /*TODO*///	driver_schasrcv,	/* RT  Taito */
-    /*TODO*///	driver_lupin3,	/* LP  (c) 1980 Taito */
-    /*TODO*///	driver_helifire,	/* (c) Nintendo */
-    /*TODO*///	driver_helifira,	/* (c) Nintendo */
-    /*TODO*///	driver_spacefev,
-    /*TODO*///	driver_sfeverbw,
-    /*TODO*///	driver_spclaser,
-    /*TODO*///	driver_laser,
-    /*TODO*///	driver_spcewarl,
-    /*TODO*///	driver_polaris,	/* PS  (c) 1980 Taito */
-    /*TODO*///	driver_polarisa,	/* PS  (c) 1980 Taito */
-    /*TODO*///	driver_ballbomb,	/* TN  (c) 1980 Taito */
-    /*TODO*///	driver_m79amb,
-    /*TODO*///	driver_alieninv,
-    /*TODO*///	driver_sitv,
-    /*TODO*///	driver_sicv,
-    /*TODO*///	driver_sisv,
-    /*TODO*///	driver_sisv2,
-    /*TODO*///	driver_spacewr3,
-    /*TODO*///	driver_invaderl,
-    /*TODO*///	driver_yosakdon,
-    /*TODO*///	driver_spceking,
-    /*TODO*///	driver_spcewars,
-    /*TODO*///
-    /*TODO*///	/* "Midway" Z80 b/w games */
-    /*TODO*///	driver_astinvad,	/* (c) 1980 Stern */
-    /*TODO*///	driver_kamikaze,	/* Leijac Corporation */
-    /*TODO*///	driver_spaceint,	/* [1980] Shoei */
-    /*TODO*///
-    /*TODO*///	/* Meadows S2650 games */
-    /*TODO*///	driver_lazercmd,	/* [1976?] */
-    /*TODO*///	driver_bbonk,		/* [1976?] */
-    /*TODO*///	driver_deadeye,	/* [1978?] */
-    /*TODO*///	driver_gypsyjug,	/* [1978?] */
-    /*TODO*///	driver_medlanes,	/* [1977?] */
-    /*TODO*///
-    /*TODO*///	/* CVS games */
-    /*TODO*///	driver_cosmos,	/* (c) 1981 Century */
-    /*TODO*///	driver_darkwar,	/* (c) 1981 Century */
-    /*TODO*///	driver_spacefrt,	/* (c) 1981 Century */
-    /*TODO*///	driver_8ball,		/* (c) 1982 Century */
-    /*TODO*///	driver_8ball1,
-    /*TODO*///	driver_logger,	/* (c) 1982 Century */
-    /*TODO*///	driver_dazzler,	/* (c) 1982 Century */
-    /*TODO*///	driver_wallst,	/* (c) 1982 Century */
-    /*TODO*///	driver_radarzon,	/* (c) 1982 Century */
-    /*TODO*///	driver_radarzn1,	/* (c) 1982 Century */
-    /*TODO*///	driver_radarznt,	/* (c) 1982 Tuni Electro Service */
-    /*TODO*///	driver_outline,	/* (c) 1982 Century */
-    /*TODO*///	driver_goldbug,	/* (c) 1982 Century */
-    /*TODO*///	driver_heartatk,	/* (c) 1983 Century Electronics */
-    /*TODO*///	driver_hunchbak,	/* (c) 1983 Century */
-    /*TODO*///	driver_superbik,	/* (c) 1983 Century */
-    /*TODO*///	driver_hero,		/* (c) 1983 Seatongrove (c) 1984 CVS */
-    /*TODO*///	driver_huncholy,	/* (c) 1984 Seatongrove (c) CVS */
-    /*TODO*///
-    /*TODO*///	/* Midway "Astrocade" games */
-    /*TODO*///	driver_seawolf2,
-    /*TODO*///	driver_spacezap,	/* (c) 1980 */
-    /*TODO*///	driver_ebases,
-    /*TODO*///	driver_wow,		/* (c) 1980 */
-    /*TODO*///	driver_gorf,		/* (c) 1981 */
-    /*TODO*///	driver_gorfpgm1,	/* (c) 1981 */
-    /*TODO*///	driver_robby,		/* (c) 1981 Bally Midway */
-    /*TODO*///TESTdriver_profpac,	/* (c) 1983 Bally Midway */
-    /*TODO*///
-    /*TODO*///	/* Bally Midway MCR games */
-    /*TODO*///	/* MCR1 */
-    /*TODO*///	driver_solarfox,	/* (c) 1981 */
-    /*TODO*///	driver_kick,		/* (c) 1981 */
-    /*TODO*///	driver_kicka,		/* bootleg? */
-    /*TODO*///	/* MCR2 */
-    /*TODO*///	driver_shollow,	/* (c) 1981 */
-    /*TODO*///	driver_shollow2,	/* (c) 1981 */
-    /*TODO*///	driver_tron,		/* (c) 1982 */
-    /*TODO*///	driver_tron2,		/* (c) 1982 */
-    /*TODO*///	driver_kroozr,	/* (c) 1982 */
-    /*TODO*///	driver_domino,	/* (c) 1982 */
-    /*TODO*///	driver_wacko,		/* (c) 1982 */
-    /*TODO*///	driver_twotiger,	/* (c) 1984 */
-    /*TODO*///	driver_twotigra,	/* (c) 1984 */
-    /*TODO*///	/* MCR2 + MCR3 sprites */
-    /*TODO*///	driver_journey,	/* (c) 1983 */
-    /*TODO*///	/* MCR3 */
-    /*TODO*///	driver_tapper,	/* (c) 1983 */
-    /*TODO*///	driver_tappera,	/* (c) 1983 */
-    /*TODO*///	driver_sutapper,	/* (c) 1983 */
-    /*TODO*///	driver_rbtapper,	/* (c) 1984 */
-    /*TODO*///	driver_timber,	/* (c) 1984 */
-    /*TODO*///	driver_dotron,	/* (c) 1983 */
-    /*TODO*///	driver_dotrone,	/* (c) 1983 */
-    /*TODO*///	driver_demoderb,	/* (c) 1984 */
-    /*TODO*///	driver_demoderm,	/* (c) 1984 */
-    /*TODO*///	driver_sarge,		/* (c) 1985 */
-    /*TODO*///	driver_rampage,	/* (c) 1986 */
-    /*TODO*///	driver_rampage2,	/* (c) 1986 */
-    /*TODO*///	driver_powerdrv,	/* (c) 1986 */
-    /*TODO*///	driver_stargrds,	/* (c) 1987 */
-    /*TODO*///	driver_maxrpm,	/* (c) 1986 */
-    /*TODO*///	driver_spyhunt,	/* (c) 1983 */
-    /*TODO*///	driver_turbotag,	/* (c) 1985 */
-    /*TODO*///	driver_crater,	/* (c) 1984 */
-    /*TODO*///	/* MCR 68000 */
-    /*TODO*///	driver_zwackery,	/* (c) 1984 */
-    /*TODO*///	driver_xenophob,	/* (c) 1987 */
-    /*TODO*///	driver_spyhunt2,	/* (c) 1987 */
-    /*TODO*///	driver_spyhnt2a,	/* (c) 1987 */
-    /*TODO*///	driver_blasted,	/* (c) 1988 */
-    /*TODO*///	driver_archrivl,	/* (c) 1989 */
-    /*TODO*///	driver_archriv2,	/* (c) 1989 */
-    /*TODO*///	driver_trisport,	/* (c) 1989 */
-    /*TODO*///	driver_pigskin,	/* (c) 1990 */
-    /*TODO*///
-    /*TODO*///	/* Bally / Sente games */
-    /*TODO*///	driver_sentetst,
-    /*TODO*///	driver_cshift,	/* (c) 1984 */
-    /*TODO*///	driver_gghost,	/* (c) 1984 */
-    /*TODO*///	driver_hattrick,	/* (c) 1984 */
-    /*TODO*///	driver_otwalls,	/* (c) 1984 */
-    /*TODO*///	driver_snakepit,	/* (c) 1984 */
-    /*TODO*///	driver_snakjack,	/* (c) 1984 */
-    /*TODO*///	driver_stocker,	/* (c) 1984 */
-    /*TODO*///	driver_triviag1,	/* (c) 1984 */
-    /*TODO*///	driver_triviag2,	/* (c) 1984 */
-    /*TODO*///	driver_triviasp,	/* (c) 1984 */
-    /*TODO*///	driver_triviayp,	/* (c) 1984 */
-    /*TODO*///	driver_triviabb,	/* (c) 1984 */
-    /*TODO*///	driver_gimeabrk,	/* (c) 1985 */
-    /*TODO*///	driver_minigolf,	/* (c) 1985 */
-    /*TODO*///	driver_minigol2,	/* (c) 1985 */
-    /*TODO*///	driver_toggle,	/* (c) 1985 */
-    /*TODO*///	driver_nametune,	/* (c) 1986 */
-    /*TODO*///	driver_nstocker,	/* (c) 1986 */
-    /*TODO*///	driver_sfootbal,	/* (c) 1986 */
-    /*TODO*///	driver_spiker,	/* (c) 1986 */
-    /*TODO*///	driver_stompin,	/* (c) 1986 */
-    /*TODO*///	driver_rescraid,	/* (c) 1987 */
-    /*TODO*///	driver_rescrdsa,	/* (c) 1987 */
-    /*TODO*///	driver_gridlee,	/* [1983 Videa] prototype - no copyright notice */
-    /*TODO*///
-    /*TODO*///	/* Irem games */
-    /*TODO*///	/* trivia: IREM means "International Rental Electronics Machines" */
-    /*TODO*///TESTdriver_iremm10,	/* M10 */
-    /*TODO*///	driver_skychut,	/* (c) [1980] */
-    /*TODO*///	driver_spacbeam,	/* M15 no copyright notice */
-    /*TODO*///TESTdriver_greenber,
-    /*TODO*///
-    /*TODO*///	driver_redalert,	/* (c) 1981 + "GDI presents" */
-    /*TODO*///	driver_olibochu,	/* M47 (c) 1981 + "GDI presents" */
-    /*TODO*///	driver_mpatrol,	/* M52 (c) 1982 */
-    /*TODO*///	driver_mpatrolw,	/* M52 (c) 1982 + Williams license */
-    /*TODO*///	driver_troangel,	/* (c) 1983 */
-    /*TODO*///	driver_yard,		/* (c) 1983 */
-    /*TODO*///	driver_vsyard,	/* (c) 1983/1984 */
-    /*TODO*///	driver_vsyard2,	/* (c) 1983/1984 */
-    /*TODO*///	driver_travrusa,	/* (c) 1983 */
-    /*TODO*///	driver_motorace,	/* (c) 1983 Williams license */
-    /*TODO*///	/* M62 */
-    /*TODO*///	driver_kungfum,	/* (c) 1984 */
-    /*TODO*///	driver_kungfud,	/* (c) 1984 + Data East license */
-    /*TODO*///	driver_spartanx,	/* (c) 1984 (Japan) */
-    /*TODO*///	driver_kungfub,	/* bootleg */
-    /*TODO*///	driver_kungfub2,	/* bootleg */
-    /*TODO*///	driver_battroad,	/* (c) 1984 */
-    /*TODO*///	driver_ldrun,		/* (c) 1984 licensed from Broderbund */
-    /*TODO*///	driver_ldruna,	/* (c) 1984 licensed from Broderbund */
-    /*TODO*///	driver_ldrun2,	/* (c) 1984 licensed from Broderbund */
-    /*TODO*///	driver_ldrun3,	/* (c) 1985 licensed from Broderbund */
-    /*TODO*///	driver_ldrun4,	/* (c) 1986 licensed from Broderbund */
-    /*TODO*///	driver_lotlot,	/* (c) 1985 licensed from Tokuma Shoten */
-    /*TODO*///	driver_kidniki,	/* (c) 1986 + Data East USA license */
-    /*TODO*///	driver_yanchamr,	/* (c) 1986 (Japan) */
-    /*TODO*///	driver_spelunkr,	/* (c) 1985 licensed from Broderbund */
-    /*TODO*///	driver_spelnkrj,	/* (c) 1985 licensed from Broderbund */
-    /*TODO*///	driver_spelunk2,	/* (c) 1986 licensed from Broderbund */
-    /*TODO*///	driver_youjyudn,	/* (c) 1986 (Japan) */
-    /*TODO*///
-    /*TODO*///	driver_vigilant,	/* (c) 1988 (World) */
-    /*TODO*///	driver_vigilntu,	/* (c) 1988 (US) */
-    /*TODO*///	driver_vigilntj,	/* (c) 1988 (Japan) */
-    /*TODO*///	driver_kikcubic,	/* (c) 1988 (Japan) */
-    /*TODO*///	/* M72 (and derivatives) */
-    /*TODO*///	driver_rtype,		/* (c) 1987 (Japan) */
-    /*TODO*///	driver_rtypepj,	/* (c) 1987 (Japan) */
-    /*TODO*///	driver_rtypeu,	/* (c) 1987 + Nintendo USA license (US) */
-    /*TODO*///	driver_bchopper,	/* (c) 1987 */
-    /*TODO*///	driver_mrheli,	/* (c) 1987 (Japan) */
-    /*TODO*///	driver_nspirit,	/* (c) 1988 */
-    /*TODO*///	driver_nspiritj,	/* (c) 1988 (Japan) */
-    /*TODO*///	driver_imgfight,	/* (c) 1988 (Japan) */
-    /*TODO*///	driver_loht,		/* (c) 1989 */
-    /*TODO*///	driver_xmultipl,	/* (c) 1989 (Japan) */
-    /*TODO*///	driver_dbreed,	/* (c) 1989 */
-    /*TODO*///	driver_rtype2,	/* (c) 1989 */
-    /*TODO*///	driver_rtype2j,	/* (c) 1989 (Japan) */
-    /*TODO*///	driver_majtitle,	/* (c) 1990 (Japan) */
-    /*TODO*///	driver_hharry,	/* (c) 1990 (World) */
-    /*TODO*///	driver_hharryu,	/* (c) 1990 Irem America (US) */
-    /*TODO*///	driver_dkgensan,	/* (c) 1990 (Japan) */
-    /*TODO*///	driver_dkgenm72,	/* (c) 1990 (Japan) */
-    /*TODO*///	driver_poundfor,	/* (c) 1990 (World) */
-    /*TODO*///	driver_poundfou,	/* (c) 1990 Irem America (US) */
-    /*TODO*///	driver_airduel,	/* (c) 1990 (Japan) */
-    /*TODO*///	driver_gallop,	/* (c) 1991 (Japan) */
-    /*TODO*///	driver_kengo,		/* (c) 1991 */
-    /*TODO*///	/* not M72, but same sound hardware */
-    /*TODO*///	driver_sichuan2,	/* (c) 1989 Tamtex */
-    /*TODO*///	driver_sichuana,	/* (c) 1989 Tamtex */
-    /*TODO*///	driver_shisen,	/* (c) 1989 Tamtex */
-    /*TODO*///	/* M90 */
-    /*TODO*///	driver_hasamu,	/* (c) 1991 Irem (Japan) */
-    /*TODO*///	driver_bombrman,	/* (c) 1991 Irem (Japan) */
-    /*TODO*///TESTdriver_dynablsb,	/* bootleg */
-    /*TODO*///	/* M97 */
-    /*TODO*///	driver_bbmanw,	/* (c) 1992 Irem (World) */
-    /*TODO*///	driver_bbmanwj,
-    /*TODO*///	driver_atompunk,	/* (c) 1992 Irem America (US) */
-    /*TODO*///TESTdriver_quizf1,
-    /*TODO*///TESTdriver_riskchal,
-    /*TODO*///TESTdriver_gussun,
-    /*TODO*///TESTdriver_shisen2,
-    /*TODO*///	/* M92 */
-    /*TODO*///	driver_gunforce,	/* (c) 1991 Irem (World) */
-    /*TODO*///	driver_gunforcu,	/* (c) 1991 Irem America (US) */
-    /*TODO*///	driver_gunforcj,	/* (c) 1991 Irem (Japan) */
-    /*TODO*///	driver_bmaster,	/* (c) 1991 Irem */
-    /*TODO*///	driver_lethalth,	/* (c) 1991 Irem (World) */
-    /*TODO*///	driver_thndblst,	/* (c) 1991 Irem (Japan) */
-    /*TODO*///	driver_uccops,	/* (c) 1992 Irem (World) */
-    /*TODO*///	driver_uccopsj,	/* (c) 1992 Irem (Japan) */
-    /*TODO*///	driver_mysticri,	/* (c) 1992 Irem (World) */
-    /*TODO*///	driver_gunhohki,	/* (c) 1992 Irem (Japan) */
-    /*TODO*///	driver_majtitl2,	/* (c) 1992 Irem (World) */
-    /*TODO*///	driver_skingame,	/* (c) 1992 Irem America (US) */
-    /*TODO*///	driver_skingam2,	/* (c) 1992 Irem America (US) */
-    /*TODO*///	driver_hook,		/* (c) 1992 Irem (World) */
-    /*TODO*///	driver_hooku,		/* (c) 1992 Irem America (US) */
-    /*TODO*///	driver_rtypeleo,	/* (c) 1992 Irem (Japan) */
-    /*TODO*///	driver_inthunt,	/* (c) 1993 Irem (World) */
-    /*TODO*///	driver_inthuntu,	/* (c) 1993 Irem (US) */
-    /*TODO*///	driver_kaiteids,	/* (c) 1993 Irem (Japan) */
-    /*TODO*///	driver_nbbatman,	/* (c) 1993 Irem America (US) */
-    /*TODO*///	driver_leaguemn,	/* (c) 1993 Irem (Japan) */
-    /*TODO*///	driver_psoldier,	/* (c) 1993 Irem (Japan) */
-    /*TODO*///	driver_dsccr94j,	/* (c) 1994 Irem (Japan) */
-    /*TODO*///	/* 1994 Geo Storm */
-    /*TODO*///	/* M107 */
-    /*TODO*///	driver_firebarr,	/* (c) 1993 Irem (Japan) */
-    /*TODO*///	driver_dsoccr94,	/* (c) 1994 Irem (Data East Corporation license) */
-    /*TODO*///
-    /*TODO*///	/* Gottlieb/Mylstar games (Gottlieb became Mylstar in 1983) */
-    /*TODO*///	driver_reactor,	/* GV-100 (c) 1982 Gottlieb */
-    /*TODO*///	driver_mplanets,	/* GV-102 (c) 1983 Gottlieb */
-    /*TODO*///	driver_qbert,		/* GV-103 (c) 1982 Gottlieb */
-    /*TODO*///	driver_qbertjp,	/* GV-103 (c) 1982 Gottlieb + Konami license */
-    /*TODO*///	driver_insector,	/* GV-??? (c) 1982 Gottlieb - never released */
-    /*TODO*///	driver_krull,		/* GV-105 (c) 1983 Gottlieb */
-    /*TODO*///	driver_sqbert,	/* GV-??? (c) 1983 Mylstar - never released */
-    /*TODO*///	driver_mach3,		/* GV-109 (c) 1983 Mylstar */
-    /*TODO*///	driver_usvsthem,	/* GV-??? (c) 198? Mylstar */
-    /*TODO*///	driver_3stooges,	/* GV-113 (c) 1984 Mylstar */
-    /*TODO*///	driver_qbertqub,	/* GV-119 (c) 1983 Mylstar */
-    /*TODO*///	driver_screwloo,	/* GV-123 (c) 1983 Mylstar - never released */
-    /*TODO*///	driver_curvebal,	/* GV-134 (c) 1984 Mylstar */
-    /*TODO*///
-    /*TODO*///	/* Taito "Qix hardware" games */
-    /*TODO*///	driver_qix,		/* LK  (c) 1981 Taito America Corporation */
-    /*TODO*///	driver_qixa,		/* LK  (c) 1981 Taito America Corporation */
-    /*TODO*///	driver_qixb,		/* LK  (c) 1981 Taito America Corporation */
-    /*TODO*///	driver_qix2,		/* ??  (c) 1981 Taito America Corporation */
-    /*TODO*///	driver_sdungeon,	/* SD  (c) 1981 Taito America Corporation */
-    /*TODO*///	driver_elecyoyo,	/* YY  (c) 1982 Taito America Corporation */
-    /*TODO*///	driver_elecyoy2,	/* YY  (c) 1982 Taito America Corporation */
-    /*TODO*///	driver_kram,		/* KS  (c) 1982 Taito America Corporation */
-    /*TODO*///	driver_kram2,		/* KS  (c) 1982 Taito America Corporation */
-    /*TODO*///	driver_zookeep,	/* ZA  (c) 1982 Taito America Corporation */
-    /*TODO*///	driver_zookeep2,	/* ZA  (c) 1982 Taito America Corporation */
-    /*TODO*///	driver_zookeep3,	/* ZA  (c) 1982 Taito America Corporation */
-    /*TODO*///	driver_slither,	/* (c) 1982 Century II */
-    /*TODO*///	driver_slithera,	/* (c) 1982 Century II */
-    /*TODO*///
-    /*TODO*///	/* Taito SJ System games */
-    /*TODO*///	driver_spaceskr,	/* EB  (c) 1981 Taito Corporation */
-    /*TODO*///	driver_junglek,	/* KN  (c) 1982 Taito Corporation */
-    /*TODO*///	driver_junglkj2,	/* KN  (c) 1982 Taito Corporation */
-    /*TODO*///	driver_jungleh,	/* KN  (c) 1982 Taito America Corporation */
-    /*TODO*///	driver_junglhbr,	/* KN  (c) 1982 Taito do Brasil */
-    /*TODO*///	driver_alpine,	/* RH  (c) 1982 Taito Corporation */
-    /*TODO*///	driver_alpinea,	/* RH  (c) 1982 Taito Corporation */
-    /*TODO*///	driver_timetunl,	/* UN  (c) 1982 Taito Corporation */
-    /*TODO*///	driver_wwestern,	/* WW  (c) 1982 Taito Corporation */
-    /*TODO*///	driver_wwester1,	/* WW  (c) 1982 Taito Corporation */
-    /*TODO*///	driver_frontlin,	/* FL  (c) 1982 Taito Corporation */
-    /*TODO*///	driver_elevator,	/* EA  (c) 1983 Taito Corporation */
-    /*TODO*///	driver_elevatob,	/* bootleg */
-    /*TODO*///	driver_tinstar,	/* A10 (c) 1983 Taito Corporation */
-    /*TODO*///	driver_waterski,	/* A03 (c) 1983 Taito Corporation */
-    /*TODO*///	driver_bioatack,	/* AA8 (c) 1983 Taito Corporation + Fox Video Games license */
-    /*TODO*///	driver_hwrace,	/* AC4 (c) 1983 Taito Corporation */
-    /*TODO*///	driver_sfposeid,	/* A14 (c) 1984 Taito Corporation */
-    /*TODO*///TESTdriver_kikstart,	/* A20 */
-    /*TODO*///
-    /*TODO*///	/* other Taito games */
-    /*TODO*///	driver_crbaloon,	/* CL  (c) 1980 Taito Corporation */
-    /*TODO*///	driver_crbalon2,	/* CL  (c) 1980 Taito Corporation */
-    /*TODO*///	driver_grchamp,	/* GM  (c) 1981 Taito Corporation */
-    /*TODO*///	driver_bking2,	/* AD6 (c) 1983 Taito Corporation */
-    /*TODO*///TESTdriver_josvolly,	/* ??? (c) 1983 Taito Corporation */
-    /*TODO*///	driver_gsword,	/* ??? (c) 1984 Taito Corporation */
-    /*TODO*///	driver_lkage,		/* A54 (c) 1984 Taito Corporation */
-    /*TODO*///	driver_lkageb,	/* bootleg */
-    /*TODO*///	driver_lkageb2,	/* bootleg */
-    /*TODO*///	driver_lkageb3,	/* bootleg */
-    /*TODO*///	driver_retofinv,	/* A37 (c) 1985 Taito Corporation */
-    /*TODO*///	driver_retofin1,	/* bootleg */
-    /*TODO*///	driver_retofin2,	/* bootleg */
-    /*TODO*///	driver_fightrol,	/* (c) 1983 Taito */
-    /*TODO*///	driver_rollrace,	/* (c) 1983 Williams */
-    /*TODO*///	driver_vsgongf,	/* (c) 1984 Kaneko */
-    /*TODO*///	driver_tsamurai,	/* A35 (c) 1985 Taito */
-    /*TODO*///	driver_tsamura2,	/* A35 (c) 1985 Taito */
-    /*TODO*///	driver_nunchaku,	/* ??? (c) 1985 Taito */
-    /*TODO*///	driver_yamagchi,	/* A38 (c) 1985 Taito */
-    /*TODO*///	driver_m660,      /* ??? (c) 1986 Taito America Corporation */
-    /*TODO*///	driver_m660j,     /* ??? (c) 1986 Taito Corporation (Japan) */
-    /*TODO*///	driver_m660b,     /* bootleg */
-    /*TODO*///	driver_alphaxz,   /* ??? (c) 1986 Ed/Wood Place */
-    /*TODO*///	driver_buggychl,	/* A22 (c) 1984 Taito Corporation */
-    /*TODO*///	driver_buggycht,	/* A22 (c) 1984 Taito Corporation + Tefri license */
-    /*TODO*///	driver_flstory,	/* A45 (c) 1985 Taito Corporation */
-    /*TODO*///	driver_flstoryj,	/* A45 (c) 1985 Taito Corporation (Japan) */
-    /*TODO*///TESTdriver_onna34ro,	/* A52 */
-    /*TODO*///	driver_gladiatr,	/* ??? (c) 1986 Taito America Corporation (US) */
-    /*TODO*///	driver_ogonsiro,	/* ??? (c) 1986 Taito Corporation (Japan) */
-    /*TODO*///	driver_lsasquad,	/* A64 (c) 1986 Taito Corporation / Taito America (dip switch) */
-    /*TODO*///	driver_storming,	/* A64 (c) 1986 Taito Corporation */
-    /*TODO*///	driver_tokio,		/* A71 1986 */
-    /*TODO*///	driver_tokiob,	/* bootleg */
-    /*TODO*///	driver_bublbobl,	/* A78 (c) 1986 Taito Corporation */
-    /*TODO*///	driver_bublbobr,	/* A78 (c) 1986 Taito America Corporation + Romstar license */
-    /*TODO*///	driver_bubbobr1,	/* A78 (c) 1986 Taito America Corporation + Romstar license */
-    /*TODO*///	driver_boblbobl,	/* bootleg */
-    /*TODO*///	driver_sboblbob,	/* bootleg */
-    /*TODO*///	driver_kikikai,	/* A85 (c) 1986 Taito Corporation */
-    /*TODO*///	driver_kicknrun,	/* A87 (c) 1986 Taito Corporation */
-    /*TODO*///	driver_mexico86,	/* bootleg (Micro Research) */
-    /*TODO*///	driver_darius,	/* A96 (c) 1986 Taito Corporation Japan (World) */
-    /*TODO*///	driver_dariusj,	/* A96 (c) 1986 Taito Corporation (Japan) */
-    /*TODO*///	driver_dariuso,	/* A96 (c) 1986 Taito Corporation (Japan) */
-    /*TODO*///	driver_dariuse,	/* A96 (c) 1986 Taito Corporation (Japan) */
-    /*TODO*///	driver_rastan,	/* B04 (c) 1987 Taito Corporation Japan (World) */
-    /*TODO*///	driver_rastanu,	/* B04 (c) 1987 Taito America Corporation (US) */
-    /*TODO*///	driver_rastanu2,	/* B04 (c) 1987 Taito America Corporation (US) */
-    /*TODO*///	driver_rastsaga,	/* B04 (c) 1987 Taito Corporation (Japan)*/
-    /*TODO*///	driver_topspeed,	/* B14 (c) 1987 Taito Corporation Japan (World) */
-    /*TODO*///	driver_topspedu,	/* B14 (c) 1987 Taito America Corporation (US) */
-    /*TODO*///	driver_fullthrl,	/* B14 (c) 1987 Taito Corporation (Japan) */
-    /*TODO*///	driver_opwolf,	/* B20 (c) 1987 Taito America Corporation (US) */
-    /*TODO*///	driver_opwolfb,	/* bootleg */
-    /*TODO*///	driver_othunder,	/* B67 (c) 1988 Taito Corporation Japan (World) */
-    /*TODO*///	driver_othundu,	/* B67 (c) 1988 Taito America Corporation (US) */
-    /*TODO*///	driver_rainbow,	/* B22 (c) 1987 Taito Corporation */
-    /*TODO*///	driver_rainbowa,	/* B22 (c) 1987 Taito Corporation */
-    /*TODO*///	driver_rainbowe,	/* ??? (c) 1988 Taito Corporation */
-    /*TODO*///	driver_jumping,	/* bootleg */
-    /*TODO*///	driver_arkanoid,	/* A75 (c) 1986 Taito Corporation Japan (World) */
-    /*TODO*///	driver_arknoidu,	/* A75 (c) 1986 Taito America Corporation + Romstar license (US) */
-    /*TODO*///	driver_arknoidj,	/* A75 (c) 1986 Taito Corporation (Japan) */
-    /*TODO*///	driver_arkbl2,	/* bootleg */
-    /*TODO*///TESTdriver_arkbl3,	/* bootleg */
-    /*TODO*///	driver_arkatayt,	/* bootleg */
-    /*TODO*///TESTdriver_arkblock,	/* bootleg */
-    /*TODO*///	driver_arkbloc2,	/* bootleg */
-    /*TODO*///	driver_arkangc,	/* bootleg */
-    /*TODO*///	driver_arkatour,	/* ??? (c) 1987 Taito America Corporation + Romstar license (US) */
-    /*TODO*///	driver_superqix,	/* B03 1987 */
-    /*TODO*///	driver_sqixbl,	/* bootleg? but (c) 1987 */
-    /*TODO*///	driver_exzisus,	/* B23 (c) 1987 Taito Corporation (Japan) */
-    /*TODO*///	driver_volfied,	/* C04 (c) 1989 Taito Corporation (Japan) */
-    /*TODO*///	driver_bonzeadv,	/* B41 (c) 1988 Taito Corporation Japan (World) */
-    /*TODO*///	driver_bonzeadu,	/* B41 (c) 1988 Taito America Corporation (US) */
-    /*TODO*///	driver_jigkmgri,	/* B41 (c) 1988 Taito Corporation (Japan)*/
-    /*TODO*///	driver_asuka,		/* ??? (c) 1988 Taito Corporation (Japan) */
-    /*TODO*///	driver_mofflott,	/* C17 (c) 1989 Taito Corporation (Japan) */
-    /*TODO*///	driver_galmedes,	/* (c) 1992 Visco (Japan) */
-    /*TODO*///	driver_earthjkr,	/* (c) 1993 Visco (Japan) */
-    /*TODO*///	driver_eto,		/* (c) 1994 Visco (Japan) */
-    /*TODO*///	driver_cadash,	/* C21 (c) 1989 Taito Corporation Japan */
-    /*TODO*///	driver_cadashj,	/* C21 (c) 1989 Taito Corporation */
-    /*TODO*///	driver_cadashu,	/* C21 (c) 1989 Taito America Corporation */
-    /*TODO*///	driver_cadashi,	/* C21 (c) 1989 Taito Corporation Japan */
-    /*TODO*///	driver_cadashf,	/* C21 (c) 1989 Taito Corporation Japan */
-    /*TODO*///	driver_wgp,		/* C32 (c) 1989 Taito America Corporation (US) */
-    /*TODO*///	driver_wgpj,		/* C32 (c) 1989 Taito Corporation (Japan) */
-    /*TODO*///	driver_wgpjoy,	/* C32 (c) 1989 Taito Corporation (Japan) */
-    /*TODO*///	driver_wgp2,		/* C73 (c) 1990 Taito Corporation (Japan) */
-    /*TODO*///	driver_slapshot,	/* D71 (c) 1994 Taito Corporation (Japan) */
-    /*TODO*///
-    /*TODO*///	/* Taito multi-screen games */
-    /*TODO*///	driver_ninjaw,	/* B31 (c) 1987 Taito Corporation Japan (World) */
-    /*TODO*///	driver_ninjawj,	/* B31 (c) 1987 Taito Corporation (Japan) */
-    /*TODO*///	driver_darius2,	/* C07 (c) 1989 Taito Corporation (Japan) */
-    /*TODO*///	driver_darius2d,	/* C07 (c) 1989 Taito Corporation (Japan) */
-    /*TODO*///	driver_drius2do,	/* C07 (c) 1989 Taito Corporation (Japan) */
-    /*TODO*///	driver_warriorb,	/* D24 (c) 1991 Taito Corporation (Japan) */
-    /*TODO*///
-    /*TODO*///	/* Taito "X"-system games */
-    /*TODO*///	driver_superman,	/* B61 (c) 1988 Taito Corporation */
-    /*TODO*///	driver_twinhawk,	/* B87 (c) 1989 Taito Corporation Japan (World) */
-    /*TODO*///	driver_twinhwku,	/* B87 (c) 1989 Taito America Corporation (US) */
-    /*TODO*///	driver_daisenpu,	/* B87 (c) 1989 Taito Corporation (Japan) */
-    /*TODO*///	driver_gigandes,	/* (c) 1989 East Technology */
-    /*TODO*///	driver_ballbros,	/* no copyright notice */
-    /*TODO*///
-    /*TODO*///	/* Taito "tnzs" hardware */
-    /*TODO*///	driver_plumppop,	/* A98 (c) 1987 Taito Corporation (Japan) */
-    /*TODO*///	driver_extrmatn,	/* B06 (c) 1987 World Games */
-    /*TODO*///	driver_arknoid2,	/* B08 (c) 1987 Taito Corporation Japan (World) */
-    /*TODO*///	driver_arknid2u,	/* B08 (c) 1987 Taito America Corporation + Romstar license (US) */
-    /*TODO*///	driver_arknid2j,	/* B08 (c) 1987 Taito Corporation (Japan) */
-    /*TODO*///	driver_drtoppel,	/* B19 (c) 1987 Taito Corporation (Japan) */
-    /*TODO*///	driver_kageki,	/* B35 (c) 1988 Taito America Corporation + Romstar license (US) */
-    /*TODO*///	driver_kagekij,	/* B35 (c) 1988 Taito Corporation (Japan) */
-    /*TODO*///	driver_chukatai,	/* B44 (c) 1988 Taito Corporation (Japan) */
-    /*TODO*///	driver_tnzs,		/* B53?(c) 1988 Taito Corporation (Japan) (new logo) */
-    /*TODO*///	driver_tnzsb,		/* bootleg but Taito Corporation Japan (World) (new logo) */
-    /*TODO*///	driver_tnzs2,		/* B53?(c) 1988 Taito Corporation Japan (World) (old logo) */
-    /*TODO*///	driver_insectx,	/* B97 (c) 1989 Taito Corporation Japan (World) */
-    /*TODO*///
-    /*TODO*///	/* Taito L-System games */
-    /*TODO*///	driver_raimais,	/* B36 (c) 1988 Taito Corporation (Japan) */
-    /*TODO*///	driver_kurikint,	/* B42 (c) 1988 Taito Corporation Japan (World) */
-    /*TODO*///	driver_kurikinu,	/* B42 (c) 1988 Taito America Corporation (US) */
-    /*TODO*///	driver_kurikinj,	/* B42 (c) 1988 Taito Corporation (Japan) */
-    /*TODO*///	driver_kurikina,	/* B42 (c) 1988 Taito Corporation Japan (World) */
-    /*TODO*///	driver_fhawk,		/* B70 (c) 1988 Taito Corporation (Japan) */
-    /*TODO*///	driver_plotting,	/* B96 (c) 1989 Taito Corporation Japan (World) */
-    /*TODO*///	driver_champwr,	/* C01 (c) 1989 Taito Corporation Japan (World) */
-    /*TODO*///	driver_champwru,	/* C01 (c) 1989 Taito America Corporation (US) */
-    /*TODO*///	driver_champwrj,	/* C01 (c) 1989 Taito Corporation (Japan) */
-    /*TODO*///	driver_puzznic,	/* C20 (c) 1989 Taito Corporation (Japan) */
-    /*TODO*///	driver_horshoes,	/* C47 (c) 1990 Taito America Corporation (US) */
-    /*TODO*///	driver_palamed,	/* C63 (c) 1990 Taito Corporation (Japan) */
-    /*TODO*///	driver_cachat,	/* ??? (c) 1993 Taito Corporation (Japan) */
-    /*TODO*///	driver_tubeit,	/* ??? no copyright message */
-    /*TODO*///	driver_cubybop,	/* ??? no copyright message */
-    /*TODO*///	driver_plgirls,	/* (c) 1992 Hot-B. */
-    /*TODO*///	driver_plgirls2,	/* (c) 1993 Hot-B. */
-    /*TODO*///
-    /*TODO*///	/* Taito H-System games */
-    /*TODO*///	driver_syvalion,	/* B51 (c) 1988 Taito Corporation (Japan) */
-    /*TODO*///	driver_recordbr,	/* B56 (c) 1988 Taito Corporation Japan (World) */
-    /*TODO*///	driver_dleague,	/* C02 (c) 1990 Taito Corporation (Japan) */
-    /*TODO*///
-    /*TODO*///	/* Taito B-System games */
-    /*TODO*///	driver_masterw,	/* B72 (c) 1989 Taito Corporation Japan (World) */
-    /*TODO*///	driver_nastar,	/* B81 (c) 1988 Taito Corporation Japan (World) */
-    /*TODO*///	driver_nastarw,	/* B81 (c) 1988 Taito America Corporation (US) */
-    /*TODO*///	driver_rastsag2,	/* B81 (c) 1988 Taito Corporation (Japan) */
-    /*TODO*///	driver_rambo3,	/* B93 (c) 1989 Taito Europe Corporation (Europe) */
-    /*TODO*///	driver_rambo3ae,	/* B93 (c) 1989 Taito Europe Corporation (Europe) */
-    /*TODO*///	driver_rambo3a,	/* B93 (c) 1989 Taito America Corporation (US) */
-    /*TODO*///	driver_crimec,	/* B99 (c) 1989 Taito Corporation Japan (World) */
-    /*TODO*///	driver_crimecu,	/* B99 (c) 1989 Taito America Corporation (US) */
-    /*TODO*///	driver_crimecj,	/* B99 (c) 1989 Taito Corporation (Japan) */
-    /*TODO*///	driver_tetrist,	/* C12 (c) 1989 Sega Enterprises,Ltd. (Japan) */
-    /*TODO*///	driver_viofight,	/* C16 (c) 1989 Taito Corporation Japan (World) */
-    /*TODO*///	driver_ashura,	/* C43 (c) 1990 Taito Corporation (Japan) */
-    /*TODO*///	driver_ashurau,	/* C43 (c) 1990 Taito America Corporation (US) */
-    /*TODO*///	driver_hitice,	/* C59 (c) 1990 Williams (US) */
-    /*TODO*///	driver_sbm,		/* C69 (c) 1990 Taito Corporation (Japan) */
-    /*TODO*///	driver_selfeena,	/* ??? (c) 1991 East Technology */
-    /*TODO*///	driver_silentd,	/* ??? (c) 1992 Taito Corporation Japan (World) */
-    /*TODO*///	driver_silentdj,	/* ??? (c) 1992 Taito Corporation (Japan) */
-    /*TODO*///	driver_ryujin,	/* ??? (c) 1993 Taito Corporation (Japan) */
-    /*TODO*///	driver_qzshowby,	/* D72 (c) 1993 Taito Corporation (Japan) */
-    /*TODO*///	driver_pbobble,	/* ??? (c) 1994 Taito Corporation (Japan) */
-    /*TODO*///	driver_spacedx,	/* D89 (c) 1994 Taito Corporation (US) */
-    /*TODO*///	driver_spacedxj,	/* D89 (c) 1994 Taito Corporation (Japan) */
-    /*TODO*///	driver_spacedxo,	/* D89 (c) 1994 Taito Corporation (Japan) */
-    /*TODO*///
-    /*TODO*///	/* Taito Z-System games */
-    /*TODO*///	driver_contcirc,	/* B33 (c) 1989 Taito Corporation Japan (World) */
-    /*TODO*///	driver_contcrcu,	/* B33 (c) 1987 Taito America Corporation (US) */
-    /*TODO*///	driver_chasehq,	/* B52 (c) 1988 Taito Corporation Japan (World) */
-    /*TODO*///	driver_chasehqj,	/* B52 (c) 1988 Taito Corporation (Japan) */
-    /*TODO*///	driver_nightstr,	/* B91 (c) 1989 Taito America Corporation (US) */
-    /*TODO*///	driver_sci,		/* C09 (c) 1989 Taito Corporation Japan (World) */
-    /*TODO*///	driver_scia,		/* C09 (c) 1989 Taito Corporation Japan (World) */
-    /*TODO*///	driver_sciu,		/* C09 (c) 1989 Taito America Corporation (US) */
-    /*TODO*///	driver_bshark,	/* C34 (c) 1989 Taito America Corporation (US) */
-    /*TODO*///	driver_bsharkj,	/* C34 (c) 1989 Taito Corporation (Japan) */
-    /*TODO*///	driver_aquajack,	/* B77 (c) 1990 Taito Corporation Japan (World) */
-    /*TODO*///	driver_aquajckj,	/* B77 (c) 1990 Taito Corporation (Japan) */
-    /*TODO*///	driver_spacegun,	/* C57 (c) 1990 Taito Corporation Japan (World) */
-    /*TODO*///	driver_dblaxle,	/* C78 (c) 1991 Taito America Corporation (US) */
-    /*TODO*///	driver_pwheelsj,	/* C78 (c) 1991 Taito Corporation (Japan) */
-    /*TODO*///
-    /*TODO*///	/* Taito Air System games */
-    /*TODO*///TESTdriver_topland,	/* B62 (c) 1988 Taito Coporation Japan (World) */
-    /*TODO*///TESTdriver_ainferno,	/* C45 (c) 1990 Taito America Corporation (US) */
-    /*TODO*///
-    /*TODO*///	/* enhanced Z-System hardware games */
-    /*TODO*///	driver_gunbustr,	/* D27 (c) 1992 Taito Corporation (Japan) */
-    /*TODO*///	driver_superchs,	/* D46 (c) 1992 Taito America Corporation (US) */
-    /*TODO*///	driver_undrfire,	/* D67 (c) 1993 Taito Coporation Japan (World) */
-    /*TODO*///
-    /*TODO*///	/* Taito F2 games */
-    /*TODO*///	driver_finalb,	/* B82 (c) 1988 Taito Corporation Japan (World) */
-    /*TODO*///	driver_finalbj,	/* B82 (c) 1988 Taito Corporation (Japan) */
-    /*TODO*///	driver_dondokod,	/* B95 (c) 1989 Taito Corporation Japan (World) */
-    /*TODO*///	driver_dondokdu,	/* B95 (c) 1989 Taito America Corporation (US) */
-    /*TODO*///	driver_dondokdj,	/* B95 (c) 1989 Taito Corporation (Japan) */
-    /*TODO*///	driver_megab,		/* C11 (c) 1989 Taito Corporation Japan (World) */
-    /*TODO*///	driver_megabj,	/* C11 (c) 1989 Taito Corporation (Japan) */
-    /*TODO*///	driver_thundfox,	/* C28 (c) 1990 Taito Corporation Japan (World) */
-    /*TODO*///	driver_thndfoxu,	/* C28 (c) 1990 Taito America Corporation (US) */
-    /*TODO*///	driver_thndfoxj,	/* C28 (c) 1990 Taito Corporation (Japan) */
-    /*TODO*///	driver_cameltry,	/* C38 (c) 1989 Taito America Corporation (US) */
-    /*TODO*///	driver_camltrua,	/* C38 (c) 1989 Taito America Corporation (US) */
-    /*TODO*///	driver_cameltrj,	/* C38 (c) 1989 Taito Corporation (Japan) */
-    /*TODO*///	driver_qtorimon,	/* C41 (c) 1990 Taito Corporation (Japan) */
-    /*TODO*///	driver_liquidk,	/* C49 (c) 1990 Taito Corporation Japan (World) */
-    /*TODO*///	driver_liquidku,	/* C49 (c) 1990 Taito America Corporation (US) */
-    /*TODO*///	driver_mizubaku,	/* C49 (c) 1990 Taito Corporation (Japan) */
-    /*TODO*///	driver_quizhq,	/* C53 (c) 1990 Taito Corporation (Japan) */
-    /*TODO*///	driver_ssi,		/* C64 (c) 1990 Taito Corporation Japan (World) */
-    /*TODO*///	driver_majest12,	/* C64 (c) 1990 Taito Corporation (Japan) */
-    /*TODO*///	driver_gunfront,	/* C71 (c) 1990 Taito Corporation Japan (World) */
-    /*TODO*///	driver_gunfronj,	/* C71 (c) 1990 Taito Corporation (Japan) */
-    /*TODO*///	driver_growl,		/* C74 (c) 1990 Taito Corporation Japan (World) */
-    /*TODO*///	driver_growlu,	/* C74 (c) 1990 Taito America Corporation (US) */
-    /*TODO*///	driver_runark,	/* C74 (c) 1990 Taito Corporation (Japan) */
-    /*TODO*///	driver_mjnquest,	/* C77 (c) 1990 Taito Corporation (Japan) */
-    /*TODO*///	driver_mjnquesb,	/* C77 (c) 1990 Taito Corporation (Japan) */
-    /*TODO*///	driver_footchmp,	/* C80 (c) 1990 Taito Corporation Japan (World) */
-    /*TODO*///	driver_hthero,	/* C80 (c) 1990 Taito Corporation (Japan) */
-    /*TODO*///	driver_euroch92,	/*     (c) 1992 Taito Corporation Japan (World) */
-    /*TODO*///	driver_koshien,	/* C81 (c) 1990 Taito Corporation (Japan) */
-    /*TODO*///	driver_yuyugogo,	/* C83 (c) 1990 Taito Corporation (Japan) */
-    /*TODO*///	driver_ninjak,	/* C85 (c) 1990 Taito Corporation Japan (World) */
-    /*TODO*///	driver_ninjakj,	/* C85 (c) 1990 Taito Corporation (Japan) */
-    /*TODO*///	driver_solfigtr,	/* C91 (c) 1991 Taito Corporation Japan (World) */
-    /*TODO*///	driver_qzquest,	/* C92 (c) 1991 Taito Corporation (Japan) */
-    /*TODO*///	driver_pulirula,	/* C98 (c) 1991 Taito Corporation Japan (World) */
-    /*TODO*///	driver_pulirulj,	/* C98 (c) 1991 Taito Corporation (Japan) */
-    /*TODO*///	driver_metalb,	/* D16? (c) 1991 Taito Corporation Japan (World) */
-    /*TODO*///	driver_metalbj,	/* D12 (c) 1991 Taito Corporation (Japan) */
-    /*TODO*///	driver_qzchikyu,	/* D19 (c) 1991 Taito Corporation (Japan) */
-    /*TODO*///	driver_yesnoj,	/* D20 (c) 1992 Taito Corporation (Japan) */
-    /*TODO*///	driver_deadconx,	/* D28 (c) 1992 Taito Corporation Japan (World) */
-    /*TODO*///	driver_deadconj,	/* D28 (c) 1992 Taito Corporation (Japan) */
-    /*TODO*///	driver_dinorex,	/* D39 (c) 1992 Taito Corporation Japan (World) */
-    /*TODO*///	driver_dinorexj,	/* D39 (c) 1992 Taito Corporation (Japan) */
-    /*TODO*///	driver_dinorexu,	/* D39 (c) 1992 Taito America Corporation (US) */
-    /*TODO*///	driver_qjinsei,	/* D48 (c) 1992 Taito Corporation (Japan) */
-    /*TODO*///	driver_qcrayon,	/* D55 (c) 1993 Taito Corporation (Japan) */
-    /*TODO*///	driver_qcrayon2,	/* D63 (c) 1993 Taito Corporation (Japan) */
-    /*TODO*///	driver_driftout,	/* (c) 1991 Visco */
-    /*TODO*///	driver_driveout,	/* bootleg */
-    /*TODO*///
-    /*TODO*///	/* Taito F3 games */
-    /*TODO*///	driver_ringrage,	/* D21 (c) 1992 Taito Corporation Japan (World) */
-    /*TODO*///	driver_ringragj,	/* D21 (c) 1992 Taito Corporation (Japan) */
-    /*TODO*///	driver_ringragu,	/* D21 (c) 1992 Taito America Corporation (US) */
-    /*TODO*///	driver_arabianm,	/* D29 (c) 1992 Taito Corporation Japan (World) */
-    /*TODO*///	driver_arabiamj,	/* D29 (c) 1992 Taito Corporation (Japan) */
-    /*TODO*///	driver_arabiamu,	/* D29 (c) 1992 Taito America Corporation (US) */
-    /*TODO*///	driver_ridingf,	/* D34 (c) 1992 Taito Corporation Japan (World) */
-    /*TODO*///	driver_ridefgtj,	/* D34 (c) 1992 Taito Corporation (Japan) */
-    /*TODO*///	driver_ridefgtu,	/* D34 (c) 1992 Taito America Corporation (US) */
-    /*TODO*///	driver_gseeker,	/* D40 (c) 1992 Taito Corporation Japan (World) */
-    /*TODO*///	driver_gseekerj,	/* D40 (c) 1992 Taito Corporation (Japan) */
-    /*TODO*///	driver_gseekeru,	/* D40 (c) 1992 Taito America Corporation (US) */
-    /*TODO*///	driver_hthero93,	/* D49 (c) 1992 Taito Corporation (Japan) */
-    /*TODO*///	driver_cupfinal,	/* D49 (c) 1993 Taito Corporation Japan (World) */
-    /*TODO*///	driver_trstar,	/* D53 (c) 1993 Taito Corporation Japan (World) */
-    /*TODO*///	driver_trstarj,	/* D53 (c) 1993 Taito Corporation (Japan) */
-    /*TODO*///	driver_prmtmfgt,	/* D53 (c) 1993 Taito Corporation (US) */
-    /*TODO*///	driver_trstaro,	/* D53 (c) 1993 Taito Corporation (World) */
-    /*TODO*///	driver_trstaroj,	/* D53 (c) 1993 Taito Corporation (Japan) */
-    /*TODO*///	driver_prmtmfgo,	/* D53 (c) 1993 Taito Corporation (US) */
-    /*TODO*///	driver_gunlock,	/* D66 (c) 1993 Taito Corporation Japan (World) */
-    /*TODO*///	driver_rayforcj,	/* D66 (c) 1993 Taito Corporation (Japan) */
-    /*TODO*///	driver_rayforce,	/* D66 (c) 1993 Taito America Corporation (US) */
-    /*TODO*///	driver_scfinals,	/* D68 (c) 1993 Taito Corporation Japan (World) */
-    /*TODO*///	driver_lightbr,	/* D69 (c) 1993 Taito Corporation (Japan) */
-    /*TODO*///	driver_kaiserkn,	/* D84 (c) 1994 Taito Corporation Japan (World) */
-    /*TODO*///	driver_kaiserkj,	/* D84 (c) 1994 Taito Corporation (Japan) */
-    /*TODO*///	driver_gblchmp,	/* D84 (c) 1994 Taito America Corporation (US) */
-    /*TODO*///	driver_dankuga,	/* D84? (c) 1994 Taito Corporation (Japan) */
-    /*TODO*///	driver_dariusg,	/* D87 (c) 1994 Taito Corporation */
-    /*TODO*///	driver_dariusgx,	/* D87 (c) 1994 Taito Corporation */
-    /*TODO*///	driver_bublbob2,	/* D90 (c) 1994 Taito Corporation Japan (World) */
-    /*TODO*///	driver_bubsymph,	/* D90 (c) 1994 Taito Corporation (Japan) */
-    /*TODO*///	driver_bubsympu,	/* D90 (c) 1994 Taito America Corporation (US) */
-    /*TODO*///	driver_spcinvdj,	/* D93 (c) 1994 Taito Corporation (Japan) */
-    /*TODO*///	driver_pwrgoal,	/* D94 (c) 1995 Taito Corporation Japan (World) */
-    /*TODO*///	driver_hthero95,	/* D94 (c) 1995 Taito Corporation (Japan) */
-    /*TODO*///	driver_hthro95u,	/* D94 (c) 1995 Taito America Corporation (US) */
-    /*TODO*///	driver_qtheater,	/* D95 (c) 1994 Taito Corporation (Japan) */
-    /*TODO*///	driver_elvactr,	/* E02 (c) 1994 Taito Corporation Japan (World) */
-    /*TODO*///	driver_elvactrj,	/* E02 (c) 1994 Taito Corporation (Japan) */
-    /*TODO*///	driver_elvact2u,	/* E02 (c) 1994 Taito America Corporation (US) */
-    /*TODO*///	driver_akkanvdr,	/* E06 (c) 1995 Taito Corporation (Japan) */
-    /*TODO*///	driver_twinqix,	/* ??? (c) 1995 Taito America Corporation (US) */
-    /*TODO*///	driver_quizhuhu,	/* E08 (c) 1995 Taito Corporation (Japan) */
-    /*TODO*///	driver_pbobble2,	/* E10 (c) 1995 Taito Corporation Japan (World) */
-    /*TODO*///	driver_pbobbl2j,	/* E10 (c) 1995 Taito Corporation (Japan) */
-    /*TODO*///	driver_pbobbl2u,	/* E10 (c) 1995 Taito America Corporation (US) */
-    /*TODO*///	driver_pbobbl2x,	/* E10 (c) 1995 Taito Corporation (Japan) */
-    /*TODO*///	driver_gekirido,	/* E11 (c) 1995 Taito Corporation (Japan) */
-    /*TODO*///	driver_ktiger2,	/* E15 (c) 1995 Taito Corporation (Japan) */
-    /*TODO*///	driver_bubblem,	/* E21 (c) 1995 Taito Corporation Japan (World) */
-    /*TODO*///	driver_bubblemj,	/* E21 (c) 1995 Taito Corporation (Japan) */
-    /*TODO*///	driver_cleopatr,	/* E28 (c) 1996 Taito Corporation (Japan) */
-    /*TODO*///	driver_pbobble3,	/* E29 (c) 1996 Taito Corporation (World) */
-    /*TODO*///	driver_pbobbl3u,	/* E29 (c) 1996 Taito Corporation (US) */
-    /*TODO*///	driver_pbobbl3j,	/* E29 (c) 1996 Taito Corporation (Japan) */
-    /*TODO*///	driver_arkretrn,	/* E36 (c) 1997 Taito Corporation (Japan) */
-    /*TODO*///	driver_kirameki,	/* E44 (c) 1997 Taito Corporation (Japan) */
-    /*TODO*///	driver_puchicar,	/* E46 (c) 1997 Taito Corporation (Japan) */
-    /*TODO*///	driver_pbobble4,	/* E49 (c) 1997 Taito Corporation (World) */
-    /*TODO*///	driver_pbobbl4j,	/* E49 (c) 1997 Taito Corporation (Japan) */
-    /*TODO*///	driver_pbobbl4u,	/* E49 (c) 1997 Taito Corporation (US) */
-    /*TODO*///	driver_popnpop,	/* E51 (c) 1997 Taito Corporation (Japan) */
-    /*TODO*///	driver_landmakr,	/* E61 (c) 1998 Taito Corporation (Japan) */
-    /*TODO*///
-    /*TODO*///	/* Toaplan games */
-    /*TODO*///	driver_perfrman,	/* (c) 1985 Data East Corporation (Japan) */
-    /*TODO*///	driver_perfrmau,	/* (c) 1985 Data East USA (US) */
-    /*TODO*///	driver_tigerh,	/* GX-551 [not a Konami board!] */
-    /*TODO*///	driver_tigerh2,	/* GX-551 [not a Konami board!] */
-    /*TODO*///	driver_tigerhj,	/* GX-551 [not a Konami board!] */
-    /*TODO*///	driver_tigerhb1,	/* bootleg but (c) 1985 Taito Corporation */
-    /*TODO*///	driver_tigerhb2,	/* bootleg but (c) 1985 Taito Corporation */
-    /*TODO*///	driver_slapfigh,	/* TP-??? */
-    /*TODO*///	driver_slapbtjp,	/* bootleg but (c) 1986 Taito Corporation */
-    /*TODO*///	driver_slapbtuk,	/* bootleg but (c) 1986 Taito Corporation */
-    /*TODO*///	driver_alcon,		/* TP-??? */
-    /*TODO*///	driver_getstar,
-    /*TODO*///	driver_getstarj,
-    /*TODO*///	driver_getstarb,	/* GX-006 bootleg but (c) 1986 Taito Corporation */
-    /*TODO*///
-    /*TODO*///	driver_fshark,	/* TP-007 (c) 1987 Taito Corporation (World) */
-    /*TODO*///	driver_skyshark,	/* TP-007 (c) 1987 Taito America Corporation + Romstar license (US) */
-    /*TODO*///	driver_hishouza,	/* TP-007 (c) 1987 Taito Corporation (Japan) */
-    /*TODO*///	driver_fsharkbt,	/* bootleg */
-    /*TODO*///	driver_wardner,	/* TP-009 (c) 1987 Taito Corporation Japan (World) */
-    /*TODO*///	driver_pyros,		/* TP-009 (c) 1987 Taito America Corporation (US) */
-    /*TODO*///	driver_wardnerj,	/* TP-009 (c) 1987 Taito Corporation (Japan) */
-    /*TODO*///	driver_twincobr,	/* TP-011 (c) 1987 Taito Corporation (World) */
-    /*TODO*///	driver_twincobu,	/* TP-011 (c) 1987 Taito America Corporation + Romstar license (US) */
-    /*TODO*///	driver_ktiger,	/* TP-011 (c) 1987 Taito Corporation (Japan) */
-    /*TODO*///
-    /*TODO*///	driver_rallybik,	/* TP-012 (c) 1988 Taito */
-    /*TODO*///	driver_truxton,	/* TP-013B (c) 1988 Taito */
-    /*TODO*///	driver_hellfire,	/* TP-??? (c) 1989 Toaplan + Taito license */
-    /*TODO*///	driver_zerowing,	/* TP-015 (c) 1989 Toaplan */
-    /*TODO*///	driver_demonwld,	/* TP-016 (c) 1989 Toaplan + Taito license */
-    /*TODO*///	driver_fireshrk,	/* TP-017 (c) 1990 Toaplan */
-    /*TODO*///	driver_samesame,	/* TP-017 (c) 1989 Toaplan */
-    /*TODO*///	driver_outzone,	/* TP-018 (c) 1990 Toaplan */
-    /*TODO*///	driver_outzonea,	/* TP-018 (c) 1990 Toaplan */
-    /*TODO*///	driver_vimana,	/* TP-019 (c) 1991 Toaplan (+ Tecmo license when set to Japan) */
-    /*TODO*///	driver_vimana2,	/* TP-019 (c) 1991 Toaplan (+ Tecmo license when set to Japan)  */
-    /*TODO*///	driver_vimanan,	/* TP-019 (c) 1991 Toaplan (+ Nova Apparate GMBH & Co license) */
-    /*TODO*///	driver_snowbros,	/* MIN16-02 (c) 1990 Toaplan + Romstar license */
-    /*TODO*///	driver_snowbroa,	/* MIN16-02 (c) 1990 Toaplan + Romstar license */
-    /*TODO*///	driver_snowbrob,	/* MIN16-02 (c) 1990 Toaplan + Romstar license */
-    /*TODO*///	driver_snowbroj,	/* MIN16-02 (c) 1990 Toaplan */
-    /*TODO*///	driver_wintbob,	/* bootleg */
-    /*TODO*///
-    /*TODO*///	driver_tekipaki,	/* TP-020 (c) 1991 Toaplan */
-    /*TODO*///	driver_ghox,		/* TP-021 (c) 1991 Toaplan */
-    /*TODO*///	driver_dogyuun,	/* TP-022 (c) 1992 Toaplan */
-    /*TODO*///	driver_kbash,		/* TP-023 (c) 1993 Toaplan */
-    /*TODO*///	driver_truxton2,	/* TP-024 (c) 1992 Toaplan */
-    /*TODO*///	driver_pipibibs,	/* TP-025 */
-    /*TODO*///	driver_pipibibi,	/* (c) 1991 Ryouta Kikaku (bootleg?) */
-    /*TODO*///	driver_whoopee,	/* TP-025 */
-    /*TODO*///TESTdriver_fixeight,	/* TP-026 (c) 1992 + Taito license */
-    /*TODO*///	driver_vfive,		/* TP-027 (c) 1993 Toaplan (Japan) */
-    /*TODO*///	driver_grindstm,	/* TP-027 (c) 1993 Toaplan + Unite Trading license (Korea) */
-    /*TODO*///	driver_batsugun,	/* TP-030 (c) 1993 Toaplan */
-    /*TODO*///	driver_batugnsp,	/* TP-??? (c) 1993 Toaplan */
-    /*TODO*///	driver_snowbro2,	/* TP-??? (c) 1994 Hanafram */
-    /*TODO*///	driver_mahoudai,	/* (c) 1993 Raizing + Able license */
-    /*TODO*///	driver_shippumd,	/* (c) 1994 Raizing */
-    /*TODO*///	driver_battleg,	/* (c) 1996 Raizing */
-    /*TODO*///	driver_batrider,	/* (c) 1998 Raizing */
-    /*TODO*///	driver_batridra,	/* (c) 1997 Raizing */
-    /*TODO*///
-    /*TODO*////*
-    /*TODO*///Toa Plan's board list
-    /*TODO*///(translated from http://www.aianet.ne.jp/~eisetu/rom/rom_toha.html)
-    /*TODO*///
-    /*TODO*///Title              ROMno.   Remark(1)   Remark(2)
-    /*TODO*///--------------------------------------------------
-    /*TODO*///Tiger Heli           A47      GX-551
-    /*TODO*///Hishouzame           B02      TP-007
-    /*TODO*///Kyukyoku Tiger       B30      TP-011
-    /*TODO*///Dash Yarou           B45      TP-012
-    /*TODO*///Tatsujin             B65      TP-013B   M6100649A
-    /*TODO*///Zero Wing            O15      TP-015
-    /*TODO*///Horror Story         O16      TP-016
-    /*TODO*///Same!Same!Same!      O17      TP-017
-    /*TODO*///Out Zone                      TP-018
-    /*TODO*///Vimana                        TP-019
-    /*TODO*///Teki Paki            O20      TP-020
-    /*TODO*///Ghox               TP-21      TP-021
-    /*TODO*///Dogyuun                       TP-022
-    /*TODO*///Tatsujin Oh                   TP-024    *1
-    /*TODO*///Fixeight                      TP-026
-    /*TODO*///V-V                           TP-027
-    /*TODO*///
-    /*TODO*///*1 There is a doubt this game uses TP-024 board and TP-025 romsets.
-    /*TODO*///
-    /*TODO*///   86 Mahjong Sisters                                 Kit 2P 8W+2B     HC    Mahjong TP-
-    /*TODO*///   88 Dash                                            Kit 2P 8W+2B                   TP-
-    /*TODO*///   89 Fire Shark                                      Kit 2P 8W+2B     VC    Shooter TP-017
-    /*TODO*///   89 Twin Hawk                                       Kit 2P 8W+2B     VC    Shooter TP-
-    /*TODO*///   91 Whoopie                                         Kit 2P 8W+2B     HC    Action
-    /*TODO*///   92 Teki Paki                                       Kit 2P                         TP-020
-    /*TODO*///   92 Ghox                                            Kit 2P Paddle+1B VC    Action  TP-021
-    /*TODO*///10/92 Dogyuun                                         Kit 2P 8W+2B     VC    Shooter TP-022
-    /*TODO*///92/93 Knuckle Bash                 Atari Games        Kit 2P 8W+2B     HC    Action  TP-023
-    /*TODO*///10/92 Tatsujin II/Truxton II       Taito              Kit 2P 8W+2B     VC    Shooter TP-024
-    /*TODO*///10/92 Truxton II/Tatsujin II       Taito              Kit 2P 8W+2B     VC    Shooter TP-024
-    /*TODO*///      Pipi & Bipi                                                                    TP-025
-    /*TODO*///   92 Fix Eight                                       Kit 2P 8W+2B     VC    Action  TP-026
-    /*TODO*///12/92 V  -  V (5)/Grind Stormer                       Kit 2P 8W+2B     VC    Shooter TP-027
-    /*TODO*/// 1/93 Grind Stormer/V - V (Five)                      Kit 2P 8W+2B     VC    Shooter TP-027
-    /*TODO*/// 2/94 Batsugun                                        Kit 2P 8W+2B     VC            TP-
-    /*TODO*/// 4/94 Snow Bros. 2                                    Kit 2P 8W+2B     HC    Action  TP-
-    /*TODO*///*/
-    /*TODO*///
-    /*TODO*///	/* Cave games */
-    /*TODO*///	/* Cave was formed in 1994 from the ruins of Toaplan, like Raizing was. */
-    /*TODO*///	driver_mazinger,	/* (c) 1994 Banpresto (country is in EEPROM) */
-    /*TODO*///	driver_donpachi,	/* (c) 1995 Atlus/Cave */
-    /*TODO*///	driver_metmqstr,	/* (c) 1995 Banpresto / Pandorabox */
-    /*TODO*///	driver_sailormn,	/* (c) 1995 Banpresto (country is in EEPROM) */
-    /*TODO*///	driver_hotdogst,	/* (c) 1996 Marble */
-    /*TODO*///	driver_ddonpach,	/* (c) 1997 Atlus/Cave */
-    /*TODO*///	driver_dfeveron,	/* (c) 1998 Cave + Nihon System license */
-    /*TODO*///	driver_esprade,	/* (c) 1998 Atlus/Cave */
-    /*TODO*///	driver_uopoko,	/* (c) 1998 Cave + Jaleco license */
-    /*TODO*///	driver_guwange,	/* (c) 1999 Atlus/Cave */
-    /*TODO*///
-    /*TODO*///	/* Kyugo games */
-    /*TODO*///	/* Kyugo only made four games: Repulse, Flash Gal, SRD Mission and Air Wolf. */
-    /*TODO*///	/* Gyrodine was made by Crux. Crux was antecedent of Toa Plan, and spin-off from Orca. */
-    /*TODO*///	driver_gyrodine,	/* (c) 1984 Taito Corporation */
-    /*TODO*///	driver_sonofphx,	/* (c) 1985 Associated Overseas MFR */
-    /*TODO*///	driver_repulse,	/* (c) 1985 Sega */
-    /*TODO*///	driver_99lstwar,	/* (c) 1985 Proma */
-    /*TODO*///	driver_99lstwra,	/* (c) 1985 Proma */
-    /*TODO*///	driver_flashgal,	/* (c) 1985 Sega */
-    /*TODO*///	driver_srdmissn,	/* (c) 1986 Taito Corporation */
-    /*TODO*///	driver_airwolf,	/* (c) 1987 Kyugo */
-    /*TODO*///	driver_skywolf,	/* bootleg */
-    /*TODO*///	driver_skywolf2,	/* bootleg */
-    /*TODO*///
-    /*TODO*///	/* Williams games */
-    /*TODO*///	driver_defender,	/* (c) 1980 */
-    /*TODO*///	driver_defendg,	/* (c) 1980 */
-    /*TODO*///	driver_defendw,	/* (c) 1980 */
-    /*TODO*///TESTdriver_defndjeu,	/* bootleg */
-    /*TODO*///	driver_defcmnd,	/* bootleg */
-    /*TODO*///	driver_defence,	/* bootleg */
-    /*TODO*///	driver_mayday,
-    /*TODO*///	driver_maydaya,
-    /*TODO*///	driver_colony7,	/* (c) 1981 Taito */
-    /*TODO*///	driver_colony7a,	/* (c) 1981 Taito */
-    /*TODO*///	driver_stargate,	/* (c) 1981 */
-    /*TODO*///	driver_robotron,	/* (c) 1982 */
-    /*TODO*///	driver_robotryo,	/* (c) 1982 */
-    /*TODO*///	driver_joust,		/* (c) 1982 */
-    /*TODO*///	driver_joustr,	/* (c) 1982 */
-    /*TODO*///	driver_joustwr,	/* (c) 1982 */
-    /*TODO*///	driver_bubbles,	/* (c) 1982 */
-    /*TODO*///	driver_bubblesr,	/* (c) 1982 */
-    /*TODO*///	driver_bubblesp,	/* (c) 1982 */
-    /*TODO*///	driver_splat,		/* (c) 1982 */
-    /*TODO*///	driver_sinistar,	/* (c) 1982 */
-    /*TODO*///	driver_sinista1,	/* (c) 1982 */
-    /*TODO*///	driver_sinista2,	/* (c) 1982 */
-    /*TODO*///	driver_blaster,	/* (c) 1983 */
-    /*TODO*///	driver_mysticm,	/* (c) 1983 */
-    /*TODO*///	driver_tshoot,	/* (c) 1984 */
-    /*TODO*///	driver_inferno,	/* (c) 1984 */
-    /*TODO*///	driver_joust2,	/* (c) 1986 */
-    /*TODO*///	driver_lottofun,	/* (c) 1987 H.A.R. Management */
-    /*TODO*///
-    /*TODO*///	/* Capcom games */
-    /*TODO*///	/* The following is a COMPLETE list of the Capcom games up to 1997, as shown on */
-    /*TODO*///	/* their web site. The list is sorted by production date.                       */
-    /*TODO*///	/* A comprehensive list of Capcom games with board info can be found here:      */
-    /*TODO*///	/* http://www.emugaming.com/strider/capcom_list.shtml                           */
-    /*TODO*///	driver_vulgus,	/*  5/1984 (c) 1984 */
-    /*TODO*///	driver_vulgus2,	/*  5/1984 (c) 1984 */
-    /*TODO*///	driver_vulgusj,	/*  5/1984 (c) 1984 */
-    /*TODO*///	driver_sonson,	/*  7/1984 (c) 1984 */
-    /*TODO*///	driver_sonsonj,	/*  7/1984 (c) 1984 (Japan) */
-    /*TODO*///	driver_higemaru,	/*  9/1984 (c) 1984 */
-    /*TODO*///	driver_1942,		/* 12/1984 (c) 1984 */
-    /*TODO*///	driver_1942a,		/* 12/1984 (c) 1984 */
-    /*TODO*///	driver_1942b,		/* 12/1984 (c) 1984 */
-    /*TODO*///	driver_exedexes,	/*  2/1985 (c) 1985 */
-    /*TODO*///	driver_savgbees,	/*  2/1985 (c) 1985 + Memetron license */
-    /*TODO*///	driver_commando,	/*  5/1985 (c) 1985 (World) */
-    /*TODO*///	driver_commandu,	/*  5/1985 (c) 1985 + Data East license (US) */
-    /*TODO*///	driver_commandj,	/*  5/1985 (c) 1985 (Japan) */
-    /*TODO*///	driver_spaceinv,	/* bootleg */
-    /*TODO*///	driver_gng,		/*  9/1985 (c) 1985 */
-    /*TODO*///	driver_gnga,		/*  9/1985 (c) 1985 */
-    /*TODO*///	driver_gngt,		/*  9/1985 (c) 1985 */
-    /*TODO*///	driver_makaimur,	/*  9/1985 (c) 1985 */
-    /*TODO*///	driver_makaimuc,	/*  9/1985 (c) 1985 */
-    /*TODO*///	driver_makaimug,	/*  9/1985 (c) 1985 */
-    /*TODO*///	driver_diamond,	/* (c) 1989 KH Video (NOT A CAPCOM GAME but runs on GnG hardware) */
-    /*TODO*///	driver_gunsmoke,	/* 11/1985 (c) 1985 (World) */
-    /*TODO*///	driver_gunsmrom,	/* 11/1985 (c) 1985 + Romstar (US) */
-    /*TODO*///	driver_gunsmoka,	/* 11/1985 (c) 1985 (US) */
-    /*TODO*///	driver_gunsmokj,	/* 11/1985 (c) 1985 (Japan) */
-    /*TODO*///	driver_sectionz,	/* 12/1985 (c) 1985 */
-    /*TODO*///	driver_sctionza,	/* 12/1985 (c) 1985 */
-    /*TODO*///	driver_trojan,	/*  4/1986 (c) 1986 (US) */
-    /*TODO*///	driver_trojanr,	/*  4/1986 (c) 1986 + Romstar */
-    /*TODO*///	driver_trojanj,	/*  4/1986 (c) 1986 (Japan) */
-    /*TODO*///	driver_srumbler,	/*  9/1986 (c) 1986 */
-    /*TODO*///	driver_srumblr2,	/*  9/1986 (c) 1986 */
-    /*TODO*///	driver_rushcrsh,	/*  9/1986 (c) 1986 */
-    /*TODO*///	driver_lwings,	/* 11/1986 (c) 1986 */
-    /*TODO*///	driver_lwings2,	/* 11/1986 (c) 1986 */
-    /*TODO*///	driver_lwingsjp,	/* 11/1986 (c) 1986 */
-    /*TODO*///	driver_sidearms,	/* 12/1986 (c) 1986 (World) */
-    /*TODO*///	driver_sidearmr,	/* 12/1986 (c) 1986 + Romstar license (US) */
-    /*TODO*///	driver_sidearjp,	/* 12/1986 (c) 1986 (Japan) */
-    /*TODO*///	driver_turtship,	/* (c) 1988 Philco (NOT A CAPCOM GAME but runs on modified Sidearms hardware) */
-    /*TODO*///	driver_dyger,		/* (c) 1989 Philco (NOT A CAPCOM GAME but runs on modified Sidearms hardware) */
-    /*TODO*///	driver_dygera,	/* (c) 1989 Philco (NOT A CAPCOM GAME but runs on modified Sidearms hardware) */
-    /*TODO*///	driver_avengers,	/*  2/1987 (c) 1987 (US) */
-    /*TODO*///	driver_avenger2,	/*  2/1987 (c) 1987 (US) */
-    /*TODO*///	driver_buraiken,	/*  2/1987 (c) 1987 (Japan) */
-    /*TODO*///	driver_bionicc,	/*  3/1987 (c) 1987 (US) */
-    /*TODO*///	driver_bionicc2,	/*  3/1987 (c) 1987 (US) */
-    /*TODO*///	driver_topsecrt,	/*  3/1987 (c) 1987 (Japan) */
-    /*TODO*///	driver_1943,		/*  6/1987 (c) 1987 (US) */
-    /*TODO*///	driver_1943j,		/*  6/1987 (c) 1987 (Japan) */
-    /*TODO*///	driver_blktiger,	/*  8/1987 (c) 1987 (US) */
-    /*TODO*///	driver_bktigerb,	/* bootleg */
-    /*TODO*///	driver_blkdrgon,	/*  8/1987 (c) 1987 (Japan) */
-    /*TODO*///	driver_blkdrgnb,	/* bootleg, hacked to say Black Tiger */
-    /*TODO*///	driver_sf1,		/*  8/1987 (c) 1987 (World) */
-    /*TODO*///	driver_sf1us,		/*  8/1987 (c) 1987 (US) */
-    /*TODO*///	driver_sf1jp,		/*  8/1987 (c) 1987 (Japan) */
-    /*TODO*///	driver_tigeroad,	/* 11/1987 (c) 1987 + Romstar (US) */
-    /*TODO*///	driver_toramich,	/* 11/1987 (c) 1987 (Japan) */
-    /*TODO*///	driver_f1dream,	/*  4/1988 (c) 1988 + Romstar */
-    /*TODO*///	driver_f1dreamb,	/* bootleg */
-    /*TODO*///	driver_1943kai,	/*  6/1988 (c) 1987 (Japan) */
-    /*TODO*///	driver_lastduel,	/*  7/1988 (c) 1988 (US) */
-    /*TODO*///	driver_lstduela,	/*  7/1988 (c) 1988 (US) */
-    /*TODO*///	driver_lstduelb,	/* bootleg */
-    /*TODO*///	driver_madgear,	/*  2/1989 (c) 1989 (US) */
-    /*TODO*///	driver_madgearj,	/*  2/1989 (c) 1989 (Japan) */
-    /*TODO*///	driver_ledstorm,	/*  2/1989 (c) 1989 (US) */
-    /*TODO*///	/*  3/1989 Dokaben (baseball) - see below among "Mitchell" games */
-    /*TODO*///	/*  8/1989 Dokaben 2 (baseball) - see below among "Mitchell" games */
-    /*TODO*///	/* 10/1989 Capcom Baseball - see below among "Mitchell" games */
-    /*TODO*///	/* 11/1989 Capcom World - see below among "Mitchell" games */
-    /*TODO*///	/*  3/1990 Adventure Quiz 2 Hatena no Dai-Bouken - see below among "Mitchell" games */
-    /*TODO*///	/*  1/1991 Quiz Tonosama no Yabou - see below among "Mitchell" games */
-    /*TODO*///	/*  4/1991 Ashita Tenki ni Naare (golf) - see below among "Mitchell" games */
-    /*TODO*///	/*  5/1991 Ataxx - see below among "Leland" games */
-    /*TODO*///	/*  6/1991 Quiz Sangokushi - see below among "Mitchell" games */
-    /*TODO*///	/* 10/1991 Block Block - see below among "Mitchell" games */
-    /*TODO*///	/*  6/1995 Street Fighter - the Movie - see below among "Incredible Technologies" games */
-    /*TODO*///
-    /*TODO*///#endif /* CPSMAME */
-    /*TODO*///
-    /*TODO*///	/* Capcom CPS1 games */
-    /*TODO*///	driver_forgottn,	/*  7/1988 (c) 1988 (US) */
-    /*TODO*///	driver_lostwrld,	/*  7/1988 (c) 1988 (Japan) */
-    /*TODO*///	driver_ghouls,	/* 12/1988 (c) 1988 (World) */
-    /*TODO*///	driver_ghoulsu,	/* 12/1988 (c) 1988 (US) */
-    /*TODO*///	driver_daimakai,	/* 12/1988 (c) 1988 (Japan) */
-    /*TODO*///	driver_strider,	/*  3/1989 (c) 1989 (not explicitly stated but should be US) */
-    /*TODO*///	driver_striderj,	/*  3/1989 (c) 1989 */
-    /*TODO*///	driver_stridrja,	/*  3/1989 (c) 1989 */
-    /*TODO*///	driver_dwj,		/*  4/1989 (c) 1989 (Japan) */
-    /*TODO*///	driver_willow,	/*  6/1989 (c) 1989 (Japan) */
-    /*TODO*///	driver_willowj,	/*  6/1989 (c) 1989 (Japan) */
-    /*TODO*///	driver_unsquad,	/*  8/1989 (c) 1989 */
-    /*TODO*///	driver_area88,	/*  8/1989 (c) 1989 */
-    /*TODO*///	driver_ffight,	/* 12/1989 (c) (World) */
-    /*TODO*///	driver_ffightu,	/* 12/1989 (c) (US)    */
-    /*TODO*///	driver_ffightj,	/* 12/1989 (c) (Japan) */
-    /*TODO*///	driver_1941,		/*  2/1990 (c) 1990 (World) */
-    /*TODO*///	driver_1941j,		/*  2/1990 (c) 1990 (Japan) */
-    /*TODO*///	driver_mercs,		/* 02/03/1990 (c) 1990 (World) */
-    /*TODO*///	driver_mercsu,	/* 02/03/1990 (c) 1990 (US)    */
-    /*TODO*///	driver_mercsj,	/* 02/03/1990 (c) 1990 (Japan) */
-    /*TODO*///	driver_mtwins,	/* 19/06/1990 (c) 1990 (World) */
-    /*TODO*///	driver_chikij,	/* 19/06/1990 (c) 1990 (Japan) */
-    /*TODO*///	driver_msword,	/* 25/07/1990 (c) 1990 (World) */
-    /*TODO*///	driver_mswordu,	/* 25/07/1990 (c) 1990 (US)    */
-    /*TODO*///	driver_mswordj,	/* 23/06/1990 (c) 1990 (Japan) */
-    /*TODO*///	driver_cawing,	/* 12/10/1990 (c) 1990 (World) */
-    /*TODO*///	driver_cawingj,	/* 12/10/1990 (c) 1990 (Japan) */
-    /*TODO*///	driver_nemo,		/* 30/11/1990 (c) 1990 (World) */
-    /*TODO*///	driver_nemoj,		/* 20/11/1990 (c) 1990 (Japan) */
-    /*TODO*///	driver_sf2,		/* 14/02/1991 (c) 1991 (World) */
-    /*TODO*///	driver_sf2ua,		/* 06/02/1991 (c) 1991 (US)    */
-    /*TODO*///	driver_sf2ub,		/* 14/02/1991 (c) 1991 (US)    */
-    /*TODO*///	driver_sf2ue,		/* 28/02/1991 (c) 1991 (US)    */
-    /*TODO*///	driver_sf2ui,		/* 22/05/1991 (c) 1991 (US)    */
-    /*TODO*///	driver_sf2j,		/* 10/12/1991 (c) 1991 (Japan) */
-    /*TODO*///	driver_sf2ja,		/* 14/02/1991 (c) 1991 (Japan) */
-    /*TODO*///	driver_sf2jc,		/* 06/03/1991 (c) 1991 (Japan) */
-    /*TODO*///	driver_3wonders,	/* 20/05/1991 (c) 1991 (World) */
-    /*TODO*///	driver_3wonderu,	/* 20/05/1991 (c) 1991 (US)    */
-    /*TODO*///	driver_wonder3,	/* 20/05/1991 (c) 1991 (Japan) */
-    /*TODO*///	driver_kod,		/* 11/07/1991 (c) 1991 (World) */
-    /*TODO*///	driver_kodu,		/* 10/09/1991 (c) 1991 (US)    */
-    /*TODO*///	driver_kodj,		/* 05/08/1991 (c) 1991 (Japan) */
-    /*TODO*///	driver_kodb,		/* bootleg */
-    /*TODO*///	driver_captcomm,	/* 14/10/1991 (c) 1991 (World) */
-    /*TODO*///	driver_captcomu,	/* 28/ 9/1991 (c) 1991 (US)    */
-    /*TODO*///	driver_captcomj,	/* 02/12/1991 (c) 1991 (Japan) */
-    /*TODO*///	driver_knights,	/* 27/11/1991 (c) 1991 (World) */
-    /*TODO*///	driver_knightsu,	/* 27/11/1991 (c) 1991 (US)    */
-    /*TODO*///	driver_knightsj,	/* 27/11/1991 (c) 1991 (Japan) */
-    /*TODO*///	driver_sf2ce,		/* 13/03/1992 (c) 1992 (World) */
-    /*TODO*///	driver_sf2ceua,	/* 13/03/1992 (c) 1992 (US)    */
-    /*TODO*///	driver_sf2ceub,	/* 13/05/1992 (c) 1992 (US)    */
-    /*TODO*///	driver_sf2cej,	/* 13/05/1992 (c) 1992 (Japan) */
-    /*TODO*///	driver_sf2rb,		/* hack */
-    /*TODO*///	driver_sf2rb2,	/* hack */
-    /*TODO*///	driver_sf2red,	/* hack */
-    /*TODO*///	driver_sf2v004,	/* hack */
-    /*TODO*///	driver_sf2accp2,	/* hack */
-    /*TODO*///	driver_varth,		/* 12/06/1992 (c) 1992 (World) */
-    /*TODO*///	driver_varthu,	/* 12/06/1992 (c) 1992 (US) */
-    /*TODO*///	driver_varthj,	/* 14/07/1992 (c) 1992 (Japan) */
-    /*TODO*///	driver_cworld2j,	/* 11/06/1992 (QUIZ 5) (c) 1992 (Japan) */
-    /*TODO*///	driver_wof,		/* 02/10/1992 (c) 1992 (World) (CPS1 + QSound) */
-    /*TODO*///	driver_wofa,		/* 05/10/1992 (c) 1992 (Asia)  (CPS1 + QSound) */
-    /*TODO*///	driver_wofu,		/* 31/10/1992 (c) 1992 (US) (CPS1 + QSound) */
-    /*TODO*///	driver_wofj,		/* 31/10/1992 (c) 1992 (Japan) (CPS1 + QSound) */
-    /*TODO*///	driver_sf2t,		/* 09/12/1992 (c) 1992 (US)    */
-    /*TODO*///	driver_sf2tj,		/* 09/12/1992 (c) 1992 (Japan) */
-    /*TODO*///	driver_dino,		/* 01/02/1993 (c) 1993 (World) (CPS1 + QSound) */
-    /*TODO*///	driver_dinoj,		/* 01/02/1993 (c) 1993 (Japan) (CPS1 + QSound) */
-    /*TODO*///	driver_punisher,	/* 22/04/1993 (c) 1993 (World) (CPS1 + QSound) */
-    /*TODO*///	driver_punishru,	/* 22/04/1993 (c) 1993 (US)    (CPS1 + QSound) */
-    /*TODO*///	driver_punishrj,	/* 22/04/1993 (c) 1993 (Japan) (CPS1 + QSound) */
-    /*TODO*///	driver_slammast,	/* 13/07/1993 (c) 1993 (World) (CPS1 + QSound) */
-    /*TODO*///	driver_slammasu,	/* 13/07/1993 (c) 1993 (US)    (CPS1 + QSound) */
-    /*TODO*///	driver_mbomberj,	/* 13/07/1993 (c) 1993 (Japan) (CPS1 + QSound) */
-    /*TODO*///	driver_mbombrd,	/* 06/12/1993 (c) 1993 (World) (CPS1 + QSound) */
-    /*TODO*///	driver_mbombrdj,	/* 06/12/1993 (c) 1993 (Japan) (CPS1 + QSound) */
-    /*TODO*///	driver_pnickj,	/* 08/06/1994 (c) 1994 Compile + Capcom license (Japan) not listed on Capcom's site */
-    /*TODO*///	driver_qad,		/* 01/07/1992 (c) 1992 (US)    */
-    /*TODO*///	driver_qadj,		/* 21/09/1994 (c) 1994 (Japan) */
-    /*TODO*///	driver_qtono2,	/* 23/01/1995 (c) 1995 (Japan) */
-    /*TODO*///	driver_pang3,		/* 11/05/1995 (c) 1995 Mitchell (Euro) not listed on Capcom's site */
-    /*TODO*///	driver_pang3j,	/* 11/05/1995 (c) 1995 Mitchell (Japan) not listed on Capcom's site */
-    /*TODO*///	driver_megaman,	/* 06/10/1995 (c) 1995 (Asia)  */
-    /*TODO*///	driver_rockmanj,	/* 22/09/1995 (c) 1995 (Japan) */
-    /*TODO*///
-    /*TODO*///	/* Capcom CPS2 games */
-    /*TODO*///	/* list completed by CPS2Shock */
-    /*TODO*///	/* http://cps2shock.retrogames.com */
-    /*TODO*///	driver_ssf2,		/* 11/09/1993 (c) 1993 (US) */
-    /*TODO*///	driver_ssf2a,		/* 11/09/1993 (c) 1993 (Asia) */
-    /*TODO*///	driver_ssf2j,		/* 05/10/1993 (c) 1993 (Japan) */
-    /*TODO*///	driver_ssf2jr1,	/* 11/09/1993 (c) 1993 (Japan) */
-    /*TODO*///	driver_ssf2jr2,	/* 10/09/1993 (c) 1993 (Japan) */
-    /*TODO*///	driver_ssf2tb,	/* 11/19/1993 (c) 1993 (World) */
-    /*TODO*///	driver_ssf2tbj,	/* 10/09/1993 (c) 1993 (Japan) */
-    /*TODO*///	driver_ecofghtr,	/* 03/12/1993 (c) 1993 (World) */
-    /*TODO*///	driver_uecology, 	/* 03/12/1993 (c) 1993 (Japan) */
-    /*TODO*///	driver_ddtod,		/* 12/04/1994 (c) 1993 (Euro) */
-    /*TODO*///	driver_ddtodu,	/* 25/01/1994 (c) 1993 (US) */
-    /*TODO*///	driver_ddtodur1,	/* 13/01/1994 (c) 1993 (US) */
-    /*TODO*///	driver_ddtodj,	/* 13/01/1994 (c) 1993 (Japan) */
-    /*TODO*///	driver_ddtoda,	/* 13/01/1994 (c) 1993 (Asia) */
-    /*TODO*///	driver_ssf2t,		/* 23/02/1994 (c) 1994 (World) */
-    /*TODO*///	driver_ssf2tu,	/* 23/02/1994 (c) 1994 (US) */
-    /*TODO*///	driver_ssf2ta,	/* 23/02/1994 (c) 1994 (Asia) */
-    /*TODO*///	driver_ssf2xj,	/* 23/02/1994 (c) 1994 (Japan) */
-    /*TODO*///	driver_avsp,		/* 20/05/1994 (c) 1994 (Euro) */
-    /*TODO*///	driver_avspu,		/* 20/05/1994 (c) 1994 (US) */
-    /*TODO*///	driver_avspj,		/* 20/05/1994 (c) 1994 (Japan) */
-    /*TODO*///	driver_avspa,		/* 20/05/1994 (c) 1994 (Asia) */
-    /*TODO*///						/*    06/1994? Galum Pa! (not listed on Capcom's site) */
-    /*TODO*///	driver_dstlk,		/* 18/08/1994 (c) 1994 (US) */
-    /*TODO*///	driver_dstlkr1,	/* 05/07/1994 (c) 1994 (US) */
-    /*TODO*///	driver_vampj,		/* 05/07/1994 (c) 1994 (Japan) */
-    /*TODO*///	driver_vampja,	/* 05/07/1994 (c) 1994 (Japan) */
-    /*TODO*///	driver_vampjr1,	/* 30/06/1994 (c) 1994 (Japan) */
-    /*TODO*///	driver_vampa,		/* 05/07/1994 (c) 1994 (Asia) */
-    /*TODO*///	driver_ringdest,	/* 02/09/1994 (c) 1994 (Euro) */
-    /*TODO*///	driver_smbomb,	/* 31/08/1994 (c) 1994 (Japan) */
-    /*TODO*///	driver_smbombr1,	/* 08/08/1994 (c) 1994 (Japan) */
-    /*TODO*///	driver_armwar,	/* 11/10/1994 (c) 1994 (Euro) */
-    /*TODO*///	driver_armwaru,	/* 24/10/1994 (c) 1994 (US) */
-    /*TODO*///	driver_pgear,		/* 24/10/1994 (c) 1994 (Japan) */
-    /*TODO*///	driver_pgearr1,	/* 16/09/1994 (c) 1994 (Japan) */
-    /*TODO*///	driver_armwara,	/* 20/09/1994 (c) 1994 (Asia) */
-    /*TODO*///	driver_xmcota,	/* (Euro) */
-    /*TODO*///	driver_xmcotau,	/* 05/01/1995 (c) 1994 (US) */
-    /*TODO*///	driver_xmcotah,	/* 31/03/1995 (c) 1994 (Hispanic) */
-    /*TODO*///	driver_xmcotaj,	/* 19/12/1994 (c) 1994 (Japan) */
-    /*TODO*///	driver_xmcotaj1,	/* 17/12/1994 (c) 1994 (Japan) */
-    /*TODO*///	driver_xmcotajr,	/* 08/12/1994 (c) 1994 (Japan Rent) */
-    /*TODO*///TESTdriver_nwarr,		/* 06/04/1995 Night Warriors: DarkStalkers Revenge (US) */
-    /*TODO*///TESTdriver_vhuntj,	/* 02/03/1995 Vampire Hunter: Darkstalkers 2 (Japan) */
-    /*TODO*///TESTdriver_vhuntjr1,	/* 02/03/1995 Vampire Hunter: Darkstalkers 2 (Japan) */
-    /*TODO*///TESTdriver_nwarrh,	/* (Hispanic) */
-    /*TODO*///	driver_cybotsj,	/* 20/04/1995 (c) 1995 (Japan) */
-    /*TODO*///	driver_sfa,		/* 27/07/1995 (c) 1995 (Euro) */
-    /*TODO*///	driver_sfar1,		/* 05/06/1995 (c) 1995 (Euro) */
-    /*TODO*///	driver_sfau,		/* 27/06/1995 (c) 1995 (US) */
-    /*TODO*///	driver_sfzj,		/* 27/07/1995 (c) 1995 (Japan) */
-    /*TODO*///	driver_sfzjr1,	/* 27/06/1995 (c) 1995 (Japan) */
-    /*TODO*///	driver_sfzjr2,	/* 05/06/1995 (c) 1995 (Japan) */
-    /*TODO*///	driver_sfzh,		/* 27/06/1995 (c) 1995 (Hispanic) */
-    /*TODO*///TESTdriver_rckmanj,	/* 22/09/1995 Rockman 2: The Power Battle (Japan) */
-    /*TODO*///	driver_msh,		/* 24/10/1995 (c) 1995 (US) */
-    /*TODO*///	driver_mshj,		/* 24/10/1995 (c) 1995 (Japan) */
-    /*TODO*///	driver_mshh,		/* 17/11/1995 (c) 1996 (Hispanic) */
-    /*TODO*///	driver_19xx,		/* 07/12/1995 (c) 1996 (US) */
-    /*TODO*///	driver_19xxj,		/* 25/12/1995 (c) 1996 (Japan) */
-    /*TODO*///	driver_19xxjr1,	/* 07/12/1995 (c) 1996 (Japan) */
-    /*TODO*///	driver_19xxh,		/* 18/12/1995 (c) 1996 (Hispanic) */
-    /*TODO*///	driver_ddsom,		/* 09/02/1996 (c) 1996 (Euro) */
-    /*TODO*///	driver_ddsomu,	/* 09/02/1996 (c) 1996 (US) */
-    /*TODO*///	driver_ddsomjr1,	/* 06/02/1996 (c) 1996 (Japan) */
-    /*TODO*///	driver_ddsomj,	/* 19/06/1996 (c) 1996 (Japan) */
-    /*TODO*///	driver_ddsoma,	/* 19/06/1996 (c) 1996 (Asia) */
-    /*TODO*///	driver_sfa2,		/* 06/03/1996 (c) 1996 (US) */
-    /*TODO*///	driver_sfz2j,		/* 27/02/1996 (c) 1996 (Japan) */
-    /*TODO*///	driver_spf2t,		/* 20/06/1996 (c) 1996 (US) */
-    /*TODO*///	driver_spf2xj,	/* 31/05/1996 (c) 1996 (Japan) */
-    /*TODO*///	driver_qndream,	/* 26/06/1996 (c) 1996 (Japan) */
-    /*TODO*///TESTdriver_rckman2j,	/* 08/07/1996 Rockman 2: The Power Fighters (Japan) */
-    /*TODO*///	driver_sfz2aj,	/* 05/08/1996 (c) 1996 (Japan) */
-    /*TODO*///	driver_sfz2ah,	/* 13/08/1996 (c) 1996 (Hispanic) */
-    /*TODO*///	driver_xmvsf,		/* 10/09/1996 (c) 1996 (Euro) */
-    /*TODO*///	driver_xmvsfu,	/* 04/10/1996 (c) 1996 (US) */
-    /*TODO*///	driver_xmvsfj,	/* 10/09/1996 (c) 1996 (Japan) */
-    /*TODO*///	driver_xmvsfa,	/* 23/10/1996 (c) 1996 (Asia) */
-    /*TODO*///	driver_xmvsfh,	/* 04/10/1996 (c) 1996 (Hispanic) */
-    /*TODO*///	driver_batcirj,	/* 19/03/1997 (c) 1997 (Japan) */
-    /*TODO*///	driver_batcira,	/* 19/03/1997 (c) 1997 (Asia) */
-    /*TODO*///	driver_vsav,		/* 19/05/1997 (c) 1997 (US) */
-    /*TODO*///	driver_vsavj,		/* 19/05/1997 (c) 1997 (Japan) */
-    /*TODO*///	driver_vsava,		/* 19/05/1997 (c) 1997 (Asia) */
-    /*TODO*///	driver_vsavh,		/* 19/05/1997 (c) 1997 (Hispanic) */
-    /*TODO*///	driver_mshvsf,	/* 25/06/1997 Marvel Super Heroes Vs. Street Fighter (US) */
-    /*TODO*///	driver_mshvsfj,	/* 07/07/1997 Marvel Super Heroes Vs. Street Fighter (Japan) */
-    /*TODO*///	driver_mshvsfj1,	/* 02/07/1997 Marvel Super Heroes Vs. Street Fighter (Japan) */
-    /*TODO*///	driver_mshvsfh,	/* 25/06/1997 Marvel Super Heroes Vs. Street Fighter (Hispanic) */
-    /*TODO*///	driver_mshvsfa,	/* 25/06/1997 Marvel Super Heroes Vs. Street Fighter (Asia) */
-    /*TODO*///	driver_mshvsfa1,	/* 20/06/1997 Marvel Super Heroes Vs. Street Fighter (Asia) */
-    /*TODO*///	driver_csclubj,	/* 22/07/1997 (c) 1997 (Japan) */
-    /*TODO*///	driver_cscluba,	/* 22/07/1997 (c) 1997 (Asia) */
-    /*TODO*///TESTdriver_sgemf,		/* 04/09/1997 Super Gem Fighter Mini Mix (US) */
-    /*TODO*///TESTdriver_pfghtj,	/* 04/09/1997 Pocket Fighter (Japan) */
-    /*TODO*///TESTdriver_sgemfh,	/* 04/09/1997 Super Gem Fighter Mini Mix (Hispanic) */
-    /*TODO*///TESTdriver_vhunt2,	/* 13/09/1997 Vampire Hunter 2: Darkstalkers Revenge (Japan) */
-    /*TODO*///	driver_vsav2,		/* 13/09/1997 Vampire Savior 2: The Lord of Vampire (Japan) */
-    /*TODO*///TESTdriver_mvsc,		/* 23/01/1998 Marvel Super Heroes vs. Capcom: Clash of Super Heroes (US) */
-    /*TODO*///TESTdriver_mvscj,		/* 23/01/1998 Marvel Super Heroes vs. Capcom: Clash of Super Heroes (Japan) */
-    /*TODO*///TESTdriver_mvscjr1,	/* 12/01/1998 Marvel Super Heroes vs. Capcom: Clash of Super Heroes (Japan) */
-    /*TODO*///TESTdriver_mvsca,		/* 12/01/1998 Marvel Super Heroes vs. Capcom: Clash of Super Heroes (Asia) */
-    /*TODO*///TESTdriver_mvsch,		/* 23/01/1998 Marvel Super Heroes vs. Capcom: Clash of Super Heroes (Hispanic) */
-    /*TODO*///	driver_sfa3,		/* 04/09/1998 (c) 1998 (US) */
-    /*TODO*///	driver_sfa3r1,	/* 29/06/1998 (c) 1998 (US) */
-    /*TODO*///	driver_sfz3j,		/* 27/07/1998 (c) 1998 (Japan) */
-    /*TODO*///	driver_sfz3jr1,	/* 29/06/1998 (c) 1998 (Japan) */
-    /*TODO*///	driver_sfz3a,		/* 01/07/1998 (c) 1998 (Asia) */
-    /*TODO*///TESTdriver_gwingj,	/* 23/02/1999 Giga Wing (Japan) */
-    /*TODO*///TESTdriver_dimahoo,	/* 21/01/2000 Dimahoo (US) */
-    /*TODO*///TESTdriver_gmahou,	/* 21/01/2000 Great Mahou Daisakusen (Japan) */
-    /*TODO*///TESTdriver_mmatrixj,	/* 12/04/2000 Mars Matrix: Hyper Solid Shooting (Japan) */
-    /*TODO*///TESTdriver_1944j,		/* 20/06/2000 1944: The Loop Master (Japan) */
-    /*TODO*///						/*    10/2000 Mighty! Pang */
-    /*TODO*///TESTdriver_puzloop2,	/* 05/02/2001 Puzz Loop 2 (Japan) */
-    /*TODO*///						/*    03/2001 Progear No Arashi */
-    /*TODO*///
-    /*TODO*///#ifndef CPSMAME
-    /*TODO*///
-    /*TODO*///	/* Capcom CPS3 games */
-    /*TODO*///	/* 10/1996 Warzard */
-    /*TODO*///	/*  2/1997 Street Fighter III - New Generation */
-    /*TODO*///	/* ???? Jojo's Bizarre Adventure */
-    /*TODO*///	/* ???? Street Fighter 3: Second Impact ~giant attack~ */
-    /*TODO*///	/* ???? Street Fighter 3: Third Strike ~fight to the finish~ */
-    /*TODO*///
-    /*TODO*///	/* Capcom ZN1 */
-    /*TODO*///TESTdriver_ts2j,		/*  Battle Arena Toshinden 2 (JAPAN 951124) */
-    /*TODO*///						/*  7/1996 Star Gladiator */
-    /*TODO*///TESTdriver_sfex,		/*  Street Fighter EX (ASIA 961219) */
-    /*TODO*///TESTdriver_sfexj,		/*  Street Fighter EX (JAPAN 961130) */
-    /*TODO*///TESTdriver_sfexp,		/*  Street Fighter EX Plus (USA 970311) */
-    /*TODO*///TESTdriver_sfexpj,	/*  Street Fighter EX Plus (JAPAN 970311) */
-    /*TODO*///TESTdriver_rvschool,	/*  Rival Schools (ASIA 971117) */
-    /*TODO*///TESTdriver_jgakuen,	/*  Justice Gakuen (JAPAN 971117) */
-    /*TODO*///
-    /*TODO*///	/* Capcom ZN2 */
-    /*TODO*///TESTdriver_sfex2,		/*  Street Fighter EX 2 (JAPAN 980312) */
-    /*TODO*///TESTdriver_tgmj,		/*  Tetris The Grand Master (JAPAN 980710) */
-    /*TODO*///TESTdriver_kikaioh,	/*  Kikaioh (JAPAN 980914) */
-    /*TODO*///TESTdriver_sfex2p,	/*  Street Fighter EX 2 Plus (JAPAN 990611) */
-    /*TODO*///TESTdriver_shiryu2,	/*  Strider Hiryu 2 (JAPAN 991213) */
-    /*TODO*///						/*  Star Gladiator 2 */
-    /*TODO*///						/*  Rival Schools 2 */
-    /*TODO*///
-    /*TODO*///	/* Video System ZN1 */
-    /*TODO*///TESTdriver_sncwgltd,	/*  Sonic Wings Limited (JAPAN) */
-    /*TODO*///
-    /*TODO*///	/* Tecmo ZN1 */
-    /*TODO*///TESTdriver_glpracr2,	/*  Gallop Racer 2 (JAPAN) */
-    /*TODO*///TESTdriver_doapp,		/*  Dead Or Alive ++ (JAPAN) */
-    /*TODO*///
-    /*TODO*///	/* Mitchell games */
-    /*TODO*///	driver_mgakuen,	/* (c) 1988 Yuga */
-    /*TODO*///	driver_mgakuen2,	/* (c) 1989 Face */
-    /*TODO*///	driver_pkladies,	/* (c) 1989 Mitchell */
-    /*TODO*///	driver_pkladiel,	/* (c) 1989 Leprechaun */
-    /*TODO*///	driver_dokaben,	/*  3/1989 (c) 1989 Capcom (Japan) */
-    /*TODO*///	/*  8/1989 Dokaben 2 (baseball) */
-    /*TODO*///	driver_pang,		/* (c) 1989 Mitchell (World) */
-    /*TODO*///	driver_pangb,		/* bootleg */
-    /*TODO*///	driver_bbros,		/* (c) 1989 Capcom (US) not listed on Capcom's site */
-    /*TODO*///	driver_pompingw,	/* (c) 1989 Mitchell (Japan) */
-    /*TODO*///	driver_cbasebal,	/* 10/1989 (c) 1989 Capcom (Japan) (different hardware) */
-    /*TODO*///	driver_cworld,	/* 11/1989 (QUIZ 1) (c) 1989 Capcom */
-    /*TODO*///	driver_hatena,	/* 28/02/1990 (QUIZ 2) (c) 1990 Capcom (Japan) */
-    /*TODO*///	driver_spang,		/* 14/09/1990 (c) 1990 Mitchell (World) */
-    /*TODO*///	driver_sbbros,	/* 01/10/1990 (c) 1990 Mitchell + Capcom (US) not listed on Capcom's site */
-    /*TODO*///	driver_marukin,	/* 17/10/1990 (c) 1990 Yuga (Japan) */
-    /*TODO*///	driver_qtono1,	/* 25/12/1990 (QUIZ 3) (c) 1991 Capcom (Japan) */
-    /*TODO*///	/*  4/1991 Ashita Tenki ni Naare (golf) */
-    /*TODO*///	driver_qsangoku,	/* 07/06/1991 (QUIZ 4) (c) 1991 Capcom (Japan) */
-    /*TODO*///	driver_block,		/* 06/11/1991 (c) 1991 Capcom (World) */
-    /*TODO*///	driver_blocka,	/* 10/09/1991 (c) 1991 Capcom (World) */
-    /*TODO*///	driver_blockj,	/* 10/09/1991 (c) 1991 Capcom (Japan) */
-    /*TODO*///	driver_blockbl,	/* bootleg */
-    /*TODO*///
-    /*TODO*///	/* Incredible Technologies games */
-    /*TODO*///	/* http://www.itsgames.com */
-    /*TODO*///	driver_capbowl,	/* (c) 1988 Incredible Technologies */
-    /*TODO*///	driver_capbowl2,	/* (c) 1988 Incredible Technologies */
-    /*TODO*///	driver_clbowl,	/* (c) 1989 Incredible Technologies */
-    /*TODO*///	driver_bowlrama,	/* (c) 1991 P & P Marketing */
-    /*TODO*///	driver_wfortune,	/* (c) 1989 GameTek */
-    /*TODO*///	driver_wfortuna,	/* (c) 1989 GameTek */
-    /*TODO*///	driver_stratab,	/* (c) 1990 Strata/Incredible Technologies */
-    /*TODO*///	driver_gtg,		/* (c) 1990 Strata/Incredible Technologies */
-    /*TODO*///	driver_hstennis,	/* (c) 1990 Strata/Incredible Technologies */
-    /*TODO*///	driver_slikshot,	/* (c) 1990 Grand Products/Incredible Technologies */
-    /*TODO*///	driver_sliksh17,	/* (c) 1990 Grand Products/Incredible Technologies */
-    /*TODO*///	driver_arlingtn,	/* (c) 1991 Strata/Incredible Technologies */
-    /*TODO*///	driver_peggle,	/* (c) 1991 Strata/Incredible Technologies */
-    /*TODO*///	driver_pegglet,	/* (c) 1991 Strata/Incredible Technologies */
-    /*TODO*///	driver_rimrockn,	/* (c) 1991 Strata/Incredible Technologies */
-    /*TODO*///	driver_rimrck20,	/* (c) 1991 Strata/Incredible Technologies */
-    /*TODO*///	driver_rimrck16,	/* (c) 1991 Strata/Incredible Technologies */
-    /*TODO*///	driver_rimrck12,	/* (c) 1991 Strata/Incredible Technologies */
-    /*TODO*///	driver_ninclown,	/* (c) 1991 Strata/Incredible Technologies */
-    /*TODO*///	driver_gtg2,		/* (c) 1992 Strata/Incredible Technologies */
-    /*TODO*///	driver_gtg2t,		/* (c) 1989 Strata/Incredible Technologies */
-    /*TODO*///	driver_gtg2j,		/* (c) 1991 Strata/Incredible Technologies */
-    /*TODO*///	driver_neckneck,	/* (c) 1992 Bundra Games/Incredible Technologies */
-    /*TODO*///	driver_timekill,	/* (c) 1992 Strata/Incredible Technologies */
-    /*TODO*///	driver_timek131,	/* (c) 1992 Strata/Incredible Technologies */
-    /*TODO*///	driver_hardyard,	/* (c) 1993 Strata/Incredible Technologies */
-    /*TODO*///	driver_hardyd10,	/* (c) 1993 Strata/Incredible Technologies */
-    /*TODO*///	driver_bloodstm,	/* (c) 1994 Strata/Incredible Technologies */
-    /*TODO*///	driver_bloods22,	/* (c) 1994 Strata/Incredible Technologies */
-    /*TODO*///	driver_bloods21,	/* (c) 1994 Strata/Incredible Technologies */
-    /*TODO*///	driver_pairs,		/* (c) 1994 Strata/Incredible Technologies */
-    /*TODO*///	driver_sftm,		/* (c) 1995 Capcom/Incredible Technologies */
-    /*TODO*///	driver_sftm110,	/* (c) 1995 Capcom/Incredible Technologies */
-    /*TODO*///	driver_sftmj,		/* (c) 1995 Capcom/Incredible Technologies */
-    /*TODO*///	driver_shufshot,	/* (c) Strata/Incredible Technologies */
-    /*TODO*///
-    /*TODO*///	/* Leland games */
-    /*TODO*///	driver_cerberus,	/* (c) 1985 Cinematronics */
-    /*TODO*///	driver_mayhem,	/* (c) 1985 Cinematronics */
-    /*TODO*///	driver_powrplay,	/* (c) 1985 Cinematronics */
-    /*TODO*///	driver_wseries,	/* (c) 1985 Cinematronics */
-    /*TODO*///	driver_alleymas,	/* (c) 1986 Cinematronics */
-    /*TODO*///	driver_dangerz,	/* (c) 1986 Cinematronics USA */
-    /*TODO*///	driver_basebal2,	/* (c) 1987 Cinematronics */
-    /*TODO*///	driver_dblplay,	/* (c) 1987 Tradewest / Leland */
-    /*TODO*///	driver_strkzone,	/* (c) 1988 Leland */
-    /*TODO*///	driver_redlin2p,	/* (c) 1987 Cinematronics + Tradewest license */
-    /*TODO*///	driver_quarterb,	/* (c) 1987 Leland */
-    /*TODO*///	driver_quartrba,	/* (c) 1987 Leland */
-    /*TODO*///	driver_viper,		/* (c) 1988 Leland */
-    /*TODO*///	driver_teamqb,	/* (c) 1988 Leland */
-    /*TODO*///	driver_teamqb2,	/* (c) 1988 Leland */
-    /*TODO*///	driver_aafb,		/* (c) 1989 Leland */
-    /*TODO*///	driver_aafbd2p,	/* (c) 1989 Leland */
-    /*TODO*///	driver_aafbc,		/* (c) 1989 Leland */
-    /*TODO*///	driver_aafbb,		/* (c) 1989 Leland */
-    /*TODO*///	driver_offroad,	/* (c) 1989 Leland */
-    /*TODO*///	driver_offroadt,	/* (c) 1989 Leland */
-    /*TODO*///	driver_pigout,	/* (c) 1990 Leland */
-    /*TODO*///	driver_pigouta,	/* (c) 1990 Leland */
-    /*TODO*///	driver_ataxx,		/* (c) 1990 Leland */
-    /*TODO*///	driver_ataxxa,	/* (c) 1990 Leland */
-    /*TODO*///	driver_ataxxj,	/* (c) 1990 Leland */
-    /*TODO*///	driver_wsf,		/* (c) 1990 Leland */
-    /*TODO*///	driver_indyheat,	/* (c) 1991 Leland */
-    /*TODO*///	driver_brutforc,	/* (c) 1991 Leland */
-    /*TODO*///
-    /*TODO*///	/* Gremlin 8080 games */
-    /*TODO*///	/* the numbers listed are the range of ROM part numbers */
-    /*TODO*///	driver_blockade,	/* 1-4 [1977 Gremlin] */
-    /*TODO*///	driver_comotion,	/* 5-7 [1977 Gremlin] */
-    /*TODO*///	driver_hustle,	/* 16-21 [1977 Gremlin] */
-    /*TODO*///	driver_blasto,	/* [1978 Gremlin] */
-    /*TODO*///	driver_mineswpr,	/* [1977 Amutech] */
-    /*TODO*///
-    /*TODO*///	/* Gremlin/Sega "VIC dual game board" games */
-    /*TODO*///	/* the numbers listed are the range of ROM part numbers */
-    /*TODO*///	driver_depthch,	/* 50-55 [1977 Gremlin?] */
-    /*TODO*///	driver_safari,	/* 57-66 [1977 Gremlin?] */
-    /*TODO*///	driver_frogs,		/* 112-119 [1978 Gremlin?] */
-    /*TODO*///	driver_sspaceat,	/* 155-162 (c) */
-    /*TODO*///	driver_sspacat2,
-    /*TODO*///	driver_sspacatc,	/* 139-146 (c) */
-    /*TODO*///	driver_headon,	/* 163-167/192-193 (c) Gremlin */
-    /*TODO*///	driver_headonb,	/* 163-167/192-193 (c) Gremlin */
-    /*TODO*///	driver_headon2,	/* ???-??? (c) 1979 Sega */
-    /*TODO*///	/* ???-??? Fortress */
-    /*TODO*///	/* ???-??? Gee Bee */
-    /*TODO*///	/* 255-270  Head On 2 / Deep Scan */
-    /*TODO*///	driver_invho2,	/* 271-286 (c) 1979 Sega */
-    /*TODO*///	driver_samurai,	/* 289-302 + upgrades (c) 1980 Sega */
-    /*TODO*///	driver_invinco,	/* 310-318 (c) 1979 Sega */
-    /*TODO*///	driver_invds,		/* 367-382 (c) 1979 Sega */
-    /*TODO*///	driver_tranqgun,	/* 413-428 (c) 1980 Sega */
-    /*TODO*///	/* 450-465  Tranquilizer Gun (different version?) */
-    /*TODO*///	/* ???-??? Car Hunt / Deep Scan */
-    /*TODO*///	driver_spacetrk,	/* 630-645 (c) 1980 Sega */
-    /*TODO*///	driver_sptrekct,	/* (c) 1980 Sega */
-    /*TODO*///	driver_carnival,	/* 651-666 (c) 1980 Sega */
-    /*TODO*///	driver_carnvckt,	/* 501-516 (c) 1980 Sega */
-    /*TODO*///	driver_digger,	/* 684-691 no copyright notice */
-    /*TODO*///	driver_pulsar,	/* 790-805 (c) 1981 Sega */
-    /*TODO*///	driver_heiankyo,	/* (c) [1979?] Denki Onkyo */
-    /*TODO*///
-    /*TODO*///	/* Sega G-80 vector games */
-    /*TODO*///	driver_spacfury,	/* (c) 1981 */
-    /*TODO*///	driver_spacfura,	/* no copyright notice */
-    /*TODO*///	driver_zektor,	/* (c) 1982 */
-    /*TODO*///	driver_tacscan,	/* (c) */
-    /*TODO*///	driver_elim2,		/* (c) 1981 Gremlin */
-    /*TODO*///	driver_elim2a,	/* (c) 1981 Gremlin */
-    /*TODO*///	driver_elim4,		/* (c) 1981 Gremlin */
-    /*TODO*///	driver_startrek,	/* (c) 1982 */
-    /*TODO*///
-    /*TODO*///	/* Sega G-80 raster games */
-    /*TODO*///	driver_astrob,	/* (c) 1981 */
-    /*TODO*///	driver_astrob2,	/* (c) 1981 */
-    /*TODO*///	driver_astrob1,	/* (c) 1981 */
-    /*TODO*///	driver_005,		/* (c) 1981 */
-    /*TODO*///	driver_monsterb,	/* (c) 1982 */
-    /*TODO*///	driver_spaceod,	/* (c) 1981 */
-    /*TODO*///	driver_pignewt,	/* (c) 1983 */
-    /*TODO*///	driver_pignewta,	/* (c) 1983 */
-    /*TODO*///	driver_sindbadm,	/* 834-5244 (c) 1983 Sega */
-    /*TODO*///
-    /*TODO*///	/* Sega "Zaxxon hardware" games */
-    /*TODO*///	driver_zaxxon,	/* (c) 1982 */
-    /*TODO*///	driver_zaxxon2,	/* (c) 1982 */
-    /*TODO*///	driver_zaxxonb,	/* bootleg */
-    /*TODO*///	driver_szaxxon,	/* (c) 1982 */
-    /*TODO*///	driver_futspy,	/* (c) 1984 */
-    /*TODO*///	driver_razmataz,	/* modified 834-0213, 834-0214 (c) 1983 */
-    /*TODO*///	driver_ixion,		/* (c) 1983 */
-    /*TODO*///	driver_congo,		/* 605-5167 (c) 1983 */
-    /*TODO*///	driver_tiptop,	/* 605-5167 (c) 1983 */
-    /*TODO*///
-    /*TODO*///	/* Sega System 1 / System 2 games */
-    	driver_starjack,	/* 834-5191 (c) 1983 (S1) */
-    	driver_starjacs,	/* (c) 1983 Stern (S1) */
-    	driver_regulus,	/* 834-5328 (c) 1983 (S1) */
-    	driver_reguluso,	/* 834-5328 (c) 1983 (S1) */
-    	driver_regulusu,	/* 834-5328 (c) 1983 (S1) */
-    	driver_upndown,	/* (c) 1983 (S1) */
-    	driver_upndownu,	/* (c) 1983 (S1) */
-    	driver_mrviking,	/* 834-5383 (c) 1984 (S1) */
-    	driver_mrvikngj,	/* 834-5383 (c) 1984 (S1) */
-    	driver_swat,		/* 834-5388 (c) 1984 Coreland / Sega (S1) */
-    	driver_flicky,	/* (c) 1984 (S1) */
-    	driver_flickyo,	/* (c) 1984 (S1) */
-    	driver_wmatch,	/* (c) 1984 (S1) */
-    	driver_bullfgt,	/* 834-5478 (c) 1984 Sega / Coreland (S1) */
-    	driver_thetogyu,	/* 834-5478 (c) 1984 Sega / Coreland (S1) */
-    	driver_spatter,	/* 834-5583 (c) 1984 (S1) */
-    	driver_pitfall2,	/* 834-5627 [1985?] reprogrammed, (c) 1984 Activision (S1) */
-    	driver_pitfallu,	/* 834-5627 [1985?] reprogrammed, (c) 1984 Activision (S1) */
-    	driver_seganinj,	/* 834-5677 (c) 1985 (S1) */
-    	driver_seganinu,	/* 834-5677 (c) 1985 (S1) */
-    	driver_nprinces,	/* 834-5677 (c) 1985 (S1) */
-    	driver_nprincso,	/* 834-5677 (c) 1985 (S1) */
-    	driver_nprincsu,	/* 834-5677 (c) 1985 (S1) */
-    	driver_nprincsb,	/* bootleg? (S1) */
-    	driver_imsorry,	/* 834-5707 (c) 1985 Coreland / Sega (S1) */
-    	driver_imsorryj,	/* 834-5707 (c) 1985 Coreland / Sega (S1) */
-    	driver_teddybb,	/* 834-5712 (c) 1985 (S1) */
-    	driver_teddybbo,	/* 834-5712 (c) 1985 (S1) */
-    	driver_hvymetal,	/* 834-5745 (c) 1985 (S2?) */
-    	driver_myhero,	/* 834-5755 (c) 1985 (S1) */
-    	driver_sscandal,	/* 834-5755 (c) 1985 Coreland / Sega (S1) */
-    	driver_myherok,	/* 834-5755 (c) 1985 Coreland / Sega (S1) */
-    /*TODO*///TESTdriver_shtngmst,	/* 834-5719/5720 (c) 1985 (S2) */
-    	driver_chplft,	/* 834-5795 (c) 1985, (c) 1982 Dan Gorlin (S2) */
-    	driver_chplftb,	/* 834-5795 (c) 1985, (c) 1982 Dan Gorlin (S2) */
-    	driver_chplftbl,	/* bootleg (S2) */
-    	driver_4dwarrio,	/* 834-5918 (c) 1985 Coreland / Sega (S1) */
-    	driver_brain,		/* (c) 1986 Coreland / Sega (S2?) */
-    	driver_raflesia,	/* 834-5753 (c) 1985 Coreland / Sega (S1) */
-    	driver_raflsiau,	/* 834-5753 (c) 1985 Coreland / Sega (S1) */
-    	driver_wboy,		/* 834-5984 (c) 1986 + Escape license (S1) */
-    	driver_wboyo,		/* 834-5984 (c) 1986 + Escape license (S1) */
-    	driver_wboy2,		/* 834-5984 (c) 1986 + Escape license (S1) */
-    	driver_wboy2u,	/* 834-5984 (c) 1986 + Escape license (S1) */
-    	driver_wboy3,		/* 834-5984 (c) 1986 + Escape license (S1) */
-    	driver_wboyu,		/* 834-5753 (? maybe a conversion) (c) 1986 + Escape license (S1) */
-    	driver_wbdeluxe,	/* (c) 1986 + Escape license (S1) */
-    /*TODO*///TESTdriver_gardia,	/* 834-6119 (S2?) */
-    /*TODO*///TESTdriver_gardiab,	/* bootleg */
-    /*TODO*///TESTdriver_blockgal,	/* 834-6303 (S1) */
-    /*TODO*///TESTdriver_blckgalb,	/* bootleg */
-    	driver_tokisens,	/* (c) 1987 (from a bootleg board) (S2) */
-    	driver_wbml,		/* bootleg (S2) */
-    	driver_wbmljo,	/* (c) 1987 Sega/Westone (S2) */
-    	driver_wbmljb,	/* (c) 1987 Sega/Westone (S2) */
-    	driver_wbmlb,		/* bootleg? (S2) */
-    /*TODO*///TESTdriver_dakkochn,	/* 836-6483? (S2) */
+        /* (c) 1984 */ /*TODO*///
+        /*TODO*///	/* "Galaxian hardware" games */
+        /*TODO*///	driver_galaxian,	/* (c) Namco */
+        /*TODO*///	driver_galaxiaj,	/* (c) Namco */
+        /*TODO*///	driver_galmidw,	/* (c) Midway */
+        /*TODO*///	driver_superg,	/* hack */
+        /*TODO*///	driver_galapx,	/* hack */
+        /*TODO*///	driver_galap1,	/* hack */
+        /*TODO*///	driver_galap4,	/* hack */
+        /*TODO*///	driver_galturbo,	/* hack */
+        /*TODO*///	driver_swarm,		/* hack */
+        /*TODO*///	driver_zerotime,	/* hack */
+        /*TODO*///	driver_pisces,	/* ? */
+        /*TODO*///	driver_uniwars,	/* (c) Irem */
+        /*TODO*///	driver_gteikoku,	/* (c) Irem */
+        /*TODO*///	driver_gteikokb,	/* bootleg */
+        /*TODO*///	driver_gteikob2,	/* bootleg */
+        /*TODO*///	driver_spacbatt,	/* bootleg */
+        /*TODO*///	driver_batman2,	/* bootleg */
+        /*TODO*///	driver_warofbug,	/* (c) 1981 Armenia */
+        /*TODO*///	driver_redufo,	/* bootleg - original should be (c) Artic */
+        /*TODO*///	driver_exodus,	/* Subelectro - bootleg? */
+        /*TODO*///	driver_streakng,	/* [1980] Shoei */
+        /*TODO*///	driver_pacmanbl,	/* bootleg */
+        /*TODO*///	driver_ghostmun,	/* bootleg */
+        /*TODO*///	driver_devilfsg,	/* (c) 1984 Vision / Artic (bootleg?) */
+        /*TODO*///	driver_zigzag,	/* (c) 1982 LAX */
+        /*TODO*///	driver_zigzag2,	/* (c) 1982 LAX */
+        /*TODO*///	driver_jumpbug,	/* (c) 1981 Rock-ola */
+        /*TODO*///	driver_jumpbugb,	/* (c) 1981 Sega */
+        /*TODO*///	driver_levers,	/* (c) 1983 Rock-ola */
+        /*TODO*///	driver_azurian,	/* (c) 1982 Rait Electronics Ltd */
+        /*TODO*///	driver_orbitron,	/* Signatron USA */
+        /*TODO*///	driver_mooncrgx,	/* bootleg */
+        /*TODO*///	driver_mooncrst,	/* (c) 1980 Nichibutsu */
+        /*TODO*///	driver_mooncrsg,	/* (c) 1980 Gremlin */
+        /*TODO*///	driver_smooncrs,	/* Gremlin */
+        /*TODO*///	driver_mooncrsb,	/* bootleg */
+        /*TODO*///	driver_mooncrs2,	/* bootleg */
+        /*TODO*///	driver_fantazia,	/* bootleg */
+        /*TODO*///	driver_eagle,		/* (c) Centuri */
+        /*TODO*///	driver_eagle2,	/* (c) Centuri */
+        /*TODO*///	driver_moonqsr,	/* (c) 1980 Nichibutsu */
+        /*TODO*///	driver_checkman,	/* (c) 1982 Zilec-Zenitone */
+        /*TODO*///	driver_checkmaj,	/* (c) 1982 Jaleco (Zenitone/Zilec in ROM CM4, and the programmer names) */
+        /*TODO*///	driver_blkhole,	/* TDS (Tokyo Denshi Sekkei) */
+        /*TODO*///	driver_moonal2,	/* Nichibutsu */
+        /*TODO*///	driver_moonal2b,	/* Nichibutsu */
+        /*TODO*///	driver_kingball,	/* (c) 1980 Namco */
+        /*TODO*///	driver_kingbalj,	/* (c) 1980 Namco */
+        /*TODO*///
+        /*TODO*///	/* "Scramble hardware" (and variations) games */
+        /*TODO*///	driver_scramble,	/* GX387 (c) 1981 Konami */
+        /*TODO*///	driver_scrambls,	/* GX387 (c) 1981 Stern */
+        /*TODO*///	driver_scramblb,	/* bootleg */
+        /*TODO*///	driver_atlantis,	/* (c) 1981 Comsoft */
+        /*TODO*///	driver_atlants2,	/* (c) 1981 Comsoft */
+        /*TODO*///	driver_theend,	/* (c) 1980 Konami */
+        /*TODO*///	driver_theends,	/* (c) 1980 Stern */
+        /*TODO*///	driver_omega,		/* bootleg */
+        /*TODO*///	driver_ckongs,	/* bootleg */
+        /*TODO*///	driver_froggers,	/* bootleg */
+        /*TODO*///	driver_amidars,	/* (c) 1982 Konami */
+        /*TODO*///	driver_triplep,	/* (c) 1982 KKI */
+        /*TODO*///	driver_knockout,	/* (c) 1982 KKK */
+        /*TODO*///	driver_mariner,	/* (c) 1981 Amenip */
+        /*TODO*///	driver_800fath,	/* (c) 1981 Amenip + U.S. Billiards license */
+        /*TODO*///	driver_mars,		/* (c) 1981 Artic */
+        /*TODO*///	driver_devilfsh,	/* (c) 1982 Artic */
+        /*TODO*///	driver_newsin7,	/* (c) 1983 ATW USA, Inc. */
+        /*TODO*///	driver_hotshock,	/* (c) 1982 E.G. Felaco */
+        /*TODO*///	driver_hunchbks,	/* (c) 1983 Century */
+        /*TODO*///	driver_cavelon,	/* (c) 1983 Jetsoft */
+        /*TODO*///	driver_scobra,	/* GX316 (c) 1981 Konami */
+        /*TODO*///	driver_scobras,	/* GX316 (c) 1981 Stern */
+        /*TODO*///	driver_scobrab,	/* GX316 (c) 1981 Karateco (bootleg?) */
+        /*TODO*///	driver_stratgyx,	/* GX306 (c) 1981 Konami */
+        /*TODO*///	driver_stratgys,	/* GX306 (c) 1981 Stern */
+        /*TODO*///	driver_armorcar,	/* (c) 1981 Stern */
+        /*TODO*///	driver_armorca2,	/* (c) 1981 Stern */
+        /*TODO*///	driver_moonwar,	/* (c) 1981 Stern */
+        /*TODO*///	driver_moonwara,	/* (c) 1981 Stern */
+        /*TODO*///	driver_spdcoin,	/* (c) 1984 Stern */
+        /*TODO*///	driver_darkplnt,	/* (c) 1982 Stern */
+        /*TODO*///	driver_tazmania,	/* (c) 1982 Stern */
+        /*TODO*///	driver_tazmani2,	/* (c) 1982 Stern */
+        /*TODO*///	driver_calipso,	/* (c) 1982 Tago */
+        /*TODO*///	driver_anteater,	/* (c) 1982 Tago */
+        /*TODO*///	driver_rescue,	/* (c) 1982 Stern */
+        /*TODO*///	driver_minefld,	/* (c) 1983 Stern */
+        /*TODO*///	driver_losttomb,	/* (c) 1982 Stern */
+        /*TODO*///	driver_losttmbh,	/* (c) 1982 Stern */
+        /*TODO*///	driver_superbon,	/* bootleg */
+        /*TODO*///	driver_hustler,	/* GX343 (c) 1981 Konami */
+        /*TODO*///	driver_billiard,	/* bootleg */
+        /*TODO*///	driver_hustlerb,	/* bootleg */
+        /*TODO*///	driver_frogger,	/* GX392 (c) 1981 Konami */
+        /*TODO*///	driver_frogseg1,	/* (c) 1981 Sega */
+        /*TODO*///	driver_frogseg2,	/* 834-0068 (c) 1981 Sega */
+        /*TODO*///	driver_froggrmc,	/* 800-3110 (c) 1981 Sega */
+        /*TODO*///	driver_amidar,	/* GX337 (c) 1981 Konami */
+        /*TODO*///	driver_amidaru,	/* GX337 (c) 1982 Konami + Stern license */
+        /*TODO*///	driver_amidaro,	/* GX337 (c) 1982 Konami + Olympia license */
+        /*TODO*///	driver_amigo,		/* bootleg */
+        /*TODO*///	driver_turtles,	/* (c) 1981 Stern */
+        /*TODO*///	driver_turpin,	/* (c) 1981 Sega */
+        /*TODO*///	driver_600,		/* GX353 (c) 1981 Konami */
+        /*TODO*///	driver_flyboy,	/* (c) 1982 Kaneko */
+        /*TODO*///	driver_flyboyb,	/* bootleg */
+        /*TODO*///	driver_fastfred,	/* (c) 1982 Atari */
+        /*TODO*///	driver_jumpcoas,	/* (c) 1983 Kaneko */
+        /*TODO*///
+        /*TODO*///	/* "Crazy Climber hardware" games */
+        /*TODO*///	driver_cclimber,	/* (c) 1980 Nichibutsu */
+        /*TODO*///	driver_cclimbrj,	/* (c) 1980 Nichibutsu */
+        /*TODO*///	driver_ccboot,	/* bootleg */
+        /*TODO*///	driver_ccboot2,	/* bootleg */
+        /*TODO*///	driver_ckong,		/* (c) 1981 Falcon */
+        /*TODO*///	driver_ckonga,	/* (c) 1981 Falcon */
+        /*TODO*///	driver_ckongjeu,	/* bootleg */
+        /*TODO*///	driver_ckongo,	/* bootleg */
+        /*TODO*///	driver_ckongalc,	/* bootleg */
+        /*TODO*///	driver_monkeyd,	/* bootleg */
+        /*TODO*///	driver_rpatrolb,	/* bootleg */
+        /*TODO*///	driver_silvland,	/* Falcon */
+        /*TODO*///	driver_yamato,	/* (c) 1983 Sega */
+        /*TODO*///	driver_yamato2,	/* (c) 1983 Sega */
+        /*TODO*///	driver_swimmer,	/* (c) 1982 Tehkan */
+        /*TODO*///	driver_swimmera,	/* (c) 1982 Tehkan */
+        /*TODO*///	driver_swimmerb,	/* (c) 1982 Tehkan */
+        /*TODO*///	driver_guzzler,	/* (c) 1983 Tehkan */
+        /*TODO*///
+        /*TODO*///	/* Nichibutsu games */
+        /*TODO*///	driver_friskyt,	/* (c) 1981 */
+        /*TODO*///	driver_radrad,	/* (c) 1982 Nichibutsu USA */
+        /*TODO*///	driver_seicross,	/* (c) 1984 + Alice */
+        /*TODO*///	driver_sectrzon,	/* (c) 1984 + Alice */
+        /*TODO*///	driver_wiping,	/* (c) 1982 */
+        /*TODO*///	driver_rugrats,	/* (c) 1983 */
+        /*TODO*///TESTdriver_firebatl,	/* (c) 1984 Taito */
+        /*TODO*///	driver_clshroad,	/* (c) 1986 Woodplace Inc. */
+        /*TODO*///TESTdriver_tubep,		/* (c) 1984 + Fujitek */
+        /*TODO*///TESTdriver_rjammer,	/* (c) 1984 + Alice */
+        /*TODO*///	driver_magmax,	/* (c) 1985 */
+        /*TODO*///	driver_cop01,		/* (c) 1985 */
+        /*TODO*///	driver_cop01a,	/* (c) 1985 */
+        /*TODO*///	driver_mightguy,	/* (c) 1986 */
+        /*TODO*///	driver_terracre,	/* (c) 1985 */
+        /*TODO*///	driver_terracrb,	/* (c) 1985 */
+        /*TODO*///	driver_terracra,	/* (c) 1985 */
+        /*TODO*///	driver_galivan,	/* (c) 1985 */
+        /*TODO*///	driver_galivan2,	/* (c) 1985 */
+        /*TODO*///	driver_dangar,	/* (c) 1986 */
+        /*TODO*///	driver_dangar2,	/* (c) 1986 */
+        /*TODO*///	driver_dangarb,	/* bootleg */
+        /*TODO*///	driver_ninjemak,	/* (c) 1986 (US?) */
+        /*TODO*///	driver_youma,		/* (c) 1986 (Japan) */
+        /*TODO*///	driver_terraf,	/* (c) 1987 */
+        /*TODO*///	driver_terrafu,	/* (c) 1987 Nichibutsu USA */
+        /*TODO*///	driver_kodure,	/* (c) 1987 (Japan) */
+        /*TODO*///	driver_armedf,	/* (c) 1988 */
+        /*TODO*///	driver_cclimbr2,	/* (c) 1988 (Japan) */
+        /*TODO*///
+        /*TODO*///	/* Nichibutsu Mahjong games */
+        /*TODO*///	driver_hyhoo,		/* (c) 1987 */
+        /*TODO*///	driver_hyhoo2,	/* (c) 1987 */
+        /*TODO*///
+        /*TODO*///	driver_pastelgl,	/* (c) 1985 */
+        /*TODO*///
+        /*TODO*///	driver_mjsikaku,	/* (c) 1988 */
+        /*TODO*///	driver_mjsikakb,	/* (c) 1988 */
+        /*TODO*///	driver_otonano,	/* (c) 1988 Apple */
+        /*TODO*///	driver_mjcamera,	/* (c) 1988 MIKI SYOUJI */
+        /*TODO*///	driver_secolove,	/* (c) 1986 */
+        /*TODO*///	driver_citylove,	/* (c) 1986 */
+        /*TODO*///	driver_seiha,		/* (c) 1987 */
+        /*TODO*///	driver_seiham,	/* (c) 1987 */
+        /*TODO*///	driver_iemoto,	/* (c) 1987 */
+        /*TODO*///	driver_ojousan,	/* (c) 1987 */
+        /*TODO*///	driver_bijokkoy,	/* (c) 1987 */
+        /*TODO*///	driver_bijokkog,	/* (c) 1988 */
+        /*TODO*///	driver_housemnq,	/* (c) 1987 */
+        /*TODO*///	driver_housemn2,	/* (c) 1987 */
+        /*TODO*///	driver_kaguya,	/* (c) 1988 MIKI SYOUJI */
+        /*TODO*///	driver_crystal2,	/* (c) 1986 */
+        /*TODO*///	driver_apparel,	/* (c) 1986 Central Denshi */
+        /*TODO*///
+        /*TODO*///	driver_hanamomo,	/* (c) 1988 */
+        /*TODO*///	driver_msjiken,	/* (c) 1988 */
+        /*TODO*///	driver_telmahjn,	/* (c) 1988 */
+        /*TODO*///	driver_gionbana,	/* (c) 1989 */
+        /*TODO*///	driver_mgmen89,	/* (c) 1989 */
+        /*TODO*///	driver_mjfocus,	/* (c) 1989 */
+        /*TODO*///	driver_mjfocusm,	/* (c) 1989 */
+        /*TODO*///	driver_peepshow,	/* (c) 1989 AC */
+        /*TODO*///	driver_scandal,	/* (c) 1989 */
+        /*TODO*///	driver_scandalm,	/* (c) 1989 */
+        /*TODO*///	driver_mjnanpas,	/* (c) 1989 BROOKS */
+        /*TODO*///	driver_mjnanpaa,	/* (c) 1989 BROOKS (old version) */
+        /*TODO*///	driver_bananadr,	/* (c) 1989 DIGITAL SOFT */
+        /*TODO*///	driver_club90s,	/* (c) 1990 */
+        /*TODO*///	driver_mladyhtr,	/* (c) 1990 */
+        /*TODO*///	driver_chinmoku,	/* (c) 1990 */
+        /*TODO*///	driver_maiko,		/* (c) 1990 */
+        /*TODO*///	driver_hanaoji,	/* (c) 1991 */
+        /*TODO*///
+        /*TODO*///	driver_pstadium,	/* (c) 1990 */
+        /*TODO*///	driver_triplew1,	/* (c) 1989 */
+        /*TODO*///	driver_triplew2,	/* (c) 1990 */
+        /*TODO*///	driver_ntopstar,	/* (c) 1990 */
+        /*TODO*///	driver_mjlstory,	/* (c) 1991 */
+        /*TODO*///	driver_vanilla,	/* (c) 1991 */
+        /*TODO*///	driver_finalbny,	/* (c) 1991 */
+        /*TODO*///	driver_qmhayaku,	/* (c) 1991 */
+        /*TODO*///	driver_galkoku,	/* (c) 1989 Nichibutsu/T.R.TEC */
+        /*TODO*///	driver_hyouban,	/* (c) 1989 Nichibutsu/T.R.TEC */
+        /*TODO*///	driver_galkaika,	/* (c) 1989 Nichibutsu/T.R.TEC */
+        /*TODO*///	driver_tokyogal,	/* (c) 1989 */
+        /*TODO*///	driver_tokimbsj,	/* (c) 1989 */
+        /*TODO*///	driver_mcontest,	/* (c) 1989 */
+        /*TODO*///	driver_av2mj1,	/* (c) 1991 MIKI SYOUJI/AV JAPAN */
+        /*TODO*///
+        /*TODO*///	driver_mjuraden,	/* (c) 1992 Nichibutsu/Yubis */
+        /*TODO*///	driver_koinomp,	/* (c) 1992 */
+        /*TODO*///	driver_patimono,	/* (c) 1992 */
+        /*TODO*///	driver_mjanbari,	/* (c) 1992 Nichibutsu/Yubis/AV JAPAN */
+        /*TODO*///	driver_gal10ren,	/* (c) 1993 FUJIC */
+        /*TODO*///	driver_mjlaman,	/* (c) 1993 Nichibutsu/AV JAPAN */
+        /*TODO*///	driver_mkeibaou,	/* (c) 1993 */
+        /*TODO*///	driver_pachiten,	/* (c) 1993 Nichibutsu/MIKI SYOUJI/AV JAPAN */
+        /*TODO*///	driver_sailorws,	/* (c) 1993 */
+        /*TODO*///	driver_sailorwr,	/* (c) 1993 */
+        /*TODO*///	driver_psailor1,	/* (c) 1994 SPHINX */
+        /*TODO*///	driver_psailor2,	/* (c) 1994 SPHINX */
+        /*TODO*///	driver_otatidai,	/* (c) 1995 SPHINX */
+        /*TODO*///	driver_ngpgal,	/* (c) 1991 */
+        /*TODO*///	driver_mjgottsu,	/* (c) 1991 */
+        /*TODO*///	driver_bakuhatu,	/* (c) 1991 */
+        /*TODO*///	driver_cmehyou,	/* (c) 1992 Nichibutsu/Kawakusu */
+        /*TODO*///	driver_mmehyou,	/* (c) 1992 Nichibutsu/Kawakusu */
+        /*TODO*///	driver_mjkoiura,	/* (c) 1992 */
+        /*TODO*///	driver_imekura,	/* (c) 1994 SPHINX/AV JAPAN */
+        /*TODO*///	driver_mscoutm,	/* (c) 1994 SPHINX/AV JAPAN */
+        /*TODO*///	driver_mjegolf,	/* (c) 1994 FUJIC/AV JAPAN */
+        /*TODO*///
+        /*TODO*///	driver_niyanpai,	/* (c) 1996 */
+        /*TODO*///
+        /*TODO*///	/* "Phoenix hardware" (and variations) games */
+        /*TODO*///	driver_safarir,	/* Shin Nihon Kikaku (SNK) */
+        /*TODO*///	driver_phoenix,	/* (c) 1980 Amstar */
+        /*TODO*///	driver_phoenixa,	/* (c) 1980 Amstar + Centuri license */
+        /*TODO*///	driver_phoenixt,	/* (c) 1980 Taito */
+        /*TODO*///	driver_phoenix3,	/* bootleg */
+        /*TODO*///	driver_phoenixc,	/* bootleg */
+        /*TODO*///	driver_pleiads,	/* (c) 1981 Tehkan */
+        /*TODO*///	driver_pleiadbl,	/* bootleg */
+        /*TODO*///	driver_pleiadce,	/* (c) 1981 Centuri + Tehkan */
+        /*TODO*///TESTdriver_survival,	/* (c) 1982 Rock-ola */
+        /*TODO*///	driver_naughtyb,	/* (c) 1982 Jaleco */
+        /*TODO*///	driver_naughtya,	/* bootleg */
+        /*TODO*///	driver_naughtyc,	/* (c) 1982 Jaleco + Cinematronics */
+        /*TODO*///	driver_popflame,	/* (c) 1982 Jaleco */
+        /*TODO*///	driver_popflama,	/* (c) 1982 Jaleco */
+        /*TODO*///TESTdriver_popflamb,
+        /*TODO*///
+        /*TODO*///	/* Namco games (plus some intruders on similar hardware) */
+        /*TODO*///	driver_geebee,	/* [1978] Namco */
+        /*TODO*///	driver_geebeeg,	/* [1978] Gremlin */
+        /*TODO*///	driver_bombbee,	/* [1979] Namco */
+        /*TODO*///	driver_cutieq,	/* (c) 1979 Namco */
+        /*TODO*///	driver_navalone,	/* (c) 1980 Namco */
+        /*TODO*///	driver_kaitei,	/* [1980] K.K. Tokki */
+        /*TODO*///	driver_kaitein,	/* [1980] Namco */
+        /*TODO*///	driver_sos,		/* [1980] Namco */
+        /*TODO*///	driver_tankbatt,	/* (c) 1980 Namco */
+        /*TODO*///	driver_warpwarp,	/* (c) 1981 Namco */
+        /*TODO*///	driver_warpwarr,	/* (c) 1981 Rock-ola - the high score table says "NAMCO" */
+        /*TODO*///	driver_warpwar2,	/* (c) 1981 Rock-ola - the high score table says "NAMCO" */
+        /*TODO*///	driver_rallyx,	/* (c) 1980 Namco */
+        /*TODO*///	driver_rallyxm,	/* (c) 1980 Midway */
+        /*TODO*///	driver_nrallyx,	/* (c) 1981 Namco */
+        /*TODO*///	driver_jungler,	/* GX327 (c) 1981 Konami */
+        /*TODO*///	driver_junglers,	/* GX327 (c) 1981 Stern */
+        /*TODO*///	driver_locomotn,	/* GX359 (c) 1982 Konami + Centuri license */
+        /*TODO*///	driver_gutangtn,	/* GX359 (c) 1982 Konami + Sega license */
+        /*TODO*///	driver_cottong,	/* bootleg */
+        /*TODO*///	driver_commsega,	/* (c) 1983 Sega */
+        /*TODO*///	/* the following ones all have a custom I/O chip */
+        /*TODO*///	driver_bosco,		/* (c) 1981 */
+        /*TODO*///	driver_boscoo,	/* (c) 1981 */
+        /*TODO*///	driver_boscoo2,	/* (c) 1981 */
+        /*TODO*///	driver_boscomd,	/* (c) 1981 Midway */
+        /*TODO*///	driver_boscomdo,	/* (c) 1981 Midway */
+        /*TODO*///	driver_galaga,	/* (c) 1981 */
+        /*TODO*///	driver_galagamw,	/* (c) 1981 Midway */
+        /*TODO*///	driver_galagads,	/* hack */
+        /*TODO*///	driver_gallag,	/* bootleg */
+        /*TODO*///	driver_galagab2,	/* bootleg */
+        /*TODO*///	driver_galaga84,	/* hack */
+        /*TODO*///	driver_nebulbee,	/* hack */
+        /*TODO*///	driver_digdug,	/* (c) 1982 */
+        /*TODO*///	driver_digdugb,	/* (c) 1982 */
+        /*TODO*///	driver_digdugat,	/* (c) 1982 Atari */
+        /*TODO*///	driver_dzigzag,	/* bootleg */
+        /*TODO*///	driver_xevious,	/* (c) 1982 */
+        /*TODO*///	driver_xeviousa,	/* (c) 1982 + Atari license */
+        /*TODO*///	driver_xevios,	/* bootleg */
+        /*TODO*///	driver_sxevious,	/* (c) 1984 */
+        /*TODO*///	driver_superpac,	/* (c) 1982 */
+        /*TODO*///	driver_superpcm,	/* (c) 1982 Midway */
+        /*TODO*///	driver_pacnpal,	/* (c) 1983 */
+        /*TODO*///	driver_pacnpal2,	/* (c) 1983 */
+        /*TODO*///	driver_pacnchmp,	/* (c) 1983 */
+        /*TODO*///	driver_phozon,	/* (c) 1983 */
+        /*TODO*///	driver_mappy,		/* (c) 1983 */
+        /*TODO*///	driver_mappyjp,	/* (c) 1983 */
+        /*TODO*///	driver_digdug2,	/* (c) 1985 */
+        /*TODO*///	driver_digdug2a,	/* (c) 1985 */
+        /*TODO*///	driver_todruaga,	/* (c) 1984 */
+        /*TODO*///	driver_todruagb,	/* (c) 1984 */
+        /*TODO*///	driver_motos,		/* (c) 1985 */
+        /*TODO*///	driver_grobda,	/* (c) 1984 */
+        /*TODO*///	driver_grobda2,	/* (c) 1984 */
+        /*TODO*///	driver_grobda3,	/* (c) 1984 */
+        /*TODO*///	driver_gaplus,	/* (c) 1984 */
+        /*TODO*///	driver_gaplusa,	/* (c) 1984 */
+        /*TODO*///	driver_galaga3,	/* (c) 1984 */
+        /*TODO*///	driver_galaga3a,	/* (c) 1984 */
+        /*TODO*///	driver_galaga3b,	/* (c) 1984 */
+        /*TODO*///	/* Libble Rabble board (first Japanese game using a 68000) */
+        /*TODO*///	driver_liblrabl,	/* (c) 1983 */
+        /*TODO*///	driver_toypop,	/* (c) 1986 */
+        /*TODO*///	/* Z8000 games */
+        /*TODO*///	driver_polepos,	/* (c) 1982  */
+        /*TODO*///	driver_poleposa,	/* (c) 1982 + Atari license */
+        /*TODO*///	driver_polepos1,	/* (c) 1982 Atari */
+        /*TODO*///	driver_topracer,	/* bootleg */
+        /*TODO*///	driver_polepos2,	/* (c) 1983 */
+        /*TODO*///	driver_poleps2a,	/* (c) 1983 + Atari license */
+        /*TODO*///	driver_poleps2b,	/* bootleg */
+        /*TODO*///	driver_poleps2c,	/* bootleg */
+        /*TODO*///	/* no custom I/O in the following, HD63701 (or compatible) microcontroller instead */
+        /*TODO*///	driver_pacland,	/* (c) 1984 */
+        /*TODO*///	driver_pacland2,	/* (c) 1984 */
+        /*TODO*///	driver_pacland3,	/* (c) 1984 */
+        /*TODO*///	driver_paclandm,	/* (c) 1984 Midway */
+        /*TODO*///	driver_drgnbstr,	/* (c) 1984 */
+        /*TODO*///	driver_skykid,	/* (c) 1985 */
+        /*TODO*///	driver_skykidb,	/* (c) 1985 */
+        /*TODO*///	driver_baraduke,	/* (c) 1985 */
+        /*TODO*///	driver_metrocrs,	/* (c) 1985 */
+        /*TODO*///
+        /*TODO*///	/* Namco System 86 games */
+        /*TODO*///	driver_hopmappy,	/* (c) 1986 */
+        /*TODO*///	driver_skykiddx,	/* (c) 1986 */
+        /*TODO*///	driver_skykiddo,	/* (c) 1986 */
+        /*TODO*///	driver_roishtar,	/* (c) 1986 */
+        /*TODO*///	driver_genpeitd,	/* (c) 1986 */
+        /*TODO*///	driver_rthunder,	/* (c) 1986 new version */
+        /*TODO*///	driver_rthundro,	/* (c) 1986 old version */
+        /*TODO*///	driver_wndrmomo,	/* (c) 1987 */
+        /*TODO*///
+        /*TODO*///	/* Namco System 1 games */
+        /*TODO*///	driver_shadowld,	/* (c) 1987 */
+        /*TODO*///	driver_youkaidk,	/* (c) 1987 (Japan new version) */
+        /*TODO*///	driver_yokaidko,	/* (c) 1987 (Japan old version) */
+        /*TODO*///	driver_dspirit,	/* (c) 1987 new version */
+        /*TODO*///	driver_dspirito,	/* (c) 1987 old version */
+        /*TODO*///	driver_blazer,	/* (c) 1987 (Japan) */
+        /*TODO*///	driver_quester,	/* (c) 1987 (Japan) */
+        /*TODO*///	driver_pacmania,	/* (c) 1987 */
+        /*TODO*///	driver_pacmanij,	/* (c) 1987 (Japan) */
+        /*TODO*///	driver_galaga88,	/* (c) 1987 */
+        /*TODO*///	driver_galag88b,	/* (c) 1987 */
+        /*TODO*///	driver_galag88j,	/* (c) 1987 (Japan) */
+        /*TODO*///	driver_ws,		/* (c) 1988 (Japan) */
+        /*TODO*///	driver_berabohm,	/* (c) 1988 (Japan) */
+        /*TODO*///	/* 1988 Alice in Wonderland (English version of Marchen maze) */
+        /*TODO*///	driver_mmaze,		/* (c) 1988 (Japan) */
+        /*TODO*///TESTdriver_bakutotu,	/* (c) 1988 */
+        /*TODO*///	driver_wldcourt,	/* (c) 1988 (Japan) */
+        /*TODO*///	driver_splatter,	/* (c) 1988 (Japan) */
+        /*TODO*///	driver_faceoff,	/* (c) 1988 (Japan) */
+        /*TODO*///	driver_rompers,	/* (c) 1989 (Japan) */
+        /*TODO*///	driver_romperso,	/* (c) 1989 (Japan) */
+        /*TODO*///	driver_blastoff,	/* (c) 1989 (Japan) */
+        /*TODO*///	driver_ws89,		/* (c) 1989 (Japan) */
+        /*TODO*///	driver_dangseed,	/* (c) 1989 (Japan) */
+        /*TODO*///	driver_ws90,		/* (c) 1990 (Japan) */
+        /*TODO*///	driver_pistoldm,	/* (c) 1990 (Japan) */
+        /*TODO*///	driver_boxyboy,	/* (c) 1990 (US) */
+        /*TODO*///	driver_soukobdx,	/* (c) 1990 (Japan) */
+        /*TODO*///	driver_puzlclub,	/* (c) 1990 (Japan) */
+        /*TODO*///	driver_tankfrce,	/* (c) 1991 (US) */
+        /*TODO*///	driver_tankfrcj,	/* (c) 1991 (Japan) */
+        /*TODO*///
+        /*TODO*///	/* Namco System 2 games */
+        /*TODO*///TESTdriver_finallap,	/* 87.12 Final Lap */
+        /*TODO*///TESTdriver_finalapd,	/* 87.12 Final Lap */
+        /*TODO*///TESTdriver_finalapc,	/* 87.12 Final Lap */
+        /*TODO*///TESTdriver_finlapjc,	/* 87.12 Final Lap */
+        /*TODO*///TESTdriver_finlapjb,	/* 87.12 Final Lap */
+        /*TODO*///	driver_assault,	/* (c) 1988 */
+        /*TODO*///	driver_assaultj,	/* (c) 1988 (Japan) */
+        /*TODO*///	driver_assaultp,	/* (c) 1988 (Japan) */
+        /*TODO*///TESTdriver_metlhawk,	/* (c) 1988 */
+        /*TODO*///	driver_ordyne,	/* (c) 1988 */
+        /*TODO*///	driver_mirninja,	/* (c) 1988 (Japan) */
+        /*TODO*///	driver_phelios,	/* (c) 1988 (Japan) */
+        /*TODO*///	driver_dirtfoxj,	/* (c) 1989 (Japan) */
+        /*TODO*///TESTdriver_fourtrax,	/* 89.11 */
+        /*TODO*///	driver_valkyrie,	/* (c) 1989 (Japan) */
+        /*TODO*///	driver_finehour,	/* (c) 1989 (Japan) */
+        /*TODO*///	driver_burnforc,	/* (c) 1989 (Japan) */
+        /*TODO*///	driver_marvland,	/* (c) 1989 (US) */
+        /*TODO*///	driver_marvlanj,	/* (c) 1989 (Japan) */
+        /*TODO*///	driver_kyukaidk,	/* (c) 1990 (Japan) */
+        /*TODO*///	driver_kyukaido,	/* (c) 1990 (Japan) */
+        /*TODO*///	driver_dsaber,	/* (c) 1990 */
+        /*TODO*///	driver_dsaberj,	/* (c) 1990 (Japan) */
+        /*TODO*///TESTdriver_finalap2,	/* 90.8  Final Lap 2 */
+        /*TODO*///TESTdriver_finalp2j,	/* 90.8  Final Lap 2 (Japan) */
+        /*TODO*///	driver_rthun2,	/* (c) 1990 */
+        /*TODO*///	driver_rthun2j,	/* (c) 1990 (Japan) */
+        /*TODO*///	/* 91.3  Steel Gunner */
+        /*TODO*///	/* 91.7  Golly Ghost */
+        /*TODO*///	/* 91.9  Super World Stadium */
+        /*TODO*///TESTdriver_sgunner2,	/* (c) 1991 (Japan) */
+        /*TODO*///	driver_cosmogng,	/* (c) 1991 (US) */
+        /*TODO*///	driver_cosmognj,	/* (c) 1991 (Japan) */
+        /*TODO*///TESTdriver_finalap3,	/* 92.9  Final Lap 3 */
+        /*TODO*///TESTdriver_suzuka8h,
+        /*TODO*///	/* 92.8  Bubble Trouble */
+        /*TODO*///	driver_sws92,		/* (c) 1992 (Japan) */
+        /*TODO*///	driver_sws92g,	/* (c) 1992 (Japan) */
+        /*TODO*///	/* 93.4  Lucky & Wild */
+        /*TODO*///TESTdriver_suzuk8h2,
+        /*TODO*///	driver_sws93,		/* (c) 1993 (Japan) */
+        /*TODO*///	/* 93.6  Super World Stadium '93 */
+        /*TODO*///
+        /*TODO*///	/* Namco System 21 games */
+        /*TODO*///	/* 1988, Winning Run */
+        /*TODO*///	/* 1989, Winning Run Suzuka Grand Prix */
+        /*TODO*///TESTdriver_winrun91,
+        /*TODO*///TESTdriver_solvalou,
+        /*TODO*///TESTdriver_starblad,
+        /*TODO*///	/* 199?, Driver's Eyes */
+        /*TODO*///	/* 1992, ShimDrive */
+        /*TODO*///TESTdriver_aircombj,
+        /*TODO*///TESTdriver_aircombu,
+        /*TODO*///	/* 1993, Rhinoceros Berth Lead-Lead */
+        /*TODO*///TESTdriver_cybsled,
+        /*TODO*///
+        /*TODO*///	/* Namco NA-1 / NA-2 System games */
+        /*TODO*///	driver_bkrtmaq,	/* (c) 1992 (Japan) */
+        /*TODO*///	driver_cgangpzl,	/* (c) 1992 (US) */
+        /*TODO*///	driver_cgangpzj,	/* (c) 1992 (Japan) */
+        /*TODO*///	driver_exvania,	/* (c) 1992 (Japan) */
+        /*TODO*///TESTdriver_fa,		/* (c) 1992 (Japan) */
+        /*TODO*///	driver_knckhead,	/* (c) 1992 (Japan) */
+        /*TODO*///	driver_swcourt,	/* (c) 1992 (Japan) */
+        /*TODO*///	driver_emeralda,	/* (c) 1993 (Japan) */
+        /*TODO*///TESTdriver_numanath,	/* (c) 1993 (Japan) */
+        /*TODO*///	driver_quiztou,	/* (c) 1993 (Japan) */
+        /*TODO*///	driver_tinklpit,	/* (c) 1993 (Japan) */
+        /*TODO*///
+        /*TODO*///	/* Namco NB-1 System games */
+        /*TODO*///	driver_nebulray,	/* (c) 1994 (Japan) */
+        /*TODO*///	driver_ptblank,	/* (c) 1994 */
+        /*TODO*///	driver_gunbulet,	/* (c) 1994 (Japan) */
+        /*TODO*///	driver_gslgr94u,	/* (c) 1994 */
+        /*TODO*///	driver_sws96,		/* (c) 1996 (Japan) */
+        /*TODO*///	driver_sws97,		/* (c) 1997 (Japan) */
+        /*TODO*///
+        /*TODO*///	/* Namco ND-1 games */
+        /*TODO*///	driver_ncv1,		/* (c) 1995 */
+        /*TODO*///	driver_ncv1j,		/* (c) 1995 (Japan) */
+        /*TODO*///	driver_ncv1j2,	/* (c) 1995 (Japan) */
+        /*TODO*///TESTdriver_ncv2,		/* (c) 1996 */
+        /*TODO*///TESTdriver_ncv2j,		/* (c) 1996 (Japan) */
+        /*TODO*///
+        /*TODO*///	/* Universal games */
+        /*TODO*///	driver_cosmicg,	/* 7907 (c) 1979 */
+        /*TODO*///	driver_cosmica,	/* 7910 (c) [1979] */
+        /*TODO*///	driver_cosmica2,	/* 7910 (c) 1979 */
+        /*TODO*///	driver_panic,		/* (c) 1980 */
+        /*TODO*///	driver_panica,	/* (c) 1980 */
+        /*TODO*///	driver_panicger,	/* (c) 1980 */
+        /*TODO*///	driver_zerohour,	/* 8011 (c) Universal */
+        /*TODO*///	driver_redclash,	/* (c) 1981 Tehkan */
+        /*TODO*///	driver_redclask,	/* (c) Kaneko (bootleg?) */
+        /*TODO*///	driver_magspot2,	/* 8013 (c) [1980] */
+        /*TODO*///	driver_devzone,	/* 8022 (c) [1980] */
+        /*TODO*///	driver_nomnlnd,	/* (c) [1980?] */
+        /*TODO*///	driver_nomnlndg,	/* (c) [1980?] + Gottlieb */
+        /*TODO*///	driver_cheekyms,	/* (c) [1980?] */
+        /*TODO*///	driver_ladybug,	/* (c) 1981 */
+        /*TODO*///	driver_ladybugb,	/* bootleg */
+        /*TODO*///	driver_snapjack,	/* (c) */
+        /*TODO*///	driver_cavenger,	/* (c) 1981 */
+        /*TODO*///	driver_mrdo,		/* (c) 1982 */
+        /*TODO*///	driver_mrdot,		/* (c) 1982 + Taito license */
+        /*TODO*///	driver_mrdofix,	/* (c) 1982 + Taito license */
+        /*TODO*///	driver_mrlo,		/* bootleg */
+        /*TODO*///	driver_mrdu,		/* bootleg */
+        /*TODO*///	driver_mrdoy,		/* bootleg */
+        /*TODO*///	driver_yankeedo,	/* bootleg */
+        /*TODO*///	driver_docastle,	/* (c) 1983 */
+        /*TODO*///	driver_docastl2,	/* (c) 1983 */
+        /*TODO*///	driver_douni,		/* (c) 1983 */
+        /*TODO*///	driver_dorunrun,	/* (c) 1984 */
+        /*TODO*///	driver_dorunru2,	/* (c) 1984 */
+        /*TODO*///	driver_dorunruc,	/* (c) 1984 */
+        /*TODO*///	driver_spiero,	/* (c) 1987 */
+        /*TODO*///	driver_dowild,	/* (c) 1984 */
+        /*TODO*///	driver_jjack,		/* (c) 1984 */
+        /*TODO*///	driver_kickridr,	/* (c) 1984 */
+        /*TODO*///
+        /*TODO*///	/* Nintendo games */
+        /*TODO*///	driver_radarscp,	/* (c) 1980 Nintendo */
+        /*TODO*///	driver_dkong,		/* (c) 1981 Nintendo of America */
+        /*TODO*///	driver_dkongjp,	/* (c) 1981 Nintendo */
+        /*TODO*///	driver_dkongjo,	/* (c) 1981 Nintendo */
+        /*TODO*///	driver_dkongjo1,	/* (c) 1981 Nintendo */
+        /*TODO*///	driver_dkongjr,	/* (c) 1982 Nintendo of America */
+        /*TODO*///	driver_dkongjrj,	/* (c) 1982 Nintendo */
+        /*TODO*///	driver_dkngjnrj,	/* (c) 1982 Nintendo */
+        /*TODO*///	driver_dkongjrb,	/* bootleg */
+        /*TODO*///	driver_dkngjnrb,	/* (c) 1982 Nintendo of America */
+        /*TODO*///	driver_dkong3,	/* (c) 1983 Nintendo of America */
+        /*TODO*///	driver_dkong3j,	/* (c) 1983 Nintendo */
+        /*TODO*///	driver_mario,		/* (c) 1983 Nintendo of America */
+        /*TODO*///	driver_mariojp,	/* (c) 1983 Nintendo */
+        /*TODO*///	driver_masao,		/* bootleg */
+        /*TODO*///	driver_hunchbkd,	/* (c) 1983 Century */
+        /*TODO*///	driver_herbiedk,	/* (c) 1984 CVS */
+        /*TODO*///TESTdriver_herocast,
+        /*TODO*///	driver_popeye,	/* (c) 1982 */
+        /*TODO*///	driver_popeyeu,	/* (c) 1982 */
+        /*TODO*///	driver_popeyef,	/* (c) 1982 */
+        /*TODO*///	driver_popeyebl,	/* bootleg */
+        /*TODO*///	driver_punchout,	/* (c) 1984 */
+        /*TODO*///	driver_spnchout,	/* (c) 1984 */
+        /*TODO*///	driver_spnchotj,	/* (c) 1984 (Japan) */
+        /*TODO*///	driver_armwrest,	/* (c) 1985 */
+        /*TODO*///
+        /*TODO*///	/* Nintendo Playchoice 10 games */
+        /*TODO*///	driver_pc_tenis,	/* (c) 1983 Nintendo */
+        /*TODO*///	driver_pc_mario,	/* (c) 1983 Nintendo */
+        /*TODO*///	driver_pc_bball,	/* (c) 1984 Nintendo of America */
+        /*TODO*///	driver_pc_bfght,	/* (c) 1984 Nintendo */
+        /*TODO*///	driver_pc_ebike,	/* (c) 1984 Nintendo */
+        /*TODO*///	driver_pc_golf	)	/* (c) 1984 Nintendo */
+        /*TODO*///	driver_pc_kngfu,	/* (c) 1984 Irem (Nintendo license) */
+        /*TODO*///	driver_pc_1942,	/* (c) 1985 Capcom */
+        /*TODO*///	driver_pc_smb,	/* (c) 1985 Nintendo */
+        /*TODO*///	driver_pc_vball,	/* (c) 1986 Nintendo */
+        /*TODO*///	driver_pc_duckh,	/* (c) 1984 Nintendo */
+        /*TODO*///	driver_pc_hgaly,	/* (c) 1984 Nintendo */
+        /*TODO*///	driver_pc_wgnmn,	/* (c) 1984 Nintendo */
+        /*TODO*///	driver_pc_grdus,	/* (c) 1986 Konami */
+        /*TODO*///	driver_pc_tkfld,	/* (c) 1987 Konami (Nintendo of America license) */
+        /*TODO*///	driver_pc_pwrst,	/* (c) 1986 Nintendo */
+        /*TODO*///	driver_pc_trjan,	/* (c) 1986 Capcom USA (Nintendo of America license) */
+        /*TODO*///	driver_pc_cvnia,	/* (c) 1987 Konami (Nintendo of America license) */
+        /*TODO*///	driver_pc_dbldr,	/* (c) 1987 Konami (Nintendo of America license) */
+        /*TODO*///	driver_pc_rnatk,	/* (c) 1987 Konami (Nintendo of America license) */
+        /*TODO*///	driver_pc_rygar,	/* (c) 1987 Tecmo (Nintendo of America license) */
+        /*TODO*///	driver_pc_cntra,	/* (c) 1988 Konami (Nintendo of America license) */
+        /*TODO*///	driver_pc_goons,	/* (c) 1986 Konami */
+        /*TODO*///	driver_pc_mtoid,	/* (c) 1986 Nintendo */
+        /*TODO*///	driver_pc_radrc,	/* (c) 1987 Square */
+        /*TODO*///	driver_pc_miket,	/* (c) 1987 Nintendo */
+        /*TODO*///	driver_pc_rcpam,	/* (c) 1987 Rare */
+        /*TODO*///	driver_pc_ngaid,	/* (c) 1989 Tecmo (Nintendo of America license) */
+        /*TODO*///	driver_pc_tmnt,	/* (c) 1989 Konami (Nintendo of America license) */
+        /*TODO*///	driver_pc_ftqst,	/* (c) 1989 Sunsoft (Nintendo of America license) */
+        /*TODO*///	driver_pc_bstar,	/* (c) 1989 SNK (Nintendo of America license) */
+        /*TODO*///	driver_pc_tbowl,	/* (c) 1989 Tecmo (Nintendo of America license) */
+        /*TODO*///	driver_pc_drmro,	/* (c) 1990 Nintendo */
+        /*TODO*///	driver_pc_ynoid,	/* (c) 1990 Capcom USA (Nintendo of America license) */
+        /*TODO*///	driver_pc_rrngr,	/* (c) Capcom USA (Nintendo of America license) */
+        /*TODO*///	driver_pc_ddrgn,
+        /*TODO*///	driver_pc_gntlt,	/* (c) 1985 Atari/Tengen (Nintendo of America license) */
+        /*TODO*///	driver_pc_smb2,	/* (c) 1988 Nintendo */
+        /*TODO*///	driver_pc_smb3,	/* (c) 1988 Nintendo */
+        /*TODO*///	driver_pc_mman3,	/* (c) 1990 Capcom USA (Nintendo of America license) */
+        /*TODO*///	driver_pc_radr2,	/* (c) 1990 Square (Nintendo of America license) */
+        /*TODO*///	driver_pc_suprc,	/* (c) 1990 Konami (Nintendo of America license) */
+        /*TODO*///	driver_pc_tmnt2,	/* (c) 1990 Konami (Nintendo of America license) */
+        /*TODO*///	driver_pc_wcup,	/* (c) 1990 Technos (Nintendo license) */
+        /*TODO*///	driver_pc_ngai2,	/* (c) 1990 Tecmo (Nintendo of America license) */
+        /*TODO*///	driver_pc_ngai3,	/* (c) 1991 Tecmo (Nintendo of America license) */
+        /*TODO*///	driver_pc_pwbld,	/* (c) 1991 Taito (Nintendo of America license) */
+        /*TODO*///	driver_pc_rkats,	/* (c) 1991 Atlus (Nintendo of America license) */
+        /*TODO*///TESTdriver_pc_pinbt,	/* (c) 1988 Rare (Nintendo of America license) */
+        /*TODO*///	driver_pc_cshwk,	/* (c) 1989 Rare (Nintendo of America license) */
+        /*TODO*///	driver_pc_sjetm,	/* (c) 1990 Rare */
+        /*TODO*///	driver_pc_moglf,	/* (c) 1991 Nintendo */
+        /*TODO*///
+        /*TODO*///	/* Nintendo VS games */
+        /*TODO*///	driver_btlecity,	/* (c) 1985 Namco */
+        /*TODO*///	driver_starlstr,	/* (c) 1985 Namco */
+        /*TODO*///	driver_cstlevna,	/* (c) 1987 Konami */
+        /*TODO*///	driver_cluclu,	/* (c) 1984 Nintendo */
+        /*TODO*///	driver_drmario,	/* (c) 1990 Nintendo */
+        /*TODO*///	driver_duckhunt,	/* (c) 1985 Nintendo */
+        /*TODO*///	driver_excitebk,	/* (c) 1984 Nintendo */
+        /*TODO*///	driver_excitbkj,	/* (c) 1984 Nintendo */
+        /*TODO*///	driver_goonies,	/* (c) 1986 Konami */
+        /*TODO*///	driver_hogalley,	/* (c) 1985 Nintendo */
+        /*TODO*///	driver_iceclimb,	/* (c) 1984 Nintendo */
+        /*TODO*///	driver_ladygolf,	/* (c) 1984 Nintendo */
+        /*TODO*///	driver_machridr,	/* (c) 1985 Nintendo */
+        /*TODO*///	driver_rbibb,		/* (c) 1987 Namco */
+        /*TODO*///	driver_suprmrio,	/* (c) 1986 Nintendo */
+        /*TODO*///	driver_vsskykid,	/* (c) 1986 Namco */
+        /*TODO*///	driver_tkoboxng,	/* (c) 1987 Data East */
+        /*TODO*///	driver_smgolf,	/* (c) 1984 Nintendo */
+        /*TODO*///	driver_smgolfj,	/* (c) 1984 Nintendo */
+        /*TODO*///	driver_vspinbal,	/* (c) 1984 Nintendo */
+        /*TODO*///	driver_vspinblj,	/* (c) 1984 Nintendo */
+        /*TODO*///	driver_vsslalom,	/* (c) 1986 Nintendo */
+        /*TODO*///	driver_vssoccer,	/* (c) 1985 Nintendo */
+        /*TODO*///	driver_vsgradus,	/* (c) 1986 Konami */
+        /*TODO*///	driver_platoon,	/* (c) 1987 Ocean */
+        /*TODO*///	driver_vstetris,	/* (c) 1988 Atari */
+        /*TODO*///	driver_vstennis,	/* (c) 1984 Nintendo */
+        /*TODO*///	driver_wrecking,	/* (c) 1984 Nintendo */
+        /*TODO*///	driver_balonfgt,	/* (c) 1984 Nintendo */
+        /*TODO*///	driver_vsmahjng,	/* (c) 1984 Nintendo */
+        /*TODO*///	driver_vsbball,	/* (c) 1984 Nintendo */
+        /*TODO*///	driver_vsbballj,	/* (c) 1984 Nintendo */
+        /*TODO*///	driver_vsbbalja,	/* (c) 1984 Nintendo */
+        /*TODO*///	driver_iceclmrj,	/* (c) 1984 Nintendo */
+        /*TODO*///TESTdriver_topgun,
+        /*TODO*///TESTdriver_jajamaru,
+        /*TODO*///TESTdriver_vsxevus,
+        /*TODO*///
+        /*TODO*///	/* Midway 8080 b/w games */
+        /*TODO*///	driver_seawolf,	/* 596 [1976] */
+        /*TODO*///	driver_gunfight,	/* 597 [1975] */
+        /*TODO*///	/* 603 - Top Gun [1976] */
+        /*TODO*///	driver_tornbase,	/* 605 [1976] */
+        /*TODO*///	driver_280zzzap,	/* 610 [1976] */
+        /*TODO*///	driver_maze,		/* 611 [1976] */
+        /*TODO*///	driver_boothill,	/* 612 [1977] */
+        /*TODO*///	driver_checkmat,	/* 615 [1977] */
+        /*TODO*///	driver_desertgu,	/* 618 [1977] */
+        /*TODO*///	driver_dplay,		/* 619 [1977] */
+        /*TODO*///	driver_lagunar,	/* 622 [1977] */
+        /*TODO*///	driver_gmissile,	/* 623 [1977] */
+        /*TODO*///	driver_m4,		/* 626 [1977] */
+        /*TODO*///	driver_clowns,	/* 630 [1978] */
+        /*TODO*///	/* 640 - Space Walk [1978] */
+        /*TODO*///	driver_einnings,	/* 642 [1978] Midway */
+        /*TODO*///	driver_shuffle,	/* 643 [1978] */
+        /*TODO*///	driver_dogpatch,	/* 644 [1977] */
+        /*TODO*///	driver_spcenctr,	/* 645 (c) 1980 Midway */
+        /*TODO*///	driver_phantom2,	/* 652 [1979] */
+        /*TODO*///	driver_bowler,	/* 730 [1978] Midway */
+        /*TODO*///	driver_invaders,	/* 739 [1979] */
+        /*TODO*///	driver_blueshrk,	/* 742 [1978] */
+        /*TODO*///	driver_invad2ct,	/* 851 (c) 1980 Midway */
+        /*TODO*///	driver_invadpt2,	/* 852 [1980] Taito */
+        /*TODO*///	driver_invaddlx,	/* 852 [1980] Midway */
+        /*TODO*///	driver_moonbase,	/* Zeta - Nichibutsu */
+        /*TODO*///	/* 870 - Space Invaders Deluxe cocktail */
+        /*TODO*///	driver_earthinv,
+        /*TODO*///	driver_spaceatt,
+        /*TODO*///	driver_spaceat2,
+        /*TODO*///	driver_sinvzen,
+        /*TODO*///	driver_superinv,
+        /*TODO*///	driver_sstrangr,
+        /*TODO*///	driver_sstrngr2,
+        /*TODO*///	driver_sinvemag,
+        /*TODO*///	driver_jspecter,
+        /*TODO*///	driver_jspectr2,
+        /*TODO*///	driver_invrvnge,
+        /*TODO*///	driver_invrvnga,
+        /*TODO*///	driver_galxwars,
+        /*TODO*///	driver_galxwar2,
+        /*TODO*///	driver_galxwart,
+        /*TODO*///	driver_starw,
+        /*TODO*///	driver_lrescue,	/* LR  (c) 1979 Taito */
+        /*TODO*///	driver_grescue,	/* bootleg? */
+        /*TODO*///	driver_desterth,	/* bootleg */
+        /*TODO*///	driver_cosmicmo,	/* Universal */
+        /*TODO*///	driver_rollingc,	/* Nichibutsu */
+        /*TODO*///	driver_sheriff,	/* (c) Nintendo */
+        /*TODO*///	driver_bandido,	/* (c) Exidy */
+        /*TODO*///	driver_ozmawars,	/* Shin Nihon Kikaku (SNK) */
+        /*TODO*///	driver_ozmawar2,	/* Shin Nihon Kikaku (SNK) */
+        /*TODO*///	driver_solfight,	/* bootleg */
+        /*TODO*///	driver_spaceph,	/* Zilec Games */
+        /*TODO*///	driver_schaser,	/* RT  Taito */
+        /*TODO*///	driver_schasrcv,	/* RT  Taito */
+        /*TODO*///	driver_lupin3,	/* LP  (c) 1980 Taito */
+        /*TODO*///	driver_helifire,	/* (c) Nintendo */
+        /*TODO*///	driver_helifira,	/* (c) Nintendo */
+        /*TODO*///	driver_spacefev,
+        /*TODO*///	driver_sfeverbw,
+        /*TODO*///	driver_spclaser,
+        /*TODO*///	driver_laser,
+        /*TODO*///	driver_spcewarl,
+        /*TODO*///	driver_polaris,	/* PS  (c) 1980 Taito */
+        /*TODO*///	driver_polarisa,	/* PS  (c) 1980 Taito */
+        /*TODO*///	driver_ballbomb,	/* TN  (c) 1980 Taito */
+        /*TODO*///	driver_m79amb,
+        /*TODO*///	driver_alieninv,
+        /*TODO*///	driver_sitv,
+        /*TODO*///	driver_sicv,
+        /*TODO*///	driver_sisv,
+        /*TODO*///	driver_sisv2,
+        /*TODO*///	driver_spacewr3,
+        /*TODO*///	driver_invaderl,
+        /*TODO*///	driver_yosakdon,
+        /*TODO*///	driver_spceking,
+        /*TODO*///	driver_spcewars,
+        /*TODO*///
+        /*TODO*///	/* "Midway" Z80 b/w games */
+        /*TODO*///	driver_astinvad,	/* (c) 1980 Stern */
+        /*TODO*///	driver_kamikaze,	/* Leijac Corporation */
+        /*TODO*///	driver_spaceint,	/* [1980] Shoei */
+        /*TODO*///
+        /*TODO*///	/* Meadows S2650 games */
+        /*TODO*///	driver_lazercmd,	/* [1976?] */
+        /*TODO*///	driver_bbonk,		/* [1976?] */
+        /*TODO*///	driver_deadeye,	/* [1978?] */
+        /*TODO*///	driver_gypsyjug,	/* [1978?] */
+        /*TODO*///	driver_medlanes,	/* [1977?] */
+        /*TODO*///
+        /*TODO*///	/* CVS games */
+        /*TODO*///	driver_cosmos,	/* (c) 1981 Century */
+        /*TODO*///	driver_darkwar,	/* (c) 1981 Century */
+        /*TODO*///	driver_spacefrt,	/* (c) 1981 Century */
+        /*TODO*///	driver_8ball,		/* (c) 1982 Century */
+        /*TODO*///	driver_8ball1,
+        /*TODO*///	driver_logger,	/* (c) 1982 Century */
+        /*TODO*///	driver_dazzler,	/* (c) 1982 Century */
+        /*TODO*///	driver_wallst,	/* (c) 1982 Century */
+        /*TODO*///	driver_radarzon,	/* (c) 1982 Century */
+        /*TODO*///	driver_radarzn1,	/* (c) 1982 Century */
+        /*TODO*///	driver_radarznt,	/* (c) 1982 Tuni Electro Service */
+        /*TODO*///	driver_outline,	/* (c) 1982 Century */
+        /*TODO*///	driver_goldbug,	/* (c) 1982 Century */
+        /*TODO*///	driver_heartatk,	/* (c) 1983 Century Electronics */
+        /*TODO*///	driver_hunchbak,	/* (c) 1983 Century */
+        /*TODO*///	driver_superbik,	/* (c) 1983 Century */
+        /*TODO*///	driver_hero,		/* (c) 1983 Seatongrove (c) 1984 CVS */
+        /*TODO*///	driver_huncholy,	/* (c) 1984 Seatongrove (c) CVS */
+        /*TODO*///
+        /*TODO*///	/* Midway "Astrocade" games */
+        /*TODO*///	driver_seawolf2,
+        /*TODO*///	driver_spacezap,	/* (c) 1980 */
+        /*TODO*///	driver_ebases,
+        /*TODO*///	driver_wow,		/* (c) 1980 */
+        /*TODO*///	driver_gorf,		/* (c) 1981 */
+        /*TODO*///	driver_gorfpgm1,	/* (c) 1981 */
+        /*TODO*///	driver_robby,		/* (c) 1981 Bally Midway */
+        /*TODO*///TESTdriver_profpac,	/* (c) 1983 Bally Midway */
+        /*TODO*///
+        /*TODO*///	/* Bally Midway MCR games */
+        /*TODO*///	/* MCR1 */
+        /*TODO*///	driver_solarfox,	/* (c) 1981 */
+        /*TODO*///	driver_kick,		/* (c) 1981 */
+        /*TODO*///	driver_kicka,		/* bootleg? */
+        /*TODO*///	/* MCR2 */
+        /*TODO*///	driver_shollow,	/* (c) 1981 */
+        /*TODO*///	driver_shollow2,	/* (c) 1981 */
+        /*TODO*///	driver_tron,		/* (c) 1982 */
+        /*TODO*///	driver_tron2,		/* (c) 1982 */
+        /*TODO*///	driver_kroozr,	/* (c) 1982 */
+        /*TODO*///	driver_domino,	/* (c) 1982 */
+        /*TODO*///	driver_wacko,		/* (c) 1982 */
+        /*TODO*///	driver_twotiger,	/* (c) 1984 */
+        /*TODO*///	driver_twotigra,	/* (c) 1984 */
+        /*TODO*///	/* MCR2 + MCR3 sprites */
+        /*TODO*///	driver_journey,	/* (c) 1983 */
+        /*TODO*///	/* MCR3 */
+        /*TODO*///	driver_tapper,	/* (c) 1983 */
+        /*TODO*///	driver_tappera,	/* (c) 1983 */
+        /*TODO*///	driver_sutapper,	/* (c) 1983 */
+        /*TODO*///	driver_rbtapper,	/* (c) 1984 */
+        /*TODO*///	driver_timber,	/* (c) 1984 */
+        /*TODO*///	driver_dotron,	/* (c) 1983 */
+        /*TODO*///	driver_dotrone,	/* (c) 1983 */
+        /*TODO*///	driver_demoderb,	/* (c) 1984 */
+        /*TODO*///	driver_demoderm,	/* (c) 1984 */
+        /*TODO*///	driver_sarge,		/* (c) 1985 */
+        /*TODO*///	driver_rampage,	/* (c) 1986 */
+        /*TODO*///	driver_rampage2,	/* (c) 1986 */
+        /*TODO*///	driver_powerdrv,	/* (c) 1986 */
+        /*TODO*///	driver_stargrds,	/* (c) 1987 */
+        /*TODO*///	driver_maxrpm,	/* (c) 1986 */
+        /*TODO*///	driver_spyhunt,	/* (c) 1983 */
+        /*TODO*///	driver_turbotag,	/* (c) 1985 */
+        /*TODO*///	driver_crater,	/* (c) 1984 */
+        /*TODO*///	/* MCR 68000 */
+        /*TODO*///	driver_zwackery,	/* (c) 1984 */
+        /*TODO*///	driver_xenophob,	/* (c) 1987 */
+        /*TODO*///	driver_spyhunt2,	/* (c) 1987 */
+        /*TODO*///	driver_spyhnt2a,	/* (c) 1987 */
+        /*TODO*///	driver_blasted,	/* (c) 1988 */
+        /*TODO*///	driver_archrivl,	/* (c) 1989 */
+        /*TODO*///	driver_archriv2,	/* (c) 1989 */
+        /*TODO*///	driver_trisport,	/* (c) 1989 */
+        /*TODO*///	driver_pigskin,	/* (c) 1990 */
+        /*TODO*///
+        /*TODO*///	/* Bally / Sente games */
+        /*TODO*///	driver_sentetst,
+        /*TODO*///	driver_cshift,	/* (c) 1984 */
+        /*TODO*///	driver_gghost,	/* (c) 1984 */
+        /*TODO*///	driver_hattrick,	/* (c) 1984 */
+        /*TODO*///	driver_otwalls,	/* (c) 1984 */
+        /*TODO*///	driver_snakepit,	/* (c) 1984 */
+        /*TODO*///	driver_snakjack,	/* (c) 1984 */
+        /*TODO*///	driver_stocker,	/* (c) 1984 */
+        /*TODO*///	driver_triviag1,	/* (c) 1984 */
+        /*TODO*///	driver_triviag2,	/* (c) 1984 */
+        /*TODO*///	driver_triviasp,	/* (c) 1984 */
+        /*TODO*///	driver_triviayp,	/* (c) 1984 */
+        /*TODO*///	driver_triviabb,	/* (c) 1984 */
+        /*TODO*///	driver_gimeabrk,	/* (c) 1985 */
+        /*TODO*///	driver_minigolf,	/* (c) 1985 */
+        /*TODO*///	driver_minigol2,	/* (c) 1985 */
+        /*TODO*///	driver_toggle,	/* (c) 1985 */
+        /*TODO*///	driver_nametune,	/* (c) 1986 */
+        /*TODO*///	driver_nstocker,	/* (c) 1986 */
+        /*TODO*///	driver_sfootbal,	/* (c) 1986 */
+        /*TODO*///	driver_spiker,	/* (c) 1986 */
+        /*TODO*///	driver_stompin,	/* (c) 1986 */
+        /*TODO*///	driver_rescraid,	/* (c) 1987 */
+        /*TODO*///	driver_rescrdsa,	/* (c) 1987 */
+        /*TODO*///	driver_gridlee,	/* [1983 Videa] prototype - no copyright notice */
+        /*TODO*///
+        /*TODO*///	/* Irem games */
+        /*TODO*///	/* trivia: IREM means "International Rental Electronics Machines" */
+        /*TODO*///TESTdriver_iremm10,	/* M10 */
+        /*TODO*///	driver_skychut,	/* (c) [1980] */
+        /*TODO*///	driver_spacbeam,	/* M15 no copyright notice */
+        /*TODO*///TESTdriver_greenber,
+        /*TODO*///
+        /*TODO*///	driver_redalert,	/* (c) 1981 + "GDI presents" */
+        /*TODO*///	driver_olibochu,	/* M47 (c) 1981 + "GDI presents" */
+        /*TODO*///	driver_mpatrol,	/* M52 (c) 1982 */
+        /*TODO*///	driver_mpatrolw,	/* M52 (c) 1982 + Williams license */
+        /*TODO*///	driver_troangel,	/* (c) 1983 */
+        /*TODO*///	driver_yard,		/* (c) 1983 */
+        /*TODO*///	driver_vsyard,	/* (c) 1983/1984 */
+        /*TODO*///	driver_vsyard2,	/* (c) 1983/1984 */
+        /*TODO*///	driver_travrusa,	/* (c) 1983 */
+        /*TODO*///	driver_motorace,	/* (c) 1983 Williams license */
+        /*TODO*///	/* M62 */
+        /*TODO*///	driver_kungfum,	/* (c) 1984 */
+        /*TODO*///	driver_kungfud,	/* (c) 1984 + Data East license */
+        /*TODO*///	driver_spartanx,	/* (c) 1984 (Japan) */
+        /*TODO*///	driver_kungfub,	/* bootleg */
+        /*TODO*///	driver_kungfub2,	/* bootleg */
+        /*TODO*///	driver_battroad,	/* (c) 1984 */
+        /*TODO*///	driver_ldrun,		/* (c) 1984 licensed from Broderbund */
+        /*TODO*///	driver_ldruna,	/* (c) 1984 licensed from Broderbund */
+        /*TODO*///	driver_ldrun2,	/* (c) 1984 licensed from Broderbund */
+        /*TODO*///	driver_ldrun3,	/* (c) 1985 licensed from Broderbund */
+        /*TODO*///	driver_ldrun4,	/* (c) 1986 licensed from Broderbund */
+        /*TODO*///	driver_lotlot,	/* (c) 1985 licensed from Tokuma Shoten */
+        /*TODO*///	driver_kidniki,	/* (c) 1986 + Data East USA license */
+        /*TODO*///	driver_yanchamr,	/* (c) 1986 (Japan) */
+        /*TODO*///	driver_spelunkr,	/* (c) 1985 licensed from Broderbund */
+        /*TODO*///	driver_spelnkrj,	/* (c) 1985 licensed from Broderbund */
+        /*TODO*///	driver_spelunk2,	/* (c) 1986 licensed from Broderbund */
+        /*TODO*///	driver_youjyudn,	/* (c) 1986 (Japan) */
+        /*TODO*///
+        /*TODO*///	driver_vigilant,	/* (c) 1988 (World) */
+        /*TODO*///	driver_vigilntu,	/* (c) 1988 (US) */
+        /*TODO*///	driver_vigilntj,	/* (c) 1988 (Japan) */
+        /*TODO*///	driver_kikcubic,	/* (c) 1988 (Japan) */
+        /*TODO*///	/* M72 (and derivatives) */
+        /*TODO*///	driver_rtype,		/* (c) 1987 (Japan) */
+        /*TODO*///	driver_rtypepj,	/* (c) 1987 (Japan) */
+        /*TODO*///	driver_rtypeu,	/* (c) 1987 + Nintendo USA license (US) */
+        /*TODO*///	driver_bchopper,	/* (c) 1987 */
+        /*TODO*///	driver_mrheli,	/* (c) 1987 (Japan) */
+        /*TODO*///	driver_nspirit,	/* (c) 1988 */
+        /*TODO*///	driver_nspiritj,	/* (c) 1988 (Japan) */
+        /*TODO*///	driver_imgfight,	/* (c) 1988 (Japan) */
+        /*TODO*///	driver_loht,		/* (c) 1989 */
+        /*TODO*///	driver_xmultipl,	/* (c) 1989 (Japan) */
+        /*TODO*///	driver_dbreed,	/* (c) 1989 */
+        /*TODO*///	driver_rtype2,	/* (c) 1989 */
+        /*TODO*///	driver_rtype2j,	/* (c) 1989 (Japan) */
+        /*TODO*///	driver_majtitle,	/* (c) 1990 (Japan) */
+        /*TODO*///	driver_hharry,	/* (c) 1990 (World) */
+        /*TODO*///	driver_hharryu,	/* (c) 1990 Irem America (US) */
+        /*TODO*///	driver_dkgensan,	/* (c) 1990 (Japan) */
+        /*TODO*///	driver_dkgenm72,	/* (c) 1990 (Japan) */
+        /*TODO*///	driver_poundfor,	/* (c) 1990 (World) */
+        /*TODO*///	driver_poundfou,	/* (c) 1990 Irem America (US) */
+        /*TODO*///	driver_airduel,	/* (c) 1990 (Japan) */
+        /*TODO*///	driver_gallop,	/* (c) 1991 (Japan) */
+        /*TODO*///	driver_kengo,		/* (c) 1991 */
+        /*TODO*///	/* not M72, but same sound hardware */
+        /*TODO*///	driver_sichuan2,	/* (c) 1989 Tamtex */
+        /*TODO*///	driver_sichuana,	/* (c) 1989 Tamtex */
+        /*TODO*///	driver_shisen,	/* (c) 1989 Tamtex */
+        /*TODO*///	/* M90 */
+        /*TODO*///	driver_hasamu,	/* (c) 1991 Irem (Japan) */
+        /*TODO*///	driver_bombrman,	/* (c) 1991 Irem (Japan) */
+        /*TODO*///TESTdriver_dynablsb,	/* bootleg */
+        /*TODO*///	/* M97 */
+        /*TODO*///	driver_bbmanw,	/* (c) 1992 Irem (World) */
+        /*TODO*///	driver_bbmanwj,
+        /*TODO*///	driver_atompunk,	/* (c) 1992 Irem America (US) */
+        /*TODO*///TESTdriver_quizf1,
+        /*TODO*///TESTdriver_riskchal,
+        /*TODO*///TESTdriver_gussun,
+        /*TODO*///TESTdriver_shisen2,
+        /*TODO*///	/* M92 */
+        /*TODO*///	driver_gunforce,	/* (c) 1991 Irem (World) */
+        /*TODO*///	driver_gunforcu,	/* (c) 1991 Irem America (US) */
+        /*TODO*///	driver_gunforcj,	/* (c) 1991 Irem (Japan) */
+        /*TODO*///	driver_bmaster,	/* (c) 1991 Irem */
+        /*TODO*///	driver_lethalth,	/* (c) 1991 Irem (World) */
+        /*TODO*///	driver_thndblst,	/* (c) 1991 Irem (Japan) */
+        /*TODO*///	driver_uccops,	/* (c) 1992 Irem (World) */
+        /*TODO*///	driver_uccopsj,	/* (c) 1992 Irem (Japan) */
+        /*TODO*///	driver_mysticri,	/* (c) 1992 Irem (World) */
+        /*TODO*///	driver_gunhohki,	/* (c) 1992 Irem (Japan) */
+        /*TODO*///	driver_majtitl2,	/* (c) 1992 Irem (World) */
+        /*TODO*///	driver_skingame,	/* (c) 1992 Irem America (US) */
+        /*TODO*///	driver_skingam2,	/* (c) 1992 Irem America (US) */
+        /*TODO*///	driver_hook,		/* (c) 1992 Irem (World) */
+        /*TODO*///	driver_hooku,		/* (c) 1992 Irem America (US) */
+        /*TODO*///	driver_rtypeleo,	/* (c) 1992 Irem (Japan) */
+        /*TODO*///	driver_inthunt,	/* (c) 1993 Irem (World) */
+        /*TODO*///	driver_inthuntu,	/* (c) 1993 Irem (US) */
+        /*TODO*///	driver_kaiteids,	/* (c) 1993 Irem (Japan) */
+        /*TODO*///	driver_nbbatman,	/* (c) 1993 Irem America (US) */
+        /*TODO*///	driver_leaguemn,	/* (c) 1993 Irem (Japan) */
+        /*TODO*///	driver_psoldier,	/* (c) 1993 Irem (Japan) */
+        /*TODO*///	driver_dsccr94j,	/* (c) 1994 Irem (Japan) */
+        /*TODO*///	/* 1994 Geo Storm */
+        /*TODO*///	/* M107 */
+        /*TODO*///	driver_firebarr,	/* (c) 1993 Irem (Japan) */
+        /*TODO*///	driver_dsoccr94,	/* (c) 1994 Irem (Data East Corporation license) */
+        /*TODO*///
+        /*TODO*///	/* Gottlieb/Mylstar games (Gottlieb became Mylstar in 1983) */
+        /*TODO*///	driver_reactor,	/* GV-100 (c) 1982 Gottlieb */
+        /*TODO*///	driver_mplanets,	/* GV-102 (c) 1983 Gottlieb */
+        /*TODO*///	driver_qbert,		/* GV-103 (c) 1982 Gottlieb */
+        /*TODO*///	driver_qbertjp,	/* GV-103 (c) 1982 Gottlieb + Konami license */
+        /*TODO*///	driver_insector,	/* GV-??? (c) 1982 Gottlieb - never released */
+        /*TODO*///	driver_krull,		/* GV-105 (c) 1983 Gottlieb */
+        /*TODO*///	driver_sqbert,	/* GV-??? (c) 1983 Mylstar - never released */
+        /*TODO*///	driver_mach3,		/* GV-109 (c) 1983 Mylstar */
+        /*TODO*///	driver_usvsthem,	/* GV-??? (c) 198? Mylstar */
+        /*TODO*///	driver_3stooges,	/* GV-113 (c) 1984 Mylstar */
+        /*TODO*///	driver_qbertqub,	/* GV-119 (c) 1983 Mylstar */
+        /*TODO*///	driver_screwloo,	/* GV-123 (c) 1983 Mylstar - never released */
+        /*TODO*///	driver_curvebal,	/* GV-134 (c) 1984 Mylstar */
+        /*TODO*///
+        /*TODO*///	/* Taito "Qix hardware" games */
+        /*TODO*///	driver_qix,		/* LK  (c) 1981 Taito America Corporation */
+        /*TODO*///	driver_qixa,		/* LK  (c) 1981 Taito America Corporation */
+        /*TODO*///	driver_qixb,		/* LK  (c) 1981 Taito America Corporation */
+        /*TODO*///	driver_qix2,		/* ??  (c) 1981 Taito America Corporation */
+        /*TODO*///	driver_sdungeon,	/* SD  (c) 1981 Taito America Corporation */
+        /*TODO*///	driver_elecyoyo,	/* YY  (c) 1982 Taito America Corporation */
+        /*TODO*///	driver_elecyoy2,	/* YY  (c) 1982 Taito America Corporation */
+        /*TODO*///	driver_kram,		/* KS  (c) 1982 Taito America Corporation */
+        /*TODO*///	driver_kram2,		/* KS  (c) 1982 Taito America Corporation */
+        /*TODO*///	driver_zookeep,	/* ZA  (c) 1982 Taito America Corporation */
+        /*TODO*///	driver_zookeep2,	/* ZA  (c) 1982 Taito America Corporation */
+        /*TODO*///	driver_zookeep3,	/* ZA  (c) 1982 Taito America Corporation */
+        /*TODO*///	driver_slither,	/* (c) 1982 Century II */
+        /*TODO*///	driver_slithera,	/* (c) 1982 Century II */
+        /*TODO*///
+        /*TODO*///	/* Taito SJ System games */
+        /*TODO*///	driver_spaceskr,	/* EB  (c) 1981 Taito Corporation */
+        /*TODO*///	driver_junglek,	/* KN  (c) 1982 Taito Corporation */
+        /*TODO*///	driver_junglkj2,	/* KN  (c) 1982 Taito Corporation */
+        /*TODO*///	driver_jungleh,	/* KN  (c) 1982 Taito America Corporation */
+        /*TODO*///	driver_junglhbr,	/* KN  (c) 1982 Taito do Brasil */
+        /*TODO*///	driver_alpine,	/* RH  (c) 1982 Taito Corporation */
+        /*TODO*///	driver_alpinea,	/* RH  (c) 1982 Taito Corporation */
+        /*TODO*///	driver_timetunl,	/* UN  (c) 1982 Taito Corporation */
+        /*TODO*///	driver_wwestern,	/* WW  (c) 1982 Taito Corporation */
+        /*TODO*///	driver_wwester1,	/* WW  (c) 1982 Taito Corporation */
+        /*TODO*///	driver_frontlin,	/* FL  (c) 1982 Taito Corporation */
+        /*TODO*///	driver_elevator,	/* EA  (c) 1983 Taito Corporation */
+        /*TODO*///	driver_elevatob,	/* bootleg */
+        /*TODO*///	driver_tinstar,	/* A10 (c) 1983 Taito Corporation */
+        /*TODO*///	driver_waterski,	/* A03 (c) 1983 Taito Corporation */
+        /*TODO*///	driver_bioatack,	/* AA8 (c) 1983 Taito Corporation + Fox Video Games license */
+        /*TODO*///	driver_hwrace,	/* AC4 (c) 1983 Taito Corporation */
+        /*TODO*///	driver_sfposeid,	/* A14 (c) 1984 Taito Corporation */
+        /*TODO*///TESTdriver_kikstart,	/* A20 */
+        /*TODO*///
+        /*TODO*///	/* other Taito games */
+        /*TODO*///	driver_crbaloon,	/* CL  (c) 1980 Taito Corporation */
+        /*TODO*///	driver_crbalon2,	/* CL  (c) 1980 Taito Corporation */
+        /*TODO*///	driver_grchamp,	/* GM  (c) 1981 Taito Corporation */
+        /*TODO*///	driver_bking2,	/* AD6 (c) 1983 Taito Corporation */
+        /*TODO*///TESTdriver_josvolly,	/* ??? (c) 1983 Taito Corporation */
+        /*TODO*///	driver_gsword,	/* ??? (c) 1984 Taito Corporation */
+        /*TODO*///	driver_lkage,		/* A54 (c) 1984 Taito Corporation */
+        /*TODO*///	driver_lkageb,	/* bootleg */
+        /*TODO*///	driver_lkageb2,	/* bootleg */
+        /*TODO*///	driver_lkageb3,	/* bootleg */
+        /*TODO*///	driver_retofinv,	/* A37 (c) 1985 Taito Corporation */
+        /*TODO*///	driver_retofin1,	/* bootleg */
+        /*TODO*///	driver_retofin2,	/* bootleg */
+        /*TODO*///	driver_fightrol,	/* (c) 1983 Taito */
+        /*TODO*///	driver_rollrace,	/* (c) 1983 Williams */
+        /*TODO*///	driver_vsgongf,	/* (c) 1984 Kaneko */
+        /*TODO*///	driver_tsamurai,	/* A35 (c) 1985 Taito */
+        /*TODO*///	driver_tsamura2,	/* A35 (c) 1985 Taito */
+        /*TODO*///	driver_nunchaku,	/* ??? (c) 1985 Taito */
+        /*TODO*///	driver_yamagchi,	/* A38 (c) 1985 Taito */
+        /*TODO*///	driver_m660,      /* ??? (c) 1986 Taito America Corporation */
+        /*TODO*///	driver_m660j,     /* ??? (c) 1986 Taito Corporation (Japan) */
+        /*TODO*///	driver_m660b,     /* bootleg */
+        /*TODO*///	driver_alphaxz,   /* ??? (c) 1986 Ed/Wood Place */
+        /*TODO*///	driver_buggychl,	/* A22 (c) 1984 Taito Corporation */
+        /*TODO*///	driver_buggycht,	/* A22 (c) 1984 Taito Corporation + Tefri license */
+        /*TODO*///	driver_flstory,	/* A45 (c) 1985 Taito Corporation */
+        /*TODO*///	driver_flstoryj,	/* A45 (c) 1985 Taito Corporation (Japan) */
+        /*TODO*///TESTdriver_onna34ro,	/* A52 */
+        /*TODO*///	driver_gladiatr,	/* ??? (c) 1986 Taito America Corporation (US) */
+        /*TODO*///	driver_ogonsiro,	/* ??? (c) 1986 Taito Corporation (Japan) */
+        /*TODO*///	driver_lsasquad,	/* A64 (c) 1986 Taito Corporation / Taito America (dip switch) */
+        /*TODO*///	driver_storming,	/* A64 (c) 1986 Taito Corporation */
+        /*TODO*///	driver_tokio,		/* A71 1986 */
+        /*TODO*///	driver_tokiob,	/* bootleg */
+        /*TODO*///	driver_bublbobl,	/* A78 (c) 1986 Taito Corporation */
+        /*TODO*///	driver_bublbobr,	/* A78 (c) 1986 Taito America Corporation + Romstar license */
+        /*TODO*///	driver_bubbobr1,	/* A78 (c) 1986 Taito America Corporation + Romstar license */
+        /*TODO*///	driver_boblbobl,	/* bootleg */
+        /*TODO*///	driver_sboblbob,	/* bootleg */
+        /*TODO*///	driver_kikikai,	/* A85 (c) 1986 Taito Corporation */
+        /*TODO*///	driver_kicknrun,	/* A87 (c) 1986 Taito Corporation */
+        /*TODO*///	driver_mexico86,	/* bootleg (Micro Research) */
+        /*TODO*///	driver_darius,	/* A96 (c) 1986 Taito Corporation Japan (World) */
+        /*TODO*///	driver_dariusj,	/* A96 (c) 1986 Taito Corporation (Japan) */
+        /*TODO*///	driver_dariuso,	/* A96 (c) 1986 Taito Corporation (Japan) */
+        /*TODO*///	driver_dariuse,	/* A96 (c) 1986 Taito Corporation (Japan) */
+        /*TODO*///	driver_rastan,	/* B04 (c) 1987 Taito Corporation Japan (World) */
+        /*TODO*///	driver_rastanu,	/* B04 (c) 1987 Taito America Corporation (US) */
+        /*TODO*///	driver_rastanu2,	/* B04 (c) 1987 Taito America Corporation (US) */
+        /*TODO*///	driver_rastsaga,	/* B04 (c) 1987 Taito Corporation (Japan)*/
+        /*TODO*///	driver_topspeed,	/* B14 (c) 1987 Taito Corporation Japan (World) */
+        /*TODO*///	driver_topspedu,	/* B14 (c) 1987 Taito America Corporation (US) */
+        /*TODO*///	driver_fullthrl,	/* B14 (c) 1987 Taito Corporation (Japan) */
+        /*TODO*///	driver_opwolf,	/* B20 (c) 1987 Taito America Corporation (US) */
+        /*TODO*///	driver_opwolfb,	/* bootleg */
+        /*TODO*///	driver_othunder,	/* B67 (c) 1988 Taito Corporation Japan (World) */
+        /*TODO*///	driver_othundu,	/* B67 (c) 1988 Taito America Corporation (US) */
+        /*TODO*///	driver_rainbow,	/* B22 (c) 1987 Taito Corporation */
+        /*TODO*///	driver_rainbowa,	/* B22 (c) 1987 Taito Corporation */
+        /*TODO*///	driver_rainbowe,	/* ??? (c) 1988 Taito Corporation */
+        /*TODO*///	driver_jumping,	/* bootleg */
+        /*TODO*///	driver_arkanoid,	/* A75 (c) 1986 Taito Corporation Japan (World) */
+        /*TODO*///	driver_arknoidu,	/* A75 (c) 1986 Taito America Corporation + Romstar license (US) */
+        /*TODO*///	driver_arknoidj,	/* A75 (c) 1986 Taito Corporation (Japan) */
+        /*TODO*///	driver_arkbl2,	/* bootleg */
+        /*TODO*///TESTdriver_arkbl3,	/* bootleg */
+        /*TODO*///	driver_arkatayt,	/* bootleg */
+        /*TODO*///TESTdriver_arkblock,	/* bootleg */
+        /*TODO*///	driver_arkbloc2,	/* bootleg */
+        /*TODO*///	driver_arkangc,	/* bootleg */
+        /*TODO*///	driver_arkatour,	/* ??? (c) 1987 Taito America Corporation + Romstar license (US) */
+        /*TODO*///	driver_superqix,	/* B03 1987 */
+        /*TODO*///	driver_sqixbl,	/* bootleg? but (c) 1987 */
+        /*TODO*///	driver_exzisus,	/* B23 (c) 1987 Taito Corporation (Japan) */
+        /*TODO*///	driver_volfied,	/* C04 (c) 1989 Taito Corporation (Japan) */
+        /*TODO*///	driver_bonzeadv,	/* B41 (c) 1988 Taito Corporation Japan (World) */
+        /*TODO*///	driver_bonzeadu,	/* B41 (c) 1988 Taito America Corporation (US) */
+        /*TODO*///	driver_jigkmgri,	/* B41 (c) 1988 Taito Corporation (Japan)*/
+        /*TODO*///	driver_asuka,		/* ??? (c) 1988 Taito Corporation (Japan) */
+        /*TODO*///	driver_mofflott,	/* C17 (c) 1989 Taito Corporation (Japan) */
+        /*TODO*///	driver_galmedes,	/* (c) 1992 Visco (Japan) */
+        /*TODO*///	driver_earthjkr,	/* (c) 1993 Visco (Japan) */
+        /*TODO*///	driver_eto,		/* (c) 1994 Visco (Japan) */
+        /*TODO*///	driver_cadash,	/* C21 (c) 1989 Taito Corporation Japan */
+        /*TODO*///	driver_cadashj,	/* C21 (c) 1989 Taito Corporation */
+        /*TODO*///	driver_cadashu,	/* C21 (c) 1989 Taito America Corporation */
+        /*TODO*///	driver_cadashi,	/* C21 (c) 1989 Taito Corporation Japan */
+        /*TODO*///	driver_cadashf,	/* C21 (c) 1989 Taito Corporation Japan */
+        /*TODO*///	driver_wgp,		/* C32 (c) 1989 Taito America Corporation (US) */
+        /*TODO*///	driver_wgpj,		/* C32 (c) 1989 Taito Corporation (Japan) */
+        /*TODO*///	driver_wgpjoy,	/* C32 (c) 1989 Taito Corporation (Japan) */
+        /*TODO*///	driver_wgp2,		/* C73 (c) 1990 Taito Corporation (Japan) */
+        /*TODO*///	driver_slapshot,	/* D71 (c) 1994 Taito Corporation (Japan) */
+        /*TODO*///
+        /*TODO*///	/* Taito multi-screen games */
+        /*TODO*///	driver_ninjaw,	/* B31 (c) 1987 Taito Corporation Japan (World) */
+        /*TODO*///	driver_ninjawj,	/* B31 (c) 1987 Taito Corporation (Japan) */
+        /*TODO*///	driver_darius2,	/* C07 (c) 1989 Taito Corporation (Japan) */
+        /*TODO*///	driver_darius2d,	/* C07 (c) 1989 Taito Corporation (Japan) */
+        /*TODO*///	driver_drius2do,	/* C07 (c) 1989 Taito Corporation (Japan) */
+        /*TODO*///	driver_warriorb,	/* D24 (c) 1991 Taito Corporation (Japan) */
+        /*TODO*///
+        /*TODO*///	/* Taito "X"-system games */
+        /*TODO*///	driver_superman,	/* B61 (c) 1988 Taito Corporation */
+        /*TODO*///	driver_twinhawk,	/* B87 (c) 1989 Taito Corporation Japan (World) */
+        /*TODO*///	driver_twinhwku,	/* B87 (c) 1989 Taito America Corporation (US) */
+        /*TODO*///	driver_daisenpu,	/* B87 (c) 1989 Taito Corporation (Japan) */
+        /*TODO*///	driver_gigandes,	/* (c) 1989 East Technology */
+        /*TODO*///	driver_ballbros,	/* no copyright notice */
+        /*TODO*///
+        /*TODO*///	/* Taito "tnzs" hardware */
+        /*TODO*///	driver_plumppop,	/* A98 (c) 1987 Taito Corporation (Japan) */
+        /*TODO*///	driver_extrmatn,	/* B06 (c) 1987 World Games */
+        /*TODO*///	driver_arknoid2,	/* B08 (c) 1987 Taito Corporation Japan (World) */
+        /*TODO*///	driver_arknid2u,	/* B08 (c) 1987 Taito America Corporation + Romstar license (US) */
+        /*TODO*///	driver_arknid2j,	/* B08 (c) 1987 Taito Corporation (Japan) */
+        /*TODO*///	driver_drtoppel,	/* B19 (c) 1987 Taito Corporation (Japan) */
+        /*TODO*///	driver_kageki,	/* B35 (c) 1988 Taito America Corporation + Romstar license (US) */
+        /*TODO*///	driver_kagekij,	/* B35 (c) 1988 Taito Corporation (Japan) */
+        /*TODO*///	driver_chukatai,	/* B44 (c) 1988 Taito Corporation (Japan) */
+        /*TODO*///	driver_tnzs,		/* B53?(c) 1988 Taito Corporation (Japan) (new logo) */
+        /*TODO*///	driver_tnzsb,		/* bootleg but Taito Corporation Japan (World) (new logo) */
+        /*TODO*///	driver_tnzs2,		/* B53?(c) 1988 Taito Corporation Japan (World) (old logo) */
+        /*TODO*///	driver_insectx,	/* B97 (c) 1989 Taito Corporation Japan (World) */
+        /*TODO*///
+        /*TODO*///	/* Taito L-System games */
+        /*TODO*///	driver_raimais,	/* B36 (c) 1988 Taito Corporation (Japan) */
+        /*TODO*///	driver_kurikint,	/* B42 (c) 1988 Taito Corporation Japan (World) */
+        /*TODO*///	driver_kurikinu,	/* B42 (c) 1988 Taito America Corporation (US) */
+        /*TODO*///	driver_kurikinj,	/* B42 (c) 1988 Taito Corporation (Japan) */
+        /*TODO*///	driver_kurikina,	/* B42 (c) 1988 Taito Corporation Japan (World) */
+        /*TODO*///	driver_fhawk,		/* B70 (c) 1988 Taito Corporation (Japan) */
+        /*TODO*///	driver_plotting,	/* B96 (c) 1989 Taito Corporation Japan (World) */
+        /*TODO*///	driver_champwr,	/* C01 (c) 1989 Taito Corporation Japan (World) */
+        /*TODO*///	driver_champwru,	/* C01 (c) 1989 Taito America Corporation (US) */
+        /*TODO*///	driver_champwrj,	/* C01 (c) 1989 Taito Corporation (Japan) */
+        /*TODO*///	driver_puzznic,	/* C20 (c) 1989 Taito Corporation (Japan) */
+        /*TODO*///	driver_horshoes,	/* C47 (c) 1990 Taito America Corporation (US) */
+        /*TODO*///	driver_palamed,	/* C63 (c) 1990 Taito Corporation (Japan) */
+        /*TODO*///	driver_cachat,	/* ??? (c) 1993 Taito Corporation (Japan) */
+        /*TODO*///	driver_tubeit,	/* ??? no copyright message */
+        /*TODO*///	driver_cubybop,	/* ??? no copyright message */
+        /*TODO*///	driver_plgirls,	/* (c) 1992 Hot-B. */
+        /*TODO*///	driver_plgirls2,	/* (c) 1993 Hot-B. */
+        /*TODO*///
+        /*TODO*///	/* Taito H-System games */
+        /*TODO*///	driver_syvalion,	/* B51 (c) 1988 Taito Corporation (Japan) */
+        /*TODO*///	driver_recordbr,	/* B56 (c) 1988 Taito Corporation Japan (World) */
+        /*TODO*///	driver_dleague,	/* C02 (c) 1990 Taito Corporation (Japan) */
+        /*TODO*///
+        /*TODO*///	/* Taito B-System games */
+        /*TODO*///	driver_masterw,	/* B72 (c) 1989 Taito Corporation Japan (World) */
+        /*TODO*///	driver_nastar,	/* B81 (c) 1988 Taito Corporation Japan (World) */
+        /*TODO*///	driver_nastarw,	/* B81 (c) 1988 Taito America Corporation (US) */
+        /*TODO*///	driver_rastsag2,	/* B81 (c) 1988 Taito Corporation (Japan) */
+        /*TODO*///	driver_rambo3,	/* B93 (c) 1989 Taito Europe Corporation (Europe) */
+        /*TODO*///	driver_rambo3ae,	/* B93 (c) 1989 Taito Europe Corporation (Europe) */
+        /*TODO*///	driver_rambo3a,	/* B93 (c) 1989 Taito America Corporation (US) */
+        /*TODO*///	driver_crimec,	/* B99 (c) 1989 Taito Corporation Japan (World) */
+        /*TODO*///	driver_crimecu,	/* B99 (c) 1989 Taito America Corporation (US) */
+        /*TODO*///	driver_crimecj,	/* B99 (c) 1989 Taito Corporation (Japan) */
+        /*TODO*///	driver_tetrist,	/* C12 (c) 1989 Sega Enterprises,Ltd. (Japan) */
+        /*TODO*///	driver_viofight,	/* C16 (c) 1989 Taito Corporation Japan (World) */
+        /*TODO*///	driver_ashura,	/* C43 (c) 1990 Taito Corporation (Japan) */
+        /*TODO*///	driver_ashurau,	/* C43 (c) 1990 Taito America Corporation (US) */
+        /*TODO*///	driver_hitice,	/* C59 (c) 1990 Williams (US) */
+        /*TODO*///	driver_sbm,		/* C69 (c) 1990 Taito Corporation (Japan) */
+        /*TODO*///	driver_selfeena,	/* ??? (c) 1991 East Technology */
+        /*TODO*///	driver_silentd,	/* ??? (c) 1992 Taito Corporation Japan (World) */
+        /*TODO*///	driver_silentdj,	/* ??? (c) 1992 Taito Corporation (Japan) */
+        /*TODO*///	driver_ryujin,	/* ??? (c) 1993 Taito Corporation (Japan) */
+        /*TODO*///	driver_qzshowby,	/* D72 (c) 1993 Taito Corporation (Japan) */
+        /*TODO*///	driver_pbobble,	/* ??? (c) 1994 Taito Corporation (Japan) */
+        /*TODO*///	driver_spacedx,	/* D89 (c) 1994 Taito Corporation (US) */
+        /*TODO*///	driver_spacedxj,	/* D89 (c) 1994 Taito Corporation (Japan) */
+        /*TODO*///	driver_spacedxo,	/* D89 (c) 1994 Taito Corporation (Japan) */
+        /*TODO*///
+        /*TODO*///	/* Taito Z-System games */
+        /*TODO*///	driver_contcirc,	/* B33 (c) 1989 Taito Corporation Japan (World) */
+        /*TODO*///	driver_contcrcu,	/* B33 (c) 1987 Taito America Corporation (US) */
+        /*TODO*///	driver_chasehq,	/* B52 (c) 1988 Taito Corporation Japan (World) */
+        /*TODO*///	driver_chasehqj,	/* B52 (c) 1988 Taito Corporation (Japan) */
+        /*TODO*///	driver_nightstr,	/* B91 (c) 1989 Taito America Corporation (US) */
+        /*TODO*///	driver_sci,		/* C09 (c) 1989 Taito Corporation Japan (World) */
+        /*TODO*///	driver_scia,		/* C09 (c) 1989 Taito Corporation Japan (World) */
+        /*TODO*///	driver_sciu,		/* C09 (c) 1989 Taito America Corporation (US) */
+        /*TODO*///	driver_bshark,	/* C34 (c) 1989 Taito America Corporation (US) */
+        /*TODO*///	driver_bsharkj,	/* C34 (c) 1989 Taito Corporation (Japan) */
+        /*TODO*///	driver_aquajack,	/* B77 (c) 1990 Taito Corporation Japan (World) */
+        /*TODO*///	driver_aquajckj,	/* B77 (c) 1990 Taito Corporation (Japan) */
+        /*TODO*///	driver_spacegun,	/* C57 (c) 1990 Taito Corporation Japan (World) */
+        /*TODO*///	driver_dblaxle,	/* C78 (c) 1991 Taito America Corporation (US) */
+        /*TODO*///	driver_pwheelsj,	/* C78 (c) 1991 Taito Corporation (Japan) */
+        /*TODO*///
+        /*TODO*///	/* Taito Air System games */
+        /*TODO*///TESTdriver_topland,	/* B62 (c) 1988 Taito Coporation Japan (World) */
+        /*TODO*///TESTdriver_ainferno,	/* C45 (c) 1990 Taito America Corporation (US) */
+        /*TODO*///
+        /*TODO*///	/* enhanced Z-System hardware games */
+        /*TODO*///	driver_gunbustr,	/* D27 (c) 1992 Taito Corporation (Japan) */
+        /*TODO*///	driver_superchs,	/* D46 (c) 1992 Taito America Corporation (US) */
+        /*TODO*///	driver_undrfire,	/* D67 (c) 1993 Taito Coporation Japan (World) */
+        /*TODO*///
+        /*TODO*///	/* Taito F2 games */
+        /*TODO*///	driver_finalb,	/* B82 (c) 1988 Taito Corporation Japan (World) */
+        /*TODO*///	driver_finalbj,	/* B82 (c) 1988 Taito Corporation (Japan) */
+        /*TODO*///	driver_dondokod,	/* B95 (c) 1989 Taito Corporation Japan (World) */
+        /*TODO*///	driver_dondokdu,	/* B95 (c) 1989 Taito America Corporation (US) */
+        /*TODO*///	driver_dondokdj,	/* B95 (c) 1989 Taito Corporation (Japan) */
+        /*TODO*///	driver_megab,		/* C11 (c) 1989 Taito Corporation Japan (World) */
+        /*TODO*///	driver_megabj,	/* C11 (c) 1989 Taito Corporation (Japan) */
+        /*TODO*///	driver_thundfox,	/* C28 (c) 1990 Taito Corporation Japan (World) */
+        /*TODO*///	driver_thndfoxu,	/* C28 (c) 1990 Taito America Corporation (US) */
+        /*TODO*///	driver_thndfoxj,	/* C28 (c) 1990 Taito Corporation (Japan) */
+        /*TODO*///	driver_cameltry,	/* C38 (c) 1989 Taito America Corporation (US) */
+        /*TODO*///	driver_camltrua,	/* C38 (c) 1989 Taito America Corporation (US) */
+        /*TODO*///	driver_cameltrj,	/* C38 (c) 1989 Taito Corporation (Japan) */
+        /*TODO*///	driver_qtorimon,	/* C41 (c) 1990 Taito Corporation (Japan) */
+        /*TODO*///	driver_liquidk,	/* C49 (c) 1990 Taito Corporation Japan (World) */
+        /*TODO*///	driver_liquidku,	/* C49 (c) 1990 Taito America Corporation (US) */
+        /*TODO*///	driver_mizubaku,	/* C49 (c) 1990 Taito Corporation (Japan) */
+        /*TODO*///	driver_quizhq,	/* C53 (c) 1990 Taito Corporation (Japan) */
+        /*TODO*///	driver_ssi,		/* C64 (c) 1990 Taito Corporation Japan (World) */
+        /*TODO*///	driver_majest12,	/* C64 (c) 1990 Taito Corporation (Japan) */
+        /*TODO*///	driver_gunfront,	/* C71 (c) 1990 Taito Corporation Japan (World) */
+        /*TODO*///	driver_gunfronj,	/* C71 (c) 1990 Taito Corporation (Japan) */
+        /*TODO*///	driver_growl,		/* C74 (c) 1990 Taito Corporation Japan (World) */
+        /*TODO*///	driver_growlu,	/* C74 (c) 1990 Taito America Corporation (US) */
+        /*TODO*///	driver_runark,	/* C74 (c) 1990 Taito Corporation (Japan) */
+        /*TODO*///	driver_mjnquest,	/* C77 (c) 1990 Taito Corporation (Japan) */
+        /*TODO*///	driver_mjnquesb,	/* C77 (c) 1990 Taito Corporation (Japan) */
+        /*TODO*///	driver_footchmp,	/* C80 (c) 1990 Taito Corporation Japan (World) */
+        /*TODO*///	driver_hthero,	/* C80 (c) 1990 Taito Corporation (Japan) */
+        /*TODO*///	driver_euroch92,	/*     (c) 1992 Taito Corporation Japan (World) */
+        /*TODO*///	driver_koshien,	/* C81 (c) 1990 Taito Corporation (Japan) */
+        /*TODO*///	driver_yuyugogo,	/* C83 (c) 1990 Taito Corporation (Japan) */
+        /*TODO*///	driver_ninjak,	/* C85 (c) 1990 Taito Corporation Japan (World) */
+        /*TODO*///	driver_ninjakj,	/* C85 (c) 1990 Taito Corporation (Japan) */
+        /*TODO*///	driver_solfigtr,	/* C91 (c) 1991 Taito Corporation Japan (World) */
+        /*TODO*///	driver_qzquest,	/* C92 (c) 1991 Taito Corporation (Japan) */
+        /*TODO*///	driver_pulirula,	/* C98 (c) 1991 Taito Corporation Japan (World) */
+        /*TODO*///	driver_pulirulj,	/* C98 (c) 1991 Taito Corporation (Japan) */
+        /*TODO*///	driver_metalb,	/* D16? (c) 1991 Taito Corporation Japan (World) */
+        /*TODO*///	driver_metalbj,	/* D12 (c) 1991 Taito Corporation (Japan) */
+        /*TODO*///	driver_qzchikyu,	/* D19 (c) 1991 Taito Corporation (Japan) */
+        /*TODO*///	driver_yesnoj,	/* D20 (c) 1992 Taito Corporation (Japan) */
+        /*TODO*///	driver_deadconx,	/* D28 (c) 1992 Taito Corporation Japan (World) */
+        /*TODO*///	driver_deadconj,	/* D28 (c) 1992 Taito Corporation (Japan) */
+        /*TODO*///	driver_dinorex,	/* D39 (c) 1992 Taito Corporation Japan (World) */
+        /*TODO*///	driver_dinorexj,	/* D39 (c) 1992 Taito Corporation (Japan) */
+        /*TODO*///	driver_dinorexu,	/* D39 (c) 1992 Taito America Corporation (US) */
+        /*TODO*///	driver_qjinsei,	/* D48 (c) 1992 Taito Corporation (Japan) */
+        /*TODO*///	driver_qcrayon,	/* D55 (c) 1993 Taito Corporation (Japan) */
+        /*TODO*///	driver_qcrayon2,	/* D63 (c) 1993 Taito Corporation (Japan) */
+        /*TODO*///	driver_driftout,	/* (c) 1991 Visco */
+        /*TODO*///	driver_driveout,	/* bootleg */
+        /*TODO*///
+        /*TODO*///	/* Taito F3 games */
+        /*TODO*///	driver_ringrage,	/* D21 (c) 1992 Taito Corporation Japan (World) */
+        /*TODO*///	driver_ringragj,	/* D21 (c) 1992 Taito Corporation (Japan) */
+        /*TODO*///	driver_ringragu,	/* D21 (c) 1992 Taito America Corporation (US) */
+        /*TODO*///	driver_arabianm,	/* D29 (c) 1992 Taito Corporation Japan (World) */
+        /*TODO*///	driver_arabiamj,	/* D29 (c) 1992 Taito Corporation (Japan) */
+        /*TODO*///	driver_arabiamu,	/* D29 (c) 1992 Taito America Corporation (US) */
+        /*TODO*///	driver_ridingf,	/* D34 (c) 1992 Taito Corporation Japan (World) */
+        /*TODO*///	driver_ridefgtj,	/* D34 (c) 1992 Taito Corporation (Japan) */
+        /*TODO*///	driver_ridefgtu,	/* D34 (c) 1992 Taito America Corporation (US) */
+        /*TODO*///	driver_gseeker,	/* D40 (c) 1992 Taito Corporation Japan (World) */
+        /*TODO*///	driver_gseekerj,	/* D40 (c) 1992 Taito Corporation (Japan) */
+        /*TODO*///	driver_gseekeru,	/* D40 (c) 1992 Taito America Corporation (US) */
+        /*TODO*///	driver_hthero93,	/* D49 (c) 1992 Taito Corporation (Japan) */
+        /*TODO*///	driver_cupfinal,	/* D49 (c) 1993 Taito Corporation Japan (World) */
+        /*TODO*///	driver_trstar,	/* D53 (c) 1993 Taito Corporation Japan (World) */
+        /*TODO*///	driver_trstarj,	/* D53 (c) 1993 Taito Corporation (Japan) */
+        /*TODO*///	driver_prmtmfgt,	/* D53 (c) 1993 Taito Corporation (US) */
+        /*TODO*///	driver_trstaro,	/* D53 (c) 1993 Taito Corporation (World) */
+        /*TODO*///	driver_trstaroj,	/* D53 (c) 1993 Taito Corporation (Japan) */
+        /*TODO*///	driver_prmtmfgo,	/* D53 (c) 1993 Taito Corporation (US) */
+        /*TODO*///	driver_gunlock,	/* D66 (c) 1993 Taito Corporation Japan (World) */
+        /*TODO*///	driver_rayforcj,	/* D66 (c) 1993 Taito Corporation (Japan) */
+        /*TODO*///	driver_rayforce,	/* D66 (c) 1993 Taito America Corporation (US) */
+        /*TODO*///	driver_scfinals,	/* D68 (c) 1993 Taito Corporation Japan (World) */
+        /*TODO*///	driver_lightbr,	/* D69 (c) 1993 Taito Corporation (Japan) */
+        /*TODO*///	driver_kaiserkn,	/* D84 (c) 1994 Taito Corporation Japan (World) */
+        /*TODO*///	driver_kaiserkj,	/* D84 (c) 1994 Taito Corporation (Japan) */
+        /*TODO*///	driver_gblchmp,	/* D84 (c) 1994 Taito America Corporation (US) */
+        /*TODO*///	driver_dankuga,	/* D84? (c) 1994 Taito Corporation (Japan) */
+        /*TODO*///	driver_dariusg,	/* D87 (c) 1994 Taito Corporation */
+        /*TODO*///	driver_dariusgx,	/* D87 (c) 1994 Taito Corporation */
+        /*TODO*///	driver_bublbob2,	/* D90 (c) 1994 Taito Corporation Japan (World) */
+        /*TODO*///	driver_bubsymph,	/* D90 (c) 1994 Taito Corporation (Japan) */
+        /*TODO*///	driver_bubsympu,	/* D90 (c) 1994 Taito America Corporation (US) */
+        /*TODO*///	driver_spcinvdj,	/* D93 (c) 1994 Taito Corporation (Japan) */
+        /*TODO*///	driver_pwrgoal,	/* D94 (c) 1995 Taito Corporation Japan (World) */
+        /*TODO*///	driver_hthero95,	/* D94 (c) 1995 Taito Corporation (Japan) */
+        /*TODO*///	driver_hthro95u,	/* D94 (c) 1995 Taito America Corporation (US) */
+        /*TODO*///	driver_qtheater,	/* D95 (c) 1994 Taito Corporation (Japan) */
+        /*TODO*///	driver_elvactr,	/* E02 (c) 1994 Taito Corporation Japan (World) */
+        /*TODO*///	driver_elvactrj,	/* E02 (c) 1994 Taito Corporation (Japan) */
+        /*TODO*///	driver_elvact2u,	/* E02 (c) 1994 Taito America Corporation (US) */
+        /*TODO*///	driver_akkanvdr,	/* E06 (c) 1995 Taito Corporation (Japan) */
+        /*TODO*///	driver_twinqix,	/* ??? (c) 1995 Taito America Corporation (US) */
+        /*TODO*///	driver_quizhuhu,	/* E08 (c) 1995 Taito Corporation (Japan) */
+        /*TODO*///	driver_pbobble2,	/* E10 (c) 1995 Taito Corporation Japan (World) */
+        /*TODO*///	driver_pbobbl2j,	/* E10 (c) 1995 Taito Corporation (Japan) */
+        /*TODO*///	driver_pbobbl2u,	/* E10 (c) 1995 Taito America Corporation (US) */
+        /*TODO*///	driver_pbobbl2x,	/* E10 (c) 1995 Taito Corporation (Japan) */
+        /*TODO*///	driver_gekirido,	/* E11 (c) 1995 Taito Corporation (Japan) */
+        /*TODO*///	driver_ktiger2,	/* E15 (c) 1995 Taito Corporation (Japan) */
+        /*TODO*///	driver_bubblem,	/* E21 (c) 1995 Taito Corporation Japan (World) */
+        /*TODO*///	driver_bubblemj,	/* E21 (c) 1995 Taito Corporation (Japan) */
+        /*TODO*///	driver_cleopatr,	/* E28 (c) 1996 Taito Corporation (Japan) */
+        /*TODO*///	driver_pbobble3,	/* E29 (c) 1996 Taito Corporation (World) */
+        /*TODO*///	driver_pbobbl3u,	/* E29 (c) 1996 Taito Corporation (US) */
+        /*TODO*///	driver_pbobbl3j,	/* E29 (c) 1996 Taito Corporation (Japan) */
+        /*TODO*///	driver_arkretrn,	/* E36 (c) 1997 Taito Corporation (Japan) */
+        /*TODO*///	driver_kirameki,	/* E44 (c) 1997 Taito Corporation (Japan) */
+        /*TODO*///	driver_puchicar,	/* E46 (c) 1997 Taito Corporation (Japan) */
+        /*TODO*///	driver_pbobble4,	/* E49 (c) 1997 Taito Corporation (World) */
+        /*TODO*///	driver_pbobbl4j,	/* E49 (c) 1997 Taito Corporation (Japan) */
+        /*TODO*///	driver_pbobbl4u,	/* E49 (c) 1997 Taito Corporation (US) */
+        /*TODO*///	driver_popnpop,	/* E51 (c) 1997 Taito Corporation (Japan) */
+        /*TODO*///	driver_landmakr,	/* E61 (c) 1998 Taito Corporation (Japan) */
+        /*TODO*///
+        /*TODO*///	/* Toaplan games */
+        /*TODO*///	driver_perfrman,	/* (c) 1985 Data East Corporation (Japan) */
+        /*TODO*///	driver_perfrmau,	/* (c) 1985 Data East USA (US) */
+        /*TODO*///	driver_tigerh,	/* GX-551 [not a Konami board!] */
+        /*TODO*///	driver_tigerh2,	/* GX-551 [not a Konami board!] */
+        /*TODO*///	driver_tigerhj,	/* GX-551 [not a Konami board!] */
+        /*TODO*///	driver_tigerhb1,	/* bootleg but (c) 1985 Taito Corporation */
+        /*TODO*///	driver_tigerhb2,	/* bootleg but (c) 1985 Taito Corporation */
+        /*TODO*///	driver_slapfigh,	/* TP-??? */
+        /*TODO*///	driver_slapbtjp,	/* bootleg but (c) 1986 Taito Corporation */
+        /*TODO*///	driver_slapbtuk,	/* bootleg but (c) 1986 Taito Corporation */
+        /*TODO*///	driver_alcon,		/* TP-??? */
+        /*TODO*///	driver_getstar,
+        /*TODO*///	driver_getstarj,
+        /*TODO*///	driver_getstarb,	/* GX-006 bootleg but (c) 1986 Taito Corporation */
+        /*TODO*///
+        /*TODO*///	driver_fshark,	/* TP-007 (c) 1987 Taito Corporation (World) */
+        /*TODO*///	driver_skyshark,	/* TP-007 (c) 1987 Taito America Corporation + Romstar license (US) */
+        /*TODO*///	driver_hishouza,	/* TP-007 (c) 1987 Taito Corporation (Japan) */
+        /*TODO*///	driver_fsharkbt,	/* bootleg */
+        /*TODO*///	driver_wardner,	/* TP-009 (c) 1987 Taito Corporation Japan (World) */
+        /*TODO*///	driver_pyros,		/* TP-009 (c) 1987 Taito America Corporation (US) */
+        /*TODO*///	driver_wardnerj,	/* TP-009 (c) 1987 Taito Corporation (Japan) */
+        /*TODO*///	driver_twincobr,	/* TP-011 (c) 1987 Taito Corporation (World) */
+        /*TODO*///	driver_twincobu,	/* TP-011 (c) 1987 Taito America Corporation + Romstar license (US) */
+        /*TODO*///	driver_ktiger,	/* TP-011 (c) 1987 Taito Corporation (Japan) */
+        /*TODO*///
+        /*TODO*///	driver_rallybik,	/* TP-012 (c) 1988 Taito */
+        /*TODO*///	driver_truxton,	/* TP-013B (c) 1988 Taito */
+        /*TODO*///	driver_hellfire,	/* TP-??? (c) 1989 Toaplan + Taito license */
+        /*TODO*///	driver_zerowing,	/* TP-015 (c) 1989 Toaplan */
+        /*TODO*///	driver_demonwld,	/* TP-016 (c) 1989 Toaplan + Taito license */
+        /*TODO*///	driver_fireshrk,	/* TP-017 (c) 1990 Toaplan */
+        /*TODO*///	driver_samesame,	/* TP-017 (c) 1989 Toaplan */
+        /*TODO*///	driver_outzone,	/* TP-018 (c) 1990 Toaplan */
+        /*TODO*///	driver_outzonea,	/* TP-018 (c) 1990 Toaplan */
+        /*TODO*///	driver_vimana,	/* TP-019 (c) 1991 Toaplan (+ Tecmo license when set to Japan) */
+        /*TODO*///	driver_vimana2,	/* TP-019 (c) 1991 Toaplan (+ Tecmo license when set to Japan)  */
+        /*TODO*///	driver_vimanan,	/* TP-019 (c) 1991 Toaplan (+ Nova Apparate GMBH & Co license) */
+        /*TODO*///	driver_snowbros,	/* MIN16-02 (c) 1990 Toaplan + Romstar license */
+        /*TODO*///	driver_snowbroa,	/* MIN16-02 (c) 1990 Toaplan + Romstar license */
+        /*TODO*///	driver_snowbrob,	/* MIN16-02 (c) 1990 Toaplan + Romstar license */
+        /*TODO*///	driver_snowbroj,	/* MIN16-02 (c) 1990 Toaplan */
+        /*TODO*///	driver_wintbob,	/* bootleg */
+        /*TODO*///
+        /*TODO*///	driver_tekipaki,	/* TP-020 (c) 1991 Toaplan */
+        /*TODO*///	driver_ghox,		/* TP-021 (c) 1991 Toaplan */
+        /*TODO*///	driver_dogyuun,	/* TP-022 (c) 1992 Toaplan */
+        /*TODO*///	driver_kbash,		/* TP-023 (c) 1993 Toaplan */
+        /*TODO*///	driver_truxton2,	/* TP-024 (c) 1992 Toaplan */
+        /*TODO*///	driver_pipibibs,	/* TP-025 */
+        /*TODO*///	driver_pipibibi,	/* (c) 1991 Ryouta Kikaku (bootleg?) */
+        /*TODO*///	driver_whoopee,	/* TP-025 */
+        /*TODO*///TESTdriver_fixeight,	/* TP-026 (c) 1992 + Taito license */
+        /*TODO*///	driver_vfive,		/* TP-027 (c) 1993 Toaplan (Japan) */
+        /*TODO*///	driver_grindstm,	/* TP-027 (c) 1993 Toaplan + Unite Trading license (Korea) */
+        /*TODO*///	driver_batsugun,	/* TP-030 (c) 1993 Toaplan */
+        /*TODO*///	driver_batugnsp,	/* TP-??? (c) 1993 Toaplan */
+        /*TODO*///	driver_snowbro2,	/* TP-??? (c) 1994 Hanafram */
+        /*TODO*///	driver_mahoudai,	/* (c) 1993 Raizing + Able license */
+        /*TODO*///	driver_shippumd,	/* (c) 1994 Raizing */
+        /*TODO*///	driver_battleg,	/* (c) 1996 Raizing */
+        /*TODO*///	driver_batrider,	/* (c) 1998 Raizing */
+        /*TODO*///	driver_batridra,	/* (c) 1997 Raizing */
+        /*TODO*///
+        /*TODO*////*
+        /*TODO*///Toa Plan's board list
+        /*TODO*///(translated from http://www.aianet.ne.jp/~eisetu/rom/rom_toha.html)
+        /*TODO*///
+        /*TODO*///Title              ROMno.   Remark(1)   Remark(2)
+        /*TODO*///--------------------------------------------------
+        /*TODO*///Tiger Heli           A47      GX-551
+        /*TODO*///Hishouzame           B02      TP-007
+        /*TODO*///Kyukyoku Tiger       B30      TP-011
+        /*TODO*///Dash Yarou           B45      TP-012
+        /*TODO*///Tatsujin             B65      TP-013B   M6100649A
+        /*TODO*///Zero Wing            O15      TP-015
+        /*TODO*///Horror Story         O16      TP-016
+        /*TODO*///Same!Same!Same!      O17      TP-017
+        /*TODO*///Out Zone                      TP-018
+        /*TODO*///Vimana                        TP-019
+        /*TODO*///Teki Paki            O20      TP-020
+        /*TODO*///Ghox               TP-21      TP-021
+        /*TODO*///Dogyuun                       TP-022
+        /*TODO*///Tatsujin Oh                   TP-024    *1
+        /*TODO*///Fixeight                      TP-026
+        /*TODO*///V-V                           TP-027
+        /*TODO*///
+        /*TODO*///*1 There is a doubt this game uses TP-024 board and TP-025 romsets.
+        /*TODO*///
+        /*TODO*///   86 Mahjong Sisters                                 Kit 2P 8W+2B     HC    Mahjong TP-
+        /*TODO*///   88 Dash                                            Kit 2P 8W+2B                   TP-
+        /*TODO*///   89 Fire Shark                                      Kit 2P 8W+2B     VC    Shooter TP-017
+        /*TODO*///   89 Twin Hawk                                       Kit 2P 8W+2B     VC    Shooter TP-
+        /*TODO*///   91 Whoopie                                         Kit 2P 8W+2B     HC    Action
+        /*TODO*///   92 Teki Paki                                       Kit 2P                         TP-020
+        /*TODO*///   92 Ghox                                            Kit 2P Paddle+1B VC    Action  TP-021
+        /*TODO*///10/92 Dogyuun                                         Kit 2P 8W+2B     VC    Shooter TP-022
+        /*TODO*///92/93 Knuckle Bash                 Atari Games        Kit 2P 8W+2B     HC    Action  TP-023
+        /*TODO*///10/92 Tatsujin II/Truxton II       Taito              Kit 2P 8W+2B     VC    Shooter TP-024
+        /*TODO*///10/92 Truxton II/Tatsujin II       Taito              Kit 2P 8W+2B     VC    Shooter TP-024
+        /*TODO*///      Pipi & Bipi                                                                    TP-025
+        /*TODO*///   92 Fix Eight                                       Kit 2P 8W+2B     VC    Action  TP-026
+        /*TODO*///12/92 V  -  V (5)/Grind Stormer                       Kit 2P 8W+2B     VC    Shooter TP-027
+        /*TODO*/// 1/93 Grind Stormer/V - V (Five)                      Kit 2P 8W+2B     VC    Shooter TP-027
+        /*TODO*/// 2/94 Batsugun                                        Kit 2P 8W+2B     VC            TP-
+        /*TODO*/// 4/94 Snow Bros. 2                                    Kit 2P 8W+2B     HC    Action  TP-
+        /*TODO*///*/
+        /*TODO*///
+        /*TODO*///	/* Cave games */
+        /*TODO*///	/* Cave was formed in 1994 from the ruins of Toaplan, like Raizing was. */
+        /*TODO*///	driver_mazinger,	/* (c) 1994 Banpresto (country is in EEPROM) */
+        /*TODO*///	driver_donpachi,	/* (c) 1995 Atlus/Cave */
+        /*TODO*///	driver_metmqstr,	/* (c) 1995 Banpresto / Pandorabox */
+        /*TODO*///	driver_sailormn,	/* (c) 1995 Banpresto (country is in EEPROM) */
+        /*TODO*///	driver_hotdogst,	/* (c) 1996 Marble */
+        /*TODO*///	driver_ddonpach,	/* (c) 1997 Atlus/Cave */
+        /*TODO*///	driver_dfeveron,	/* (c) 1998 Cave + Nihon System license */
+        /*TODO*///	driver_esprade,	/* (c) 1998 Atlus/Cave */
+        /*TODO*///	driver_uopoko,	/* (c) 1998 Cave + Jaleco license */
+        /*TODO*///	driver_guwange,	/* (c) 1999 Atlus/Cave */
+        /*TODO*///
+        /*TODO*///	/* Kyugo games */
+        /*TODO*///	/* Kyugo only made four games: Repulse, Flash Gal, SRD Mission and Air Wolf. */
+        /*TODO*///	/* Gyrodine was made by Crux. Crux was antecedent of Toa Plan, and spin-off from Orca. */
+        /*TODO*///	driver_gyrodine,	/* (c) 1984 Taito Corporation */
+        /*TODO*///	driver_sonofphx,	/* (c) 1985 Associated Overseas MFR */
+        /*TODO*///	driver_repulse,	/* (c) 1985 Sega */
+        /*TODO*///	driver_99lstwar,	/* (c) 1985 Proma */
+        /*TODO*///	driver_99lstwra,	/* (c) 1985 Proma */
+        /*TODO*///	driver_flashgal,	/* (c) 1985 Sega */
+        /*TODO*///	driver_srdmissn,	/* (c) 1986 Taito Corporation */
+        /*TODO*///	driver_airwolf,	/* (c) 1987 Kyugo */
+        /*TODO*///	driver_skywolf,	/* bootleg */
+        /*TODO*///	driver_skywolf2,	/* bootleg */
+        /*TODO*///
+        /*TODO*///	/* Williams games */
+        /*TODO*///	driver_defender,	/* (c) 1980 */
+        /*TODO*///	driver_defendg,	/* (c) 1980 */
+        /*TODO*///	driver_defendw,	/* (c) 1980 */
+        /*TODO*///TESTdriver_defndjeu,	/* bootleg */
+        /*TODO*///	driver_defcmnd,	/* bootleg */
+        /*TODO*///	driver_defence,	/* bootleg */
+        /*TODO*///	driver_mayday,
+        /*TODO*///	driver_maydaya,
+        /*TODO*///	driver_colony7,	/* (c) 1981 Taito */
+        /*TODO*///	driver_colony7a,	/* (c) 1981 Taito */
+        /*TODO*///	driver_stargate,	/* (c) 1981 */
+        /*TODO*///	driver_robotron,	/* (c) 1982 */
+        /*TODO*///	driver_robotryo,	/* (c) 1982 */
+        /*TODO*///	driver_joust,		/* (c) 1982 */
+        /*TODO*///	driver_joustr,	/* (c) 1982 */
+        /*TODO*///	driver_joustwr,	/* (c) 1982 */
+        /*TODO*///	driver_bubbles,	/* (c) 1982 */
+        /*TODO*///	driver_bubblesr,	/* (c) 1982 */
+        /*TODO*///	driver_bubblesp,	/* (c) 1982 */
+        /*TODO*///	driver_splat,		/* (c) 1982 */
+        /*TODO*///	driver_sinistar,	/* (c) 1982 */
+        /*TODO*///	driver_sinista1,	/* (c) 1982 */
+        /*TODO*///	driver_sinista2,	/* (c) 1982 */
+        /*TODO*///	driver_blaster,	/* (c) 1983 */
+        /*TODO*///	driver_mysticm,	/* (c) 1983 */
+        /*TODO*///	driver_tshoot,	/* (c) 1984 */
+        /*TODO*///	driver_inferno,	/* (c) 1984 */
+        /*TODO*///	driver_joust2,	/* (c) 1986 */
+        /*TODO*///	driver_lottofun,	/* (c) 1987 H.A.R. Management */
+        /*TODO*///
+        /*TODO*///	/* Capcom games */
+        /*TODO*///	/* The following is a COMPLETE list of the Capcom games up to 1997, as shown on */
+        /*TODO*///	/* their web site. The list is sorted by production date.                       */
+        /*TODO*///	/* A comprehensive list of Capcom games with board info can be found here:      */
+        /*TODO*///	/* http://www.emugaming.com/strider/capcom_list.shtml                           */
+        /*TODO*///	driver_vulgus,	/*  5/1984 (c) 1984 */
+        /*TODO*///	driver_vulgus2,	/*  5/1984 (c) 1984 */
+        /*TODO*///	driver_vulgusj,	/*  5/1984 (c) 1984 */
+        /*TODO*///	driver_sonson,	/*  7/1984 (c) 1984 */
+        /*TODO*///	driver_sonsonj,	/*  7/1984 (c) 1984 (Japan) */
+        /*TODO*///	driver_higemaru,	/*  9/1984 (c) 1984 */
+        /*TODO*///	driver_1942,		/* 12/1984 (c) 1984 */
+        /*TODO*///	driver_1942a,		/* 12/1984 (c) 1984 */
+        /*TODO*///	driver_1942b,		/* 12/1984 (c) 1984 */
+        /*TODO*///	driver_exedexes,	/*  2/1985 (c) 1985 */
+        /*TODO*///	driver_savgbees,	/*  2/1985 (c) 1985 + Memetron license */
+        /*TODO*///	driver_commando,	/*  5/1985 (c) 1985 (World) */
+        /*TODO*///	driver_commandu,	/*  5/1985 (c) 1985 + Data East license (US) */
+        /*TODO*///	driver_commandj,	/*  5/1985 (c) 1985 (Japan) */
+        /*TODO*///	driver_spaceinv,	/* bootleg */
+        /*TODO*///	driver_gng,		/*  9/1985 (c) 1985 */
+        /*TODO*///	driver_gnga,		/*  9/1985 (c) 1985 */
+        /*TODO*///	driver_gngt,		/*  9/1985 (c) 1985 */
+        /*TODO*///	driver_makaimur,	/*  9/1985 (c) 1985 */
+        /*TODO*///	driver_makaimuc,	/*  9/1985 (c) 1985 */
+        /*TODO*///	driver_makaimug,	/*  9/1985 (c) 1985 */
+        /*TODO*///	driver_diamond,	/* (c) 1989 KH Video (NOT A CAPCOM GAME but runs on GnG hardware) */
+        /*TODO*///	driver_gunsmoke,	/* 11/1985 (c) 1985 (World) */
+        /*TODO*///	driver_gunsmrom,	/* 11/1985 (c) 1985 + Romstar (US) */
+        /*TODO*///	driver_gunsmoka,	/* 11/1985 (c) 1985 (US) */
+        /*TODO*///	driver_gunsmokj,	/* 11/1985 (c) 1985 (Japan) */
+        /*TODO*///	driver_sectionz,	/* 12/1985 (c) 1985 */
+        /*TODO*///	driver_sctionza,	/* 12/1985 (c) 1985 */
+        /*TODO*///	driver_trojan,	/*  4/1986 (c) 1986 (US) */
+        /*TODO*///	driver_trojanr,	/*  4/1986 (c) 1986 + Romstar */
+        /*TODO*///	driver_trojanj,	/*  4/1986 (c) 1986 (Japan) */
+        /*TODO*///	driver_srumbler,	/*  9/1986 (c) 1986 */
+        /*TODO*///	driver_srumblr2,	/*  9/1986 (c) 1986 */
+        /*TODO*///	driver_rushcrsh,	/*  9/1986 (c) 1986 */
+        /*TODO*///	driver_lwings,	/* 11/1986 (c) 1986 */
+        /*TODO*///	driver_lwings2,	/* 11/1986 (c) 1986 */
+        /*TODO*///	driver_lwingsjp,	/* 11/1986 (c) 1986 */
+        /*TODO*///	driver_sidearms,	/* 12/1986 (c) 1986 (World) */
+        /*TODO*///	driver_sidearmr,	/* 12/1986 (c) 1986 + Romstar license (US) */
+        /*TODO*///	driver_sidearjp,	/* 12/1986 (c) 1986 (Japan) */
+        /*TODO*///	driver_turtship,	/* (c) 1988 Philco (NOT A CAPCOM GAME but runs on modified Sidearms hardware) */
+        /*TODO*///	driver_dyger,		/* (c) 1989 Philco (NOT A CAPCOM GAME but runs on modified Sidearms hardware) */
+        /*TODO*///	driver_dygera,	/* (c) 1989 Philco (NOT A CAPCOM GAME but runs on modified Sidearms hardware) */
+        /*TODO*///	driver_avengers,	/*  2/1987 (c) 1987 (US) */
+        /*TODO*///	driver_avenger2,	/*  2/1987 (c) 1987 (US) */
+        /*TODO*///	driver_buraiken,	/*  2/1987 (c) 1987 (Japan) */
+        /*TODO*///	driver_bionicc,	/*  3/1987 (c) 1987 (US) */
+        /*TODO*///	driver_bionicc2,	/*  3/1987 (c) 1987 (US) */
+        /*TODO*///	driver_topsecrt,	/*  3/1987 (c) 1987 (Japan) */
+        /*TODO*///	driver_1943,		/*  6/1987 (c) 1987 (US) */
+        /*TODO*///	driver_1943j,		/*  6/1987 (c) 1987 (Japan) */
+        /*TODO*///	driver_blktiger,	/*  8/1987 (c) 1987 (US) */
+        /*TODO*///	driver_bktigerb,	/* bootleg */
+        /*TODO*///	driver_blkdrgon,	/*  8/1987 (c) 1987 (Japan) */
+        /*TODO*///	driver_blkdrgnb,	/* bootleg, hacked to say Black Tiger */
+        /*TODO*///	driver_sf1,		/*  8/1987 (c) 1987 (World) */
+        /*TODO*///	driver_sf1us,		/*  8/1987 (c) 1987 (US) */
+        /*TODO*///	driver_sf1jp,		/*  8/1987 (c) 1987 (Japan) */
+        /*TODO*///	driver_tigeroad,	/* 11/1987 (c) 1987 + Romstar (US) */
+        /*TODO*///	driver_toramich,	/* 11/1987 (c) 1987 (Japan) */
+        /*TODO*///	driver_f1dream,	/*  4/1988 (c) 1988 + Romstar */
+        /*TODO*///	driver_f1dreamb,	/* bootleg */
+        /*TODO*///	driver_1943kai,	/*  6/1988 (c) 1987 (Japan) */
+        /*TODO*///	driver_lastduel,	/*  7/1988 (c) 1988 (US) */
+        /*TODO*///	driver_lstduela,	/*  7/1988 (c) 1988 (US) */
+        /*TODO*///	driver_lstduelb,	/* bootleg */
+        /*TODO*///	driver_madgear,	/*  2/1989 (c) 1989 (US) */
+        /*TODO*///	driver_madgearj,	/*  2/1989 (c) 1989 (Japan) */
+        /*TODO*///	driver_ledstorm,	/*  2/1989 (c) 1989 (US) */
+        /*TODO*///	/*  3/1989 Dokaben (baseball) - see below among "Mitchell" games */
+        /*TODO*///	/*  8/1989 Dokaben 2 (baseball) - see below among "Mitchell" games */
+        /*TODO*///	/* 10/1989 Capcom Baseball - see below among "Mitchell" games */
+        /*TODO*///	/* 11/1989 Capcom World - see below among "Mitchell" games */
+        /*TODO*///	/*  3/1990 Adventure Quiz 2 Hatena no Dai-Bouken - see below among "Mitchell" games */
+        /*TODO*///	/*  1/1991 Quiz Tonosama no Yabou - see below among "Mitchell" games */
+        /*TODO*///	/*  4/1991 Ashita Tenki ni Naare (golf) - see below among "Mitchell" games */
+        /*TODO*///	/*  5/1991 Ataxx - see below among "Leland" games */
+        /*TODO*///	/*  6/1991 Quiz Sangokushi - see below among "Mitchell" games */
+        /*TODO*///	/* 10/1991 Block Block - see below among "Mitchell" games */
+        /*TODO*///	/*  6/1995 Street Fighter - the Movie - see below among "Incredible Technologies" games */
+        /*TODO*///
+        /*TODO*///#endif /* CPSMAME */
+        /*TODO*///
+        /*TODO*///	/* Capcom CPS1 games */
+        /*TODO*///	driver_forgottn,	/*  7/1988 (c) 1988 (US) */
+        /*TODO*///	driver_lostwrld,	/*  7/1988 (c) 1988 (Japan) */
+        /*TODO*///	driver_ghouls,	/* 12/1988 (c) 1988 (World) */
+        /*TODO*///	driver_ghoulsu,	/* 12/1988 (c) 1988 (US) */
+        /*TODO*///	driver_daimakai,	/* 12/1988 (c) 1988 (Japan) */
+        /*TODO*///	driver_strider,	/*  3/1989 (c) 1989 (not explicitly stated but should be US) */
+        /*TODO*///	driver_striderj,	/*  3/1989 (c) 1989 */
+        /*TODO*///	driver_stridrja,	/*  3/1989 (c) 1989 */
+        /*TODO*///	driver_dwj,		/*  4/1989 (c) 1989 (Japan) */
+        /*TODO*///	driver_willow,	/*  6/1989 (c) 1989 (Japan) */
+        /*TODO*///	driver_willowj,	/*  6/1989 (c) 1989 (Japan) */
+        /*TODO*///	driver_unsquad,	/*  8/1989 (c) 1989 */
+        /*TODO*///	driver_area88,	/*  8/1989 (c) 1989 */
+        /*TODO*///	driver_ffight,	/* 12/1989 (c) (World) */
+        /*TODO*///	driver_ffightu,	/* 12/1989 (c) (US)    */
+        /*TODO*///	driver_ffightj,	/* 12/1989 (c) (Japan) */
+        /*TODO*///	driver_1941,		/*  2/1990 (c) 1990 (World) */
+        /*TODO*///	driver_1941j,		/*  2/1990 (c) 1990 (Japan) */
+        /*TODO*///	driver_mercs,		/* 02/03/1990 (c) 1990 (World) */
+        /*TODO*///	driver_mercsu,	/* 02/03/1990 (c) 1990 (US)    */
+        /*TODO*///	driver_mercsj,	/* 02/03/1990 (c) 1990 (Japan) */
+        /*TODO*///	driver_mtwins,	/* 19/06/1990 (c) 1990 (World) */
+        /*TODO*///	driver_chikij,	/* 19/06/1990 (c) 1990 (Japan) */
+        /*TODO*///	driver_msword,	/* 25/07/1990 (c) 1990 (World) */
+        /*TODO*///	driver_mswordu,	/* 25/07/1990 (c) 1990 (US)    */
+        /*TODO*///	driver_mswordj,	/* 23/06/1990 (c) 1990 (Japan) */
+        /*TODO*///	driver_cawing,	/* 12/10/1990 (c) 1990 (World) */
+        /*TODO*///	driver_cawingj,	/* 12/10/1990 (c) 1990 (Japan) */
+        /*TODO*///	driver_nemo,		/* 30/11/1990 (c) 1990 (World) */
+        /*TODO*///	driver_nemoj,		/* 20/11/1990 (c) 1990 (Japan) */
+        /*TODO*///	driver_sf2,		/* 14/02/1991 (c) 1991 (World) */
+        /*TODO*///	driver_sf2ua,		/* 06/02/1991 (c) 1991 (US)    */
+        /*TODO*///	driver_sf2ub,		/* 14/02/1991 (c) 1991 (US)    */
+        /*TODO*///	driver_sf2ue,		/* 28/02/1991 (c) 1991 (US)    */
+        /*TODO*///	driver_sf2ui,		/* 22/05/1991 (c) 1991 (US)    */
+        /*TODO*///	driver_sf2j,		/* 10/12/1991 (c) 1991 (Japan) */
+        /*TODO*///	driver_sf2ja,		/* 14/02/1991 (c) 1991 (Japan) */
+        /*TODO*///	driver_sf2jc,		/* 06/03/1991 (c) 1991 (Japan) */
+        /*TODO*///	driver_3wonders,	/* 20/05/1991 (c) 1991 (World) */
+        /*TODO*///	driver_3wonderu,	/* 20/05/1991 (c) 1991 (US)    */
+        /*TODO*///	driver_wonder3,	/* 20/05/1991 (c) 1991 (Japan) */
+        /*TODO*///	driver_kod,		/* 11/07/1991 (c) 1991 (World) */
+        /*TODO*///	driver_kodu,		/* 10/09/1991 (c) 1991 (US)    */
+        /*TODO*///	driver_kodj,		/* 05/08/1991 (c) 1991 (Japan) */
+        /*TODO*///	driver_kodb,		/* bootleg */
+        /*TODO*///	driver_captcomm,	/* 14/10/1991 (c) 1991 (World) */
+        /*TODO*///	driver_captcomu,	/* 28/ 9/1991 (c) 1991 (US)    */
+        /*TODO*///	driver_captcomj,	/* 02/12/1991 (c) 1991 (Japan) */
+        /*TODO*///	driver_knights,	/* 27/11/1991 (c) 1991 (World) */
+        /*TODO*///	driver_knightsu,	/* 27/11/1991 (c) 1991 (US)    */
+        /*TODO*///	driver_knightsj,	/* 27/11/1991 (c) 1991 (Japan) */
+        /*TODO*///	driver_sf2ce,		/* 13/03/1992 (c) 1992 (World) */
+        /*TODO*///	driver_sf2ceua,	/* 13/03/1992 (c) 1992 (US)    */
+        /*TODO*///	driver_sf2ceub,	/* 13/05/1992 (c) 1992 (US)    */
+        /*TODO*///	driver_sf2cej,	/* 13/05/1992 (c) 1992 (Japan) */
+        /*TODO*///	driver_sf2rb,		/* hack */
+        /*TODO*///	driver_sf2rb2,	/* hack */
+        /*TODO*///	driver_sf2red,	/* hack */
+        /*TODO*///	driver_sf2v004,	/* hack */
+        /*TODO*///	driver_sf2accp2,	/* hack */
+        /*TODO*///	driver_varth,		/* 12/06/1992 (c) 1992 (World) */
+        /*TODO*///	driver_varthu,	/* 12/06/1992 (c) 1992 (US) */
+        /*TODO*///	driver_varthj,	/* 14/07/1992 (c) 1992 (Japan) */
+        /*TODO*///	driver_cworld2j,	/* 11/06/1992 (QUIZ 5) (c) 1992 (Japan) */
+        /*TODO*///	driver_wof,		/* 02/10/1992 (c) 1992 (World) (CPS1 + QSound) */
+        /*TODO*///	driver_wofa,		/* 05/10/1992 (c) 1992 (Asia)  (CPS1 + QSound) */
+        /*TODO*///	driver_wofu,		/* 31/10/1992 (c) 1992 (US) (CPS1 + QSound) */
+        /*TODO*///	driver_wofj,		/* 31/10/1992 (c) 1992 (Japan) (CPS1 + QSound) */
+        /*TODO*///	driver_sf2t,		/* 09/12/1992 (c) 1992 (US)    */
+        /*TODO*///	driver_sf2tj,		/* 09/12/1992 (c) 1992 (Japan) */
+        /*TODO*///	driver_dino,		/* 01/02/1993 (c) 1993 (World) (CPS1 + QSound) */
+        /*TODO*///	driver_dinoj,		/* 01/02/1993 (c) 1993 (Japan) (CPS1 + QSound) */
+        /*TODO*///	driver_punisher,	/* 22/04/1993 (c) 1993 (World) (CPS1 + QSound) */
+        /*TODO*///	driver_punishru,	/* 22/04/1993 (c) 1993 (US)    (CPS1 + QSound) */
+        /*TODO*///	driver_punishrj,	/* 22/04/1993 (c) 1993 (Japan) (CPS1 + QSound) */
+        /*TODO*///	driver_slammast,	/* 13/07/1993 (c) 1993 (World) (CPS1 + QSound) */
+        /*TODO*///	driver_slammasu,	/* 13/07/1993 (c) 1993 (US)    (CPS1 + QSound) */
+        /*TODO*///	driver_mbomberj,	/* 13/07/1993 (c) 1993 (Japan) (CPS1 + QSound) */
+        /*TODO*///	driver_mbombrd,	/* 06/12/1993 (c) 1993 (World) (CPS1 + QSound) */
+        /*TODO*///	driver_mbombrdj,	/* 06/12/1993 (c) 1993 (Japan) (CPS1 + QSound) */
+        /*TODO*///	driver_pnickj,	/* 08/06/1994 (c) 1994 Compile + Capcom license (Japan) not listed on Capcom's site */
+        /*TODO*///	driver_qad,		/* 01/07/1992 (c) 1992 (US)    */
+        /*TODO*///	driver_qadj,		/* 21/09/1994 (c) 1994 (Japan) */
+        /*TODO*///	driver_qtono2,	/* 23/01/1995 (c) 1995 (Japan) */
+        /*TODO*///	driver_pang3,		/* 11/05/1995 (c) 1995 Mitchell (Euro) not listed on Capcom's site */
+        /*TODO*///	driver_pang3j,	/* 11/05/1995 (c) 1995 Mitchell (Japan) not listed on Capcom's site */
+        /*TODO*///	driver_megaman,	/* 06/10/1995 (c) 1995 (Asia)  */
+        /*TODO*///	driver_rockmanj,	/* 22/09/1995 (c) 1995 (Japan) */
+        /*TODO*///
+        /*TODO*///	/* Capcom CPS2 games */
+        /*TODO*///	/* list completed by CPS2Shock */
+        /*TODO*///	/* http://cps2shock.retrogames.com */
+        /*TODO*///	driver_ssf2,		/* 11/09/1993 (c) 1993 (US) */
+        /*TODO*///	driver_ssf2a,		/* 11/09/1993 (c) 1993 (Asia) */
+        /*TODO*///	driver_ssf2j,		/* 05/10/1993 (c) 1993 (Japan) */
+        /*TODO*///	driver_ssf2jr1,	/* 11/09/1993 (c) 1993 (Japan) */
+        /*TODO*///	driver_ssf2jr2,	/* 10/09/1993 (c) 1993 (Japan) */
+        /*TODO*///	driver_ssf2tb,	/* 11/19/1993 (c) 1993 (World) */
+        /*TODO*///	driver_ssf2tbj,	/* 10/09/1993 (c) 1993 (Japan) */
+        /*TODO*///	driver_ecofghtr,	/* 03/12/1993 (c) 1993 (World) */
+        /*TODO*///	driver_uecology, 	/* 03/12/1993 (c) 1993 (Japan) */
+        /*TODO*///	driver_ddtod,		/* 12/04/1994 (c) 1993 (Euro) */
+        /*TODO*///	driver_ddtodu,	/* 25/01/1994 (c) 1993 (US) */
+        /*TODO*///	driver_ddtodur1,	/* 13/01/1994 (c) 1993 (US) */
+        /*TODO*///	driver_ddtodj,	/* 13/01/1994 (c) 1993 (Japan) */
+        /*TODO*///	driver_ddtoda,	/* 13/01/1994 (c) 1993 (Asia) */
+        /*TODO*///	driver_ssf2t,		/* 23/02/1994 (c) 1994 (World) */
+        /*TODO*///	driver_ssf2tu,	/* 23/02/1994 (c) 1994 (US) */
+        /*TODO*///	driver_ssf2ta,	/* 23/02/1994 (c) 1994 (Asia) */
+        /*TODO*///	driver_ssf2xj,	/* 23/02/1994 (c) 1994 (Japan) */
+        /*TODO*///	driver_avsp,		/* 20/05/1994 (c) 1994 (Euro) */
+        /*TODO*///	driver_avspu,		/* 20/05/1994 (c) 1994 (US) */
+        /*TODO*///	driver_avspj,		/* 20/05/1994 (c) 1994 (Japan) */
+        /*TODO*///	driver_avspa,		/* 20/05/1994 (c) 1994 (Asia) */
+        /*TODO*///						/*    06/1994? Galum Pa! (not listed on Capcom's site) */
+        /*TODO*///	driver_dstlk,		/* 18/08/1994 (c) 1994 (US) */
+        /*TODO*///	driver_dstlkr1,	/* 05/07/1994 (c) 1994 (US) */
+        /*TODO*///	driver_vampj,		/* 05/07/1994 (c) 1994 (Japan) */
+        /*TODO*///	driver_vampja,	/* 05/07/1994 (c) 1994 (Japan) */
+        /*TODO*///	driver_vampjr1,	/* 30/06/1994 (c) 1994 (Japan) */
+        /*TODO*///	driver_vampa,		/* 05/07/1994 (c) 1994 (Asia) */
+        /*TODO*///	driver_ringdest,	/* 02/09/1994 (c) 1994 (Euro) */
+        /*TODO*///	driver_smbomb,	/* 31/08/1994 (c) 1994 (Japan) */
+        /*TODO*///	driver_smbombr1,	/* 08/08/1994 (c) 1994 (Japan) */
+        /*TODO*///	driver_armwar,	/* 11/10/1994 (c) 1994 (Euro) */
+        /*TODO*///	driver_armwaru,	/* 24/10/1994 (c) 1994 (US) */
+        /*TODO*///	driver_pgear,		/* 24/10/1994 (c) 1994 (Japan) */
+        /*TODO*///	driver_pgearr1,	/* 16/09/1994 (c) 1994 (Japan) */
+        /*TODO*///	driver_armwara,	/* 20/09/1994 (c) 1994 (Asia) */
+        /*TODO*///	driver_xmcota,	/* (Euro) */
+        /*TODO*///	driver_xmcotau,	/* 05/01/1995 (c) 1994 (US) */
+        /*TODO*///	driver_xmcotah,	/* 31/03/1995 (c) 1994 (Hispanic) */
+        /*TODO*///	driver_xmcotaj,	/* 19/12/1994 (c) 1994 (Japan) */
+        /*TODO*///	driver_xmcotaj1,	/* 17/12/1994 (c) 1994 (Japan) */
+        /*TODO*///	driver_xmcotajr,	/* 08/12/1994 (c) 1994 (Japan Rent) */
+        /*TODO*///TESTdriver_nwarr,		/* 06/04/1995 Night Warriors: DarkStalkers Revenge (US) */
+        /*TODO*///TESTdriver_vhuntj,	/* 02/03/1995 Vampire Hunter: Darkstalkers 2 (Japan) */
+        /*TODO*///TESTdriver_vhuntjr1,	/* 02/03/1995 Vampire Hunter: Darkstalkers 2 (Japan) */
+        /*TODO*///TESTdriver_nwarrh,	/* (Hispanic) */
+        /*TODO*///	driver_cybotsj,	/* 20/04/1995 (c) 1995 (Japan) */
+        /*TODO*///	driver_sfa,		/* 27/07/1995 (c) 1995 (Euro) */
+        /*TODO*///	driver_sfar1,		/* 05/06/1995 (c) 1995 (Euro) */
+        /*TODO*///	driver_sfau,		/* 27/06/1995 (c) 1995 (US) */
+        /*TODO*///	driver_sfzj,		/* 27/07/1995 (c) 1995 (Japan) */
+        /*TODO*///	driver_sfzjr1,	/* 27/06/1995 (c) 1995 (Japan) */
+        /*TODO*///	driver_sfzjr2,	/* 05/06/1995 (c) 1995 (Japan) */
+        /*TODO*///	driver_sfzh,		/* 27/06/1995 (c) 1995 (Hispanic) */
+        /*TODO*///TESTdriver_rckmanj,	/* 22/09/1995 Rockman 2: The Power Battle (Japan) */
+        /*TODO*///	driver_msh,		/* 24/10/1995 (c) 1995 (US) */
+        /*TODO*///	driver_mshj,		/* 24/10/1995 (c) 1995 (Japan) */
+        /*TODO*///	driver_mshh,		/* 17/11/1995 (c) 1996 (Hispanic) */
+        /*TODO*///	driver_19xx,		/* 07/12/1995 (c) 1996 (US) */
+        /*TODO*///	driver_19xxj,		/* 25/12/1995 (c) 1996 (Japan) */
+        /*TODO*///	driver_19xxjr1,	/* 07/12/1995 (c) 1996 (Japan) */
+        /*TODO*///	driver_19xxh,		/* 18/12/1995 (c) 1996 (Hispanic) */
+        /*TODO*///	driver_ddsom,		/* 09/02/1996 (c) 1996 (Euro) */
+        /*TODO*///	driver_ddsomu,	/* 09/02/1996 (c) 1996 (US) */
+        /*TODO*///	driver_ddsomjr1,	/* 06/02/1996 (c) 1996 (Japan) */
+        /*TODO*///	driver_ddsomj,	/* 19/06/1996 (c) 1996 (Japan) */
+        /*TODO*///	driver_ddsoma,	/* 19/06/1996 (c) 1996 (Asia) */
+        /*TODO*///	driver_sfa2,		/* 06/03/1996 (c) 1996 (US) */
+        /*TODO*///	driver_sfz2j,		/* 27/02/1996 (c) 1996 (Japan) */
+        /*TODO*///	driver_spf2t,		/* 20/06/1996 (c) 1996 (US) */
+        /*TODO*///	driver_spf2xj,	/* 31/05/1996 (c) 1996 (Japan) */
+        /*TODO*///	driver_qndream,	/* 26/06/1996 (c) 1996 (Japan) */
+        /*TODO*///TESTdriver_rckman2j,	/* 08/07/1996 Rockman 2: The Power Fighters (Japan) */
+        /*TODO*///	driver_sfz2aj,	/* 05/08/1996 (c) 1996 (Japan) */
+        /*TODO*///	driver_sfz2ah,	/* 13/08/1996 (c) 1996 (Hispanic) */
+        /*TODO*///	driver_xmvsf,		/* 10/09/1996 (c) 1996 (Euro) */
+        /*TODO*///	driver_xmvsfu,	/* 04/10/1996 (c) 1996 (US) */
+        /*TODO*///	driver_xmvsfj,	/* 10/09/1996 (c) 1996 (Japan) */
+        /*TODO*///	driver_xmvsfa,	/* 23/10/1996 (c) 1996 (Asia) */
+        /*TODO*///	driver_xmvsfh,	/* 04/10/1996 (c) 1996 (Hispanic) */
+        /*TODO*///	driver_batcirj,	/* 19/03/1997 (c) 1997 (Japan) */
+        /*TODO*///	driver_batcira,	/* 19/03/1997 (c) 1997 (Asia) */
+        /*TODO*///	driver_vsav,		/* 19/05/1997 (c) 1997 (US) */
+        /*TODO*///	driver_vsavj,		/* 19/05/1997 (c) 1997 (Japan) */
+        /*TODO*///	driver_vsava,		/* 19/05/1997 (c) 1997 (Asia) */
+        /*TODO*///	driver_vsavh,		/* 19/05/1997 (c) 1997 (Hispanic) */
+        /*TODO*///	driver_mshvsf,	/* 25/06/1997 Marvel Super Heroes Vs. Street Fighter (US) */
+        /*TODO*///	driver_mshvsfj,	/* 07/07/1997 Marvel Super Heroes Vs. Street Fighter (Japan) */
+        /*TODO*///	driver_mshvsfj1,	/* 02/07/1997 Marvel Super Heroes Vs. Street Fighter (Japan) */
+        /*TODO*///	driver_mshvsfh,	/* 25/06/1997 Marvel Super Heroes Vs. Street Fighter (Hispanic) */
+        /*TODO*///	driver_mshvsfa,	/* 25/06/1997 Marvel Super Heroes Vs. Street Fighter (Asia) */
+        /*TODO*///	driver_mshvsfa1,	/* 20/06/1997 Marvel Super Heroes Vs. Street Fighter (Asia) */
+        /*TODO*///	driver_csclubj,	/* 22/07/1997 (c) 1997 (Japan) */
+        /*TODO*///	driver_cscluba,	/* 22/07/1997 (c) 1997 (Asia) */
+        /*TODO*///TESTdriver_sgemf,		/* 04/09/1997 Super Gem Fighter Mini Mix (US) */
+        /*TODO*///TESTdriver_pfghtj,	/* 04/09/1997 Pocket Fighter (Japan) */
+        /*TODO*///TESTdriver_sgemfh,	/* 04/09/1997 Super Gem Fighter Mini Mix (Hispanic) */
+        /*TODO*///TESTdriver_vhunt2,	/* 13/09/1997 Vampire Hunter 2: Darkstalkers Revenge (Japan) */
+        /*TODO*///	driver_vsav2,		/* 13/09/1997 Vampire Savior 2: The Lord of Vampire (Japan) */
+        /*TODO*///TESTdriver_mvsc,		/* 23/01/1998 Marvel Super Heroes vs. Capcom: Clash of Super Heroes (US) */
+        /*TODO*///TESTdriver_mvscj,		/* 23/01/1998 Marvel Super Heroes vs. Capcom: Clash of Super Heroes (Japan) */
+        /*TODO*///TESTdriver_mvscjr1,	/* 12/01/1998 Marvel Super Heroes vs. Capcom: Clash of Super Heroes (Japan) */
+        /*TODO*///TESTdriver_mvsca,		/* 12/01/1998 Marvel Super Heroes vs. Capcom: Clash of Super Heroes (Asia) */
+        /*TODO*///TESTdriver_mvsch,		/* 23/01/1998 Marvel Super Heroes vs. Capcom: Clash of Super Heroes (Hispanic) */
+        /*TODO*///	driver_sfa3,		/* 04/09/1998 (c) 1998 (US) */
+        /*TODO*///	driver_sfa3r1,	/* 29/06/1998 (c) 1998 (US) */
+        /*TODO*///	driver_sfz3j,		/* 27/07/1998 (c) 1998 (Japan) */
+        /*TODO*///	driver_sfz3jr1,	/* 29/06/1998 (c) 1998 (Japan) */
+        /*TODO*///	driver_sfz3a,		/* 01/07/1998 (c) 1998 (Asia) */
+        /*TODO*///TESTdriver_gwingj,	/* 23/02/1999 Giga Wing (Japan) */
+        /*TODO*///TESTdriver_dimahoo,	/* 21/01/2000 Dimahoo (US) */
+        /*TODO*///TESTdriver_gmahou,	/* 21/01/2000 Great Mahou Daisakusen (Japan) */
+        /*TODO*///TESTdriver_mmatrixj,	/* 12/04/2000 Mars Matrix: Hyper Solid Shooting (Japan) */
+        /*TODO*///TESTdriver_1944j,		/* 20/06/2000 1944: The Loop Master (Japan) */
+        /*TODO*///						/*    10/2000 Mighty! Pang */
+        /*TODO*///TESTdriver_puzloop2,	/* 05/02/2001 Puzz Loop 2 (Japan) */
+        /*TODO*///						/*    03/2001 Progear No Arashi */
+        /*TODO*///
+        /*TODO*///#ifndef CPSMAME
+        /*TODO*///
+        /*TODO*///	/* Capcom CPS3 games */
+        /*TODO*///	/* 10/1996 Warzard */
+        /*TODO*///	/*  2/1997 Street Fighter III - New Generation */
+        /*TODO*///	/* ???? Jojo's Bizarre Adventure */
+        /*TODO*///	/* ???? Street Fighter 3: Second Impact ~giant attack~ */
+        /*TODO*///	/* ???? Street Fighter 3: Third Strike ~fight to the finish~ */
+        /*TODO*///
+        /*TODO*///	/* Capcom ZN1 */
+        /*TODO*///TESTdriver_ts2j,		/*  Battle Arena Toshinden 2 (JAPAN 951124) */
+        /*TODO*///						/*  7/1996 Star Gladiator */
+        /*TODO*///TESTdriver_sfex,		/*  Street Fighter EX (ASIA 961219) */
+        /*TODO*///TESTdriver_sfexj,		/*  Street Fighter EX (JAPAN 961130) */
+        /*TODO*///TESTdriver_sfexp,		/*  Street Fighter EX Plus (USA 970311) */
+        /*TODO*///TESTdriver_sfexpj,	/*  Street Fighter EX Plus (JAPAN 970311) */
+        /*TODO*///TESTdriver_rvschool,	/*  Rival Schools (ASIA 971117) */
+        /*TODO*///TESTdriver_jgakuen,	/*  Justice Gakuen (JAPAN 971117) */
+        /*TODO*///
+        /*TODO*///	/* Capcom ZN2 */
+        /*TODO*///TESTdriver_sfex2,		/*  Street Fighter EX 2 (JAPAN 980312) */
+        /*TODO*///TESTdriver_tgmj,		/*  Tetris The Grand Master (JAPAN 980710) */
+        /*TODO*///TESTdriver_kikaioh,	/*  Kikaioh (JAPAN 980914) */
+        /*TODO*///TESTdriver_sfex2p,	/*  Street Fighter EX 2 Plus (JAPAN 990611) */
+        /*TODO*///TESTdriver_shiryu2,	/*  Strider Hiryu 2 (JAPAN 991213) */
+        /*TODO*///						/*  Star Gladiator 2 */
+        /*TODO*///						/*  Rival Schools 2 */
+        /*TODO*///
+        /*TODO*///	/* Video System ZN1 */
+        /*TODO*///TESTdriver_sncwgltd,	/*  Sonic Wings Limited (JAPAN) */
+        /*TODO*///
+        /*TODO*///	/* Tecmo ZN1 */
+        /*TODO*///TESTdriver_glpracr2,	/*  Gallop Racer 2 (JAPAN) */
+        /*TODO*///TESTdriver_doapp,		/*  Dead Or Alive ++ (JAPAN) */
+        /*TODO*///
+        /*TODO*///	/* Mitchell games */
+        /*TODO*///	driver_mgakuen,	/* (c) 1988 Yuga */
+        /*TODO*///	driver_mgakuen2,	/* (c) 1989 Face */
+        /*TODO*///	driver_pkladies,	/* (c) 1989 Mitchell */
+        /*TODO*///	driver_pkladiel,	/* (c) 1989 Leprechaun */
+        /*TODO*///	driver_dokaben,	/*  3/1989 (c) 1989 Capcom (Japan) */
+        /*TODO*///	/*  8/1989 Dokaben 2 (baseball) */
+        /*TODO*///	driver_pang,		/* (c) 1989 Mitchell (World) */
+        /*TODO*///	driver_pangb,		/* bootleg */
+        /*TODO*///	driver_bbros,		/* (c) 1989 Capcom (US) not listed on Capcom's site */
+        /*TODO*///	driver_pompingw,	/* (c) 1989 Mitchell (Japan) */
+        /*TODO*///	driver_cbasebal,	/* 10/1989 (c) 1989 Capcom (Japan) (different hardware) */
+        /*TODO*///	driver_cworld,	/* 11/1989 (QUIZ 1) (c) 1989 Capcom */
+        /*TODO*///	driver_hatena,	/* 28/02/1990 (QUIZ 2) (c) 1990 Capcom (Japan) */
+        /*TODO*///	driver_spang,		/* 14/09/1990 (c) 1990 Mitchell (World) */
+        /*TODO*///	driver_sbbros,	/* 01/10/1990 (c) 1990 Mitchell + Capcom (US) not listed on Capcom's site */
+        /*TODO*///	driver_marukin,	/* 17/10/1990 (c) 1990 Yuga (Japan) */
+        /*TODO*///	driver_qtono1,	/* 25/12/1990 (QUIZ 3) (c) 1991 Capcom (Japan) */
+        /*TODO*///	/*  4/1991 Ashita Tenki ni Naare (golf) */
+        /*TODO*///	driver_qsangoku,	/* 07/06/1991 (QUIZ 4) (c) 1991 Capcom (Japan) */
+        /*TODO*///	driver_block,		/* 06/11/1991 (c) 1991 Capcom (World) */
+        /*TODO*///	driver_blocka,	/* 10/09/1991 (c) 1991 Capcom (World) */
+        /*TODO*///	driver_blockj,	/* 10/09/1991 (c) 1991 Capcom (Japan) */
+        /*TODO*///	driver_blockbl,	/* bootleg */
+        /*TODO*///
+        /*TODO*///	/* Incredible Technologies games */
+        /*TODO*///	/* http://www.itsgames.com */
+        /*TODO*///	driver_capbowl,	/* (c) 1988 Incredible Technologies */
+        /*TODO*///	driver_capbowl2,	/* (c) 1988 Incredible Technologies */
+        /*TODO*///	driver_clbowl,	/* (c) 1989 Incredible Technologies */
+        /*TODO*///	driver_bowlrama,	/* (c) 1991 P & P Marketing */
+        /*TODO*///	driver_wfortune,	/* (c) 1989 GameTek */
+        /*TODO*///	driver_wfortuna,	/* (c) 1989 GameTek */
+        /*TODO*///	driver_stratab,	/* (c) 1990 Strata/Incredible Technologies */
+        /*TODO*///	driver_gtg,		/* (c) 1990 Strata/Incredible Technologies */
+        /*TODO*///	driver_hstennis,	/* (c) 1990 Strata/Incredible Technologies */
+        /*TODO*///	driver_slikshot,	/* (c) 1990 Grand Products/Incredible Technologies */
+        /*TODO*///	driver_sliksh17,	/* (c) 1990 Grand Products/Incredible Technologies */
+        /*TODO*///	driver_arlingtn,	/* (c) 1991 Strata/Incredible Technologies */
+        /*TODO*///	driver_peggle,	/* (c) 1991 Strata/Incredible Technologies */
+        /*TODO*///	driver_pegglet,	/* (c) 1991 Strata/Incredible Technologies */
+        /*TODO*///	driver_rimrockn,	/* (c) 1991 Strata/Incredible Technologies */
+        /*TODO*///	driver_rimrck20,	/* (c) 1991 Strata/Incredible Technologies */
+        /*TODO*///	driver_rimrck16,	/* (c) 1991 Strata/Incredible Technologies */
+        /*TODO*///	driver_rimrck12,	/* (c) 1991 Strata/Incredible Technologies */
+        /*TODO*///	driver_ninclown,	/* (c) 1991 Strata/Incredible Technologies */
+        /*TODO*///	driver_gtg2,		/* (c) 1992 Strata/Incredible Technologies */
+        /*TODO*///	driver_gtg2t,		/* (c) 1989 Strata/Incredible Technologies */
+        /*TODO*///	driver_gtg2j,		/* (c) 1991 Strata/Incredible Technologies */
+        /*TODO*///	driver_neckneck,	/* (c) 1992 Bundra Games/Incredible Technologies */
+        /*TODO*///	driver_timekill,	/* (c) 1992 Strata/Incredible Technologies */
+        /*TODO*///	driver_timek131,	/* (c) 1992 Strata/Incredible Technologies */
+        /*TODO*///	driver_hardyard,	/* (c) 1993 Strata/Incredible Technologies */
+        /*TODO*///	driver_hardyd10,	/* (c) 1993 Strata/Incredible Technologies */
+        /*TODO*///	driver_bloodstm,	/* (c) 1994 Strata/Incredible Technologies */
+        /*TODO*///	driver_bloods22,	/* (c) 1994 Strata/Incredible Technologies */
+        /*TODO*///	driver_bloods21,	/* (c) 1994 Strata/Incredible Technologies */
+        /*TODO*///	driver_pairs,		/* (c) 1994 Strata/Incredible Technologies */
+        /*TODO*///	driver_sftm,		/* (c) 1995 Capcom/Incredible Technologies */
+        /*TODO*///	driver_sftm110,	/* (c) 1995 Capcom/Incredible Technologies */
+        /*TODO*///	driver_sftmj,		/* (c) 1995 Capcom/Incredible Technologies */
+        /*TODO*///	driver_shufshot,	/* (c) Strata/Incredible Technologies */
+        /*TODO*///
+        /*TODO*///	/* Leland games */
+        /*TODO*///	driver_cerberus,	/* (c) 1985 Cinematronics */
+        /*TODO*///	driver_mayhem,	/* (c) 1985 Cinematronics */
+        /*TODO*///	driver_powrplay,	/* (c) 1985 Cinematronics */
+        /*TODO*///	driver_wseries,	/* (c) 1985 Cinematronics */
+        /*TODO*///	driver_alleymas,	/* (c) 1986 Cinematronics */
+        /*TODO*///	driver_dangerz,	/* (c) 1986 Cinematronics USA */
+        /*TODO*///	driver_basebal2,	/* (c) 1987 Cinematronics */
+        /*TODO*///	driver_dblplay,	/* (c) 1987 Tradewest / Leland */
+        /*TODO*///	driver_strkzone,	/* (c) 1988 Leland */
+        /*TODO*///	driver_redlin2p,	/* (c) 1987 Cinematronics + Tradewest license */
+        /*TODO*///	driver_quarterb,	/* (c) 1987 Leland */
+        /*TODO*///	driver_quartrba,	/* (c) 1987 Leland */
+        /*TODO*///	driver_viper,		/* (c) 1988 Leland */
+        /*TODO*///	driver_teamqb,	/* (c) 1988 Leland */
+        /*TODO*///	driver_teamqb2,	/* (c) 1988 Leland */
+        /*TODO*///	driver_aafb,		/* (c) 1989 Leland */
+        /*TODO*///	driver_aafbd2p,	/* (c) 1989 Leland */
+        /*TODO*///	driver_aafbc,		/* (c) 1989 Leland */
+        /*TODO*///	driver_aafbb,		/* (c) 1989 Leland */
+        /*TODO*///	driver_offroad,	/* (c) 1989 Leland */
+        /*TODO*///	driver_offroadt,	/* (c) 1989 Leland */
+        /*TODO*///	driver_pigout,	/* (c) 1990 Leland */
+        /*TODO*///	driver_pigouta,	/* (c) 1990 Leland */
+        /*TODO*///	driver_ataxx,		/* (c) 1990 Leland */
+        /*TODO*///	driver_ataxxa,	/* (c) 1990 Leland */
+        /*TODO*///	driver_ataxxj,	/* (c) 1990 Leland */
+        /*TODO*///	driver_wsf,		/* (c) 1990 Leland */
+        /*TODO*///	driver_indyheat,	/* (c) 1991 Leland */
+        /*TODO*///	driver_brutforc,	/* (c) 1991 Leland */
+        /*TODO*///
+        /*TODO*///	/* Gremlin 8080 games */
+        /*TODO*///	/* the numbers listed are the range of ROM part numbers */
+        /*TODO*///	driver_blockade,	/* 1-4 [1977 Gremlin] */
+        /*TODO*///	driver_comotion,	/* 5-7 [1977 Gremlin] */
+        /*TODO*///	driver_hustle,	/* 16-21 [1977 Gremlin] */
+        /*TODO*///	driver_blasto,	/* [1978 Gremlin] */
+        /*TODO*///	driver_mineswpr,	/* [1977 Amutech] */
+        /*TODO*///
+        /*TODO*///	/* Gremlin/Sega "VIC dual game board" games */
+        /*TODO*///	/* the numbers listed are the range of ROM part numbers */
+        /*TODO*///	driver_depthch,	/* 50-55 [1977 Gremlin?] */
+        /*TODO*///	driver_safari,	/* 57-66 [1977 Gremlin?] */
+        /*TODO*///	driver_frogs,		/* 112-119 [1978 Gremlin?] */
+        /*TODO*///	driver_sspaceat,	/* 155-162 (c) */
+        /*TODO*///	driver_sspacat2,
+        /*TODO*///	driver_sspacatc,	/* 139-146 (c) */
+        /*TODO*///	driver_headon,	/* 163-167/192-193 (c) Gremlin */
+        /*TODO*///	driver_headonb,	/* 163-167/192-193 (c) Gremlin */
+        /*TODO*///	driver_headon2,	/* ???-??? (c) 1979 Sega */
+        /*TODO*///	/* ???-??? Fortress */
+        /*TODO*///	/* ???-??? Gee Bee */
+        /*TODO*///	/* 255-270  Head On 2 / Deep Scan */
+        /*TODO*///	driver_invho2,	/* 271-286 (c) 1979 Sega */
+        /*TODO*///	driver_samurai,	/* 289-302 + upgrades (c) 1980 Sega */
+        /*TODO*///	driver_invinco,	/* 310-318 (c) 1979 Sega */
+        /*TODO*///	driver_invds,		/* 367-382 (c) 1979 Sega */
+        /*TODO*///	driver_tranqgun,	/* 413-428 (c) 1980 Sega */
+        /*TODO*///	/* 450-465  Tranquilizer Gun (different version?) */
+        /*TODO*///	/* ???-??? Car Hunt / Deep Scan */
+        /*TODO*///	driver_spacetrk,	/* 630-645 (c) 1980 Sega */
+        /*TODO*///	driver_sptrekct,	/* (c) 1980 Sega */
+        /*TODO*///	driver_carnival,	/* 651-666 (c) 1980 Sega */
+        /*TODO*///	driver_carnvckt,	/* 501-516 (c) 1980 Sega */
+        /*TODO*///	driver_digger,	/* 684-691 no copyright notice */
+        /*TODO*///	driver_pulsar,	/* 790-805 (c) 1981 Sega */
+        /*TODO*///	driver_heiankyo,	/* (c) [1979?] Denki Onkyo */
+        /*TODO*///
+        /*TODO*///	/* Sega G-80 vector games */
+        /*TODO*///	driver_spacfury,	/* (c) 1981 */
+        /*TODO*///	driver_spacfura,	/* no copyright notice */
+        /*TODO*///	driver_zektor,	/* (c) 1982 */
+        /*TODO*///	driver_tacscan,	/* (c) */
+        /*TODO*///	driver_elim2,		/* (c) 1981 Gremlin */
+        /*TODO*///	driver_elim2a,	/* (c) 1981 Gremlin */
+        /*TODO*///	driver_elim4,		/* (c) 1981 Gremlin */
+        /*TODO*///	driver_startrek,	/* (c) 1982 */
+        /*TODO*///
+        /*TODO*///	/* Sega G-80 raster games */
+        /*TODO*///	driver_astrob,	/* (c) 1981 */
+        /*TODO*///	driver_astrob2,	/* (c) 1981 */
+        /*TODO*///	driver_astrob1,	/* (c) 1981 */
+        /*TODO*///	driver_005,		/* (c) 1981 */
+        /*TODO*///	driver_monsterb,	/* (c) 1982 */
+        /*TODO*///	driver_spaceod,	/* (c) 1981 */
+        /*TODO*///	driver_pignewt,	/* (c) 1983 */
+        /*TODO*///	driver_pignewta,	/* (c) 1983 */
+        /*TODO*///	driver_sindbadm,	/* 834-5244 (c) 1983 Sega */
+        /*TODO*///
+        /*TODO*///	/* Sega "Zaxxon hardware" games */
+        /*TODO*///	driver_zaxxon,	/* (c) 1982 */
+        /*TODO*///	driver_zaxxon2,	/* (c) 1982 */
+        /*TODO*///	driver_zaxxonb,	/* bootleg */
+        /*TODO*///	driver_szaxxon,	/* (c) 1982 */
+        /*TODO*///	driver_futspy,	/* (c) 1984 */
+        /*TODO*///	driver_razmataz,	/* modified 834-0213, 834-0214 (c) 1983 */
+        /*TODO*///	driver_ixion,		/* (c) 1983 */
+        /*TODO*///	driver_congo,		/* 605-5167 (c) 1983 */
+        /*TODO*///	driver_tiptop,	/* 605-5167 (c) 1983 */
+        /*TODO*///
+        /*TODO*///	/* Sega System 1 / System 2 games */
+        driver_starjack, /* 834-5191 (c) 1983 (S1) */
+        driver_starjacs, /* (c) 1983 Stern (S1) */
+        driver_regulus, /* 834-5328 (c) 1983 (S1) */
+        driver_reguluso, /* 834-5328 (c) 1983 (S1) */
+        driver_regulusu, /* 834-5328 (c) 1983 (S1) */
+        driver_upndown, /* (c) 1983 (S1) */
+        driver_upndownu, /* (c) 1983 (S1) */
+        driver_mrviking, /* 834-5383 (c) 1984 (S1) */
+        driver_mrvikngj, /* 834-5383 (c) 1984 (S1) */
+        driver_swat, /* 834-5388 (c) 1984 Coreland / Sega (S1) */
+        driver_flicky, /* (c) 1984 (S1) */
+        driver_flickyo, /* (c) 1984 (S1) */
+        driver_wmatch, /* (c) 1984 (S1) */
+        driver_bullfgt, /* 834-5478 (c) 1984 Sega / Coreland (S1) */
+        driver_thetogyu, /* 834-5478 (c) 1984 Sega / Coreland (S1) */
+        driver_spatter, /* 834-5583 (c) 1984 (S1) */
+        driver_pitfall2, /* 834-5627 [1985?] reprogrammed, (c) 1984 Activision (S1) */
+        driver_pitfallu, /* 834-5627 [1985?] reprogrammed, (c) 1984 Activision (S1) */
+        driver_seganinj, /* 834-5677 (c) 1985 (S1) */
+        driver_seganinu, /* 834-5677 (c) 1985 (S1) */
+        driver_nprinces, /* 834-5677 (c) 1985 (S1) */
+        driver_nprincso, /* 834-5677 (c) 1985 (S1) */
+        driver_nprincsu, /* 834-5677 (c) 1985 (S1) */
+        driver_nprincsb, /* bootleg? (S1) */
+        driver_imsorry, /* 834-5707 (c) 1985 Coreland / Sega (S1) */
+        driver_imsorryj, /* 834-5707 (c) 1985 Coreland / Sega (S1) */
+        driver_teddybb, /* 834-5712 (c) 1985 (S1) */
+        driver_teddybbo, /* 834-5712 (c) 1985 (S1) */
+        driver_hvymetal, /* 834-5745 (c) 1985 (S2?) */
+        driver_myhero, /* 834-5755 (c) 1985 (S1) */
+        driver_sscandal, /* 834-5755 (c) 1985 Coreland / Sega (S1) */
+        driver_myherok, /* 834-5755 (c) 1985 Coreland / Sega (S1) */
+        /*TODO*///TESTdriver_shtngmst,	/* 834-5719/5720 (c) 1985 (S2) */
+        driver_chplft, /* 834-5795 (c) 1985, (c) 1982 Dan Gorlin (S2) */
+        driver_chplftb, /* 834-5795 (c) 1985, (c) 1982 Dan Gorlin (S2) */
+        driver_chplftbl, /* bootleg (S2) */
+        driver_4dwarrio, /* 834-5918 (c) 1985 Coreland / Sega (S1) */
+        driver_brain, /* (c) 1986 Coreland / Sega (S2?) */
+        driver_raflesia, /* 834-5753 (c) 1985 Coreland / Sega (S1) */
+        driver_raflsiau, /* 834-5753 (c) 1985 Coreland / Sega (S1) */
+        driver_wboy, /* 834-5984 (c) 1986 + Escape license (S1) */
+        driver_wboyo, /* 834-5984 (c) 1986 + Escape license (S1) */
+        driver_wboy2, /* 834-5984 (c) 1986 + Escape license (S1) */
+        driver_wboy2u, /* 834-5984 (c) 1986 + Escape license (S1) */
+        driver_wboy3, /* 834-5984 (c) 1986 + Escape license (S1) */
+        driver_wboyu, /* 834-5753 (? maybe a conversion) (c) 1986 + Escape license (S1) */
+        driver_wbdeluxe, /* (c) 1986 + Escape license (S1) */
+        /*TODO*///TESTdriver_gardia,	/* 834-6119 (S2?) */
+        /*TODO*///TESTdriver_gardiab,	/* bootleg */
+        /*TODO*///TESTdriver_blockgal,	/* 834-6303 (S1) */
+        /*TODO*///TESTdriver_blckgalb,	/* bootleg */
+        driver_tokisens, /* (c) 1987 (from a bootleg board) (S2) */
+        driver_wbml, /* bootleg (S2) */
+        driver_wbmljo, /* (c) 1987 Sega/Westone (S2) */
+        driver_wbmljb, /* (c) 1987 Sega/Westone (S2) */
+        driver_wbmlb, /* bootleg? (S2) */ /*TODO*///TESTdriver_dakkochn,	/* 836-6483? (S2) */
     /*TODO*///TESTdriver_ufosensi,	/* 834-6659 (S2) */
     /*TODO*////*
     /*TODO*///other System 1 / System 2 games:
@@ -3196,13 +3200,9 @@ public class driver {
     /*TODO*///
     /*TODO*///	/* UPL games */
     /*TODO*///	/* Mouser              UPL-83001 */
-    /*TODO*///	driver_nova2001,	/* UPL-83005 (c) 1983 */
-    /*TODO*///	driver_nov2001u,	/* UPL-83005 (c) [1983] + Universal license */
     /*TODO*///	driver_ninjakun,	/* UPL-84003 (c) 1984 Taito Corporation */
     /*TODO*///	driver_raiders5,	/* UPL-85004 (c) 1985 */
     /*TODO*///	driver_raidrs5t,
-    /*TODO*///	driver_pkunwar,	/* UPL-????? [1985?] */
-    /*TODO*///	driver_pkunwarj,	/* UPL-????? [1985?] */
     /*TODO*///	driver_xxmissio,	/* UPL-86001 [1986] */
     /*TODO*///	driver_ninjakd2,	/* UPL-????? (c) 1987 */
     /*TODO*///	driver_ninjak2a,	/* UPL-????? (c) 1987 */
