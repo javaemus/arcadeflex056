@@ -7,12 +7,9 @@ package mame056.drivers;
 import static arcadeflex056.fucPtr.*;
 
 import static common.ptr.*;
-import static common.libc.cstdlib.*;
-import static common.libc.cstring.*;
 
 import static mame056.cpuintrfH.*;
 import static mame056.cpuexecH.*;
-import static mame056.mame.*;
 import static mame056.common.*;
 import static mame056.commonH.*;
 import static mame056.drawgfxH.*;
@@ -20,25 +17,13 @@ import static mame056.driverH.*;
 import static mame056.inptport.*;
 import static mame056.inptportH.*;
 import static mame056.inputH.*;
-import static mame056.memory.*;
 import static mame056.memoryH.*;
 import static mame056.sndintrfH.*;
 import static mame056.cpuexec.*;
 
-import static mame056.drivers.epos.*;
-
-import static mame056.machine.mspacman.*;
-import static mame056.machine.theglobp.*;
-import static mame056.machine.pacplus.*;
-import static mame056.machine.jumpshot.*;
-import static mame056.machine.shootbul.*;
 
 import static mame056.sound.namco.*;
 import static mame056.sound.namcoH.*;
-import static mame056.sound.ay8910.*;
-import static mame056.sound.ay8910H.*;
-import static mame056.sound.sn76496.*;
-import static mame056.sound.sn76496H.*;
 
 import static mame056.vidhrdw.jrpacman.*;
 import static mame056.vidhrdw.generic.*;

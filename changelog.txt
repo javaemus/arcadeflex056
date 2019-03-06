@@ -5,6 +5,7 @@
 -Added munchmo driver .Colors appears to be wrong ( i am not sure if it is blockmove_8toN_transpen16 issue)
 -Fixed blockmove_8toN_transpen16  issue
 -Added digdug driver (working)
+-Added working blueprnt,higemaru,pooyan,exctsccr drivers 
 
 05/03/2019
 ==========

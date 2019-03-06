@@ -17,6 +17,10 @@ import static mame056.drivers.nova2001.*;
 import static mame056.drivers.jrpacman.*;
 import static mame056.drivers.munchmo.*;
 import static mame056.drivers.digdug.*;
+import static mame056.drivers.blueprnt.*;
+import static mame056.drivers.higemaru.*;
+import static mame056.drivers.pooyan.*;
+import static mame056.drivers.exctsccr.*;
 
 public class driver {
 
@@ -76,6 +80,13 @@ public class driver {
         /*digdug*/ driver_digdugb,
         /*digdug*/ driver_digdugat,
         /*digdug*/ driver_dzigzag,
+        /*blueprnt*/ driver_blueprnt,
+        /*blueprnt*/ driver_blueprnj,
+        /*blueprnt*/ driver_saturn,
+        /*higemaru*/ driver_higemaru,
+        /*pooyan*/ driver_pooyan,
+        /*pooyan*/ driver_pooyans,
+        /*pooyan*/ driver_pootan,
         /**
          * GAME NOT WORKING FLAG
          */
@@ -1593,7 +1604,7 @@ public class driver {
         /*TODO*///	driver_vulgusj,	/*  5/1984 (c) 1984 */
         /*TODO*///	driver_sonson,	/*  7/1984 (c) 1984 */
         /*TODO*///	driver_sonsonj,	/*  7/1984 (c) 1984 (Japan) */
-        /*TODO*///	driver_higemaru,	/*  9/1984 (c) 1984 */
+
         /*TODO*///	driver_1942,		/* 12/1984 (c) 1984 */
         /*TODO*///	driver_1942a,		/* 12/1984 (c) 1984 */
         /*TODO*///	driver_1942b,		/* 12/1984 (c) 1984 */
@@ -2571,9 +2582,6 @@ public class driver {
         /*TODO*///	driver_junofstg,	/* GX310 (c) 1983 Konami + Gottlieb license */
         /*TODO*///
         /*TODO*///	/* Konami games */
-        /*TODO*///	driver_pooyan,	/* GX320 (c) 1982 */
-        /*TODO*///	driver_pooyans,	/* GX320 (c) 1982 Stern */
-        /*TODO*///	driver_pootan,	/* bootleg */
         /*TODO*///	driver_timeplt,	/* GX393 (c) 1982 */
         /*TODO*///	driver_timepltc,	/* GX393 (c) 1982 + Centuri license*/
         /*TODO*///	driver_spaceplt,	/* bootleg */
@@ -3129,10 +3137,10 @@ public class driver {
     /*TODO*///	driver_champbas,	/* (c) 1983 Sega */
     /*TODO*///	driver_champbbj,	/* (c) 1983 Alpha Denshi Co. */
     /*TODO*///TESTdriver_champbb2,	/* (c) 1983 Sega */
-    /*TODO*///	driver_exctsccr,	/* (c) 1983 Alpha Denshi Co. */
-    /*TODO*///	driver_exctscca,	/* (c) 1983 Alpha Denshi Co. */
-    /*TODO*///	driver_exctsccb,	/* bootleg */
-    /*TODO*///	driver_exctscc2,	/* (c) 1984 Alpha Denshi Co. */
+    	/*exctsccr*/driver_exctsccr,	
+    	/*exctsccr*/driver_exctscca,	
+    	/*exctsccr*/driver_exctsccb,	
+    	/*exctsccr*/driver_exctscc2,	
     /*TODO*///
     /*TODO*///	/* Technos games */
     /*TODO*///	driver_scregg,	/* TA-0001 (c) 1983 */
@@ -3743,10 +3751,6 @@ public class driver {
     /*TODO*///	driver_magicbub,	/* (c) Yun Sung */
     /*TODO*///	driver_shocking,	/* (c) 1997 Yun Sung */
     /*TODO*///
-    /*TODO*///	/* Zilec games */
-    /*TODO*///	driver_blueprnt,	/* (c) 1982 Bally Midway (Zilec in ROM 3U, and the programmer names) */
-    /*TODO*///	driver_blueprnj,	/* (c) 1982 Jaleco (Zilec in ROM 3U, and the programmer names) */
-    /*TODO*///	driver_saturn,	/* (c) 1983 Jaleco (Zilec in ROM R6, and the programmer names) */
     /*TODO*///
     /*TODO*///	/* Fuuki games */
     /*TODO*///	driver_gogomile,	/* (c) 1995 */
@@ -3992,5 +3996,6 @@ public class driver {
     /*TODO*///TESTdriver_nitd,		/* 0260 (c) 2000 Eleven / Gavaking */
     /*TODO*///TESTdriver_sengoku3,	/* 0261 (c) 2001 SNK */
     /*TODO*///	/* Bang Bead (c) 2000 Visco (prototype) */    
+        null
     };
 }
