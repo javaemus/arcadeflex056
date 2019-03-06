@@ -14,6 +14,7 @@ import static mame056.drivers.epos.*;
 import static mame056.drivers.system1.*;
 import static mame056.drivers.pkunwar.*;
 import static mame056.drivers.nova2001.*;
+import static mame056.drivers.jrpacman.*;
 
 public class driver {
 
@@ -83,6 +84,7 @@ public class driver {
         /*epos*/ driver_suprglob, //screen doesn't clear blue color in left and right of screen
         /*epos*/ driver_theglob, //screen doesn't clear blue color in left and right of screen
         /*epos*/ driver_theglob2,//screen doesn't clear blue color in left and right of screen
+        /*jrpacman*/driver_jrpacman,//small artifacts left side of screen
         //////////////////
         /**
          * TODO
