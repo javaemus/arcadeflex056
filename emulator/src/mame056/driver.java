@@ -15,6 +15,7 @@ import static mame056.drivers.system1.*;
 import static mame056.drivers.pkunwar.*;
 import static mame056.drivers.nova2001.*;
 import static mame056.drivers.jrpacman.*;
+import static mame056.drivers.munchmo.*;
 
 public class driver {
 
@@ -3057,8 +3058,8 @@ public class driver {
     /*TODO*///	driver_lasso,		/*       'WM' (c) 1982 */
     /*TODO*///	driver_chameleo,	/* (c) 1983 Jaleco */
     /*TODO*///	driver_wwjgtin,	/* (c) 1984 Jaleco / Casio */
-    /*TODO*///	driver_joyfulr,	/* A2001      (c) 1983 */
-    /*TODO*///	driver_mnchmobl,	/* A2001      (c) 1983 + Centuri license */
+    driver_joyfulr,	/* A2001      (c) 1983 */
+    driver_mnchmobl,	/* A2001      (c) 1983 + Centuri license */
     /*TODO*///	driver_marvins,	/* A2003      (c) 1983 */
     /*TODO*///	driver_madcrash,	/* A2005      (c) 1984 */
     /*TODO*///	driver_vangrd2,	/*            (c) 1984 */
