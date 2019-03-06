@@ -8094,7 +8094,7 @@ public class drawgfx {
 
                     col = srcdata.readinc();
                     if (col != transpen) {
-                        dstdata.write(0, (char) col);
+                        dstdata.write(0, (char)paldata.read(col));
                     }
                     dstdata.dec();
                 }
@@ -8109,16 +8109,16 @@ public class drawgfx {
 
                         xod4 = col4 ^ trans4;
                         if ((xod4 & (0xff << SHIFT0)) != 0) {
-                            dstdata.write(4, (char) ((col4 >> SHIFT0) & 0xff));
+                            dstdata.write(4, (char)paldata.read(((col4 >> SHIFT0) & 0xff)));
                         }
                         if ((xod4 & (0xff << SHIFT1)) != 0) {
-                            dstdata.write(3, (char) (((col4 >> SHIFT1) & 0xff)));
+                            dstdata.write(3, (char)paldata.read((((col4 >> SHIFT1) & 0xff))));
                         }
                         if ((xod4 & (0xff << SHIFT2)) != 0) {
-                            dstdata.write(2, (char) (((col4 >> SHIFT2) & 0xff)));
+                            dstdata.write(2, (char)paldata.read((((col4 >> SHIFT2) & 0xff))));
                         }
                         if ((xod4 & (0xff << SHIFT3)) != 0) {
-                            dstdata.write(1, (char) (((col4 >> SHIFT3) & 0xff)));
+                            dstdata.write(1, (char)paldata.read((((col4 >> SHIFT3) & 0xff))));
                         }
                     }
                     sd4.base += 4;
@@ -8129,7 +8129,7 @@ public class drawgfx {
 
                     col = srcdata.readinc();
                     if (col != transpen) {
-                        dstdata.write(0, (char) col);
+                        dstdata.write(0, (char)paldata.read(col));
                     }
                     dstdata.dec();
                 }
@@ -8152,7 +8152,7 @@ public class drawgfx {
 
                     col = srcdata.readinc();
                     if (col != transpen) {
-                        dstdata.write(0, (char) col);
+                        dstdata.write(0, (char)paldata.read(col));
                     }
                     dstdata.inc();
                 }
@@ -8165,16 +8165,16 @@ public class drawgfx {
 
                         xod4 = col4 ^ trans4;
                         if ((xod4 & (0xff << SHIFT0)) != 0) {
-                            dstdata.write(0, (char) ((col4 >> SHIFT0) & 0xff));
+                            dstdata.write(0, (char)paldata.read(((col4 >> SHIFT0) & 0xff)));
                         }
                         if ((xod4 & (0xff << SHIFT1)) != 0) {
-                            dstdata.write(1, (char) (((col4 >> SHIFT1) & 0xff)));
+                            dstdata.write(1, (char)paldata.read((char) (((col4 >> SHIFT1) & 0xff))));
                         }
                         if ((xod4 & (0xff << SHIFT2)) != 0) {
-                            dstdata.write(2, (char) (((col4 >> SHIFT2) & 0xff)));
+                            dstdata.write(2, (char)paldata.read((((col4 >> SHIFT2) & 0xff))));
                         }
                         if ((xod4 & (0xff << SHIFT3)) != 0) {
-                            dstdata.write(3, (char) (((col4 >> SHIFT3) & 0xff)));
+                            dstdata.write(3, (char)paldata.read((((col4 >> SHIFT3) & 0xff))));
                         }
                     }
                     dstdata.inc(4);
@@ -8186,7 +8186,7 @@ public class drawgfx {
 
                     col = srcdata.readinc();
                     if (col != transpen) {
-                        dstdata.write(0, (char) col);
+                        dstdata.write(0, (char)paldata.read(col));
                     }
                     dstdata.inc();
                 }

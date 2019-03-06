@@ -16,6 +16,7 @@ import static mame056.drivers.pkunwar.*;
 import static mame056.drivers.nova2001.*;
 import static mame056.drivers.jrpacman.*;
 import static mame056.drivers.munchmo.*;
+import static mame056.drivers.digdug.*;
 
 public class driver {
 
@@ -390,10 +391,10 @@ public class driver {
         /*TODO*///	driver_galagab2,	/* bootleg */
         /*TODO*///	driver_galaga84,	/* hack */
         /*TODO*///	driver_nebulbee,	/* hack */
-        /*TODO*///	driver_digdug,	/* (c) 1982 */
-        /*TODO*///	driver_digdugb,	/* (c) 1982 */
-        /*TODO*///	driver_digdugat,	/* (c) 1982 Atari */
-        /*TODO*///	driver_dzigzag,	/* bootleg */
+        	driver_digdug,	
+        	driver_digdugb,	
+        	driver_digdugat,	
+        	driver_dzigzag,
         /*TODO*///	driver_xevious,	/* (c) 1982 */
         /*TODO*///	driver_xeviousa,	/* (c) 1982 + Atari license */
         /*TODO*///	driver_xevios,	/* bootleg */
