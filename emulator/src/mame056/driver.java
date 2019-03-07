@@ -21,6 +21,7 @@ import static mame056.drivers.blueprnt.*;
 import static mame056.drivers.higemaru.*;
 import static mame056.drivers.pooyan.*;
 import static mame056.drivers.exctsccr.*;
+import static mame056.drivers.galaxian.*;
 
 public class driver {
 
@@ -108,7 +109,7 @@ public class driver {
          */
         /* (c) 1984 */ /*TODO*///
         /*TODO*///	/* "Galaxian hardware" games */
-        /*TODO*///	driver_galaxian,	/* (c) Namco */
+        	driver_galaxian,	/* (c) Namco */
         /*TODO*///	driver_galaxiaj,	/* (c) Namco */
         /*TODO*///	driver_galmidw,	/* (c) Midway */
         /*TODO*///	driver_superg,	/* hack */
