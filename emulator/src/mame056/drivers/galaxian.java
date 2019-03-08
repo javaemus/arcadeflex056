@@ -175,6 +175,8 @@ import static mame056.sound.dacH.*;
 import static mame056.vidhrdw.galaxian.*;
 import static mame056.sndhrdw.galaxian.*;
 
+import static mame056.drivers.pacman.driver_puckman;
+
 // refactor
 import static arcadeflex036.osdepend.logerror;
 import mame056.sound.ay8910H.AY8910interface;
@@ -2122,15 +2124,310 @@ public class galaxian
 		}																			
 	);
         
-	/*			   NAME      MEM  	   INTERRUPT  	  GFXDECODE VH_START */
         //MACHINE_DRIVER(pisces,   galaxian, nmi_interrupt, galaxian, pisces)
-	//MACHINE_DRIVER(gteikob2, galaxian, nmi_interrupt, galaxian, gteikob2)
-	//MACHINE_DRIVER(batman2,  galaxian, nmi_interrupt, galaxian, batman2)
-	//MACHINE_DRIVER(mooncrgx, galaxian, nmi_interrupt, galaxian, mooncrst)
-	//MACHINE_DRIVER(pacmanbl, galaxian, nmi_interrupt, pacmanbl, galaxian)
+        static MachineDriver machine_driver_pisces = new MachineDriver
+	(																				
+		/* basic machine hardware */												
+		new MachineCPU[] {																			
+			new MachineCPU(																		
+				CPU_Z80,															
+				18432000/6,	/* 3.072 MHz */											
+				galaxian_readmem,galaxian_writemem,null,null,									
+				nmi_interrupt,1																
+			)																		
+		},																			
+		16000/132/2, 2500,	/* frames per second, vblank duration */			
+		1,	/* single CPU, no need for interleaving */								
+		null,																			
+																					
+		/* video hardware */														
+		32*8, 32*8, new rectangle( 0*8, 32*8-1, 2*8, 30*8-1 ),									
+		galaxian_gfxdecodeinfo,														
+		32+2+64,8*4,	/* 32 for the characters, 2 for the bullets, 64 for the stars */	
+		galaxian_vh_convert_color_prom,												
+																					
+		VIDEO_TYPE_RASTER,															
+		null,																			
+		pisces_vh_start,															
+		null,																			
+		galaxian_vh_screenrefresh,													
+																					
+		/* sound hardware */														
+		0,0,0,0,																	
+		new MachineSound[] {																			
+			new MachineSound(																		
+				SOUND_CUSTOM,														
+				custom_interface													
+			)																		
+		}																			
+	);
+        
+        //MACHINE_DRIVER(gteikob2, galaxian, nmi_interrupt, galaxian, gteikob2)
+        static MachineDriver machine_driver_gteikob2 = new MachineDriver
+	(																				
+		/* basic machine hardware */												
+		new MachineCPU[] {																			
+			new MachineCPU(																		
+				CPU_Z80,															
+				18432000/6,	/* 3.072 MHz */											
+				galaxian_readmem,galaxian_writemem,null,null,									
+				nmi_interrupt,1																
+			)																		
+		},																			
+		16000/132/2, 2500,	/* frames per second, vblank duration */			
+		1,	/* single CPU, no need for interleaving */								
+		null,																			
+																					
+		/* video hardware */														
+		32*8, 32*8, new rectangle( 0*8, 32*8-1, 2*8, 30*8-1 ),									
+		galaxian_gfxdecodeinfo,														
+		32+2+64,8*4,	/* 32 for the characters, 2 for the bullets, 64 for the stars */	
+		galaxian_vh_convert_color_prom,												
+																					
+		VIDEO_TYPE_RASTER,															
+		null,																			
+		gteikob2_vh_start,															
+		null,																			
+		galaxian_vh_screenrefresh,													
+																					
+		/* sound hardware */														
+		0,0,0,0,																	
+		new MachineSound[] {																			
+			new MachineSound(																		
+				SOUND_CUSTOM,														
+				custom_interface													
+			)																		
+		}																			
+	);
+        
+        //MACHINE_DRIVER(batman2,  galaxian, nmi_interrupt, galaxian, batman2)
+        static MachineDriver machine_driver_batman2 = new MachineDriver
+	(																				
+		/* basic machine hardware */												
+		new MachineCPU[] {																			
+			new MachineCPU(																		
+				CPU_Z80,															
+				18432000/6,	/* 3.072 MHz */											
+				galaxian_readmem,galaxian_writemem,null,null,									
+				nmi_interrupt,1																
+			)																		
+		},																			
+		16000/132/2, 2500,	/* frames per second, vblank duration */			
+		1,	/* single CPU, no need for interleaving */								
+		null,																			
+																					
+		/* video hardware */														
+		32*8, 32*8, new rectangle( 0*8, 32*8-1, 2*8, 30*8-1 ),									
+		galaxian_gfxdecodeinfo,														
+		32+2+64,8*4,	/* 32 for the characters, 2 for the bullets, 64 for the stars */	
+		galaxian_vh_convert_color_prom,												
+																					
+		VIDEO_TYPE_RASTER,															
+		null,																			
+		batman2_vh_start,															
+		null,																			
+		galaxian_vh_screenrefresh,													
+																					
+		/* sound hardware */														
+		0,0,0,0,																	
+		new MachineSound[] {																			
+			new MachineSound(																		
+				SOUND_CUSTOM,														
+				custom_interface													
+			)																		
+		}																			
+	);
+        
+        //MACHINE_DRIVER(mooncrgx, galaxian, nmi_interrupt, galaxian, mooncrst)
+        static MachineDriver machine_driver_mooncrgx = new MachineDriver
+	(																				
+		/* basic machine hardware */												
+		new MachineCPU[] {																			
+			new MachineCPU(																		
+				CPU_Z80,															
+				18432000/6,	/* 3.072 MHz */											
+				galaxian_readmem,galaxian_writemem,null,null,									
+				nmi_interrupt,1																
+			)																		
+		},																			
+		16000/132/2, 2500,	/* frames per second, vblank duration */			
+		1,	/* single CPU, no need for interleaving */								
+		null,																			
+																					
+		/* video hardware */														
+		32*8, 32*8, new rectangle( 0*8, 32*8-1, 2*8, 30*8-1 ),									
+		galaxian_gfxdecodeinfo,														
+		32+2+64,8*4,	/* 32 for the characters, 2 for the bullets, 64 for the stars */	
+		galaxian_vh_convert_color_prom,												
+																					
+		VIDEO_TYPE_RASTER,															
+		null,																			
+		mooncrst_vh_start,															
+		null,																			
+		galaxian_vh_screenrefresh,													
+																					
+		/* sound hardware */														
+		0,0,0,0,																	
+		new MachineSound[] {																			
+			new MachineSound(																		
+				SOUND_CUSTOM,														
+				custom_interface													
+			)																		
+		}																			
+	);
+        
+        //MACHINE_DRIVER(mooncrst, mooncrst, nmi_interrupt, galaxian, mooncrst)
+        static MachineDriver machine_driver_mooncrst = new MachineDriver
+	(																				
+		/* basic machine hardware */												
+		new MachineCPU[] {																			
+			new MachineCPU(																		
+				CPU_Z80,															
+				18432000/6,	/* 3.072 MHz */											
+				mooncrst_readmem,mooncrst_writemem,null,null,									
+				nmi_interrupt,1																
+			)																		
+		},																			
+		16000/132/2, 2500,	/* frames per second, vblank duration */			
+		1,	/* single CPU, no need for interleaving */								
+		null,																			
+																					
+		/* video hardware */														
+		32*8, 32*8, new rectangle( 0*8, 32*8-1, 2*8, 30*8-1 ),									
+		galaxian_gfxdecodeinfo,														
+		32+2+64,8*4,	/* 32 for the characters, 2 for the bullets, 64 for the stars */	
+		galaxian_vh_convert_color_prom,												
+																					
+		VIDEO_TYPE_RASTER,															
+		null,																			
+		mooncrst_vh_start,															
+		null,																			
+		galaxian_vh_screenrefresh,													
+																					
+		/* sound hardware */														
+		0,0,0,0,																	
+		new MachineSound[] {																			
+			new MachineSound(																		
+				SOUND_CUSTOM,														
+				custom_interface													
+			)																		
+		}																			
+	);
+        
+        //MACHINE_DRIVER(moonqsr,  mooncrst, nmi_interrupt, galaxian, moonqsr)
+        static MachineDriver machine_driver_moonqsr = new MachineDriver
+	(																				
+		/* basic machine hardware */												
+		new MachineCPU[] {																			
+			new MachineCPU(																		
+				CPU_Z80,															
+				18432000/6,	/* 3.072 MHz */											
+				mooncrst_readmem,mooncrst_writemem,null,null,									
+				nmi_interrupt,1																
+			)																		
+		},																			
+		16000/132/2, 2500,	/* frames per second, vblank duration */			
+		1,	/* single CPU, no need for interleaving */								
+		null,																			
+																					
+		/* video hardware */														
+		32*8, 32*8, new rectangle( 0*8, 32*8-1, 2*8, 30*8-1 ),									
+		galaxian_gfxdecodeinfo,														
+		32+2+64,8*4,	/* 32 for the characters, 2 for the bullets, 64 for the stars */	
+		galaxian_vh_convert_color_prom,												
+																					
+		VIDEO_TYPE_RASTER,															
+		null,																			
+		moonqsr_vh_start,															
+		null,																			
+		galaxian_vh_screenrefresh,													
+																					
+		/* sound hardware */														
+		0,0,0,0,																	
+		new MachineSound[] {																			
+			new MachineSound(																		
+				SOUND_CUSTOM,														
+				custom_interface													
+			)																		
+		}																			
+	);
+        
+        //MACHINE_DRIVER(pacmanbl, galaxian, nmi_interrupt, pacmanbl, galaxian)
+        static MachineDriver machine_driver_pacmanbl = new MachineDriver
+	(																				
+		/* basic machine hardware */												
+		new MachineCPU[] {																			
+			new MachineCPU(																		
+				CPU_Z80,															
+				18432000/6,	/* 3.072 MHz */											
+				galaxian_readmem,galaxian_writemem,null,null,									
+				nmi_interrupt,1																
+			)																		
+		},																			
+		16000/132/2, 2500,	/* frames per second, vblank duration */			
+		1,	/* single CPU, no need for interleaving */								
+		null,																			
+																					
+		/* video hardware */														
+		32*8, 32*8, new rectangle( 0*8, 32*8-1, 2*8, 30*8-1 ),									
+		pacmanbl_gfxdecodeinfo,														
+		32+2+64,8*4,	/* 32 for the characters, 2 for the bullets, 64 for the stars */	
+		galaxian_vh_convert_color_prom,												
+																					
+		VIDEO_TYPE_RASTER,															
+		null,																			
+		mooncrst_vh_start,															
+		null,																			
+		galaxian_vh_screenrefresh,													
+																					
+		/* sound hardware */														
+		0,0,0,0,																	
+		new MachineSound[] {																			
+			new MachineSound(																		
+				SOUND_CUSTOM,														
+				custom_interface													
+			)																		
+		}																			
+	);
+        
+	/*               NAME      MEM  	   INTERRUPT  	  GFXDECODE VH_START */
 	//MACHINE_DRIVER(devilfsg, galaxian, interrupt,  	  pacmanbl, galaxian)
-	//MACHINE_DRIVER(mooncrst, mooncrst, nmi_interrupt, galaxian, mooncrst)
-	//MACHINE_DRIVER(moonqsr,  mooncrst, nmi_interrupt, galaxian, moonqsr)
+	static MachineDriver machine_driver_devilfsg = new MachineDriver
+	(																				
+		/* basic machine hardware */												
+		new MachineCPU[] {																			
+			new MachineCPU(																		
+				CPU_Z80,															
+				18432000/6,	/* 3.072 MHz */											
+				galaxian_readmem,galaxian_writemem,null,null,									
+				interrupt,1																
+			)																		
+		},																			
+		16000/132/2, 2500,	/* frames per second, vblank duration */			
+		1,	/* single CPU, no need for interleaving */								
+		null,																			
+																					
+		/* video hardware */														
+		32*8, 32*8, new rectangle( 0*8, 32*8-1, 2*8, 30*8-1 ),									
+		pacmanbl_gfxdecodeinfo,														
+		32+2+64,8*4,	/* 32 for the characters, 2 for the bullets, 64 for the stars */	
+		galaxian_vh_convert_color_prom,												
+																					
+		VIDEO_TYPE_RASTER,															
+		null,																			
+		mooncrst_vh_start,															
+		null,																			
+		galaxian_vh_screenrefresh,													
+																					
+		/* sound hardware */														
+		0,0,0,0,																	
+		new MachineSound[] {																			
+			new MachineSound(																		
+				SOUND_CUSTOM,														
+				custom_interface													
+			)																		
+		}																			
+	);
 	
 	
 	static MachineDriver machine_driver_scramblb = new MachineDriver
@@ -3387,23 +3684,26 @@ public class galaxian
 	
 	
 	
-	static void init_pisces()
-	{
-		/* the coin lockout was replaced */
+	public static InitDriverPtr init_pisces = new InitDriverPtr() {
+            public void handler() {
+                /* the coin lockout was replaced */
 		/*TODO*///install_mem_write_handler(0, 0x6002, 0x6002, pisces_gfxbank_w);
-	}
+            }
+        };
 	
-	static void init_checkmaj()
-	{
+	public static InitDriverPtr init_checkmaj = new InitDriverPtr() {
+            public void handler() {
 		/* for the title screen */
 		install_mem_read_handler(0, 0x3800, 0x3800, checkmaj_protection_r);
-	}
+            }
+	};
 	
-	static void init_kingball()
-	{
+	public static InitDriverPtr init_kingball = new InitDriverPtr() {
+            public void handler() {
 		install_mem_read_handler(0, 0xa000, 0xa000, kingball_IN0_r);
 		install_mem_read_handler(0, 0xa800, 0xa800, kingball_IN1_r);
-	}
+            }
+	};
 	
 	
 	static int decode(int data,int addr)
@@ -3418,30 +3718,33 @@ public class galaxian
 		return res;
 	}
 	
-	static void init_mooncrst()
-	{
-		int A;
+	public static InitDriverPtr init_mooncrst = new InitDriverPtr() {
+            public void handler() {
+                int A;
 		UBytePtr rom = memory_region(REGION_CPU1);
 	
 	
 		for (A = 0;A < 0x10000;A++)
 			rom.write(A, decode(rom.read(A),A));
-	}
+            }
+        };
 	
-	static void init_mooncrgx()
-	{
-		init_mooncrst();
+	public static InitDriverPtr init_mooncrgx = new InitDriverPtr() {
+            public void handler() {
+		init_mooncrst.handler();
 	
 		/*TODO*///install_mem_write_handler(0, 0x6000, 0x6002, mooncrgx_gfxextend_w);
-	}
+            }
+	};
 	
-	static void init_moonal2()
-	{
+	public static InitDriverPtr init_moonal2 = new InitDriverPtr() {
+            public void handler() {
 		/*TODO*///install_mem_write_handler(0, 0xa000, 0xa002, MWA_NOP);
-	}
+            }
+	};
 	
-	static void init_moonqsr()
-	{
+	public static InitDriverPtr init_moonqsr = new InitDriverPtr() {
+            public void handler() {
 		int A;
 		UBytePtr rom = memory_region(REGION_CPU1);
 		int diff = memory_region_length(REGION_CPU1) / 2;
@@ -3451,11 +3754,12 @@ public class galaxian
 	
 		for (A = 0;A < 0x10000;A++)
 			rom.write(A + diff, decode(rom.read(A),A));
-	}
+            }
+	};
 	
-	static void init_checkman()
-	{
-	/*
+	public static InitDriverPtr init_checkman = new InitDriverPtr() {
+            public void handler() {
+                /*
 	                     Encryption Table
 	                     ----------------
 	+---+---+---+------+------+------+------+------+------+------+------+
@@ -3510,15 +3814,17 @@ public class galaxian
 			}
 			rom.write(A, rom.read(A)^ data_xor);
 		}
-	}
+            }
+        };
 	
-	static void init_gteikob2()
-	{
-		init_pisces();
+	public static InitDriverPtr init_gteikob2 = new InitDriverPtr() {
+            public void handler() {
+                init_pisces.handler();
 	
 		/*TODO*///install_mem_write_handler(0, 0x7006, 0x7006, gteikob2_flip_screen_x_w);
 		/*TODO*///install_mem_write_handler(0, 0x7007, 0x7007, gteikob2_flip_screen_y_w);
-	}
+            }
+        };
 	
 	
 	public static GameDriver driver_galaxian	   = new GameDriver("1979"	,"galaxian"	,"galaxian.java"	,rom_galaxian,null	,machine_driver_galaxian	,input_ports_galaxian	,null	,ROT90	,	"Namco", "Galaxian (Namco set 1)" );
@@ -3531,44 +3837,44 @@ public class galaxian
 	public static GameDriver driver_galturbo	   = new GameDriver("1979"	,"galturbo"	,"galaxian.java"	,rom_galturbo,driver_galaxian	,machine_driver_galaxian	,input_ports_superg	,null	,ROT90	,	"hack", "Galaxian Turbo" );
 	public static GameDriver driver_swarm	   = new GameDriver("1979"	,"swarm"	,"galaxian.java"	,rom_swarm,driver_galaxian	,machine_driver_galaxian	,input_ports_swarm	,null	,ROT90	,	"hack", "Swarm" );
 	public static GameDriver driver_zerotime	   = new GameDriver("1979"	,"zerotime"	,"galaxian.java"	,rom_zerotime,driver_galaxian	,machine_driver_galaxian	,input_ports_zerotime	,null	,ROT90	,	"Petaco S.A.", "Zero Time" );
-	/*TODO*///public static GameDriver driver_pisces	   = new GameDriver("19??"	,"pisces"	,"galaxian.java"	,rom_pisces,null	,machine_driver_pisces	,input_ports_pisces	,init_pisces	,ROT90	,	"<unknown>", "Pisces" );
-	/*TODO*///public static GameDriver driver_uniwars	   = new GameDriver("1980"	,"uniwars"	,"galaxian.java"	,rom_uniwars,null	,machine_driver_pisces	,input_ports_superg	,init_pisces	,ROT90	,	"Irem", "UniWar S" );
-	/*TODO*///public static GameDriver driver_gteikoku	   = new GameDriver("1980"	,"gteikoku"	,"galaxian.java"	,rom_gteikoku,driver_uniwars	,machine_driver_pisces	,input_ports_superg	,init_pisces	,ROT90	,	"Irem", "Gingateikoku No Gyakushu" );
-	/*TODO*///public static GameDriver driver_gteikokb	   = new GameDriver("1980"	,"gteikokb"	,"galaxian.java"	,rom_gteikokb,driver_uniwars	,machine_driver_pisces	,input_ports_gteikokb	,init_pisces	,ROT270	,	"bootleg", "Gingateikoku No Gyakushu (bootleg)" );
-	/*TODO*///public static GameDriver driver_gteikob2	   = new GameDriver("1980"	,"gteikob2"	,"galaxian.java"	,rom_gteikob2,driver_uniwars	,machine_driver_gteikob2	,input_ports_gteikob2	,init_gteikob2	,ROT270	,	"bootleg", "Gingateikoku No Gyakushu (bootleg, set 2)" );
-	/*TODO*///public static GameDriver driver_spacbatt	   = new GameDriver("1980"	,"spacbatt"	,"galaxian.java"	,rom_spacbatt,driver_uniwars	,machine_driver_pisces	,input_ports_superg	,init_pisces	,ROT90	,	"bootleg", "Space Battle" );
+	public static GameDriver driver_pisces	   = new GameDriver("19??"	,"pisces"	,"galaxian.java"	,rom_pisces,null	,machine_driver_pisces	,input_ports_pisces	,init_pisces	,ROT90	,	"<unknown>", "Pisces" );
+	public static GameDriver driver_uniwars	   = new GameDriver("1980"	,"uniwars"	,"galaxian.java"	,rom_uniwars,null	,machine_driver_pisces	,input_ports_superg	,init_pisces	,ROT90	,	"Irem", "UniWar S" );
+	public static GameDriver driver_gteikoku	   = new GameDriver("1980"	,"gteikoku"	,"galaxian.java"	,rom_gteikoku,driver_uniwars	,machine_driver_pisces	,input_ports_superg	,init_pisces	,ROT90	,	"Irem", "Gingateikoku No Gyakushu" );
+	public static GameDriver driver_gteikokb	   = new GameDriver("1980"	,"gteikokb"	,"galaxian.java"	,rom_gteikokb,driver_uniwars	,machine_driver_pisces	,input_ports_gteikokb	,init_pisces	,ROT270	,	"bootleg", "Gingateikoku No Gyakushu (bootleg)" );
+	public static GameDriver driver_gteikob2	   = new GameDriver("1980"	,"gteikob2"	,"galaxian.java"	,rom_gteikob2,driver_uniwars	,machine_driver_gteikob2	,input_ports_gteikob2	,init_gteikob2	,ROT270	,	"bootleg", "Gingateikoku No Gyakushu (bootleg, set 2)" );
+	public static GameDriver driver_spacbatt	   = new GameDriver("1980"	,"spacbatt"	,"galaxian.java"	,rom_spacbatt,driver_uniwars	,machine_driver_pisces	,input_ports_superg	,init_pisces	,ROT90	,	"bootleg", "Space Battle" );
 	/*TODO*///public static GameDriver driver_batman2	   = new GameDriver("1980"	,"batman2"	,"galaxian.java"	,rom_batman2,driver_phoenix	,machine_driver_batman2	,input_ports_batman2	,init_pisces	,ROT270	,	"bootleg", "Batman Part 2" );
-	/*TODO*///public static GameDriver driver_warofbug	   = new GameDriver("1981"	,"warofbug"	,"galaxian.java"	,rom_warofbug,null	,machine_driver_galaxian	,input_ports_warofbug	,init_pisces	,ROT90	,	"Armenia", "War of the Bugs or Monsterous Manouvers in a Mushroom Maze" );
-	/*TODO*///public static GameDriver driver_redufo	   = new GameDriver("19??"	,"redufo"	,"galaxian.java"	,rom_redufo,null	,machine_driver_galaxian	,input_ports_redufo	,init_pisces	,ROT90	,	"bootleg", "Defend the Terra Attack on the Red UFO (bootleg)" );
-	/*TODO*///public static GameDriver driver_exodus	   = new GameDriver("19??"	,"exodus"	,"galaxian.java"	,rom_exodus,driver_redufo	,machine_driver_galaxian	,input_ports_exodus	,init_pisces	,ROT90	,	"Subelectro", "Exodus (bootleg?)" );
-	/*TODO*///public static GameDriver driver_streakng	   = new GameDriver("1980"	,"streakng"	,"galaxian.java"	,rom_streakng,null	,machine_driver_pacmanbl	,input_ports_streakng	,null	,ROT90	,	"Shoei", "Streaking", GAME_IMPERFECT_COLORS );
-	/*TODO*///public static GameDriver driver_ghostmun	   = new GameDriver("1981"	,"ghostmun"	,"galaxian.java"	,rom_ghostmun,driver_puckman	,machine_driver_pacmanbl	,input_ports_streakng	,null	,ROT90	,	"bootleg", "Ghost Muncher" );
-	/*TODO*///public static GameDriver driver_pacmanbl	   = new GameDriver("1981"	,"pacmanbl"	,"galaxian.java"	,rom_pacmanbl,driver_puckman	,machine_driver_pacmanbl	,input_ports_pacmanbl	,init_pisces	,ROT270	,	"bootleg", "Pac-Man (bootleg on Galaxian hardware)" );
+	public static GameDriver driver_warofbug	   = new GameDriver("1981"	,"warofbug"	,"galaxian.java"	,rom_warofbug,null	,machine_driver_galaxian	,input_ports_warofbug	,init_pisces	,ROT90	,	"Armenia", "War of the Bugs or Monsterous Manouvers in a Mushroom Maze" );
+	public static GameDriver driver_redufo	   = new GameDriver("19??"	,"redufo"	,"galaxian.java"	,rom_redufo,null	,machine_driver_galaxian	,input_ports_redufo	,init_pisces	,ROT90	,	"bootleg", "Defend the Terra Attack on the Red UFO (bootleg)" );
+	public static GameDriver driver_exodus	   = new GameDriver("19??"	,"exodus"	,"galaxian.java"	,rom_exodus,driver_redufo	,machine_driver_galaxian	,input_ports_exodus	,init_pisces	,ROT90	,	"Subelectro", "Exodus (bootleg?)" );
+	public static GameDriver driver_streakng	   = new GameDriver("1980"	,"streakng"	,"galaxian.java"	,rom_streakng,null	,machine_driver_pacmanbl	,input_ports_streakng	,null	,ROT90	,	"Shoei", "Streaking", GAME_IMPERFECT_COLORS );
+	public static GameDriver driver_ghostmun	   = new GameDriver("1981"	,"ghostmun"	,"galaxian.java"	,rom_ghostmun,driver_puckman	,machine_driver_pacmanbl	,input_ports_streakng	,null	,ROT90	,	"bootleg", "Ghost Muncher" );
+	public static GameDriver driver_pacmanbl	   = new GameDriver("1981"	,"pacmanbl"	,"galaxian.java"	,rom_pacmanbl,driver_puckman	,machine_driver_pacmanbl	,input_ports_pacmanbl	,init_pisces	,ROT270	,	"bootleg", "Pac-Man (bootleg on Galaxian hardware)" );
 	/*TODO*///public static GameDriver driver_devilfsg	   = new GameDriver("1984"	,"devilfsg"	,"galaxian.java"	,rom_devilfsg,driver_devilfsh	,machine_driver_devilfsg	,input_ports_devilfsg	,null	,ROT270	,	"Vision / Artic", "Devil Fish (Galaxian hardware, bootleg?)" );
-	/*TODO*///public static GameDriver driver_zigzag	   = new GameDriver("1982"	,"zigzag"	,"galaxian.java"	,rom_zigzag,null	,machine_driver_zigzag	,input_ports_zigzag	,null	,ROT90	,	"LAX", "Zig Zag (Galaxian hardware, set 1)" );
-	/*TODO*///public static GameDriver driver_zigzag2	   = new GameDriver("1982"	,"zigzag2"	,"galaxian.java"	,rom_zigzag2,driver_zigzag	,machine_driver_zigzag	,input_ports_zigzag	,null	,ROT90	,	"LAX", "Zig Zag (Galaxian hardware, set 2)" );
+	public static GameDriver driver_zigzag	   = new GameDriver("1982"	,"zigzag"	,"galaxian.java"	,rom_zigzag,null	,machine_driver_zigzag	,input_ports_zigzag	,null	,ROT90	,	"LAX", "Zig Zag (Galaxian hardware, set 1)" );
+	public static GameDriver driver_zigzag2	   = new GameDriver("1982"	,"zigzag2"	,"galaxian.java"	,rom_zigzag2,driver_zigzag	,machine_driver_zigzag	,input_ports_zigzag	,null	,ROT90	,	"LAX", "Zig Zag (Galaxian hardware, set 2)" );
 	/*TODO*///public static GameDriver driver_scramblb	   = new GameDriver("1981"	,"scramblb"	,"galaxian.java"	,rom_scramblb,driver_scramble	,machine_driver_scramblb	,input_ports_scramblb	,null	,ROT90	,	"bootleg", "Scramble (bootleg on Galaxian hardware)" );
-	/*TODO*///public static GameDriver driver_jumpbug	   = new GameDriver("1981"	,"jumpbug"	,"galaxian.java"	,rom_jumpbug,null	,machine_driver_jumpbug	,input_ports_jumpbug	,null	,ROT90	,	"Rock-ola", "Jump Bug" );
-	/*TODO*///public static GameDriver driver_jumpbugb	   = new GameDriver("1981"	,"jumpbugb"	,"galaxian.java"	,rom_jumpbugb,driver_jumpbug	,machine_driver_jumpbug	,input_ports_jumpbug	,null	,ROT90	,	"bootleg", "Jump Bug (bootleg)" );
-	/*TODO*///public static GameDriver driver_levers	   = new GameDriver("1983"	,"levers"	,"galaxian.java"	,rom_levers,null	,machine_driver_jumpbug	,input_ports_levers	,null	,ROT90	,	"Rock-ola", "Levers" );
-	/*TODO*///public static GameDriver driver_azurian	   = new GameDriver("1982"	,"azurian"	,"galaxian.java"	,rom_azurian,null	,machine_driver_galaxian	,input_ports_azurian	,init_pisces	,ROT90	,	"Rait Electronics Ltd", "Azurian Attack" );
-	/*TODO*///public static GameDriver driver_orbitron	   = new GameDriver("19??"	,"orbitron"	,"galaxian.java"	,rom_orbitron,null	,machine_driver_galaxian	,input_ports_orbitron	,init_pisces	,ROT270	,	"Signatron USA", "Orbitron" );
-	/*TODO*///public static GameDriver driver_checkman	   = new GameDriver("1982"	,"checkman"	,"galaxian.java"	,rom_checkman,null	,machine_driver_checkman	,input_ports_checkman	,init_checkman	,ROT90	,	"Zilec-Zenitone", "Checkman" );
-	/*TODO*///public static GameDriver driver_checkmaj	   = new GameDriver("1982"	,"checkmaj"	,"galaxian.java"	,rom_checkmaj,driver_checkman	,machine_driver_checkmaj	,input_ports_checkmaj	,init_checkmaj	,ROT90	,	"Jaleco", "Checkman (Japan)" );
-	/*TODO*///public static GameDriver driver_blkhole	   = new GameDriver("19??"	,"blkhole"	,"galaxian.java"	,rom_blkhole,null	,machine_driver_galaxian	,input_ports_blkhole	,null	,ROT90	,	"TDS", "Black Hole" );
-	/*TODO*///public static GameDriver driver_mooncrst	   = new GameDriver("1980"	,"mooncrst"	,"galaxian.java"	,rom_mooncrst,null	,machine_driver_mooncrst	,input_ports_mooncrst	,init_mooncrst	,ROT90	,	"Nichibutsu", "Moon Cresta (Nichibutsu)" );
-	/*TODO*///public static GameDriver driver_mooncrsg	   = new GameDriver("1980"	,"mooncrsg"	,"galaxian.java"	,rom_mooncrsg,driver_mooncrst	,machine_driver_mooncrst	,input_ports_mooncrst	,null	,ROT90	,	"Gremlin", "Moon Cresta (Gremlin)" );
-	/*TODO*///public static GameDriver driver_smooncrs	   = new GameDriver("1980?"	,"smooncrs"	,"galaxian.java"	,rom_smooncrs,driver_mooncrst	,machine_driver_mooncrst	,input_ports_mooncrst	,null	,ROT90	,	"Gremlin", "Super Moon Cresta" );
-	/*TODO*///public static GameDriver driver_mooncrsb	   = new GameDriver("1980"	,"mooncrsb"	,"galaxian.java"	,rom_mooncrsb,driver_mooncrst	,machine_driver_mooncrst	,input_ports_mooncrst	,null	,ROT90	,	"bootleg", "Moon Cresta (bootleg set 1)" );
-	/*TODO*///public static GameDriver driver_mooncrs2	   = new GameDriver("1980"	,"mooncrs2"	,"galaxian.java"	,rom_mooncrs2,driver_mooncrst	,machine_driver_mooncrst	,input_ports_mooncrst	,null	,ROT90	,	"Nichibutsu", "Moon Cresta (bootleg set 2)" );
-	/*TODO*///public static GameDriver driver_fantazia	   = new GameDriver("1980"	,"fantazia"	,"galaxian.java"	,rom_fantazia,driver_mooncrst	,machine_driver_mooncrst	,input_ports_mooncrst	,null	,ROT90	,	"bootleg", "Fantazia", GAME_IMPERFECT_COLORS );
-	/*TODO*///public static GameDriver driver_eagle	   = new GameDriver("1980"	,"eagle"	,"galaxian.java"	,rom_eagle,driver_mooncrst	,machine_driver_mooncrst	,input_ports_eagle	,null	,ROT90	,	"Centuri", "Eagle (set 1)" );
-	/*TODO*///public static GameDriver driver_eagle2	   = new GameDriver("1980"	,"eagle2"	,"galaxian.java"	,rom_eagle2,driver_mooncrst	,machine_driver_mooncrst	,input_ports_eagle2	,null	,ROT90	,	"Centuri", "Eagle (set 2)" );
-	/*TODO*///public static GameDriver driver_mooncrgx	   = new GameDriver("1980"	,"mooncrgx"	,"galaxian.java"	,rom_mooncrgx,driver_mooncrst	,machine_driver_mooncrgx	,input_ports_mooncrgx	,init_mooncrgx	,ROT270	,	"bootleg", "Moon Cresta (bootleg on Galaxian hardware)" );
+	public static GameDriver driver_jumpbug	   = new GameDriver("1981"	,"jumpbug"	,"galaxian.java"	,rom_jumpbug,null	,machine_driver_jumpbug	,input_ports_jumpbug	,null	,ROT90	,	"Rock-ola", "Jump Bug" );
+	public static GameDriver driver_jumpbugb	   = new GameDriver("1981"	,"jumpbugb"	,"galaxian.java"	,rom_jumpbugb,driver_jumpbug	,machine_driver_jumpbug	,input_ports_jumpbug	,null	,ROT90	,	"bootleg", "Jump Bug (bootleg)" );
+	public static GameDriver driver_levers	   = new GameDriver("1983"	,"levers"	,"galaxian.java"	,rom_levers,null	,machine_driver_jumpbug	,input_ports_levers	,null	,ROT90	,	"Rock-ola", "Levers" );
+	public static GameDriver driver_azurian	   = new GameDriver("1982"	,"azurian"	,"galaxian.java"	,rom_azurian,null	,machine_driver_galaxian	,input_ports_azurian	,init_pisces	,ROT90	,	"Rait Electronics Ltd", "Azurian Attack" );
+	public static GameDriver driver_orbitron	   = new GameDriver("19??"	,"orbitron"	,"galaxian.java"	,rom_orbitron,null	,machine_driver_galaxian	,input_ports_orbitron	,init_pisces	,ROT270	,	"Signatron USA", "Orbitron" );
+	public static GameDriver driver_checkman	   = new GameDriver("1982"	,"checkman"	,"galaxian.java"	,rom_checkman,null	,machine_driver_checkman	,input_ports_checkman	,init_checkman	,ROT90	,	"Zilec-Zenitone", "Checkman" );
+	public static GameDriver driver_checkmaj	   = new GameDriver("1982"	,"checkmaj"	,"galaxian.java"	,rom_checkmaj,driver_checkman	,machine_driver_checkmaj	,input_ports_checkmaj	,init_checkmaj	,ROT90	,	"Jaleco", "Checkman (Japan)" );
+	public static GameDriver driver_blkhole	   = new GameDriver("19??"	,"blkhole"	,"galaxian.java"	,rom_blkhole,null	,machine_driver_galaxian	,input_ports_blkhole	,null	,ROT90	,	"TDS", "Black Hole" );
+	public static GameDriver driver_mooncrst	   = new GameDriver("1980"	,"mooncrst"	,"galaxian.java"	,rom_mooncrst,null	,machine_driver_mooncrst	,input_ports_mooncrst	,init_mooncrst	,ROT90	,	"Nichibutsu", "Moon Cresta (Nichibutsu)" );
+	public static GameDriver driver_mooncrsg	   = new GameDriver("1980"	,"mooncrsg"	,"galaxian.java"	,rom_mooncrsg,driver_mooncrst	,machine_driver_mooncrst	,input_ports_mooncrst	,null	,ROT90	,	"Gremlin", "Moon Cresta (Gremlin)" );
+	public static GameDriver driver_smooncrs	   = new GameDriver("1980?"	,"smooncrs"	,"galaxian.java"	,rom_smooncrs,driver_mooncrst	,machine_driver_mooncrst	,input_ports_mooncrst	,null	,ROT90	,	"Gremlin", "Super Moon Cresta" );
+	public static GameDriver driver_mooncrsb	   = new GameDriver("1980"	,"mooncrsb"	,"galaxian.java"	,rom_mooncrsb,driver_mooncrst	,machine_driver_mooncrst	,input_ports_mooncrst	,null	,ROT90	,	"bootleg", "Moon Cresta (bootleg set 1)" );
+	public static GameDriver driver_mooncrs2	   = new GameDriver("1980"	,"mooncrs2"	,"galaxian.java"	,rom_mooncrs2,driver_mooncrst	,machine_driver_mooncrst	,input_ports_mooncrst	,null	,ROT90	,	"Nichibutsu", "Moon Cresta (bootleg set 2)" );
+	public static GameDriver driver_fantazia	   = new GameDriver("1980"	,"fantazia"	,"galaxian.java"	,rom_fantazia,driver_mooncrst	,machine_driver_mooncrst	,input_ports_mooncrst	,null	,ROT90	,	"bootleg", "Fantazia", GAME_IMPERFECT_COLORS );
+	public static GameDriver driver_eagle	   = new GameDriver("1980"	,"eagle"	,"galaxian.java"	,rom_eagle,driver_mooncrst	,machine_driver_mooncrst	,input_ports_eagle	,null	,ROT90	,	"Centuri", "Eagle (set 1)" );
+	public static GameDriver driver_eagle2	   = new GameDriver("1980"	,"eagle2"	,"galaxian.java"	,rom_eagle2,driver_mooncrst	,machine_driver_mooncrst	,input_ports_eagle2	,null	,ROT90	,	"Centuri", "Eagle (set 2)" );
+	public static GameDriver driver_mooncrgx	   = new GameDriver("1980"	,"mooncrgx"	,"galaxian.java"	,rom_mooncrgx,driver_mooncrst	,machine_driver_mooncrgx	,input_ports_mooncrgx	,init_mooncrgx	,ROT270	,	"bootleg", "Moon Cresta (bootleg on Galaxian hardware)" );
 	/*TODO*///public static GameDriver driver_omega	   = new GameDriver("19??"	,"omega"	,"galaxian.java"	,rom_omega,driver_theend	,machine_driver_galaxian	,input_ports_omega	,null	,ROT270	,	"bootleg?", "Omega" );
-	/*TODO*///public static GameDriver driver_moonqsr	   = new GameDriver("1980"	,"moonqsr"	,"galaxian.java"	,rom_moonqsr,null	,machine_driver_moonqsr	,input_ports_moonqsr	,init_moonqsr	,ROT90	,	"Nichibutsu", "Moon Quasar" );
-	/*TODO*///public static GameDriver driver_moonal2	   = new GameDriver("1980"	,"moonal2"	,"galaxian.java"	,rom_moonal2,null	,machine_driver_mooncrst	,input_ports_moonal2	,init_moonal2	,ROT90	,	"Nichibutsu", "Moon Alien Part 2" );
-	/*TODO*///public static GameDriver driver_moonal2b	   = new GameDriver("1980"	,"moonal2b"	,"galaxian.java"	,rom_moonal2b,driver_moonal2	,machine_driver_mooncrst	,input_ports_moonal2	,init_moonal2	,ROT90	,	"Nichibutsu", "Moon Alien Part 2 (older version)" );
-	/*TODO*///public static GameDriver driver_kingball	   = new GameDriver("1980"	,"kingball"	,"galaxian.java"	,rom_kingball,null	,machine_driver_kingball	,input_ports_kingball	,init_kingball	,ROT90	,	"Namco", "King & Balloon (US)" );
-	/*TODO*///public static GameDriver driver_kingbalj	   = new GameDriver("1980"	,"kingbalj"	,"galaxian.java"	,rom_kingbalj,driver_kingball	,machine_driver_kingball	,input_ports_kingball	,init_kingball	,ROT90	,	"Namco", "King & Balloon (Japan)" );
+	public static GameDriver driver_moonqsr	   = new GameDriver("1980"	,"moonqsr"	,"galaxian.java"	,rom_moonqsr,null	,machine_driver_moonqsr	,input_ports_moonqsr	,init_moonqsr	,ROT90	,	"Nichibutsu", "Moon Quasar" );
+	public static GameDriver driver_moonal2	   = new GameDriver("1980"	,"moonal2"	,"galaxian.java"	,rom_moonal2,null	,machine_driver_mooncrst	,input_ports_moonal2	,init_moonal2	,ROT90	,	"Nichibutsu", "Moon Alien Part 2" );
+	public static GameDriver driver_moonal2b	   = new GameDriver("1980"	,"moonal2b"	,"galaxian.java"	,rom_moonal2b,driver_moonal2	,machine_driver_mooncrst	,input_ports_moonal2	,init_moonal2	,ROT90	,	"Nichibutsu", "Moon Alien Part 2 (older version)" );
+	public static GameDriver driver_kingball	   = new GameDriver("1980"	,"kingball"	,"galaxian.java"	,rom_kingball,null	,machine_driver_kingball	,input_ports_kingball	,init_kingball	,ROT90	,	"Namco", "King & Balloon (US)" );
+	public static GameDriver driver_kingbalj	   = new GameDriver("1980"	,"kingbalj"	,"galaxian.java"	,rom_kingbalj,driver_kingball	,machine_driver_kingball	,input_ports_kingball	,init_kingball	,ROT90	,	"Namco", "King & Balloon (Japan)" );
 }
