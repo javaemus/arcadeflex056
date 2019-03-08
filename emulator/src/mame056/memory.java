@@ -16,6 +16,7 @@ import static mame056.driverH.*;
 import static mame056.mame.Machine;
 import static mame056.memoryH.*;
 import static arcadeflex036.libc_old.*;
+import static java.lang.System.exit;
 
 public class memory {
 
@@ -440,32 +441,33 @@ public class memory {
 /*TODO*///#endif
 /*TODO*///	return memory_find_base(cpunum, start);
 /*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*////*-------------------------------------------------
-/*TODO*///	install_mem_write_handler - install dynamic
-/*TODO*///	read handler for 8-bit case
-/*TODO*///-------------------------------------------------*/
-/*TODO*///
-/*TODO*///data8_t *install_mem_write_handler(int cpunum, offs_t start, offs_t end, mem_write_handler handler)
-/*TODO*///{
-/*TODO*///	/* sanity check */
-/*TODO*///	if (cpudata[cpunum].mem.dbits != 8)
-/*TODO*///	{
-/*TODO*///		printf("fatal: install_mem_write_handler called on %d-bit cpu\n",cpudata[cpunum].mem.dbits);
-/*TODO*///		exit(1);
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	/* install the handler */
-/*TODO*///	install_mem_handler(&cpudata[cpunum].mem, 1, start, end, (void *)handler);
-/*TODO*///#ifdef MEM_DUMP
-/*TODO*///	/* dump the new memory configuration */
-/*TODO*///	mem_dump();
-/*TODO*///#endif
-/*TODO*///	return memory_find_base(cpunum, start);
-/*TODO*///}
-/*TODO*///
-/*TODO*///
+
+
+    /*-------------------------------------------------
+            install_mem_write_handler - install dynamic
+            read handler for 8-bit case
+    -------------------------------------------------*/
+
+    public static UBytePtr install_mem_write_handler(int cpunum, int start, int end, WriteHandlerPtr handler)
+    {
+            /* sanity check */
+            if (cpudata[cpunum].mem.dbits != 8)
+            {
+                    printf("fatal: install_mem_write_handler called on %d-bit cpu\n",cpudata[cpunum].mem.dbits);
+                    exit(1);
+            }
+
+            /* install the handler */
+            install_mem_handler(cpudata[cpunum].mem, 1, start, end, -15000, (Object) handler);
+            
+    /*TODO*///#ifdef MEM_DUMP
+    /*TODO*///	/* dump the new memory configuration */
+    /*TODO*///	mem_dump();
+    /*TODO*///#endif
+            return memory_find_base(cpunum, start);
+    }
+
+
 /*TODO*////*-------------------------------------------------
 /*TODO*///	install_mem_write16_handler - install dynamic
 /*TODO*///	read handler for 16-bit case
