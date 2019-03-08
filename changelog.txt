@@ -1,3 +1,7 @@
+08/03/2019
+==========
+-Added galaxian driver (WIP) games galaxiaj, galmidw, superg, galapx, galap1, galap4, galturbo, swarm, zerotime, pisces, uniwars, gteikoku, gteikokb, gteikob2,	spacbatt, warofbug, redufo, exodus, streakng, pacmanbl, ghostmun, zigzag, zigzag2, jumpbug, jumpbugb, levers, azurian, orbitron, mooncrgx, mooncrst, mooncrsg, smooncrs, mooncrsb, mooncrs2, fantazia, eagle, eagle2, moonqsr, checkman, checkmaj, blkhole, moonal2, moonal2b, kingball, kingbalj
+
 07/03/2019
 ==========
 -Added method pp_16_nd_fx_s in drawgfxfor galaxian driver
