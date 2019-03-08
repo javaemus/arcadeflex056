@@ -3687,7 +3687,7 @@ public class galaxian
 	public static InitDriverPtr init_pisces = new InitDriverPtr() {
             public void handler() {
                 /* the coin lockout was replaced */
-		/*TODO*///install_mem_write_handler(0, 0x6002, 0x6002, pisces_gfxbank_w);
+		install_mem_write_handler(0, 0x6002, 0x6002, pisces_gfxbank_w);
             }
         };
 	
@@ -3733,7 +3733,7 @@ public class galaxian
             public void handler() {
 		init_mooncrst.handler();
 	
-		/*TODO*///install_mem_write_handler(0, 0x6000, 0x6002, mooncrgx_gfxextend_w);
+		install_mem_write_handler(0, 0x6000, 0x6002, mooncrgx_gfxextend_w);
             }
 	};
 	
@@ -3821,8 +3821,8 @@ public class galaxian
             public void handler() {
                 init_pisces.handler();
 	
-		/*TODO*///install_mem_write_handler(0, 0x7006, 0x7006, gteikob2_flip_screen_x_w);
-		/*TODO*///install_mem_write_handler(0, 0x7007, 0x7007, gteikob2_flip_screen_y_w);
+		install_mem_write_handler(0, 0x7006, 0x7006, gteikob2_flip_screen_x_w);
+		install_mem_write_handler(0, 0x7007, 0x7007, gteikob2_flip_screen_y_w);
             }
         };
 	
