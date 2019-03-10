@@ -381,7 +381,7 @@ public class memory {
         /* sanity check */
         if (cpudata[cpunum].mem.dbits != 8) {
             printf("fatal: install_mem_read_handler called on %d-bit cpu\n", cpudata[cpunum].mem.dbits);
-            throw new UnsupportedOperationException("Unsupported");
+            exit(1);
         }
 
         /* install the handler */
@@ -441,34 +441,28 @@ public class memory {
 /*TODO*///#endif
 /*TODO*///	return memory_find_base(cpunum, start);
 /*TODO*///}
-
-
     /*-------------------------------------------------
             install_mem_write_handler - install dynamic
             read handler for 8-bit case
     -------------------------------------------------*/
+    public static UBytePtr install_mem_write_handler(int cpunum, int start, int end, WriteHandlerPtr handler) {
+        /* sanity check */
+        if (cpudata[cpunum].mem.dbits != 8) {
+            printf("fatal: install_mem_write_handler called on %d-bit cpu\n", cpudata[cpunum].mem.dbits);
+            exit(1);
+        }
 
-    public static UBytePtr install_mem_write_handler(int cpunum, int start, int end, WriteHandlerPtr handler)
-    {
-            /* sanity check */
-            if (cpudata[cpunum].mem.dbits != 8)
-            {
-                    printf("fatal: install_mem_write_handler called on %d-bit cpu\n",cpudata[cpunum].mem.dbits);
-                    exit(1);
-            }
+        /* install the handler */
+        install_mem_handler(cpudata[cpunum].mem, 1, start, end, -15000, handler);
 
-            /* install the handler */
-            install_mem_handler(cpudata[cpunum].mem, 1, start, end, -15000, (Object) handler);
-            
-    /*TODO*///#ifdef MEM_DUMP
-    /*TODO*///	/* dump the new memory configuration */
-    /*TODO*///	mem_dump();
-    /*TODO*///#endif
-            return memory_find_base(cpunum, start);
+        /* dump the new memory configuration */
+        mem_dump();
+
+        return memory_find_base(cpunum, start);
     }
 
 
-/*TODO*////*-------------------------------------------------
+    /*TODO*////*-------------------------------------------------
 /*TODO*///	install_mem_write16_handler - install dynamic
 /*TODO*///	read handler for 16-bit case
 /*TODO*///-------------------------------------------------*/
