@@ -6,6 +6,7 @@
 package arcadeflex036;
 
 import javax.sound.sampled.*;
+import static mame056.mame.Machine;
 
 /**
  *
@@ -23,11 +24,11 @@ public class SoundPlayer {
         System.out.println(stereo);
         //soundInstance = new DynamicSoundEffectInstance(sampleRate, stereo ? AudioChannels.Stereo : AudioChannels.Mono);
         AudioFormat format = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
-                22050,
+                Machine.sample_rate,
                 16,
                 (stereo!=0 ? 2:1),
                 (stereo!=0 ? 4:2),
-                22050,
+                Machine.sample_rate,
                 false);
 
         

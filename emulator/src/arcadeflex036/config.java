@@ -465,7 +465,7 @@ public class config {
             /*TODO*///	soundcard           = get_int  ("config", "soundcard",  NULL, -1);
             /*TODO*///	options.use_emulated_ym3812 = !get_bool ("config", "ym3812opl",  NULL,  0);
             /*TODO*///	options.samplerate = get_int  ("config", "samplerate", "sr", 22050);
-/*temphack*/            options.samplerate = 22050;
+/*temphack*/            options.samplerate = 44100;
             /*TODO*///	if (options.samplerate < 5000) options.samplerate = 5000;
             /*TODO*///	if (options.samplerate > 50000) options.samplerate = 50000;
             /*TODO*///	usestereo           = get_bool ("config", "stereo",  NULL,  1);

@@ -1,3 +1,8 @@
+10/03/2019
+==========
+-Small adjustments to memory
+-Changed default sample rate to 44100HZ from 22050
+
 09/03/2019
 ==========
 -Fixed incorrect flip functions in common.java
