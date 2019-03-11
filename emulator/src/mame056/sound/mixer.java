@@ -1055,29 +1055,28 @@ public class mixer {
 /*TODO*///	profiler_mark(PROFILER_END);
 /*TODO*///}
 /*TODO*///
-/*TODO*///
-/*TODO*////***************************************************************************
-/*TODO*///	mixer_samples_this_frame
-/*TODO*///***************************************************************************/
-/*TODO*///
-/*TODO*///int mixer_samples_this_frame(void)
-/*TODO*///{
-/*TODO*///	return samples_this_frame;
-/*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*////***************************************************************************
-/*TODO*///	mixer_need_samples_this_frame
-/*TODO*///***************************************************************************/
-/*TODO*///#define EXTRA_SAMPLES 1    // safety margin for sampling rate conversion
-/*TODO*///int mixer_need_samples_this_frame(int channel,int freq)
-/*TODO*///{
-/*TODO*///	return (samples_this_frame - mixer_channel[channel].samples_available)
-/*TODO*///			* freq / Machine->sample_rate + EXTRA_SAMPLES;
-/*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*////***************************************************************************
+    /**
+     * *************************************************************************
+     * mixer_samples_this_frame
+     * *************************************************************************
+     */
+    public static int mixer_samples_this_frame() {
+        return samples_this_frame;
+    }
+
+    /**
+     * *************************************************************************
+     * mixer_need_samples_this_frame
+     * *************************************************************************
+     */
+    public static final int EXTRA_SAMPLES = 1;   // safety margin for sampling rate conversion
+
+    public static int mixer_need_samples_this_frame(int channel, int freq) {
+        return (samples_this_frame - mixer_channel[channel].samples_available)
+                * freq / Machine.sample_rate + EXTRA_SAMPLES;
+    }
+
+    /*TODO*////***************************************************************************
 /*TODO*///	mixer_play_sample
 /*TODO*///***************************************************************************/
 /*TODO*///
@@ -1153,20 +1152,17 @@ public class mixer {
 /*TODO*///	}
 /*TODO*///}
 /*TODO*///
-/*TODO*////***************************************************************************
-/*TODO*///	mixer_is_sample_playing
-/*TODO*///***************************************************************************/
-/*TODO*///
-/*TODO*///int mixer_is_sample_playing(int ch)
-/*TODO*///{
-/*TODO*///	struct mixer_channel_data *channel = &mixer_channel[ch];
-/*TODO*///
-/*TODO*///	mixer_update_channel(channel, sound_scalebufferpos(samples_this_frame));
-/*TODO*///	return channel->is_playing;
-/*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*////***************************************************************************
+    /**
+     * *************************************************************************
+     * mixer_is_sample_playing
+     * *************************************************************************
+     */
+    public static int mixer_is_sample_playing(int ch) {
+        mixer_update_channel(mixer_channel[ch], sound_scalebufferpos((int) samples_this_frame));
+        return mixer_channel[ch].is_playing;
+    }
+
+    /*TODO*////***************************************************************************
 /*TODO*///	mixer_set_sample_frequency
 /*TODO*///***************************************************************************/
 /*TODO*///
@@ -1207,23 +1203,19 @@ public class mixer {
 /*TODO*///	channel->request_lowpass_frequency = freq;
 /*TODO*///}
 /*TODO*///
-/*TODO*////***************************************************************************
-/*TODO*///	mixer_sound_enable_global_w
-/*TODO*///***************************************************************************/
-/*TODO*///
-/*TODO*///void mixer_sound_enable_global_w(int enable)
-/*TODO*///{
-/*TODO*///	int i;
-/*TODO*///	struct mixer_channel_data *channel;
-/*TODO*///
-/*TODO*///	/* update all channels (for streams this is a no-op) */
-/*TODO*///	for (i = 0, channel = mixer_channel; i < first_free_channel; i++, channel++)
-/*TODO*///	{
-/*TODO*///		mixer_update_channel(channel, sound_scalebufferpos(samples_this_frame));
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	mixer_sound_enabled = enable;
-/*TODO*///}
-/*TODO*///
-/*TODO*///    
+    /**
+     * *************************************************************************
+     * mixer_sound_enable_global_w
+     * *************************************************************************
+     */
+    public static void mixer_sound_enable_global_w(int enable) {
+        int i;
+
+        /* update all channels (for streams this is a no-op) */
+        for (i = 0; i < first_free_channel; i++) {
+            mixer_update_channel(mixer_channel[i], sound_scalebufferpos(samples_this_frame));
+        }
+
+        mixer_sound_enabled = enable;
+    }
 }
