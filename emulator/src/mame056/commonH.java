@@ -453,22 +453,24 @@ public class commonH {
     public static int flip_screen() {
         return flip_screen_x[0];
     }
-    /*TODO*////***************************************************************************
-/*TODO*///
-/*TODO*///	Useful macros to deal with bit shuffling encryptions
-/*TODO*///
-/*TODO*///***************************************************************************/
-/*TODO*///
-/*TODO*///#define BITSWAP8(val,B7,B6,B5,B4,B3,B2,B1,B0) \
-/*TODO*///		(((((val) >> (B7)) & 1) << 7) | \
-/*TODO*///		 ((((val) >> (B6)) & 1) << 6) | \
-/*TODO*///		 ((((val) >> (B5)) & 1) << 5) | \
-/*TODO*///		 ((((val) >> (B4)) & 1) << 4) | \
-/*TODO*///		 ((((val) >> (B3)) & 1) << 3) | \
-/*TODO*///		 ((((val) >> (B2)) & 1) << 2) | \
-/*TODO*///		 ((((val) >> (B1)) & 1) << 1) | \
-/*TODO*///		 ((((val) >> (B0)) & 1) << 0))
-/*TODO*///
+    
+    /***************************************************************************
+
+	Useful macros to deal with bit shuffling encryptions
+
+    ***************************************************************************/
+
+    public static int BITSWAP8(int val, int B7, int B6, int B5, int B4, int B3, int B2, int B1, int B0){
+                    return (((((val) >> (B7)) & 1) << 7) | 
+                     ((((val) >> (B6)) & 1) << 6) | 
+                     ((((val) >> (B5)) & 1) << 5) | 
+                     ((((val) >> (B4)) & 1) << 4) | 
+                     ((((val) >> (B3)) & 1) << 3) | 
+                     ((((val) >> (B2)) & 1) << 2) | 
+                     ((((val) >> (B1)) & 1) << 1) | 
+                     ((((val) >> (B0)) & 1) << 0));
+    }
+
 /*TODO*///#define BITSWAP16(val,B15,B14,B13,B12,B11,B10,B9,B8,B7,B6,B5,B4,B3,B2,B1,B0) \
 /*TODO*///		(((((val) >> (B15)) & 1) << 15) | \
 /*TODO*///		 ((((val) >> (B14)) & 1) << 14) | \
