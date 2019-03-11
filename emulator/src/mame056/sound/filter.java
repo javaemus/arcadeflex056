@@ -34,10 +34,10 @@ public class filter {
         return s;
     }
 
-    /*TODO*///
-/*TODO*///void filter_state_free(filter_state* s) {
-/*TODO*///	free(s);
-/*TODO*///}
+    public static void filter_state_free(filter_state s) {
+        s = null;
+    }
+
     /**
      * *************************************************************************
      */
