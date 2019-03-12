@@ -1,6 +1,18 @@
+12/03/2019
+==========
+-Added amidars game in scramble driver
+-Added amidar driver (games: amidar, amidaru, amidaro, amigo, turtles, turpin and 600)
+-Added froggers game in scramble driver
+-Added devilfsh game in scramble driver
+-Added frogger driver (games: frogger, frogseg1, frogseg2, froggrmc)
+-Added scobra driver
+-Added scramble driver
+-More galaxian games added
+
 11/03/2019
 ==========
 -Added 8255ppi machine class
+-Added BITSWAP8 method in commonH class
 
 10/03/2019
 ==========
