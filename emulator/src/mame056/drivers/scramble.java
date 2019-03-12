@@ -1147,7 +1147,49 @@ public class scramble
                 
 	/*			NAME      GFXDECODE  MAINMEM   SOUND     VHSTART   BACKCOLOR, CONV_COLORPROM */
         //DRIVER_2CPU(theend,   galaxian,  scramble, scobra,   theend,   0,         galaxian);
-	//DRIVER_2CPU(froggers, galaxian,  scramble, frogger,  froggers, 1,         frogger);
+	static MachineDriver machine_driver_theend = new MachineDriver
+	(																
+		/* basic machine hardware */								
+		new MachineCPU[] {															
+			new MachineCPU(														
+				CPU_Z80,											
+				18432000/6,	/* 3.072 MHz */							
+				scramble_readmem,scramble_writemem,null,null,			
+				nmi_interrupt,1										
+			),														
+			new MachineCPU(														
+				CPU_Z80 | CPU_AUDIO_CPU,							
+				14318000/8,	/* 1.78975 MHz */						
+				scobra_sound_readmem,scobra_sound_writemem,scobra_sound_readport,scobra_sound_writeport,	
+				ignore_interrupt,1	/* interrupts are triggered by the main CPU */								
+			)														
+		},															
+		16000/132/2, 2500,	/* frames per second, vblank duration */	
+		1,	/* 1 CPU slice per frame - interleaving is forced when a sound command is written */				
+		scramble_init_machine,										
+																	
+		/* video hardware */										
+		32*8, 32*8, new rectangle( 0*8, 32*8-1, 2*8, 30*8-1 ),					
+		galaxian_gfxdecodeinfo,									
+		32+64+2+0,8*4,	/* 32 for characters, 64 for stars, 2 for bullets, null/1 for background */	
+		galaxian_vh_convert_color_prom,							
+																	
+		VIDEO_TYPE_RASTER,											
+		null,															
+		theend_vh_start,											
+		null,															
+		galaxian_vh_screenrefresh,									
+																	
+		/* sound hardware */										
+		0,0,0,0,													
+		new MachineSound[] {															
+			new MachineSound(														
+				SOUND_AY8910,										
+				scobra_ay8910_interface							
+			)														
+		}															
+	);
+        //DRIVER_2CPU(froggers, galaxian,  scramble, frogger,  froggers, 1,         frogger);
 	static MachineDriver machine_driver_froggers = new MachineDriver
 	(																
 		/* basic machine hardware */								
@@ -1190,8 +1232,51 @@ public class scramble
 			)														
 		}															
 	);
+        /*		NAME      GFXDECODE  MAINMEM   SOUND     VHSTART   BACKCOLOR, CONV_COLORPROM */
         //DRIVER_2CPU(mars,     galaxian,  mars,     scobra,   scramble, 0,         galaxian);
-	//DRIVER_2CPU(devilfsh, devilfsh,  mars,     scobra,   scramble, 0,         galaxian);
+	static MachineDriver machine_driver_mars = new MachineDriver
+	(																
+		/* basic machine hardware */								
+		new MachineCPU[] {															
+			new MachineCPU(														
+				CPU_Z80,											
+				18432000/6,	/* 3.072 MHz */							
+				mars_readmem,mars_writemem,null,null,			
+				nmi_interrupt,1										
+			),														
+			new MachineCPU(														
+				CPU_Z80 | CPU_AUDIO_CPU,							
+				14318000/8,	/* 1.78975 MHz */						
+				scobra_sound_readmem,scobra_sound_writemem,scobra_sound_readport,scobra_sound_writeport,	
+				ignore_interrupt,1	/* interrupts are triggered by the main CPU */								
+			)														
+		},															
+		16000/132/2, 2500,	/* frames per second, vblank duration */	
+		1,	/* 1 CPU slice per frame - interleaving is forced when a sound command is written */				
+		scramble_init_machine,										
+																	
+		/* video hardware */										
+		32*8, 32*8, new rectangle( 0*8, 32*8-1, 2*8, 30*8-1 ),					
+		galaxian_gfxdecodeinfo,									
+		32+64+2+0,8*4,	/* 32 for characters, 64 for stars, 2 for bullets, null/1 for background */	
+		galaxian_vh_convert_color_prom,							
+																	
+		VIDEO_TYPE_RASTER,											
+		null,															
+		scramble_vh_start,											
+		null,															
+		galaxian_vh_screenrefresh,									
+																	
+		/* sound hardware */										
+		0,0,0,0,													
+		new MachineSound[] {															
+			new MachineSound(														
+				SOUND_AY8910,										
+				scobra_ay8910_interface							
+			)														
+		}															
+	);
+        //DRIVER_2CPU(devilfsh, devilfsh,  mars,     scobra,   scramble, 0,         galaxian);
 	static MachineDriver machine_driver_devilfsh = new MachineDriver
 	(																
 		/* basic machine hardware */								
@@ -1234,11 +1319,181 @@ public class scramble
 			)														
 		}															
 	);
+        /*		NAME      GFXDECODE  MAINMEM   SOUND     VHSTART   BACKCOLOR, CONV_COLORPROM */
         //DRIVER_2CPU(newsin7,  newsin7,   newsin7,  scobra,   scramble, 0,         galaxian);
-	//DRIVER_2CPU(ckongs,   galaxian,  ckongs,   scobra,   ckongs,   0,         galaxian);
-	//DRIVER_2CPU(hotshock, galaxian,  hotshock, hotshock, pisces,   0,         galaxian);
-	//DRIVER_2CPU(cavelon,  galaxian,  scramble, scobra,   ckongs,   0,         galaxian);
-	
+	static MachineDriver machine_driver_newsin7 = new MachineDriver
+	(																
+		/* basic machine hardware */								
+		new MachineCPU[] {															
+			new MachineCPU(														
+				CPU_Z80,											
+				18432000/6,	/* 3.072 MHz */							
+				newsin7_readmem,newsin7_writemem,null,null,			
+				nmi_interrupt,1										
+			),														
+			new MachineCPU(														
+				CPU_Z80 | CPU_AUDIO_CPU,							
+				14318000/8,	/* 1.78975 MHz */						
+				scobra_sound_readmem,scobra_sound_writemem,scobra_sound_readport,scobra_sound_writeport,	
+				ignore_interrupt,1	/* interrupts are triggered by the main CPU */								
+			)														
+		},															
+		16000/132/2, 2500,	/* frames per second, vblank duration */	
+		1,	/* 1 CPU slice per frame - interleaving is forced when a sound command is written */				
+		scramble_init_machine,										
+																	
+		/* video hardware */										
+		32*8, 32*8, new rectangle( 0*8, 32*8-1, 2*8, 30*8-1 ),					
+		newsin7_gfxdecodeinfo,									
+		32+64+2+0,8*4,	/* 32 for characters, 64 for stars, 2 for bullets, null/1 for background */	
+		galaxian_vh_convert_color_prom,							
+																	
+		VIDEO_TYPE_RASTER,											
+		null,															
+		scramble_vh_start,											
+		null,															
+		galaxian_vh_screenrefresh,									
+																	
+		/* sound hardware */										
+		0,0,0,0,													
+		new MachineSound[] {															
+			new MachineSound(														
+				SOUND_AY8910,										
+				scobra_ay8910_interface							
+			)														
+		}															
+	);
+        //DRIVER_2CPU(ckongs,   galaxian,  ckongs,   scobra,   ckongs,   0,         galaxian);
+	static MachineDriver machine_driver_ckongs = new MachineDriver
+	(																
+		/* basic machine hardware */								
+		new MachineCPU[] {															
+			new MachineCPU(														
+				CPU_Z80,											
+				18432000/6,	/* 3.072 MHz */							
+				ckongs_readmem,ckongs_writemem,null,null,			
+				nmi_interrupt,1										
+			),														
+			new MachineCPU(														
+				CPU_Z80 | CPU_AUDIO_CPU,							
+				14318000/8,	/* 1.78975 MHz */						
+				scobra_sound_readmem,scobra_sound_writemem,scobra_sound_readport,scobra_sound_writeport,	
+				ignore_interrupt,1	/* interrupts are triggered by the main CPU */								
+			)														
+		},															
+		16000/132/2, 2500,	/* frames per second, vblank duration */	
+		1,	/* 1 CPU slice per frame - interleaving is forced when a sound command is written */				
+		scramble_init_machine,										
+																	
+		/* video hardware */										
+		32*8, 32*8, new rectangle( 0*8, 32*8-1, 2*8, 30*8-1 ),					
+		galaxian_gfxdecodeinfo,									
+		32+64+2+0,8*4,	/* 32 for characters, 64 for stars, 2 for bullets, null/1 for background */	
+		galaxian_vh_convert_color_prom,							
+																	
+		VIDEO_TYPE_RASTER,											
+		null,															
+		ckongs_vh_start,											
+		null,															
+		galaxian_vh_screenrefresh,									
+																	
+		/* sound hardware */										
+		0,0,0,0,													
+		new MachineSound[] {															
+			new MachineSound(														
+				SOUND_AY8910,										
+				scobra_ay8910_interface							
+			)														
+		}															
+	);
+        /*		NAME      GFXDECODE  MAINMEM   SOUND     VHSTART   BACKCOLOR, CONV_COLORPROM */
+        //DRIVER_2CPU(hotshock, galaxian,  hotshock, hotshock, pisces,   0,         galaxian);
+	static MachineDriver machine_driver_hotshock = new MachineDriver
+	(																
+		/* basic machine hardware */								
+		new MachineCPU[] {															
+			new MachineCPU(														
+				CPU_Z80,											
+				18432000/6,	/* 3.072 MHz */							
+				hotshock_readmem,hotshock_writemem,null,null,			
+				nmi_interrupt,1										
+			),														
+			new MachineCPU(														
+				CPU_Z80 | CPU_AUDIO_CPU,							
+				14318000/8,	/* 1.78975 MHz */						
+				scobra_sound_readmem,scobra_sound_writemem,hotshock_sound_readport,hotshock_sound_writeport,	
+				ignore_interrupt,1	/* interrupts are triggered by the main CPU */								
+			)														
+		},															
+		16000/132/2, 2500,	/* frames per second, vblank duration */	
+		1,	/* 1 CPU slice per frame - interleaving is forced when a sound command is written */				
+		scramble_init_machine,										
+																	
+		/* video hardware */										
+		32*8, 32*8, new rectangle( 0*8, 32*8-1, 2*8, 30*8-1 ),					
+		galaxian_gfxdecodeinfo,									
+		32+64+2+0,8*4,	/* 32 for characters, 64 for stars, 2 for bullets, null/1 for background */	
+		galaxian_vh_convert_color_prom,							
+																	
+		VIDEO_TYPE_RASTER,											
+		null,															
+		pisces_vh_start,											
+		null,															
+		galaxian_vh_screenrefresh,									
+																	
+		/* sound hardware */										
+		0,0,0,0,													
+		new MachineSound[] {															
+			new MachineSound(														
+				SOUND_AY8910,										
+				scobra_ay8910_interface							
+			)														
+		}															
+	);
+        /*		NAME      GFXDECODE  MAINMEM   SOUND     VHSTART   BACKCOLOR, CONV_COLORPROM */
+        //DRIVER_2CPU(cavelon,  galaxian,  scramble, scobra,   ckongs,   0,         galaxian);
+	static MachineDriver machine_driver_cavelon = new MachineDriver
+	(																
+		/* basic machine hardware */								
+		new MachineCPU[] {															
+			new MachineCPU(														
+				CPU_Z80,											
+				18432000/6,	/* 3.072 MHz */							
+				scramble_readmem,scramble_writemem,null,null,			
+				nmi_interrupt,1										
+			),														
+			new MachineCPU(														
+				CPU_Z80 | CPU_AUDIO_CPU,							
+				14318000/8,	/* 1.78975 MHz */						
+				scobra_sound_readmem,scobra_sound_writemem,scobra_sound_readport,scobra_sound_writeport,	
+				ignore_interrupt,1	/* interrupts are triggered by the main CPU */								
+			)														
+		},															
+		16000/132/2, 2500,	/* frames per second, vblank duration */	
+		1,	/* 1 CPU slice per frame - interleaving is forced when a sound command is written */				
+		scramble_init_machine,										
+																	
+		/* video hardware */										
+		32*8, 32*8, new rectangle( 0*8, 32*8-1, 2*8, 30*8-1 ),					
+		galaxian_gfxdecodeinfo,									
+		32+64+2+0,8*4,	/* 32 for characters, 64 for stars, 2 for bullets, null/1 for background */	
+		galaxian_vh_convert_color_prom,							
+																	
+		VIDEO_TYPE_RASTER,											
+		null,															
+		ckongs_vh_start,											
+		null,															
+		galaxian_vh_screenrefresh,									
+																	
+		/* sound hardware */										
+		0,0,0,0,													
+		new MachineSound[] {															
+			new MachineSound(														
+				SOUND_AY8910,										
+				scobra_ay8910_interface							
+			)														
+		}															
+	);
 	/* Triple Punch and Mariner are different - only one CPU, one 8910 */
 	static MachineDriver machine_driver_triplep = new MachineDriver
 	(
@@ -1778,8 +2033,8 @@ public class scramble
 	public static GameDriver driver_scrambls	   = new GameDriver("1981"	,"scrambls"	,"scramble.java"	,rom_scrambls,driver_scramble	,machine_driver_scramble	,input_ports_scramble	,init_scrambls	,ROT90	,	"[Konami] (Stern license)", "Scramble (Stern)" );
 	public static GameDriver driver_atlantis	   = new GameDriver("1981"	,"atlantis"	,"scramble.java"	,rom_atlantis,null	,machine_driver_scramble	,input_ports_atlantis	,init_atlantis	,ROT90	,	"Comsoft", "Battle of Atlantis (set 1)" );
 	public static GameDriver driver_atlants2	   = new GameDriver("1981"	,"atlants2"	,"scramble.java"	,rom_atlants2,driver_atlantis	,machine_driver_scramble	,input_ports_atlantis	,init_atlantis	,ROT90	,	"Comsoft", "Battle of Atlantis (set 2)" );
-	/*TODO*///public static GameDriver driver_theend	   = new GameDriver("1980"	,"theend"	,"scramble.java"	,rom_theend,null	,machine_driver_theend	,input_ports_theend	,init_theend	,ROT90	,	"Konami", "The End" );
-	/*TODO*///public static GameDriver driver_theends	   = new GameDriver("1980"	,"theends"	,"scramble.java"	,rom_theends,driver_theend	,machine_driver_theend	,input_ports_theend	,init_theend	,ROT90	,	"[Konami] (Stern license)", "The End (Stern)" );
+	public static GameDriver driver_theend	   = new GameDriver("1980"	,"theend"	,"scramble.java"	,rom_theend,null	,machine_driver_theend	,input_ports_theend	,init_theend	,ROT90	,	"Konami", "The End" );
+	public static GameDriver driver_theends	   = new GameDriver("1980"	,"theends"	,"scramble.java"	,rom_theends,driver_theend	,machine_driver_theend	,input_ports_theend	,init_theend	,ROT90	,	"[Konami] (Stern license)", "The End (Stern)" );
 	public static GameDriver driver_froggers	   = new GameDriver("1981"	,"froggers"	,"scramble.java"	,rom_froggers,driver_frogger	,machine_driver_froggers	,input_ports_froggers	,init_froggers	,ROT90	,	"bootleg", "Frog" );
 	public static GameDriver driver_amidars	   = new GameDriver("1982"	,"amidars"	,"scramble.java"	,rom_amidars,driver_amidar	,machine_driver_scramble	,input_ports_amidars	,init_atlantis	,ROT90	,	"Konami", "Amidar (Scramble hardware)" );
 	public static GameDriver driver_triplep	   = new GameDriver("1982"	,"triplep"	,"scramble.java"	,rom_triplep,null	,machine_driver_triplep	,input_ports_triplep	,init_scramble_ppi	,ROT90	,	"KKI", "Triple Punch" );
@@ -1787,10 +2042,10 @@ public class scramble
 	public static GameDriver driver_mariner	   = new GameDriver("1981"	,"mariner"	,"scramble.java"	,rom_mariner,null	,machine_driver_mariner	,input_ports_scramble	,init_mariner	,ROT90	,	"Amenip", "Mariner" );
 	public static GameDriver driver_800fath	   = new GameDriver("1981"	,"800fath"	,"scramble.java"	,rom_800fath,driver_mariner	,machine_driver_mariner	,input_ports_scramble	,init_mariner	,ROT90	,	"Amenip (US Billiards Inc. license)", "800 Fathoms" );
 	/*TODO*///public static GameDriver driver_ckongs	   = new GameDriver("1981"	,"ckongs"	,"scramble.java"	,rom_ckongs,driver_ckong	,machine_driver_ckongs	,input_ports_ckongs	,init_ckongs	,ROT90	,	"bootleg", "Crazy Kong (Scramble hardware)" );
-	/*TODO*///public static GameDriver driver_mars	   = new GameDriver("1981"	,"mars"	,"scramble.java"	,rom_mars,null	,machine_driver_mars	,input_ports_mars	,init_mars	,ROT90	,	"Artic", "Mars" );
+	public static GameDriver driver_mars	   = new GameDriver("1981"	,"mars"	,"scramble.java"	,rom_mars,null	,machine_driver_mars	,input_ports_mars	,init_mars	,ROT90	,	"Artic", "Mars" );
 	public static GameDriver driver_devilfsh	   = new GameDriver("1982"	,"devilfsh"	,"scramble.java"	,rom_devilfsh,null	,machine_driver_devilfsh	,input_ports_devilfsh	,init_mars	,ROT90	,	"Artic", "Devil Fish" );
-	/*TODO*///public static GameDriver driver_newsin7	   = new GameDriver("1983"	,"newsin7"	,"scramble.java"	,rom_newsin7,null	,machine_driver_newsin7	,input_ports_newsin7	,init_mars	,ROT90	,	"ATW USA, Inc.", "New Sinbad 7", GAME_IMPERFECT_COLORS );
-	/*TODO*///public static GameDriver driver_hotshock	   = new GameDriver("1982"	,"hotshock"	,"scramble.java"	,rom_hotshock,null	,machine_driver_hotshock	,input_ports_hotshock	,init_hotshock	,ROT90	,	"E.G. Felaco", "Hot Shocker" );
+	public static GameDriver driver_newsin7	   = new GameDriver("1983"	,"newsin7"	,"scramble.java"	,rom_newsin7,null	,machine_driver_newsin7	,input_ports_newsin7	,init_mars	,ROT90	,	"ATW USA, Inc.", "New Sinbad 7", GAME_IMPERFECT_COLORS );
+	public static GameDriver driver_hotshock	   = new GameDriver("1982"	,"hotshock"	,"scramble.java"	,rom_hotshock,null	,machine_driver_hotshock	,input_ports_hotshock	,init_hotshock	,ROT90	,	"E.G. Felaco", "Hot Shocker" );
 	/*TODO*///public static GameDriver driver_hunchbks	   = new GameDriver("1983"	,"hunchbks"	,"scramble.java"	,rom_hunchbks,driver_hunchbak	,machine_driver_hunchbks	,input_ports_hunchbks	,init_scramble_ppi	,ROT90	,	"Century", "Hunchback (Scramble hardware)" );
-	/*TODO*///public static GameDriver driver_cavelon	   = new GameDriver("1983"	,"cavelon"	,"scramble.java"	,rom_cavelon,null	,machine_driver_cavelon	,input_ports_cavelon	,init_cavelon	,ROT90	,	"Jetsoft", "Cavelon" );
+	public static GameDriver driver_cavelon	   = new GameDriver("1983"	,"cavelon"	,"scramble.java"	,rom_cavelon,null	,machine_driver_cavelon	,input_ports_cavelon	,init_cavelon	,ROT90	,	"Jetsoft", "Cavelon" );
 }
