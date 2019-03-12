@@ -179,9 +179,8 @@ import static mame056.drivers.pacman.driver_puckman;
 
 // refactor
 import static arcadeflex036.osdepend.logerror;
-import static mame056.drivers.scramble.driver_scramble;
+import static mame056.drivers.scramble.*;
 import mame056.sound.ay8910H.AY8910interface;
-import mame056.sound.dacH;
 
 public class galaxian
 {
@@ -3851,7 +3850,7 @@ public class galaxian
 	public static GameDriver driver_streakng	   = new GameDriver("1980"	,"streakng"	,"galaxian.java"	,rom_streakng,null	,machine_driver_pacmanbl	,input_ports_streakng	,null	,ROT90	,	"Shoei", "Streaking", GAME_IMPERFECT_COLORS );
 	public static GameDriver driver_ghostmun	   = new GameDriver("1981"	,"ghostmun"	,"galaxian.java"	,rom_ghostmun,driver_puckman	,machine_driver_pacmanbl	,input_ports_streakng	,null	,ROT90	,	"bootleg", "Ghost Muncher" );
 	public static GameDriver driver_pacmanbl	   = new GameDriver("1981"	,"pacmanbl"	,"galaxian.java"	,rom_pacmanbl,driver_puckman	,machine_driver_pacmanbl	,input_ports_pacmanbl	,init_pisces	,ROT270	,	"bootleg", "Pac-Man (bootleg on Galaxian hardware)" );
-	/*TODO*///public static GameDriver driver_devilfsg	   = new GameDriver("1984"	,"devilfsg"	,"galaxian.java"	,rom_devilfsg,driver_devilfsh	,machine_driver_devilfsg	,input_ports_devilfsg	,null	,ROT270	,	"Vision / Artic", "Devil Fish (Galaxian hardware, bootleg?)" );
+	public static GameDriver driver_devilfsg	   = new GameDriver("1984"	,"devilfsg"	,"galaxian.java"	,rom_devilfsg,driver_devilfsh	,machine_driver_devilfsg	,input_ports_devilfsg	,null	,ROT270	,	"Vision / Artic", "Devil Fish (Galaxian hardware, bootleg?)" );
 	public static GameDriver driver_zigzag	   = new GameDriver("1982"	,"zigzag"	,"galaxian.java"	,rom_zigzag,null	,machine_driver_zigzag	,input_ports_zigzag	,null	,ROT90	,	"LAX", "Zig Zag (Galaxian hardware, set 1)" );
 	public static GameDriver driver_zigzag2	   = new GameDriver("1982"	,"zigzag2"	,"galaxian.java"	,rom_zigzag2,driver_zigzag	,machine_driver_zigzag	,input_ports_zigzag	,null	,ROT90	,	"LAX", "Zig Zag (Galaxian hardware, set 2)" );
 	public static GameDriver driver_scramblb	   = new GameDriver("1981"	,"scramblb"	,"galaxian.java"	,rom_scramblb,driver_scramble	,machine_driver_scramblb	,input_ports_scramblb	,null	,ROT90	,	"bootleg", "Scramble (bootleg on Galaxian hardware)" );

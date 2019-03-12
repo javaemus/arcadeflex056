@@ -121,6 +121,7 @@ import static mame056.driverH.*;
 import static mame056.memoryH.*;
 import static mame056.inptport.*;
 import static mame056.drawgfxH.*;
+import static mame056.drivers.frogger.*;
 import static mame056.drivers.galaxian.*;
 import static mame056.vidhrdw.galaxian.*;
 import static mame056.memory.*;
@@ -317,7 +318,7 @@ public class scobra
 	};
 	
 	
-	public static UBytePtr scobra_soundram;
+	public static UBytePtr scobra_soundram=new UBytePtr();
 	
 	public static ReadHandlerPtr scobra_soundram_r = new ReadHandlerPtr() {
             public int handler(int offset) {
@@ -334,7 +335,7 @@ public class scobra
 	
 	
 	public static Memory_ReadAddress scobra_sound_readmem[]={
-            new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+            new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
             new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
             new Memory_ReadAddress( 0x8000, 0x8fff, scobra_soundram_r ),
             new Memory_ReadAddress(MEMPORT_MARKER, 0)
@@ -1527,14 +1528,13 @@ public class scobra
 				18432000/6,	/* 3.072 MHz */
 				hustler_readmem,hustler_writemem,null,null,
 				nmi_interrupt,1
-                        )
-			/*TODO*///),
-			/*TODO*///new MachineCPU(
-			/*TODO*///	CPU_Z80 | CPU_AUDIO_CPU,
-			/*TODO*///	14318000/8,	/* 1.78975 MHz */
-			/*TODO*///	frogger_sound_readmem,frogger_sound_writemem,frogger_sound_readport,frogger_sound_writeport,
-			/*TODO*///	ignore_interrupt,1	/* interrupts are triggered by the main CPU */
-			/*TODO*///)
+                        ),
+			new MachineCPU(
+				CPU_Z80 | CPU_AUDIO_CPU,
+				14318000/8,	/* 1.78975 MHz */
+				frogger_sound_readmem,frogger_sound_writemem,frogger_sound_readport,frogger_sound_writeport,
+				ignore_interrupt,1	/* interrupts are triggered by the main CPU */
+			)
 		},
 		16000/132/2, 2500,	/* frames per second, vblank duration */
 		1,	/* 1 CPU slice per frame - interleaving is forced when a sound command is written */
@@ -1554,13 +1554,13 @@ public class scobra
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_AY8910,
-		/*TODO*///		frogger_ay8910_interface
-		/*TODO*///	)
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_AY8910,
+				frogger_ay8910_interface
+			)
+		}
+                
 	);
 	
 	static MachineDriver machine_driver_hustlerb = new MachineDriver
@@ -1598,13 +1598,13 @@ public class scobra
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_AY8910,
-		/*TODO*///		frogger_ay8910_interface
-		/*TODO*///	)
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_AY8910,
+				frogger_ay8910_interface
+			)
+		}
+                
 	);
 	
 	/* same as the others, but no sprite flipping, but instead, the bits are used
