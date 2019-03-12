@@ -59,7 +59,7 @@ public class scramble
         static int last_totalcycles = 0;
 
         /* number of Z80 clock cycles to count */
-        static int clock;
+        static int clock=0;
 	
 	public static ReadHandlerPtr scramble_portB_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
