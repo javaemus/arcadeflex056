@@ -112,10 +112,12 @@ public class bombjack
 	
 	static int latch;
 	
-	static void soundlatch_callback(int param)
-	{
-		latch = param;
-	}
+	public static timer_callback soundlatch_callback = new timer_callback() {
+            @Override
+            public void handler(int param) {
+                latch = param;
+            }
+        };
 	
 	public static WriteHandlerPtr bombjack_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
