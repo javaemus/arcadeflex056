@@ -10,6 +10,8 @@ import static mame056.commonH.REGION_PROMS;
 import static mame056.common.memory_region;
 import static mame056.usrintrf.usrintf_showmessage;
 import static arcadeflex036.osdepend.logerror;
+import static arcadeflex056.fucPtr.*;
+
 import common.ptr.UBytePtr;
 import static mame056.mame.Machine;
 
@@ -607,30 +609,31 @@ public class palette {
 /*TODO*///
 /*TODO*///	palette_set_color(offset,r,g,b);
 /*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*///INLINE void changecolor_xxxxBBBBGGGGRRRR(int color,int data)
-/*TODO*///{
-/*TODO*///	int r,g,b;
-/*TODO*///
-/*TODO*///
-/*TODO*///	r = (data >> 0) & 0x0f;
-/*TODO*///	g = (data >> 4) & 0x0f;
-/*TODO*///	b = (data >> 8) & 0x0f;
-/*TODO*///
-/*TODO*///	r = (r << 4) | r;
-/*TODO*///	g = (g << 4) | g;
-/*TODO*///	b = (b << 4) | b;
-/*TODO*///
-/*TODO*///	palette_set_color(color,r,g,b);
-/*TODO*///}
-/*TODO*///
-/*TODO*///WRITE_HANDLER( paletteram_xxxxBBBBGGGGRRRR_w )
-/*TODO*///{
-/*TODO*///	paletteram[offset] = data;
-/*TODO*///	changecolor_xxxxBBBBGGGGRRRR(offset / 2,paletteram[offset & ~1] | (paletteram[offset | 1] << 8));
-/*TODO*///}
-/*TODO*///
+
+
+    public static void changecolor_xxxxBBBBGGGGRRRR(int color,int data)
+    {
+            int r,g,b;
+
+
+            r = (data >> 0) & 0x0f;
+            g = (data >> 4) & 0x0f;
+            b = (data >> 8) & 0x0f;
+
+            r = (r << 4) | r;
+            g = (g << 4) | g;
+            b = (b << 4) | b;
+
+            palette_set_color(color,r,g,b);
+    }
+
+    public static WriteHandlerPtr paletteram_xxxxBBBBGGGGRRRR_w = new WriteHandlerPtr() {
+        public void handler(int offset, int data) {
+            paletteram.write(offset, data);
+            changecolor_xxxxBBBBGGGGRRRR(offset / 2,paletteram.read(offset & ~1) | (paletteram.read(offset | 1) << 8));
+        }
+    };
+        
 /*TODO*///WRITE_HANDLER( paletteram_xxxxBBBBGGGGRRRR_swap_w )
 /*TODO*///{
 /*TODO*///	paletteram[offset] = data;
