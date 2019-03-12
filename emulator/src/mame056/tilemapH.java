@@ -44,8 +44,10 @@ public class tilemapH {
             available in alpha mode, ignore_transparency isn't.
     */
 
-    /*TODO*///extern struct tile_info
-    /*TODO*///{
+    public static _tile_info tile_info = new _tile_info();
+    
+    public static class _tile_info
+    {
             /*
                     you must set tile_info.pen_data, tile_info.pal_data and tile_info.pen_usage
                     in the callback.  You can use the SET_TILE_INFO() macro below to do this.
@@ -58,9 +60,9 @@ public class tilemapH {
     /*TODO*///        int skip;
     /*TODO*///        UINT32 tile_number;		/* needed for tilemap_mark_gfxdata_dirty */
     /*TODO*///        UINT32 pen_usage;		/* TBR */
-    /*TODO*///        UINT32 priority;		/* tile priority */
+            public int priority;		/* tile priority */
     /*TODO*///        UINT8 *mask_data;		/* for TILEMAP_BITMASK */
-    /*TODO*///} tile_info;
+    };
 
     /*TODO*///#define SET_TILE_INFO(GFX,CODE,COLOR,FLAGS) { \
     /*TODO*///        const struct GfxElement *gfx = Machine->gfx[(GFX)]; \

@@ -166,9 +166,9 @@ public class driver {
         	driver_scramblb,	/* bootleg */
         	driver_atlantis,	/* (c) 1981 Comsoft */
         	driver_atlants2,	/* (c) 1981 Comsoft */
-        /*TODO*///	driver_theend,	/* (c) 1980 Konami */
-        /*TODO*///	driver_theends,	/* (c) 1980 Stern */
-        /*TODO*///	driver_omega,		/* bootleg */
+        	driver_theend,	/* (c) 1980 Konami */
+        	driver_theends,	/* (c) 1980 Stern */
+        	driver_omega,		/* bootleg */
         /*TODO*///	driver_ckongs,	/* bootleg */
         	driver_froggers,	/* bootleg */
         	driver_amidars,	/* (c) 1982 Konami */
@@ -176,12 +176,12 @@ public class driver {
         	driver_knockout,	/* (c) 1982 KKK */
         	driver_mariner,	/* (c) 1981 Amenip */
         	driver_800fath,	/* (c) 1981 Amenip + U.S. Billiards license */
-        /*TODO*///	driver_mars,		/* (c) 1981 Artic */
+        	driver_mars,		/* (c) 1981 Artic */
         	driver_devilfsh,	/* (c) 1982 Artic */
-        /*TODO*///	driver_newsin7,	/* (c) 1983 ATW USA, Inc. */
-        /*TODO*///	driver_hotshock,	/* (c) 1982 E.G. Felaco */
+        	driver_newsin7,	/* (c) 1983 ATW USA, Inc. */
+        	driver_hotshock,	/* (c) 1982 E.G. Felaco */
         /*TODO*///	driver_hunchbks,	/* (c) 1983 Century */
-        /*TODO*///	driver_cavelon,	/* (c) 1983 Jetsoft */
+        	driver_cavelon,	/* (c) 1983 Jetsoft */
         	driver_scobra,	/* GX316 (c) 1981 Konami */
         	driver_scobras,	/* GX316 (c) 1981 Stern */
         	driver_scobrab,	/* GX316 (c) 1981 Karateco (bootleg?) */
