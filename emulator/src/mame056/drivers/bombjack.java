@@ -342,10 +342,10 @@ public class bombjack
 		3,	/* 3 chips */
 		1500000,	/* 1.5 MHz?????? */
 		new int[] { 13, 13, 13 },
-		new ReadHandlerPtr[] { null },
-		new ReadHandlerPtr[] { null },
-		new WriteHandlerPtr[] { null },
-		new WriteHandlerPtr[] { null }
+		new ReadHandlerPtr[] { null, null, null },
+		new ReadHandlerPtr[] { null, null, null },
+		new WriteHandlerPtr[] { null, null, null },
+		new WriteHandlerPtr[] { null, null, null }
 	);
 	
 	
@@ -359,12 +359,12 @@ public class bombjack
 				4000000,	/* 4 MHz */
 				readmem,writemem,null,null,
 				nmi_interrupt,1
-			/*TODO*///),
-			/*TODO*///new MachineCPU(
-			/*TODO*///	CPU_Z80 | CPU_AUDIO_CPU,
-			/*TODO*///	3072000,	/* 3.072 MHz????? */
-			/*TODO*///	bombjack_sound_readmem,bombjack_sound_writemem,null,bombjack_sound_writeport,
-			/*TODO*///	nmi_interrupt,1
+			),
+			new MachineCPU(
+				CPU_Z80 | CPU_AUDIO_CPU,
+				3072000,	/* 3.072 MHz????? */
+				bombjack_sound_readmem,bombjack_sound_writemem,null,bombjack_sound_writeport,
+				nmi_interrupt,1
 			)
 		},
 		60, DEFAULT_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */
@@ -385,13 +385,13 @@ public class bombjack
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_AY8910,
-		/*TODO*///		ay8910_interface
-		/*TODO*///	)
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_AY8910,
+				ay8910_interface
+			)
+		}
+                
 	);
 	
 	
