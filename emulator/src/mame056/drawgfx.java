@@ -4078,17 +4078,17 @@ public class drawgfx {
     };
     public static plot_box_procPtr pb_16_nd_fx_s = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");/*
+            //throw new UnsupportedOperationException("unsupported");
             int t = x;
-            y = b -> width - 1 - y;
+            y = b.width - 1 - y;
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT16 *)b -> line[x])[y] = p;
+                while (c-- > 0) {new UShortPtr(b.line[x]).write(y, (char)p);
                     x++;
                 }
                 y--;
-            }*/
+            }
         }
     };
     public static plot_box_procPtr pb_16_nd_fy_s = new plot_box_procPtr() {

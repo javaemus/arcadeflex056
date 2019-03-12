@@ -459,7 +459,7 @@ public class system1
 	
 		background_scrollx.write(0, ((system1_scroll_x.read(0) >> 1) + ((system1_scroll_x.read(1) & 1) << 7) + 14) & 0xff);
 		/*TODO*///background_scrolly = (-*system1_scroll_y) & 0xff;
-                background_scrolly.write(0, (system1_scroll_y.read(0)-1) & 0xff);
+                background_scrolly.write(0, (system1_scroll_y.read(0)) & 0xff);
 	
 		background_scrollx_flip[0] = (275 - background_scrollx.read(0)) & 0xff;
 		background_scrolly_flip[0] = (256 - background_scrolly.read(0)) & 0xff;

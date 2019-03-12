@@ -30,13 +30,13 @@ public class _8255ppi
 	
 	public static class ppi8255
 	{
-		public PortReadHandlerPtr portAread;
-		public PortReadHandlerPtr portBread;
-		public PortReadHandlerPtr portCread;
+		public ReadHandlerPtr portAread;
+		public ReadHandlerPtr portBread;
+		public ReadHandlerPtr portCread;
 		
-                public PortWriteHandlerPtr portAwrite;
-		public PortWriteHandlerPtr portBwrite;
-		public PortWriteHandlerPtr portCwrite;
+                public WriteHandlerPtr portAwrite;
+		public WriteHandlerPtr portBwrite;
+		public WriteHandlerPtr portCwrite;
 		
                 public int groupA_mode;
 		public int groupB_mode;
@@ -262,21 +262,21 @@ public class _8255ppi
 	/*TODO*///#endif
 	
 	
-	public static void ppi8255_set_portAread( int which, PortReadHandlerPtr portAread)
+	public static void ppi8255_set_portAread( int which, ReadHandlerPtr portAread)
 	{
 		ppi8255 chip = chips[which];
 	
 		chip.portAread = portAread;
 	}
 	
-	public static void ppi8255_set_portBread( int which, PortReadHandlerPtr portBread)
+	public static void ppi8255_set_portBread( int which, ReadHandlerPtr portBread)
 	{
 		ppi8255 chip = chips[which];
 	
 		chip.portBread = portBread;
 	}
 	
-	public static void ppi8255_set_portCread( int which, PortReadHandlerPtr portCread)
+	public static void ppi8255_set_portCread( int which, ReadHandlerPtr portCread)
 	{
 		ppi8255 chip = chips[which];
 	
@@ -284,21 +284,21 @@ public class _8255ppi
 	}
 	
 	
-	public static void ppi8255_set_portAwrite( int which, PortWriteHandlerPtr portAwrite)
+	public static void ppi8255_set_portAwrite( int which, WriteHandlerPtr portAwrite)
 	{
 		ppi8255 chip = chips[which];
 	
 		chip.portAwrite = portAwrite;
 	}
 	
-	public static void ppi8255_set_portBwrite( int which, PortWriteHandlerPtr portBwrite)
+	public static void ppi8255_set_portBwrite( int which, WriteHandlerPtr portBwrite)
 	{
 		ppi8255 chip = chips[which];
 	
 		chip.portBwrite = portBwrite;
 	}
 	
-	public static void ppi8255_set_portCwrite( int which, PortWriteHandlerPtr portCwrite)
+	public static void ppi8255_set_portCwrite( int which, WriteHandlerPtr portCwrite)
 	{
 		ppi8255 chip = chips[which];
 	

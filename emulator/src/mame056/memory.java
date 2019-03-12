@@ -1024,6 +1024,9 @@ public class memory {
             }
             Object mra_obj = Machine.drv.cpu[cpunum].memory_read;
             Object mwa_obj = Machine.drv.cpu[cpunum].memory_write;
+            
+            
+            System.out.println(width);
 
             /* verify the read handlers */
             if (mra_obj != null) {

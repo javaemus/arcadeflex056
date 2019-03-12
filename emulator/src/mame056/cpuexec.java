@@ -905,18 +905,18 @@ public class cpuexec {
         return current_frame;
     }
 
-    /*TODO*////*************************************
-/*TODO*/// *
-/*TODO*/// *	Set IRQ callback for drivers
-/*TODO*/// *
-/*TODO*/// *************************************/
-/*TODO*///
-/*TODO*///void cpu_set_irq_callback(int cpunum, int (*callback)(int))
-/*TODO*///{
-/*TODO*///	drv_irq_callbacks[cpunum] = callback;
-/*TODO*///}
-/*TODO*///
-/*TODO*///
+    /*************************************
+    *
+    *	Set IRQ callback for drivers
+    *
+    *************************************/
+
+   public static void cpu_set_irq_callback(int cpunum, irqcallbacksPtr callback)
+   {
+           drv_irq_callbacks[cpunum] = callback;
+   }
+
+
     /**
      * ***********************************
      *

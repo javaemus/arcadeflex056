@@ -4,6 +4,8 @@
  */ 
 package mame056.machine;
 
+import static arcadeflex056.fucPtr.*;
+
 public class _8255ppiH
 {
     /*TODO*///#ifndef _8255PPI_H_
@@ -11,27 +13,17 @@ public class _8255ppiH
 
     public static int MAX_8255 = 4;
     
-    public static abstract interface PortReadHandlerPtr {
-
-        public abstract int handler(int chip);
-    }
-
-    public static abstract interface PortWriteHandlerPtr {
-
-        public abstract void handler(int chip, int data);
-    }
-
     public static class ppi8255_interface
     {
             public int num;							 /* number of PPIs to emulate */
-            public PortReadHandlerPtr[] portAread;
-            public PortReadHandlerPtr[] portBread;
-            public PortReadHandlerPtr[] portCread;
-            public PortWriteHandlerPtr[] portAwrite;
-            public PortWriteHandlerPtr[] portBwrite;
-            public PortWriteHandlerPtr[] portCwrite;
+            public ReadHandlerPtr[] portAread;
+            public ReadHandlerPtr[] portBread;
+            public ReadHandlerPtr[] portCread;
+            public WriteHandlerPtr[] portAwrite;
+            public WriteHandlerPtr[] portBwrite;
+            public WriteHandlerPtr[] portCwrite;
 
-        public ppi8255_interface(int i, PortReadHandlerPtr[] ppi_porta_r, PortReadHandlerPtr[] ppi_portb_r, PortReadHandlerPtr[] ppi_portc_r, PortWriteHandlerPtr[] ppi_porta_w, PortWriteHandlerPtr[] ppi_portb_w, PortWriteHandlerPtr[] ppi_portc_w) {
+        public ppi8255_interface(int i, ReadHandlerPtr[] ppi_porta_r, ReadHandlerPtr[] ppi_portb_r, ReadHandlerPtr[] ppi_portc_r, WriteHandlerPtr[] ppi_porta_w, WriteHandlerPtr[] ppi_portb_w, WriteHandlerPtr[] ppi_portc_w) {
             num = i;
             
             portAread = ppi_porta_r;
@@ -43,16 +35,16 @@ public class _8255ppiH
             portCwrite = ppi_portc_w;
         }
         
-        public ppi8255_interface(int i, PortReadHandlerPtr ppi_porta_r, PortReadHandlerPtr ppi_portb_r, PortReadHandlerPtr ppi_portc_r, PortWriteHandlerPtr ppi_porta_w, PortWriteHandlerPtr ppi_portb_w, PortWriteHandlerPtr ppi_portc_w) {
+        public ppi8255_interface(int i, ReadHandlerPtr ppi_porta_r, ReadHandlerPtr ppi_portb_r, ReadHandlerPtr ppi_portc_r, WriteHandlerPtr ppi_porta_w, WriteHandlerPtr ppi_portb_w, WriteHandlerPtr ppi_portc_w) {
             num = i;
             
-            portAread = new PortReadHandlerPtr[] {ppi_porta_r};
-            portBread = new PortReadHandlerPtr[] {ppi_portb_r};
-            portCread = new PortReadHandlerPtr[] {ppi_portc_r};
+            portAread = new ReadHandlerPtr[] {ppi_porta_r};
+            portBread = new ReadHandlerPtr[] {ppi_portb_r};
+            portCread = new ReadHandlerPtr[] {ppi_portc_r};
             
-            portAwrite = new PortWriteHandlerPtr[] {ppi_porta_w};
-            portBwrite = new PortWriteHandlerPtr[] {ppi_portb_w};
-            portCwrite = new PortWriteHandlerPtr[] {ppi_portc_w};
+            portAwrite = new WriteHandlerPtr[] {ppi_porta_w};
+            portBwrite = new WriteHandlerPtr[] {ppi_portb_w};
+            portCwrite = new WriteHandlerPtr[] {ppi_portc_w};
         }
     };
 
