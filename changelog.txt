@@ -1,5 +1,11 @@
 12/03/2019
 ==========
+-Added cavelon game in scramble driver
+-Added hotshock game in scramble driver
+-Added newsin7 game in scramble driver
+-Added mars game in scramble driver
+-Added omega game in galaxian driver
+-Added theend and theends games in scramble driver
 -Added amidars game in scramble driver
 -Added amidar driver (games: amidar, amidaru, amidaro, amigo, turtles, turpin and 600)
 -Added froggers game in scramble driver
