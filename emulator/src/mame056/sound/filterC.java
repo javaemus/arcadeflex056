@@ -5,18 +5,18 @@ package mame056.sound;
 
 import static mame056.sound.filterH.*;
 
-public class filter {
+public class filterC {
 
-    static _filter filter_alloc() {
-        _filter f = new _filter();
+    static filter filter_alloc() {
+        filter f = new filter();
         return f;
     }
 
-    public static void filter_free(_filter f) {
+    public static void filter_free(filter f) {
         f = null;
     }
 
-    public static void filter_state_reset(_filter f, filter_state s) {
+    public static void filter_state_reset(filter f, filter_state s) {
         int i;
         s.prev_mac = 0;
         for (i = 0; i < f.order; ++i) {
@@ -42,7 +42,7 @@ public class filter {
      * *************************************************************************
      */
     /* FIR */
-    public static int filter_compute(_filter f, filter_state s) {
+    public static int filter_compute(filter f, filter_state s) {
         int/*unsigned*/ order = f.order;
         int/*unsigned*/ midorder = f.order / 2;
         int y = 0;
@@ -74,8 +74,8 @@ public class filter {
         return y >> FILTER_INT_FRACT;
     }
 
-    public static _filter filter_lp_fir_alloc(double freq, int order) {
-        _filter f = filter_alloc();
+    public static filter filter_lp_fir_alloc(double freq, int order) {
+        filter f = filter_alloc();
         int/*unsigned*/ midorder = (order - 1) / 2;
         int/*unsigned*/ i;
         double gain;

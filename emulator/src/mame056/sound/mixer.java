@@ -3,10 +3,12 @@
  */
 package mame056.sound;
 
+import static arcadeflex036.libc_old.*;
 import static arcadeflex036.osdepend.logerror;
 import static arcadeflex036.sound.osd_start_audio_stream;
 import static arcadeflex036.sound.osd_stop_audio_stream;
 import static arcadeflex036.sound.osd_update_audio_stream;
+import static arcadeflex056.debug.mixerLog;
 import static common.libc.cstdio.sprintf;
 import static java.lang.System.exit;
 import static mame037b11.sound.mixer.*;
@@ -14,46 +16,25 @@ import static mame056.driverH.SOUND_SUPPORTS_STEREO;
 import static mame056.mame.Machine;
 import static mame056.sndintrf.sound_scalebufferpos;
 import static mame056.sound.mixerH.*;
+import static mame056.sound.filterC.*;
+import static mame056.sound.filterH.*;
 
 public class mixer {
 
-    /*TODO*////***************************************************************************
-/*TODO*///
-/*TODO*///  mixer.c
-/*TODO*///
-/*TODO*///  Manage audio channels allocation, with volume and panning control
-/*TODO*///
-/*TODO*///***************************************************************************/
-/*TODO*///
-/*TODO*///#include "driver.h"
-/*TODO*///#include "filter.h"
-/*TODO*///
-/*TODO*///#include <math.h>
-/*TODO*///#include <limits.h>
-/*TODO*///#include <assert.h>
-/*TODO*///
-/*TODO*////***************************************************************************/
-/*TODO*////* Options */
-/*TODO*///
-/*TODO*////* Define it to enable the check of the flag options.use_filter as condition for the filter use */
-/*TODO*///#define MIXER_USE_OPTION_FILTER
-/*TODO*///
-/*TODO*////* Undefine it to turn off clipping (helpful to find cases where we max out */
-/*TODO*///#define MIXER_USE_CLIPPING
-/*TODO*///
-/*TODO*////* Define it to enable the logerror output */
-/*TODO*////* #define MIXER_USE_LOGERROR */
-/*TODO*///
-/*TODO*////***************************************************************************/
-/*TODO*////* Config */
-/*TODO*///
-/*TODO*////* Internal log */
-/*TODO*///#ifdef MIXER_USE_LOGERROR
-/*TODO*///#define mixerlogerror(a) logerror a
-/*TODO*///#else
-/*TODO*///#define mixerlogerror(a) do { } while (0)
-/*TODO*///#endif
-/*TODO*///
+    /* Config */
+    static int mx_opened;
+
+    public static void mixerlogerror(String string, Object... arguments) {
+        if (mixerLog) {
+            FILE f;
+
+            f = fopen("mixer.log", (mx_opened++) != 0 ? "a" : "w");
+            if (f != null) {
+                fprintf(f, string, arguments);
+                fclose(f);
+            }
+        }
+    }
     /* accumulators have ACCUMULATOR_SAMPLES samples (must be a power of 2) */
     public static final int ACCUMULATOR_SAMPLES = 8192;
     public static final int ACCUMULATOR_MASK = (ACCUMULATOR_SAMPLES - 1);
@@ -636,9 +617,9 @@ public class mixer {
 /*TODO*///static unsigned char silence_data[FILTER_FLUSH];
 /*TODO*///
 /*TODO*////* Flush the state of the filter playing some 0 samples */
-/*TODO*///static void mixer_flush(struct mixer_channel_data *channel)
-/*TODO*///{
-/*TODO*///	INT8 *source_begin, *source_end;
+    public static void mixer_flush(mixer_channel_data channel) {
+        System.out.println("mixer flush TODO!");
+        /*TODO*///	INT8 *source_begin, *source_end;
 /*TODO*///	int mixing_volume[2];
 /*TODO*///	unsigned save_available;
 /*TODO*///
@@ -663,7 +644,8 @@ public class mixer {
 /*TODO*///
 /*TODO*///	/* restore the number of samples availables */
 /*TODO*///	channel->samples_available = save_available;
-/*TODO*///}
+    }
+
     /**
      * *************************************************************************
      * mixer_sh_start
@@ -680,8 +662,8 @@ public class mixer {
             mixer_channel[i].default_mixing_level = 0xff;
             mixer_channel[i].config_mixing_level = config_mixing_level[i];
             mixer_channel[i].config_default_mixing_level = config_default_mixing_level[i];
-            /*TODO*///		channel->left = filter_state_alloc();
-/*TODO*///		channel->right = filter_state_alloc();
+            mixer_channel[i].left = filter_state_alloc();
+            mixer_channel[i].right = filter_state_alloc();
         }
         /* determine if we're playing in stereo or not */
         first_free_channel = 0;
@@ -708,10 +690,11 @@ public class mixer {
     public static void mixer_sh_stop() {
         osd_stop_audio_stream();
         for (int i = 0; i < mixer_channel.length; i++) {
-            /*TODO*///		if (channel->filter)
-/*TODO*///			filter_free(channel->filter);
-/*TODO*///		filter_state_free(channel->left);
-/*TODO*///		filter_state_free(channel->right);
+            if (mixer_channel[i]._filter != null) {
+                filter_free(mixer_channel[i]._filter);
+            }
+            filter_state_free(mixer_channel[i].left);
+            filter_state_free(mixer_channel[i].right);
         }
     }
 
@@ -1133,25 +1116,23 @@ public class mixer {
 /*TODO*///	channel->is_16bit = 1;
 /*TODO*///}
 /*TODO*///
-/*TODO*///
-/*TODO*////***************************************************************************
-/*TODO*///	mixer_stop_sample
-/*TODO*///***************************************************************************/
-/*TODO*///
-/*TODO*///void mixer_stop_sample(int ch)
-/*TODO*///{
-/*TODO*///	struct mixer_channel_data *channel = &mixer_channel[ch];
-/*TODO*///
-/*TODO*///	mixerlogerror(("Mixer:mixer_stop_sample(%s)\n",channel->name));
-/*TODO*///
-/*TODO*///	mixer_update_channel(channel, sound_scalebufferpos(samples_this_frame));
-/*TODO*///
-/*TODO*///	if (channel->is_playing) {
-/*TODO*///		channel->is_playing = 0;
-/*TODO*///		mixer_flush(channel);
-/*TODO*///	}
-/*TODO*///}
-/*TODO*///
+    /**
+     * *************************************************************************
+     * mixer_stop_sample
+     * *************************************************************************
+     */
+    public static void mixer_stop_sample(int ch) {
+
+        mixerlogerror("Mixer:mixer_stop_sample(%s)\n", mixer_channel[ch].name);
+
+        mixer_update_channel(mixer_channel[ch], sound_scalebufferpos(samples_this_frame));
+
+        if (mixer_channel[ch].is_playing != 0) {
+            mixer_channel[ch].is_playing = 0;
+            mixer_flush(mixer_channel[ch]);
+        }
+    }
+
     /**
      * *************************************************************************
      * mixer_is_sample_playing

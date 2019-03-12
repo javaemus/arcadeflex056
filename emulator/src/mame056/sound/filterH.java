@@ -10,7 +10,7 @@ public class filterH {
 
     public static final int FILTER_INT_FRACT = 15;/* fractional bits */
 
-    public static class _filter {
+    public static class filter {
 
         public int[] xcoeffs = new int[(FILTER_ORDER_MAX + 1) / 2];
         int /*unsigned*/ order;
@@ -23,7 +23,7 @@ public class filterH {
     }
 
     /* Insert a value in the filter state */
-    public static void filter_insert(_filter f, filter_state s, int x) {
+    public static void filter_insert(filter f, filter_state s, int x) {
         /* next state */
         ++s.prev_mac;
         if (s.prev_mac >= f.order) {
