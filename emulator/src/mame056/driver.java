@@ -24,6 +24,8 @@ import static mame056.drivers.exctsccr.*;
 import static mame056.drivers.galaxian.*;
 import static mame056.drivers.scramble.*;
 import static mame056.drivers.scobra.*;
+import static mame056.drivers.frogger.*;
+import static mame056.drivers.amidar.*;
 
 public class driver {
 
@@ -168,14 +170,14 @@ public class driver {
         /*TODO*///	driver_theends,	/* (c) 1980 Stern */
         /*TODO*///	driver_omega,		/* bootleg */
         /*TODO*///	driver_ckongs,	/* bootleg */
-        /*TODO*///	driver_froggers,	/* bootleg */
-        /*TODO*///	driver_amidars,	/* (c) 1982 Konami */
+        	driver_froggers,	/* bootleg */
+        	driver_amidars,	/* (c) 1982 Konami */
         	driver_triplep,	/* (c) 1982 KKI */
         	driver_knockout,	/* (c) 1982 KKK */
         	driver_mariner,	/* (c) 1981 Amenip */
         	driver_800fath,	/* (c) 1981 Amenip + U.S. Billiards license */
         /*TODO*///	driver_mars,		/* (c) 1981 Artic */
-        /*TODO*///	driver_devilfsh,	/* (c) 1982 Artic */
+        	driver_devilfsh,	/* (c) 1982 Artic */
         /*TODO*///	driver_newsin7,	/* (c) 1983 ATW USA, Inc. */
         /*TODO*///	driver_hotshock,	/* (c) 1982 E.G. Felaco */
         /*TODO*///	driver_hunchbks,	/* (c) 1983 Century */
@@ -203,17 +205,17 @@ public class driver {
         	driver_hustler,	/* GX343 (c) 1981 Konami */
         	driver_billiard,	/* bootleg */
         	driver_hustlerb,	/* bootleg */
-        /*TODO*///	driver_frogger,	/* GX392 (c) 1981 Konami */
-        /*TODO*///	driver_frogseg1,	/* (c) 1981 Sega */
-        /*TODO*///	driver_frogseg2,	/* 834-0068 (c) 1981 Sega */
-        /*TODO*///	driver_froggrmc,	/* 800-3110 (c) 1981 Sega */
-        /*TODO*///	driver_amidar,	/* GX337 (c) 1981 Konami */
-        /*TODO*///	driver_amidaru,	/* GX337 (c) 1982 Konami + Stern license */
-        /*TODO*///	driver_amidaro,	/* GX337 (c) 1982 Konami + Olympia license */
-        /*TODO*///	driver_amigo,		/* bootleg */
-        /*TODO*///	driver_turtles,	/* (c) 1981 Stern */
-        /*TODO*///	driver_turpin,	/* (c) 1981 Sega */
-        /*TODO*///	driver_600,		/* GX353 (c) 1981 Konami */
+        	driver_frogger,	/* GX392 (c) 1981 Konami */
+        	driver_frogseg1,	/* (c) 1981 Sega */
+        	driver_frogseg2,	/* 834-0068 (c) 1981 Sega */
+        	driver_froggrmc,	/* 800-3110 (c) 1981 Sega */
+        	driver_amidar,	/* GX337 (c) 1981 Konami */
+        	driver_amidaru,	/* GX337 (c) 1982 Konami + Stern license */
+        	driver_amidaro,	/* GX337 (c) 1982 Konami + Olympia license */
+        	driver_amigo,		/* bootleg */
+        	driver_turtles,	/* (c) 1981 Stern */
+        	driver_turpin,	/* (c) 1981 Sega */
+        	driver_600,		/* GX353 (c) 1981 Konami */
         /*TODO*///	driver_flyboy,	/* (c) 1982 Kaneko */
         /*TODO*///	driver_flyboyb,	/* bootleg */
         /*TODO*///	driver_fastfred,	/* (c) 1982 Atari */
