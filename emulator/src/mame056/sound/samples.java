@@ -16,6 +16,10 @@ import static mame056.sndintrfH.*;
 import static mame056.sound.mixer.*;
 import static mame056.sound.mixerH.*;
 
+import static mame037b11.sound.mixer.mixer_play_sample;
+import static mame037b11.sound.mixer.mixer_play_sample_16;
+import static mame037b11.sound.mixer.mixer_set_sample_frequency;
+
 public class samples extends snd_interface {
 
     public samples() {

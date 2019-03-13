@@ -10,6 +10,8 @@ import static mame056.sndintrf.*;
 import static mame056.sound.mixer.*;
 import static mame056.sound.mixerH.*;
 
+import static mame037b11.sound.mixer.mixer_play_streamed_sample_16;
+
 public class streams {
 
     public static abstract interface StreamInitPtr {
