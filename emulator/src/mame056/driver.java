@@ -99,6 +99,41 @@ public class driver {
         /*frogger*/ driver_frogseg1,
         /*frogger*/ driver_frogseg2,
         /*frogger*/ driver_froggrmc,
+        /*galaxian*/ driver_galaxian,
+        /*galaxian*/ driver_galaxiaj,
+        /*galaxian*/ driver_galmidw,
+        /*galaxian*/ driver_superg,
+        /*galaxian*/ driver_galapx,
+        /*galaxian*/ driver_galap1,
+        /*galaxian*/ driver_galap4,
+        /*galaxian*/ driver_galturbo,
+        /*galaxian*/ driver_swarm,
+        /*galaxian*/ driver_zerotime,
+        /*galaxian*/ driver_pisces,
+        /*galaxian*/ driver_uniwars,
+        /*galaxian*/ driver_gteikoku,
+        /*galaxian*/ driver_spacbatt,
+        /*galaxian*/ driver_warofbug,
+        /*galaxian*/ driver_redufo,
+        /*galaxian*/ driver_exodus,
+        /*galaxian*/ driver_streakng,
+        /*galaxian*/ driver_zigzag,
+        /*galaxian*/ driver_zigzag2,
+        /*galaxian*/ driver_levers,
+        /*galaxian*/ driver_azurian,
+        /*galaxian*/ driver_mooncrst,
+        /*galaxian*/ driver_mooncrsg,
+        /*galaxian*/ driver_smooncrs,
+        /*galaxian*/ driver_mooncrsb,
+        /*galaxian*/ driver_mooncrs2,
+        /*galaxian*/ driver_eagle,
+        /*galaxian*/ driver_eagle2,
+        /*galaxian*/ driver_moonqsr,
+        /*galaxian*/ driver_checkman,
+        /*galaxian*/ driver_checkmaj,
+        /*galaxian*/ driver_blkhole,
+        /*galaxian*/ driver_moonal2,
+        /*galaxian*/ driver_moonal2b,
         /**
          * GAME NOT WORKING FLAG
          */
@@ -118,55 +153,20 @@ public class driver {
 
         /* (c) 1984 */ /*TODO*///
         /* "Galaxian hardware" games */
-        driver_galaxian, 
-        driver_galaxiaj,
-        driver_galmidw, 
-        driver_superg, 
-        
-        driver_galapx, /* hack */
-        driver_galap1, /* hack */
-        driver_galap4, /* hack */
-        driver_galturbo, /* hack */
-        driver_swarm, /* hack */
-        driver_zerotime, /* hack */
-        driver_pisces, /* ? */
-        driver_uniwars, /* (c) Irem */
-        driver_gteikoku, /* (c) Irem */
-        driver_gteikokb, /* bootleg */
-        driver_gteikob2, /* bootleg */
-        driver_spacbatt, /* bootleg */
+        driver_gteikokb, /*multi screens intialaze */
+        driver_gteikob2, /*multi screens intialaze */
         /*TODO*///driver_batman2,	/* bootleg */
-        driver_warofbug, /* (c) 1981 Armenia */
-        driver_redufo, /* bootleg - original should be (c) Artic */
-        driver_exodus, /* Subelectro - bootleg? */
-        driver_streakng, /* [1980] Shoei */
-        driver_pacmanbl, /* bootleg */
-        driver_ghostmun, /* bootleg */
-        /*TODO*///driver_devilfsg,	/* (c) 1984 Vision / Artic (bootleg?) */
-        driver_zigzag, /* (c) 1982 LAX */
-        driver_zigzag2, /* (c) 1982 LAX */
-        driver_jumpbug, /* (c) 1981 Rock-ola */
-        driver_jumpbugb, /* (c) 1981 Sega */
-        driver_levers, /* (c) 1983 Rock-ola */
-        driver_azurian, /* (c) 1982 Rait Electronics Ltd */
-        driver_orbitron, /* Signatron USA */
-        driver_mooncrgx, /* bootleg */
-        driver_mooncrst, /* (c) 1980 Nichibutsu */
-        driver_mooncrsg, /* (c) 1980 Gremlin */
-        driver_smooncrs, /* Gremlin */
-        driver_mooncrsb, /* bootleg */
-        driver_mooncrs2, /* bootleg */
-        driver_fantazia, /* bootleg */
-        driver_eagle, /* (c) Centuri */
-        driver_eagle2, /* (c) Centuri */
-        driver_moonqsr, /* (c) 1980 Nichibutsu */
-        driver_checkman, /* (c) 1982 Zilec-Zenitone */
-        driver_checkmaj, /* (c) 1982 Jaleco (Zenitone/Zilec in ROM CM4, and the programmer names) */
-        driver_blkhole, /* TDS (Tokyo Denshi Sekkei) */
-        driver_moonal2, /* Nichibutsu */
-        driver_moonal2b, /* Nichibutsu */
-        driver_kingball, /* (c) 1980 Namco */
-        driver_kingbalj, /* (c) 1980 Namco */
+        driver_pacmanbl, /*multi screens intialaze */
+        driver_ghostmun,/*No rom*/
+        driver_devilfsg, /*No rom*/
+        driver_jumpbug, /* scrolling issues */
+        driver_jumpbugb, /* scrolling issues  */
+        driver_orbitron,/*multi screens intialaze */
+        driver_mooncrgx, /* doesn't boot */
+        driver_fantazia,/*no rom*/
+        driver_kingball, /* freezes on intialaze */
+        driver_kingbalj, /* freezes on intialaze */
+        
         /* "Scramble hardware" (and variations) games */
         driver_scramble, /* GX387 (c) 1981 Konami */
         driver_scrambls, /* GX387 (c) 1981 Stern */

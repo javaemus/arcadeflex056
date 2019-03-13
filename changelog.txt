@@ -4,6 +4,7 @@
 -Added sprite case for newsin7 in galaxian vidhrdw
 -Added bombjack driver to fully playable 
 -Added frogger driver to fully playable
+-galaxian driver compatibility updated
 
 12/03/2019
 ==========
