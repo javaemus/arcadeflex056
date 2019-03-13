@@ -7,6 +7,7 @@
 -galaxian driver compatibility updated
 -Workaround for double window intialaze in video.java (fixed some galaxian games)
 -Implemented install_mem_write_handler for moonal2 in galaxian
+-Fixed install memhandlers for scramble driver
 
 12/03/2019
 ==========

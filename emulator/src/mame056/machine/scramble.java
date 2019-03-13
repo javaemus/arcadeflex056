@@ -501,8 +501,8 @@ public class scramble {
             init_scramble_ppi.handler();
 
             /* extra ROM */
- /*TODO*///install_mem_read_handler (0, 0x5800, 0x67ff, MRA_ROM);
-            /*TODO*///install_mem_write_handler(0, 0x5800, 0x67ff, MWA_ROM);
+            install_mem_read_handler (0, 0x5800, 0x67ff, MRA_ROM);
+            install_mem_write_handler(0, 0x5800, 0x67ff, MWA_ROM);
             install_mem_read_handler(0, 0x9008, 0x9008, mariner_protection_2_r);
             install_mem_read_handler(0, 0xb401, 0xb401, mariner_protection_1_r);
 
@@ -589,13 +589,13 @@ public class scramble {
             init_scramble_ppi.handler();
 
             /* banked ROM */
- /*TODO*///install_mem_read_handler(0, 0x0000, 0x3fff, MRA_BANK1);
+            install_mem_read_handler(0, 0x0000, 0x3fff, MRA_BANK1);
             /* A15 switches memory banks */
             install_mem_read_handler(0, 0x8000, 0xffff, cavelon_banksw_r);
             install_mem_write_handler(0, 0x8000, 0xffff, cavelon_banksw_w);
 
-            /*TODO*///install_mem_write_handler(0, 0x2000, 0x2000, MWA_NOP);	/* ??? */
-            /*TODO*///install_mem_write_handler(0, 0x3800, 0x3801, MWA_NOP);  /* looks suspicously like an AY8910, but not sure */
+            install_mem_write_handler(0, 0x2000, 0x2000, MWA_NOP);	/* ??? */
+            install_mem_write_handler(0, 0x3800, 0x3801, MWA_NOP);  /* looks suspicously like an AY8910, but not sure */
         }
     };
 
