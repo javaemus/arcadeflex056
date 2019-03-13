@@ -95,6 +95,10 @@ public class driver {
         /*pooyan*/ driver_pootan,
         /*bombjack*/ driver_bombjack,
         /*bombjack*/ driver_bombjac2,
+        /*frogger*/ driver_frogger,
+        /*frogger*/ driver_frogseg1,
+        /*frogger*/ driver_frogseg2,
+        /*frogger*/ driver_froggrmc,
         /**
          * GAME NOT WORKING FLAG
          */
@@ -114,10 +118,11 @@ public class driver {
 
         /* (c) 1984 */ /*TODO*///
         /* "Galaxian hardware" games */
-        driver_galaxian, /* (c) Namco */
-        driver_galaxiaj, /* (c) Namco */
-        driver_galmidw, /* (c) Midway */
-        driver_superg, /* hack */
+        driver_galaxian, 
+        driver_galaxiaj,
+        driver_galmidw, 
+        driver_superg, 
+        
         driver_galapx, /* hack */
         driver_galap1, /* hack */
         driver_galap4, /* hack */
@@ -207,11 +212,6 @@ public class driver {
         driver_hustler, /* GX343 (c) 1981 Konami */
         driver_billiard, /* bootleg */
         driver_hustlerb, /* bootleg */
-        
-        driver_frogger, /* GX392 (c) 1981 Konami */
-        driver_frogseg1, /* (c) 1981 Sega */
-        driver_frogseg2, /* 834-0068 (c) 1981 Sega */
-        driver_froggrmc, /* 800-3110 (c) 1981 Sega */
         driver_amidar, /* GX337 (c) 1981 Konami */
         driver_amidaru, /* GX337 (c) 1982 Konami + Stern license */
         driver_amidaro, /* GX337 (c) 1982 Konami + Olympia license */
