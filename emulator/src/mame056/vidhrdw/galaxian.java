@@ -6,19 +6,19 @@ package mame056.vidhrdw;
 
 import static arcadeflex036.osdepend.logerror;
 import static arcadeflex056.fucPtr.*;
+
 import static common.ptr.*;
 import static common.libc.expressions.*;
 
+import static mame056.drivers.scramble.*;
+
 import static mame056.common.*;
 import static mame056.commonH.*;
-import static mame056.common.*;
 import static mame056.cpuexec.*;
 import static mame056.cpuintrfH.*;
-
 import static mame056.drawgfxH.*;
 import static mame056.drawgfx.*;
 import static mame056.mame.*;
-import static mame056.palette.*;
 import static mame056.timer.*;
 import static mame056.timerH.*;
 
@@ -419,16 +419,13 @@ public class galaxian {
 
             /* all the games except New Sinbad 7 clip the sprites at the top of the screen,
 		   New Sinbad 7 does it at the bottom */
- /*TODO*///		if (Machine->gamedrv == &driver_newsin7)
-/*TODO*///		{
-/*TODO*///			spritevisiblearea      = &_spritevisibleareaflipx;
-/*TODO*///			spritevisibleareaflipx = &_spritevisiblearea;
-/*TODO*///		}
-/*TODO*///		else
-/*TODO*///		{
-            spritevisiblearea = _spritevisiblearea;
-            spritevisibleareaflipx = _spritevisibleareaflipx;
-            /*TODO*///		}
+            if (Machine.gamedrv == driver_newsin7) {
+                spritevisiblearea = _spritevisibleareaflipx;
+                spritevisibleareaflipx = _spritevisiblearea;
+            } else {
+                spritevisiblearea = _spritevisiblearea;
+                spritevisibleareaflipx = _spritevisibleareaflipx;
+            }
 
             return 0;
         }
