@@ -1022,50 +1022,42 @@ public class video {
                         }
                     }
                 }
-            }
-            else
-                {
-                    if (dirty_bright != 0)
-                    {
-                        dirty_bright = 0;
-                        for (int i = 0; i < 256; i++)
-                        {
-                            float rate = (float)(brightness * brightness_paused_adjust * Math.pow(i / 255.0, 1 / osd_gamma_correction) / 100);
-                            bright_lookup[i] = (int)(255 * rate + 0.5);
-                        }
+            } else {
+                if (dirty_bright != 0) {
+                    dirty_bright = 0;
+                    for (int i = 0; i < 256; i++) {
+                        float rate = (float) (brightness * brightness_paused_adjust * Math.pow(i / 255.0, 1 / osd_gamma_correction) / 100);
+                        bright_lookup[i] = (int) (255 * rate + 0.5);
                     }
-                    if (dirtypalette!=0)
-                    {
-                       // if (use_dirty != 0) init_dirty(1);	/* have to redraw the whole screen */
+                }
+                if (dirtypalette != 0) {
+                    // if (use_dirty != 0) init_dirty(1);	/* have to redraw the whole screen */
 
-                        dirtypalette = 0;
-                        for (int i = 0; i < screen_colors; i++)
-                        {
-                            if (dirtycolor[i]!=0)
-                            {
-                                int r, g, b;
+                    dirtypalette = 0;
+                    for (int i = 0; i < screen_colors; i++) {
+                        if (dirtycolor[i] != 0) {
+                            int r, g, b;
 
-                                dirtycolor[i] = 0;
+                            dirtycolor[i] = 0;
 
-                                r = current_palette.read(3 * i + 0);
-                                g = current_palette.read(3 * i + 1);
-                                b = current_palette.read(3 * i + 2);
-                                if (i != Machine.uifont.colortable.read(1))	/* don't adjust the user interface text */
-                                {
-                                    r = bright_lookup[r];
-                                    g = bright_lookup[g];
-                                    b = bright_lookup[b];
-                                }
-                                palette_16bit_lookup[i] = (char)(makecol(r, g, b));// * 0x10001);
-                                RGB p = new RGB();
-                                p.r=(char)r;
-                                p.g=(char)g;
-                                p.b=(char)b;
-                                set_color(i, p);
+                            r = current_palette.read(3 * i + 0);
+                            g = current_palette.read(3 * i + 1);
+                            b = current_palette.read(3 * i + 2);
+                            if (i != Machine.uifont.colortable.read(1)) /* don't adjust the user interface text */ {
+                                r = bright_lookup[r];
+                                g = bright_lookup[g];
+                                b = bright_lookup[b];
                             }
+                            palette_16bit_lookup[i] = (char) (makecol(r, g, b));// * 0x10001);
+                            RGB p = new RGB();
+                            p.r = (char) r;
+                            p.g = (char) g;
+                            p.b = (char) b;
+                            set_color(i, p);
                         }
                     }
                 }
+            }
             /*TODO*///		else
             /*TODO*///		{
             /*TODO*///			if (dirty_bright)
@@ -1106,7 +1098,7 @@ public class video {
             /*TODO*///		}
             blitscreen_dirty1_vga();
             update_audio();
-            
+
             clock_counter = (clock_counter + 1) % MEMORY;
             if ((curr - prev1[clock_counter]) != 0) {
                 long divdr = (int) Machine.drv.frames_per_second * (curr - prev1[clock_counter]) / (100L * MEMORY);
@@ -1168,18 +1160,18 @@ public class video {
     }
 
     public static int makecol(int r, int g, int b) {//makecol16 from allegro src
-      /*  Color c = new Color(r, g, b);
+        /*  Color c = new Color(r, g, b);
         int cl = c.getRGB();
         //Red shift from 24 to 16, masking but 5 MSBs 
         char o = (char) ((cl >> 8) & 0xf800);
 
         /* Green shift from 16 to 11, masking 6 MSBs */
-    /*    o |= (char) ((cl >> 5) & 0x07e0);
+ /*    o |= (char) ((cl >> 5) & 0x07e0);
 
         /* Blue shift from 8 to 5, masking 5 MSBs */
-     /*   o |= (char) ((cl >> 3) & 0x001f);
+ /*   o |= (char) ((cl >> 3) & 0x001f);
         System.out.println((int) o);*/
-     int o = ((r >> 3) << 11) | (( g >> 2) << 5 ) | (( b >> 3 ) << 0 );
+        int o = ((r >> 3) << 11) | ((g >> 2) << 5) | ((b >> 3) << 0);
         return o;
         //return (((r >> 3) << 11)
         //        | ((g >> 2) << 11)
@@ -1484,47 +1476,50 @@ public class video {
         } catch (InterruptedException localInterruptedException) {
         }
     }
+    static int onlyone = 0;
 
     public static void tempCreation() {
         /*part of the old arcadeflex_old emulator probably need refactoring */
         Dimension localDimension = Toolkit.getDefaultToolkit().getScreenSize();
+        if (onlyone == 0) {
+            //kill loading window
+            osdepend.dlprogress.setVisible(false);
+            screen = new software_gfx(settings.version + " (based on mame v" + build_version + ")");
+            screen.pack();
+            //screen.setSize((scanlines==1),gfx_width,gfx_height);//this???
+            //screen.setSize((scanlines==1),width,height);//this???
+            screen.setSize((scanlines == 0), Machine.scrbitmap.width, Machine.scrbitmap.height);
+            screen.setBackground(Color.black);
+            screen.start();
+            screen.run();
+            screen.setLocation((int) ((localDimension.getWidth() - screen.getWidth()) / 2.0D), (int) ((localDimension.getHeight() - screen.getHeight()) / 2.0D));
+            screen.setVisible(true);
+            screen.setResizable((scanlines == 1));
 
-        //kill loading window
-        osdepend.dlprogress.setVisible(false);
-        screen = new software_gfx(settings.version + " (based on mame v" + build_version + ")");
-        screen.pack();
-        //screen.setSize((scanlines==1),gfx_width,gfx_height);//this???
-        //screen.setSize((scanlines==1),width,height);//this???
-        screen.setSize((scanlines == 0), Machine.scrbitmap.width, Machine.scrbitmap.height);
-        screen.setBackground(Color.black);
-        screen.start();
-        screen.run();
-        screen.setLocation((int) ((localDimension.getWidth() - screen.getWidth()) / 2.0D), (int) ((localDimension.getHeight() - screen.getHeight()) / 2.0D));
-        screen.setVisible(true);
-        screen.setResizable((scanlines == 1));
+            screen.addWindowListener(new WindowAdapter() {
 
-        screen.addWindowListener(new WindowAdapter() {
-
-            public void windowClosing(WindowEvent evt) {
-                screen.readkey = KeyEvent.VK_ESCAPE;
-                screen.key[KeyEvent.VK_ESCAPE] = true;
-                osd_refresh();
-                if (screen != null) {
-                    screen.key[KeyEvent.VK_ESCAPE] = false;
+                public void windowClosing(WindowEvent evt) {
+                    screen.readkey = KeyEvent.VK_ESCAPE;
+                    screen.key[KeyEvent.VK_ESCAPE] = true;
+                    osd_refresh();
+                    if (screen != null) {
+                        screen.key[KeyEvent.VK_ESCAPE] = false;
+                    }
                 }
-            }
-        });
+            });
 
-        screen.addComponentListener(new ComponentAdapter() {
+            screen.addComponentListener(new ComponentAdapter() {
 
-            public void componentResized(ComponentEvent evt) {
-                screen.resizeVideo();
-            }
-        });
+                public void componentResized(ComponentEvent evt) {
+                    screen.resizeVideo();
+                }
+            });
 
-        screen.addKeyListener(screen);
-        screen.setFocusTraversalKeysEnabled(false);
-        screen.requestFocus();
+            screen.addKeyListener(screen);
+            screen.setFocusTraversalKeysEnabled(false);
+            screen.requestFocus();
+            onlyone = 1;//big hack!!
+        }
     }
 
     /* center image inside the display based on the visual area */

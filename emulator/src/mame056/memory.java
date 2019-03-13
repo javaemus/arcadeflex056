@@ -460,6 +460,21 @@ public class memory {
 
         return memory_find_base(cpunum, start);
     }
+    public static UBytePtr install_mem_write_handler(int cpunum, int start, int end, int _handler) {
+        /* sanity check */
+        if (cpudata[cpunum].mem.dbits != 8) {
+            printf("fatal: install_mem_write_handler called on %d-bit cpu\n", cpudata[cpunum].mem.dbits);
+            exit(1);
+        }
+
+        /* install the handler */
+        install_mem_handler(cpudata[cpunum].mem, 1, start, end, _handler, null);
+
+        /* dump the new memory configuration */
+        mem_dump();
+
+        return memory_find_base(cpunum, start);
+    }
 
 
     /*TODO*////*-------------------------------------------------

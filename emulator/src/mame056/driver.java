@@ -134,6 +134,9 @@ public class driver {
         /*galaxian*/ driver_blkhole,
         /*galaxian*/ driver_moonal2,
         /*galaxian*/ driver_moonal2b,
+        /*galaxian*/ driver_gteikokb,
+        /*galaxian*/ driver_gteikob2,
+        /*galaxian*/ driver_pacmanbl,
         /**
          * GAME NOT WORKING FLAG
          */
@@ -153,20 +156,16 @@ public class driver {
 
         /* (c) 1984 */ /*TODO*///
         /* "Galaxian hardware" games */
-        driver_gteikokb, /*multi screens intialaze */
-        driver_gteikob2, /*multi screens intialaze */
-        /*TODO*///driver_batman2,	/* bootleg */
-        driver_pacmanbl, /*multi screens intialaze */
-        driver_ghostmun,/*No rom*/
-        driver_devilfsg, /*No rom*/
-        driver_jumpbug, /* scrolling issues */
-        driver_jumpbugb, /* scrolling issues  */
-        driver_orbitron,/*multi screens intialaze */
-        driver_mooncrgx, /* doesn't boot */
-        driver_fantazia,/*no rom*/
-        driver_kingball, /* freezes on intialaze */
-        driver_kingbalj, /* freezes on intialaze */
-        
+        /*galaxian*//*TODO*///driver_batman2,/* needs phoenix driver */
+        /*galaxian*/ driver_ghostmun,/*No rom*/
+        /*galaxian*/ driver_devilfsg, /*No rom*/
+        /*galaxian*/ driver_jumpbug, /* scrolling issues */
+        /*galaxian*/ driver_jumpbugb, /* scrolling issues  */
+        /*galaxian*/ driver_orbitron,/*scrolling issues */
+        /*galaxian*/ driver_mooncrgx, /* doesn't boot */
+        /*galaxian*/ driver_fantazia,/*no rom*/
+        /*galaxian*/ driver_kingball, /* freezes on intialaze */
+        /*galaxian*/ driver_kingbalj, /* freezes on intialaze */
         /* "Scramble hardware" (and variations) games */
         driver_scramble, /* GX387 (c) 1981 Konami */
         driver_scrambls, /* GX387 (c) 1981 Stern */
