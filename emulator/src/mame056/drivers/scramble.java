@@ -90,6 +90,7 @@ import static mame056.memoryH.*;
 import static mame056.inptport.*;
 import static mame056.drawgfxH.*;
 import static mame056.drivers.amidar.driver_amidar;
+import static mame056.drivers.cclimber.driver_ckong;
 import static mame056.drivers.frogger.*;
 import static mame056.inputH.KEYCODE_F1;
 import static mame056.machine.scramble.*;
@@ -2041,7 +2042,7 @@ public class scramble
 	public static GameDriver driver_knockout	   = new GameDriver("1982"	,"knockout"	,"scramble.java"	,rom_knockout,driver_triplep	,machine_driver_triplep	,input_ports_triplep	,init_scramble_ppi	,ROT90	,	"KKK", "Knock Out!!" );
 	public static GameDriver driver_mariner	   = new GameDriver("1981"	,"mariner"	,"scramble.java"	,rom_mariner,null	,machine_driver_mariner	,input_ports_scramble	,init_mariner	,ROT90	,	"Amenip", "Mariner" );
 	public static GameDriver driver_800fath	   = new GameDriver("1981"	,"800fath"	,"scramble.java"	,rom_800fath,driver_mariner	,machine_driver_mariner	,input_ports_scramble	,init_mariner	,ROT90	,	"Amenip (US Billiards Inc. license)", "800 Fathoms" );
-	/*TODO*///public static GameDriver driver_ckongs	   = new GameDriver("1981"	,"ckongs"	,"scramble.java"	,rom_ckongs,driver_ckong	,machine_driver_ckongs	,input_ports_ckongs	,init_ckongs	,ROT90	,	"bootleg", "Crazy Kong (Scramble hardware)" );
+	public static GameDriver driver_ckongs	   = new GameDriver("1981"	,"ckongs"	,"scramble.java"	,rom_ckongs,driver_ckong	,machine_driver_ckongs	,input_ports_ckongs	,init_ckongs	,ROT90	,	"bootleg", "Crazy Kong (Scramble hardware)" );
 	public static GameDriver driver_mars	   = new GameDriver("1981"	,"mars"	,"scramble.java"	,rom_mars,null	,machine_driver_mars	,input_ports_mars	,init_mars	,ROT90	,	"Artic", "Mars" );
 	public static GameDriver driver_devilfsh	   = new GameDriver("1982"	,"devilfsh"	,"scramble.java"	,rom_devilfsh,null	,machine_driver_devilfsh	,input_ports_devilfsh	,init_mars	,ROT90	,	"Artic", "Devil Fish" );
 	public static GameDriver driver_newsin7	   = new GameDriver("1983"	,"newsin7"	,"scramble.java"	,rom_newsin7,null	,machine_driver_newsin7	,input_ports_newsin7	,init_mars	,ROT90	,	"ATW USA, Inc.", "New Sinbad 7", GAME_IMPERFECT_COLORS );
