@@ -2,6 +2,7 @@
 ==========
 -Added cclimber driver (games supported: cclimber, cclimbrj, ccboot, ccboot2, ckong, ckonga, ckongjeu, ckongo, 
 ckongalc, monkeyd, rpatrolb, silvland, swimmer, swimmera, swimmerb, guzzler)
+-M6809 cpu added (but we don't have a game that uses it yet)
 
 13/03/2019
 ==========

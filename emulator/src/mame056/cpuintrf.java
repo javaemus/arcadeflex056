@@ -13,6 +13,7 @@ import static mame056.memory.*;
 //cpu imports
 import mame056.cpu.dummy_cpu;
 import mame056.cpu.z80.z80;
+import mame056.cpu.m6809.m6809;
 
 public class cpuintrf {
 
@@ -174,126 +175,47 @@ public class cpuintrf {
     public static cpu_interface cpuintrf[]
             = {
                 new dummy_cpu(),
-                new z80()
-            /*TODO*///#if (HAS_8080)
-            /*TODO*///	CPU0(8080,	   i8080,	 4,255,1.00,I8080_INTR_LINE,8, 16,	  0,16,LE,1, 3	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_8085A)
-            /*TODO*///	CPU0(8085A,    i8085,	 4,255,1.00,I8085_INTR_LINE,8, 16,	  0,16,LE,1, 3	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_M6502)
-            /*TODO*///	CPU0(M6502,    m6502,	 1,  0,1.00,M6502_IRQ_LINE, 8, 16,	  0,16,LE,1, 3	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_M65C02)
-            /*TODO*///	CPU0(M65C02,   m65c02,	 1,  0,1.00,M65C02_IRQ_LINE, 8, 16,	  0,16,LE,1, 3	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_M65SC02)
-            /*TODO*///	CPU0(M65SC02,  m65sc02,  1,  0,1.00,M65SC02_IRQ_LINE, 8, 16,	  0,16,LE,1, 3	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_M65CE02)
-            /*TODO*///	CPU0(M65CE02,  m65ce02,  1,  0,1.00,M65CE02_IRQ_LINE, 8, 16,	  0,16,LE,1, 3	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_M6509)
-            /*TODO*///	CPU0(M6509,    m6509,	 1,  0,1.00,M6509_IRQ_LINE, 8, 20,	  0,20,LE,1, 3	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_M6510)
-            /*TODO*///	CPU0(M6510,    m6510,	 1,  0,1.00,M6510_IRQ_LINE, 8, 16,	  0,16,LE,1, 3	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_M6510T)
-            /*TODO*///	CPU0(M6510T,   m6510t,	 1,  0,1.00,M6510T_IRQ_LINE, 8, 16,	  0,16,LE,1, 3	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_M7501)
-            /*TODO*///	CPU0(M7501,    m7501,	 1,  0,1.00,M7501_IRQ_LINE, 8, 16,	  0,16,LE,1, 3	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_M8502)
-            /*TODO*///	CPU0(M8502,    m8502,	 1,  0,1.00,M8502_IRQ_LINE, 8, 16,	  0,16,LE,1, 3	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_N2A03)
-            /*TODO*///	CPU0(N2A03,    n2a03,	 1,  0,1.00,N2A03_IRQ_LINE, 8, 16,	  0,16,LE,1, 3	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_M4510)
-            /*TODO*///	CPU0(M4510,    m4510,	 1,  0,1.00,M4510_IRQ_LINE, 8, 20,	  0,20,LE,1, 3	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_H6280)
-            /*TODO*///	CPU0(H6280,    h6280,	 3,  0,1.00,-1,			    8, 21,	  0,21,LE,1, 3	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_I86)
-            /*TODO*///	CPU0(I86,	   i86, 	 1,  0,1.00,-1000,		    8, 20,	  0,20,LE,1, 5	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_I88)
-            /*TODO*///	CPU0(I88,	   i88, 	 1,  0,1.00,-1000,		    8, 20,	  0,20,LE,1, 5	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_I186)
-            /*TODO*///	CPU0(I186,	   i186,	 1,  0,1.00,-1000,		    8, 20,	  0,20,LE,1, 5	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_I188)
-            /*TODO*///	CPU0(I188,	   i188,	 1,  0,1.00,-1000,		    8, 20,	  0,20,LE,1, 5	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_I286)
-            /*TODO*///	CPU0(I286,	   i286,	 1,  0,1.00,-1000,		    8, 24,	  0,24,LE,1, 5	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_V20)
-            /*TODO*///	CPU0(V20,	   v20, 	 1,  0,1.00,-1000,		    8, 20,	  0,20,LE,1, 5	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_V30)
-            /*TODO*///	CPU0(V30,	   v30, 	 1,  0,1.00,-1000,		    8, 20,	  0,20,LE,1, 5	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_V33)
-            /*TODO*///	CPU0(V33,	   v33, 	 1,  0,1.00,-1000,		    8, 20,	  0,20,LE,1, 5	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_V60)
-            /*TODO*///	CPU0(V60,	   v60, 	 1,  0,1.00,-1000,		   16, 24lew, 0,24,LE,1, 11	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_I8035)
-            /*TODO*///	CPU0(I8035,    i8035,	 1,  0,1.00,0,              8, 16,	  0,16,LE,1, 2	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_I8039)
-            /*TODO*///	CPU0(I8039,    i8039,	 1,  0,1.00,0,              8, 16,	  0,16,LE,1, 2	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_I8048)
-            /*TODO*///	CPU0(I8048,    i8048,	 1,  0,1.00,0,              8, 16,	  0,16,LE,1, 2	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_N7751)
-            /*TODO*///	CPU0(N7751,    n7751,	 1,  0,1.00,0,              8, 16,	  0,16,LE,1, 2	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_I8X41)
-            /*TODO*///	CPU0(I8X41,    i8x41,	 1,  0,1.00,I8X41_INT_IBF,  8, 16,	  0,16,LE,1, 2	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_M6800)
-            /*TODO*///	CPU0(M6800,    m6800,	 1,  0,1.00,M6800_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_M6801)
-            /*TODO*///	CPU0(M6801,    m6801,	 1,  0,1.00,M6801_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_M6802)
-            /*TODO*///	CPU0(M6802,    m6802,	 1,  0,1.00,M6802_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_M6803)
-            /*TODO*///	CPU0(M6803,    m6803,	 1,  0,1.00,M6803_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_M6808)
-            /*TODO*///	CPU0(M6808,    m6808,	 1,  0,1.00,M6808_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_HD63701)
-            /*TODO*///	CPU0(HD63701,  hd63701,  1,  0,1.00,HD63701_IRQ_LINE,8, 16,	  0,16,BE,1, 4	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_NSC8105)
-            /*TODO*///	CPU0(NSC8105,  nsc8105,  1,  0,1.00,NSC8105_IRQ_LINE,8, 16,	  0,16,BE,1, 4	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_M6805)
-            /*TODO*///	CPU0(M6805,    m6805,	 1,  0,1.00,M6805_IRQ_LINE,  8, 16,	  0,11,BE,1, 3	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_M68705)
-            /*TODO*///	CPU0(M68705,   m68705,	 1,  0,1.00,M68705_IRQ_LINE, 8, 16,	  0,11,BE,1, 3	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_HD63705)
-            /*TODO*///	CPU0(HD63705,  hd63705,  8,  0,1.00,HD63705_INT_IRQ1,8, 16,	  0,16,BE,1, 3	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_HD6309)
-            /*TODO*///	CPU0(HD6309,   hd6309,	 2,  0,1.00,HD6309_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_M6809)
-            /*TODO*///	CPU0(M6809,    m6809,	 2,  0,1.00,M6809_IRQ_LINE,  8, 16,	  0,16,BE,1, 4	),
+                new z80(),
+                new dummy_cpu(),/*TODO*///	CPU0(8080,	   i8080,	 4,255,1.00,I8080_INTR_LINE,8, 16,	  0,16,LE,1, 3	),
+                new dummy_cpu(),/*TODO*///	CPU0(8085A,    i8085,	 4,255,1.00,I8085_INTR_LINE,8, 16,	  0,16,LE,1, 3	),
+                new dummy_cpu(),/*TODO*///	CPU0(M6502,    m6502,	 1,  0,1.00,M6502_IRQ_LINE, 8, 16,	  0,16,LE,1, 3	),
+                new dummy_cpu(),/*TODO*///	CPU0(M65C02,   m65c02,	 1,  0,1.00,M65C02_IRQ_LINE, 8, 16,	  0,16,LE,1, 3	),
+                new dummy_cpu(),/*TODO*///	CPU0(M65SC02,  m65sc02,  1,  0,1.00,M65SC02_IRQ_LINE, 8, 16,	  0,16,LE,1, 3	),
+                new dummy_cpu(),/*TODO*///	CPU0(M65CE02,  m65ce02,  1,  0,1.00,M65CE02_IRQ_LINE, 8, 16,	  0,16,LE,1, 3	),
+                new dummy_cpu(),/*TODO*///	CPU0(M6509,    m6509,	 1,  0,1.00,M6509_IRQ_LINE, 8, 20,	  0,20,LE,1, 3	),
+                new dummy_cpu(),/*TODO*///	CPU0(M6510,    m6510,	 1,  0,1.00,M6510_IRQ_LINE, 8, 16,	  0,16,LE,1, 3	),
+                new dummy_cpu(),/*TODO*///	CPU0(M6510T,   m6510t,	 1,  0,1.00,M6510T_IRQ_LINE, 8, 16,	  0,16,LE,1, 3	),
+                new dummy_cpu(),/*TODO*///	CPU0(M7501,    m7501,	 1,  0,1.00,M7501_IRQ_LINE, 8, 16,	  0,16,LE,1, 3	),
+                new dummy_cpu(),/*TODO*///	CPU0(M8502,    m8502,	 1,  0,1.00,M8502_IRQ_LINE, 8, 16,	  0,16,LE,1, 3	),
+                new dummy_cpu(),/*TODO*///	CPU0(N2A03,    n2a03,	 1,  0,1.00,N2A03_IRQ_LINE, 8, 16,	  0,16,LE,1, 3	),
+                new dummy_cpu(),/*TODO*///	CPU0(M4510,    m4510,	 1,  0,1.00,M4510_IRQ_LINE, 8, 20,	  0,20,LE,1, 3	),
+                new dummy_cpu(),/*TODO*///	CPU0(H6280,    h6280,	 3,  0,1.00,-1,			    8, 21,	  0,21,LE,1, 3	),
+                new dummy_cpu(),/*TODO*///	CPU0(I86,	   i86, 	 1,  0,1.00,-1000,		    8, 20,	  0,20,LE,1, 5	),
+                new dummy_cpu(),/*TODO*///	CPU0(I88,	   i88, 	 1,  0,1.00,-1000,		    8, 20,	  0,20,LE,1, 5	),
+                new dummy_cpu(),/*TODO*///	CPU0(I186,	   i186,	 1,  0,1.00,-1000,		    8, 20,	  0,20,LE,1, 5	),
+                new dummy_cpu(),/*TODO*///	CPU0(I188,	   i188,	 1,  0,1.00,-1000,		    8, 20,	  0,20,LE,1, 5	),
+                new dummy_cpu(),/*TODO*///	CPU0(I286,	   i286,	 1,  0,1.00,-1000,		    8, 24,	  0,24,LE,1, 5	),
+                new dummy_cpu(),/*TODO*///	CPU0(V20,	   v20, 	 1,  0,1.00,-1000,		    8, 20,	  0,20,LE,1, 5	),
+                new dummy_cpu(),/*TODO*///	CPU0(V30,	   v30, 	 1,  0,1.00,-1000,		    8, 20,	  0,20,LE,1, 5	),
+                new dummy_cpu(),/*TODO*///	CPU0(V33,	   v33, 	 1,  0,1.00,-1000,		    8, 20,	  0,20,LE,1, 5	),
+                new dummy_cpu(),/*TODO*///	CPU0(V60,	   v60, 	 1,  0,1.00,-1000,		   16, 24lew, 0,24,LE,1, 11	),
+                new dummy_cpu(),/*TODO*///	CPU0(I8035,    i8035,	 1,  0,1.00,0,              8, 16,	  0,16,LE,1, 2	),
+                new dummy_cpu(),/*TODO*///	CPU0(I8039,    i8039,	 1,  0,1.00,0,              8, 16,	  0,16,LE,1, 2	),
+                new dummy_cpu(),/*TODO*///	CPU0(I8048,    i8048,	 1,  0,1.00,0,              8, 16,	  0,16,LE,1, 2	),
+                new dummy_cpu(),/*TODO*///	CPU0(N7751,    n7751,	 1,  0,1.00,0,              8, 16,	  0,16,LE,1, 2	),
+                new dummy_cpu(),/*TODO*///	CPU0(I8X41,    i8x41,	 1,  0,1.00,I8X41_INT_IBF,  8, 16,	  0,16,LE,1, 2	),
+                new dummy_cpu(),/*TODO*///	CPU0(M6800,    m6800,	 1,  0,1.00,M6800_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
+                new dummy_cpu(),/*TODO*///	CPU0(M6801,    m6801,	 1,  0,1.00,M6801_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
+                new dummy_cpu(),/*TODO*///	CPU0(M6802,    m6802,	 1,  0,1.00,M6802_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
+                new dummy_cpu(),/*TODO*///	CPU0(M6803,    m6803,	 1,  0,1.00,M6803_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
+                new dummy_cpu(),/*TODO*///	CPU0(M6808,    m6808,	 1,  0,1.00,M6808_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
+                new dummy_cpu(),/*TODO*///	CPU0(HD63701,  hd63701,  1,  0,1.00,HD63701_IRQ_LINE,8, 16,	  0,16,BE,1, 4	),
+                new dummy_cpu(),/*TODO*///	CPU0(NSC8105,  nsc8105,  1,  0,1.00,NSC8105_IRQ_LINE,8, 16,	  0,16,BE,1, 4	),
+                new dummy_cpu(),/*TODO*///	CPU0(M6805,    m6805,	 1,  0,1.00,M6805_IRQ_LINE,  8, 16,	  0,11,BE,1, 3	),
+                new dummy_cpu(),/*TODO*///	CPU0(M68705,   m68705,	 1,  0,1.00,M68705_IRQ_LINE, 8, 16,	  0,11,BE,1, 3	),
+                new dummy_cpu(),/*TODO*///	CPU0(HD63705,  hd63705,  8,  0,1.00,HD63705_INT_IRQ1,8, 16,	  0,16,BE,1, 3	),
+                new dummy_cpu(),/*TODO*///	CPU0(HD6309,   hd6309,	 2,  0,1.00,HD6309_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
+                new m6809(),/*TODO*///	CPU0(M6809,    m6809,	 2,  0,1.00,M6809_IRQ_LINE,  8, 16,	  0,16,BE,1, 4	),
             /*TODO*///#endif
             /*TODO*///#if (HAS_KONAMI)
             /*TODO*///	CPU0(KONAMI,   konami,	 2,  0,1.00,KONAMI_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
