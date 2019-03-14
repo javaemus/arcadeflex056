@@ -32,6 +32,7 @@ import static mame056.drivers.kchamp.*;
 import static mame056.drivers.rocnrope.*;
 import static mame056.drivers.galaga.*;
 import static mame056.drivers.fastfred.*;
+import static mame056.drivers.mikie.*;
 
 public class driver {
 
@@ -2616,9 +2617,9 @@ public class driver {
         /*TODO*///	driver_hpolym84,	/* GX330 (c) 1984 */
         /*TODO*///	driver_sbasketb,	/* GX405 (c) 1984 */
         /*TODO*///	driver_sbasketu,	/* GX405 (c) 1984 */
-        /*TODO*///	driver_mikie,		/* GX469 (c) 1984 */
-        /*TODO*///	driver_mikiej,	/* GX469 (c) 1984 */
-        /*TODO*///	driver_mikiehs,	/* GX469 (c) 1984 */
+        	driver_mikie,		/* GX469 (c) 1984 */
+        	driver_mikiej,	/* GX469 (c) 1984 */
+        	driver_mikiehs,	/* GX469 (c) 1984 */
         /*TODO*///	driver_roadf,		/* GX461 (c) 1984 */
         /*TODO*///	driver_roadf2,	/* GX461 (c) 1984 */
         /*TODO*///	driver_yiear,		/* GX407 (c) 1985 */
