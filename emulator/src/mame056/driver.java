@@ -28,6 +28,8 @@ import static mame056.drivers.frogger.*;
 import static mame056.drivers.amidar.*;
 import static mame056.drivers.bombjack.*;
 import static mame056.drivers.cclimber.*;
+import static mame056.drivers.kchamp.*;
+import static mame056.drivers.rocnrope.*;
 
 public class driver {
 
@@ -176,7 +178,7 @@ public class driver {
         driver_theend, /* (c) 1980 Konami */
         driver_theends, /* (c) 1980 Stern */
         driver_omega, /* bootleg */
-        /*TODO*///	driver_ckongs,	/* bootleg */
+        driver_ckongs,	/* bootleg */
         driver_froggers, /* bootleg */
         driver_amidars, /* (c) 1982 Konami */
         driver_triplep, /* (c) 1982 KKI */
@@ -2410,10 +2412,10 @@ public class driver {
         /*TODO*///	driver_astrof3,	/* (c) [1980?] */
         /*TODO*///	driver_tomahawk,	/* (c) [1980?] */
         /*TODO*///	driver_tomahaw5,	/* (c) [1980?] */
-        /*TODO*///	driver_kchamp,	/* (c) 1984 Data East USA (US) */
-        /*TODO*///	driver_karatedo,	/* (c) 1984 Data East Corporation (Japan) */
-        /*TODO*///	driver_kchampvs,	/* (c) 1984 Data East USA (US) */
-        /*TODO*///	driver_karatevs,	/* (c) 1984 Data East Corporation (Japan) */
+        	driver_kchamp,	/* (c) 1984 Data East USA (US) */
+        	driver_karatedo,	/* (c) 1984 Data East Corporation (Japan) */
+        	driver_kchampvs,	/* (c) 1984 Data East USA (US) */
+        	driver_karatevs,	/* (c) 1984 Data East Corporation (Japan) */
         /*TODO*///	driver_firetrap,	/* (c) 1986 */
         /*TODO*///	driver_firetpbl,	/* bootleg */
         /*TODO*///	driver_brkthru,	/* (c) 1986 Data East USA (US) */
@@ -2600,8 +2602,8 @@ public class driver {
         /*TODO*///	driver_trackflc,	/* GX361 (c) 1983 + Centuri license */
         /*TODO*///	driver_hyprolym,	/* GX361 (c) 1983 */
         /*TODO*///	driver_hyprolyb,	/* bootleg */
-        /*TODO*///	driver_rocnrope,	/* GX364 (c) 1983 */
-        /*TODO*///	driver_rocnropk,	/* GX364 (c) 1983 + Kosuka */
+        	driver_rocnrope,	/* GX364 (c) 1983 */
+        	driver_rocnropk,	/* GX364 (c) 1983 + Kosuka */
         /*TODO*///	driver_circusc,	/* GX380 (c) 1984 */
         /*TODO*///	driver_circusc2,	/* GX380 (c) 1984 */
         /*TODO*///	driver_circuscc,	/* GX380 (c) 1984 + Centuri license */
