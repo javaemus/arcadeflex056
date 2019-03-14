@@ -30,6 +30,8 @@ import static mame056.drivers.bombjack.*;
 import static mame056.drivers.cclimber.*;
 import static mame056.drivers.kchamp.*;
 import static mame056.drivers.rocnrope.*;
+import static mame056.drivers.galaga.*;
+import static mame056.drivers.fastfred.*;
 
 public class driver {
 
@@ -221,12 +223,12 @@ public class driver {
         driver_turtles, /* (c) 1981 Stern */
         driver_turpin, /* (c) 1981 Sega */
         driver_600, /* GX353 (c) 1981 Konami */
-        /*TODO*///	driver_flyboy,	/* (c) 1982 Kaneko */
-        /*TODO*///	driver_flyboyb,	/* bootleg */
-        /*TODO*///	driver_fastfred,	/* (c) 1982 Atari */
-        /*TODO*///	driver_jumpcoas,	/* (c) 1983 Kaneko */
-        /*TODO*///
-        /*TODO*///	/* "Crazy Climber hardware" games */
+        driver_flyboy,	/* (c) 1982 Kaneko */
+        driver_flyboyb,	/* bootleg */
+        driver_fastfred,	/* (c) 1982 Atari */
+        driver_jumpcoas,	/* (c) 1983 Kaneko */
+        
+        	/* "Crazy Climber hardware" games */
         	driver_cclimber,	/* (c) 1980 Nichibutsu */
         	driver_cclimbrj,	/* (c) 1980 Nichibutsu */
         	driver_ccboot,	/* bootleg */
@@ -407,13 +409,13 @@ public class driver {
         /*TODO*///	driver_boscoo2,	/* (c) 1981 */
         /*TODO*///	driver_boscomd,	/* (c) 1981 Midway */
         /*TODO*///	driver_boscomdo,	/* (c) 1981 Midway */
-        /*TODO*///	driver_galaga,	/* (c) 1981 */
-        /*TODO*///	driver_galagamw,	/* (c) 1981 Midway */
-        /*TODO*///	driver_galagads,	/* hack */
-        /*TODO*///	driver_gallag,	/* bootleg */
-        /*TODO*///	driver_galagab2,	/* bootleg */
-        /*TODO*///	driver_galaga84,	/* hack */
-        /*TODO*///	driver_nebulbee,	/* hack */
+        	driver_galaga,	/* (c) 1981 */
+        	driver_galagamw,	/* (c) 1981 Midway */
+        	driver_galagads,	/* hack */
+        	driver_gallag,	/* bootleg */
+        	driver_galagab2,	/* bootleg */
+        	driver_galaga84,	/* hack */
+        	driver_nebulbee,	/* hack */
 
         /*TODO*///	driver_xevious,	/* (c) 1982 */
         /*TODO*///	driver_xeviousa,	/* (c) 1982 + Atari license */
