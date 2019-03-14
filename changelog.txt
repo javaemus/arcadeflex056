@@ -1,5 +1,6 @@
 14/03/2019
 ==========
+-Added rocnrope driver (fully playable) and kchamp driver (doesn't shows the menu; same ink for back and foreground)
 -Added cclimber driver (games supported: cclimber, cclimbrj, ccboot, ccboot2, ckong, ckonga, ckongjeu, ckongo, 
 ckongalc, monkeyd, rpatrolb, silvland, swimmer, swimmera, swimmerb, guzzler)
 -M6809 cpu added (but we don't have a game that uses it yet)
