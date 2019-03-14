@@ -1,3 +1,8 @@
+14/03/2019
+==========
+-Added cclimber driver (games supported: cclimber, cclimbrj, ccboot, ccboot2, ckong, ckonga, ckongjeu, ckongo, 
+ckongalc, monkeyd, rpatrolb, silvland, swimmer, swimmera, swimmerb, guzzler)
+
 13/03/2019
 ==========
 -Fixed samples playing (using old mixer from 0.37b11. Still have to figure out why the new mixer isn't working properly)
