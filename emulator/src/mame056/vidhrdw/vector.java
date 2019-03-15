@@ -326,7 +326,7 @@ public class vector
 	 * Setup scaling. Currently the Sega games are stuck at VECSHIFT 15
 	 * and the the AVG games at VECSHIFT 16
 	 */
-	void vector_set_shift (int shift)
+	public static void vector_set_shift (int shift)
 	{
 		vecshift = shift;
 	}
@@ -657,7 +657,7 @@ public class vector
 	 * Adds a line end point to the vertices list. The vector processor emulation
 	 * needs to call this.
 	 */
-	void vector_add_point (int x, int y, int color, int intensity)
+	public static void vector_add_point (int x, int y, int color, int intensity)
 	{
 		point _new;
 	
@@ -691,7 +691,7 @@ public class vector
 	/*
 	 * Add new clipping info to the list
 	 */
-	void vector_add_clip (int x1, int yy1, int x2, int y2)
+	public static void vector_add_clip (int x1, int yy1, int x2, int y2)
 	{
 		point _new;
 	
@@ -789,7 +789,7 @@ public class vector
 	 * The vector CPU creates a new display list. We save the old display list,
 	 * but only once per refresh.
 	 */
-	void vector_clear_list ()
+	public static void vector_clear_list ()
 	{
 		point[] tmp;
 	
