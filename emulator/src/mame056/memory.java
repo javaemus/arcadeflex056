@@ -357,21 +357,21 @@ public class memory {
 /*TODO*///	wmemhandler8[bank].handler = (void *)handler;
 /*TODO*///}
 /*TODO*///
-/*TODO*///
-/*TODO*////*-------------------------------------------------
-/*TODO*///	memory_set_opbase_handler - change op-code
-/*TODO*///	memory base
-/*TODO*///-------------------------------------------------*/
-/*TODO*///
-/*TODO*///opbase_handler memory_set_opbase_handler(int cpunum, opbase_handler function)
-/*TODO*///{
-/*TODO*///	opbase_handler old = cpudata[cpunum].opbase;
-/*TODO*///	cpudata[cpunum].opbase = function;
-/*TODO*///	if (cpunum == cpu_getactivecpu())
-/*TODO*///		opbasefunc = function;
-/*TODO*///	return old;
-/*TODO*///}
-/*TODO*///
+
+    /*-------------------------------------------------
+            memory_set_opbase_handler - change op-code
+            memory base
+    -------------------------------------------------*/
+
+    public static opbase_handlerPtr memory_set_opbase_handler(int cpunum, opbase_handlerPtr function)
+    {
+            opbase_handlerPtr old = cpudata[cpunum].opbase;
+            cpudata[cpunum].opbase = function;
+            if (cpunum == cpu_getactivecpu())
+                    opbasefunc = function;
+            return old;
+    }
+
 
     /*-------------------------------------------------
 	install_mem_read_handler - install dynamic
