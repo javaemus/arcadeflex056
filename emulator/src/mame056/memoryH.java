@@ -1046,9 +1046,11 @@ public class memoryH {
 
     /*TODO*///
 /*TODO*///
-/*TODO*////* ----- forces the next branch to generate a call to the opbase handler ----- */
-/*TODO*///#define catch_nextBranch()			(opcode_entry = 0xff)
-/*TODO*///
+    /* ----- forces the next branch to generate a call to the opbase handler ----- */
+    public static void catch_nextBranch(){
+        opcode_entry = 0xff;
+    }
+
 /*TODO*////* ----- bank switching macro ----- */
 /*TODO*///#define cpu_setbank(bank, base) 														
 /*TODO*///do {	
