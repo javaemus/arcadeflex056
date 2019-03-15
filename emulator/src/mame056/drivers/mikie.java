@@ -47,7 +47,7 @@ import static mame056.cpuexec.*;
 
 import static mame056.sndintrf.*;
 import static mame056.sound.sn76496.*;
-import mame056.sound.sn76496H.*;
+import static mame056.sound.sn76496H.*;
 import static mame056.vidhrdw.generic.*;
 import static mame056.vidhrdw.mikie.*;
 
