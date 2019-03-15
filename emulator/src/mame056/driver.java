@@ -33,6 +33,7 @@ import static mame056.drivers.rocnrope.*;
 import static mame056.drivers.galaga.*;
 import static mame056.drivers.fastfred.*;
 import static mame056.drivers.mikie.*;
+import static mame056.drivers.shaolins.*;
 
 public class driver {
 
@@ -2624,8 +2625,8 @@ public class driver {
         /*TODO*///	driver_roadf2,	/* GX461 (c) 1984 */
         /*TODO*///	driver_yiear,		/* GX407 (c) 1985 */
         /*TODO*///	driver_yiear2,	/* GX407 (c) 1985 */
-        /*TODO*///	driver_kicker,	/* GX477 (c) 1985 */
-        /*TODO*///	driver_shaolins,	/* GX477 (c) 1985 */
+        	driver_kicker,	/* GX477 (c) 1985 */
+        	driver_shaolins,	/* GX477 (c) 1985 */
         /*TODO*///	driver_gberet,	/* GX577 (c) 1985 */
         /*TODO*///	driver_rushatck,	/* GX577 (c) 1985 */
         /*TODO*///	driver_gberetb,	/* bootleg on different hardware */
