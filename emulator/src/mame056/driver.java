@@ -34,6 +34,7 @@ import static mame056.drivers.galaga.*;
 import static mame056.drivers.fastfred.*;
 import static mame056.drivers.mikie.*;
 import static mame056.drivers.shaolins.*;
+import static mame056.drivers.asteroid.*;
 
 public class driver {
 
@@ -2904,14 +2905,14 @@ public class driver {
         /*TODO*///	driver_missile2,	/* 035820-035825	(c) 1980 */
         /*TODO*///	driver_suprmatk,	/* 					(c) 1980 + (c) 1981 Gencomp */
         /*TODO*///
-        /*TODO*///	/* Atari vector games */
+        	/* Atari vector games */
         /*TODO*///	driver_llander,	/* 0345xx			no copyright notice */
         /*TODO*///	driver_llander1,	/* 0345xx			no copyright notice */
-        /*TODO*///	driver_asteroid,	/* 035127-035145	(c) 1979 */
-        /*TODO*///	driver_asteroi1,	/* 035127-035145	no copyright notice */
-        /*TODO*///	driver_asteroib,	/* (bootleg) */
-        /*TODO*///	driver_astdelux,	/* 0351xx			(c) 1980 */
-        /*TODO*///	driver_astdelu1,	/* 0351xx			(c) 1980 */
+        	driver_asteroid,	/* 035127-035145	(c) 1979 */
+        	driver_asteroi1,	/* 035127-035145	no copyright notice */
+        	driver_asteroib,	/* (bootleg) */
+        	driver_astdelux,	/* 0351xx			(c) 1980 */
+        	driver_astdelu1,	/* 0351xx			(c) 1980 */
         /*TODO*///	driver_bzone,		/* 0364xx			(c) 1980 */
         /*TODO*///	driver_bzone2,	/* 0364xx			(c) 1980 */
         /*TODO*///	driver_bzonec,	/* 0364xx			(c) 1980 */

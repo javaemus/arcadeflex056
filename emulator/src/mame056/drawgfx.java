@@ -73,20 +73,20 @@ public class drawgfx {
         return src.read(bitnum / 8) & (0x80 >> (bitnum % 8));
     }
 
-    /*TODO*///struct _alpha_cache alpha_cache;
+    public static _alpha_cache alpha_cache=new _alpha_cache();
     public static int alpha_active;
 
-    /*TODO*///
-/*TODO*///void alpha_init(void)
-/*TODO*///{
-/*TODO*///	int lev, byte;
-/*TODO*///	for(lev=0; lev<257; lev++)
-/*TODO*///		for(byte=0; byte<256; byte++)
-/*TODO*///			alpha_cache.alpha[lev][byte] = (byte*lev) >> 8;
-/*TODO*///	alpha_set_level(255);
-/*TODO*///}
-/*TODO*///
-/*TODO*///
+    
+    public static void alpha_init()
+    {
+            int lev, _byte;
+            for(lev=0; lev<257; lev++)
+                    for(_byte=0; _byte<256; _byte++)
+                            alpha_cache.alpha[lev][_byte] = (_byte*lev) >> 8;
+            alpha_set_level(255);
+    }
+
+
     static void calc_penusage(GfxElement gfx, int num) {
         int x, y;
         UBytePtr dp;

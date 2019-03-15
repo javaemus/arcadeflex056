@@ -103,9 +103,9 @@ public class mame {
             if ((drv.video_attributes & VIDEO_RGB_DIRECT) == 0) {
                 Machine.color_depth = 16;
             } else {
-                throw new UnsupportedOperationException("Unsupported");
-                /*TODO*///			alpha_active = 1;
-/*TODO*///			alpha_init();
+                //throw new UnsupportedOperationException("Unsupported");
+                			alpha_active = 1;
+			alpha_init();
             }
         } else {
             alpha_active = 0;

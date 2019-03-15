@@ -7,6 +7,7 @@ import static common.ptr.*;
 import java.util.Arrays;
 import mame056.commonH.mame_bitmap;
 import common.subArrays.IntArray;
+import static mame056.drawgfx.alpha_cache;
 
 public class drawgfxH {
 
@@ -167,13 +168,13 @@ public class drawgfxH {
         public int min_x, max_x;
         public int min_y, max_y;
     }
-    /*TODO*///
-/*TODO*///struct _alpha_cache {
-/*TODO*///	const UINT8 *alphas;
-/*TODO*///	const UINT8 *alphad;
-/*TODO*///	UINT8 alpha[0x101][0x100];
-/*TODO*///};
-/*TODO*///
+    
+    public static class _alpha_cache {
+            public int[] alphas;
+            public int[] alphad;
+            public int[][] alpha=new int[0x101][0x100];
+    };
+
 /*TODO*///extern struct _alpha_cache alpha_cache;
 
     public static final int TRANSPARENCY_NONE = 0;/* opaque with remapping */
@@ -219,13 +220,13 @@ public class drawgfxH {
     /*TODO*////* Alpha blending functions */
 /*TODO*///extern int alpha_active;
 /*TODO*///void alpha_init(void);
-/*TODO*///INLINE void alpha_set_level(int level) {
-/*TODO*///	if(level == 0)
-/*TODO*///		level = -1;
-/*TODO*///	alpha_cache.alphas = alpha_cache.alpha[level+1];
-/*TODO*///	alpha_cache.alphad = alpha_cache.alpha[255-level];
-/*TODO*///}
-/*TODO*///
+    public static void alpha_set_level(int level) {
+            if(level == 0)
+                    level = -1;
+            alpha_cache.alphas = alpha_cache.alpha[level+1];
+            alpha_cache.alphad = alpha_cache.alpha[255-level];
+    }
+
 /*TODO*///INLINE UINT32 alpha_blend16( UINT32 d, UINT32 s )
 /*TODO*///{
 /*TODO*///	const UINT8 *alphas = alpha_cache.alphas;
