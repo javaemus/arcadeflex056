@@ -1,3 +1,7 @@
+16/03/2019
+==========
+Fixed galaga driver
+
 15/03/2019
 ==========
 -Ported to 0.56 vector components and asteroid driver (WIP)
