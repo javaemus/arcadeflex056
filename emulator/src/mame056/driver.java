@@ -35,6 +35,8 @@ import static mame056.drivers.fastfred.*;
 import static mame056.drivers.mikie.*;
 import static mame056.drivers.shaolins.*;
 import static mame056.drivers.asteroid.*;
+import static mame056.drivers.gberet.*;
+import static mame056.drivers.berzerk.*;
 
 public class driver {
 
@@ -2628,10 +2630,10 @@ public class driver {
         /*TODO*///	driver_yiear2,	/* GX407 (c) 1985 */
         	driver_kicker,	/* GX477 (c) 1985 */
         	driver_shaolins,	/* GX477 (c) 1985 */
-        /*TODO*///	driver_gberet,	/* GX577 (c) 1985 */
-        /*TODO*///	driver_rushatck,	/* GX577 (c) 1985 */
-        /*TODO*///	driver_gberetb,	/* bootleg on different hardware */
-        /*TODO*///	driver_mrgoemon,	/* GX621 (c) 1986 (Japan) */
+        	driver_gberet,	/* GX577 (c) 1985 */
+        	driver_rushatck,	/* GX577 (c) 1985 */
+        	driver_gberetb,	/* bootleg on different hardware */
+        	driver_mrgoemon,	/* GX621 (c) 1986 (Japan) */
         /*TODO*///	driver_jailbrek,	/* GX507 (c) 1986 */
         /*TODO*///	driver_manhatan,	/* GX507 (c) 1986 (Japan) */
         /*TODO*///	driver_finalizr,	/* GX523 (c) 1985 */
@@ -3201,11 +3203,11 @@ public class driver {
         /*TODO*///	driver_wwfwfstj,	/* TA-0031 (c) 1991 (Japan) */
         /*TODO*///	/* TA-0032 Shadow Force (c) 1993 */
         /*TODO*///
-        /*TODO*///	/* Stern "Berzerk hardware" games */
-        /*TODO*///	driver_berzerk,	/* (c) 1980 */
-        /*TODO*///	driver_berzerk1,	/* (c) 1980 */
-        /*TODO*///	driver_frenzy,	/* (c) 1982 */
-        /*TODO*///
+        	/* Stern "Berzerk hardware" games */
+        	driver_berzerk,	/* (c) 1980 */
+        	driver_berzerk1,	/* (c) 1980 */
+        	driver_frenzy,	/* (c) 1982 */
+        
         /*TODO*///	/* GamePlan games */
         /*TODO*///	driver_megatack,	/* (c) 1980 Centuri */
         /*TODO*///	driver_killcom,	/* (c) 1980 Centuri */

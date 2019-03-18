@@ -18,7 +18,7 @@ import static mame056.mame.Machine;
 public class palette {
 
     /*TODO*///#define VERBOSE 0
-    static char[] game_palette;/* RGB palette as set by the driver */
+    public static char[] game_palette;/* RGB palette as set by the driver */
     static char[] actual_palette;/* actual RGB palette after brightness adjustments */
     static double[] brightness;
     /*TODO*///
