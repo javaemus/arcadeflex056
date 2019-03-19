@@ -1,6 +1,7 @@
 19/03/2019
 ==========
 -Ported berzerk driver (SOUND not ported still)
+-Berzerk now has sound and it's fully playable
 
 16/03/2019
 ==========
