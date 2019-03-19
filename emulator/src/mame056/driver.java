@@ -147,6 +147,9 @@ public class driver {
         /*galaxian*/ driver_gteikokb,
         /*galaxian*/ driver_gteikob2,
         /*galaxian*/ driver_pacmanbl,
+        /*berzerk*/driver_berzerk,
+        /*berzerk*/driver_berzerk1,
+        /*berzerk*/driver_frenzy,
         /**
          * GAME NOT WORKING FLAG
          */
@@ -3203,11 +3206,6 @@ public class driver {
         /*TODO*///	driver_wwfwfstj,	/* TA-0031 (c) 1991 (Japan) */
         /*TODO*///	/* TA-0032 Shadow Force (c) 1993 */
         /*TODO*///
-        	/* Stern "Berzerk hardware" games */
-        	driver_berzerk,	/* (c) 1980 */
-        	driver_berzerk1,	/* (c) 1980 */
-        	driver_frenzy,	/* (c) 1982 */
-        
         /*TODO*///	/* GamePlan games */
         /*TODO*///	driver_megatack,	/* (c) 1980 Centuri */
         /*TODO*///	driver_killcom,	/* (c) 1980 Centuri */
