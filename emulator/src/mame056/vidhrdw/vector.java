@@ -71,7 +71,7 @@ public class vector
 	public static int VCLIP  = 2;
 	
 	public static UBytePtr vectorram = new UBytePtr();
-	public static int[] vectorram_size;
+	public static int[] vectorram_size = new int[1];
 	
 	static int vector_orientation;
 	
@@ -99,8 +99,8 @@ public class vector
 		public int status;         /* for dirty and clipping handling */
 	};
 	
-	static point[] new_list;
-	static point[] old_list;
+	static point[] new_list=new point[1024];
+	static point[] old_list=new point[1024];
 	static int new_index;
 	static int old_index;
 	
@@ -673,7 +673,14 @@ public class vector
 			if (intensity > 0xff)
 				intensity = 0xff;
 		}
-		_new = new_list[new_index];
+		
+                
+                if (new_list[new_index] == null) {
+                    //for (int i=0 ; i<new_index ; i++)
+                        new_list[new_index] = new point();
+                }
+                    
+                _new = new_list[new_index];
 		_new.x = x;
 		_new.y = y;
 		_new.col = color;

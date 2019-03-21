@@ -177,7 +177,7 @@ public class gberet
 	
 		/* bit 3 flips screen */
 		flipscreen = data & 0x08;
-		/*TODO*///tilemap_set_flip(ALL_TILEMAPS,flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
+		tilemap_set_flip(ALL_TILEMAPS,(flipscreen!=0) ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
 	
 		/* don't know about the other bits */
 	} };

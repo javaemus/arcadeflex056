@@ -226,7 +226,8 @@ public class video {
 /*TODO*///			/* if it's a vector, and there's isn't an SVGA support we want to avoid the half modes */
 /*TODO*///			/* - so force default res. */
 /*TODO*///			if (vector_game && (use_vesa == 0 || monitor_type == MONITOR_TYPE_PAL))
-/*TODO*///				gfx_width = 0;
+                                if (vector_game != 0)
+                                    gfx_width = 0;
 /*TODO*///
 /*TODO*///			/* we didn't find a tweaked 15.75KHz mode to fit */
 /*TODO*///			if (gfx_width == 0)
@@ -862,10 +863,10 @@ public class video {
 
     public static int osd_create_display(int width, int height, int depth, int fps, int attributes, int orientation) {
         logerror("width %d, height %d\n", width, height);
-        /*if ((Machine.drv.video_attributes & VIDEO_TYPE_VECTOR) == 0) {//temp hack
+        if ((Machine.drv.video_attributes & VIDEO_TYPE_VECTOR) == 0) {//temp hack
             width = Machine.drv.screen_width;
             height = Machine.drv.screen_height;//TODO workaround to get it work for now
-        }*/
+        }
         video_depth = depth;
         video_fps = fps;
         video_attributes = attributes;

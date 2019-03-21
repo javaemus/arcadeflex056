@@ -160,7 +160,7 @@ public class avgdvg
 	public static int NUM_BANKS = (0x4000/BANK_SIZE);
 	
         public static int VECTORRAM(int offset){
-            return (vectorbank[(offset)>>BANK_BITS].read(offset)&(BANK_SIZE-1));
+            return vectorbank[(offset)>>BANK_BITS].read((offset)&(BANK_SIZE-1));
         }
 	
         public static UBytePtr[] vectorbank=new UBytePtr[NUM_BANKS];
@@ -953,8 +953,11 @@ public class avgdvg
 		int i;
 	
 		/* initialize the colorram */
-		for (i = 0; i < 16; i++)
+		for (i = 0; i < 16; i++){
 			colorram[i] = i & 0x07;
+                        //System.out.println("colorram["+i+"]="+colorram[i]);
+                }
+                colorram[1] = 7;
 	
 		/* fill the rest of the 256 color entries depending on the game */
 		switch (paltype)
@@ -1119,10 +1122,11 @@ public class avgdvg
 		return avgdvg_init (USE_AVG);
 	}
 	
-	int avg_start_starwars()
-	{
-		return avgdvg_init (USE_AVG_SWARS);
-	}
+	public static VhStartPtr avg_start_starwars = new VhStartPtr() {
+            public int handler() {
+                return avgdvg_init (USE_AVG_SWARS);
+            }
+        };
 	
 	int avg_start_tempest()
 	{
@@ -1149,13 +1153,14 @@ public class avgdvg
 		return avgdvg_init (USE_AVG_RBARON);
 	}
 	
-	void avg_stop()
-	{
-		busy = 0;
+	public static VhStopPtr avg_stop = new VhStopPtr() {
+            public void handler() {
+                busy = 0;
 		vector_clear_list();
 	
 		vector_vh_stop.handler();
-	}
+            }
+        };
 	
 	public static VhStopPtr dvg_stop = new VhStopPtr() {
             public void handler() {

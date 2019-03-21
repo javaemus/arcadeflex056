@@ -37,6 +37,7 @@ import static mame056.drivers.shaolins.*;
 import static mame056.drivers.asteroid.*;
 import static mame056.drivers.gberet.*;
 import static mame056.drivers.berzerk.*;
+import static mame056.drivers.starwars.*;
 
 public class driver {
 
@@ -2933,14 +2934,14 @@ public class driver {
         /*TODO*///	driver_quantum1,	/* 136016			(c) 1982 */	/* made by Gencomp */
         /*TODO*///	driver_quantump,	/* 136016			(c) 1982 */	/* made by Gencomp */
         /*TODO*///	driver_bwidow,	/* 136017			(c) 1982 */
-        /*TODO*///	driver_starwars,	/* 136021			(c) 1983 */
-        /*TODO*///	driver_starwar1,	/* 136021			(c) 1983 */
+        	driver_starwars,	/* 136021			(c) 1983 */
+        	driver_starwar1,	/* 136021			(c) 1983 */
         /*TODO*///	driver_mhavoc,	/* 136025			(c) 1983 */
         /*TODO*///	driver_mhavoc2,	/* 136025			(c) 1983 */
         /*TODO*///	driver_mhavocp,	/* 136025			(c) 1983 */
         /*TODO*///	driver_mhavocrv,	/* (hack) */
-        /*TODO*///	driver_esb,		/* 136031			(c) 1985 */
-        /*TODO*///
+        	driver_esb,		/* 136031			(c) 1985 */
+        
         /*TODO*///	/* Atari "Centipede hardware" games */
         /*TODO*///	driver_warlord,	/* 037153-037159	(c) 1980 */
         /*TODO*///	driver_centiped,	/* 136001			(c) 1980 */
