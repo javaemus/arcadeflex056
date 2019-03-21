@@ -227,20 +227,20 @@ public class drawgfxH {
             alpha_cache.alphad = alpha_cache.alpha[255-level];
     }
 
-/*TODO*///INLINE UINT32 alpha_blend16( UINT32 d, UINT32 s )
-/*TODO*///{
-/*TODO*///	const UINT8 *alphas = alpha_cache.alphas;
-/*TODO*///	const UINT8 *alphad = alpha_cache.alphad;
-/*TODO*///	return (alphas[s & 0x1f] | (alphas[(s>>5) & 0x1f] << 5) | (alphas[(s>>10) & 0x1f] << 10))
-/*TODO*///		+ (alphad[d & 0x1f] | (alphad[(d>>5) & 0x1f] << 5) | (alphad[(d>>10) & 0x1f] << 10));
-/*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*///INLINE UINT32 alpha_blend32( UINT32 d, UINT32 s )
-/*TODO*///{
-/*TODO*///	const UINT8 *alphas = alpha_cache.alphas;
-/*TODO*///	const UINT8 *alphad = alpha_cache.alphad;
-/*TODO*///	return (alphas[s & 0xff] | (alphas[(s>>8) & 0xff] << 8) | (alphas[(s>>16) & 0xff] << 16))
-/*TODO*///		+ (alphad[d & 0xff] | (alphad[(d>>8) & 0xff] << 8) | (alphad[(d>>16) & 0xff] << 16));
-/*TODO*///}
+    public static int alpha_blend16( int d, int s )
+    {
+            int[] alphas = alpha_cache.alphas;
+            int[] alphad = alpha_cache.alphad;
+            return (alphas[s & 0x1f] | (alphas[(s>>5) & 0x1f] << 5) | (alphas[(s>>10) & 0x1f] << 10))
+                    + (alphad[d & 0x1f] | (alphad[(d>>5) & 0x1f] << 5) | (alphad[(d>>10) & 0x1f] << 10));
+    }
+
+
+    public static int alpha_blend32( int d, int s )
+    {
+            int[] alphas = alpha_cache.alphas;
+            int[] alphad = alpha_cache.alphad;
+            return (alphas[s & 0xff] | (alphas[(s>>8) & 0xff] << 8) | (alphas[(s>>16) & 0xff] << 16))
+                    + (alphad[d & 0xff] | (alphad[(d>>8) & 0xff] << 8) | (alphad[(d>>16) & 0xff] << 16));
+    }
 }
