@@ -4,6 +4,7 @@ import common.ptr.UBytePtr;
 import common.subArrays.IntArray;
 import static mame056.drawgfxH.*;
 import static mame056.mame.Machine;
+import static mame056.tilemapC.tilemap;
 
 /**
  *
@@ -14,7 +15,7 @@ public class tilemapH {
 
     /*TODO*///struct tilemap; /* appease compiler */
 
-    public static final int ALL_TILEMAPS = 0;
+    public static final tilemap ALL_TILEMAPS = null;
     /* ALL_TILEMAPS may be used with:
             tilemap_set_flip, tilemap_mark_all_tiles_dirty
     */
