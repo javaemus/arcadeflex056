@@ -38,6 +38,7 @@ import static mame056.drivers.asteroid.*;
 import static mame056.drivers.gberet.*;
 import static mame056.drivers.berzerk.*;
 import static mame056.drivers.starwars.*;
+import static mame056.drivers.sega.*;
 
 public class driver {
 
@@ -2080,15 +2081,15 @@ public class driver {
         /*TODO*///	driver_heiankyo,	/* (c) [1979?] Denki Onkyo */
         /*TODO*///
         /*TODO*///	/* Sega G-80 vector games */
-        /*TODO*///	driver_spacfury,	/* (c) 1981 */
-        /*TODO*///	driver_spacfura,	/* no copyright notice */
-        /*TODO*///	driver_zektor,	/* (c) 1982 */
-        /*TODO*///	driver_tacscan,	/* (c) */
-        /*TODO*///	driver_elim2,		/* (c) 1981 Gremlin */
-        /*TODO*///	driver_elim2a,	/* (c) 1981 Gremlin */
-        /*TODO*///	driver_elim4,		/* (c) 1981 Gremlin */
-        /*TODO*///	driver_startrek,	/* (c) 1982 */
-        /*TODO*///
+                driver_spacfury,	/* (c) 1981 */
+        	driver_spacfura,	/* no copyright notice */
+        	driver_zektor,	/* (c) 1982 */
+        	driver_tacscan,	/* (c) */
+        	driver_elim2,		/* (c) 1981 Gremlin */
+        	driver_elim2a,	/* (c) 1981 Gremlin */
+        	driver_elim4,		/* (c) 1981 Gremlin */
+        	driver_startrek,	/* (c) 1982 */
+        
         /*TODO*///	/* Sega G-80 raster games */
         /*TODO*///	driver_astrob,	/* (c) 1981 */
         /*TODO*///	driver_astrob2,	/* (c) 1981 */
