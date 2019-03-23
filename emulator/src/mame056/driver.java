@@ -39,6 +39,7 @@ import static mame056.drivers.gberet.*;
 import static mame056.drivers.berzerk.*;
 import static mame056.drivers.starwars.*;
 import static mame056.drivers.sega.*;
+import static mame056.drivers.yamato.*;
 
 public class driver {
 
@@ -251,8 +252,8 @@ public class driver {
         	driver_monkeyd,	/* bootleg */
         	driver_rpatrolb,	/* bootleg */
         	driver_silvland,	/* Falcon */
-        	/*TODO*///driver_yamato,	/* (c) 1983 Sega */
-        	/*TODO*///driver_yamato2,	/* (c) 1983 Sega */
+        	driver_yamato,	/* (c) 1983 Sega */
+        	driver_yamato2,	/* (c) 1983 Sega */
         	driver_swimmer,	/* (c) 1982 Tehkan */
         	driver_swimmera,	/* (c) 1982 Tehkan */
         	driver_swimmerb,	/* (c) 1982 Tehkan */

@@ -220,7 +220,7 @@ public class cclimber
 		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x6000, 0x6bff, MWA_RAM ),    /* Crazy Kong only */
 		new Memory_WriteAddress( 0x8000, 0x83ff, MWA_RAM ),
-		new Memory_WriteAddress( 0x8800, 0x88ff, cclimber_bigsprite_videoram_w, cclimber_bsvideoram, new int[] {cclimber_bsvideoram_size} ),
+		new Memory_WriteAddress( 0x8800, 0x88ff, cclimber_bigsprite_videoram_w, cclimber_bsvideoram, cclimber_bsvideoram_size ),
 		new Memory_WriteAddress( 0x8900, 0x8bff, MWA_RAM ),  /* not used, but initialized */
 		new Memory_WriteAddress( 0x9000, 0x93ff, videoram_w, videoram, videoram_size ),
 		new Memory_WriteAddress( 0x9400, 0x97ff, videoram_w ), /* mirror address, used by Crazy Climber to draw windows */
@@ -1095,7 +1095,7 @@ public class cclimber
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
-		new Memory_WriteAddress( 0x8800, 0x88ff, cclimber_bigsprite_videoram_w, cclimber_bsvideoram, new int[]{cclimber_bsvideoram_size} ),
+		new Memory_WriteAddress( 0x8800, 0x88ff, cclimber_bigsprite_videoram_w, cclimber_bsvideoram, cclimber_bsvideoram_size ),
 		new Memory_WriteAddress( 0x8900, 0x89ff, cclimber_bigsprite_videoram_w ),      /* mirror for the above (Guzzler writes to both) */
 		new Memory_WriteAddress( 0x9000, 0x93ff, videoram_w, videoram, videoram_size ),
 		new Memory_WriteAddress( 0x9400, 0x97ff, videoram_w ), /* mirror address (used by Guzzler) */

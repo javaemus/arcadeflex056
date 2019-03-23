@@ -33,7 +33,7 @@ import static arcadeflex036.osdepend.logerror;
 public class cclimber {
 
     public static UBytePtr cclimber_bsvideoram = new UBytePtr();
-    public static int cclimber_bsvideoram_size = 0;
+    public static int[] cclimber_bsvideoram_size=new int[1];
     public static UBytePtr cclimber_bigspriteram = new UBytePtr();
     public static UBytePtr cclimber_column_scroll = new UBytePtr();
     static int[] palettebank = new int[1];
@@ -351,7 +351,7 @@ public class cclimber {
         /* cclimber */
         //	color = cclimber_bigspriteram[1] & 0x03;	/* swimmer */
 
-        for (offs = cclimber_bsvideoram_size - 1; offs >= 0; offs--) {
+        for (offs = cclimber_bsvideoram_size[0] - 1; offs >= 0; offs--) {
             sx = offs % 16;
             sy = offs / 16;
             if (flipx != 0) {
