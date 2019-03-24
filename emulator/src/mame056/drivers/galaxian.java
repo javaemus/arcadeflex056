@@ -3832,7 +3832,7 @@ public class galaxian {
         if ((addr & 1) == 0) {
             res = (res & 0xbb) | ((res & 0x40) >> 4) | ((res & 0x04) << 4);
         }
-        return res;
+        return res&0xFF;
     }
 
     public static InitDriverPtr init_mooncrst = new InitDriverPtr() {
@@ -3848,7 +3848,7 @@ public class galaxian {
 
     public static InitDriverPtr init_mooncrgx = new InitDriverPtr() {
         public void handler() {
-            init_mooncrst.handler();
+            //init_mooncrst.handler();
 
             install_mem_write_handler(0, 0x6000, 0x6002, mooncrgx_gfxextend_w);
         }

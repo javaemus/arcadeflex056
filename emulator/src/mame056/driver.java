@@ -153,6 +153,8 @@ public class driver {
         /*berzerk*/driver_berzerk,
         /*berzerk*/driver_berzerk1,
         /*berzerk*/driver_frenzy,
+        /*galaxian*/ driver_kingball,
+        /*galaxian*/ driver_kingbalj,
         /**
          * GAME NOT WORKING FLAG
          */
@@ -180,8 +182,7 @@ public class driver {
         /*galaxian*/ driver_orbitron,/*scrolling issues */
         /*galaxian*/ driver_mooncrgx, /* doesn't boot */
         /*galaxian*/ driver_fantazia,/*no rom*/
-        /*galaxian*/ driver_kingball, /* freezes on intialaze */
-        /*galaxian*/ driver_kingbalj, /* freezes on intialaze */
+        
         /* "Scramble hardware" (and variations) games */
         driver_scramble, /* GX387 (c) 1981 Konami */
         driver_scrambls, /* GX387 (c) 1981 Stern */
