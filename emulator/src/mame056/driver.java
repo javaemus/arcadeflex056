@@ -40,6 +40,7 @@ import static mame056.drivers.berzerk.*;
 import static mame056.drivers.starwars.*;
 import static mame056.drivers.sega.*;
 import static mame056.drivers.yamato.*;
+import static mame056.drivers.gaplus.*;
 
 public class driver {
 
@@ -156,6 +157,11 @@ public class driver {
         /*galaxian*/ driver_kingball,
         /*galaxian*/ driver_kingbalj,
         /*galaxian*/ driver_mooncrgx,
+        /*gaplus*/ driver_gaplus,
+        /*gaplus*/ driver_gaplusa,
+        /*gaplus*/ driver_galaga3,
+        /*gaplus*/ driver_galaga3a,
+        /*gaplus*/ driver_galaga3b,
         /**
          * GAME NOT WORKING FLAG
          */
@@ -445,11 +451,7 @@ public class driver {
         /*TODO*///	driver_grobda,	/* (c) 1984 */
         /*TODO*///	driver_grobda2,	/* (c) 1984 */
         /*TODO*///	driver_grobda3,	/* (c) 1984 */
-        /*TODO*///	driver_gaplus,	/* (c) 1984 */
-        /*TODO*///	driver_gaplusa,	/* (c) 1984 */
-        /*TODO*///	driver_galaga3,	/* (c) 1984 */
-        /*TODO*///	driver_galaga3a,	/* (c) 1984 */
-        /*TODO*///	driver_galaga3b,	/* (c) 1984 */
+
         /*TODO*///	/* Libble Rabble board (first Japanese game using a 68000) */
         /*TODO*///	driver_liblrabl,	/* (c) 1983 */
         /*TODO*///	driver_toypop,	/* (c) 1986 */

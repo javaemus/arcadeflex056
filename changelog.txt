@@ -3,6 +3,7 @@
 -Ported File functions to cstdio common
 -Fixed kingball in galaxian driver
 -Fixed mooncrgx in galaxian driver (roms is not encrypted ,was wrong in mame as well)
+-Added working gaplus driver
 
 22/03/2019
 ==========
