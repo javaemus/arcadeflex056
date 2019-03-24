@@ -8,7 +8,7 @@ import static mame056.cpuexecH.*;
 import static mame056.cpuintrfH.*;
 import static mame056.memory.*;
 import static mame056.memoryH.*;
-import static arcadeflex036.libc_old.*;
+import static common.libc.cstdio.*;
 import static arcadeflex036.osdepend.*;
 
 public class m6809 extends cpu_interface {

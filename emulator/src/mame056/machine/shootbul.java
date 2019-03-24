@@ -3,8 +3,7 @@
  */
 package mame056.machine;
 
-import static arcadeflex036.libc_old.printf;
-
+import static common.libc.cstdio.*;
 import static common.ptr.*;
 
 import static mame056.common.*;

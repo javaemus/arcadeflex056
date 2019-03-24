@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import static common.libc.cstring.*;
-import static arcadeflex036.libc_old.*;
 import static common.ptr.*;
 import static common.libc.cstdio.*;
 import static mame056.mame.mame_highscore_enabled;
@@ -636,7 +635,7 @@ public class fileio {
         }
     }
 
-    public static String osd_fgets(char[] s, int n, Object file) {
+    /*public static String osd_fgets(char[] s, int n, Object file) {
         FakeFileHandle f = (FakeFileHandle) file;
 
         if (f.type == kPlainFile && f.file != null) {
@@ -654,9 +653,9 @@ public class fileio {
         } else {
             
         }
-    }
+    }*/
 
-    public static char osd_fgetc(Object file) {
+    /*public static char osd_fgetc(Object file) {
         FakeFileHandle f = (FakeFileHandle) file;
 
         if (f.type == kPlainFile && f.file != null) {
@@ -674,7 +673,7 @@ public class fileio {
         } else {
             return 1;
         }
-    }
+    }*/
 
     public static int osd_ungetc(char c, Object file) {
         FakeFileHandle f = (FakeFileHandle) file;

@@ -1,3 +1,7 @@
+24/03/2019
+==========
+-Ported File functions to cstdio common
+
 22/03/2019
 ==========
 -Added sega vector games (WIP/NOT WORKING still)

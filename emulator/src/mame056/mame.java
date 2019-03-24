@@ -29,7 +29,7 @@ import static common.libc.cstdlib.rand;
 import static mame037b7.cheat.InitCheat;
 import static mame037b7.cheat.StopCheat;
 import static mame037b7.cheat.he_did_cheat;
-import static arcadeflex036.libc_old.*;
+import static common.libc.cstdio.*;
 import static arcadeflex036.osdepend.*;
 import static mame056.vidhrdw.generic.*;
 import static mame056.driver.*;

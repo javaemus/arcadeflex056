@@ -24,7 +24,7 @@ import static mame056.driverH.VIDEO_PIXEL_ASPECT_RATIO_2_1;
 import static mame056.driverH.VIDEO_PIXEL_ASPECT_RATIO_MASK;
 import static mame056.driverH.VIDEO_TYPE_VECTOR;
 import static mame056.version.build_version;
-import static arcadeflex036.libc_old.printf;
+import static common.libc.cstdio.*;
 import arcadeflex036.osdepend;
 import static arcadeflex036.osdepend.logerror;
 import arcadeflex036.software_gfx;

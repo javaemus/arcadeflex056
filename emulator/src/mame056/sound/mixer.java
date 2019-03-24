@@ -3,7 +3,7 @@
  */
 package mame056.sound;
 
-import static arcadeflex036.libc_old.*;
+import static common.libc.cstdio.*;
 import static arcadeflex036.osdepend.logerror;
 import static arcadeflex036.sound.osd_start_audio_stream;
 import static arcadeflex036.sound.osd_stop_audio_stream;

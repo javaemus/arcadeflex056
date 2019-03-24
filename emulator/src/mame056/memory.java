@@ -15,7 +15,7 @@ import static mame056.commonH.*;
 import static mame056.driverH.*;
 import static mame056.mame.Machine;
 import static mame056.memoryH.*;
-import static arcadeflex036.libc_old.*;
+import static common.libc.cstdio.*;
 import static java.lang.System.exit;
 
 public class memory {

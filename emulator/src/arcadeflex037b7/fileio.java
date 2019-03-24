@@ -6,7 +6,7 @@ package arcadeflex037b7;
 
 import static common.util.*;
 import java.io.File;
-import static arcadeflex036.libc_old.*;
+import static common.libc.cstdio.*;
 
 public class fileio {
 

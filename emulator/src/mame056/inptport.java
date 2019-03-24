@@ -18,7 +18,7 @@ package mame056;
  * *************************************************************************
  */
 import java.util.HashMap;
-
+import static common.libc.cstdio.*;
 import static arcadeflex036.osdepend.logerror;
 import static mame056.common.*;
 import static mame056.commonH.*;

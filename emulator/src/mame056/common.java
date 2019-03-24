@@ -25,8 +25,6 @@ import static mame056.tilemapH.*;
 //to refactor
 import static arcadeflex037b7.video.osd_set_visible_area;
 import static arcadeflex036.fileio.*;
-import arcadeflex036.libc_old.FILE;
-import static arcadeflex036.libc_old.*;
 import static arcadeflex036.osdepend.logerror;
 
 public class common {

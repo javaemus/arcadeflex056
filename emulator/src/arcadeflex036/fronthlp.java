@@ -17,7 +17,7 @@ along with Arcadeflex.  If not, see <http://www.gnu.org/licenses/>.
 package arcadeflex036;
 
 import static common.libc.cstring.*;
-
+import static common.libc.cstdio.*;
 import static mame056.cpuexecH.*;
 import static arcadeflex037b7.util.gamesxml.gamesXmlParser.writeGamesXml;
 import arcadeflex056.settings;
