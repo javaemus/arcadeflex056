@@ -1,11 +1,3 @@
-/** *************************************************************************
- *
- * vidhrdw.c
- *
- * Functions to emulate the video hardware of the machine.
- *
- ************************************************************************** */
-
 /*
  * ported to v0.56
  * using automatic conversion tool v0.01
@@ -29,11 +21,12 @@ import static mame056.vidhrdw.generic.*;
 
 // refactor
 import static arcadeflex036.osdepend.logerror;
+import static common.libc.expressions.NOT;
 
 public class cclimber {
 
     public static UBytePtr cclimber_bsvideoram = new UBytePtr();
-    public static int[] cclimber_bsvideoram_size=new int[1];
+    public static int[] cclimber_bsvideoram_size = new int[1];
     public static UBytePtr cclimber_bigspriteram = new UBytePtr();
     public static UBytePtr cclimber_column_scroll = new UBytePtr();
     static int[] palettebank = new int[1];
@@ -64,9 +57,8 @@ public class cclimber {
 
     public static VhConvertColorPromPtr cclimber_vh_convert_color_prom = new VhConvertColorPromPtr() {
         public void handler(char[] palette, char[] colortable, UBytePtr color_prom) {
-            int i;
-            int _posPal = 0;
-
+                int i;
+            int p_ptr = 0;
             for (i = 0; i < Machine.drv.total_colors; i++) {
                 int bit0, bit1, bit2;
 
@@ -74,17 +66,17 @@ public class cclimber {
                 bit0 = (color_prom.read() >> 0) & 0x01;
                 bit1 = (color_prom.read() >> 1) & 0x01;
                 bit2 = (color_prom.read() >> 2) & 0x01;
-                palette[_posPal++] = (char) (0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2);
+                palette[p_ptr++] = (char) (0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2);
                 /* green component */
                 bit0 = (color_prom.read() >> 3) & 0x01;
                 bit1 = (color_prom.read() >> 4) & 0x01;
                 bit2 = (color_prom.read() >> 5) & 0x01;
-                palette[_posPal++] = (char) (0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2);
+                palette[p_ptr++] = (char) (0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2);
                 /* blue component */
                 bit0 = 0;
                 bit1 = (color_prom.read() >> 6) & 0x01;
                 bit2 = (color_prom.read() >> 7) & 0x01;
-                palette[_posPal++] = (char) (0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2);
+                palette[p_ptr++] = (char) (0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2);
 
                 color_prom.inc();
             }
@@ -94,9 +86,9 @@ public class cclimber {
             for (i = 0; i < TOTAL_COLORS(0); i++) {
                 /* pen 0 always uses color 0 (background in River Patrol and Silver Land) */
                 if (i % 4 == 0) {
-                    COLOR(colortable, 0, i, 0);
+                    colortable[Machine.drv.gfxdecodeinfo[0].color_codes_start + i] = (char) (0);
                 } else {
-                    COLOR(colortable, 0, i, i);
+                    colortable[Machine.drv.gfxdecodeinfo[0].color_codes_start + i] = (char) (i);
                 }
             }
 
@@ -104,11 +96,13 @@ public class cclimber {
  /* it uses colors 64-95 */
             for (i = 0; i < TOTAL_COLORS(2); i++) {
                 if (i % 4 == 0) {
-                    COLOR(colortable, 2, i, 0);
+                    colortable[Machine.drv.gfxdecodeinfo[2].color_codes_start + i] = (char) (0);
                 } else {
-                    COLOR(colortable, 2, i, i + 64);
+                    colortable[Machine.drv.gfxdecodeinfo[2].color_codes_start + i] = (char) (i + 64);
                 }
+
             }
+
         }
     };
 
@@ -345,7 +339,7 @@ public class cclimber {
         flipy = cclimber_bigspriteram.read(1) & 0x20;
         if (flip_screen_y[0] != 0) /* only the Y direction has to be flipped */ {
             oy = 128 - oy;
-            flipy = (flipy == 1) ? 0 : 1;
+            flipy = NOT(flipy);
         }
         color = cclimber_bigspriteram.read(1) & 0x07;
         /* cclimber */
@@ -407,14 +401,14 @@ public class cclimber {
 
                     if (flip_screen_x[0] != 0) {
                         sx = 31 - sx;
-                        flipx = (flipx == 0) ? 1 : 0;
+                        flipx = NOT(flipx);
                     }
                     if (flip_screen_y[0] != 0) {
                         sy = 31 - sy;
-                        flipy = (flipy == 0) ? 1 : 0;
+                        flipy = NOT(flipy);
                     }
 
-                    drawgfx(tmpbitmap, Machine.gfx[((colorram.read(offs) & 0x10) != 0) ? 1 : 0],
+                    drawgfx(tmpbitmap, Machine.gfx[(colorram.read(offs) & 0x10) != 0 ? 1 : 0],
                             videoram.read(offs) + 8 * (colorram.read(offs) & 0x20),
                             colorram.read(offs) & 0x0f,
                             flipx, flipy,
@@ -425,7 +419,7 @@ public class cclimber {
 
             /* copy the temporary bitmap to the screen */
             {
-                int scroll[] = new int[32];
+                int[] scroll = new int[32];
 
                 if (flip_screen_x[0] != 0) {
                     for (offs = 0; offs < 32; offs++) {
@@ -461,14 +455,14 @@ public class cclimber {
                 flipy = spriteram.read(offs) & 0x80;
                 if (flip_screen_x[0] != 0) {
                     sx = 240 - sx;
-                    flipx = (flipx != 0) ? 0 : 1;
+                    flipx = NOT(flipx);
                 }
                 if (flip_screen_y[0] != 0) {
                     sy = 240 - sy;
-                    flipy = (flipy != 0) ? 0 : 1;
+                    flipy = NOT(flipy);
                 }
 
-                drawgfx(bitmap, Machine.gfx[((spriteram.read(offs + 1) & 0x10) != 0) ? 4 : 3],
+                drawgfx(bitmap, Machine.gfx[(spriteram.read(offs + 1) & 0x10) != 0 ? 4 : 3],
                         (spriteram.read(offs) & 0x3f) + 2 * (spriteram.read(offs + 1) & 0x20),
                         spriteram.read(offs + 1) & 0x0f,
                         flipx, flipy,

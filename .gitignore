@@ -2,3 +2,4 @@
 /emulator/_src/*
 /emulator/mixer.log
 /emulator/_roms/*
+/emulator/__roms/*
