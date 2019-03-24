@@ -1,150 +1,3 @@
-/** *************************************************************************
- *
- * Galaxian/Moon Cresta memory map.
- *
- * Compiled from information provided by friends and Uncles on RGVAC.
- *
- * Add 0x4000 to all addresses except for the ROM for Moon Cresta.
- *
- * AAAAAA
- * 111111AAAAAAAAAA     DDDDDDDD   Schem   function
- * HEX         5432109876543210 R/W 76543210   name
- *
- * 0000-3FFF                                           Game ROM
- * 4000-47FF											Working ram
- * 5000-57FF   01010AAAAAAAAAAA R/W DDDDDDDD   !Vram   Character ram
- * 5800-583F   01011AAAAAAAAAAA R/W DDDDDDDD   !OBJRAM Screen attributes
- * 5840-585F   01011AAAAAAAAAAA R/W DDDDDDDD   !OBJRAM Sprites
- * 5860-5FFF   01011AAAAAAAAAAA R/W DDDDDDDD   !OBJRAM Bullets
- *
- * 6000        0110000000000000 R   -------D   !SW0    coin1
- * 6000        0110000000000000 R   ------D-   !SW0    coin2
- * 6000        0110000000000000 R   -----D--   !SW0    p1 left
- * 6000        0110000000000000 R   ----D---   !SW0    p1 right
- * 6000        0110000000000000 R   ---D----   !SW0    p1shoot
- * 6000        0110000000000000 R   --D-----   !SW0    table ??
- * 6000        0110000000000000 R   -D------   !SW0    test
- * 6000        0110000000000000 R   D-------   !SW0    service
- *
- * 6000        0110000000000001 W   -------D   !DRIVER lamp 1 ??
- * 6001        0110000000000001 W   -------D   !DRIVER lamp 2 ??
- * 6002        0110000000000010 W   -------D   !DRIVER lamp 3 ??
- * 6003        0110000000000011 W   -------D   !DRIVER coin control
- * 6004        0110000000000100 W   -------D   !DRIVER Background lfo freq bit0
- * 6005        0110000000000101 W   -------D   !DRIVER Background lfo freq bit1
- * 6006        0110000000000110 W   -------D   !DRIVER Background lfo freq bit2
- * 6007        0110000000000111 W   -------D   !DRIVER Background lfo freq bit3
- *
- * 6800        0110100000000000 R   -------D   !SW1    1p start
- * 6800        0110100000000000 R   ------D-   !SW1    2p start
- * 6800        0110100000000000 R   -----D--   !SW1    p2 left
- * 6800        0110100000000000 R   ----D---   !SW1    p2 right
- * 6800        0110100000000000 R   ---D----   !SW1    p2 shoot
- * 6800        0110100000000000 R   --D-----   !SW1    no used
- * 6800        0110100000000000 R   -D------   !SW1    dip sw1
- * 6800        0110100000000000 R   D-------   !SW1    dip sw2
- *
- * 6800        0110100000000000 W   -------D   !SOUND  reset background F1
- * (1=reset ?)
- * 6801        0110100000000001 W   -------D   !SOUND  reset background F2
- * 6802        0110100000000010 W   -------D   !SOUND  reset background F3
- * 6803        0110100000000011 W   -------D   !SOUND  Noise on/off
- * 6804        0110100000000100 W   -------D   !SOUND  not used
- * 6805        0110100000000101 W   -------D   !SOUND  shoot on/off
- * 6806        0110100000000110 W   -------D   !SOUND  Vol of f1
- * 6807        0110100000000111 W   -------D   !SOUND  Vol of f2
- *
- * 7000        0111000000000000 R   -------D   !DIPSW  dip sw 3
- * 7000        0111000000000000 R   ------D-   !DIPSW  dip sw 4
- * 7000        0111000000000000 R   -----D--   !DIPSW  dip sw 5
- * 7000        0111000000000000 R   ----D---   !DIPSW  dip s2 6
- *
- * 7001/B000/1 0111000000000001 W   -------D   9Nregen NMIon
- * 7004        0111000000000100 W   -------D   9Nregen stars on
- * 7006        0111000000000110 W   -------D   9Nregen hflip
- * 7007        0111000000000111 W   -------D   9Nregen vflip
- *
- * Note: 9n reg,other bits  used on moon cresta for extra graphics rom control.
- *
- * 7800        0111100000000000 R   --------   !wdr    watchdog reset
- * 7800        0111100000000000 W   DDDDDDDD   !pitch  Sound Fx base frequency
- *
- *
- * Notes:
- * -----
- *
- * - The only code difference between 'galaxian' and 'galmidw' is that the
- * 'BONUS SHIP' text is printed on a different line.
- *
- * Main clock: XTAL = 18.432 MHz
- * Z80 Clock: XTAL/6 = 3.072 MHz
- * Horizontal video frequency: HSYNC = XTAL/3/192/2 = 16 kHz
- * Video frequency: VSYNC = HSYNC/132/2 = 60.606060 Hz
- * VBlank duration: 1/VSYNC * (20/132) = 2500 us
- *
- *
- * TODO:
- * ----
- *
- * - Problems with Galaxian based on the observation of a real machine:
- *
- * - Starfield is incorrect.  The speed and flashing frequency is fine, but the
- * stars appear in different positions.
- * - Background humming is incorrect.  It's faster on a real machine
- * - Explosion sound is much softer.  Filter involved?
- *
- * - $4800-4bff in Streaking/Ghost Muncher
- *
- * - Need valid color prom for Fantazia. Current one is slightly damaged.
- *
- *
- * Jump Bug memory map (preliminary)
- *
- * 0000-3fff ROM
- * 4000-47ff RAM
- * 4800-4bff Video RAM
- * 4c00-4fff mirror address for video RAM
- * 5000-50ff Object RAM
- * 5000-503f  screen attributes
- * 5040-505f  sprites
- * 5060-507f  bullets?
- * 5080-50ff  unused?
- * 8000-a7ff ROM
- *
- * read:
- * 6000      IN0
- * 6800      IN1
- * 7000      IN2
- *
- * write:
- * 5800      8910 write port
- * 5900      8910 control port
- * 6002-6006 gfx bank select - see vidhrdw/jumpbug.c for details
- * 7001      interrupt enable
- * 7002      coin counter ????
- * 7003      ?
- * 7004      stars on
- * 7005      ?
- * 7006      screen vertical flip
- * 7007      screen horizontal flip
- * 7800      ?
- *
- *
- * Moon Cresta versions supported:
- * ------------------------------
- *
- * mooncrst    Nichibutsu - later revision with better demo mode and
- * text for docking. Encrypted. No ROM/RAM check
- * mooncrs2    Nichibutsu - probably first revision (no patches) and ROM/RAM check code.
- * This came from a bootleg board, with the logos erased
- * from the graphics
- * mooncrsg    Gremlin    - same docking text as mooncrst
- * mooncrsb    bootleg of mooncrs2. ROM/RAM check erased.
- *
- *
- *
- ************************************************************************** */
-
 /*
  * ported to v0.56
  * using automatic conversion tool v0.01
@@ -155,7 +8,7 @@ import static arcadeflex056.fucPtr.*;
 import static common.ptr.*;
 import static mame056.common.*;
 import static mame056.mame.*;
-
+import static common.libc.cstdlib.*;
 import static mame056.commonH.*;
 import static mame056.cpuexec.*;
 import static mame056.inptportH.*;
@@ -216,7 +69,7 @@ public class galaxian {
 		   that it's working, doesn't actually use return value, so we can just use
 		   rand() */
 
-            return (readinputport(1) & ~0x20) | (((int) Math.random()) & 0x20);
+            return (readinputport(1) & ~0x20) | (rand() & 0x20);
         }
     };
 
