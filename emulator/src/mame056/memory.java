@@ -362,14 +362,13 @@ public class memory {
             memory_set_opbase_handler - change op-code
             memory base
     -------------------------------------------------*/
-
-    public static opbase_handlerPtr memory_set_opbase_handler(int cpunum, opbase_handlerPtr function)
-    {
-            opbase_handlerPtr old = cpudata[cpunum].opbase;
-            cpudata[cpunum].opbase = function;
-            if (cpunum == cpu_getactivecpu())
-                    opbasefunc = function;
-            return old;
+    public static opbase_handlerPtr memory_set_opbase_handler(int cpunum, opbase_handlerPtr function) {
+        opbase_handlerPtr old = cpudata[cpunum].opbase;
+        cpudata[cpunum].opbase = function;
+        if (cpunum == cpu_getactivecpu()) {
+            opbasefunc = function;
+        }
+        return old;
     }
 
 
@@ -392,6 +391,7 @@ public class memory {
 
         return memory_find_base(cpunum, start);
     }
+
     public static UBytePtr install_mem_read_handler(int cpunum, int start, int end, int _handler) {
         /* sanity check */
         if (cpudata[cpunum].mem.dbits != 8) {
@@ -407,7 +407,7 @@ public class memory {
 
         return memory_find_base(cpunum, start);
     }
-    
+
 
     /*TODO*///
 /*TODO*///
@@ -476,6 +476,7 @@ public class memory {
 
         return memory_find_base(cpunum, start);
     }
+
     public static UBytePtr install_mem_write_handler(int cpunum, int start, int end, int _handler) {
         /* sanity check */
         if (cpudata[cpunum].mem.dbits != 8) {
@@ -540,29 +541,27 @@ public class memory {
 /*TODO*///	return memory_find_base(cpunum, start);
 /*TODO*///}
 /*TODO*///
-/*TODO*///
-/*TODO*////*-------------------------------------------------
-/*TODO*///	install_port_read_handler - install dynamic
-/*TODO*///	read handler for 8-bit case
-/*TODO*///-------------------------------------------------*/
-/*TODO*///
-/*TODO*///void install_port_read_handler(int cpunum, offs_t start, offs_t end, port_read_handler handler)
-/*TODO*///{
-/*TODO*///	/* sanity check */
-/*TODO*///	if (cpudata[cpunum].port.dbits != 8)
-/*TODO*///	{
-/*TODO*///		printf("fatal: install_port_read_handler called on %d-bit cpu\n",cpudata[cpunum].port.dbits);
-/*TODO*///		exit(1);
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	/* install the handler */
-/*TODO*///	install_port_handler(&cpudata[cpunum].port, 0, start, end, (void *)handler);
-/*TODO*///#ifdef MEM_DUMP
-/*TODO*///	/* dump the new memory configuration */
-/*TODO*///	mem_dump();
-/*TODO*///#endif
-/*TODO*///}
-/*TODO*///
+
+    /*-------------------------------------------------
+            install_port_read_handler - install dynamic
+            read handler for 8-bit case
+    -------------------------------------------------*/
+    public static void install_port_read_handler(int cpunum, int start, int end, ReadHandlerPtr handler) {
+        /* sanity check */
+        if (cpudata[cpunum].port.dbits != 8) {
+            printf("fatal: install_port_read_handler called on %d-bit cpu\n", cpudata[cpunum].port.dbits);
+            exit(1);
+        }
+
+        /* install the handler */
+        install_port_handler(cpudata[cpunum].port, 0, start, end, -15000, handler);
+
+        /* dump the new memory configuration */
+        mem_dump();
+
+    }
+
+    /*TODO*///
 /*TODO*///
 /*TODO*////*-------------------------------------------------
 /*TODO*///	install_port_read16_handler - install dynamic
@@ -1055,8 +1054,7 @@ public class memory {
             }
             Object mra_obj = Machine.drv.cpu[cpunum].memory_read;
             Object mwa_obj = Machine.drv.cpu[cpunum].memory_write;
-            
-            
+
             /* verify the read handlers */
             if (mra_obj != null) {
                 if (mra_obj instanceof Memory_ReadAddress[]) {

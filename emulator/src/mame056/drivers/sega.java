@@ -1,123 +1,3 @@
-/***************************************************************************
-
-4/25/99 - Tac-Scan sound call for coins now works. (Jim Hernandez)
-2/5/98 - Added input ports support for Tac Scan. Bonus Ships now work.
-		 Zektor now uses it's own input port section. (Jim Hernandez)
-
-Sega Vector memory map (preliminary)
-
-Most of the info here comes from the wiretap archive at:
-http://www.spies.com/arcade/simulation/gameHardware/
-
- * Sega G80 Vector Simulation
-
-ROM Address Map
----------------
-	   Eliminator Elim4Player Space Fury  Zektor  TAC/SCAN	Star Trk
------+-----------+-----------+-----------+-------+---------+---------+
-0000 | 969		 | 1390 	 | 969		 | 1611  | 1711    | 1873	 | CPU u25
------+-----------+-----------+-----------+-------+---------+---------+
-0800 | 1333 	 | 1347 	 | 960		 | 1586  | 1670    | 1848	 | ROM u1
------+-----------+-----------+-----------+-------+---------+---------+
-1000 | 1334 	 | 1348 	 | 961		 | 1587  | 1671    | 1849	 | ROM u2
------+-----------+-----------+-----------+-------+---------+---------+
-1800 | 1335 	 | 1349 	 | 962		 | 1588  | 1672    | 1850	 | ROM u3
------+-----------+-----------+-----------+-------+---------+---------+
-2000 | 1336 	 | 1350 	 | 963		 | 1589  | 1673    | 1851	 | ROM u4
------+-----------+-----------+-----------+-------+---------+---------+
-2800 | 1337 	 | 1351 	 | 964		 | 1590  | 1674    | 1852	 | ROM u5
------+-----------+-----------+-----------+-------+---------+---------+
-3000 | 1338 	 | 1352 	 | 965		 | 1591  | 1675    | 1853	 | ROM u6
------+-----------+-----------+-----------+-------+---------+---------+
-3800 | 1339 	 | 1353 	 | 966		 | 1592  | 1676    | 1854	 | ROM u7
------+-----------+-----------+-----------+-------+---------+---------+
-4000 | 1340 	 | 1354 	 | 967		 | 1593  | 1677    | 1855	 | ROM u8
------+-----------+-----------+-----------+-------+---------+---------+
-4800 | 1341 	 | 1355 	 | 968		 | 1594  | 1678    | 1856	 | ROM u9
------+-----------+-----------+-----------+-------+---------+---------+
-5000 | 1342 	 | 1356 	 |			 | 1595  | 1679    | 1857	 | ROM u10
------+-----------+-----------+-----------+-------+---------+---------+
-5800 | 1343 	 | 1357 	 |			 | 1596  | 1680    | 1858	 | ROM u11
------+-----------+-----------+-----------+-------+---------+---------+
-6000 | 1344 	 | 1358 	 |			 | 1597  | 1681    | 1859	 | ROM u12
------+-----------+-----------+-----------+-------+---------+---------+
-6800 | 1345 	 | 1359 	 |			 | 1598  | 1682    | 1860	 | ROM u13
------+-----------+-----------+-----------+-------+---------+---------+
-7000 |			 | 1360 	 |			 | 1599  | 1683    | 1861	 | ROM u14
------+-----------+-----------+-----------+-------+---------+---------+
-7800 |									 | 1600  | 1684    | 1862	 | ROM u15
------+-----------+-----------+-----------+-------+---------+---------+
-8000 |									 | 1601  | 1685    | 1863	 | ROM u16
------+-----------+-----------+-----------+-------+---------+---------+
-8800 |									 | 1602  | 1686    | 1864	 | ROM u17
------+-----------+-----------+-----------+-------+---------+---------+
-9000 |									 | 1603  | 1687    | 1865	 | ROM u18
------+-----------+-----------+-----------+-------+---------+---------+
-9800 |									 | 1604  | 1688    | 1866	 | ROM u19
------+-----------+-----------+-----------+-------+---------+---------+
-A000 |									 | 1605  | 1709    | 1867	 | ROM u20
------+-----------+-----------+-----------+-------+---------+---------+
-A800 |									 | 1606  | 1710    | 1868	 | ROM u21
------+-----------+-----------+-----------+-------+---------+---------+
-B000 |													   | 1869	 | ROM u22
------+-----------+-----------+-----------+-------+---------+---------+
-B800 |													   | 1870	 | ROM u23
------+-----------+-----------+-----------+-------+---------+---------+
-
-I/O ports:
-read:
-
-write:
-
-These games all have dipswitches, but they are mapped in such a way as to make
-using them with MAME extremely difficult. I might try to implement them in the
-future.
-
-SWITCH MAPPINGS
----------------
-
-+------+------+------+------+------+------+------+------+
-|SW1-8 |SW1-7 |SW1-6 |SW1-5 |SW1-4 |SW1-3 |SW1-2 |SW1-1 |
-+------+------+------+------+------+------+------+------+
- F8:08 |F9:08 |FA:08 |FB:08 |F8:04 |F9:04  FA:04  FB:04    Zektor &
-	   |	  | 	 |		|	   |	  | 			   Space Fury
-	   |	  | 	 |		|	   |	  |
-   1  -|------|------|------|------|------|--------------- upright
-   0  -|------|------|------|------|------|--------------- cocktail
-	   |	  | 	 |		|	   |	  |
-	   |  1  -|------|------|------|------|--------------- voice
-	   |  0  -|------|------|------|------|--------------- no voice
-			  | 	 |		|	   |	  |
-			  |  1	 |	1  -|------|------|--------------- 5 ships
-			  |  0	 |	1  -|------|------|--------------- 4 ships
-			  |  1	 |	0  -|------|------|--------------- 3 ships
-			  |  0	 |	0  -|------|------|--------------- 2 ships
-							|	   |	  |
-							|  1   |  1  -|--------------- hardest
-							|  0   |  1  -|--------------- hard
-1 = Open					|  1   |  0  -|--------------- medium
-0 = Closed					|  0   |  0  -|--------------- easy
-
-+------+------+------+------+------+------+------+------+
-|SW2-8 |SW2-7 |SW2-6 |SW2-5 |SW2-4 |SW2-3 |SW2-2 |SW2-1 |
-+------+------+------+------+------+------+------+------+
-|F8:02 |F9:02 |FA:02 |FB:02 |F8:01 |F9:01 |FA:01 |FB:01 |
-|	   |	  | 	 |		|	   |	  | 	 |		|
-|  1   |  1   |  0	 |	0	|  1   | 1	  | 0	 |	0	| 1 coin/ 1 play
-+------+------+------+------+------+------+------+------+
-
-Known problems:
-
-1 The games seem to run too fast. This is most noticable
-  with the speech samples in Zektor - they don't match the mouth.
-  Slowing down the Z80 doesn't help and in fact hurts performance.
-
-2 Cocktail mode isn't implemented.
-
-Is 1) still valid?
-
-***************************************************************************/
-
 /*
  * ported to v0.56
  * using automatic conversion tool v0.01
@@ -141,7 +21,7 @@ import static mame056.sndintrfH.*;
 import static mame056.timerH.*;
 import static mame056.timer.*;
 import static mame056.palette.*;
-
+import static mame056.memory.*;
 import static mame056.vidhrdw.vector.*;
 import static mame056.vidhrdw.vectorH.*;
 import static mame056.vidhrdw.sega.*;
@@ -152,7 +32,6 @@ import static mame056.sound.samplesH.*;
 
 public class sega
 {
-	
 	/* Video hardware prototypes */
 	
 	public static Memory_ReadAddress readmem[]={
@@ -692,7 +571,7 @@ public class sega
 		/* This game uses the 315-0064 security chip */
 		sega_security(64);
 	
-		/*TODO*///install_port_read_handler(0, 0xfc, 0xfc, input_port_8_r);
+		install_port_read_handler(0, 0xfc, 0xfc, input_port_8_r);
 	} };
 	
 	public static InitDriverPtr init_zektor = new InitDriverPtr() { public void handler() 
@@ -878,7 +757,7 @@ public class sega
 		null	/* end of array */
 	};
 	
-	static Samplesinterface zektor_samples_interface = new Samplesinterface
+	static  Samplesinterface zektor_samples_interface = new Samplesinterface
 	(
 		12, /* only speech for now */
 		25, /* volume */
@@ -968,8 +847,8 @@ public class sega
 		null	/* end of array */
 	};
 	
-	static Samplesinterface tacscan_samples_interface = new Samplesinterface
-        (
+	static  Samplesinterface tacscan_samples_interface = new Samplesinterface
+	(
 		12, /* 12 channels */
 		25, /* volume */
 		tacscan_sample_names
@@ -1052,8 +931,8 @@ public class sega
 		null	/* end of array */
 	};
 	
-	static Samplesinterface elim2_samples_interface = new Samplesinterface
-        (
+	static  Samplesinterface elim2_samples_interface = new Samplesinterface
+	(
 		8,	/* 8 channels */
 		25, /* volume */
 		elim_sample_names
@@ -1213,7 +1092,7 @@ public class sega
 		null	/* end of array */
 	};
 	
-	static Samplesinterface startrek_samples_interface = new Samplesinterface
+	static  Samplesinterface startrek_samples_interface = new Samplesinterface
 	(
 		10, /* 10 channels */
 		25, /* volume */
