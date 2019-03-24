@@ -150,11 +150,12 @@ public class driver {
         /*galaxian*/ driver_gteikokb,
         /*galaxian*/ driver_gteikob2,
         /*galaxian*/ driver_pacmanbl,
-        /*berzerk*/driver_berzerk,
-        /*berzerk*/driver_berzerk1,
-        /*berzerk*/driver_frenzy,
+        /*berzerk*/ driver_berzerk,
+        /*berzerk*/ driver_berzerk1,
+        /*berzerk*/ driver_frenzy,
         /*galaxian*/ driver_kingball,
         /*galaxian*/ driver_kingbalj,
+        /*galaxian*/ driver_mooncrgx,
         /**
          * GAME NOT WORKING FLAG
          */
@@ -180,9 +181,7 @@ public class driver {
         /*galaxian*/ driver_jumpbug, /* scrolling issues */
         /*galaxian*/ driver_jumpbugb, /* scrolling issues  */
         /*galaxian*/ driver_orbitron,/*scrolling issues */
-        /*galaxian*/ driver_mooncrgx, /* doesn't boot */
         /*galaxian*/ driver_fantazia,/*no rom*/
-        
         /* "Scramble hardware" (and variations) games */
         driver_scramble, /* GX387 (c) 1981 Konami */
         driver_scrambls, /* GX387 (c) 1981 Stern */
@@ -192,7 +191,7 @@ public class driver {
         driver_theend, /* (c) 1980 Konami */
         driver_theends, /* (c) 1980 Stern */
         driver_omega, /* bootleg */
-        driver_ckongs,	/* bootleg */
+        driver_ckongs, /* bootleg */
         driver_froggers, /* bootleg */
         driver_amidars, /* (c) 1982 Konami */
         driver_triplep, /* (c) 1982 KKI */
@@ -235,31 +234,29 @@ public class driver {
         driver_turtles, /* (c) 1981 Stern */
         driver_turpin, /* (c) 1981 Sega */
         driver_600, /* GX353 (c) 1981 Konami */
-        driver_flyboy,	/* (c) 1982 Kaneko */
-        driver_flyboyb,	/* bootleg */
-        driver_fastfred,	/* (c) 1982 Atari */
-        driver_jumpcoas,	/* (c) 1983 Kaneko */
-        
-        	/* "Crazy Climber hardware" games */
-        	driver_cclimber,	/* (c) 1980 Nichibutsu */
-        	driver_cclimbrj,	/* (c) 1980 Nichibutsu */
-        	driver_ccboot,	/* bootleg */
-        	driver_ccboot2,	/* bootleg */
-        	driver_ckong,		/* (c) 1981 Falcon */
-        	driver_ckonga,	/* (c) 1981 Falcon */
-        	driver_ckongjeu,	/* bootleg */
-        	driver_ckongo,	/* bootleg */
-        	driver_ckongalc,	/* bootleg */
-        	driver_monkeyd,	/* bootleg */
-        	driver_rpatrolb,	/* bootleg */
-        	driver_silvland,	/* Falcon */
-        	driver_yamato,	/* (c) 1983 Sega */
-        	driver_yamato2,	/* (c) 1983 Sega */
-        	driver_swimmer,	/* (c) 1982 Tehkan */
-        	driver_swimmera,	/* (c) 1982 Tehkan */
-        	driver_swimmerb,	/* (c) 1982 Tehkan */
-        	driver_guzzler,	/* (c) 1983 Tehkan */
-        
+        driver_flyboy, /* (c) 1982 Kaneko */
+        driver_flyboyb, /* bootleg */
+        driver_fastfred, /* (c) 1982 Atari */
+        driver_jumpcoas, /* (c) 1983 Kaneko */
+        /* "Crazy Climber hardware" games */
+        driver_cclimber, /* (c) 1980 Nichibutsu */
+        driver_cclimbrj, /* (c) 1980 Nichibutsu */
+        driver_ccboot, /* bootleg */
+        driver_ccboot2, /* bootleg */
+        driver_ckong, /* (c) 1981 Falcon */
+        driver_ckonga, /* (c) 1981 Falcon */
+        driver_ckongjeu, /* bootleg */
+        driver_ckongo, /* bootleg */
+        driver_ckongalc, /* bootleg */
+        driver_monkeyd, /* bootleg */
+        driver_rpatrolb, /* bootleg */
+        driver_silvland, /* Falcon */
+        driver_yamato, /* (c) 1983 Sega */
+        driver_yamato2, /* (c) 1983 Sega */
+        driver_swimmer, /* (c) 1982 Tehkan */
+        driver_swimmera, /* (c) 1982 Tehkan */
+        driver_swimmerb, /* (c) 1982 Tehkan */
+        driver_guzzler, /* (c) 1983 Tehkan */
         /*TODO*///	/* Nichibutsu games */
         /*TODO*///	driver_friskyt,	/* (c) 1981 */
         /*TODO*///	driver_radrad,	/* (c) 1982 Nichibutsu USA */
@@ -421,14 +418,13 @@ public class driver {
         /*TODO*///	driver_boscoo2,	/* (c) 1981 */
         /*TODO*///	driver_boscomd,	/* (c) 1981 Midway */
         /*TODO*///	driver_boscomdo,	/* (c) 1981 Midway */
-        	driver_galaga,	/* (c) 1981 */
-        	driver_galagamw,	/* (c) 1981 Midway */
-        	driver_galagads,	/* hack */
-        	driver_gallag,	/* bootleg */
-        	driver_galagab2,	/* bootleg */
-        	driver_galaga84,	/* hack */
-        	driver_nebulbee,	/* hack */
-
+        driver_galaga, /* (c) 1981 */
+        driver_galagamw, /* (c) 1981 Midway */
+        driver_galagads, /* hack */
+        driver_gallag, /* bootleg */
+        driver_galagab2, /* bootleg */
+        driver_galaga84, /* hack */
+        driver_nebulbee, /* hack */
         /*TODO*///	driver_xevious,	/* (c) 1982 */
         /*TODO*///	driver_xeviousa,	/* (c) 1982 + Atari license */
         /*TODO*///	driver_xevios,	/* bootleg */
@@ -2083,15 +2079,14 @@ public class driver {
         /*TODO*///	driver_heiankyo,	/* (c) [1979?] Denki Onkyo */
         /*TODO*///
         /*TODO*///	/* Sega G-80 vector games */
-                driver_spacfury,	/* (c) 1981 */
-        	driver_spacfura,	/* no copyright notice */
-        	driver_zektor,	/* (c) 1982 */
-        	driver_tacscan,	/* (c) */
-        	driver_elim2,		/* (c) 1981 Gremlin */
-        	driver_elim2a,	/* (c) 1981 Gremlin */
-        	driver_elim4,		/* (c) 1981 Gremlin */
-        	driver_startrek,	/* (c) 1982 */
-        
+        driver_spacfury, /* (c) 1981 */
+        driver_spacfura, /* no copyright notice */
+        driver_zektor, /* (c) 1982 */
+        driver_tacscan, /* (c) */
+        driver_elim2, /* (c) 1981 Gremlin */
+        driver_elim2a, /* (c) 1981 Gremlin */
+        driver_elim4, /* (c) 1981 Gremlin */
+        driver_startrek, /* (c) 1982 */
         /*TODO*///	/* Sega G-80 raster games */
         /*TODO*///	driver_astrob,	/* (c) 1981 */
         /*TODO*///	driver_astrob2,	/* (c) 1981 */
@@ -2426,10 +2421,10 @@ public class driver {
         /*TODO*///	driver_astrof3,	/* (c) [1980?] */
         /*TODO*///	driver_tomahawk,	/* (c) [1980?] */
         /*TODO*///	driver_tomahaw5,	/* (c) [1980?] */
-        	driver_kchamp,	/* (c) 1984 Data East USA (US) */
-        	driver_karatedo,	/* (c) 1984 Data East Corporation (Japan) */
-        	driver_kchampvs,	/* (c) 1984 Data East USA (US) */
-        	driver_karatevs,	/* (c) 1984 Data East Corporation (Japan) */
+        driver_kchamp, /* (c) 1984 Data East USA (US) */
+        driver_karatedo, /* (c) 1984 Data East Corporation (Japan) */
+        driver_kchampvs, /* (c) 1984 Data East USA (US) */
+        driver_karatevs, /* (c) 1984 Data East Corporation (Japan) */
         /*TODO*///	driver_firetrap,	/* (c) 1986 */
         /*TODO*///	driver_firetpbl,	/* bootleg */
         /*TODO*///	driver_brkthru,	/* (c) 1986 Data East USA (US) */
@@ -2616,8 +2611,8 @@ public class driver {
         /*TODO*///	driver_trackflc,	/* GX361 (c) 1983 + Centuri license */
         /*TODO*///	driver_hyprolym,	/* GX361 (c) 1983 */
         /*TODO*///	driver_hyprolyb,	/* bootleg */
-        	driver_rocnrope,	/* GX364 (c) 1983 */
-        	driver_rocnropk,	/* GX364 (c) 1983 + Kosuka */
+        driver_rocnrope, /* GX364 (c) 1983 */
+        driver_rocnropk, /* GX364 (c) 1983 + Kosuka */
         /*TODO*///	driver_circusc,	/* GX380 (c) 1984 */
         /*TODO*///	driver_circusc2,	/* GX380 (c) 1984 */
         /*TODO*///	driver_circuscc,	/* GX380 (c) 1984 + Centuri license */
@@ -2628,19 +2623,19 @@ public class driver {
         /*TODO*///	driver_hpolym84,	/* GX330 (c) 1984 */
         /*TODO*///	driver_sbasketb,	/* GX405 (c) 1984 */
         /*TODO*///	driver_sbasketu,	/* GX405 (c) 1984 */
-        	driver_mikie,		/* GX469 (c) 1984 */
-        	driver_mikiej,	/* GX469 (c) 1984 */
-        	driver_mikiehs,	/* GX469 (c) 1984 */
+        driver_mikie, /* GX469 (c) 1984 */
+        driver_mikiej, /* GX469 (c) 1984 */
+        driver_mikiehs, /* GX469 (c) 1984 */
         /*TODO*///	driver_roadf,		/* GX461 (c) 1984 */
         /*TODO*///	driver_roadf2,	/* GX461 (c) 1984 */
         /*TODO*///	driver_yiear,		/* GX407 (c) 1985 */
         /*TODO*///	driver_yiear2,	/* GX407 (c) 1985 */
-        	driver_kicker,	/* GX477 (c) 1985 */
-        	driver_shaolins,	/* GX477 (c) 1985 */
-        	driver_gberet,	/* GX577 (c) 1985 */
-        	driver_rushatck,	/* GX577 (c) 1985 */
-        	driver_gberetb,	/* bootleg on different hardware */
-        	driver_mrgoemon,	/* GX621 (c) 1986 (Japan) */
+        driver_kicker, /* GX477 (c) 1985 */
+        driver_shaolins, /* GX477 (c) 1985 */
+        driver_gberet, /* GX577 (c) 1985 */
+        driver_rushatck, /* GX577 (c) 1985 */
+        driver_gberetb, /* bootleg on different hardware */
+        driver_mrgoemon, /* GX621 (c) 1986 (Japan) */
         /*TODO*///	driver_jailbrek,	/* GX507 (c) 1986 */
         /*TODO*///	driver_manhatan,	/* GX507 (c) 1986 (Japan) */
         /*TODO*///	driver_finalizr,	/* GX523 (c) 1985 */
@@ -2914,14 +2909,14 @@ public class driver {
         /*TODO*///	driver_missile2,	/* 035820-035825	(c) 1980 */
         /*TODO*///	driver_suprmatk,	/* 					(c) 1980 + (c) 1981 Gencomp */
         /*TODO*///
-        	/* Atari vector games */
+        /* Atari vector games */
         /*TODO*///	driver_llander,	/* 0345xx			no copyright notice */
         /*TODO*///	driver_llander1,	/* 0345xx			no copyright notice */
-        	driver_asteroid,	/* 035127-035145	(c) 1979 */
-        	driver_asteroi1,	/* 035127-035145	no copyright notice */
-        	driver_asteroib,	/* (bootleg) */
-        	driver_astdelux,	/* 0351xx			(c) 1980 */
-        	driver_astdelu1,	/* 0351xx			(c) 1980 */
+        driver_asteroid, /* 035127-035145	(c) 1979 */
+        driver_asteroi1, /* 035127-035145	no copyright notice */
+        driver_asteroib, /* (bootleg) */
+        driver_astdelux, /* 0351xx			(c) 1980 */
+        driver_astdelu1, /* 0351xx			(c) 1980 */
         /*TODO*///	driver_bzone,		/* 0364xx			(c) 1980 */
         /*TODO*///	driver_bzone2,	/* 0364xx			(c) 1980 */
         /*TODO*///	driver_bzonec,	/* 0364xx			(c) 1980 */
@@ -2937,14 +2932,13 @@ public class driver {
         /*TODO*///	driver_quantum1,	/* 136016			(c) 1982 */	/* made by Gencomp */
         /*TODO*///	driver_quantump,	/* 136016			(c) 1982 */	/* made by Gencomp */
         /*TODO*///	driver_bwidow,	/* 136017			(c) 1982 */
-        	driver_starwars,	/* 136021			(c) 1983 */
-        	driver_starwar1,	/* 136021			(c) 1983 */
+        driver_starwars, /* 136021			(c) 1983 */
+        driver_starwar1, /* 136021			(c) 1983 */
         /*TODO*///	driver_mhavoc,	/* 136025			(c) 1983 */
         /*TODO*///	driver_mhavoc2,	/* 136025			(c) 1983 */
         /*TODO*///	driver_mhavocp,	/* 136025			(c) 1983 */
         /*TODO*///	driver_mhavocrv,	/* (hack) */
-        	driver_esb,		/* 136031			(c) 1985 */
-        
+        driver_esb, /* 136031			(c) 1985 */
         /*TODO*///	/* Atari "Centipede hardware" games */
         /*TODO*///	driver_warlord,	/* 037153-037159	(c) 1980 */
         /*TODO*///	driver_centiped,	/* 136001			(c) 1980 */
