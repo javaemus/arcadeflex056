@@ -1,5 +1,6 @@
 25/03/2019
 ==========
+-Added rallyx driver
 -Added vicdual driver
 -Fixed bug when sample file doesn't exists
 

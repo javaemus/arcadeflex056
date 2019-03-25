@@ -42,6 +42,7 @@ import static mame056.drivers.sega.*;
 import static mame056.drivers.yamato.*;
 import static mame056.drivers.gaplus.*;
 import static mame056.drivers.vicdual.*;
+import static mame056.drivers.rallyx.*;
 
 public class driver {
 
@@ -410,9 +411,9 @@ public class driver {
         /*TODO*///	driver_warpwarp,	/* (c) 1981 Namco */
         /*TODO*///	driver_warpwarr,	/* (c) 1981 Rock-ola - the high score table says "NAMCO" */
         /*TODO*///	driver_warpwar2,	/* (c) 1981 Rock-ola - the high score table says "NAMCO" */
-        /*TODO*///	driver_rallyx,	/* (c) 1980 Namco */
-        /*TODO*///	driver_rallyxm,	/* (c) 1980 Midway */
-        /*TODO*///	driver_nrallyx,	/* (c) 1981 Namco */
+        	driver_rallyx,	/* (c) 1980 Namco */
+        	driver_rallyxm,	/* (c) 1980 Midway */
+        	driver_nrallyx,	/* (c) 1981 Namco */
         /*TODO*///	driver_jungler,	/* GX327 (c) 1981 Konami */
         /*TODO*///	driver_junglers,	/* GX327 (c) 1981 Stern */
         /*TODO*///	driver_locomotn,	/* GX359 (c) 1982 Konami + Centuri license */
