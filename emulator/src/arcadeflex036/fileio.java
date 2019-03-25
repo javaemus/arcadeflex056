@@ -110,12 +110,19 @@ public class fileio {
 
                 for (indx = 0; indx < pathc && found == 0; ++indx) {
                     String dir_name = pathv[indx];
+                    
                     //unZipIt(dir_name + File.separator + gamename + ".zip", dir_name + File.separator + gamename, filename);
                     if (found == 0) {
                         name = sprintf("%s/%s", dir_name, gamename);
                         fprintf(errorlog, "Trying %s\n", name);
+                        
                         //java code to emulate stat command (shadow)
                         osdepend.dlprogress.setFileName("loading file: " + name);
+                        
+                        if ((filetype == OSD_FILETYPE_SAMPLE) && (!new File(name).exists())){
+                            fprintf(errorlog, "Sample file %s doesn't exists\n", name);
+                            return null;
+                        }
                         //case where file exists in rom folder
                         if (new File(name).isDirectory() && new File(name).exists()) // if( cache_stat (name, &stat_buffer) == 0 && (stat_buffer.st_mode & S_IFDIR) )               
                         {
@@ -260,8 +267,11 @@ public class fileio {
                                 System.out.println(filename + " does not seem to exist in the zip file");
                                 osdepend.dlprogress.setFileName(filename + " does not seem to exist in the zip file");
                             }
+                            
                         }
+                        
                     }
+                    
 
                     /*TODO*///                           if( !found )
 /*TODO*///                            {

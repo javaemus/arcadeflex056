@@ -1,6 +1,7 @@
 25/03/2019
 ==========
 -Added vicdual driver
+-Fixed bug when sample file doesn't exists
 
 24/03/2019
 ==========
