@@ -804,28 +804,28 @@ public class cpuexec {
         }
     }
 
-    /*TODO*////*************************************
-/*TODO*/// *
-/*TODO*/// *	Returns the current scanline
-/*TODO*/// *
-/*TODO*/// *************************************/
-/*TODO*///
-/*TODO*////*--------------------------------------------------------------
-/*TODO*///
-/*TODO*///	Note: cpu_getscanline() counts from 0, 0 being the first
-/*TODO*///	visible line. You might have to adjust this value to match
-/*TODO*///	the hardware, since in many cases the first visible line
-/*TODO*///	is >0.
-/*TODO*///
-/*TODO*///--------------------------------------------------------------*/
-/*TODO*///
-/*TODO*///int cpu_getscanline(void)
-/*TODO*///{
-/*TODO*///	return (int)(timer_timeelapsed(refresh_timer) * scanline_period_inv);
-/*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*///
+    /*************************************
+    *
+    *	Returns the current scanline
+    *
+    *************************************/
+
+   /*--------------------------------------------------------------
+
+           Note: cpu_getscanline() counts from 0, 0 being the first
+           visible line. You might have to adjust this value to match
+           the hardware, since in many cases the first visible line
+           is >0.
+
+   --------------------------------------------------------------*/
+
+   public static int cpu_getscanline()
+   {
+           return (int)(timer_timeelapsed(refresh_timer) * scanline_period_inv);
+   }
+
+
+
 /*TODO*////*************************************
 /*TODO*/// *
 /*TODO*/// *	Returns time until given scanline
