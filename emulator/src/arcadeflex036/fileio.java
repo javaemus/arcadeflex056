@@ -28,7 +28,7 @@ public class fileio {
     /*TODO*/ //    char *cfgdir, *nvdir, *hidir, *inpdir, *stadir;
     /*TODO*/ //   char *memcarddir, *artworkdir, *screenshotdir;
     /*temp nvdir, will be configurable lator*/ static String nvdir = "nvram";
-    static String hidir="hi";
+    static String hidir = "hi";
     /*TODO*/ //     char *alternate_name;				   /* for "-romdir" */
     public static final int kPlainFile = 1;
     public static final int kRAMFile = 2;
@@ -110,19 +110,15 @@ public class fileio {
 
                 for (indx = 0; indx < pathc && found == 0; ++indx) {
                     String dir_name = pathv[indx];
-                    
+
                     //unZipIt(dir_name + File.separator + gamename + ".zip", dir_name + File.separator + gamename, filename);
                     if (found == 0) {
                         name = sprintf("%s/%s", dir_name, gamename);
                         fprintf(errorlog, "Trying %s\n", name);
-                        
+
                         //java code to emulate stat command (shadow)
                         osdepend.dlprogress.setFileName("loading file: " + name);
-                        
-                        if ((filetype == OSD_FILETYPE_SAMPLE) && (!new File(name).exists())){
-                            fprintf(errorlog, "Sample file %s doesn't exists\n", name);
-                            return null;
-                        }
+
                         //case where file exists in rom folder
                         if (new File(name).isDirectory() && new File(name).exists()) // if( cache_stat (name, &stat_buffer) == 0 && (stat_buffer.st_mode & S_IFDIR) )               
                         {
@@ -267,11 +263,11 @@ public class fileio {
                                 System.out.println(filename + " does not seem to exist in the zip file");
                                 osdepend.dlprogress.setFileName(filename + " does not seem to exist in the zip file");
                             }
-                            
+
                         }
-                        
+
                     }
-                    
+
 
                     /*TODO*///                           if( !found )
 /*TODO*///                            {
@@ -303,18 +299,16 @@ public class fileio {
                 }
                 break;
 
-                       case OSD_FILETYPE_HIGHSCORE:
-                               if( mame_highscore_enabled ()!=0 )
-                               {
-                                       if( found==0 )
-                                       {
-                                                name = sprintf("%s/%s.hi", hidir, gamename);
-                                               f.type = kPlainFile;
-                                               f.file = fopen (name, _write!=0 ? "wb" : "rb");
-                                               found = (f.file != null) ? 1 : 0;
-                                       }                      
-                               }
-                               break;
+            case OSD_FILETYPE_HIGHSCORE:
+                if (mame_highscore_enabled() != 0) {
+                    if (found == 0) {
+                        name = sprintf("%s/%s.hi", hidir, gamename);
+                        f.type = kPlainFile;
+                        f.file = fopen(name, _write != 0 ? "wb" : "rb");
+                        found = (f.file != null) ? 1 : 0;
+                    }
+                }
+                break;
 
             /*TODO*///       case OSD_FILETYPE_CONFIG:
             /*TODO*///                   sprintf (name, "%s/%s.cfg", cfgdir, gamename);
@@ -511,7 +505,6 @@ public class fileio {
         return r;
     }
 
-
     public static int osd_fread(Object file, UBytePtr buffer, int length) {
         osd_fread(file, buffer.memory, buffer.offset, length);
         return 0;
@@ -571,7 +564,6 @@ public class fileio {
     }
 
     /* JB 980920 update */
-
     public static int osd_fwrite(Object file, UBytePtr buffer, int length) {
         osd_fwrite(file, buffer.memory, buffer.offset, length);
         return 0;
@@ -665,7 +657,7 @@ public class fileio {
         }
     }*/
 
-    /*public static char osd_fgetc(Object file) {
+ /*public static char osd_fgetc(Object file) {
         FakeFileHandle f = (FakeFileHandle) file;
 
         if (f.type == kPlainFile && f.file != null) {
@@ -684,7 +676,6 @@ public class fileio {
             return 1;
         }
     }*/
-
     public static int osd_ungetc(char c, Object file) {
         FakeFileHandle f = (FakeFileHandle) file;
 
