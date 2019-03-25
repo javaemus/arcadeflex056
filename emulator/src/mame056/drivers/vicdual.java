@@ -103,6 +103,8 @@ import static mame056.sound.samples.*;
 import static mame056.sound.samplesH.*;
 
 import static mame056.sndhrdw.invinco.*;
+import static mame056.sndhrdw.carnival.*;
+import static mame056.sndhrdw.depthch.*;
 import mame056.sound.ay8910H.AY8910interface;
 
 public class vicdual
@@ -1044,26 +1046,26 @@ public class vicdual
 	
 	
 	
-	/*TODO*///static Samplesinterface samples_interface_carnival = new Samplesinterface
-        /*TODO*///(
-	/*TODO*/// 	12,	/* 12 channels */
-	/*TODO*/// 	50,	/* volume */
-	/*TODO*///	carnival_sample_names
-	/*TODO*///};
+	static Samplesinterface samples_interface_carnival = new Samplesinterface
+        (
+	 	12,	/* 12 channels */
+	 	50,	/* volume */
+		carnival_sample_names
+        );
 	
-	/*TODO*///static Samplesinterface samples_interface_depthch = new Samplesinterface
-        /*TODO*///(
-	/*TODO*///	12,	/* 12 channels */
-	/*TODO*///	50,	/* volume */
-	/*TODO*///	depthch_sample_names
-        /*TODO*///);
+	static Samplesinterface samples_interface_depthch = new Samplesinterface
+        (
+		12,	/* 12 channels */
+		50,	/* volume */
+		depthch_sample_names
+        );
 	
-	/*TODO*///static Samplesinterface samples_interface_invinco3 =
-	/*TODO*///{
-	/*TODO*///	12,	/* 12 channels */
-	/*TODO*///	50,	/* volume */
-	/*TODO*///	invinco_sample_names
-	/*TODO*///};
+	static Samplesinterface samples_interface_invinco3 = new Samplesinterface
+        (
+		12,	/* 12 channels */
+		50,	/* volume */
+		invinco_sample_names
+        );
 	
 	//#define samples_interface_invinco4 samples_interface_invinco3
 	
@@ -1074,10 +1076,10 @@ public class vicdual
 	/*TODO*///	pulsar_sample_names
         /*TODO*///);
 	
-	//#define samples_interface_2ports samples_interface_carnival	/* not used */
-	//#define samples_interface_3ports samples_interface_carnival	/* not used */
-	//#define samples_interface_4ports samples_interface_carnival	/* not used */
-	//#define samples_interface_safari samples_interface_carnival	/* not used */
+	public static Samplesinterface samples_interface_2ports = samples_interface_carnival;	/* not used */
+	public static Samplesinterface samples_interface_3ports = samples_interface_carnival;	/* not used */
+	public static Samplesinterface samples_interface_4ports = samples_interface_carnival;	/* not used */
+	public static Samplesinterface samples_interface_safari = samples_interface_carnival;	/* not used */
 	
 	
 	
@@ -1111,13 +1113,12 @@ public class vicdual
 														
 		/* sound hardware */							
 		0,0,0,0,										
-		/*TODO*///new MachineSound[] {												
-		/*TODO*///	new MachineSound(											
-		/*TODO*///		0 * SOUND_SAMPLES,				
-		/*TODO*///		samples_interface_2ports				
-		/*TODO*///	)											
-		/*TODO*///}
-                null                
+		new MachineSound[] {												
+			new MachineSound(											
+				0 * SOUND_SAMPLES,				
+				samples_interface_2ports				
+			)											
+		}                
 	);
 	
         //MACHINEDRIVER( 3ports,   vicdual, 3ports, 0 )
@@ -1150,13 +1151,12 @@ public class vicdual
 														
 		/* sound hardware */							
 		0,0,0,0,										
-		/*TODO*///new MachineSound[] {												
-		/*TODO*///	new MachineSound(											
-		/*TODO*///		0 * SOUND_SAMPLES,				
-		/*TODO*///		samples_interface_3ports				
-		/*TODO*///	)											
-		/*TODO*///}
-                null                
+		new MachineSound[] {												
+			new MachineSound(											
+				0 * SOUND_SAMPLES,				
+				samples_interface_3ports				
+			)											
+		}               
 	);
         
 	//MACHINEDRIVER( 4ports,   vicdual, 4ports, 0 )
@@ -1189,13 +1189,12 @@ public class vicdual
 														
 		/* sound hardware */							
 		0,0,0,0,										
-		/*TODO*///new MachineSound[] {												
-		/*TODO*///	new MachineSound(											
-		/*TODO*///		0 * SOUND_SAMPLES,				
-		/*TODO*///		samples_interface_4ports				
-		/*TODO*///	)											
-		/*TODO*///}
-                null                
+		new MachineSound[] {												
+			new MachineSound(											
+				0 * SOUND_SAMPLES,				
+				samples_interface_4ports				
+			)											
+		}                                
 	);
         
 	//MACHINEDRIVER( safari,   safari,  safari, 0 )
@@ -1228,13 +1227,12 @@ public class vicdual
 														
 		/* sound hardware */							
 		0,0,0,0,										
-		/*TODO*///new MachineSound[] {												
-		/*TODO*///	new MachineSound(											
-		/*TODO*///		0 * SOUND_SAMPLES,				
-		/*TODO*///		samples_interface_safari				
-		/*TODO*///	)											
-		/*TODO*///}
-                null
+		new MachineSound[] {												
+			new MachineSound(											
+				0 * SOUND_SAMPLES,				
+				samples_interface_safari				
+			)											
+		}
 	);
         
         //MACHINEDRIVER( depthch,  vicdual, 2ports, 1 )
@@ -1267,13 +1265,12 @@ public class vicdual
 														
 		/* sound hardware */							
 		0,0,0,0,										
-		/*TODO*///new MachineSound[] {												
-		/*TODO*///	new MachineSound(											
-		/*TODO*///		1 * SOUND_SAMPLES,				
-		/*TODO*///		samples_interface_depthch				
-		/*TODO*///	)											
-		/*TODO*///}
-                null
+		new MachineSound[] {												
+			new MachineSound(											
+				1 * SOUND_SAMPLES,				
+				samples_interface_depthch				
+			)											
+		}
 	);
         
 	//MACHINEDRIVER( invinco3, vicdual, 3ports, 1 )
@@ -1306,13 +1303,12 @@ public class vicdual
 														
 		/* sound hardware */							
 		0,0,0,0,										
-		/*TODO*///new MachineSound[] {												
-		/*TODO*///	new MachineSound(											
-		/*TODO*///		1 * SOUND_SAMPLES,				
-		/*TODO*///		samples_interface_invinco3				
-		/*TODO*///	)
-                /*TODO*///}
-                null
+		new MachineSound[] {												
+			new MachineSound(											
+				1 * SOUND_SAMPLES,				
+				samples_interface_invinco3				
+			)
+                }
 	);
         
 	//MACHINEDRIVER( invinco4, vicdual, 4ports, 1 )
@@ -1345,13 +1341,12 @@ public class vicdual
 														
 		/* sound hardware */							
 		0,0,0,0,										
-		/*TODO*///new MachineSound[] {												
-		/*TODO*///	new MachineSound(											
-		/*TODO*///		1 * SOUND_SAMPLES,				
-		/*TODO*///		samples_interface_invinco4				
-		/*TODO*///	)											
-		/*TODO*///}
-                null
+		new MachineSound[] {												
+			new MachineSound(											
+				1 * SOUND_SAMPLES,				
+				samples_interface_invinco3				
+			)											
+		}
 	);
         
 	////#define MACHINEDRIVER(NAME,       MEM,        PORT, SAMPLES)
@@ -1446,10 +1441,10 @@ public class vicdual
 			new MachineSound(
 				SOUND_AY8910,
 				carnival_ay8910_interface
-			/*TODO*///),
-			/*TODO*///new MachineSound(
-			/*TODO*///	SOUND_SAMPLES,
-			/*TODO*///	samples_interface_carnival
+			),
+			new MachineSound(
+				SOUND_SAMPLES,
+				samples_interface_carnival
 			)
 		}
 	);
