@@ -105,6 +105,7 @@ import static mame056.sound.samplesH.*;
 import static mame056.sndhrdw.invinco.*;
 import static mame056.sndhrdw.carnival.*;
 import static mame056.sndhrdw.depthch.*;
+import static mame056.sndhrdw.pulsar.*;
 import mame056.sound.ay8910H.AY8910interface;
 
 public class vicdual
@@ -1069,12 +1070,12 @@ public class vicdual
 	
 	//#define samples_interface_invinco4 samples_interface_invinco3
 	
-	/*TODO*///static Samplesinterface samples_interface_pulsar = new Samplesinterface
-        /*TODO*///(
-	/*TODO*///	12,	/* 12 channels */
-	/*TODO*///	50,	/* volume */
-	/*TODO*///	pulsar_sample_names
-        /*TODO*///);
+	static Samplesinterface samples_interface_pulsar = new Samplesinterface
+        (
+		12,	/* 12 channels */
+		50,	/* volume */
+		pulsar_sample_names
+        );
 	
 	public static Samplesinterface samples_interface_2ports = samples_interface_carnival;	/* not used */
 	public static Samplesinterface samples_interface_3ports = samples_interface_carnival;	/* not used */
@@ -1380,13 +1381,12 @@ public class vicdual
 														
 		/* sound hardware */							
 		0,0,0,0,										
-		/*TODO*///new MachineSound[] {												
-		/*TODO*///	new MachineSound(											
-		/*TODO*///		1 * SOUND_SAMPLES,				
-		/*TODO*///		samples_interface_pulsar				
-		/*TODO*///	)											
-		/*TODO*///}
-                null
+		new MachineSound[] {												
+			new MachineSound(											
+				1 * SOUND_SAMPLES,				
+				samples_interface_pulsar				
+			)											
+		}
 	);
 	
 	static AY8910interface carnival_ay8910_interface = new AY8910interface
