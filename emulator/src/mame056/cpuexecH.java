@@ -192,7 +192,7 @@ public class cpuexecH {
 /*TODO*///#define M6502_INT_NMI		INTERRUPT_NMI
     public static final int M6809_INT_IRQ = M6809_IRQ_LINE;
 /*TODO*///#define M6809_INT_FIRQ		M6809_FIRQ_LINE
-/*TODO*///#define M6809_INT_NMI		INTERRUPT_NMI
+    public static final int M6809_INT_NMI = INTERRUPT_NMI;
 /*TODO*///#define HD6309_INT_IRQ		HD6309_IRQ_LINE
 /*TODO*///#define HD6309_INT_FIRQ		HD6309_FIRQ_LINE
 /*TODO*///#define HD63705_INT_IRQ		HD63705_INT_IRQ1
