@@ -1411,12 +1411,12 @@ public class vicdual
 				15468480/8,
 				vicdual_readmem,vicdual_writemem,readport_4ports,writeport,
 				ignore_interrupt,1
-			),
-			new MachineCPU(
-				CPU_I8039 | CPU_AUDIO_CPU,
-				( ( 3579545 / 5 ) / 3 ),
-				i8039_readmem,i8039_writemem,i8039_readport,i8039_writeport,
-				ignore_interrupt,1
+			/*TODO*///),
+			/*TODO*///new MachineCPU(
+			/*TODO*///	CPU_I8039 | CPU_AUDIO_CPU,
+			/*TODO*///	( ( 3579545 / 5 ) / 3 ),
+			/*TODO*///	i8039_readmem,i8039_writemem,i8039_readport,i8039_writeport,
+			/*TODO*///	ignore_interrupt,1
 			)
 		},
 		60, 5000,	/* frames per second, vblank duration */
