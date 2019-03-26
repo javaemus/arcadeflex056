@@ -44,6 +44,8 @@ import static mame056.drivers.gaplus.*;
 import static mame056.drivers.vicdual.*;
 import static mame056.drivers.rallyx.*;
 import static mame056.drivers.sonson.*;
+import static mame056.drivers.brkthru.*;
+import static mame056.drivers.pbaction.*;
 
 public class driver {
 
@@ -2432,9 +2434,9 @@ public class driver {
         driver_karatevs, /* (c) 1984 Data East Corporation (Japan) */
         /*TODO*///	driver_firetrap,	/* (c) 1986 */
         /*TODO*///	driver_firetpbl,	/* bootleg */
-        /*TODO*///	driver_brkthru,	/* (c) 1986 Data East USA (US) */
-        /*TODO*///	driver_brkthruj,	/* (c) 1986 Data East Corporation (Japan) */
-        /*TODO*///	driver_darwin,	/* (c) 1986 Data East Corporation (Japan) */
+        	driver_brkthru,	/* (c) 1986 Data East USA (US) */
+        	driver_brkthruj,	/* (c) 1986 Data East Corporation (Japan) */
+        	driver_darwin,	/* (c) 1986 Data East Corporation (Japan) */
         /*TODO*///	driver_shootout,	/* (c) 1985 Data East USA (US) */
         /*TODO*///	driver_shootouj,	/* (c) 1985 Data East USA (Japan) */
         /*TODO*///	driver_shootoub,	/* bootleg */
@@ -2569,8 +2571,8 @@ public class driver {
         /*TODO*///	driver_starfore,	/* (c) 1984 Tehkan */
         /*TODO*///	driver_megaforc,	/* (c) 1985 Tehkan + Video Ware license */
         /*TODO*///	driver_baluba,	/* (c) 1986 Able Corp. */
-        /*TODO*///	driver_pbaction,	/* (c) 1985 Tehkan */
-        /*TODO*///	driver_pbactio2,	/* (c) 1985 Tehkan */
+        	driver_pbaction,	/* (c) 1985 Tehkan */
+        	driver_pbactio2,	/* (c) 1985 Tehkan */
         /*TODO*///	/* 6009 Tank Busters */
         /*TODO*///	/* 6011 Pontoon (c) 1985 Tehkan is a gambling game - removed */
         /*TODO*///	driver_tehkanwc,	/* (c) 1985 Tehkan */

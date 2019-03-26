@@ -29,7 +29,6 @@ import static mame056.drivers.system1.*;
 
 import static mame056.vidhrdw.generic.*;
 import static mame056.vidhrdw.system1.*;
-import static mame056.drivers.system1.driver_wbml;
 import static mame056.vidhrdw.system1H.*;
 
 // refactor
@@ -49,7 +48,7 @@ public class system1
 	public static int[] system1_backgroundram_size=new int[1];
 	
 	public static int[] sprite_onscreen_map;
-	public static UBytePtr background_scrollx=new UBytePtr(2),background_scrolly=new UBytePtr(2);
+	public static int background_scrollx,background_scrolly;
 	public static int[] bg_dirtybuffer;
 	
 	public static int[] scrollx_row=new int[32];
@@ -58,7 +57,7 @@ public class system1
 	//static int system1_pixel_mode = 0
 	public static int system1_background_memory,system1_video_mode=0;
 	
-	public static UBytePtr system1_color_prom;
+	public static UBytePtr system1_color_prom=new UBytePtr();
 	
 	static char[] wbml_paged_videoram;
 	static int wbml_videoram_bank=0,wbml_videoram_bank_latch=0;
@@ -88,6 +87,24 @@ public class system1
 	public static VhConvertColorPromPtr system1_vh_convert_color_prom= new VhConvertColorPromPtr() {
             public void handler(char[] palette, char[] colortable, UBytePtr color_prom) {
                 system1_color_prom = color_prom;
+                
+                /*for (int i=0 ; i<palette.length ; i++){
+                    //paletteram.write(i, palette[i]);
+                    int val, r, g, b;
+                    int data = paletteram.read(i);
+                    val = (data >> 0) & 0x07;
+			r = (val << 5) | (val << 2) | (val >> 1);
+	
+			val = (data >> 3) & 0x07;
+			g = (val << 5) | (val << 2) | (val >> 1);
+	
+			val = (data >> 6) & 0x03;
+			//if (val != 0) val++;
+			b = (val << 6) | (val << 4) | (val << 2);
+		
+	
+		palette_set_color((i&0x7ff),r,g,b);
+                }*/
             }
         };
 	
@@ -125,18 +142,24 @@ public class system1
 		}
 		else
 		{
+                    /*
+                        color.r:=pal3bit(valor shr 0);
+                        color.g:=pal3bit(valor shr 3);
+                        color.b:=pal2bit(valor shr 6);
+                        set_pal_color(color,pos);
+                    */
 			val = (data >> 0) & 0x07;
 			r = (val << 5) | (val << 2) | (val >> 1);
 	
 			val = (data >> 3) & 0x07;
 			g = (val << 5) | (val << 2) | (val >> 1);
 	
-			val = (data >> 5) & 0x06;
-			if (val != 0) val++;
-			b = (val << 5) | (val << 2) | (val >> 1);
+			val = (data >> 6) & 0x03;
+			//if (val != 0) val++;
+			b = (val << 6) | (val << 4) | (val << 2);
 		}
 	
-		palette_set_color(offset,r,g,b);
+		palette_set_color((offset&0x7ff),r,g,b);
 	} };
 	
 	
@@ -248,8 +271,8 @@ public class system1
 			plot_pixel.handler(bitmap, x_flipped, y_flipped, color);
 		}
 	
-		xr = ((x - background_scrollx.read(0)) & 0xff) / 8;
-		yr = ((y - background_scrolly.read(0)) & 0xff) / 8;
+		xr = ((x - background_scrollx) & 0xff) / 8;
+		yr = ((y - background_scrolly) & 0xff) / 8;
 	
 		/* TODO: bits 5 and 6 of backgroundram are also used (e.g. Pitfall2, Mr. Viking) */
 		/* what's the difference? Bit 7 is used in Choplifter/WBML for extra char bank */
@@ -393,7 +416,7 @@ public class system1
 			sprite_base = new UBytePtr(spriteram, 0x10 * spr_number);
 			sprite_top_y = sprite_base.read(SPR_Y_TOP);
 			sprite_bottom_y = sprite_base.read(SPR_Y_BOTTOM);
-			if ((sprite_bottom_y != 0) && (sprite_bottom_y-sprite_top_y > 0))
+			if ((sprite_bottom_y!=0) && (sprite_bottom_y-sprite_top_y > 0))
 				draw_sprite(bitmap,spr_number);
 		}
 	}
@@ -402,14 +425,14 @@ public class system1
 	
 	public static WriteHandlerPtr system1_backgroundram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		system1_backgroundram.write(offset, data);
-		bg_dirtybuffer[offset>>1] = 1;
+		system1_backgroundram.write((offset&0xfff), data);
+		bg_dirtybuffer[(offset&0xfff)>>1] = 1;
 	} };
 	
 	
 	static int system1_draw_fg(mame_bitmap bitmap,int priority)
 	{
-		int sx,sy,offs;
+	int sx,sy,offs;
 		int drawn = 0;
 	
 	
@@ -428,7 +451,7 @@ public class system1
 				sx = (offs/2) % 32;
 				sy = (offs/2) / 32;
 	
-				if (flip_screen_x[0] != 0)
+				if (flip_screen() != 0)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
@@ -441,7 +464,7 @@ public class system1
 					drawgfx(bitmap,Machine.gfx[0],
 							code,
 							color,
-							flip_screen_x[0],flip_screen_x[0],
+							flip_screen(),flip_screen(),
 							8*sx,8*sy,
 							Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
@@ -454,15 +477,14 @@ public class system1
 	static void system1_draw_bg(mame_bitmap bitmap,int priority)
 	{
 		int sx,sy,offs;
-		int[] background_scrollx_flip= new int[1], background_scrolly_flip = new int[1];
+		int background_scrollx_flip, background_scrolly_flip;
 	
 	
-		background_scrollx.write(0, ((system1_scroll_x.read(0) >> 1) + ((system1_scroll_x.read(1) & 1) << 7) + 14) & 0xff);
-		/*TODO*///background_scrolly = (-*system1_scroll_y) & 0xff;
-                background_scrolly.write(0, (system1_scroll_y.read(0)) & 0xff);
+		background_scrollx = ((system1_scroll_x.read(0) >> 1) + ((system1_scroll_x.read(1) & 1) << 7) + 14) & 0xff;
+		background_scrolly = (-system1_scroll_y.read(0)) & 0xff;
 	
-		background_scrollx_flip[0] = (275 - background_scrollx.read(0)) & 0xff;
-		background_scrolly_flip[0] = (256 - background_scrolly.read(0)) & 0xff;
+		background_scrollx_flip = (275 - background_scrollx) & 0xff;
+		background_scrolly_flip = (256 - background_scrolly) & 0xff;
 	
 		if (priority == -1)
 		{
@@ -487,7 +509,7 @@ public class system1
 					sx = (offs/2) % 32;
 					sy = (offs/2) / 32;
 	
-					if (flip_screen_x[0] != 0)
+					if (flip_screen() != 0)
 					{
 						sx = 31 - sx;
 						sy = 31 - sy;
@@ -496,17 +518,17 @@ public class system1
 					drawgfx(tmp_bitmap,Machine.gfx[0],
 							code,
 							color,
-							flip_screen_x[0],flip_screen_x[0],
+							flip_screen(),flip_screen(),
 							8*sx,8*sy,
 							null,TRANSPARENCY_NONE,0);
 				}
 			}
 	
 			/* copy the temporary bitmap to the screen */
-			if (flip_screen_x[0] != 0)
-				copyscrollbitmap(bitmap,tmp_bitmap,1,background_scrollx_flip,1,background_scrolly_flip,Machine.visible_area,TRANSPARENCY_NONE,0);
+			if (flip_screen() != 0)
+				copyscrollbitmap(bitmap,tmp_bitmap,1,new int[]{background_scrollx_flip},1,new int[]{background_scrolly_flip},Machine.visible_area,TRANSPARENCY_NONE,0);
 			else
-				copyscrollbitmap(bitmap,tmp_bitmap,1,new int[]{background_scrollx.read(0)},1,new int[]{background_scrolly.read(0)},Machine.visible_area,TRANSPARENCY_NONE,0);
+				copyscrollbitmap(bitmap,tmp_bitmap,1,new int[]{background_scrollx},1,new int[]{background_scrolly},Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 		else
 		{
@@ -525,40 +547,40 @@ public class system1
 					sx = (offs/2) % 32;
 					sy = (offs/2) / 32;
 	
-					if (flip_screen_x[0] != 0)
+					if (flip_screen() != 0)
 					{
-						sx = 8*(31-sx) + background_scrollx_flip[0];
-						sy = 8*(31-sy) + background_scrolly_flip[0];
+						sx = 8*(31-sx) + background_scrollx_flip;
+						sy = 8*(31-sy) + background_scrolly_flip;
 					}
 					else
 					{
-						sx = 8*sx + background_scrollx.read(0);
-						sy = 8*sy + background_scrolly.read(0);
+						sx = 8*sx + background_scrollx;
+						sy = 8*sy + background_scrolly;
 					}
 	
 					/* draw it 4 times because of possible wrap around */
 					drawgfx(bitmap,Machine.gfx[0],
 							code,
 							color,
-							flip_screen_x[0],flip_screen_x[0],
+							flip_screen(),flip_screen(),
 							sx,sy,
 							Machine.visible_area,TRANSPARENCY_PEN,0);
 					drawgfx(bitmap,Machine.gfx[0],
 							code,
 							color,
-							flip_screen_x[0],flip_screen_x[0],
+							flip_screen(),flip_screen(),
 							sx-256,sy,
 							Machine.visible_area,TRANSPARENCY_PEN,0);
 					drawgfx(bitmap,Machine.gfx[0],
 							code,
 							color,
-							flip_screen_x[0],flip_screen_x[0],
+							flip_screen(),flip_screen(),
 							sx,sy-256,
 							Machine.visible_area,TRANSPARENCY_PEN,0);
 					drawgfx(bitmap,Machine.gfx[0],
 							code,
 							color,
-							flip_screen_x[0],flip_screen_x[0],
+							flip_screen(),flip_screen(),
 							sx-256,sy-256,
 							Machine.visible_area,TRANSPARENCY_PEN,0);
 				}

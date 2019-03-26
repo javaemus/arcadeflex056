@@ -105,6 +105,14 @@ public class kchamp
                         
                         //palette_set_color(i,red*0x11,green*0x11,blue*0x11);
 		}
+                
+                palette[0]=0x00;
+                palette[1]=0x00;
+                palette[2]=0x00;
+                
+                palette[3]=0xFF;
+                palette[4]=0xFF;
+                palette[5]=0xFF;
             }
         };
 	

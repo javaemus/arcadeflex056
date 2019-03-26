@@ -68,7 +68,8 @@ public class brkthru
 	public static VhConvertColorPromPtr brkthru_vh_convert_color_prom = new VhConvertColorPromPtr() {
             public void handler(char[] palette, char[] colortable, UBytePtr color_prom) {
                 int i;
-	
+                int _posPal = 0;
+                color_prom.offset = 0;
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
@@ -92,7 +93,19 @@ public class brkthru
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
 			palette_set_color(i,r,g,b);
+                        
+                        palette[_posPal++] = (char) r;
+                        palette[_posPal++] = (char) g;
+                        palette[_posPal++] = (char) b;
 		}
+                
+                palette[0]=0x00;
+                palette[1]=0x00;
+                palette[2]=0x00;
+                
+                palette[3]=0xFF;
+                palette[4]=0xFF;
+                palette[5]=0xFF;
             }
         };
 		
@@ -213,7 +226,7 @@ public class brkthru
 			}
 		}
 	
-	
+	spriteram.offset=0;
 		/* copy the background graphics */
 		{
 			int scroll;

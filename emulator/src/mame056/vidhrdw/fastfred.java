@@ -91,6 +91,10 @@ public class fastfred
 		bit2 = (prom.read(i + 2*total) >> 2) & 0x01;
 		bit3 = (prom.read(i + 2*total) >> 3) & 0x01;
 		b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
+                
+                /*palette[3*i+0] = (char) r;
+			palette[3*i+1] = (char) g;
+			palette[3*i+2] = (char) b;*/
 	}
         
         public static int TOTAL_COLORS(int gfxn){
@@ -98,7 +102,7 @@ public class fastfred
         };
         
 	public static void COLOR(char[] colortable, int gfxn, int offs, int value){
-            colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs] = (char) value;
+            colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs] = (char) (value&0xFF);
         };
 	
 	public static VhConvertColorPromPtr fastfred_vh_convert_color_prom = new VhConvertColorPromPtr() {
@@ -115,9 +119,10 @@ public class fastfred
 	
 			convert_color(i, r, g, b);
 	
-			palette[_palPos++] = (char) r;
-			palette[_palPos++] = (char) g;
-			palette[_palPos++] = (char) b;
+			//palette_set_color(i,r,g,b);
+                        /*palette[_palPos++]=(char) r;
+                        palette[_palPos++]=(char) g;
+                        palette[_palPos++]=(char) b;*/
 		}
 	
 	
@@ -138,6 +143,13 @@ public class fastfred
 			COLOR(colortable,0,i,color);
                         COLOR(colortable,1,i,color);
 		}
+                /*palette[0]=0x00;
+                palette[1]=0x00;
+                palette[2]=0x00;
+                
+                palette[3]=0xFF;
+                palette[4]=0xFF;
+                palette[5]=0xFF;*/
 	}};
 	
 	
