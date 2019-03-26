@@ -43,6 +43,7 @@ import static mame056.drivers.yamato.*;
 import static mame056.drivers.gaplus.*;
 import static mame056.drivers.vicdual.*;
 import static mame056.drivers.rallyx.*;
+import static mame056.drivers.sonson.*;
 
 public class driver {
 
@@ -1624,8 +1625,8 @@ public class driver {
         /*TODO*///	driver_vulgus,	/*  5/1984 (c) 1984 */
         /*TODO*///	driver_vulgus2,	/*  5/1984 (c) 1984 */
         /*TODO*///	driver_vulgusj,	/*  5/1984 (c) 1984 */
-        /*TODO*///	driver_sonson,	/*  7/1984 (c) 1984 */
-        /*TODO*///	driver_sonsonj,	/*  7/1984 (c) 1984 (Japan) */
+        	driver_sonson,	/*  7/1984 (c) 1984 */
+        	driver_sonsonj,	/*  7/1984 (c) 1984 (Japan) */
 
         /*TODO*///	driver_1942,		/* 12/1984 (c) 1984 */
         /*TODO*///	driver_1942a,		/* 12/1984 (c) 1984 */

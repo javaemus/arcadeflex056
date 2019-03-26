@@ -7,7 +7,7 @@ import arcadeflex056.fucPtr.*;
 import static mame056.cpuexec.cpu_set_irq_line;
 import static mame056.cpuintrfH.*;
 
-import static mame056.cpu.m6809.m6809H.M6809_IRQ_LINE;
+import static mame056.cpu.m6809.m6809H.*;
 
 public class cpuexecH {
 
@@ -191,7 +191,7 @@ public class cpuexecH {
     /*TODO*///#define M6502_INT_IRQ		M6502_IRQ_LINE
 /*TODO*///#define M6502_INT_NMI		INTERRUPT_NMI
     public static final int M6809_INT_IRQ = M6809_IRQ_LINE;
-/*TODO*///#define M6809_INT_FIRQ		M6809_FIRQ_LINE
+    public static final int M6809_INT_FIRQ = M6809_FIRQ_LINE;
     public static final int M6809_INT_NMI = INTERRUPT_NMI;
 /*TODO*///#define HD6309_INT_IRQ		HD6309_IRQ_LINE
 /*TODO*///#define HD6309_INT_FIRQ		HD6309_FIRQ_LINE
