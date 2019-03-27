@@ -1313,16 +1313,17 @@ public class cpuexec {
         timetrig_spinuntil_time = (timetrig_spinuntil_time + 1) & 255;
     }
 
-    /*TODO*///
-/*TODO*///
-/*TODO*///void cpu_yielduntil_time(double duration)
-/*TODO*///{
-/*TODO*///	static int timetrig = 0;
-/*TODO*///
-/*TODO*///	cpu_yielduntil_trigger(TRIGGER_YIELDTIME + timetrig);
-/*TODO*///	cpu_triggertime(duration, TRIGGER_YIELDTIME + timetrig);
-/*TODO*///	timetrig = (timetrig + 1) & 255;
-/*TODO*///}
+    
+    static int timetrig = 0;
+    
+    public static void cpu_yielduntil_time(double duration)
+    {
+            
+
+            cpu_yielduntil_trigger(TRIGGER_YIELDTIME + timetrig);
+            cpu_triggertime(duration, TRIGGER_YIELDTIME + timetrig);
+            timetrig = (timetrig + 1) & 255;
+    }
     /**
      * ***********************************
      *

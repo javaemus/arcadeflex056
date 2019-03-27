@@ -135,7 +135,7 @@ public class taitosj
 	public static ReadHandlerPtr taitosj_mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* mcu synchronization */
-		/*TODO*///cpu_yielduntil_time (TIME_IN_USEC(5));
+		cpu_yielduntil_time (TIME_IN_USEC(5));
 	
 		/* bit 0 = the 68705 has read data from the Z80 */
 		/* bit 1 = the 68705 has written data for the Z80 */

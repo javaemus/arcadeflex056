@@ -433,14 +433,28 @@ public class taitosj
 	{
 		int offs = num * 4;
 	
-	
-		sx = spriteram.read(offs) - 1;
+                sx = spriteram.read(offs) - 1;
 		sy = 240 - spriteram.read(offs + 1);
+                
 		return (sy < 240)?1:0;
 	}
 	
+        public static int get_sprite_x(int num)
+	{
+		int offs = num * 4;
 	
-	static int check_sprite_sprite_bitpattern(int sx1, int sy1, int num1,
+                return spriteram.read(offs) - 1;		
+	}
+        
+        public static int get_sprite_y(int num)
+	{
+		int offs = num * 4;
+	
+                return 240 - spriteram.read(offs + 1);
+                
+	}
+	
+	public static int check_sprite_sprite_bitpattern(int sx1, int sy1, int num1,
 	                                          int sx2, int sy2, int num2)
 	{
 		int x,y,minx,miny,maxx = 16,maxy = 16;
@@ -517,6 +531,10 @@ public class taitosj
 	
 			if (get_sprite_xy(i, sx1, sy1) != 0)
 			{
+                            
+                                sx1=get_sprite_x(i);
+                                sy1=get_sprite_y(i);
+                                
 				for (j = 0x00; j < 0x20; j++)
 				{
 					if (j >= i)	 break;		/* only check a pair once and don't check against itself */
@@ -525,6 +543,10 @@ public class taitosj
 	
 					if (get_sprite_xy(j, sx2, sy2) != 0)
 					{
+                                            
+                                                sx2=get_sprite_x(j);
+                                                sy2=get_sprite_y(j);
+                                                
 						/* rule out any pairs that cannot be touching */
 						if ((abs(sx1 - sx2) < 16) &&
 							(abs(sy1 - sy2) < 16))
@@ -551,10 +573,12 @@ public class taitosj
 	}
 	
 	
-	static void calculate_sprites_areas()
+        
+	public static void calculate_sprites_areas()
 	{
-		int sx=0,sy=0;
+		
 		int i,minx,miny,maxx,maxy;
+                int sx=0,sy=0;
 	
 		for (i = 0x00; i < 0x20; i++)
 		{
@@ -562,7 +586,10 @@ public class taitosj
 	
 			if (get_sprite_xy(i, sx, sy) != 0)
 			{
-				minx = sx;
+                                sx=get_sprite_x(i);
+                                sy=get_sprite_y(i);
+				
+                                minx = sx;
 				miny = sy;
 	
 				maxx = minx+15;
@@ -704,6 +731,10 @@ public class taitosj
 	
 				if (get_sprite_xy(offs / 4, sx, sy) != 0)
 				{
+                                   
+                                        sx=get_sprite_x(offs / 4);
+                                        sy=get_sprite_y(offs / 4);
+                                        
 					flipx = spriteram.read(offs + 2) & 1;
 					flipy = spriteram.read(offs + 2) & 2;
 					if (flipscreen[0]!=0)
