@@ -46,6 +46,7 @@ import static mame056.drivers.rallyx.*;
 import static mame056.drivers.sonson.*;
 import static mame056.drivers.brkthru.*;
 import static mame056.drivers.pbaction.*;
+import static mame056.drivers.taitosj.*;
 
 public class driver {
 
@@ -1104,26 +1105,26 @@ public class driver {
         /*TODO*///	driver_zookeep3,	/* ZA  (c) 1982 Taito America Corporation */
         /*TODO*///	driver_slither,	/* (c) 1982 Century II */
         /*TODO*///	driver_slithera,	/* (c) 1982 Century II */
-        /*TODO*///
-        /*TODO*///	/* Taito SJ System games */
-        /*TODO*///	driver_spaceskr,	/* EB  (c) 1981 Taito Corporation */
-        /*TODO*///	driver_junglek,	/* KN  (c) 1982 Taito Corporation */
-        /*TODO*///	driver_junglkj2,	/* KN  (c) 1982 Taito Corporation */
-        /*TODO*///	driver_jungleh,	/* KN  (c) 1982 Taito America Corporation */
-        /*TODO*///	driver_junglhbr,	/* KN  (c) 1982 Taito do Brasil */
-        /*TODO*///	driver_alpine,	/* RH  (c) 1982 Taito Corporation */
-        /*TODO*///	driver_alpinea,	/* RH  (c) 1982 Taito Corporation */
-        /*TODO*///	driver_timetunl,	/* UN  (c) 1982 Taito Corporation */
-        /*TODO*///	driver_wwestern,	/* WW  (c) 1982 Taito Corporation */
-        /*TODO*///	driver_wwester1,	/* WW  (c) 1982 Taito Corporation */
-        /*TODO*///	driver_frontlin,	/* FL  (c) 1982 Taito Corporation */
-        /*TODO*///	driver_elevator,	/* EA  (c) 1983 Taito Corporation */
-        /*TODO*///	driver_elevatob,	/* bootleg */
-        /*TODO*///	driver_tinstar,	/* A10 (c) 1983 Taito Corporation */
-        /*TODO*///	driver_waterski,	/* A03 (c) 1983 Taito Corporation */
-        /*TODO*///	driver_bioatack,	/* AA8 (c) 1983 Taito Corporation + Fox Video Games license */
-        /*TODO*///	driver_hwrace,	/* AC4 (c) 1983 Taito Corporation */
-        /*TODO*///	driver_sfposeid,	/* A14 (c) 1984 Taito Corporation */
+        
+        	/* Taito SJ System games */
+        	driver_spaceskr,	/* EB  (c) 1981 Taito Corporation */
+        	driver_junglek,	/* KN  (c) 1982 Taito Corporation */
+        	driver_junglkj2,	/* KN  (c) 1982 Taito Corporation */
+        	driver_jungleh,	/* KN  (c) 1982 Taito America Corporation */
+        	driver_junglhbr,	/* KN  (c) 1982 Taito do Brasil */
+        	driver_alpine,	/* RH  (c) 1982 Taito Corporation */
+        	driver_alpinea,	/* RH  (c) 1982 Taito Corporation */
+        	driver_timetunl,	/* UN  (c) 1982 Taito Corporation */
+        	driver_wwestern,	/* WW  (c) 1982 Taito Corporation */
+        	driver_wwester1,	/* WW  (c) 1982 Taito Corporation */
+        	driver_frontlin,	/* FL  (c) 1982 Taito Corporation */
+        	driver_elevator,	/* EA  (c) 1983 Taito Corporation */
+        	driver_elevatob,	/* bootleg */
+        	driver_tinstar,	/* A10 (c) 1983 Taito Corporation */
+        	driver_waterski,	/* A03 (c) 1983 Taito Corporation */
+        	driver_bioatack,	/* AA8 (c) 1983 Taito Corporation + Fox Video Games license */
+        	driver_hwrace,	/* AC4 (c) 1983 Taito Corporation */
+        	driver_sfposeid,	/* A14 (c) 1984 Taito Corporation */
         /*TODO*///TESTdriver_kikstart,	/* A20 */
         /*TODO*///
         /*TODO*///	/* other Taito games */

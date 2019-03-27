@@ -3829,7 +3829,7 @@ public class drawgfx {
 
     public static read_pixel_procPtr rp_16 = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
-            throw new UnsupportedOperationException("unsupported");//return ((UINT16 *)b -> line[y])[x]; 
+            return new UShortPtr(bitmap.line[y]).read(x); 
         }
     };
     public static read_pixel_procPtr rp_16_fx = new read_pixel_procPtr() {
@@ -3854,12 +3854,12 @@ public class drawgfx {
     };
     public static read_pixel_procPtr rp_16_fx_s = new read_pixel_procPtr() {
         public int handler(mame_bitmap b, int x, int y) {
-            return new UShortPtr(b.line[x]).read(b.width-1-y);
+            return (new UShortPtr(b.line[x]).read(b.width-1-y));
         }
     };
     public static read_pixel_procPtr rp_16_fy_s = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
-            throw new UnsupportedOperationException("unsupported");//            return ((UINT16 *)b -> line[b -> height - 1 - x])[y];
+            return (new UShortPtr(bitmap.line[bitmap.height - 1 - x]).read(y));
         }
     };
     public static read_pixel_procPtr rp_16_fxy_s = new read_pixel_procPtr() {
