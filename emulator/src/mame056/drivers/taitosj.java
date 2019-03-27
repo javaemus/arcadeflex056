@@ -142,7 +142,7 @@ import static mame056.sound.samplesH.*;
 
 import static mame056.vidhrdw.generic.*;
 
-import static arcadeflex036.fileio.*;
+import static arcadeflex056.fileio.*;
 
 import static mame056.machine.taitosj.*;
 import static mame056.palette.*;
