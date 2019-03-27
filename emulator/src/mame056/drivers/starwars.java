@@ -54,7 +54,7 @@ import static mame056.sndintrf.*;
 import static mame056.vidhrdw.generic.*;
 
 // refactor
-import static arcadeflex036.fileio.*;
+import static arcadeflex056.fileio.*;
 import static mame056.cpu.m6809.m6809H.M6809_IRQ_LINE;
 
 import static mame056.machine.slapstic.*;

@@ -9,7 +9,7 @@ import static common.ptr.*;
 import static mame056.mame.Machine;
 import arcadeflex056.util.hiscoreFileParser;
 import static mame056.osdependH.*;
-import static arcadeflex036.fileio.*;
+import static arcadeflex056.fileio.*;
 import static arcadeflex036.osdepend.logerror;
 import static mame056.cpuintrf.*;
 

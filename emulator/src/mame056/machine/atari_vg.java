@@ -18,8 +18,7 @@ import static common.ptr.UBytePtr;
 import static common.libc.cstring.*;
 
 // refactor
-import static arcadeflex036.fileio.osd_fwrite;
-import static arcadeflex036.fileio.osd_fread;
+import static arcadeflex056.fileio.*;
 import static arcadeflex036.osdepend.logerror;
 
 public class atari_vg

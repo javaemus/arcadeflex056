@@ -35,7 +35,7 @@ import static mame056.vidhrdw.berzerk.*;
 import static mame056.vidhrdw.generic.*;
 import static mame056.sndhrdw.berzerk.*;
 
-import static arcadeflex036.fileio.*;
+import static arcadeflex056.fileio.*;
 import static mame056.palette.game_palette;
 //import static mame.palette.game_palette;
 

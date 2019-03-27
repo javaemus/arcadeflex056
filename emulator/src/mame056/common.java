@@ -4,6 +4,7 @@
 package mame056;
 
 import static arcadeflex056.debug.*;
+import static arcadeflex056.fileio.*;
 
 import static common.ptr.*;
 import static common.util.*;
@@ -24,7 +25,6 @@ import static mame056.tilemapH.*;
 
 //to refactor
 import static arcadeflex037b7.video.osd_set_visible_area;
-import static arcadeflex036.fileio.*;
 import static arcadeflex036.osdepend.logerror;
 
 public class common {

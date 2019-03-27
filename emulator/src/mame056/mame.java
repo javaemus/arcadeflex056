@@ -34,8 +34,7 @@ import static arcadeflex036.osdepend.*;
 import static mame056.vidhrdw.generic.*;
 import static mame056.driver.*;
 
-import static arcadeflex036.fileio.osd_fclose;
-import static arcadeflex036.fileio.osd_fopen;
+import static arcadeflex056.fileio.*;
 import common.subArrays.IntArray;
 import static mame056.common.bitmap_alloc_depth;
 import static mame056.tilemapC.*;

@@ -170,9 +170,7 @@ import static mame056.sndintrf.*;
 import static mame056.vidhrdw.avgdvg.*;
 import static mame056.vidhrdw.vector.*;
 import static mame056.vidhrdw.generic.*;
-
-// refactor
-import static arcadeflex036.fileio.*;
+import static arcadeflex056.fileio.*;
 
 
 public class asteroid
