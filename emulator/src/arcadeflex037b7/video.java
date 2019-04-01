@@ -50,8 +50,7 @@ import static arcadeflex056.video.*;
 public class video {
 
     public static software_gfx screen; //for our screen creation
-    public static int skiplines;
-    public static int skipcolumns;
+    
     
     public static int gone_to_gfx_mode;
     public static int unchained;
@@ -59,17 +58,15 @@ public class video {
     public static int stretch;
     public static int video_sync;
     public static int use_dirty;
-    public static int frameskip;
-    public static int autoframeskip;
+    
     public static int frameskip_counter;
     public static int frames_displayed;
     public static float brightness_paused_adjust;
     
     public static float osd_gamma_correction = 1.0f;
     public static int xmultiply, ymultiply;
-    public static int viswidth;
-    public static int visheight;
-    public static int vis_min_x, vis_max_x, vis_min_y, vis_max_y;
+    
+    
     static int warming_up;
     public static int vsync_frame_rate;
 
@@ -78,11 +75,8 @@ public class video {
     public static int use_vesa;
     public static int auto_resolution;
     public static int modifiable_palette;
-    public static int vector_game;
-    public static int skiplinesmax;
-    public static int skipcolumnsmax;
-    public static int skiplinesmin;
-    public static int skipcolumnsmin;
+    
+    
     static int framecount = 0;
     public static final int FRAMESKIP_LEVELS = 12;
     static int showfps, showfpstemp;
@@ -1083,37 +1077,7 @@ public class video {
         }
     }
 
-    public static void osd_close_display() {
-        /*TODO*///	if (gone_to_gfx_mode != 0)
-        /*TODO*///	{
-        /*TODO*///		/* tidy up if 15.75KHz SVGA mode used */
-        /*TODO*///		if (scanrate15KHz && use_vesa == 1)
-        /*TODO*///		{
-        /*TODO*///			/* check we've got a valid driver before calling it */
-        /*TODO*///			if (SVGA15KHzdriver != NULL)
-        /*TODO*///				SVGA15KHzdriver->resetSVGA15KHzmode();
-        /*TODO*///		}
-        /*TODO*///
-        /*TODO*///		set_gfx_mode (GFX_TEXT,0,0,0,0);
-        /*TODO*///
-        if (frames_displayed > FRAMES_TO_SKIP) {
-            printf("Average FPS: %f\n", (double) TICKS_PER_SEC / (end_time - start_time) * (frames_displayed - FRAMES_TO_SKIP));
-        }
-        /*TODO*///	}
-        /*TODO*///
-        /*TODO*///	free(dirtycolor);
-        /*TODO*///	dirtycolor = 0;
-        /*TODO*///	free(current_palette);
-        /*TODO*///	current_palette = 0;
-        /*TODO*///	free(palette_16bit_lookup);
-        /*TODO*///	palette_16bit_lookup = 0;
-        /*TODO*///	if (scrbitmap)
-        /*TODO*///	{
-        /*TODO*///		osd_free_bitmap(scrbitmap);
-        /*TODO*///		scrbitmap = NULL;
-        /*TODO*///	}
-    }
-
+   
     
     public static int makecol(int r, int g, int b) {//makecol16 from allegro src
         /*  Color c = new Color(r, g, b);

@@ -3,7 +3,9 @@
  */
 package arcadeflex056;
 
+import static arcadeflex036.ticker.TICKS_PER_SEC;
 import static arcadeflex037b7.video.*;
+import static common.libc.cstdio.printf;
 import common.ptr.UBytePtr;
 
 public class video {
@@ -423,10 +425,10 @@ public class video {
 /*TODO*///extern unsigned int doublepixel[256];
 /*TODO*///extern unsigned int quadpixel[256]; /* for quadring pixels */
 /*TODO*///extern UINT32 *palette_16bit_lookup;
-/*TODO*///
-/*TODO*///int frameskip,autoframeskip;
+
+    public static int frameskip,autoframeskip;
 /*TODO*///#define FRAMESKIP_LEVELS 12
-/*TODO*///
+
 /*TODO*///static int update_video_first_time;
 /*TODO*///
 /*TODO*///
@@ -441,8 +443,8 @@ public class video {
 /*TODO*///int use_triplebuf;
 /*TODO*///int triplebuf_pos,triplebuf_page_width;
 /*TODO*///int vsync_frame_rate;
-/*TODO*///int skiplines;
-/*TODO*///int skipcolumns;
+    public static int skiplines;
+    public static int skipcolumns;
 /*TODO*///int scanlines;
 /*TODO*///int stretch;
 /*TODO*///int use_mmx;
@@ -458,7 +460,7 @@ public class video {
 /*TODO*///int gfx_mode;
     public static int gfx_width;
     public static int gfx_height;
-/*TODO*///static int vis_min_x,vis_max_x,vis_min_y,vis_max_y;
+    public static int vis_min_x,vis_max_x,vis_min_y,vis_max_y;
 /*TODO*///
 /*TODO*///
 /*TODO*////*new 'half' flag (req. for 15.75KHz Arcade Monitor Modes)*/
@@ -469,15 +471,15 @@ public class video {
 /*TODO*///int scanrate15KHz;
 /*TODO*///
 /*TODO*///static int auto_resolution;
-/*TODO*///static int viswidth;
-/*TODO*///static int visheight;
-/*TODO*///static int skiplinesmax;
-/*TODO*///static int skipcolumnsmax;
-/*TODO*///static int skiplinesmin;
-/*TODO*///static int skipcolumnsmin;
+    public static int viswidth;
+    public static int visheight;
+    public static int skiplinesmax;
+    public static int skipcolumnsmax;
+    public static int skiplinesmin;
+    public static int skipcolumnsmin;
 /*TODO*///static int show_debugger,debugger_focus_changed;
 /*TODO*///
-/*TODO*///static int vector_game;
+    public static int vector_game;
 /*TODO*///
 /*TODO*///static Register *reg = 0;       /* for VGA modes */
 /*TODO*///static int reglen = 0;  /* for VGA modes */
@@ -1682,11 +1684,11 @@ public class video {
 /*TODO*///
 /*TODO*///    return 0;
 /*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*////* shut up the display */
-/*TODO*///void osd_close_display(void)
-/*TODO*///{
+
+    
+    /* shut up the display */
+    public static void osd_close_display()
+    {
 /*TODO*///	if (gone_to_gfx_mode != 0)
 /*TODO*///	{
 /*TODO*///		/* tidy up if 15.75KHz SVGA mode used */
@@ -1699,8 +1701,8 @@ public class video {
 /*TODO*///
 /*TODO*///		set_gfx_mode (GFX_TEXT,0,0,0,0);
 /*TODO*///
-/*TODO*///		if (frames_displayed > FRAMES_TO_SKIP)
-/*TODO*///			printf("Average FPS: %f\n",(double)TICKS_PER_SEC/(end_time-start_time)*(frames_displayed-FRAMES_TO_SKIP));
+		if (frames_displayed > FRAMES_TO_SKIP)
+			printf("Average FPS: %f\n",(double)TICKS_PER_SEC/(end_time-start_time)*(frames_displayed-FRAMES_TO_SKIP));
 /*TODO*///	}
 /*TODO*///
 /*TODO*///	free(dirtycolor);
@@ -1709,9 +1711,9 @@ public class video {
 /*TODO*///	current_palette = 0;
 /*TODO*///	free(palette_16bit_lookup);
 /*TODO*///	palette_16bit_lookup = 0;
-/*TODO*///}
-/*TODO*///
-/*TODO*///
+    }
+
+
 /*TODO*///void osd_debugger_focus(int debugger_has_focus)
 /*TODO*///{
 /*TODO*///    if (show_debugger != debugger_has_focus)

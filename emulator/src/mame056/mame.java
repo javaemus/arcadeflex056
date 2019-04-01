@@ -20,7 +20,7 @@ import static mame056.sndintrf.*;
 import static mame056.palette.*;
 
 import static common.ptr.*;
-import static arcadeflex037b7.video.osd_close_display;
+import static arcadeflex056.video.osd_close_display;
 import static arcadeflex037b7.video.osd_create_display;
 import static arcadeflex037b7.video.osd_mark_dirty;
 import static arcadeflex056.video.osd_skip_this_frame;
