@@ -3,6 +3,8 @@
  */
 package arcadeflex056;
 
+import static arcadeflex037b7.video.*;
+
 public class video {
 /*TODO*///#include "mamalleg.h"
 /*TODO*///#include "driver.h"
@@ -1093,17 +1095,17 @@ public class video {
 /*TODO*///	gfx_display_columns  = (gfx_display_columns + 3) & ~3;
 /*TODO*///}
 /*TODO*///
-/*TODO*///
-/*TODO*///void osd_set_visible_area(int min_x,int max_x,int min_y,int max_y)
-/*TODO*///{
-/*TODO*///	vis_min_x = min_x;
-/*TODO*///	vis_max_x = max_x;
-/*TODO*///	vis_min_y = min_y;
-/*TODO*///	vis_max_y = max_y;
-/*TODO*///	internal_set_visible_area(min_x,max_x,min_y,max_y,0);
-/*TODO*///}
-/*TODO*///
-/*TODO*///
+
+    public static void osd_set_visible_area(int min_x,int max_x,int min_y,int max_y)
+    {
+            vis_min_x = min_x;
+            vis_max_x = max_x;
+            vis_min_y = min_y;
+            vis_max_y = max_y;
+            internal_set_visible_area(min_x,max_x,min_y,max_y,0);
+    }
+
+
 /*TODO*///
 /*TODO*///
 /*TODO*////* set the actual display screen but don't allocate the screen bitmap */
@@ -2104,30 +2106,29 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
 /*TODO*///		set_ui_visarea (skipcolumns, skiplines, skipcolumns+gfx_display_columns-1, skiplines+gfx_display_lines-1);
 /*TODO*///	}
 /*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*///
-/*TODO*///int osd_skip_this_frame(void)
-/*TODO*///{
-/*TODO*///	static const int skiptable[FRAMESKIP_LEVELS][FRAMESKIP_LEVELS] =
-/*TODO*///	{
-/*TODO*///		{ 0,0,0,0,0,0,0,0,0,0,0,0 },
-/*TODO*///		{ 0,0,0,0,0,0,0,0,0,0,0,1 },
-/*TODO*///		{ 0,0,0,0,0,1,0,0,0,0,0,1 },
-/*TODO*///		{ 0,0,0,1,0,0,0,1,0,0,0,1 },
-/*TODO*///		{ 0,0,1,0,0,1,0,0,1,0,0,1 },
-/*TODO*///		{ 0,1,0,0,1,0,1,0,0,1,0,1 },
-/*TODO*///		{ 0,1,0,1,0,1,0,1,0,1,0,1 },
-/*TODO*///		{ 0,1,0,1,1,0,1,0,1,1,0,1 },
-/*TODO*///		{ 0,1,1,0,1,1,0,1,1,0,1,1 },
-/*TODO*///		{ 0,1,1,1,0,1,1,1,0,1,1,1 },
-/*TODO*///		{ 0,1,1,1,1,1,0,1,1,1,1,1 },
-/*TODO*///		{ 0,1,1,1,1,1,1,1,1,1,1,1 }
-/*TODO*///	};
-/*TODO*///
-/*TODO*///	return skiptable[frameskip][frameskip_counter];
-/*TODO*///}
-/*TODO*///
+
+    static int[][] skiptable =
+	{
+		{ 0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,0,1 },
+		{ 0,0,0,0,0,1,0,0,0,0,0,1 },
+		{ 0,0,0,1,0,0,0,1,0,0,0,1 },
+		{ 0,0,1,0,0,1,0,0,1,0,0,1 },
+		{ 0,1,0,0,1,0,1,0,0,1,0,1 },
+		{ 0,1,0,1,0,1,0,1,0,1,0,1 },
+		{ 0,1,0,1,1,0,1,0,1,1,0,1 },
+		{ 0,1,1,0,1,1,0,1,1,0,1,1 },
+		{ 0,1,1,1,0,1,1,1,0,1,1,1 },
+		{ 0,1,1,1,1,1,0,1,1,1,1,1 },
+		{ 0,1,1,1,1,1,1,1,1,1,1,1 }
+	};
+
+
+        public static int osd_skip_this_frame()
+        {
+            return skiptable[frameskip][frameskip_counter];
+        }
+
 /*TODO*////* Update the display. */
 /*TODO*///void osd_update_video_and_audio(struct mame_bitmap *game_bitmap,struct mame_bitmap *debug_bitmap,int leds_status)
 /*TODO*///{
@@ -2603,44 +2604,44 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
 /*TODO*///{
 /*TODO*///	return osd_gamma_correction;
 /*TODO*///}
-/*TODO*///
-/*TODO*////* brightess = percentage 0-100% */
-/*TODO*///void osd_set_brightness(int _brightness)
-/*TODO*///{
-/*TODO*///	int i;
-/*TODO*///
-/*TODO*///	brightness = _brightness;
-/*TODO*///
-/*TODO*///	for (i = 0;i < screen_colors;i++)
-/*TODO*///		dirtycolor[i] = 1;
-/*TODO*///	dirtypalette = 1;
-/*TODO*///	dirty_bright = 1;
-/*TODO*///}
-/*TODO*///
-/*TODO*///int osd_get_brightness(void)
-/*TODO*///{
-/*TODO*///	return brightness;
-/*TODO*///}
-/*TODO*///
-/*TODO*///
+
+    /* brightess = percentage 0-100% */
+    public static void osd_set_brightness(int _brightness)
+    {
+            int i;
+
+            brightness = _brightness;
+
+            for (i = 0;i < screen_colors;i++)
+                    dirtycolor[i] = 1;
+            dirtypalette = 1;
+            dirty_bright = 1;
+    }
+
+    public static int osd_get_brightness()
+    {
+            return brightness;
+    }
+
+
 /*TODO*///void osd_save_snapshot(struct mame_bitmap *bitmap)
 /*TODO*///{
 /*TODO*///	save_screen_snapshot(bitmap);
 /*TODO*///}
-/*TODO*///
-/*TODO*///void osd_pause(int paused)
-/*TODO*///{
-/*TODO*///	int i;
-/*TODO*///
-/*TODO*///	if (paused) brightness_paused_adjust = 0.65;
-/*TODO*///	else brightness_paused_adjust = 1.0;
-/*TODO*///
-/*TODO*///	for (i = 0;i < screen_colors;i++)
-/*TODO*///		dirtycolor[i] = 1;
-/*TODO*///	dirtypalette = 1;
-/*TODO*///	dirty_bright = 1;
-/*TODO*///}
-/*TODO*///
+
+    public static void osd_pause(int paused)
+    {
+            int i;
+
+            if (paused != 0) brightness_paused_adjust = 0.65f;
+            else brightness_paused_adjust = 1.0f;
+
+            for (i = 0;i < screen_colors;i++)
+                    dirtycolor[i] = 1;
+            dirtypalette = 1;
+            dirty_bright = 1;
+    }
+
 /*TODO*///Register *make_scanline_mode(Register *inreg,int entries)
 /*TODO*///{
 /*TODO*///	static Register outreg[32];

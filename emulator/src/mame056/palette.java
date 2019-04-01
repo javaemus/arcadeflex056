@@ -74,7 +74,7 @@ public class palette {
         Machine.pens = new int[total_colors * 4];//malloc(total_colors * sizeof(*Machine->pens));
 
         if (Machine.drv.color_table_len != 0) {
-            Machine.game_colortable = new char[Machine.drv.color_table_len * 2];//malloc(Machine.drv.color_table_len * sizeof(*Machine.game_colortable));
+            Machine.game_colortable = new char[Machine.drv.color_table_len * 4];//malloc(Machine.drv.color_table_len * sizeof(*Machine.game_colortable));
             Machine.remapped_colortable = new IntArray(Machine.drv.color_table_len * 4);//malloc(Machine.drv.color_table_len * sizeof(*Machine.remapped_colortable));
         } else {
             Machine.game_colortable = null;
@@ -174,7 +174,7 @@ public class palette {
         /* Preload the colortable with a default setting, following the same */
  /* order of the palette. The driver can overwrite this in */
  /* vh_init_palette() */
-        for (i = 0; i < Machine.drv.color_table_len; i++) {
+        for (i = 0; i < (Machine.drv.color_table_len*4); i++) {
             Machine.game_colortable[i] = (char) (i % total_colors);
         }
 

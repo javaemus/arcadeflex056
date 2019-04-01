@@ -1711,13 +1711,7 @@ public class video {
         tempCreation();
     }
 
-    public static void osd_set_visible_area(int min_x, int max_x, int min_y, int max_y) {
-        vis_min_x = min_x;
-        vis_max_x = max_x;
-        vis_min_y = min_y;
-        vis_max_y = max_y;
-        internal_set_visible_area(min_x, max_x, min_y, max_y, 0);
-    }
+    
 
     public static void osd_free_bitmap(mame_bitmap bitmap) {
         if (bitmap != null) {
@@ -1782,43 +1776,7 @@ public class video {
         return bitmap;
     }
 
-    public static int osd_skip_this_frame() {
-        return skiptable[frameskip][frameskip_counter];
-    }
-
-    public static void osd_pause(int paused) {
-        int i;
-
-        if (paused != 0) {
-            brightness_paused_adjust = (float) 0.65;
-        } else {
-            brightness_paused_adjust = (float) 1.0;
-        }
-
-        for (i = 0; i < screen_colors; i++) {
-            dirtycolor[i] = 1;
-        }
-        dirtypalette = 1;
-        dirty_bright = 1;
-    }
-
-    /* brightess = percentage 0-100% */
-    public static void osd_set_brightness(int _brightness) {
-        int i;
-
-        brightness = _brightness;
-
-        for (i = 0; i < screen_colors; i++) {
-            dirtycolor[i] = 1;
-        }
-        dirtypalette = 1;
-        dirty_bright = 1;
-    }
-
-    public static int osd_get_brightness() {
-        return brightness;
-    }
-
+    
     public static void osd_get_pen(int pen, char[] red, char[] green, char[] blue) {
         if (video_depth != 8 && modifiable_palette == 0) {
             throw new UnsupportedOperationException("unimplemented");

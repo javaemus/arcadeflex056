@@ -30,6 +30,7 @@ import static mame056.usrintrfH.*;
 import static mame056.inptport.*;
 import static mame056.version.*;
 import static mame056.driver.*;
+import static arcadeflex056.video.*;
 
 //to refactor
 import static arcadeflex037b7.video.*;

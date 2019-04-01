@@ -22,9 +22,9 @@ import static mame056.cpuintrf.*;
 import static mame056.cpuintrfH.*;
 import static mame056.drawgfxH.*;
 import static mame056.tilemapH.*;
+import static arcadeflex056.video.osd_set_visible_area;
 
 //to refactor
-import static arcadeflex037b7.video.osd_set_visible_area;
 import static arcadeflex036.osdepend.logerror;
 
 public class common {

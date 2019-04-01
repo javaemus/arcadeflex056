@@ -65,49 +65,54 @@ public class brkthru
 	  bit 0 -- 2.2kohm resistor  -- BLUE
 	
 	***************************************************************************/
-	public static VhConvertColorPromPtr brkthru_vh_convert_color_prom = new VhConvertColorPromPtr() {
-            public void handler(char[] palette, char[] colortable, UBytePtr color_prom) {
-                int i;
-                int _posPal = 0;
-                color_prom.offset = 0;
-	
-		for (i = 0;i < Machine.drv.total_colors;i++)
-		{
-			int bit0,bit1,bit2,bit3,r,g,b;
-	
-	
-			bit0 = (color_prom.read(0) >> 0) & 0x01;
-			bit1 = (color_prom.read(0) >> 1) & 0x01;
-			bit2 = (color_prom.read(0) >> 2) & 0x01;
-			bit3 = (color_prom.read(0) >> 3) & 0x01;
-			r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-			bit0 = (color_prom.read(0) >> 4) & 0x01;
-			bit1 = (color_prom.read(0) >> 5) & 0x01;
-			bit2 = (color_prom.read(0) >> 6) & 0x01;
-			bit3 = (color_prom.read(0) >> 7) & 0x01;
-			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-			bit0 = (color_prom.read(Machine.drv.total_colors) >> 0) & 0x01;
-			bit1 = (color_prom.read(Machine.drv.total_colors) >> 1) & 0x01;
-			bit2 = (color_prom.read(Machine.drv.total_colors) >> 2) & 0x01;
-			bit3 = (color_prom.read(Machine.drv.total_colors) >> 3) & 0x01;
-			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-	
-			palette_set_color(i,r,g,b);
-                        
-                        palette[_posPal++] = (char) r;
-                        palette[_posPal++] = (char) g;
-                        palette[_posPal++] = (char) b;
-		}
-                
-                palette[0]=0x00;
-                palette[1]=0x00;
-                palette[2]=0x00;
-                
-                palette[3]=0xFF;
-                palette[4]=0xFF;
-                palette[5]=0xFF;
+	static int TOTAL_COLORS(int gfxn) {
+        return Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity;
+    }
+    public static VhConvertColorPromPtr brkthru_vh_convert_color_prom = new VhConvertColorPromPtr() {
+        public void handler(char[] palette, char[] colortable, UBytePtr color_prom) {
+            int i;
+		//#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+            //#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
+
+            int p_inc = 0;
+            for (i = 0; i < Machine.drv.total_colors; i++) {
+                int bit0, bit1, bit2, bit3;
+
+                bit0 = (color_prom.read(0) >> 0) & 0x01;
+                bit1 = (color_prom.read(0) >> 1) & 0x01;
+                bit2 = (color_prom.read(0) >> 2) & 0x01;
+                bit3 = (color_prom.read(0) >> 3) & 0x01;
+                palette[p_inc++]=((char) (0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3));
+                bit0 = (color_prom.read(0) >> 4) & 0x01;
+                bit1 = (color_prom.read(0) >> 5) & 0x01;
+                bit2 = (color_prom.read(0) >> 6) & 0x01;
+                bit3 = (color_prom.read(0) >> 7) & 0x01;
+                palette[p_inc++]=((char) (0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3));
+                bit0 = (color_prom.read(Machine.drv.total_colors) >> 0) & 0x01;
+                bit1 = (color_prom.read(Machine.drv.total_colors) >> 1) & 0x01;
+                bit2 = (color_prom.read(Machine.drv.total_colors) >> 2) & 0x01;
+                bit3 = (color_prom.read(Machine.drv.total_colors) >> 3) & 0x01;
+                palette[p_inc++]=((char) (0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3));
+
+                color_prom.inc();
             }
-        };
+System.out.println(colortable);
+            /* characters use colors 0-7 */
+            for (i = 0; i < TOTAL_COLORS(0); i++) {
+                colortable[Machine.drv.gfxdecodeinfo[0].color_codes_start + i] = (char) i;
+            }
+
+            /* background tiles use colors 128-255 */
+            for (i = 0; i < TOTAL_COLORS(1); i++) {
+                colortable[Machine.drv.gfxdecodeinfo[1].color_codes_start + i] = (char) (i + 128);
+            }
+
+            /* sprites use colors 64-127 */
+            for (i = 0; i < TOTAL_COLORS(9); i++) {
+                colortable[Machine.drv.gfxdecodeinfo[9].color_codes_start + i] = (char) (i + 64);
+            }
+        }
+    };
 		
 	/***************************************************************************
 	
