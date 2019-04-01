@@ -7,6 +7,7 @@ package arcadeflex037b7;
 
 
 import static arcadeflex037b7.video.*;
+import static arcadeflex056.video.*;
 import static arcadeflex037b7.dirtyH.*;
 import common.ptr;
 import common.ptr.UShortPtr;

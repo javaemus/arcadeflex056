@@ -4,6 +4,7 @@
 package arcadeflex056;
 
 import static arcadeflex037b7.video.*;
+import common.ptr.UBytePtr;
 
 public class video {
 /*TODO*///#include "mamalleg.h"
@@ -230,6 +231,10 @@ public class video {
 /*TODO*///#define MAX_X_MULTIPLY 4
 /*TODO*///#define MAX_Y_MULTIPLY 3
 /*TODO*///
+    
+    public static class RGB {
+        public int r, g, b;
+    }
 /*TODO*///static void (*updaters8[MAX_X_MULTIPLY][MAX_Y_MULTIPLY][2][2])(struct mame_bitmap *bitmap) =
 /*TODO*///{			/* 1 x 1 */
 /*TODO*///	{	{	{ blitscreen_dirty0_vesa_1x_1x_8bpp, blitscreen_dirty1_vesa_1x_1x_8bpp },
@@ -406,15 +411,15 @@ public class video {
 /*TODO*///	}
 /*TODO*///};
 /*TODO*///
-/*TODO*///static int video_depth,video_fps,video_attributes,video_orientation;
+    public static int video_depth,video_fps,video_attributes,video_orientation;
 /*TODO*///static int rgb_direct;
-/*TODO*///static int screen_colors;
-/*TODO*///static UINT8 *current_palette;
+    public static int screen_colors;
+    public static UBytePtr current_palette;
 /*TODO*///static const UINT8 *dbg_palette;
-/*TODO*///static unsigned int *dirtycolor;
-/*TODO*///static int dirtypalette;
-/*TODO*///static int dirty_bright;
-/*TODO*///static int bright_lookup[256];
+    public static /*unsigned int * */ int[] dirtycolor;
+    public static int dirtypalette;
+    public static int dirty_bright;
+    public static int[] bright_lookup = new int[256];
 /*TODO*///extern unsigned int doublepixel[256];
 /*TODO*///extern unsigned int quadpixel[256]; /* for quadring pixels */
 /*TODO*///extern UINT32 *palette_16bit_lookup;
@@ -446,13 +451,13 @@ public class video {
 /*TODO*///int use_vesa;
 /*TODO*///int use_dirty;
 /*TODO*///float osd_gamma_correction = 1.0;
-/*TODO*///int brightness;
+    public static int brightness;
 /*TODO*///float brightness_paused_adjust;
 /*TODO*///char *resolution;
 /*TODO*///char *mode_desc;
 /*TODO*///int gfx_mode;
-/*TODO*///int gfx_width;
-/*TODO*///int gfx_height;
+    public static int gfx_width;
+    public static int gfx_height;
 /*TODO*///static int vis_min_x,vis_max_x,vis_min_y,vis_max_y;
 /*TODO*///
 /*TODO*///
@@ -477,11 +482,11 @@ public class video {
 /*TODO*///static Register *reg = 0;       /* for VGA modes */
 /*TODO*///static int reglen = 0;  /* for VGA modes */
 /*TODO*///static int videofreq;   /* for VGA modes */
-/*TODO*///
-/*TODO*///int gfx_xoffset;
-/*TODO*///int gfx_yoffset;
-/*TODO*///int gfx_display_lines;
-/*TODO*///int gfx_display_columns;
+
+    public static int gfx_xoffset;
+    public static int gfx_yoffset;
+    public static int gfx_display_lines;
+    public static int gfx_display_columns;
 /*TODO*///static int xmultiply,ymultiply;
 /*TODO*///int throttle = 1;       /* toggled by F10 */
 /*TODO*///
@@ -2033,33 +2038,33 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
 /*TODO*///
 	return 0;
 }
-/*TODO*///
-/*TODO*///
-/*TODO*///
-/*TODO*///void osd_modify_pen(int pen,unsigned char red, unsigned char green, unsigned char blue)
-/*TODO*///{
-/*TODO*///	if (rgb_direct)
-/*TODO*///	{
-/*TODO*///		logerror("error: osd_modify_pen() called with rgb direct mode\n");
-/*TODO*///		return;
-/*TODO*///	}
-/*TODO*///
-/*TODO*///
-/*TODO*///	if (	current_palette[3*pen+0] != red ||
-/*TODO*///			current_palette[3*pen+1] != green ||
-/*TODO*///			current_palette[3*pen+2] != blue)
-/*TODO*///	{
-/*TODO*///		current_palette[3*pen+0] = red;
-/*TODO*///		current_palette[3*pen+1] = green;
-/*TODO*///		current_palette[3*pen+2] = blue;
-/*TODO*///
-/*TODO*///		dirtycolor[pen] = 1;
-/*TODO*///		dirtypalette = 1;
-/*TODO*///	}
-/*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*///
+
+
+
+    public static void osd_modify_pen(int pen, int red, int green, int blue)
+    {
+            /*TODO*///if (rgb_direct != 0)
+            /*TODO*///{
+            /*TODO*///        logerror("error: osd_modify_pen() called with rgb direct mode\n");
+            /*TODO*///        return;
+            /*TODO*///}
+
+
+            if (current_palette.read(3*pen+0) != red ||
+                            current_palette.read(3*pen+1) != green ||
+                            current_palette.read(3*pen+2) != blue)
+            {
+                    current_palette.write(3*pen+0, red);
+                    current_palette.write(3*pen+1, green);
+                    current_palette.write(3*pen+2, blue);
+
+                    dirtycolor[pen] = 1;
+                    dirtypalette = 1;
+            }
+    }
+
+
+
 /*TODO*///static void update_screen_dummy(struct mame_bitmap *bitmap)
 /*TODO*///{
 /*TODO*///	logerror("msdos/video.c: undefined update_screen() function for %d x %d!\n",xmultiply,ymultiply);

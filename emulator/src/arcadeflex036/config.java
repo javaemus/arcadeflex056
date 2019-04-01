@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 
 import static arcadeflex036.osdepend.ignorecfg;
 import static arcadeflex037b7.video.*;
+import static arcadeflex056.video.*;
 import static mame056.mame.options;
 
 public class config {

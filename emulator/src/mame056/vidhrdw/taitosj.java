@@ -41,8 +41,8 @@ public class taitosj
 	
 	public static UBytePtr taitosj_videoram2 = new UBytePtr(), taitosj_videoram3 = new UBytePtr();
 	public static UBytePtr taitosj_characterram = new UBytePtr();
-	public static UBytePtr taitosj_scroll = new UBytePtr(1024*128);
-	public static UBytePtr taitosj_colscrolly = new UBytePtr(1024*128);
+	public static UBytePtr taitosj_scroll = new UBytePtr();
+	public static UBytePtr taitosj_colscrolly = new UBytePtr();
 	public static UBytePtr taitosj_gfxpointer = new UBytePtr();
 	public static UBytePtr taitosj_colorbank = new UBytePtr(), taitosj_video_priority = new UBytePtr();
 	static int[] taitosj_collision_reg=new int[4];
@@ -523,12 +523,13 @@ public class taitosj
 	{
 		int i,j,sx1=0,sx2=0,sy1=0,sy2=0;
 	
-	
+                boolean cont = false;
+                
 		/* chech each pair of sprites */
 		for (i = 0x00; i < 0x20; i++)
 		{
-			if ((i >= 0x10) && (i <= 0x17)) continue;	/* no sprites here */
-	
+			if ((i >= 0x10) && (i <= 0x17)) cont=true;	/* no sprites here */
+                        if (!cont){
 			if (get_sprite_xy(i, sx1, sy1) != 0)
 			{
                             
@@ -539,7 +540,7 @@ public class taitosj
 				{
 					if (j >= i)	 break;		/* only check a pair once and don't check against itself */
 	
-					if ((j >= 0x10) && (j <= 0x17)) continue;	  /* no sprites here */
+					if ((j >= 0x10) && (j <= 0x17)) cont=true;	  /* no sprites here */
 	
 					if (get_sprite_xy(j, sx2, sy2) != 0)
 					{
@@ -568,6 +569,7 @@ public class taitosj
 						}
 					}
 				}
+                        }
 			}
 		}
 	}

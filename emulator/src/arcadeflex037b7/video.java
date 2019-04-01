@@ -41,6 +41,8 @@ import static mame056.mame.schedule_full_refresh;
 import static mame056.usrintrf.set_ui_visarea;
 import static mame056.usrintrf.ui_text;
 
+import static arcadeflex056.video.*;
+
 /**
  *
  * @author chusogar
@@ -50,12 +52,7 @@ public class video {
     public static software_gfx screen; //for our screen creation
     public static int skiplines;
     public static int skipcolumns;
-    public static int gfx_xoffset;
-    public static int gfx_yoffset;
-    public static int gfx_width;
-    public static int gfx_height;
-    public static int gfx_display_lines;
-    public static int gfx_display_columns;
+    
     public static int gone_to_gfx_mode;
     public static int unchained;
     public static int scanlines;
@@ -67,7 +64,7 @@ public class video {
     public static int frameskip_counter;
     public static int frames_displayed;
     public static float brightness_paused_adjust;
-    public static int[] bright_lookup = new int[256];
+    
     public static float osd_gamma_correction = 1.0f;
     public static int xmultiply, ymultiply;
     public static int viswidth;
@@ -77,16 +74,9 @@ public class video {
     public static int vsync_frame_rate;
 
     public static final int BACKGROUND = 0;
-    public static int brightness;
+    
     public static int use_vesa;
     public static int auto_resolution;
-
-    public static int screen_colors;
-    public static UBytePtr current_palette;
-    public static /*unsigned int * */ int[] dirtycolor;
-    public static int dirtypalette;
-    public static int dirty_bright;
-    public static int video_depth, video_fps, video_attributes, video_orientation;
     public static int modifiable_palette;
     public static int vector_game;
     public static int skiplinesmax;
@@ -120,26 +110,8 @@ public class video {
  /* routines don't clip at boundaries of the bitmap. */
     public static int safety = 16;
 
-    static int skiptable[][]
-            = {
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},
-                {0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1},
-                {0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1},
-                {0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1},
-                {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-                {0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1},
-                {0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1},
-                {0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
-                {0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1},
-                {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-            };
-
-    public static class RGB {
-
-        public char r, g, b;
-    }
+    
+    
 
     /*
      * This function tries to find the best display mode.
@@ -1051,9 +1023,9 @@ public class video {
                             }
                             palette_16bit_lookup[i] = (char) (makecol(r, g, b));// * 0x10001);
                             RGB p = new RGB();
-                            p.r = (char) r;
-                            p.g = (char) g;
-                            p.b = (char) b;
+                            p.r = r;
+                            p.g = g;
+                            p.b = b;
                             set_color(i, p);
                         }
                     }
@@ -1142,24 +1114,7 @@ public class video {
         /*TODO*///	}
     }
 
-    public static void osd_modify_pen(int pen, int/*unsigned char*/ red, int/*unsigned char*/ green, int/*unsigned char*/ blue) {
-        /*if (modifiable_palette == 0) {
-            logerror("error: osd_modify_pen() called with modifiable_palette == 0\n");
-            return;
-        }*/
-
-        if (current_palette.read(3 * pen + 0) != red
-                || current_palette.read(3 * pen + 1) != green
-                || current_palette.read(3 * pen + 2) != blue) {
-            current_palette.write(3 * pen + 0, red & 0xFF);
-            current_palette.write(3 * pen + 1, green & 0xFF);
-            current_palette.write(3 * pen + 2, blue & 0xFF);
-
-            dirtycolor[pen] = 1;
-            dirtypalette = 1;
-        }
-    }
-
+    
     public static int makecol(int r, int g, int b) {//makecol16 from allegro src
         /*  Color c = new Color(r, g, b);
         int cl = c.getRGB();
@@ -1722,60 +1677,6 @@ public class video {
         }
     }
 
-    public static mame_bitmap osd_alloc_bitmap(int width, int height, int depth) {
-        mame_bitmap bitmap;
-
-        if ((bitmap = new mame_bitmap()) != null) {
-            int i, rowlen, rdwidth;
-            UBytePtr bm;
-
-            if (depth != 8 && depth != 16) {
-                depth = 8;
-            }
-
-            bitmap.depth = depth;
-            bitmap.width = width;
-            bitmap.height = height;
-
-            rdwidth = (width + 7) & ~7;
-            /* round width to a quadword */
-            if (depth == 16) {
-                rowlen = 2 * (rdwidth + 2 * safety);
-            } else {
-                rowlen = (rdwidth + 2 * safety);
-            }
-
-            if ((bm = new UBytePtr((height + 2 * safety) * rowlen)) == null) {
-                bitmap = null;
-                return null;
-            }
-            /* clear ALL bitmap, including safety area, to avoid garbage on right */
- /* side of screen is width is not a multiple of 4 */
-            memset(bm, 0, (height + 2 * safety) * rowlen);
-
-            if ((bitmap.line = new UBytePtr[(height + 2 * safety)]) == null) {
-                bm = null;
-                bitmap = null;
-                return null;
-            }
-
-            for (i = 0; i < height + 2 * safety; i++) {
-                if (depth == 16) {
-                    bitmap.line[i] = new UBytePtr(bm, i * rowlen + 2 * safety);
-                } else {
-                    bitmap.line[i] = new UBytePtr(bm, i * rowlen + safety);
-                }
-                //bitmap.line[i].offset += safety;
-            }
-            ///bitmap.line += safety;
-
-//            bitmap._private = bm;
-            osd_clearbitmap(bitmap);
-        }
-
-        return bitmap;
-    }
-
     
     public static void osd_get_pen(int pen, char[] red, char[] green, char[] blue) {
         if (video_depth != 8 && modifiable_palette == 0) {
@@ -1818,23 +1719,6 @@ public class video {
 /*TODO*///	}
     }
 
-    /* set the bitmap to black */
-    public static void osd_clearbitmap(mame_bitmap bitmap) {
-        int i;
-
-        for (i = 0; i < bitmap.height; i++) {
-            if (bitmap.depth == 16) {
-                memset(bitmap.line[i], 0, 2 * bitmap.width);
-            } else {
-                memset(bitmap.line[i], BACKGROUND, bitmap.width);
-            }
-        }
-
-        if (bitmap == Machine.scrbitmap) {
-            osd_mark_dirty(0, 0, bitmap.width - 1, bitmap.height - 1, 1);
-            schedule_full_refresh();
-        }
-    }
 
     public static void osd_save_snapshot(mame_bitmap bitmap) {
 

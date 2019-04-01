@@ -76,27 +76,33 @@ public class brkthru
 
             int p_inc = 0;
             for (i = 0; i < Machine.drv.total_colors; i++) {
-                int bit0, bit1, bit2, bit3;
+                int bit0, bit1, bit2, bit3, r, g, b;
 
                 bit0 = (color_prom.read(0) >> 0) & 0x01;
                 bit1 = (color_prom.read(0) >> 1) & 0x01;
                 bit2 = (color_prom.read(0) >> 2) & 0x01;
                 bit3 = (color_prom.read(0) >> 3) & 0x01;
-                palette[p_inc++]=((char) (0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3));
+                r = ((0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3));
+                palette[p_inc++]=(char) r;
                 bit0 = (color_prom.read(0) >> 4) & 0x01;
                 bit1 = (color_prom.read(0) >> 5) & 0x01;
                 bit2 = (color_prom.read(0) >> 6) & 0x01;
                 bit3 = (color_prom.read(0) >> 7) & 0x01;
-                palette[p_inc++]=((char) (0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3));
+                g=( 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3);
+                palette[p_inc++]=((char) g);
                 bit0 = (color_prom.read(Machine.drv.total_colors) >> 0) & 0x01;
                 bit1 = (color_prom.read(Machine.drv.total_colors) >> 1) & 0x01;
                 bit2 = (color_prom.read(Machine.drv.total_colors) >> 2) & 0x01;
                 bit3 = (color_prom.read(Machine.drv.total_colors) >> 3) & 0x01;
-                palette[p_inc++]=((char) (0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3));
+                b=(0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3);
+                palette[p_inc++]=((char) b);
+                
+                palette_set_color(i,r,g,b);
 
                 color_prom.inc();
             }
-System.out.println(colortable);
+// temp hack
+if (colortable==null) colortable=new char[65535];
             /* characters use colors 0-7 */
             for (i = 0; i < TOTAL_COLORS(0); i++) {
                 colortable[Machine.drv.gfxdecodeinfo[0].color_codes_start + i] = (char) i;
