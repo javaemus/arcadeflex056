@@ -49,6 +49,7 @@ import static mame056.drivers.pbaction.*;
 import static mame056.drivers.taitosj.*;
 import static mame056.drivers.bosco.*;
 import static mame056.drivers.gunsmoke.*;
+import static mame056.drivers.trackfld.*;
 
 public class driver {
 
@@ -2617,10 +2618,10 @@ public class driver {
         /*TODO*///	driver_gyruss,	/* GX347 (c) 1983 */
         /*TODO*///	driver_gyrussce,	/* GX347 (c) 1983 + Centuri license */
         /*TODO*///	driver_venus,		/* bootleg */
-        /*TODO*///	driver_trackfld,	/* GX361 (c) 1983 */
-        /*TODO*///	driver_trackflc,	/* GX361 (c) 1983 + Centuri license */
-        /*TODO*///	driver_hyprolym,	/* GX361 (c) 1983 */
-        /*TODO*///	driver_hyprolyb,	/* bootleg */
+        driver_trackfld,	/* GX361 (c) 1983 */
+        driver_trackflc,	/* GX361 (c) 1983 + Centuri license */
+        driver_hyprolym,	/* GX361 (c) 1983 */
+        driver_hyprolyb,	/* bootleg */
         driver_rocnrope, /* GX364 (c) 1983 */
         driver_rocnropk, /* GX364 (c) 1983 + Kosuka */
         /*TODO*///	driver_circusc,	/* GX380 (c) 1984 */
