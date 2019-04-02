@@ -3,7 +3,7 @@ package arcadeflex036;
 
 import java.awt.event.KeyEvent;
 
-import static arcadeflex037b7.video.screen;
+import static arcadeflex056.video.screen;
 import static arcadeflex056.fucPtr.WriteHandlerPtr;
 import static mame056.inputH.*;
 

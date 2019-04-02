@@ -3,7 +3,7 @@
  */
 package mame056;
 
-import static arcadeflex037b7.video.osd_allocate_colors;
+import static arcadeflex056.video.osd_allocate_colors;
 import static arcadeflex056.video.osd_modify_pen;
 import common.subArrays.IntArray;
 import static mame056.commonH.REGION_PROMS;

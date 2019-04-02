@@ -16,8 +16,7 @@ import static mame056.mame.*;
 import static mame056.usrintrf.*;
 import static mame056.cpuexec.*;
 
-//to refactor
-import static arcadeflex037b7.video.*;
+import static arcadeflex056.video.*;
 import static common.libc.expressions.NOT;
 import common.subArrays.IntArray;
 import common.subArrays.UShortArray;

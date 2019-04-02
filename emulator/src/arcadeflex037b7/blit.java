@@ -55,7 +55,7 @@ public class blit {
     public static int[] doublepixel=new int[256];
     public static int[] quadpixel=new int[256]; /* for quadring pixels */
     
-    public static int[] palette_16bit_lookup;
+    public static UShortPtr palette_16bit_lookup;
     
     
     /* current 'page' for unchained modes */
@@ -167,7 +167,7 @@ public class blit {
         { 
             for (x = 0; x < columns; x++) 
             { 
-                address.write(x, (char) palette_16bit_lookup[lb.read(x)]); 
+                address.write(x, palette_16bit_lookup.read(lb.read(x))); 
             } 
             lb.inc(width); 
             address.inc(gfx_width); 

@@ -5,8 +5,19 @@ package arcadeflex056;
 
 import static arcadeflex036.ticker.TICKS_PER_SEC;
 import static arcadeflex037b7.video.*;
+import static arcadeflex037b7.blit.*;
 import static common.libc.cstdio.printf;
-import common.ptr.UBytePtr;
+import static common.ptr.*;
+import static mame056.driverH.*;
+
+import static mame056.mame.Machine;
+
+// refactor
+import static arcadeflex036.osdepend.logerror;
+import arcadeflex036.software_gfx;
+import static arcadeflex037b7.dirtyH.MARKDIRTY;
+import static mame056.usrintrf.set_ui_visarea;
+
 
 public class video {
 /*TODO*///#include "mamalleg.h"
@@ -37,7 +48,7 @@ public class video {
 /*TODO*///extern int no_xpages;
 /*TODO*///void unchain_vga(Register *pReg);
 /*TODO*///
-/*TODO*///static int warming_up;
+    public static int warming_up;
 /*TODO*///
 /*TODO*////* tweak values for centering tweaked modes */
 /*TODO*///int center_x;
@@ -412,7 +423,7 @@ public class video {
 /*TODO*///		}
 /*TODO*///	}
 /*TODO*///};
-/*TODO*///
+    public static software_gfx screen; //for our screen creation
     public static int video_depth,video_fps,video_attributes,video_orientation;
 /*TODO*///static int rgb_direct;
     public static int screen_colors;
@@ -422,39 +433,35 @@ public class video {
     public static int dirtypalette;
     public static int dirty_bright;
     public static int[] bright_lookup = new int[256];
-/*TODO*///extern unsigned int doublepixel[256];
-/*TODO*///extern unsigned int quadpixel[256]; /* for quadring pixels */
-/*TODO*///extern UINT32 *palette_16bit_lookup;
 
     public static int frameskip,autoframeskip;
-/*TODO*///#define FRAMESKIP_LEVELS 12
+    public static final int FRAMESKIP_LEVELS = 12;
 
-/*TODO*///static int update_video_first_time;
-/*TODO*///
-/*TODO*///
+    public static int update_video_first_time;
+
 /*TODO*////* type of monitor output- */
 /*TODO*////* Standard PC, NTSC, PAL or Arcade */
 /*TODO*///int monitor_type;
 /*TODO*///
 /*TODO*///int vgafreq;
 /*TODO*///int always_synced;
-/*TODO*///int video_sync;
+    public static int video_sync;
 /*TODO*///int wait_vsync;
 /*TODO*///int use_triplebuf;
 /*TODO*///int triplebuf_pos,triplebuf_page_width;
-/*TODO*///int vsync_frame_rate;
+    public static int vsync_frame_rate;
     public static int skiplines;
     public static int skipcolumns;
-/*TODO*///int scanlines;
-/*TODO*///int stretch;
+    public static int scanlines;
+    public static int stretch;
 /*TODO*///int use_mmx;
 /*TODO*///int mmxlfb;
 /*TODO*///int use_tweaked;
-/*TODO*///int use_vesa;
-/*TODO*///int use_dirty;
-/*TODO*///float osd_gamma_correction = 1.0;
+    public static int use_vesa;
+    public static int use_dirty;
+    public static float osd_gamma_correction = 1.0f;
     public static int brightness;
-/*TODO*///float brightness_paused_adjust;
+    public static float brightness_paused_adjust;
 /*TODO*///char *resolution;
 /*TODO*///char *mode_desc;
 /*TODO*///int gfx_mode;
@@ -469,8 +476,8 @@ public class video {
 /*TODO*///int unchained;
 /*TODO*////* flags for lowscanrate modes */
 /*TODO*///int scanrate15KHz;
-/*TODO*///
-/*TODO*///static int auto_resolution;
+
+    public static int auto_resolution;
     public static int viswidth;
     public static int visheight;
     public static int skiplinesmax;
@@ -489,12 +496,12 @@ public class video {
     public static int gfx_yoffset;
     public static int gfx_display_lines;
     public static int gfx_display_columns;
-/*TODO*///static int xmultiply,ymultiply;
-/*TODO*///int throttle = 1;       /* toggled by F10 */
-/*TODO*///
-/*TODO*///static int gone_to_gfx_mode;
-/*TODO*///static int frameskip_counter;
-/*TODO*///static int frames_displayed;
+    public static int xmultiply, ymultiply;
+    public static int throttle = 1;/* toggled by F10 */
+
+    public static int gone_to_gfx_mode;
+    public static int frameskip_counter;
+    public static int frames_displayed;
 /*TODO*///static TICKER start_time,end_time;    /* to calculate fps average on exit */
 /*TODO*///#define FRAMES_TO_SKIP 20       /* skip the first few frames from the FPS calculation */
 /*TODO*///							/* to avoid counting the copyright and info screens */
@@ -612,34 +619,34 @@ public class video {
 /*TODO*///{
 /*TODO*///	osd_mark_dirty(0,0,65535,65535);
 /*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*///
-/*TODO*///void osd_mark_dirty(int _x1,int _y1,int _x2,int _y2)
-/*TODO*///{
-/*TODO*///	if (use_dirty)
-/*TODO*///	{
-/*TODO*///		int x, y;
-/*TODO*///
-/*TODO*/////        logerror("mark_dirty %3d,%3d - %3d,%3d\n", _x1,_y1, _x2,_y2);
-/*TODO*///
-/*TODO*///		_x1 -= skipcolumns;
-/*TODO*///		_x2 -= skipcolumns;
-/*TODO*///		_y1 -= skiplines;
-/*TODO*///		_y2 -= skiplines;
-/*TODO*///
-/*TODO*///	if (_y1 >= gfx_display_lines || _y2 < 0 || _x1 > gfx_display_columns || _x2 < 0) return;
-/*TODO*///		if (_y1 < 0) _y1 = 0;
-/*TODO*///		if (_y2 >= gfx_display_lines) _y2 = gfx_display_lines - 1;
-/*TODO*///		if (_x1 < 0) _x1 = 0;
-/*TODO*///		if (_x2 >= gfx_display_columns) _x2 = gfx_display_columns - 1;
-/*TODO*///
-/*TODO*///		for (y = _y1; y <= _y2 + 15; y += 16)
-/*TODO*///			for (x = _x1; x <= _x2 + 15; x += 16)
-/*TODO*///				MARKDIRTY(x,y);
-/*TODO*///	}
-/*TODO*///}
-/*TODO*///
+
+
+
+    public static void osd_mark_dirty(int _x1,int _y1,int _x2,int _y2)
+    {
+            if (use_dirty != 0)
+            {
+                    int x, y;
+
+    //        logerror("mark_dirty %3d,%3d - %3d,%3d\n", _x1,_y1, _x2,_y2);
+
+                    _x1 -= skipcolumns;
+                    _x2 -= skipcolumns;
+                    _y1 -= skiplines;
+                    _y2 -= skiplines;
+
+            if (_y1 >= gfx_display_lines || _y2 < 0 || _x1 > gfx_display_columns || _x2 < 0) return;
+                    if (_y1 < 0) _y1 = 0;
+                    if (_y2 >= gfx_display_lines) _y2 = gfx_display_lines - 1;
+                    if (_x1 < 0) _x1 = 0;
+                    if (_x2 >= gfx_display_columns) _x2 = gfx_display_columns - 1;
+
+                    for (y = _y1; y <= _y2 + 15; y += 16)
+                            for (x = _x1; x <= _x2 + 15; x += 16)
+                                    MARKDIRTY(x,y);
+            }
+    }
+
 /*TODO*///static void init_dirty(char dirty)
 /*TODO*///{
 /*TODO*///	memset(dirty_new, dirty, MAX_GFX_WIDTH/16 * MAX_GFX_HEIGHT/16);
@@ -911,197 +918,200 @@ public class video {
 /*TODO*///		}
 /*TODO*///	}
 /*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*///
-/*TODO*////* center image inside the display based on the visual area */
-/*TODO*///static void internal_set_visible_area(int min_x,int max_x,int min_y,int max_y,int debugger)
-/*TODO*///{
-/*TODO*///	int act_width;
-/*TODO*///
-/*TODO*///logerror("set visible area %d-%d %d-%d\n",min_x,max_x,min_y,max_y);
-/*TODO*///
+
+
+
+/* center image inside the display based on the visual area */
+public static void internal_set_visible_area(int min_x,int max_x,int min_y,int max_y,int debugger)
+{
+	int act_width;
+
+logerror("set visible area %d-%d %d-%d\n",min_x,max_x,min_y,max_y);
+
 /*TODO*////* if it's a SVGA arcade monitor mode, get the memory width of the mode */
 /*TODO*////* this could be double the width of the actual mode set */
 /*TODO*///	if (scanrate15KHz && SVGA15KHzdriver && use_vesa == 1)
 /*TODO*///		act_width = SVGA15KHzdriver->getlogicalwidth (gfx_width);
 /*TODO*///	else
-/*TODO*///		act_width = gfx_width;
-/*TODO*///
-/*TODO*///
-/*TODO*///	viswidth  = max_x - min_x + 1;
-/*TODO*///	visheight = max_y - min_y + 1;
-/*TODO*///
-/*TODO*///
+		act_width = gfx_width;
+
+
+	viswidth  = max_x - min_x + 1;
+	visheight = max_y - min_y + 1;
+
+
 /*TODO*///	if (debugger)
 /*TODO*///	{
 /*TODO*///		xmultiply = ymultiply = 1;
 /*TODO*///	}
 /*TODO*///	else
 /*TODO*///	{
-/*TODO*///		/* setup xmultiply to handle SVGA driver's (possible) double width */
-/*TODO*///		xmultiply = act_width / gfx_width;
-/*TODO*///		ymultiply = 1;
-/*TODO*///
-/*TODO*///		if (use_vesa && !vector_game)
-/*TODO*///		{
-/*TODO*///			if (stretch)
-/*TODO*///			{
-/*TODO*///				if (!(video_orientation & ORIENTATION_SWAP_XY) &&
-/*TODO*///						!(video_attributes & VIDEO_DUAL_MONITOR))
-/*TODO*///				{
-/*TODO*///					/* horizontal, non dual monitor games may be stretched at will */
-/*TODO*///					while ((xmultiply+1) * viswidth <= act_width)
-/*TODO*///						xmultiply++;
-/*TODO*///					while ((ymultiply+1) * visheight <= gfx_height)
-/*TODO*///						ymultiply++;
-/*TODO*///				}
-/*TODO*///				else
-/*TODO*///				{
-/*TODO*///					int tw,th;
-/*TODO*///
-/*TODO*///					tw = act_width;
-/*TODO*///					th = gfx_height;
-/*TODO*///
-/*TODO*///					if ((video_attributes & VIDEO_PIXEL_ASPECT_RATIO_MASK)
-/*TODO*///							== VIDEO_PIXEL_ASPECT_RATIO_1_2)
-/*TODO*///					{
-/*TODO*///						if (video_orientation & ORIENTATION_SWAP_XY)
-/*TODO*///							tw /= 2;
-/*TODO*///						else th /= 2;
-/*TODO*///					}
-/*TODO*///					else if ((video_attributes & VIDEO_PIXEL_ASPECT_RATIO_MASK)
-/*TODO*///							== VIDEO_PIXEL_ASPECT_RATIO_2_1)
-/*TODO*///					{
-/*TODO*///						if (video_orientation & ORIENTATION_SWAP_XY)
-/*TODO*///							th /= 2;
-/*TODO*///						else tw /= 2;
-/*TODO*///					}
-/*TODO*///
-/*TODO*///					/* Hack for 320x480 and 400x600 "vmame" video modes */
-/*TODO*///					if ((gfx_width == 320 && gfx_height == 480) ||
-/*TODO*///							(gfx_width == 400 && gfx_height == 600))
-/*TODO*///						th /= 2;
-/*TODO*///
-/*TODO*///					/* maintain aspect ratio for other games */
-/*TODO*///					while ((xmultiply+1) * viswidth <= tw &&
-/*TODO*///							(ymultiply+1) * visheight <= th)
-/*TODO*///					{
-/*TODO*///						xmultiply++;
-/*TODO*///						ymultiply++;
-/*TODO*///					}
-/*TODO*///
-/*TODO*///					if ((video_attributes & VIDEO_PIXEL_ASPECT_RATIO_MASK)
-/*TODO*///							== VIDEO_PIXEL_ASPECT_RATIO_1_2)
-/*TODO*///					{
-/*TODO*///						if (video_orientation & ORIENTATION_SWAP_XY)
-/*TODO*///							xmultiply *= 2;
-/*TODO*///						else ymultiply *= 2;
-/*TODO*///					}
-/*TODO*///					else if ((video_attributes & VIDEO_PIXEL_ASPECT_RATIO_MASK)
-/*TODO*///							== VIDEO_PIXEL_ASPECT_RATIO_2_1)
-/*TODO*///					{
-/*TODO*///						if (video_orientation & ORIENTATION_SWAP_XY)
-/*TODO*///							ymultiply *= 2;
-/*TODO*///						else xmultiply *= 2;
-/*TODO*///					}
-/*TODO*///
-/*TODO*///					/* Hack for 320x480 and 400x600 "vmame" video modes */
-/*TODO*///					if ((gfx_width == 320 && gfx_height == 480) ||
-/*TODO*///							(gfx_width == 400 && gfx_height == 600))
-/*TODO*///						ymultiply *= 2;
-/*TODO*///				}
-/*TODO*///			}
-/*TODO*///			else
-/*TODO*///			{
-/*TODO*///				if ((video_attributes & VIDEO_PIXEL_ASPECT_RATIO_MASK)
-/*TODO*///						== VIDEO_PIXEL_ASPECT_RATIO_1_2)
-/*TODO*///				{
-/*TODO*///					if (video_orientation & ORIENTATION_SWAP_XY)
-/*TODO*///						xmultiply *= 2;
-/*TODO*///					else ymultiply *= 2;
-/*TODO*///				}
-/*TODO*///				else if ((video_attributes & VIDEO_PIXEL_ASPECT_RATIO_MASK)
-/*TODO*///						== VIDEO_PIXEL_ASPECT_RATIO_2_1)
-/*TODO*///				{
-/*TODO*///					if (video_orientation & ORIENTATION_SWAP_XY)
-/*TODO*///						ymultiply *= 2;
-/*TODO*///					else xmultiply *= 2;
-/*TODO*///				}
-/*TODO*///
-/*TODO*///				/* Hack for 320x480 and 400x600 "vmame" video modes */
-/*TODO*///				if ((gfx_width == 320 && gfx_height == 480) ||
-/*TODO*///						(gfx_width == 400 && gfx_height == 600))
-/*TODO*///					ymultiply *= 2;
-/*TODO*///			}
-/*TODO*///		}
-/*TODO*///
-/*TODO*///		if (xmultiply > MAX_X_MULTIPLY) xmultiply = MAX_X_MULTIPLY;
-/*TODO*///		if (ymultiply > MAX_Y_MULTIPLY) ymultiply = MAX_Y_MULTIPLY;
+		/* setup xmultiply to handle SVGA driver's (possible) double width */
+		xmultiply = act_width / gfx_width;
+		ymultiply = 1;
+
+		if ((use_vesa!=0) && (vector_game==0))
+		{
+			if (stretch != 0)
+			{
+				if (((video_orientation & ORIENTATION_SWAP_XY)==0) &&
+						((video_attributes & VIDEO_DUAL_MONITOR)==0))
+				{
+					/* horizontal, non dual monitor games may be stretched at will */
+					while ((xmultiply+1) * viswidth <= act_width)
+						xmultiply++;
+					while ((ymultiply+1) * visheight <= gfx_height)
+						ymultiply++;
+				}
+				else
+				{
+					int tw,th;
+
+					tw = act_width;
+					th = gfx_height;
+
+					if ((video_attributes & VIDEO_PIXEL_ASPECT_RATIO_MASK)
+							== VIDEO_PIXEL_ASPECT_RATIO_1_2)
+					{
+						if ((video_orientation & ORIENTATION_SWAP_XY) !=0 )
+							tw /= 2;
+						else th /= 2;
+					}
+					else if ((video_attributes & VIDEO_PIXEL_ASPECT_RATIO_MASK)
+							== VIDEO_PIXEL_ASPECT_RATIO_2_1)
+					{
+						if ((video_orientation & ORIENTATION_SWAP_XY) != 0)
+							th /= 2;
+						else tw /= 2;
+					}
+
+					/* Hack for 320x480 and 400x600 "vmame" video modes */
+					if ((gfx_width == 320 && gfx_height == 480) ||
+							(gfx_width == 400 && gfx_height == 600))
+						th /= 2;
+
+					/* maintain aspect ratio for other games */
+					while ((xmultiply+1) * viswidth <= tw &&
+							(ymultiply+1) * visheight <= th)
+					{
+						xmultiply++;
+						ymultiply++;
+					}
+
+					if ((video_attributes & VIDEO_PIXEL_ASPECT_RATIO_MASK)
+							== VIDEO_PIXEL_ASPECT_RATIO_1_2)
+					{
+						if ((video_orientation & ORIENTATION_SWAP_XY) != 0)
+							xmultiply *= 2;
+						else ymultiply *= 2;
+					}
+					else if ((video_attributes & VIDEO_PIXEL_ASPECT_RATIO_MASK)
+							== VIDEO_PIXEL_ASPECT_RATIO_2_1)
+					{
+						if ((video_orientation & ORIENTATION_SWAP_XY) != 0)
+							ymultiply *= 2;
+						else xmultiply *= 2;
+					}
+
+					/* Hack for 320x480 and 400x600 "vmame" video modes */
+					if ((gfx_width == 320 && gfx_height == 480) ||
+							(gfx_width == 400 && gfx_height == 600))
+						ymultiply *= 2;
+				}
+			}
+			else
+			{
+				if ((video_attributes & VIDEO_PIXEL_ASPECT_RATIO_MASK)
+						== VIDEO_PIXEL_ASPECT_RATIO_1_2)
+				{
+					if ((video_orientation & ORIENTATION_SWAP_XY) != 0)
+						xmultiply *= 2;
+					else ymultiply *= 2;
+				}
+				else if ((video_attributes & VIDEO_PIXEL_ASPECT_RATIO_MASK)
+						== VIDEO_PIXEL_ASPECT_RATIO_2_1)
+				{
+					if ((video_orientation & ORIENTATION_SWAP_XY) != 0)
+						ymultiply *= 2;
+					else xmultiply *= 2;
+				}
+
+				/* Hack for 320x480 and 400x600 "vmame" video modes */
+				if ((gfx_width == 320 && gfx_height == 480) ||
+						(gfx_width == 400 && gfx_height == 600))
+					ymultiply *= 2;
+			}
+		}
+
+		if (xmultiply > MAX_X_MULTIPLY) xmultiply = MAX_X_MULTIPLY;
+		if (ymultiply > MAX_Y_MULTIPLY) ymultiply = MAX_Y_MULTIPLY;
 /*TODO*///	}
-/*TODO*///
-/*TODO*///	gfx_display_lines = visheight;
-/*TODO*///	gfx_display_columns = viswidth;
-/*TODO*///
-/*TODO*///	gfx_xoffset = (act_width - viswidth * xmultiply) / 2;
-/*TODO*///	if (gfx_display_columns > act_width / xmultiply)
-/*TODO*///		gfx_display_columns = act_width / xmultiply;
-/*TODO*///
-/*TODO*///	gfx_yoffset = (gfx_height - visheight * ymultiply) / 2;
-/*TODO*///		if (gfx_display_lines > gfx_height / ymultiply)
-/*TODO*///			gfx_display_lines = gfx_height / ymultiply;
-/*TODO*///
-/*TODO*///
-/*TODO*///	skiplinesmin = min_y;
-/*TODO*///	skiplinesmax = visheight - gfx_display_lines + min_y;
-/*TODO*///	skipcolumnsmin = min_x;
-/*TODO*///	skipcolumnsmax = viswidth - gfx_display_columns + min_x;
-/*TODO*///
-/*TODO*///	/* Align on a quadword !*/
-/*TODO*///	gfx_xoffset &= ~7;
-/*TODO*///
-/*TODO*///	/* the skipcolumns from mame.cfg/cmdline is relative to the visible area */
-/*TODO*///	skipcolumns = min_x + skipcolumns;
-/*TODO*///	skiplines   = min_y + skiplines;
-/*TODO*///
-/*TODO*///	/* Just in case the visual area doesn't fit */
-/*TODO*///	if (gfx_xoffset < 0)
-/*TODO*///	{
-/*TODO*///		skipcolumns -= gfx_xoffset;
-/*TODO*///		gfx_xoffset = 0;
-/*TODO*///	}
-/*TODO*///	if (gfx_yoffset < 0)
-/*TODO*///	{
-/*TODO*///		skiplines   -= gfx_yoffset;
-/*TODO*///		gfx_yoffset = 0;
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	/* Failsafe against silly parameters */
-/*TODO*///	if (skiplines < skiplinesmin)
-/*TODO*///		skiplines = skiplinesmin;
-/*TODO*///	if (skipcolumns < skipcolumnsmin)
-/*TODO*///		skipcolumns = skipcolumnsmin;
-/*TODO*///	if (skiplines > skiplinesmax)
-/*TODO*///		skiplines = skiplinesmax;
-/*TODO*///	if (skipcolumns > skipcolumnsmax)
-/*TODO*///		skipcolumns = skipcolumnsmax;
-/*TODO*///
-/*TODO*///	logerror("gfx_width = %d gfx_height = %d\n"
-/*TODO*///				"gfx_xoffset = %d gfx_yoffset = %d\n"
-/*TODO*///				"xmin %d ymin %d xmax %d ymax %d\n"
-/*TODO*///				"skiplines %d skipcolumns %d\n"
-/*TODO*///				"gfx_display_lines %d gfx_display_columns %d\n"
-/*TODO*///				"xmultiply %d ymultiply %d\n",
-/*TODO*///				gfx_width,gfx_height,
-/*TODO*///				gfx_xoffset,gfx_yoffset,
-/*TODO*///				min_x, min_y, max_x, max_y, skiplines, skipcolumns,gfx_display_lines,gfx_display_columns,xmultiply,ymultiply);
-/*TODO*///
-/*TODO*///	set_ui_visarea(skipcolumns, skiplines, skipcolumns+gfx_display_columns-1, skiplines+gfx_display_lines-1);
-/*TODO*///
-/*TODO*///	/* round to a multiple of 4 to avoid missing pixels on the right side */
-/*TODO*///	gfx_display_columns  = (gfx_display_columns + 3) & ~3;
-/*TODO*///}
-/*TODO*///
+
+	gfx_display_lines = visheight;
+	gfx_display_columns = viswidth;
+
+	gfx_xoffset = (act_width - viswidth * xmultiply) / 2;
+	if (gfx_display_columns > act_width / xmultiply)
+		gfx_display_columns = act_width / xmultiply;
+
+	gfx_yoffset = (gfx_height - visheight * ymultiply) / 2;
+		if (gfx_display_lines > gfx_height / ymultiply)
+			gfx_display_lines = gfx_height / ymultiply;
+
+
+	skiplinesmin = min_y;
+	skiplinesmax = visheight - gfx_display_lines + min_y;
+	skipcolumnsmin = min_x;
+	skipcolumnsmax = viswidth - gfx_display_columns + min_x;
+
+	/* Align on a quadword !*/
+	gfx_xoffset &= ~7;
+
+	/* the skipcolumns from mame.cfg/cmdline is relative to the visible area */
+	skipcolumns = min_x + skipcolumns;
+	skiplines   = min_y + skiplines;
+
+	/* Just in case the visual area doesn't fit */
+	if (gfx_xoffset < 0)
+	{
+		skipcolumns -= gfx_xoffset;
+		gfx_xoffset = 0;
+	}
+	if (gfx_yoffset < 0)
+	{
+		skiplines   -= gfx_yoffset;
+		gfx_yoffset = 0;
+	}
+
+	/* Failsafe against silly parameters */
+	if (skiplines < skiplinesmin)
+		skiplines = skiplinesmin;
+	if (skipcolumns < skipcolumnsmin)
+		skipcolumns = skipcolumnsmin;
+	if (skiplines > skiplinesmax)
+		skiplines = skiplinesmax;
+	if (skipcolumns > skipcolumnsmax)
+		skipcolumns = skipcolumnsmax;
+
+	logerror("gfx_width = %d gfx_height = %d\n"+
+				"gfx_xoffset = %d gfx_yoffset = %d\n"+
+				"xmin %d ymin %d xmax %d ymax %d\n"+
+				"skiplines %d skipcolumns %d\n"+
+				"gfx_display_lines %d gfx_display_columns %d\n"+
+				"xmultiply %d ymultiply %d\n",
+				gfx_width,gfx_height,
+				gfx_xoffset,gfx_yoffset,
+				min_x, min_y, max_x, max_y, skiplines, skipcolumns,gfx_display_lines,gfx_display_columns,xmultiply,ymultiply);
+
+	set_ui_visarea(skipcolumns, skiplines, skipcolumns+gfx_display_columns-1, skiplines+gfx_display_lines-1);
+
+	/* round to a multiple of 4 to avoid missing pixels on the right side */
+	gfx_display_columns  = (gfx_display_columns + 3) & ~3;
+        
+        /*HACKISH*/
+        tempCreation();
+}
+
 
     public static void osd_set_visible_area(int min_x,int max_x,int min_y,int max_y)
     {
@@ -1593,97 +1603,101 @@ public class video {
 /*TODO*///
 /*TODO*///	return 1;
 /*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*////*
-/*TODO*///Create a display screen, or window, of the given dimensions (or larger).
-/*TODO*///Attributes are the ones defined in driver.h.
-/*TODO*///Returns 0 on success.
-/*TODO*///*/
-/*TODO*///int osd_create_display(int width,int height,int depth,int fps,int attributes,int orientation)
-/*TODO*///{
-/*TODO*///	logerror("width %d, height %d depth %d\n",width,height,depth);
-/*TODO*///
-/*TODO*///	video_depth = depth;
-/*TODO*///	if (video_depth == 15) video_depth = 16;
-/*TODO*///	video_fps = fps;
-/*TODO*///	video_attributes = attributes;
-/*TODO*///	video_orientation = orientation;
-/*TODO*///
-/*TODO*///	show_debugger = 0;
-/*TODO*///
-/*TODO*///	brightness = 100;
-/*TODO*///	brightness_paused_adjust = 1.0;
-/*TODO*///	dirty_bright = 1;
-/*TODO*///
-/*TODO*///	if (frameskip < 0) frameskip = 0;
-/*TODO*///	if (frameskip >= FRAMESKIP_LEVELS) frameskip = FRAMESKIP_LEVELS-1;
-/*TODO*///
-/*TODO*///
-/*TODO*///
-/*TODO*///	gone_to_gfx_mode = 0;
-/*TODO*///
-/*TODO*///	/* Look if this is a vector game */
-/*TODO*///	if (attributes & VIDEO_TYPE_VECTOR)
-/*TODO*///		vector_game = 1;
-/*TODO*///	else
-/*TODO*///		vector_game = 0;
-/*TODO*///
-/*TODO*///
-/*TODO*///	if (use_dirty == -1)	/* dirty=auto in mame.cfg? */
-/*TODO*///	{
-/*TODO*///		/* Is the game using a dirty system? */
-/*TODO*///		if (attributes & VIDEO_SUPPORTS_DIRTY)
-/*TODO*///			use_dirty = 1;
-/*TODO*///		else
-/*TODO*///			use_dirty = 0;
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	select_display_mode(width,height,video_depth,attributes,orientation);
-/*TODO*///
-/*TODO*////* find a VESA driver for 15KHz modes just in case we need it later on */
-/*TODO*///	if (scanrate15KHz)
-/*TODO*///		getSVGA15KHzdriver (&SVGA15KHzdriver);
-/*TODO*///	else
-/*TODO*///		SVGA15KHzdriver = 0;
-/*TODO*///
-/*TODO*///
-/*TODO*///	if (!osd_set_display(width,height,video_depth,attributes,orientation))
-/*TODO*///		return 1;
-/*TODO*///
-/*TODO*///	/* set visible area to nothing just to initialize it - it will be set by the core */
-/*TODO*///	osd_set_visible_area(0,0,0,0);
-/*TODO*///
-/*TODO*///   /*Check for SVGA 15.75KHz mode (req. for 15.75KHz Arcade Monitor Modes)
-/*TODO*///     need to do this here, as the double params will be set up correctly */
-/*TODO*///	if (use_vesa == 1 && scanrate15KHz)
-/*TODO*///	{
-/*TODO*///		int dbl;
-/*TODO*///		dbl = (ymultiply >= 2);
-/*TODO*///		/* check that we found a driver */
-/*TODO*///		if (!SVGA15KHzdriver)
-/*TODO*///		{
-/*TODO*///			printf ("\nUnable to find 15.75KHz SVGA driver for %dx%d\n", gfx_width, gfx_height);
-/*TODO*///			return 1;
-/*TODO*///		}
-/*TODO*///		logerror("Using %s 15.75KHz SVGA driver\n", SVGA15KHzdriver->name);
-/*TODO*///		/*and try to set the mode */
-/*TODO*///		if (!SVGA15KHzdriver->setSVGA15KHzmode (dbl, gfx_width, gfx_height))
-/*TODO*///		{
-/*TODO*///			printf ("\nUnable to set SVGA 15.75KHz mode %dx%d (driver: %s)\n", gfx_width, gfx_height, SVGA15KHzdriver->name);
-/*TODO*///			return 1;
-/*TODO*///		}
-/*TODO*///		/* if we're doubling, we might as well have scanlines */
-/*TODO*///		/* the 15.75KHz driver is going to drop every other line anyway -
-/*TODO*///			so we can avoid drawing them and save some time */
-/*TODO*///		if(dbl)
-/*TODO*///			scanlines=1;
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	update_video_first_time = 1;
-/*TODO*///
-/*TODO*///    return 0;
-/*TODO*///}
+
+
+    /*
+    Create a display screen, or window, of the given dimensions (or larger).
+    Attributes are the ones defined in driver.h.
+    Returns 0 on success.
+    */
+    public static int osd_create_display(int width,int height,int depth,int fps,int attributes,int orientation)
+    {
+            logerror("width %d, height %d depth %d\n",width,height,depth);
+            if ((Machine.drv.video_attributes & VIDEO_TYPE_VECTOR) == 0) {//temp hack
+                width = Machine.drv.screen_width;
+                height = Machine.drv.screen_height;//TODO workaround to get it work for now
+            }
+
+            video_depth = depth;
+            if (video_depth == 15) video_depth = 16;
+            video_fps = fps;
+            video_attributes = attributes;
+            video_orientation = orientation;
+
+    /*TODO*///	show_debugger = 0;
+
+            brightness = 100;
+            brightness_paused_adjust = 1.0f;
+            dirty_bright = 1;
+
+            if (frameskip < 0) frameskip = 0;
+            if (frameskip >= FRAMESKIP_LEVELS) frameskip = FRAMESKIP_LEVELS-1;
+
+
+
+            gone_to_gfx_mode = 0;
+
+            /* Look if this is a vector game */
+            if ((attributes & VIDEO_TYPE_VECTOR) != 0)
+                    vector_game = 1;
+            else
+                    vector_game = 0;
+
+
+            /*TODO*///if (use_dirty == -1)	/* dirty=auto in mame.cfg? */
+            /*TODO*///{
+            /*TODO*///        /* Is the game using a dirty system? */
+            /*TODO*///        if ((attributes & VIDEO_SUPPORTS_DIRTY)!=0)
+            /*TODO*///                use_dirty = 1;
+            /*TODO*///        else
+            /*TODO*///                use_dirty = 0;
+            /*TODO*///}
+
+            select_display_mode(width,height,video_depth,attributes,orientation);
+
+    /*TODO*////* find a VESA driver for 15KHz modes just in case we need it later on */
+    /*TODO*///	if (scanrate15KHz)
+    /*TODO*///		getSVGA15KHzdriver (&SVGA15KHzdriver);
+    /*TODO*///	else
+    /*TODO*///		SVGA15KHzdriver = 0;
+
+
+            if (osd_set_display(width,height,video_depth,attributes,orientation) == 0)
+                    return 1;
+
+            /* set visible area to nothing just to initialize it - it will be set by the core */
+            /*TODO*///osd_set_visible_area(0,0,0,0);
+
+    /*TODO*///   /*Check for SVGA 15.75KHz mode (req. for 15.75KHz Arcade Monitor Modes)
+    /*TODO*///     need to do this here, as the double params will be set up correctly */
+    /*TODO*///	if (use_vesa == 1 && scanrate15KHz)
+    /*TODO*///	{
+    /*TODO*///		int dbl;
+    /*TODO*///		dbl = (ymultiply >= 2);
+    /*TODO*///		/* check that we found a driver */
+    /*TODO*///		if (!SVGA15KHzdriver)
+    /*TODO*///		{
+    /*TODO*///			printf ("\nUnable to find 15.75KHz SVGA driver for %dx%d\n", gfx_width, gfx_height);
+    /*TODO*///			return 1;
+    /*TODO*///		}
+    /*TODO*///		logerror("Using %s 15.75KHz SVGA driver\n", SVGA15KHzdriver->name);
+    /*TODO*///		/*and try to set the mode */
+    /*TODO*///		if (!SVGA15KHzdriver->setSVGA15KHzmode (dbl, gfx_width, gfx_height))
+    /*TODO*///		{
+    /*TODO*///			printf ("\nUnable to set SVGA 15.75KHz mode %dx%d (driver: %s)\n", gfx_width, gfx_height, SVGA15KHzdriver->name);
+    /*TODO*///			return 1;
+    /*TODO*///		}
+    /*TODO*///		/* if we're doubling, we might as well have scanlines */
+    /*TODO*///		/* the 15.75KHz driver is going to drop every other line anyway -
+    /*TODO*///			so we can avoid drawing them and save some time */
+    /*TODO*///		if(dbl)
+    /*TODO*///			scanlines=1;
+    /*TODO*///	}
+
+            update_video_first_time = 1;
+
+            return 0;
+    }
 
     
     /* shut up the display */
@@ -1910,6 +1924,9 @@ public class video {
 /*TODO*///
 public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_components)
 {
+        /*TODO*///TEMPHACK*/
+        video_depth = Machine.scrbitmap.depth;
+        
 	int i;
 /*TODO*///
 /*TODO*///	if (video_attributes & VIDEO_RGB_DIRECT)
@@ -1919,48 +1936,53 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
 /*TODO*///	}
 /*TODO*///
 /*TODO*///	rgb_direct = 0;
-/*TODO*///
-/*TODO*///	screen_colors = totalcolors;
-/*TODO*///	if (video_depth != 8)
-/*TODO*///		screen_colors += 2;
-/*TODO*///	else screen_colors = 256;
-/*TODO*///
-/*TODO*///	dirtycolor = malloc(screen_colors * sizeof(int));
-/*TODO*///	current_palette = malloc(3 * screen_colors * sizeof(unsigned char));
-/*TODO*///	palette_16bit_lookup = malloc(screen_colors * sizeof(palette_16bit_lookup[0]));
-/*TODO*///	if (dirtycolor == 0 || current_palette == 0 || palette_16bit_lookup == 0)
-/*TODO*///		return 1;
-/*TODO*///
-/*TODO*///	for (i = 0;i < screen_colors;i++)
-/*TODO*///		dirtycolor[i] = 1;
-/*TODO*///	dirtypalette = 1;
-/*TODO*///	for (i = 0;i < screen_colors;i++)
-/*TODO*///		current_palette[3*i+0] = current_palette[3*i+1] = current_palette[3*i+2] = 0;
-/*TODO*///
-/*TODO*///	// reserve color totalcolors+1 for the user interface text */
-/*TODO*///	if (totalcolors < 65535)
-/*TODO*///	{
-/*TODO*///		current_palette[(totalcolors+1)*3+0] = current_palette[(totalcolors+1)*3+1] = current_palette[(totalcolors+1)*3+2] = 0xff;
-/*TODO*///		Machine->uifont->colortable[0] = totalcolors;
-/*TODO*///		Machine->uifont->colortable[1] = totalcolors + 1;
-/*TODO*///		Machine->uifont->colortable[2] = totalcolors + 1;
-/*TODO*///		Machine->uifont->colortable[3] = totalcolors;
-/*TODO*///	}
-/*TODO*///	else
-/*TODO*///	{
-/*TODO*///		Machine->uifont->colortable[0] = 0;
-/*TODO*///		Machine->uifont->colortable[1] = 65535;
-/*TODO*///		Machine->uifont->colortable[2] = 65535;
-/*TODO*///		Machine->uifont->colortable[3] = 0;
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	for (i = 0;i < totalcolors;i++)
-/*TODO*///	{
-/*TODO*///		current_palette[3*i+0] = palette[3*i];
-/*TODO*///		current_palette[3*i+1] = palette[3*i+1];
-/*TODO*///		current_palette[3*i+2] = palette[3*i+2];
-/*TODO*///	}
-/*TODO*///
+
+	screen_colors = totalcolors;
+	if (video_depth != 8)
+		screen_colors += 2;
+	else screen_colors = 256;
+
+	dirtycolor = new int[screen_colors];
+	current_palette = new UBytePtr(3 * screen_colors);
+	palette_16bit_lookup = new UShortPtr(screen_colors*2);
+	if (dirtycolor == null || current_palette == null || palette_16bit_lookup == null)
+		return 1;
+
+	for (i = 0;i < screen_colors;i++)
+		dirtycolor[i] = 1;
+	dirtypalette = 1;
+	for (i = 0;i < screen_colors;i++){
+		current_palette.write(3*i+0, 0);
+                current_palette.write(3*i+1, 0);
+                current_palette.write(3*i+2, 0);
+        }
+
+	// reserve color totalcolors+1 for the user interface text */
+	if (totalcolors < 65535)
+	{
+		current_palette.write((totalcolors+1)*3+0, 0xff);
+                current_palette.write((totalcolors+1)*3+1, 0xff);
+                current_palette.write((totalcolors+1)*3+2, 0xff);
+		Machine.uifont.colortable.write(0, totalcolors);
+		Machine.uifont.colortable.write(1, totalcolors + 1);
+		Machine.uifont.colortable.write(2, totalcolors + 1);
+		Machine.uifont.colortable.write(3, totalcolors);
+	}
+	else
+	{
+		Machine.uifont.colortable.write(0, 0);
+		Machine.uifont.colortable.write(1, 65535);
+		Machine.uifont.colortable.write(2, 65535);
+		Machine.uifont.colortable.write(3, 0);
+	}
+
+	for (i = 0;i < totalcolors;i++)
+	{
+		current_palette.write(3*i+0, palette[3*i]);
+		current_palette.write(3*i+1, palette[3*i+1]);
+		current_palette.write(3*i+2, palette[3*i+2]);
+	}
+
 /*TODO*///	if (debug_pens)
 /*TODO*///	{
 /*TODO*///		for (i = 0;i < DEBUGGER_TOTAL_COLORS;i++)
@@ -2038,7 +2060,8 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
 /*TODO*///		}
 /*TODO*///	}
 /*TODO*///
-	return 0;
+	back_buffer = new char[Machine.scrbitmap.line[0].memory.length];
+        return 0;
 }
 
 
@@ -2155,11 +2178,11 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
 /*TODO*///		{12,0,0,0,0,0,0,0,0,0,0,0 }
 /*TODO*///	};
 /*TODO*///	int i;
-/*TODO*///	static int showfps,showfpstemp;
+	public static int showfps,showfpstemp;
 /*TODO*///	TICKER curr;
 /*TODO*///	static TICKER prev_measure,this_frame_base,prev;
 /*TODO*///	static int speed = 100;
-/*TODO*///	static int vups,vfcount;
+	public static int vups,vfcount;
 /*TODO*///	int already_synced;
 /*TODO*///	struct mame_bitmap *bitmap;
 /*TODO*///	static int leds_old;
