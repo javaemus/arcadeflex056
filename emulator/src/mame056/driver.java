@@ -48,6 +48,7 @@ import static mame056.drivers.brkthru.*;
 import static mame056.drivers.pbaction.*;
 import static mame056.drivers.taitosj.*;
 import static mame056.drivers.bosco.*;
+import static mame056.drivers.gunsmoke.*;
 
 public class driver {
 
@@ -1648,10 +1649,10 @@ public class driver {
         /*TODO*///	driver_makaimuc,	/*  9/1985 (c) 1985 */
         /*TODO*///	driver_makaimug,	/*  9/1985 (c) 1985 */
         /*TODO*///	driver_diamond,	/* (c) 1989 KH Video (NOT A CAPCOM GAME but runs on GnG hardware) */
-        /*TODO*///	driver_gunsmoke,	/* 11/1985 (c) 1985 (World) */
-        /*TODO*///	driver_gunsmrom,	/* 11/1985 (c) 1985 + Romstar (US) */
-        /*TODO*///	driver_gunsmoka,	/* 11/1985 (c) 1985 (US) */
-        /*TODO*///	driver_gunsmokj,	/* 11/1985 (c) 1985 (Japan) */
+        	driver_gunsmoke,	/* 11/1985 (c) 1985 (World) */
+        	driver_gunsmrom,	/* 11/1985 (c) 1985 + Romstar (US) */
+        	driver_gunsmoka,	/* 11/1985 (c) 1985 (US) */
+        	driver_gunsmokj,	/* 11/1985 (c) 1985 (Japan) */
         /*TODO*///	driver_sectionz,	/* 12/1985 (c) 1985 */
         /*TODO*///	driver_sctionza,	/* 12/1985 (c) 1985 */
         /*TODO*///	driver_trojan,	/*  4/1986 (c) 1986 (US) */
