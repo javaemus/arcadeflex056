@@ -47,6 +47,7 @@ import static mame056.drivers.sonson.*;
 import static mame056.drivers.brkthru.*;
 import static mame056.drivers.pbaction.*;
 import static mame056.drivers.taitosj.*;
+import static mame056.drivers.bosco.*;
 
 public class driver {
 
@@ -424,12 +425,12 @@ public class driver {
         /*TODO*///	driver_gutangtn,	/* GX359 (c) 1982 Konami + Sega license */
         /*TODO*///	driver_cottong,	/* bootleg */
         /*TODO*///	driver_commsega,	/* (c) 1983 Sega */
-        /*TODO*///	/* the following ones all have a custom I/O chip */
-        /*TODO*///	driver_bosco,		/* (c) 1981 */
-        /*TODO*///	driver_boscoo,	/* (c) 1981 */
-        /*TODO*///	driver_boscoo2,	/* (c) 1981 */
-        /*TODO*///	driver_boscomd,	/* (c) 1981 Midway */
-        /*TODO*///	driver_boscomdo,	/* (c) 1981 Midway */
+        	/* the following ones all have a custom I/O chip */
+        	driver_bosco,		/* (c) 1981 */
+        	driver_boscoo,	/* (c) 1981 */
+        	driver_boscoo2,	/* (c) 1981 */
+        	driver_boscomd,	/* (c) 1981 Midway */
+        	driver_boscomdo,	/* (c) 1981 Midway */
         driver_galaga, /* (c) 1981 */
         driver_galagamw, /* (c) 1981 Midway */
         driver_galagads, /* hack */
