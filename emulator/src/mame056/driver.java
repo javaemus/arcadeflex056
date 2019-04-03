@@ -50,6 +50,7 @@ import static mame056.drivers.taitosj.*;
 import static mame056.drivers.bosco.*;
 import static mame056.drivers.gunsmoke.*;
 import static mame056.drivers.trackfld.*;
+import static mame056.drivers.hyperspt.*;
 
 public class driver {
 
@@ -2630,15 +2631,15 @@ public class driver {
         /*TODO*///	driver_circusce,	/* GX380 (c) 1984 + Centuri license */
         /*TODO*///	driver_tp84,		/* GX388 (c) 1984 */
         /*TODO*///	driver_tp84a,		/* GX388 (c) 1984 */
-        /*TODO*///	driver_hyperspt,	/* GX330 (c) 1984 + Centuri */
-        /*TODO*///	driver_hpolym84,	/* GX330 (c) 1984 */
+        driver_hyperspt,	/* GX330 (c) 1984 + Centuri */
+        driver_hpolym84,	/* GX330 (c) 1984 */
         /*TODO*///	driver_sbasketb,	/* GX405 (c) 1984 */
         /*TODO*///	driver_sbasketu,	/* GX405 (c) 1984 */
         driver_mikie, /* GX469 (c) 1984 */
         driver_mikiej, /* GX469 (c) 1984 */
         driver_mikiehs, /* GX469 (c) 1984 */
-        /*TODO*///	driver_roadf,		/* GX461 (c) 1984 */
-        /*TODO*///	driver_roadf2,	/* GX461 (c) 1984 */
+        driver_roadf,		/* GX461 (c) 1984 */
+        driver_roadf2,	/* GX461 (c) 1984 */
         /*TODO*///	driver_yiear,		/* GX407 (c) 1985 */
         /*TODO*///	driver_yiear2,	/* GX407 (c) 1985 */
         driver_kicker, /* GX477 (c) 1985 */

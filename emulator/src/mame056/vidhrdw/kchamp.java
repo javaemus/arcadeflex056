@@ -103,7 +103,7 @@ public class kchamp
                         System.out.println("Colors["+i+"]: RED "+red*0x11+" GREEN "+green*0x11+" BLUE "+blue*0x11);
 	                colortable[_colTabPos++] = (char) i;
                         
-                        //palette_set_color(i,red*0x11,green*0x11,blue*0x11);
+                        palette_set_color(i,red*0x11,green*0x11,blue*0x11);
 		}
                 
                 palette[0]=0x00;

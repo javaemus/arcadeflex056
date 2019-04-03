@@ -83,39 +83,23 @@ public class brkthru
                 bit2 = (color_prom.read(0) >> 2) & 0x01;
                 bit3 = (color_prom.read(0) >> 3) & 0x01;
                 r = ((0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3));
-                palette[p_inc++]=(char) r;
+                //palette[p_inc++]=(char) r;
                 bit0 = (color_prom.read(0) >> 4) & 0x01;
                 bit1 = (color_prom.read(0) >> 5) & 0x01;
                 bit2 = (color_prom.read(0) >> 6) & 0x01;
                 bit3 = (color_prom.read(0) >> 7) & 0x01;
                 g=( 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3);
-                palette[p_inc++]=((char) g);
+                //palette[p_inc++]=((char) g);
                 bit0 = (color_prom.read(Machine.drv.total_colors) >> 0) & 0x01;
                 bit1 = (color_prom.read(Machine.drv.total_colors) >> 1) & 0x01;
                 bit2 = (color_prom.read(Machine.drv.total_colors) >> 2) & 0x01;
                 bit3 = (color_prom.read(Machine.drv.total_colors) >> 3) & 0x01;
                 b=(0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3);
-                palette[p_inc++]=((char) b);
+                //palette[p_inc++]=((char) b);
                 
                 palette_set_color(i,r,g,b);
 
                 color_prom.inc();
-            }
-// temp hack
-if (colortable==null) colortable=new char[65535];
-            /* characters use colors 0-7 */
-            for (i = 0; i < TOTAL_COLORS(0); i++) {
-                colortable[Machine.drv.gfxdecodeinfo[0].color_codes_start + i] = (char) i;
-            }
-
-            /* background tiles use colors 128-255 */
-            for (i = 0; i < TOTAL_COLORS(1); i++) {
-                colortable[Machine.drv.gfxdecodeinfo[1].color_codes_start + i] = (char) (i + 128);
-            }
-
-            /* sprites use colors 64-127 */
-            for (i = 0; i < TOTAL_COLORS(9); i++) {
-                colortable[Machine.drv.gfxdecodeinfo[9].color_codes_start + i] = (char) (i + 64);
             }
         }
     };
