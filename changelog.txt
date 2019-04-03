@@ -1,3 +1,7 @@
+03/04/2019
+==========
+-Added hyperspt driver fully playable (partial sound)
+
 02/04/2019
 ==========
 -Added bosco driver (fully playable)
