@@ -65,7 +65,6 @@ import static mame056.memoryH.*;
 import static mame056.inptport.*;
 import static mame056.drawgfxH.*;
 import static mame056.inputH.*;
-import static mame056.machine.berzerk.*;
 import static mame056.sndintrfH.*;
 import static mame056.sndintrf.*;
 import static mame056.sound.samples.*;

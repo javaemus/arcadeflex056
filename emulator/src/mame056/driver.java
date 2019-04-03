@@ -51,6 +51,8 @@ import static mame056.drivers.bosco.*;
 import static mame056.drivers.gunsmoke.*;
 import static mame056.drivers.trackfld.*;
 import static mame056.drivers.hyperspt.*;
+import static mame056.drivers.tehkanwc.*;
+import static mame056.drivers.popeye.*;
 
 public class driver {
 
@@ -670,10 +672,10 @@ public class driver {
         /*TODO*///	driver_hunchbkd,	/* (c) 1983 Century */
         /*TODO*///	driver_herbiedk,	/* (c) 1984 CVS */
         /*TODO*///TESTdriver_herocast,
-        /*TODO*///	driver_popeye,	/* (c) 1982 */
-        /*TODO*///	driver_popeyeu,	/* (c) 1982 */
-        /*TODO*///	driver_popeyef,	/* (c) 1982 */
-        /*TODO*///	driver_popeyebl,	/* bootleg */
+        	driver_popeye,	/* (c) 1982 */
+        	driver_popeyeu,	/* (c) 1982 */
+        	driver_popeyef,	/* (c) 1982 */
+        	driver_popeyebl,	/* bootleg */
         /*TODO*///	driver_punchout,	/* (c) 1984 */
         /*TODO*///	driver_spnchout,	/* (c) 1984 */
         /*TODO*///	driver_spnchotj,	/* (c) 1984 (Japan) */
@@ -2580,9 +2582,9 @@ public class driver {
         	driver_pbactio2,	/* (c) 1985 Tehkan */
         /*TODO*///	/* 6009 Tank Busters */
         /*TODO*///	/* 6011 Pontoon (c) 1985 Tehkan is a gambling game - removed */
-        /*TODO*///	driver_tehkanwc,	/* (c) 1985 Tehkan */
-        /*TODO*///	driver_gridiron,	/* (c) 1985 Tehkan */
-        /*TODO*///	driver_teedoff,	/* 6102 - (c) 1986 Tecmo */
+        	driver_tehkanwc,	/* (c) 1985 Tehkan */
+        	driver_gridiron,	/* (c) 1985 Tehkan */
+        	driver_teedoff,	/* 6102 - (c) 1986 Tecmo */
         /*TODO*///	driver_solomon,	/* (c) 1986 Tecmo */
         /*TODO*///	driver_rygar,		/* 6002 - (c) 1986 Tecmo */
         /*TODO*///	driver_rygar2,	/* 6002 - (c) 1986 Tecmo */

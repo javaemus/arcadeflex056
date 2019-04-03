@@ -142,24 +142,18 @@ public class system1
 		}
 		else
 		{
-                    /*
-                        color.r:=pal3bit(valor shr 0);
-                        color.g:=pal3bit(valor shr 3);
-                        color.b:=pal2bit(valor shr 6);
-                        set_pal_color(color,pos);
-                    */
 			val = (data >> 0) & 0x07;
 			r = (val << 5) | (val << 2) | (val >> 1);
 	
 			val = (data >> 3) & 0x07;
 			g = (val << 5) | (val << 2) | (val >> 1);
 	
-			val = (data >> 6) & 0x03;
-			//if (val != 0) val++;
-			b = (val << 6) | (val << 4) | (val << 2);
+			val = (data >> 5) & 0x06;
+			if (val!=0) val++;
+			b = (val << 5) | (val << 2) | (val >> 1);
 		}
 	
-		palette_set_color((offset&0x7ff),r,g,b);
+		palette_set_color(offset,r,g,b);
 	} };
 	
 	

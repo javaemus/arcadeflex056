@@ -75,24 +75,25 @@ public class sndintrf {
             latch = cleared_value;
         }
     };
-    /*TODO*///
-/*TODO*///
-/*TODO*///static int latch2,read_debug2;
-/*TODO*///
-/*TODO*///static void soundlatch2_callback(int param)
-/*TODO*///{
-/*TODO*///	if (read_debug2 == 0 && latch2 != param)
-/*TODO*///		logerror("Warning: sound latch 2 written before being read. Previous: %02x, new: %02x\n",latch2,param);
-/*TODO*///	latch2 = param;
-/*TODO*///	read_debug2 = 0;
-/*TODO*///}
-/*TODO*///
-/*TODO*///WRITE_HANDLER( soundlatch2_w )
-/*TODO*///{
-/*TODO*///	/* make all the CPUs synchronize, and only AFTER that write the new command to the latch */
-/*TODO*///	timer_set(TIME_NOW,data,soundlatch2_callback);
-/*TODO*///}
-/*TODO*///
+
+    static int latch2,read_debug2;
+
+    public static timer_callback soundlatch2_callback = new timer_callback() {
+        public void handler(int param) {
+            if (read_debug2 == 0 && latch2 != param)
+                    logerror("Warning: sound latch 2 written before being read. Previous: %02x, new: %02x\n",latch2,param);
+            latch2 = param;
+            read_debug2 = 0;
+        }
+    };
+    
+    public static WriteHandlerPtr soundlatch2_w = new WriteHandlerPtr() {
+        public void handler(int offset, int data) {
+            /* make all the CPUs synchronize, and only AFTER that write the new command to the latch */
+            timer_set(TIME_NOW,data,soundlatch2_callback);
+        }
+    };
+    
 /*TODO*///WRITE16_HANDLER( soundlatch2_word_w )
 /*TODO*///{
 /*TODO*///	static data16_t word;
@@ -101,13 +102,14 @@ public class sndintrf {
 /*TODO*///	/* make all the CPUs synchronize, and only AFTER that write the new command to the latch */
 /*TODO*///	timer_set(TIME_NOW,word,soundlatch2_callback);
 /*TODO*///}
-/*TODO*///
-/*TODO*///READ_HANDLER( soundlatch2_r )
-/*TODO*///{
-/*TODO*///	read_debug2 = 1;
-/*TODO*///	return latch2;
-/*TODO*///}
-/*TODO*///
+
+    public static ReadHandlerPtr soundlatch2_r = new ReadHandlerPtr() {
+        public int handler(int offset) {
+            read_debug2 = 1;
+            return latch2;
+        }
+    };
+   
 /*TODO*///READ16_HANDLER( soundlatch2_word_r )
 /*TODO*///{
 /*TODO*///	read_debug2 = 1;

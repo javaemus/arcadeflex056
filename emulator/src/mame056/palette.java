@@ -461,11 +461,13 @@ public class palette {
 /*TODO*///data16_t *paletteram16;
 /*TODO*///data16_t *paletteram16_2;
 /*TODO*///data32_t *paletteram32;
-/*TODO*///
-/*TODO*///READ_HANDLER( paletteram_r )
-/*TODO*///{
-/*TODO*///	return paletteram[offset];
-/*TODO*///}
+
+    public static ReadHandlerPtr paletteram_r = new ReadHandlerPtr() {
+        public int handler(int offset) {
+            return paletteram.read(offset);
+        }
+    };
+
 /*TODO*///
 /*TODO*///READ_HANDLER( paletteram_2_r )
 /*TODO*///{
@@ -634,12 +636,14 @@ public class palette {
         }
     };
         
-/*TODO*///WRITE_HANDLER( paletteram_xxxxBBBBGGGGRRRR_swap_w )
-/*TODO*///{
-/*TODO*///	paletteram[offset] = data;
-/*TODO*///	changecolor_xxxxBBBBGGGGRRRR(offset / 2,paletteram[offset | 1] | (paletteram[offset & ~1] << 8));
-/*TODO*///}
-/*TODO*///
+    public static WriteHandlerPtr paletteram_xxxxBBBBGGGGRRRR_swap_w = new WriteHandlerPtr() {
+        public void handler(int offset, int data) {
+            paletteram.write(offset, data);
+            changecolor_xxxxBBBBGGGGRRRR(offset / 2,paletteram.read(offset | 1) | (paletteram.read(offset & ~1) << 8));
+        }
+    };
+    
+
 /*TODO*///WRITE_HANDLER( paletteram_xxxxBBBBGGGGRRRR_split1_w )
 /*TODO*///{
 /*TODO*///	paletteram[offset] = data;
