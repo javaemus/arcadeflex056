@@ -3,6 +3,7 @@
 -Added hyperspt driver fully playable (partial sound)
 -Solved all video problems in taitosj driver
 -Added popeye and tehkanwc (WIP/in progess)
+-Solved all video problems in fastfred driver
 
 02/04/2019
 ==========

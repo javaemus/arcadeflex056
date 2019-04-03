@@ -90,6 +90,7 @@ import static mame056.sound.ay8910H.*;
 
 // refactor
 import static arcadeflex036.osdepend.logerror;
+import static mame056.vidhrdw.galaxian.*;
 
 
 public class fastfred
