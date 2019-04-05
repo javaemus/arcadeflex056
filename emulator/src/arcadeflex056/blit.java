@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package arcadeflex037b7;
+package arcadeflex056;
 
 
-import static arcadeflex037b7.video.*;
 import static arcadeflex056.video.*;
-import static arcadeflex037b7.dirtyH.*;
+import static arcadeflex056.dirtyH.*;
 import common.ptr;
 import common.ptr.UShortPtr;
 import common.subArrays;

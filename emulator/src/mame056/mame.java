@@ -24,7 +24,7 @@ import static arcadeflex056.video.osd_close_display;
 import static arcadeflex056.video.osd_create_display;
 import static arcadeflex056.video.osd_mark_dirty;
 import static arcadeflex056.video.osd_skip_this_frame;
-import static arcadeflex037b7.video.osd_update_video_and_audio;
+import static arcadeflex056.video.osd_update_video_and_audio;
 import static common.libc.cstdlib.rand;
 import static mame037b7.cheat.InitCheat;
 import static mame037b7.cheat.StopCheat;

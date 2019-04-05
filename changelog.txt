@@ -1,3 +1,7 @@
+05/04/2019
+==========
+-Video class 0.56 fully ported!
+
 04/04/2019
 ==========
 -More functions implemented in video 056 class

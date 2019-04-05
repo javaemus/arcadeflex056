@@ -33,7 +33,6 @@ import static mame056.driver.*;
 import static arcadeflex056.video.*;
 
 //to refactor
-import static arcadeflex037b7.video.*;
 import static arcadeflex036.sound.*;
 
 public class usrintrf {

@@ -55,7 +55,7 @@ import static mame056.vidhrdw.generic.*;
 
 // refactor
 import static arcadeflex036.osdepend.logerror;
-import static arcadeflex037b7.dirtyH.*;
+import static arcadeflex056.dirtyH.*;
 
 import static common.libc.cstdlib.rand;
 

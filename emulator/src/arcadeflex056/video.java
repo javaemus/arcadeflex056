@@ -3,10 +3,10 @@
  */
 package arcadeflex056;
 
+import static arcadeflex036.libc_old.strlen;
 import arcadeflex036.osdepend;
 import static arcadeflex036.ticker.TICKS_PER_SEC;
-import static arcadeflex037b7.video.*;
-import static arcadeflex037b7.blit.*;
+import static arcadeflex056.blit.*;
 import static common.libc.cstdio.printf;
 import static common.ptr.*;
 import static mame056.driverH.*;
@@ -16,7 +16,11 @@ import static mame056.mame.Machine;
 // refactor
 import static arcadeflex036.osdepend.logerror;
 import arcadeflex036.software_gfx;
-import static arcadeflex037b7.dirtyH.MARKDIRTY;
+import static arcadeflex036.sound.update_audio;
+import static arcadeflex056.dirtyH.MARKDIRTY;
+import static common.libc.cstdio.sprintf;
+import common.libc.ctime;
+import static common.libc.ctime.*;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -25,12 +29,29 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import static java.lang.Math.pow;
 import mame056.commonH.mame_bitmap;
+import static mame056.inptportH.*;
+import static mame056.input.*;
+import static mame056.mame.Machine;
+import static mame056.mame.schedule_full_refresh;
 import static mame056.usrintrf.set_ui_visarea;
+import static mame056.usrintrf.ui_text;
 import static mame056.version.build_version;
 
 
 public class video {
+    /* old variables just to remember */
+    
+    static final int MEMORY = 10;
+    static long[] prev1 = new long[10];
+    static int clock_counter;
+    static int speed = 100;
+    
+    public static final int MAX_X_MULTIPLY = 4;
+    public static final int MAX_Y_MULTIPLY = 3;
+    public static final int FRAMES_TO_SKIP = 20;
+    public static long start_time, end_time;
 /*TODO*///#include "mamalleg.h"
 /*TODO*///#include "driver.h"
 /*TODO*///#include "mamedbg.h"
@@ -457,7 +478,7 @@ public class video {
 /*TODO*///int vgafreq;
 /*TODO*///int always_synced;
     public static int video_sync;
-/*TODO*///int wait_vsync;
+    public static int wait_vsync;
 /*TODO*///int use_triplebuf;
 /*TODO*///int triplebuf_pos,triplebuf_page_width;
     public static int vsync_frame_rate;
@@ -2166,55 +2187,63 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
         {
             return skiptable[frameskip][frameskip_counter];
         }
-
-/*TODO*////* Update the display. */
-/*TODO*///void osd_update_video_and_audio(struct mame_bitmap *game_bitmap,struct mame_bitmap *debug_bitmap,int leds_status)
-/*TODO*///{
-/*TODO*///	static const int waittable[FRAMESKIP_LEVELS][FRAMESKIP_LEVELS] =
-/*TODO*///	{
-/*TODO*///		{ 1,1,1,1,1,1,1,1,1,1,1,1 },
-/*TODO*///		{ 2,1,1,1,1,1,1,1,1,1,1,0 },
-/*TODO*///		{ 2,1,1,1,1,0,2,1,1,1,1,0 },
-/*TODO*///		{ 2,1,1,0,2,1,1,0,2,1,1,0 },
-/*TODO*///		{ 2,1,0,2,1,0,2,1,0,2,1,0 },
-/*TODO*///		{ 2,0,2,1,0,2,0,2,1,0,2,0 },
-/*TODO*///		{ 2,0,2,0,2,0,2,0,2,0,2,0 },
-/*TODO*///		{ 2,0,2,0,0,3,0,2,0,0,3,0 },
-/*TODO*///		{ 3,0,0,3,0,0,3,0,0,3,0,0 },
-/*TODO*///		{ 4,0,0,0,4,0,0,0,4,0,0,0 },
-/*TODO*///		{ 6,0,0,0,0,0,6,0,0,0,0,0 },
-/*TODO*///		{12,0,0,0,0,0,0,0,0,0,0,0 }
-/*TODO*///	};
-/*TODO*///	int i;
+        
+        static int waittable[][] =
+	{
+		{ 1,1,1,1,1,1,1,1,1,1,1,1 },
+		{ 2,1,1,1,1,1,1,1,1,1,1,0 },
+		{ 2,1,1,1,1,0,2,1,1,1,1,0 },
+		{ 2,1,1,0,2,1,1,0,2,1,1,0 },
+		{ 2,1,0,2,1,0,2,1,0,2,1,0 },
+		{ 2,0,2,1,0,2,0,2,1,0,2,0 },
+		{ 2,0,2,0,2,0,2,0,2,0,2,0 },
+		{ 2,0,2,0,0,3,0,2,0,0,3,0 },
+		{ 3,0,0,3,0,0,3,0,0,3,0,0 },
+		{ 4,0,0,0,4,0,0,0,4,0,0,0 },
+		{ 6,0,0,0,0,0,6,0,0,0,0,0 },
+		{12,0,0,0,0,0,0,0,0,0,0,0 }
+	};
+	
 	public static int showfps,showfpstemp;
-/*TODO*///	TICKER curr;
-/*TODO*///	static TICKER prev_measure,this_frame_base,prev;
-/*TODO*///	static int speed = 100;
+	/*TODO*///TICKER curr;
+        public static long curr;
+	/*TODO*///static TICKER prev_measure,this_frame_base,prev;
+        static long prev_measure, this_frame_base, prev;
 	public static int vups,vfcount;
-/*TODO*///	int already_synced;
-/*TODO*///	struct mame_bitmap *bitmap;
-/*TODO*///	static int leds_old;
-/*TODO*///
-/*TODO*///	if (update_video_first_time || leds_old != leds_status)
-/*TODO*///	{
-/*TODO*///		static const int led_flags[3] =
-/*TODO*///		{
-/*TODO*///			KB_NUMLOCK_FLAG,
-/*TODO*///			KB_CAPSLOCK_FLAG,
-/*TODO*///			KB_SCROLOCK_FLAG
-/*TODO*///		};
-/*TODO*///
-/*TODO*///		update_video_first_time = 0;
-/*TODO*///		leds_old = leds_status;
-/*TODO*///
-/*TODO*///		i = 0;
-/*TODO*///		if (leds_status & 1) i |= led_flags[0];
-/*TODO*///		if (leds_status & 2) i |= led_flags[1];
-/*TODO*///		if (leds_status & 4) i |= led_flags[2];
-/*TODO*///		set_leds(i);
-/*TODO*///	}
-/*TODO*///
-/*TODO*///
+	static int already_synced;
+	
+	static int leds_old;
+        public static final int KB_NUMLOCK_FLAG = 0;
+        public static final int KB_CAPSLOCK_FLAG = 1;
+        public static final int KB_SCROLOCK_FLAG = 2;
+        
+        static int led_flags[] =
+        {
+                KB_NUMLOCK_FLAG,
+                KB_CAPSLOCK_FLAG,
+                KB_SCROLOCK_FLAG
+        };
+
+    static long last=0;
+    /* Update the display. */
+    public static void osd_update_video_and_audio(mame_bitmap game_bitmap, /*mame_bitmap debug_bitmap,*/ int leds_status)
+    {
+        /*TODO*///mame_bitmap bitmap;
+        //int i;
+	
+	/*TODO*///if ((update_video_first_time!=0) || leds_old != leds_status)
+	/*TODO*///{
+		/*TODO*///update_video_first_time = 0;
+		/*TODO*///leds_old = leds_status;
+
+		/*TODO*///i = 0;
+		/*TODO*///if ((leds_status & 1)!=0) i |= led_flags[0];
+		/*TODO*///if ((leds_status & 2)!=0) i |= led_flags[1];
+		/*TODO*///if ((leds_status & 4)!=0) i |= led_flags[2];
+		/*TODO*///set_leds(i);
+        /*TODO*///}
+
+
 /*TODO*///	if (debug_bitmap && input_ui_pressed(IPT_UI_TOGGLE_DEBUG))
 /*TODO*///	{
 /*TODO*///		osd_debugger_focus(show_debugger ^ 1);
@@ -2231,7 +2260,8 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
 /*TODO*///	}
 /*TODO*///
 /*TODO*///	if (show_debugger && debug_bitmap) bitmap = debug_bitmap;
-/*TODO*///	else bitmap = game_bitmap;
+/*TODO*///	else 
+/*TODO*///        bitmap = game_bitmap;
 /*TODO*///
 /*TODO*///	if (warming_up)
 /*TODO*///	{
@@ -2270,24 +2300,25 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
 /*TODO*///			if (showfps == 0 && showfpstemp == 0)
 /*TODO*///				schedule_full_refresh();
 /*TODO*///		}
-/*TODO*///
-/*TODO*///
-/*TODO*///		if (input_ui_pressed(IPT_UI_SHOW_FPS))
-/*TODO*///		{
-/*TODO*///			if (showfpstemp)
-/*TODO*///			{
-/*TODO*///				showfpstemp = 0;
-/*TODO*///				schedule_full_refresh();
-/*TODO*///			}
-/*TODO*///			else
-/*TODO*///			{
-/*TODO*///				showfps ^= 1;
-/*TODO*///				if (showfps == 0)
-/*TODO*///					schedule_full_refresh();
-/*TODO*///			}
-/*TODO*///		}
-/*TODO*///
-/*TODO*///
+
+
+		if (input_ui_pressed(IPT_UI_SHOW_FPS) != 0)
+		{
+			if (showfpstemp != 0)
+			{
+				showfpstemp = 0;
+				schedule_full_refresh();
+			}
+			else
+			{
+				showfps ^= 1;
+				if (showfps == 0)
+					schedule_full_refresh();
+			}
+		}
+
+                long curr;
+                
 /*TODO*///		/* now wait until it's time to update the screen */
 /*TODO*///		if (throttle)
 /*TODO*///		{
@@ -2295,69 +2326,74 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
 /*TODO*///			if (video_sync)
 /*TODO*///			{
 /*TODO*///				static TICKER last;
+                                
 /*TODO*///
 /*TODO*///
-/*TODO*///				do
-/*TODO*///				{
+				do
+				{
 /*TODO*///					vsync();
 /*TODO*///					curr = ticker();
-/*TODO*///				} while (TICKS_PER_SEC / (curr - last) > video_fps * 11 /10);
+                                    curr = uclock();
+
+                                } //while ((throttle != 0) && (curr - last < (frameskip + 1) * 1000000000 / Machine.drv.frames_per_second));
+                                while (TICKS_PER_SEC / (curr - last) > video_fps * 11 /10);
 /*TODO*///
-/*TODO*///				last = curr;
+				last = curr;
 /*TODO*///			}
 /*TODO*///			else
 /*TODO*///			{
 /*TODO*///				TICKER target;
-/*TODO*///
-/*TODO*///
-/*TODO*///				/* wait for video sync but use normal throttling */
-/*TODO*///				if (wait_vsync)
-/*TODO*///					vsync();
-/*TODO*///
+
+				/* wait for video sync but use normal throttling */
+/*TODO*///				if (wait_vsync != 0)
+/*TODO*///                                  vsync();
+
 /*TODO*///				curr = ticker();
-/*TODO*///
+
+
 /*TODO*///				if (already_synced == 0)
 /*TODO*///				{
-/*TODO*///				/* wait only if the audio update hasn't synced us already */
-/*TODO*///
+				/* wait only if the audio update hasn't synced us already */
+
 /*TODO*///					target = this_frame_base +
 /*TODO*///							frameskip_counter * TICKS_PER_SEC/video_fps;
-/*TODO*///
+
 /*TODO*///					if (curr - target < 0)
 /*TODO*///					{
 /*TODO*///						do
 /*TODO*///						{
 /*TODO*///							curr = ticker();
+/*TODO*///                                                    curr = uclock();
 /*TODO*///						} while (curr - target < 0);
 /*TODO*///					}
 /*TODO*///				}
-/*TODO*///
+
 /*TODO*///			}
 /*TODO*///			profiler_mark(PROFILER_END);
 /*TODO*///		}
 /*TODO*///		else curr = ticker();
-/*TODO*///
-/*TODO*///
-/*TODO*///		/* for the FPS average calculation */
+
+
+		/* for the FPS average calculation */
 /*TODO*///		if (++frames_displayed == FRAMES_TO_SKIP)
 /*TODO*///			start_time = curr;
 /*TODO*///		else
 /*TODO*///			end_time = curr;
-/*TODO*///
-/*TODO*///
+
+
 /*TODO*///		if (frameskip_counter == 0)
 /*TODO*///		{
 /*TODO*///			int divdr;
-/*TODO*///
-/*TODO*///
-/*TODO*///			divdr = video_fps * (curr - prev_measure) / (100 * FRAMESKIP_LEVELS);
-/*TODO*///			speed = (TICKS_PER_SEC + divdr/2) / divdr;
-/*TODO*///
+
+
+/*TODO*///			divdr = (int) (video_fps * (curr - prev_measure) / (100 * FRAMESKIP_LEVELS));
+/*TODO*///			speed = (int) ((TICKS_PER_SEC + divdr/2) / divdr);
+
 /*TODO*///			prev_measure = curr;
 /*TODO*///		}
-/*TODO*///
+
 /*TODO*///		prev = curr;
-/*TODO*///
+
 /*TODO*///		vfcount += waittable[frameskip][frameskip_counter];
 /*TODO*///		if (vfcount >= video_fps)
 /*TODO*///		{
@@ -2369,137 +2405,140 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
 /*TODO*///			vector_updates = 0;
 /*TODO*///		}
 /*TODO*///
-/*TODO*///		if (!show_debugger && (showfps || showfpstemp))
-/*TODO*///		{
-/*TODO*///			int fps;
-/*TODO*///			char buf[30];
-/*TODO*///			int divdr;
-/*TODO*///
-/*TODO*///
-/*TODO*///			divdr = 100 * FRAMESKIP_LEVELS;
-/*TODO*///			fps = (video_fps * (FRAMESKIP_LEVELS - frameskip) * speed + (divdr / 2)) / divdr;
-/*TODO*///			sprintf(buf,"%s%2d%4d%%%4d/%d fps",autoframeskip?"auto":"fskp",frameskip,speed,fps,(int)(video_fps+0.5));
-/*TODO*///			ui_text(bitmap,buf,Machine->uiwidth-strlen(buf)*Machine->uifontwidth,0);
-/*TODO*///			if (vector_game)
-/*TODO*///			{
-/*TODO*///				sprintf(buf," %d vector updates",vups);
-/*TODO*///				ui_text(bitmap,buf,Machine->uiwidth-strlen(buf)*Machine->uifontwidth,Machine->uifontheight);
-/*TODO*///			}
+//		if (!show_debugger && (showfps || showfpstemp))
+                if (showfps != 0 || showfpstemp != 0)
+		{
+			int fps;
+			String buf;
+			int divdr;
+
+
+			divdr = 100 * FRAMESKIP_LEVELS;
+			fps = (video_fps * (FRAMESKIP_LEVELS - frameskip) * speed + (divdr / 2)) / divdr;
+			buf = sprintf("%s%2d%4d%%%4d/%d fps", autoframeskip != 0 ? "auto" : "fskp", frameskip, speed, fps, (int) (Machine.drv.frames_per_second + 0.5));
+			ui_text(Machine.scrbitmap, buf, Machine.uiwidth - buf.length() * Machine.uifontwidth, 0);
+			if (vector_game != 0)
+			{
+				sprintf(buf," %d vector updates",vups);
+				ui_text(Machine.scrbitmap, buf, Machine.uiwidth - buf.length() * Machine.uifontwidth, Machine.uifontheight);
+			}
+		}
+
+		if (Machine.scrbitmap.depth == 8)
+		{
+			if (dirty_bright!=0)
+			{
+				dirty_bright = 0;
+				for (int i = 0;i < 256;i++)
+				{
+					float rate = (float) (brightness * brightness_paused_adjust * pow(i / 255.0, 1 / osd_gamma_correction) / 100);
+					//bright_lookup[i] = (int) (63 * rate + 0.5);
+                                        bright_lookup[i] = (int) (255 * rate + 0.5);
+				}
+			}
+			if (dirtypalette != 0)
+			{
+				dirtypalette = 0;
+
+			/*TODO*///	if (show_debugger)
+			/*TODO*///	{
+			/*TODO*///		for (i = 0;i < DEBUGGER_TOTAL_COLORS;i++)
+			/*TODO*///		{
+			/*TODO*///			RGB adjusted_palette;
+			/*TODO*///			adjusted_palette.r = dbg_palette[3*i+0] >> 2;
+			/*TODO*///			adjusted_palette.g = dbg_palette[3*i+1] >> 2;
+			/*TODO*///			adjusted_palette.b = dbg_palette[3*i+2] >> 2;
+			/*TODO*///			set_color(i,&adjusted_palette);
+			/*TODO*///		}
+			/*TODO*///	}
+			/*TODO*///	else
+/*TODO*///				{
+					for (int i = 0;i < screen_colors;i++)
+					{
+						if (dirtycolor[i] != 0)
+						{
+							RGB adjusted_palette=new RGB();
+
+							dirtycolor[i] = 0;
+
+							adjusted_palette.r = current_palette.read(3*i+0);
+							adjusted_palette.g = current_palette.read(3*i+1);
+							adjusted_palette.b = current_palette.read(3*i+2);
+							if (i != Machine.uifont.colortable.read(1))	/* don't adjust the user interface text */
+							{
+								adjusted_palette.r = bright_lookup[adjusted_palette.r];
+								adjusted_palette.g = bright_lookup[adjusted_palette.g];
+								adjusted_palette.b = bright_lookup[adjusted_palette.b];
+							}
+							else
+							{
+							/*TODO*///	adjusted_palette.r >>= 2;
+							/*TODO*///	adjusted_palette.g >>= 2;
+							/*TODO*///	adjusted_palette.b >>= 2;
+							}
+							set_color(i,adjusted_palette);
+						}
+					}
+				}
+			}
 /*TODO*///		}
+		else if (Machine.scrbitmap.depth == 15 || Machine.scrbitmap.depth == 16)
+                {
+			if (dirty_bright!=0)
+			{
+				dirty_bright = 0;
+				for (int i = 0;i < 256;i++)
+				{
+					float rate = (float) (brightness * brightness_paused_adjust * pow(i / 255.0, 1 / osd_gamma_correction) / 100);
+					bright_lookup[i] = (int) (255 * rate + 0.5);
+				}
+			}
+			if (dirtypalette != 0)
+			{
+				/*TODO*///if (use_dirty != 0) init_dirty(1);	/* have to redraw the whole screen */
+
+				dirtypalette = 0;
+
+				/*TODO*///if (show_debugger)
+				/*TODO*///{
+				/*TODO*///	for (i = 0;i < DEBUGGER_TOTAL_COLORS;i++)
+				/*TODO*///	{
+				/*TODO*///		int r,g,b;
 /*TODO*///
-/*TODO*///		if (bitmap->depth == 8)
-/*TODO*///		{
-/*TODO*///			if (dirty_bright)
-/*TODO*///			{
-/*TODO*///				dirty_bright = 0;
-/*TODO*///				for (i = 0;i < 256;i++)
+				/*TODO*///		r = dbg_palette[3*i+0];
+				/*TODO*///		g = dbg_palette[3*i+1];
+				/*TODO*///		b = dbg_palette[3*i+2];
+				/*TODO*///		palette_16bit_lookup[i] = makecol(r,g,b) * 0x10001;
+				/*TODO*///	}
+				/*TODO*///}
+				/*TODO*///else
 /*TODO*///				{
-/*TODO*///					float rate = brightness * brightness_paused_adjust * pow(i / 255.0, 1 / osd_gamma_correction) / 100;
-/*TODO*///					bright_lookup[i] = 63 * rate + 0.5;
-/*TODO*///				}
+					for (int i = 0; i < screen_colors; i++) {
+                                            if (dirtycolor[i] != 0) {
+                                                int r, g, b;
+
+                                                dirtycolor[i] = 0;
+
+                                                r = current_palette.read(3 * i + 0);
+                                                g = current_palette.read(3 * i + 1);
+                                                b = current_palette.read(3 * i + 2);
+                                                if (i != Machine.uifont.colortable.read(1)) /* don't adjust the user interface text */ {
+                                                    r = bright_lookup[r];
+                                                    g = bright_lookup[g];
+                                                    b = bright_lookup[b];
+                                                }
+                                                palette_16bit_lookup.write(i,  (char)(makecol(r, g, b)));// * 0x10001);
+                                                RGB p = new RGB();
+                                                p.r = r;
+                                                p.g = g;
+                                                p.b = b;
+                                                set_color(i, p);
+                                            }
+					}
+				}
 /*TODO*///			}
-/*TODO*///			if (dirtypalette)
-/*TODO*///			{
-/*TODO*///				dirtypalette = 0;
-/*TODO*///
-/*TODO*///				if (show_debugger)
-/*TODO*///				{
-/*TODO*///					for (i = 0;i < DEBUGGER_TOTAL_COLORS;i++)
-/*TODO*///					{
-/*TODO*///						RGB adjusted_palette;
-/*TODO*///
-/*TODO*///						adjusted_palette.r = dbg_palette[3*i+0] >> 2;
-/*TODO*///						adjusted_palette.g = dbg_palette[3*i+1] >> 2;
-/*TODO*///						adjusted_palette.b = dbg_palette[3*i+2] >> 2;
-/*TODO*///						set_color(i,&adjusted_palette);
-/*TODO*///					}
-/*TODO*///				}
-/*TODO*///				else
-/*TODO*///				{
-/*TODO*///					for (i = 0;i < screen_colors;i++)
-/*TODO*///					{
-/*TODO*///						if (dirtycolor[i])
-/*TODO*///						{
-/*TODO*///							RGB adjusted_palette;
-/*TODO*///
-/*TODO*///							dirtycolor[i] = 0;
-/*TODO*///
-/*TODO*///							adjusted_palette.r = current_palette[3*i+0];
-/*TODO*///							adjusted_palette.g = current_palette[3*i+1];
-/*TODO*///							adjusted_palette.b = current_palette[3*i+2];
-/*TODO*///							if (i != Machine->uifont->colortable[1])	/* don't adjust the user interface text */
-/*TODO*///							{
-/*TODO*///								adjusted_palette.r = bright_lookup[adjusted_palette.r];
-/*TODO*///								adjusted_palette.g = bright_lookup[adjusted_palette.g];
-/*TODO*///								adjusted_palette.b = bright_lookup[adjusted_palette.b];
-/*TODO*///							}
-/*TODO*///							else
-/*TODO*///							{
-/*TODO*///								adjusted_palette.r >>= 2;
-/*TODO*///								adjusted_palette.g >>= 2;
-/*TODO*///								adjusted_palette.b >>= 2;
-/*TODO*///							}
-/*TODO*///							set_color(i,&adjusted_palette);
-/*TODO*///						}
-/*TODO*///					}
-/*TODO*///				}
-/*TODO*///			}
-/*TODO*///		}
-/*TODO*///		else if (bitmap->depth == 15 || bitmap->depth == 16)
-/*TODO*///		{
-/*TODO*///			if (dirty_bright)
-/*TODO*///			{
-/*TODO*///				dirty_bright = 0;
-/*TODO*///				for (i = 0;i < 256;i++)
-/*TODO*///				{
-/*TODO*///					float rate = brightness * brightness_paused_adjust * pow(i / 255.0, 1 / osd_gamma_correction) / 100;
-/*TODO*///					bright_lookup[i] = 255 * rate + 0.5;
-/*TODO*///				}
-/*TODO*///			}
-/*TODO*///			if (dirtypalette)
-/*TODO*///			{
-/*TODO*///				if (use_dirty) init_dirty(1);	/* have to redraw the whole screen */
-/*TODO*///
-/*TODO*///				dirtypalette = 0;
-/*TODO*///
-/*TODO*///				if (show_debugger)
-/*TODO*///				{
-/*TODO*///					for (i = 0;i < DEBUGGER_TOTAL_COLORS;i++)
-/*TODO*///					{
-/*TODO*///						int r,g,b;
-/*TODO*///
-/*TODO*///						r = dbg_palette[3*i+0];
-/*TODO*///						g = dbg_palette[3*i+1];
-/*TODO*///						b = dbg_palette[3*i+2];
-/*TODO*///						palette_16bit_lookup[i] = makecol(r,g,b) * 0x10001;
-/*TODO*///					}
-/*TODO*///				}
-/*TODO*///				else
-/*TODO*///				{
-/*TODO*///					for (i = 0;i < screen_colors;i++)
-/*TODO*///					{
-/*TODO*///						if (dirtycolor[i])
-/*TODO*///						{
-/*TODO*///							int r,g,b;
-/*TODO*///
-/*TODO*///							dirtycolor[i] = 0;
-/*TODO*///
-/*TODO*///							r = current_palette[3*i+0];
-/*TODO*///							g = current_palette[3*i+1];
-/*TODO*///							b = current_palette[3*i+2];
-/*TODO*///							if (i != Machine->uifont->colortable[1])	/* don't adjust the user interface text */
-/*TODO*///							{
-/*TODO*///								r = bright_lookup[r];
-/*TODO*///								g = bright_lookup[g];
-/*TODO*///								b = bright_lookup[b];
-/*TODO*///							}
-/*TODO*///							palette_16bit_lookup[i] = makecol(r,g,b) * 0x10001;
-/*TODO*///						}
-/*TODO*///					}
-/*TODO*///				}
-/*TODO*///			}
-/*TODO*///		}
-/*TODO*///
+		}
+
 /*TODO*///		if (show_debugger)
 /*TODO*///		{
 /*TODO*///			update_screen_debugger(bitmap);
@@ -2559,10 +2598,10 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
 /*TODO*///
 /*TODO*///	/* Check for PGUP, PGDN and pan screen */
 /*TODO*///	pan_display();
-/*TODO*///
-/*TODO*///	if (input_ui_pressed(IPT_UI_FRAMESKIP_INC))
+
+/*TODO*///	if (input_ui_pressed(IPT_UI_FRAMESKIP_INC) != 0)
 /*TODO*///	{
-/*TODO*///		if (autoframeskip)
+/*TODO*///		if (autoframeskip != 0)
 /*TODO*///		{
 /*TODO*///			autoframeskip = 0;
 /*TODO*///			frameskip = 0;
@@ -2577,55 +2616,70 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
 /*TODO*///			else
 /*TODO*///				frameskip++;
 /*TODO*///		}
-/*TODO*///
+
 /*TODO*///		if (showfps == 0)
 /*TODO*///			showfpstemp = 2*video_fps;
-/*TODO*///
-/*TODO*///		/* reset the frame counter every time the frameskip key is pressed, so */
-/*TODO*///		/* we'll measure the average FPS on a consistent status. */
+
+		/* reset the frame counter every time the frameskip key is pressed, so */
+		/* we'll measure the average FPS on a consistent status. */
 /*TODO*///		frames_displayed = 0;
 /*TODO*///	}
-/*TODO*///
-/*TODO*///	if (input_ui_pressed(IPT_UI_FRAMESKIP_DEC))
-/*TODO*///	{
-/*TODO*///		if (autoframeskip)
-/*TODO*///		{
-/*TODO*///			autoframeskip = 0;
-/*TODO*///			frameskip = FRAMESKIP_LEVELS-1;
-/*TODO*///		}
-/*TODO*///		else
-/*TODO*///		{
-/*TODO*///			if (frameskip == 0)
-/*TODO*///				autoframeskip = 1;
-/*TODO*///			else
-/*TODO*///				frameskip--;
-/*TODO*///		}
-/*TODO*///
-/*TODO*///		if (showfps == 0)
-/*TODO*///			showfpstemp = 2*video_fps;
-/*TODO*///
-/*TODO*///		/* reset the frame counter every time the frameskip key is pressed, so */
-/*TODO*///		/* we'll measure the average FPS on a consistent status. */
-/*TODO*///		frames_displayed = 0;
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	if (input_ui_pressed(IPT_UI_THROTTLE))
-/*TODO*///	{
-/*TODO*///		throttle ^= 1;
-/*TODO*///
-/*TODO*///		/* reset the frame counter every time the throttle key is pressed, so */
-/*TODO*///		/* we'll measure the average FPS on a consistent status. */
-/*TODO*///		frames_displayed = 0;
-/*TODO*///	}
-/*TODO*///
-/*TODO*///
-/*TODO*///	frameskip_counter = (frameskip_counter + 1) % FRAMESKIP_LEVELS;
-/*TODO*///
+
+	/*TODO*///if (input_ui_pressed(IPT_UI_FRAMESKIP_DEC) != 0)
+	/*TODO*///{
+	/*TODO*///	if (autoframeskip != 0)
+	/*TODO*///	{
+	/*TODO*///		autoframeskip = 0;
+	/*TODO*///		frameskip = FRAMESKIP_LEVELS-1;
+	/*TODO*///	}
+	/*TODO*///	else
+	/*TODO*///	{
+	/*TODO*///		if (frameskip == 0)
+	/*TODO*///			autoframeskip = 1;
+	/*TODO*///		else
+	/*TODO*///			frameskip--;
+	/*TODO*///	}
+
+	/*TODO*///	if (showfps == 0)
+	/*TODO*///		showfpstemp = 2*video_fps;
+
+		/* reset the frame counter every time the frameskip key is pressed, so */
+		/* we'll measure the average FPS on a consistent status. */
+	/*TODO*///	frames_displayed = 0;
+	/*TODO*///}
+
+	/*TODO*///if (input_ui_pressed(IPT_UI_THROTTLE) != 0)
+	/*TODO*///{
+	/*TODO*///	throttle ^= 1;
+
+		/* reset the frame counter every time the throttle key is pressed, so */
+		/* we'll measure the average FPS on a consistent status. */
+	/*TODO*///	frames_displayed = 0;
+	/*TODO*///}
+
+
+	/*TODO*///frameskip_counter = (frameskip_counter + 1) % FRAMESKIP_LEVELS;
+
 /*TODO*///	poll_joysticks();
-/*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*///
+
+         blitscreen_dirty1_vga();
+         update_audio();
+         
+         /* OLD VIDEO VERSION just to remember */
+         
+         clock_counter = (clock_counter + 1) % MEMORY;
+            if ((curr - prev1[clock_counter]) != 0) {
+                long divdr = (int) Machine.drv.frames_per_second * (curr - prev1[clock_counter]) / (100L * MEMORY);
+
+                speed = (int) ((UCLOCKS_PER_SEC * (frameskip + 1) + divdr / 2L) / divdr);
+            }
+
+            prev1[clock_counter] = curr;
+         
+    }
+
+
+
 /*TODO*///void osd_set_gamma(float _gamma)
 /*TODO*///{
 /*TODO*///	int i;
