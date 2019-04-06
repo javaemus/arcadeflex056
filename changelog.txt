@@ -1,3 +1,7 @@
+06/04/2019
+==========
+-Added preliminary version of tnzs driver (WIP)
+
 05/04/2019
 ==========
 -Video class 0.56 fully ported!

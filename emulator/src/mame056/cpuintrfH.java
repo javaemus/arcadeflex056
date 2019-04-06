@@ -288,10 +288,12 @@ public class cpuintrfH {
 /*TODO*///#define		cpunum_get_sp(cpu)			cpunum_get_reg(cpu, REG_SP)
 /*TODO*///#define		cpunum_set_pc(cpu, val)		cpunum_set_reg(cpu, REG_PC, val)
 /*TODO*///#define		cpunum_set_sp(cpu, val)		cpunum_set_reg(cpu, REG_SP, val)
-/*TODO*///
-/*TODO*////* this is kind of gross - is it necessary */
-/*TODO*///#define 	cpu_geturnpc() 				activecpu_get_reg(REG_SP_CONTENTS)
-/*TODO*///
+
+    /* this is kind of gross - is it necessary */
+    public static int cpu_geturnpc(){
+        return activecpu_get_reg(REG_SP_CONTENTS);
+    }
+
     /* map older cpu_* functions to activecpu_* */
     public static int cpu_get_pc() {
         return activecpu_get_pc();
