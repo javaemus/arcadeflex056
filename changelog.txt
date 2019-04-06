@@ -1,6 +1,7 @@
 06/04/2019
 ==========
 -Added preliminary version of tnzs driver (WIP)
+-Added tp84 driver (fully playable)
 
 05/04/2019
 ==========

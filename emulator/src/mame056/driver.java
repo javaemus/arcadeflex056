@@ -54,6 +54,7 @@ import static mame056.drivers.hyperspt.*;
 import static mame056.drivers.tehkanwc.*;
 import static mame056.drivers.popeye.*;
 import static mame056.drivers.tnzs.*;
+import static mame056.drivers.tp84.*;
 
 public class driver {
 
@@ -2632,8 +2633,8 @@ public class driver {
         /*TODO*///	driver_circusc2,	/* GX380 (c) 1984 */
         /*TODO*///	driver_circuscc,	/* GX380 (c) 1984 + Centuri license */
         /*TODO*///	driver_circusce,	/* GX380 (c) 1984 + Centuri license */
-        /*TODO*///	driver_tp84,		/* GX388 (c) 1984 */
-        /*TODO*///	driver_tp84a,		/* GX388 (c) 1984 */
+        driver_tp84,		/* GX388 (c) 1984 */
+        driver_tp84a,		/* GX388 (c) 1984 */
         driver_hyperspt,	/* GX330 (c) 1984 + Centuri */
         driver_hpolym84,	/* GX330 (c) 1984 */
         /*TODO*///	driver_sbasketb,	/* GX405 (c) 1984 */
