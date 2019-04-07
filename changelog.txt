@@ -1,3 +1,7 @@
+07/04/2019
+==========
+-Added MSM5205 sound and added sound to Kchamp driver
+
 06/04/2019
 ==========
 -Added preliminary version of tnzs driver (WIP)
