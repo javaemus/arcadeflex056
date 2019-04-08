@@ -56,6 +56,7 @@ import static mame056.drivers.popeye.*;
 import static mame056.drivers.tnzs.*;
 import static mame056.drivers.tp84.*;
 import static mame056.drivers.snk.*;
+import static mame056.drivers.hal21.*;
 
 public class driver {
 
@@ -3104,9 +3105,9 @@ public class driver {
         /*TODO*///	driver_madcrash,	/* A2005      (c) 1984 */
         /*TODO*///	driver_vangrd2,	/*            (c) 1984 */
         /*TODO*///	driver_sgladiat,	/* A3006      (c) 1984 */
-        /*TODO*///	driver_hal21,		/*            (c) 1985 */
-        /*TODO*///	driver_hal21j,	/*            (c) 1985 (Japan) */
-        /*TODO*///	driver_aso,		/*            (c) 1985 */
+        driver_hal21,		/*            (c) 1985 */
+        driver_hal21j,	/*            (c) 1985 (Japan) */
+        driver_aso,		/*            (c) 1985 */
         driver_tnk3,		/* A5001      (c) 1985 */
         driver_tnk3j,		/* A5001      (c) 1985 */
         driver_athena,	/*       'UP' (c) 1986 */

@@ -2,6 +2,7 @@
 ==========
 -Added MSM5205 sound and added sound to Kchamp driver
 -Added preliminary version of snk driver (WIP)
+-Added preliminary version of hal21 driver (WIP)
 
 06/04/2019
 ==========

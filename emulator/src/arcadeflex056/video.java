@@ -2225,6 +2225,7 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
         };
 
     static long last=0;
+    static int frameskipadjust;
     /* Update the display. */
     public static void osd_update_video_and_audio(mame_bitmap game_bitmap, /*mame_bitmap debug_bitmap,*/ int leds_status)
     {
@@ -2547,7 +2548,7 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
 /*TODO*///		{
 /*TODO*///			/* copy the bitmap to screen memory */
 /*TODO*///			profiler_mark(PROFILER_BLIT);
-/*TODO*///			update_screen(bitmap);
+/*TODO*///			update_screen(game_bitmap);
 /*TODO*///			profiler_mark(PROFILER_END);
 /*TODO*///		}
 /*TODO*///
@@ -2558,44 +2559,44 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
 /*TODO*///
 /*TODO*///		if (use_dirty) init_dirty(0);
 /*TODO*///
-/*TODO*///
-/*TODO*///		if (throttle && autoframeskip && frameskip_counter == 0)
-/*TODO*///		{
+
+		if ((throttle!=0) && (autoframeskip!=0) && frameskip_counter == 0)
+		{
 /*TODO*///			static int frameskipadjust;
-/*TODO*///			int adjspeed;
-/*TODO*///
-/*TODO*///			/* adjust speed to video refresh rate if vsync is on */
-/*TODO*///			adjspeed = speed * video_fps / vsync_frame_rate;
-/*TODO*///
-/*TODO*///			if (adjspeed >= 100)
-/*TODO*///			{
-/*TODO*///				frameskipadjust++;
-/*TODO*///				if (frameskipadjust >= 3)
-/*TODO*///				{
-/*TODO*///					frameskipadjust = 0;
-/*TODO*///					if (frameskip > 0) frameskip--;
-/*TODO*///				}
-/*TODO*///			}
-/*TODO*///			else
-/*TODO*///			{
-/*TODO*///				if (adjspeed < 80)
-/*TODO*///					frameskipadjust -= (90 - adjspeed) / 5;
-/*TODO*///				else
-/*TODO*///				{
-/*TODO*///					/* don't push frameskip too far if we are close to 100% speed */
-/*TODO*///					if (frameskip < 8)
-/*TODO*///						frameskipadjust--;
-/*TODO*///				}
-/*TODO*///
-/*TODO*///				while (frameskipadjust <= -2)
-/*TODO*///				{
-/*TODO*///					frameskipadjust += 2;
-/*TODO*///					if (frameskip < FRAMESKIP_LEVELS-1) frameskip++;
-/*TODO*///				}
-/*TODO*///			}
-/*TODO*///		}
+			int adjspeed;
+
+			/* adjust speed to video refresh rate if vsync is on */
+			adjspeed = speed * video_fps / vsync_frame_rate;
+
+			if (adjspeed >= 100)
+			{
+				frameskipadjust++;
+				if (frameskipadjust >= 3)
+				{
+					frameskipadjust = 0;
+					if (frameskip > 0) frameskip--;
+				}
+			}
+			else
+			{
+				if (adjspeed < 80)
+					frameskipadjust -= (90 - adjspeed) / 5;
+				else
+				{
+					/* don't push frameskip too far if we are close to 100% speed */
+					if (frameskip < 8)
+						frameskipadjust--;
+				}
+
+				while (frameskipadjust <= -2)
+				{
+					frameskipadjust += 2;
+					if (frameskip < FRAMESKIP_LEVELS-1) frameskip++;
+				}
+			}
+		}
 /*TODO*///	}
-/*TODO*///
+
 /*TODO*///	/* Check for PGUP, PGDN and pan screen */
 /*TODO*///	pan_display();
 
@@ -2658,7 +2659,7 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
 	/*TODO*///}
 
 
-	/*TODO*///frameskip_counter = (frameskip_counter + 1) % FRAMESKIP_LEVELS;
+	frameskip_counter = (frameskip_counter + 1) % FRAMESKIP_LEVELS;
 
 /*TODO*///	poll_joysticks();
 
@@ -2667,7 +2668,7 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
          
          /* OLD VIDEO VERSION just to remember */
          
-         clock_counter = (clock_counter + 1) % MEMORY;
+         /*clock_counter = (clock_counter + 1) % MEMORY;
             if ((curr - prev1[clock_counter]) != 0) {
                 long divdr = (int) Machine.drv.frames_per_second * (curr - prev1[clock_counter]) / (100L * MEMORY);
 
@@ -2675,7 +2676,7 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
             }
 
             prev1[clock_counter] = curr;
-         
+         */
     }
 
 
