@@ -131,19 +131,19 @@ public class hal21
 			bit2 = (color_prom.read(i) >> 2) & 0x01;
 			bit3 = (color_prom.read(i) >> 3) & 0x01;
 			r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-                        palette[_palette++] = (char) r;
+                        //palette[_palette++] = (char) r;
 			bit0 = (color_prom.read(i + 2*num_colors) >> 1) & 0x01;
 			bit1 = (color_prom.read(i + num_colors) >> 2) & 0x01;
 			bit2 = (color_prom.read(i + num_colors) >> 3) & 0x01;
 			bit3 = (color_prom.read(i) >> 0) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-                        palette[_palette++] = (char) g;
+                        //palette[_palette++] = (char) g;
 			bit0 = (color_prom.read(i + 2*num_colors) >> 0) & 0x01;
 			bit1 = (color_prom.read(i + 2*num_colors) >> 3) & 0x01;
 			bit2 = (color_prom.read(i + num_colors) >> 0) & 0x01;
 			bit3 = (color_prom.read(i + num_colors) >> 1) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-                        palette[_palette++] = (char) b;
+                        //palette[_palette++] = (char) b;
 			palette_set_color(i,r,g,b);
 		}
             }

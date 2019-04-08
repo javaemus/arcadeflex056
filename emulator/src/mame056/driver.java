@@ -57,6 +57,7 @@ import static mame056.drivers.tnzs.*;
 import static mame056.drivers.tp84.*;
 import static mame056.drivers.snk.*;
 import static mame056.drivers.hal21.*;
+import static mame056.drivers.ladybug.*;
 
 public class driver {
 
@@ -635,10 +636,10 @@ public class driver {
         /*TODO*///	driver_nomnlnd,	/* (c) [1980?] */
         /*TODO*///	driver_nomnlndg,	/* (c) [1980?] + Gottlieb */
         /*TODO*///	driver_cheekyms,	/* (c) [1980?] */
-        /*TODO*///	driver_ladybug,	/* (c) 1981 */
-        /*TODO*///	driver_ladybugb,	/* bootleg */
-        /*TODO*///	driver_snapjack,	/* (c) */
-        /*TODO*///	driver_cavenger,	/* (c) 1981 */
+        	driver_ladybug,	/* (c) 1981 */
+        	driver_ladybugb,	/* bootleg */
+        	driver_snapjack,	/* (c) */
+        	driver_cavenger,	/* (c) 1981 */
         /*TODO*///	driver_mrdo,		/* (c) 1982 */
         /*TODO*///	driver_mrdot,		/* (c) 1982 + Taito license */
         /*TODO*///	driver_mrdofix,	/* (c) 1982 + Taito license */
