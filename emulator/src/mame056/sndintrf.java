@@ -25,6 +25,7 @@ import mame056.sound.sn76496;
 import mame056.sound.tms36xx;
 import mame056.sound.ay8910;
 import mame056.sound.namco;
+import mame056.sound.MSM5205;
 
 public class sndintrf {
 
@@ -249,9 +250,6 @@ public class sndintrf {
 /*TODO*///int OKIM6295_num(const struct MachineSound *msound) { return ((struct OKIM6295interface*)msound->sound_interface)->num; }
 /*TODO*///int OKIM6295_clock(const struct MachineSound *msound) { return ((struct OKIM6295interface*)msound->sound_interface)->frequency[0]; }
 /*TODO*///#endif
-/*TODO*///#if (HAS_MSM5205)
-/*TODO*///int MSM5205_num(const struct MachineSound *msound) { return ((struct MSM5205interface*)msound->sound_interface)->num; }
-/*TODO*///#endif
 /*TODO*///#if (HAS_HC55516)
 /*TODO*///int HC55516_num(const struct MachineSound *msound) { return ((struct hc55516_interface*)msound->sound_interface)->num; }
 /*TODO*///#endif
@@ -305,9 +303,6 @@ public class sndintrf {
 /*TODO*///#endif
 /*TODO*///#if (HAS_NES)
 /*TODO*///int NES_num(const struct MachineSound *msound) { return ((struct NESinterface*)msound->sound_interface)->num; }
-/*TODO*///#endif
-/*TODO*///#if (HAS_MSM5205)
-/*TODO*///int MSM5205_clock(const struct MachineSound *msound) { return ((struct MSM5205interface*)msound->sound_interface)->baseclock; }
 /*TODO*///#endif
 /*TODO*///#if (HAS_UPD7759)
 /*TODO*///int UPD7759_clock(const struct MachineSound *msound) { return ((struct UPD7759_interface*)msound->sound_interface)->clock_rate; }
@@ -647,19 +642,7 @@ public class sndintrf {
                 /*TODO*///		0
                 /*TODO*///	},
                 new Dummy_snd(),
-                /*TODO*///#endif
-                /*TODO*///#if (HAS_MSM5205)
-                /*TODO*///    {
-                /*TODO*///		SOUND_MSM5205,
-                /*TODO*///		"MSM5205",
-                /*TODO*///		MSM5205_num,
-                /*TODO*///		MSM5205_clock,
-                /*TODO*///		MSM5205_sh_start,
-                /*TODO*///		0,
-                /*TODO*///		0,
-                /*TODO*///		MSM5205_sh_reset,
-                /*TODO*///	},
-                new Dummy_snd(),
+                new MSM5205(),
                 /*TODO*///#endif
                 /*TODO*///#if (HAS_UPD7759)
                 /*TODO*///    {
