@@ -1061,54 +1061,56 @@ public class palette {
 /*TODO*///	COMBINE_DATA(&paletteram16[offset]);
 /*TODO*///	changecolor_RRRRGGGGBBBBRGBx(offset,paletteram16[offset]);
 /*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*///
-/*TODO*////******************************************************************************
-/*TODO*///
-/*TODO*/// Commonly used color PROM handling functions
-/*TODO*///
-/*TODO*///******************************************************************************/
-/*TODO*///
-/*TODO*////***************************************************************************
-/*TODO*///
-/*TODO*///  This assumes the commonly used resistor values:
-/*TODO*///
-/*TODO*///  bit 3 -- 220 ohm resistor  -- RED/GREEN/BLUE
-/*TODO*///        -- 470 ohm resistor  -- RED/GREEN/BLUE
-/*TODO*///        -- 1  kohm resistor  -- RED/GREEN/BLUE
-/*TODO*///  bit 0 -- 2.2kohm resistor  -- RED/GREEN/BLUE
-/*TODO*///
-/*TODO*///***************************************************************************/
-/*TODO*///void palette_RRRR_GGGG_BBBB_convert_prom(unsigned char *obsolete,unsigned short *colortable,const unsigned char *color_prom)
-/*TODO*///{
-/*TODO*///	int i;
-/*TODO*///
-/*TODO*///
-/*TODO*///	for (i = 0;i < Machine->drv->total_colors;i++)
-/*TODO*///	{
-/*TODO*///		int bit0,bit1,bit2,bit3,r,g,b;
-/*TODO*///
-/*TODO*///		/* red component */
-/*TODO*///		bit0 = (color_prom[i] >> 0) & 0x01;
-/*TODO*///		bit1 = (color_prom[i] >> 1) & 0x01;
-/*TODO*///		bit2 = (color_prom[i] >> 2) & 0x01;
-/*TODO*///		bit3 = (color_prom[i] >> 3) & 0x01;
-/*TODO*///		r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-/*TODO*///		/* green component */
-/*TODO*///		bit0 = (color_prom[i + Machine->drv->total_colors] >> 0) & 0x01;
-/*TODO*///		bit1 = (color_prom[i + Machine->drv->total_colors] >> 1) & 0x01;
-/*TODO*///		bit2 = (color_prom[i + Machine->drv->total_colors] >> 2) & 0x01;
-/*TODO*///		bit3 = (color_prom[i + Machine->drv->total_colors] >> 3) & 0x01;
-/*TODO*///		g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-/*TODO*///		/* blue component */
-/*TODO*///		bit0 = (color_prom[i + 2*Machine->drv->total_colors] >> 0) & 0x01;
-/*TODO*///		bit1 = (color_prom[i + 2*Machine->drv->total_colors] >> 1) & 0x01;
-/*TODO*///		bit2 = (color_prom[i + 2*Machine->drv->total_colors] >> 2) & 0x01;
-/*TODO*///		bit3 = (color_prom[i + 2*Machine->drv->total_colors] >> 3) & 0x01;
-/*TODO*///		b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-/*TODO*///
-/*TODO*///		palette_set_color(i,r,g,b);
-/*TODO*///	}
-/*TODO*///}    
+
+
+
+    /******************************************************************************
+
+     Commonly used color PROM handling functions
+
+    ******************************************************************************/
+
+    /***************************************************************************
+
+      This assumes the commonly used resistor values:
+
+      bit 3 -- 220 ohm resistor  -- RED/GREEN/BLUE
+            -- 470 ohm resistor  -- RED/GREEN/BLUE
+            -- 1  kohm resistor  -- RED/GREEN/BLUE
+      bit 0 -- 2.2kohm resistor  -- RED/GREEN/BLUE
+
+    ***************************************************************************/
+    public static VhConvertColorPromPtr palette_RRRR_GGGG_BBBB_convert_prom = new VhConvertColorPromPtr() {
+        public void handler(char[] palette, char[] colortable, UBytePtr color_prom) {
+            int i;
+
+
+            for (i = 0;i < Machine.drv.total_colors;i++)
+            {
+                    int bit0,bit1,bit2,bit3,r,g,b;
+
+                    /* red component */
+                    bit0 = (color_prom.read(i) >> 0) & 0x01;
+                    bit1 = (color_prom.read(i) >> 1) & 0x01;
+                    bit2 = (color_prom.read(i) >> 2) & 0x01;
+                    bit3 = (color_prom.read(i) >> 3) & 0x01;
+                    r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
+                    /* green component */
+                    bit0 = (color_prom.read(i + Machine.drv.total_colors) >> 0) & 0x01;
+                    bit1 = (color_prom.read(i + Machine.drv.total_colors) >> 1) & 0x01;
+                    bit2 = (color_prom.read(i + Machine.drv.total_colors) >> 2) & 0x01;
+                    bit3 = (color_prom.read(i + Machine.drv.total_colors) >> 3) & 0x01;
+                    g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
+                    /* blue component */
+                    bit0 = (color_prom.read(i + 2*Machine.drv.total_colors) >> 0) & 0x01;
+                    bit1 = (color_prom.read(i + 2*Machine.drv.total_colors) >> 1) & 0x01;
+                    bit2 = (color_prom.read(i + 2*Machine.drv.total_colors) >> 2) & 0x01;
+                    bit3 = (color_prom.read(i + 2*Machine.drv.total_colors) >> 3) & 0x01;
+                    b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
+
+                    palette_set_color(i,r,g,b);
+            }
+        }
+    };
+            
 }

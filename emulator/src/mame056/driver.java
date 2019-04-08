@@ -55,6 +55,7 @@ import static mame056.drivers.tehkanwc.*;
 import static mame056.drivers.popeye.*;
 import static mame056.drivers.tnzs.*;
 import static mame056.drivers.tp84.*;
+import static mame056.drivers.snk.*;
 
 public class driver {
 
@@ -3106,28 +3107,28 @@ public class driver {
         /*TODO*///	driver_hal21,		/*            (c) 1985 */
         /*TODO*///	driver_hal21j,	/*            (c) 1985 (Japan) */
         /*TODO*///	driver_aso,		/*            (c) 1985 */
-        /*TODO*///	driver_tnk3,		/* A5001      (c) 1985 */
-        /*TODO*///	driver_tnk3j,		/* A5001      (c) 1985 */
-        /*TODO*///	driver_athena,	/*       'UP' (c) 1986 */
-        /*TODO*///	driver_fitegolf,	/*       'GU' (c) 1988 */
-        /*TODO*///	driver_ikari,		/* A5004 'IW' (c) 1986 */
-        /*TODO*///	driver_ikarijp,	/* A5004 'IW' (c) 1986 (Japan) */
-        /*TODO*///	driver_ikarijpb,	/* bootleg */
-        /*TODO*///	driver_victroad,	/*            (c) 1986 */
-        /*TODO*///	driver_dogosoke,	/*            (c) 1986 */
-        /*TODO*///	driver_gwar,		/* A7003 'GV' (c) 1987 */
-        /*TODO*///	driver_gwarj,		/* A7003 'GV' (c) 1987 (Japan) */
-        /*TODO*///	driver_gwara,		/* A7003 'GV' (c) 1987 */
-        /*TODO*///	driver_gwarb,		/* bootleg */
-        /*TODO*///	driver_bermudat,	/* A6003 'WW' (c) 1987 */
-        /*TODO*///	driver_bermudaj,	/* A6003 'WW' (c) 1987 */
-        /*TODO*///	driver_bermudaa,	/* A6003 'WW' (c) 1987 */
-        /*TODO*///	driver_worldwar,	/* A6003 'WW' (c) 1987 */
-        /*TODO*///	driver_psychos,	/*       'PS' (c) 1987 */
-        /*TODO*///	driver_psychosj,	/*       'PS' (c) 1987 (Japan) */
-        /*TODO*///	driver_chopper,	/* A7003 'KK' (c) 1988 */
-        /*TODO*///	driver_legofair,	/* A7003 'KK' (c) 1988 */
-        /*TODO*///	driver_ftsoccer,	/*            (c) 1988 */
+        driver_tnk3,		/* A5001      (c) 1985 */
+        driver_tnk3j,		/* A5001      (c) 1985 */
+        driver_athena,	/*       'UP' (c) 1986 */
+        driver_fitegolf,	/*       'GU' (c) 1988 */
+        driver_ikari,		/* A5004 'IW' (c) 1986 */
+        driver_ikarijp,	/* A5004 'IW' (c) 1986 (Japan) */
+        driver_ikarijpb,	/* bootleg */
+        driver_victroad,	/*            (c) 1986 */
+        driver_dogosoke,	/*            (c) 1986 */
+        driver_gwar,		/* A7003 'GV' (c) 1987 */
+        driver_gwarj,		/* A7003 'GV' (c) 1987 (Japan) */
+        driver_gwara,		/* A7003 'GV' (c) 1987 */
+        driver_gwarb,		/* bootleg */
+        driver_bermudat,	/* A6003 'WW' (c) 1987 */
+        driver_bermudaj,	/* A6003 'WW' (c) 1987 */
+        driver_bermudaa,	/* A6003 'WW' (c) 1987 */
+        driver_worldwar,	/* A6003 'WW' (c) 1987 */
+        driver_psychos,	/*       'PS' (c) 1987 */
+        driver_psychosj,	/*       'PS' (c) 1987 (Japan) */
+        driver_chopper,	/* A7003 'KK' (c) 1988 */
+        driver_legofair,	/* A7003 'KK' (c) 1988 */
+        driver_ftsoccer,	/*            (c) 1988 */
         /*TODO*///	driver_tdfever,	/* A6006 'TD' (c) 1987 */
         /*TODO*///	driver_tdfeverj,	/* A6006 'TD' (c) 1987 */
         /*TODO*///	driver_ikari3,	/* A7007 'IK3'(c) 1989 */

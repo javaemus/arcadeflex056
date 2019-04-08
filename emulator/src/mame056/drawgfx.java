@@ -28,7 +28,7 @@ public class drawgfx {
     public static final int SHIFT2 = 16;
     public static final int SHIFT3 = 24;
 
-    /*TODO*///UINT8 gfx_drawmode_table[256];
+    public static int[] gfx_drawmode_table=new int[256];
     public static plot_pixel_procPtr plot_pixel;
     public static read_pixel_procPtr read_pixel;
     public static plot_box_procPtr plot_box;
