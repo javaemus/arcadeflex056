@@ -4,6 +4,7 @@
 -Added preliminary version of snk driver (WIP)
 -Added preliminary version of hal21 driver (WIP)
 -Added ladybug driver (Full Playable)
+-Solved speed video issues
 
 06/04/2019
 ==========

@@ -2336,8 +2336,8 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
 /*TODO*///					curr = ticker();
                                     curr = uclock();
 
-                                } //while ((throttle != 0) && (curr - last < (frameskip + 1) * 1000000000 / Machine.drv.frames_per_second));
-                                while (TICKS_PER_SEC / (curr - last) > video_fps * 11 /10);
+                                } while ((throttle != 0) && (curr - last < (frameskip + 1) * 1000000000 / Machine.drv.frames_per_second));
+                                //while (TICKS_PER_SEC / (curr - last) > video_fps * 11 /10);
 /*TODO*///
 				last = curr;
 /*TODO*///			}
@@ -2473,9 +2473,9 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
 							}
 							else
 							{
-							/*TODO*///	adjusted_palette.r >>= 2;
-							/*TODO*///	adjusted_palette.g >>= 2;
-							/*TODO*///	adjusted_palette.b >>= 2;
+								adjusted_palette.r >>= 2;
+								adjusted_palette.g >>= 2;
+								adjusted_palette.b >>= 2;
 							}
 							set_color(i,adjusted_palette);
 						}
@@ -2666,17 +2666,6 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
          blitscreen_dirty1_vga();
          update_audio();
          
-         /* OLD VIDEO VERSION just to remember */
-         
-         /*clock_counter = (clock_counter + 1) % MEMORY;
-            if ((curr - prev1[clock_counter]) != 0) {
-                long divdr = (int) Machine.drv.frames_per_second * (curr - prev1[clock_counter]) / (100L * MEMORY);
-
-                speed = (int) ((UCLOCKS_PER_SEC * (frameskip + 1) + divdr / 2L) / divdr);
-            }
-
-            prev1[clock_counter] = curr;
-         */
     }
 
 
