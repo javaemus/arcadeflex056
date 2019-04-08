@@ -20,6 +20,7 @@ import static arcadeflex056.video.*;
 import static common.libc.expressions.NOT;
 import common.subArrays.IntArray;
 import common.subArrays.UShortArray;
+import static mame056.tilemapC.priority_bitmap;
 
 public class drawgfx {
 
@@ -1097,15 +1098,15 @@ public class drawgfx {
         common_drawgfx(dest, gfx, code, color, flipx, flipy, sx, sy, clip, transparency, transparent_color, null, 0);
     }
 
-    /*TODO*///
-/*TODO*///void pdrawgfx(struct mame_bitmap *dest,const struct GfxElement *gfx,
-/*TODO*///		unsigned int code,unsigned int color,int flipx,int flipy,int sx,int sy,
-/*TODO*///		const struct rectangle *clip,int transparency,int transparent_color,UINT32 priority_mask)
-/*TODO*///{
+    
+    public static void pdrawgfx(mame_bitmap dest, GfxElement gfx,
+		int code, int color,int flipx,int flipy,int sx,int sy,
+		rectangle clip,int transparency,int transparent_color,int priority_mask)
+{
 /*TODO*///	profiler_mark(PROFILER_DRAWGFX);
-/*TODO*///	common_drawgfx(dest,gfx,code,color,flipx,flipy,sx,sy,clip,transparency,transparent_color,priority_bitmap,priority_mask | (1<<31));
+            common_drawgfx(dest,gfx,code,color,flipx,flipy,sx,sy,clip,transparency,transparent_color,priority_bitmap,priority_mask | (1<<31));
 /*TODO*///	profiler_mark(PROFILER_END);
-/*TODO*///}
+    }
 /*TODO*///
 /*TODO*///void mdrawgfx(struct mame_bitmap *dest,const struct GfxElement *gfx,
 /*TODO*///		unsigned int code,unsigned int color,int flipx,int flipy,int sx,int sy,

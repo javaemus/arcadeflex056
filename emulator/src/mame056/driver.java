@@ -58,6 +58,7 @@ import static mame056.drivers.tp84.*;
 import static mame056.drivers.snk.*;
 import static mame056.drivers.hal21.*;
 import static mame056.drivers.ladybug.*;
+import static mame056.drivers.docastle.*;
 
 public class driver {
 
@@ -647,17 +648,17 @@ public class driver {
         /*TODO*///	driver_mrdu,		/* bootleg */
         /*TODO*///	driver_mrdoy,		/* bootleg */
         /*TODO*///	driver_yankeedo,	/* bootleg */
-        /*TODO*///	driver_docastle,	/* (c) 1983 */
-        /*TODO*///	driver_docastl2,	/* (c) 1983 */
-        /*TODO*///	driver_douni,		/* (c) 1983 */
-        /*TODO*///	driver_dorunrun,	/* (c) 1984 */
-        /*TODO*///	driver_dorunru2,	/* (c) 1984 */
-        /*TODO*///	driver_dorunruc,	/* (c) 1984 */
-        /*TODO*///	driver_spiero,	/* (c) 1987 */
-        /*TODO*///	driver_dowild,	/* (c) 1984 */
-        /*TODO*///	driver_jjack,		/* (c) 1984 */
-        /*TODO*///	driver_kickridr,	/* (c) 1984 */
-        /*TODO*///
+        	driver_docastle,	/* (c) 1983 */
+        	driver_docastl2,	/* (c) 1983 */
+        	driver_douni,		/* (c) 1983 */
+        	driver_dorunrun,	/* (c) 1984 */
+        	driver_dorunru2,	/* (c) 1984 */
+        	driver_dorunruc,	/* (c) 1984 */
+        	driver_spiero,	/* (c) 1987 */
+        	driver_dowild,	/* (c) 1984 */
+        	driver_jjack,		/* (c) 1984 */
+        	driver_kickridr,	/* (c) 1984 */
+        
         /*TODO*///	/* Nintendo games */
         /*TODO*///	driver_radarscp,	/* (c) 1980 Nintendo */
         /*TODO*///	driver_dkong,		/* (c) 1981 Nintendo of America */
