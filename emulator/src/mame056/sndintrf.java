@@ -26,6 +26,7 @@ import mame056.sound.tms36xx;
 import mame056.sound.ay8910;
 import mame056.sound.namco;
 import mame056.sound.MSM5205;
+import mame056.sound.vlm5030;
 
 public class sndintrf {
 
@@ -603,19 +604,7 @@ public class sndintrf {
                 /*TODO*///		0
                 /*TODO*///	},
                 new Dummy_snd(),
-                /*TODO*///#endif
-                /*TODO*///#if (HAS_VLM5030)
-                /*TODO*///    {
-                /*TODO*///		SOUND_VLM5030,
-                /*TODO*///		"VLM5030",
-                /*TODO*///		0,
-                /*TODO*///		VLM5030_clock,
-                /*TODO*///		VLM5030_sh_start,
-                /*TODO*///		VLM5030_sh_stop,
-                /*TODO*///		VLM5030_sh_update,
-                /*TODO*///		0
-                /*TODO*///	},
-                new Dummy_snd(),
+                new vlm5030(),
                 /*TODO*///#endif
                 /*TODO*///#if (HAS_ADPCM)
                 /*TODO*///    {
