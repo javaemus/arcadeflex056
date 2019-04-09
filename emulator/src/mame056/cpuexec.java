@@ -826,32 +826,32 @@ public class cpuexec {
 
 
 
-/*TODO*////*************************************
-/*TODO*/// *
-/*TODO*/// *	Returns time until given scanline
-/*TODO*/// *
-/*TODO*/// *************************************/
-/*TODO*///
-/*TODO*///double cpu_getscanlinetime(int scanline)
-/*TODO*///{
-/*TODO*///	double scantime = timer_starttime(refresh_timer) + (double)scanline * scanline_period;
-/*TODO*///	double abstime = timer_get_time();
-/*TODO*///	double result;
-/*TODO*///
-/*TODO*///	/* if we're already past the computed time, count it for the next frame */
-/*TODO*///	if (abstime >= scantime)
-/*TODO*///		scantime += TIME_IN_HZ(Machine->drv->frames_per_second);
-/*TODO*///
-/*TODO*///	/* compute how long from now until that time */
-/*TODO*///	result = scantime - abstime;
-/*TODO*///
-/*TODO*///	/* if it's small, just count a whole frame */
-/*TODO*///	if (result < TIME_IN_NSEC(1))
-/*TODO*///		result = TIME_IN_HZ(Machine->drv->frames_per_second);
-/*TODO*///	return result;
-/*TODO*///}
-/*TODO*///
-/*TODO*///
+    /*************************************
+     *
+     *	Returns time until given scanline
+     *
+     *************************************/
+
+    public static double cpu_getscanlinetime(int scanline)
+    {
+            double scantime = timer_starttime(refresh_timer) + (double)scanline * scanline_period;
+            double abstime = timer_get_time();
+            double result;
+
+            /* if we're already past the computed time, count it for the next frame */
+            if (abstime >= scantime)
+                    scantime += TIME_IN_HZ(Machine.drv.frames_per_second);
+
+            /* compute how long from now until that time */
+            result = scantime - abstime;
+
+            /* if it's small, just count a whole frame */
+            if (result < TIME_IN_NSEC(1))
+                    result = TIME_IN_HZ(Machine.drv.frames_per_second);
+            return result;
+    }
+
+
 /*TODO*///
 /*TODO*////*************************************
 /*TODO*/// *

@@ -98,7 +98,7 @@ public class memoryH {
 /*TODO*///
 /*TODO*////* ----- macros for accessing bytes and words within larger chunks ----- */
 /*TODO*///#ifdef LSB_FIRST
-/*TODO*///	#define BYTE_XOR_BE(a)  	((a) ^ 1)				/* read/write a byte to a 16-bit space */
+	public static int BYTE_XOR_BE(int a){ return((a) ^ 1); }				/* read/write a byte to a 16-bit space */
 /*TODO*///	#define BYTE_XOR_LE(a)  	(a)
 /*TODO*///	#define BYTE4_XOR_BE(a) 	((a) ^ 3)				/* read/write a byte to a 32-bit space */
 /*TODO*///	#define BYTE4_XOR_LE(a) 	(a)
