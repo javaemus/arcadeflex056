@@ -35,6 +35,8 @@ import static mame056.vidhrdw.gunsmoke.*;
 
 // refactor
 import static arcadeflex036.osdepend.logerror;
+import static mame056.sound._2203intfH.*;
+import static mame056.sound._2203intf.*;
 import static mame056.vidhrdw.generic.*;
 
 public class gunsmoke
@@ -107,10 +109,10 @@ public class gunsmoke
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_RAM ),
-		/*TODO*///new Memory_WriteAddress( 0xe000, 0xe000, YM2203_control_port_0_w ),
-		/*TODO*///new Memory_WriteAddress( 0xe001, 0xe001, YM2203_write_port_0_w ),
-		/*TODO*///new Memory_WriteAddress( 0xe002, 0xe002, YM2203_control_port_1_w ),
-		/*TODO*///new Memory_WriteAddress( 0xe003, 0xe003, YM2203_write_port_1_w ),
+		new Memory_WriteAddress( 0xe000, 0xe000, YM2203_control_port_0_w ),
+		new Memory_WriteAddress( 0xe001, 0xe001, YM2203_write_port_0_w ),
+		new Memory_WriteAddress( 0xe002, 0xe002, YM2203_control_port_1_w ),
+		new Memory_WriteAddress( 0xe003, 0xe003, YM2203_write_port_1_w ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -247,16 +249,16 @@ public class gunsmoke
 	
 	
 	
-	/*TODO*///static struct YM2203interface ym2203_interface =
-	/*TODO*///{
-	/*TODO*///	2,			/* 2 chips */
-	/*TODO*///	1500000,	/* 1.5 MHz (?) */
-	/*TODO*///	{ YM2203_VOL(14,22), YM2203_VOL(14,22) },
-	/*TODO*///	{ 0 },
-	/*TODO*///	{ 0 },
-	/*TODO*///	{ 0 },
-	/*TODO*///	{ 0 }
-	/*TODO*///};
+	public static YM2203interface ym2203_interface = new YM2203interface
+	(
+		2,			/* 2 chips */
+		1500000,	/* 1.5 MHz (?) */
+		new int[]{ YM2203_VOL(14,22), YM2203_VOL(14,22) },
+                new ReadHandlerPtr[]{ null, null },
+                new ReadHandlerPtr[]{ null, null },
+                new WriteHandlerPtr[]{ null, null },
+                new WriteHandlerPtr[]{ null, null }
+        );
 	
 	
 	
@@ -295,13 +297,13 @@ public class gunsmoke
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_YM2203,
-		/*TODO*///		ym2203_interface
-		/*TODO*///	)
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_YM2203,
+				ym2203_interface
+			)
+		}
+                
 	);
 	
 	

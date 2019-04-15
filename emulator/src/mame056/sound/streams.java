@@ -173,6 +173,7 @@ public class streams {
     public static int stream_init(String name, int default_mixing_level,
             int sample_rate,
             int param, StreamInitPtr callback) {
+        System.out.println("stream_init");
         int channel;
 
         channel = mixer_allocate_channel(default_mixing_level);

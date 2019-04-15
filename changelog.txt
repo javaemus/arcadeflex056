@@ -1,3 +1,13 @@
+15/04/2019
+==========
+-Added support for ym2203 sound driver (0.56) using fm classes in 0.37b11
+-Added sound to Gunsmoke driver
+
+09/04/2019
+==========
+-irobot driver (WIP/many thing to be done)
+-Added hal21 driver (WIP)
+
 08/04/2019
 ==========
 -Added docastle driver (WIP)

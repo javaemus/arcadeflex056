@@ -206,6 +206,9 @@ import static mame056.palette.*;
 import static mame056.machine.tnzs.*;
 import static mame056.vidhrdw.tnzs.*;
 
+import static mame056.sound._2203intf.*;
+import static mame056.sound._2203intfH.*;
+
 public class tnzs
 {
 	/* prototypes for functions in ../machine/tnzs.c */
@@ -357,8 +360,8 @@ public class tnzs
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
 		new Memory_ReadAddress( 0x8000, 0x9fff, MRA_BANK2 ),
-		/*TODO*///new Memory_ReadAddress( 0xb000, 0xb000, YM2203_status_port_0_r ),
-		/*TODO*///new Memory_ReadAddress( 0xb001, 0xb001, YM2203_read_port_0_r ),
+		new Memory_ReadAddress( 0xb000, 0xb000, YM2203_status_port_0_r ),
+		new Memory_ReadAddress( 0xb001, 0xb001, YM2203_read_port_0_r ),
 		new Memory_ReadAddress( 0xc000, 0xc001, tnzs_mcu_r ),	/* plain input ports in insectx (memory handler */
 										/* changed in insectx_init() ) */
 		new Memory_ReadAddress( 0xd000, 0xdfff, MRA_RAM ),
@@ -373,8 +376,8 @@ public class tnzs
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x9fff, MWA_ROM ),
 		new Memory_WriteAddress( 0xa000, 0xa000, tnzs_bankswitch1_w ),
-		/*TODO*///new Memory_WriteAddress( 0xb000, 0xb000, YM2203_control_port_0_w ),
-		/*TODO*///new Memory_WriteAddress( 0xb001, 0xb001, YM2203_write_port_0_w ),
+		new Memory_WriteAddress( 0xb000, 0xb000, YM2203_control_port_0_w ),
+		new Memory_WriteAddress( 0xb001, 0xb001, YM2203_write_port_0_w ),
 		new Memory_WriteAddress( 0xc000, 0xc001, tnzs_mcu_w ),	/* not present in insectx */
 		new Memory_WriteAddress( 0xd000, 0xdfff, MWA_RAM ),
 		new Memory_WriteAddress( 0xe000, 0xefff, tnzs_workram_sub_w ),
@@ -385,8 +388,8 @@ public class tnzs
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
 		new Memory_ReadAddress( 0x8000, 0x9fff, MRA_BANK2 ),
-		/*TODO*///new Memory_ReadAddress( 0xb000, 0xb000, YM2203_status_port_0_r ),
-		/*TODO*///new Memory_ReadAddress( 0xb001, 0xb001, YM2203_read_port_0_r ),
+		new Memory_ReadAddress( 0xb000, 0xb000, YM2203_status_port_0_r ),
+		new Memory_ReadAddress( 0xb001, 0xb001, YM2203_read_port_0_r ),
 		new Memory_ReadAddress( 0xc000, 0xc000, input_port_2_r ),
 		new Memory_ReadAddress( 0xc001, 0xc001, input_port_3_r ),
 		new Memory_ReadAddress( 0xc002, 0xc002, input_port_4_r ),
@@ -399,8 +402,8 @@ public class tnzs
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x9fff, MWA_ROM ),
 		new Memory_WriteAddress( 0xa000, 0xa000, tnzs_bankswitch1_w ),
-		/*TODO*///new Memory_WriteAddress( 0xb000, 0xb000, YM2203_control_port_0_w ),
-		/*TODO*///new Memory_WriteAddress( 0xb001, 0xb001, YM2203_write_port_0_w ),
+		new Memory_WriteAddress( 0xb000, 0xb000, YM2203_control_port_0_w ),
+		new Memory_WriteAddress( 0xb001, 0xb001, YM2203_write_port_0_w ),
 		new Memory_WriteAddress( 0xd000, 0xdfff, MWA_RAM ),
 		new Memory_WriteAddress( 0xe000, 0xefff, tnzs_workram_sub_w ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
@@ -456,15 +459,15 @@ public class tnzs
 	
 	public static IO_ReadPort tnzsb_readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
-		/*TODO*///new IO_ReadPort( 0x00, 0x00, YM2203_status_port_0_r  ),
+		new IO_ReadPort( 0x00, 0x00, YM2203_status_port_0_r  ),
 		new IO_ReadPort( 0x02, 0x02, soundlatch_r  ),
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
 	public static IO_WritePort tnzsb_writeport[]={
 		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
-		/*TODO*///new IO_WritePort( 0x00, 0x00, YM2203_control_port_0_w  ),
-		/*TODO*///new IO_WritePort( 0x01, 0x01, YM2203_write_port_0_w  ),
+		new IO_WritePort( 0x00, 0x00, YM2203_control_port_0_w  ),
+		new IO_WritePort( 0x01, 0x01, YM2203_write_port_0_w  ),
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
@@ -1378,46 +1381,47 @@ public class tnzs
 	
 	
 	
-	/*TODO*///static struct YM2203interface ym2203_interface =
-	/*TODO*///{
-	/*TODO*///	1,			/* 1 chip */
-	/*TODO*///	3000000,	/* 3 MHz ??? */
-	/*TODO*///	{ YM2203_VOL(30,30) },
-	/*TODO*///	{ input_port_0_r },		/* DSW1 connected to port A */
-	/*TODO*///	{ input_port_1_r },		/* DSW2 connected to port B */
-	/*TODO*///	{ 0 },
-	/*TODO*///	{ 0 }
-	/*TODO*///};
+	public static YM2203interface ym2203_interface = new YM2203interface
+	(
+		1,			/* 1 chip */
+		3000000,	/* 3 MHz ??? */
+		new int[]{ YM2203_VOL(30,30) },
+		new ReadHandlerPtr[]{ input_port_0_r },		/* DSW1 connected to port A */
+		new ReadHandlerPtr[]{ input_port_1_r },		/* DSW2 connected to port B */
+		new WriteHandlerPtr[]{ null },
+		new WriteHandlerPtr[]{ null }
+        );
 	
 	
 	/* handler called by the 2203 emulator when the internal timers cause an IRQ */
-	static void irqhandler(int irq)
-	{
-		cpu_set_nmi_line(2,(irq!=0) ? ASSERT_LINE : CLEAR_LINE);
-	}
+	public static WriteYmHandlerPtr irqhandler = new WriteYmHandlerPtr() {
+            public void handler(int irq) {
+                cpu_set_nmi_line(2,(irq!=0) ? ASSERT_LINE : CLEAR_LINE);
+            }
+        };
 	
-	/*TODO*///static struct YM2203interface ym2203b_interface =
-	/*TODO*///{
-	/*TODO*///	1,			/* 1 chip */
-	/*TODO*///	3000000,	/* 3 MHz ??? */
-	/*TODO*///	{ YM2203_VOL(100,100) },
-	/*TODO*///	{ 0 },
-	/*TODO*///	{ 0 },
-	/*TODO*///	{ 0 },
-	/*TODO*///	{ 0 },
-	/*TODO*///	{ irqhandler }
-	/*TODO*///};
+	public static YM2203interface ym2203b_interface = new YM2203interface
+	(
+		1,			/* 1 chip */
+		3000000,	/* 3 MHz ??? */
+		new int[]{ YM2203_VOL(100,100) },
+		new ReadHandlerPtr[]{ null },
+		new ReadHandlerPtr[]{ null },
+		new WriteHandlerPtr[]{ null },
+		new WriteHandlerPtr[]{ null },
+		new WriteYmHandlerPtr[]{ irqhandler }
+        );
 	
-	/*TODO*///static struct YM2203interface kageki_ym2203_interface =
-	/*TODO*///{
-	/*TODO*///	1,					/* 1 chip */
-	/*TODO*///	3000000,				/* 12000000/4 ??? */
-	/*TODO*///	{ YM2203_VOL(35, 15) },
-	/*TODO*///	{ kageki_csport_r },
-	/*TODO*///	{ 0 },
-	/*TODO*///	{ 0 },
-	/*TODO*///	{ kageki_csport_w },
-	/*TODO*///};
+	public static YM2203interface kageki_ym2203_interface = new YM2203interface
+	(
+		1,					/* 1 chip */
+		3000000,				/* 12000000/4 ??? */
+		new int[]{ YM2203_VOL(35, 15) },
+		new ReadHandlerPtr[]{ kageki_csport_r },
+		new ReadHandlerPtr[]{ null },
+		new WriteHandlerPtr[]{ null },
+		new WriteHandlerPtr[]{ kageki_csport_w }
+        );
 	
 	static Samplesinterface samples_interface = new Samplesinterface
         (
@@ -1470,13 +1474,13 @@ public class tnzs
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_YM2203,
-		/*TODO*///		ym2203_interface
-		/*TODO*///	)
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_YM2203,
+				ym2203_interface
+			)
+		}
+                
 	);
 	
 	static MachineDriver machine_driver_drtoppel = new MachineDriver
@@ -1514,13 +1518,13 @@ public class tnzs
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_YM2203,
-		/*TODO*///		ym2203_interface
-		/*TODO*///	)
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_YM2203,
+				ym2203_interface
+			)
+		}
+                
 	);
 	
 	static MachineDriver machine_driver_tnzs = new MachineDriver
@@ -1559,13 +1563,13 @@ public class tnzs
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_YM2203,
-		/*TODO*///		ym2203_interface
-		/*TODO*///	)
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_YM2203,
+				ym2203_interface
+			)
+		}
+                
 	);
 	
 	static MachineDriver machine_driver_tnzsb = new MachineDriver
@@ -1610,13 +1614,13 @@ public class tnzs
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_YM2203,
-		/*TODO*///		ym2203b_interface
-		/*TODO*///	)
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_YM2203,
+				ym2203b_interface
+			)
+		}
+                
 	);
 	
 	static MachineDriver machine_driver_insectx = new MachineDriver
@@ -1655,13 +1659,13 @@ public class tnzs
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_YM2203,
-		/*TODO*///		ym2203_interface
-		/*TODO*///	)
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_YM2203,
+				ym2203_interface
+			)
+		}
+                
 	);
 	
 	static MachineDriver machine_driver_kageki = new MachineDriver
@@ -1699,21 +1703,21 @@ public class tnzs
 	
 		/* sound hardware */
 		0, 0, 0, 0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_YM2203,
-		/*TODO*///		kageki_ym2203_interface
-		/*TODO*///	),
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_SAMPLES,
-		/*TODO*///		samples_interface
-		/*TODO*///	),
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_CUSTOM,
-		/*TODO*///		custom_interface
-		/*TODO*///	)
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_YM2203,
+				kageki_ym2203_interface
+			),
+			new MachineSound(
+				SOUND_SAMPLES,
+				samples_interface
+			),
+			new MachineSound(
+				SOUND_CUSTOM,
+				custom_interface
+			)
+		}
+       
 	);
 	
 	

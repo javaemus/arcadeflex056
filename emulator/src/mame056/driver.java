@@ -59,6 +59,7 @@ import static mame056.drivers.snk.*;
 import static mame056.drivers.hal21.*;
 import static mame056.drivers.ladybug.*;
 import static mame056.drivers.docastle.*;
+import static mame056.drivers.mcr1.*;
 
 public class driver {
 
@@ -902,12 +903,12 @@ public class driver {
         /*TODO*///	driver_gorfpgm1,	/* (c) 1981 */
         /*TODO*///	driver_robby,		/* (c) 1981 Bally Midway */
         /*TODO*///TESTdriver_profpac,	/* (c) 1983 Bally Midway */
-        /*TODO*///
-        /*TODO*///	/* Bally Midway MCR games */
-        /*TODO*///	/* MCR1 */
-        /*TODO*///	driver_solarfox,	/* (c) 1981 */
-        /*TODO*///	driver_kick,		/* (c) 1981 */
-        /*TODO*///	driver_kicka,		/* bootleg? */
+        
+        	/* Bally Midway MCR games */
+        	/* MCR1 */
+        	driver_solarfox,	/* (c) 1981 */
+        	driver_kick,		/* (c) 1981 */
+        	driver_kicka,		/* bootleg? */
         /*TODO*///	/* MCR2 */
         /*TODO*///	driver_shollow,	/* (c) 1981 */
         /*TODO*///	driver_shollow2,	/* (c) 1981 */

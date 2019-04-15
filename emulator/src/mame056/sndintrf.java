@@ -26,6 +26,7 @@ import mame056.sound.tms36xx;
 import mame056.sound.ay8910;
 import mame056.sound.namco;
 import mame056.sound.MSM5205;
+import mame056.sound._2203intf;
 import mame056.sound.vlm5030;
 
 public class sndintrf {
@@ -379,19 +380,7 @@ public class sndintrf {
                 /*TODO*///	},
                 new Dummy_snd(),
                 new ay8910(),
-                /*TODO*///#endif
-                /*TODO*///#if (HAS_YM2203)
-                /*TODO*///    {
-                /*TODO*///		SOUND_YM2203,
-                /*TODO*///		"YM2203",
-                /*TODO*///		YM2203_num,
-                /*TODO*///		YM2203_clock,
-                /*TODO*///		YM2203_sh_start,
-                /*TODO*///		YM2203_sh_stop,
-                /*TODO*///		0,
-                /*TODO*///		YM2203_sh_reset
-                /*TODO*///	},
-                new Dummy_snd(),
+                new _2203intf(),
                 /*TODO*///#endif
                 /*TODO*///#if (HAS_YM2151 || HAS_YM2151_ALT)
                 /*TODO*///    {

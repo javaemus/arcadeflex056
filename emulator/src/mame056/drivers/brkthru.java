@@ -77,6 +77,8 @@ import static mame056.palette.game_palette;
 
 // refactor
 import static arcadeflex036.osdepend.logerror;
+import static mame056.sound._2203intf.*;
+import static mame056.sound._2203intfH.*;
 
 import static mame056.vidhrdw.brkthru.*;
 
@@ -175,7 +177,7 @@ public class brkthru
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_RAM ),
 		new Memory_ReadAddress( 0x4000, 0x4000, soundlatch_r ),
-		/*TODO*///new Memory_ReadAddress( 0x6000, 0x6000, YM2203_status_port_0_r ),
+		new Memory_ReadAddress( 0x6000, 0x6000, YM2203_status_port_0_r ),
 		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
@@ -185,8 +187,8 @@ public class brkthru
 		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_RAM ),
 		/*TODO*///new Memory_WriteAddress( 0x2000, 0x2000, YM3526_control_port_0_w  ),
 		/*TODO*///new Memory_WriteAddress( 0x2001, 0x2001, YM3526_write_port_0_w ),
-		/*TODO*///new Memory_WriteAddress( 0x6000, 0x6000, YM2203_control_port_0_w ),
-		/*TODO*///new Memory_WriteAddress( 0x6001, 0x6001, YM2203_write_port_0_w ),
+		new Memory_WriteAddress( 0x6000, 0x6000, YM2203_control_port_0_w ),
+		new Memory_WriteAddress( 0x6001, 0x6001, YM2203_write_port_0_w ),
 		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -477,16 +479,16 @@ public class brkthru
 		//cpu_cause_interrupt(1,M6809_INT_IRQ);
 	}
 	
-	/*TODO*///static struct YM2203interface ym2203_interface =
-	/*TODO*///{
-	/*TODO*///	1,
-	/*TODO*///	1500000,	/* Unknown */
-	/*TODO*///	{ YM2203_VOL(50,10) },
-	/*TODO*///	{ 0 },
-	/*TODO*///	{ 0 },
-	/*TODO*///	{ 0 },
-	/*TODO*///	{ 0 }
-	/*TODO*///};
+	public static YM2203interface ym2203_interface = new YM2203interface
+	(
+		1,
+		1500000,	/* Unknown */
+		new int[]{ YM2203_VOL(50,10) },
+		new ReadHandlerPtr[]{ null },
+		new ReadHandlerPtr[]{ null },
+		new WriteHandlerPtr[]{ null },
+		new WriteHandlerPtr[]{ null }
+        );
 	
 	/*TODO*///static struct YM3526interface ym3526_interface =
 	/*TODO*///{
@@ -533,17 +535,17 @@ public class brkthru
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_YM2203,
-		/*TODO*///		ym2203_interface
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_YM2203,
+				ym2203_interface
 		/*TODO*///	),
 		/*TODO*///	new MachineSound(
 		/*TODO*///		SOUND_YM3526,
 		/*TODO*///		ym3526_interface
-		/*TODO*///	)
-		/*TODO*///}
-                null
+			)
+		}
+                
 	);
 	
 	static MachineDriver machine_driver_darwin = new MachineDriver
@@ -593,17 +595,17 @@ public class brkthru
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_YM2203,
-		/*TODO*///		ym2203_interface
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_YM2203,
+				ym2203_interface
 		/*TODO*///	),
 		/*TODO*///	new MachineSound(
 		/*TODO*///		SOUND_YM3526,
 		/*TODO*///		ym3526_interface
-		/*TODO*///	)
-		/*TODO*///}
-                null
+			)
+		}
+                
 	);
 	
 	

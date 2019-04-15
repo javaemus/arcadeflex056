@@ -457,7 +457,7 @@ public class palette {
 /*TODO*///******************************************************************************/
 /*TODO*///
     public static UBytePtr paletteram=new UBytePtr();
-/*TODO*///data8_t *paletteram_2;	/* use when palette RAM is split in two parts */
+    public static UBytePtr paletteram_2=new UBytePtr();	/* use when palette RAM is split in two parts */
 /*TODO*///data16_t *paletteram16;
 /*TODO*///data16_t *paletteram16_2;
 /*TODO*///data32_t *paletteram32;
@@ -702,37 +702,39 @@ public class palette {
 /*TODO*///	paletteram_2[offset] = data;
 /*TODO*///	changecolor_xxxxBBBBRRRRGGGG(offset,paletteram[offset] | (paletteram_2[offset] << 8));
 /*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*///INLINE void changecolor_xxxxRRRRBBBBGGGG(int color,int data)
-/*TODO*///{
-/*TODO*///	int r,g,b;
-/*TODO*///
-/*TODO*///
-/*TODO*///	r = (data >> 8) & 0x0f;
-/*TODO*///	g = (data >> 0) & 0x0f;
-/*TODO*///	b = (data >> 4) & 0x0f;
-/*TODO*///
-/*TODO*///	r = (r << 4) | r;
-/*TODO*///	g = (g << 4) | g;
-/*TODO*///	b = (b << 4) | b;
-/*TODO*///
-/*TODO*///	palette_set_color(color,r,g,b);
-/*TODO*///}
-/*TODO*///
-/*TODO*///WRITE_HANDLER( paletteram_xxxxRRRRBBBBGGGG_split1_w )
-/*TODO*///{
-/*TODO*///	paletteram[offset] = data;
-/*TODO*///	changecolor_xxxxRRRRBBBBGGGG(offset,paletteram[offset] | (paletteram_2[offset] << 8));
-/*TODO*///}
-/*TODO*///
-/*TODO*///WRITE_HANDLER( paletteram_xxxxRRRRBBBBGGGG_split2_w )
-/*TODO*///{
-/*TODO*///	paletteram_2[offset] = data;
-/*TODO*///	changecolor_xxxxRRRRBBBBGGGG(offset,paletteram[offset] | (paletteram_2[offset] << 8));
-/*TODO*///}
-/*TODO*///
-/*TODO*///
+
+
+    public static void changecolor_xxxxRRRRBBBBGGGG(int color,int data)
+    {
+            int r,g,b;
+
+
+            r = (data >> 8) & 0x0f;
+            g = (data >> 0) & 0x0f;
+            b = (data >> 4) & 0x0f;
+
+            r = (r << 4) | r;
+            g = (g << 4) | g;
+            b = (b << 4) | b;
+
+            palette_set_color(color,r,g,b);
+    }
+
+    public static WriteHandlerPtr paletteram_xxxxRRRRBBBBGGGG_split1_w = new WriteHandlerPtr() {
+        public void handler(int offset, int data) {
+            paletteram.write(offset, data);
+            changecolor_xxxxRRRRBBBBGGGG(offset,paletteram.read(offset) | (paletteram_2.read(offset) << 8));
+        }
+    };
+    
+    public static WriteHandlerPtr paletteram_xxxxRRRRBBBBGGGG_split2_w = new WriteHandlerPtr() {
+        public void handler(int offset, int data) {
+            paletteram_2.write(offset, data);
+            changecolor_xxxxRRRRBBBBGGGG(offset,paletteram.read(offset) | (paletteram_2.read(offset) << 8));
+        }
+    };
+
+    
 /*TODO*///INLINE void changecolor_xxxxRRRRGGGGBBBB(int color,int data)
 /*TODO*///{
 /*TODO*///	int r,g,b;
