@@ -1,6 +1,7 @@
 16/04/2019
 ==========
 -Added support for ym3812 and ym3526
+-Added support for ym8950
 
 15/04/2019
 ==========

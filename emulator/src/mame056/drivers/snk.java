@@ -96,7 +96,9 @@ import static mame056.vidhrdw.snk.*;
 import static arcadeflex036.osdepend.logerror;
 import static mame056.drivers.hal21.aso_vh_convert_color_prom;
 import static mame056.drivers.snk.*;
+import static mame056.sound._3526intf.*;
 import mame056.sound._3812intfH;
+import static mame056.sound.y8950intf.*;
 
 
 public class snk
@@ -335,7 +337,7 @@ public class snk
 		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
 		new Memory_ReadAddress( 0xa000, 0xa000, soundlatch_r ),
 		new Memory_ReadAddress( 0xc000, 0xc000, snk_soundlatch_clear_r ),
-		/*TODO*///new Memory_ReadAddress( 0xe000, 0xe000, YM3526_status_port_0_r ),
+		new Memory_ReadAddress( 0xe000, 0xe000, YM3526_status_port_0_r ),
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -343,8 +345,8 @@ public class snk
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
-		/*TODO*///new Memory_WriteAddress( 0xe000, 0xe000, YM3526_control_port_0_w ),
-		/*TODO*///new Memory_WriteAddress( 0xe001, 0xe001, YM3526_write_port_0_w ),
+		new Memory_WriteAddress( 0xe000, 0xe000, YM3526_control_port_0_w ),
+		new Memory_WriteAddress( 0xe001, 0xe001, YM3526_write_port_0_w ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -353,8 +355,8 @@ public class snk
 		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
 		new Memory_ReadAddress( 0xc000, 0xcfff, MRA_RAM ),
 		new Memory_ReadAddress( 0xe000, 0xe000, soundlatch_r ),
-		/*TODO*///new Memory_ReadAddress( 0xe800, 0xe800, YM3526_status_port_0_r ),
-		/*TODO*///new Memory_ReadAddress( 0xf000, 0xf000, YM3526_status_port_1_r ),
+		new Memory_ReadAddress( 0xe800, 0xe800, YM3526_status_port_0_r ),
+		new Memory_ReadAddress( 0xf000, 0xf000, YM3526_status_port_1_r ),
 		new Memory_ReadAddress( 0xf800, 0xf800, snk_sound_register_r ),
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
@@ -363,10 +365,10 @@ public class snk
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
 		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAM ),
-		/*TODO*///new Memory_WriteAddress( 0xe800, 0xe800, YM3526_control_port_0_w ),
-		/*TODO*///new Memory_WriteAddress( 0xec00, 0xec00, YM3526_write_port_0_w ),
-		/*TODO*///new Memory_WriteAddress( 0xf000, 0xf000, YM3526_control_port_1_w ),
-		/*TODO*///new Memory_WriteAddress( 0xf400, 0xf400, YM3526_write_port_1_w ),
+		new Memory_WriteAddress( 0xe800, 0xe800, YM3526_control_port_0_w ),
+		new Memory_WriteAddress( 0xec00, 0xec00, YM3526_write_port_0_w ),
+		new Memory_WriteAddress( 0xf000, 0xf000, YM3526_control_port_1_w ),
+		new Memory_WriteAddress( 0xf400, 0xf400, YM3526_write_port_1_w ),
 		new Memory_WriteAddress( 0xf800, 0xf800, snk_sound_register_w ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -376,8 +378,8 @@ public class snk
 		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
 		new Memory_ReadAddress( 0xc000, 0xcfff, MRA_RAM ),
 		new Memory_ReadAddress( 0xe000, 0xe000, soundlatch_r ),
-		/*TODO*///new Memory_ReadAddress( 0xe800, 0xe800, Y8950_status_port_0_r ), // YM3526_status_port_0_r
-		/*TODO*///new Memory_ReadAddress( 0xf000, 0xf000, Y8950_status_port_1_r ),
+		new Memory_ReadAddress( 0xe800, 0xe800, Y8950_status_port_0_r ), // YM3526_status_port_0_r
+		new Memory_ReadAddress( 0xf000, 0xf000, Y8950_status_port_1_r ),
 		new Memory_ReadAddress( 0xf800, 0xf800, snk_sound_register_r ),
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
@@ -386,10 +388,10 @@ public class snk
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
 		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAM ),
-		/*TODO*///new Memory_WriteAddress( 0xe800, 0xe800, Y8950_control_port_0_w ), // YM3526_control_port_0_w
-		/*TODO*///new Memory_WriteAddress( 0xec00, 0xec00, Y8950_write_port_0_w ), // YM3526_write_port_0_w
-		/*TODO*///new Memory_WriteAddress( 0xf000, 0xf000, Y8950_control_port_1_w ),
-		/*TODO*///new Memory_WriteAddress( 0xf400, 0xf400, Y8950_write_port_1_w ),
+		new Memory_WriteAddress( 0xe800, 0xe800, Y8950_control_port_0_w ), // YM3526_control_port_0_w
+		new Memory_WriteAddress( 0xec00, 0xec00, Y8950_write_port_0_w ), // YM3526_write_port_0_w
+		new Memory_WriteAddress( 0xf000, 0xf000, Y8950_control_port_1_w ),
+		new Memory_WriteAddress( 0xf400, 0xf400, Y8950_write_port_1_w ),
 		new Memory_WriteAddress( 0xf800, 0xf800, snk_sound_register_w ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -400,7 +402,7 @@ public class snk
 		new Memory_ReadAddress( 0xc000, 0xcfff, MRA_RAM ),
 		new Memory_ReadAddress( 0xe000, 0xe000, soundlatch_r ),
 		new Memory_ReadAddress( 0xe800, 0xe800, YM3812_status_port_0_r ),
-		/*TODO*///new Memory_ReadAddress( 0xf000, 0xf000, Y8950_status_port_0_r ),
+		new Memory_ReadAddress( 0xf000, 0xf000, Y8950_status_port_0_r ),
 		new Memory_ReadAddress( 0xf800, 0xf800, snk_sound_register_r ),
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
@@ -411,8 +413,8 @@ public class snk
 		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAM ),
 		new Memory_WriteAddress( 0xe800, 0xe800, YM3812_control_port_0_w ),
 		new Memory_WriteAddress( 0xec00, 0xec00, YM3812_write_port_0_w ),
-		/*TODO*///new Memory_WriteAddress( 0xf000, 0xf000, Y8950_control_port_0_w ),
-		/*TODO*///new Memory_WriteAddress( 0xf400, 0xf400, Y8950_write_port_0_w ),
+		new Memory_WriteAddress( 0xf000, 0xf000, Y8950_control_port_0_w ),
+		new Memory_WriteAddress( 0xf400, 0xf400, Y8950_write_port_0_w ),
 		new Memory_WriteAddress( 0xf800, 0xf800, snk_sound_register_w ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -422,7 +424,7 @@ public class snk
 		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
 		new Memory_ReadAddress( 0xc000, 0xcfff, MRA_RAM ),
 		new Memory_ReadAddress( 0xe000, 0xe000, soundlatch_r ),
-		/*TODO*///new Memory_ReadAddress( 0xf000, 0xf000, YM3526_status_port_0_r ),
+		new Memory_ReadAddress( 0xf000, 0xf000, YM3526_status_port_0_r ),
 	//	new Memory_ReadAddress( 0xf000, 0xf000, Y8950_status_port_0_r ),
 		new Memory_ReadAddress( 0xf800, 0xf800, snk_sound_register_r ),
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
@@ -432,8 +434,8 @@ public class snk
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
 		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAM ),
-		/*TODO*///new Memory_WriteAddress( 0xf000, 0xf000, YM3526_control_port_0_w ),
-		/*TODO*///new Memory_WriteAddress( 0xf400, 0xf400, YM3526_write_port_0_w ),
+		new Memory_WriteAddress( 0xf000, 0xf000, YM3526_control_port_0_w ),
+		new Memory_WriteAddress( 0xf400, 0xf400, YM3526_write_port_0_w ),
 	//	new Memory_WriteAddress( 0xf000, 0xf000, Y8950_control_port_0_w ),
 	//	new Memory_WriteAddress( 0xf400, 0xf400, Y8950_write_port_0_w ),
 		new Memory_WriteAddress( 0xf800, 0xf800, snk_sound_register_w ),
