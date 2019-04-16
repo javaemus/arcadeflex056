@@ -60,6 +60,7 @@ import static mame056.drivers.hal21.*;
 import static mame056.drivers.ladybug.*;
 import static mame056.drivers.docastle.*;
 import static mame056.drivers.mcr1.*;
+import static mame056.drivers.yiear.*;
 
 public class driver {
 
@@ -2649,8 +2650,8 @@ public class driver {
         driver_mikiehs, /* GX469 (c) 1984 */
         driver_roadf,		/* GX461 (c) 1984 */
         driver_roadf2,	/* GX461 (c) 1984 */
-        /*TODO*///	driver_yiear,		/* GX407 (c) 1985 */
-        /*TODO*///	driver_yiear2,	/* GX407 (c) 1985 */
+        driver_yiear,		/* GX407 (c) 1985 */
+        driver_yiear2,	/* GX407 (c) 1985 */
         driver_kicker, /* GX477 (c) 1985 */
         driver_shaolins, /* GX477 (c) 1985 */
         driver_gberet, /* GX577 (c) 1985 */
