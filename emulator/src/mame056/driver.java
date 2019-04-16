@@ -62,6 +62,7 @@ import static mame056.drivers.docastle.*;
 import static mame056.drivers.mcr1.*;
 import static mame056.drivers.yiear.*;
 import static mame056.drivers.jailbrek.*;
+import static mame056.drivers.shisen.*;
 
 public class driver {
 
@@ -1046,9 +1047,9 @@ public class driver {
         /*TODO*///	driver_gallop,	/* (c) 1991 (Japan) */
         /*TODO*///	driver_kengo,		/* (c) 1991 */
         /*TODO*///	/* not M72, but same sound hardware */
-        /*TODO*///	driver_sichuan2,	/* (c) 1989 Tamtex */
-        /*TODO*///	driver_sichuana,	/* (c) 1989 Tamtex */
-        /*TODO*///	driver_shisen,	/* (c) 1989 Tamtex */
+        	driver_sichuan2,	/* (c) 1989 Tamtex */
+        	driver_sichuana,	/* (c) 1989 Tamtex */
+        	driver_shisen,	/* (c) 1989 Tamtex */
         /*TODO*///	/* M90 */
         /*TODO*///	driver_hasamu,	/* (c) 1991 Irem (Japan) */
         /*TODO*///	driver_bombrman,	/* (c) 1991 Irem (Japan) */

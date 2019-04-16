@@ -1,5 +1,6 @@
 16/04/2019
 ==========
+-Added shisen driver (NO SOUND still)
 -Added jailbrek driver (full playable)
 -Added yiear driver (full playable)
 -Added support for ym3812 and ym3526
