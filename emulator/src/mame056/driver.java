@@ -65,6 +65,8 @@ import static mame056.drivers.jailbrek.*;
 import static mame056.drivers.shisen.*;
 import static mame056.drivers.jack.*;
 import static mame056.drivers.sgladiat.*;
+import static mame056.drivers.jackal.*;
+import static mame056.drivers.champbas.*;
 
 public class driver {
 
@@ -2669,10 +2671,10 @@ public class driver {
         /*TODO*///	driver_ironhors,	/* GX560 (c) 1986 */
         /*TODO*///	driver_dairesya,	/* GX560 (c) 1986 (Japan) */
         /*TODO*///	driver_farwest,
-        /*TODO*///	driver_jackal,	/* GX631 (c) 1986 (World) */
-        /*TODO*///	driver_topgunr,	/* GX631 (c) 1986 (US) */
-        /*TODO*///	driver_jackalj,	/* GX631 (c) 1986 (Japan) */
-        /*TODO*///	driver_topgunbl,	/* bootleg */
+        driver_jackal,	/* GX631 (c) 1986 (World) */
+        driver_topgunr,	/* GX631 (c) 1986 (US) */
+        driver_jackalj,	/* GX631 (c) 1986 (Japan) */
+        driver_topgunbl,	/* bootleg */
         /*TODO*///	driver_ddribble,	/* GX690 (c) 1986 */
         /*TODO*///	driver_contra,	/* GX633 (c) 1987 */
         /*TODO*///	driver_contrab,	/* bootleg */
@@ -3173,9 +3175,9 @@ public class driver {
         /*TODO*///	driver_gangwarb,	/* Alpha-68K96V bootleg */
         /*TODO*///	driver_sbasebal,	/* Alpha-68K96V       (c) 1989 SNK of America licensed from Alpha */
         /*TODO*///
-        /*TODO*///	/* Alpha Denshi games */
-        /*TODO*///	driver_champbas,	/* (c) 1983 Sega */
-        /*TODO*///	driver_champbbj,	/* (c) 1983 Alpha Denshi Co. */
+        	/* Alpha Denshi games */
+        	driver_champbas,	/* (c) 1983 Sega */
+        	driver_champbbj,	/* (c) 1983 Alpha Denshi Co. */
         /*TODO*///TESTdriver_champbb2,	/* (c) 1983 Sega */
         /*exctsccr*/ driver_exctsccr,
         /*exctsccr*/ driver_exctscca,

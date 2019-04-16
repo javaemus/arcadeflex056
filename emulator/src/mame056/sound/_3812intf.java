@@ -315,7 +315,9 @@ public class _3812intf  extends snd_interface
 	/* IRQ Handler */
 	static OPL_IRQHANDLERPtr IRQHandler = new OPL_IRQHANDLERPtr() {
             public void handler(int n,int irq) {
-                if (intf.handler[n] != null) (intf.handler[n]).handler(irq!=0 ? ASSERT_LINE : CLEAR_LINE);
+                
+                if ((intf!=null)&&(intf.handler!=null))
+                    if (intf.handler[n] != null) (intf.handler[n]).handler(irq!=0 ? ASSERT_LINE : CLEAR_LINE);
             }
         };
 	

@@ -307,7 +307,9 @@ public class commonH {
 /*TODO*///#define		ROM_GROUPDWORD			ROM_GROUPSIZE(4)
 
     public static final int ROM_SKIPMASK = 0x000f0000;/* skip this many bytes after each group */
- /*TODO*///#define		ROM_SKIP(n)				(((n) & 15) << 16)
+    public static int ROM_SKIP(int n){
+        return (((n) & 15) << 16);
+    }
 /*TODO*///#define		ROM_NOSKIP				ROM_SKIP(0)
 
     public static final int ROM_REVERSEMASK = 0x00100000;/* reverse the byte order within a group */
@@ -439,7 +441,9 @@ public class commonH {
 /*TODO*///#define ROM_LOAD_NIB_LOW(name,offset,length,crc)	ROMX_LOAD(name, offset, length, crc, ROM_NIBBLE | ROM_SHIFT_NIBBLE_LO)
 /*TODO*///
 /*TODO*////* ----- new-style 16-bit loading macros ----- */
-/*TODO*///#define ROM_LOAD16_BYTE(name,offset,length,crc)		ROMX_LOAD(name, offset, length, crc, ROM_SKIP(1))
+    public static void ROM_LOAD16_BYTE(String name, int offset, int length, int crc){
+            ROMX_LOAD(name, offset, length, crc, ROM_SKIP(1));
+    }
 /*TODO*///#define ROM_LOAD16_WORD(name,offset,length,crc)		ROM_LOAD(name, offset, length, crc)
 /*TODO*///#define ROM_LOAD16_WORD_SWAP(name,offset,length,crc)ROMX_LOAD(name, offset, length, crc, ROM_GROUPWORD | ROM_REVERSE)
 /*TODO*///

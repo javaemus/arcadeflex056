@@ -851,30 +851,32 @@ public class palette {
 /*TODO*///	COMBINE_DATA(&paletteram16[offset]);
 /*TODO*///	changecolor_BBBBGGGGRRRRxxxx(offset,paletteram16[offset]);
 /*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*///INLINE void changecolor_xBBBBBGGGGGRRRRR(int color,int data)
-/*TODO*///{
-/*TODO*///	int r,g,b;
-/*TODO*///
-/*TODO*///
-/*TODO*///	r = (data >>  0) & 0x1f;
-/*TODO*///	g = (data >>  5) & 0x1f;
-/*TODO*///	b = (data >> 10) & 0x1f;
-/*TODO*///
-/*TODO*///	r = (r << 3) | (r >> 2);
-/*TODO*///	g = (g << 3) | (g >> 2);
-/*TODO*///	b = (b << 3) | (b >> 2);
-/*TODO*///
-/*TODO*///	palette_set_color(color,r,g,b);
-/*TODO*///}
-/*TODO*///
-/*TODO*///WRITE_HANDLER( paletteram_xBBBBBGGGGGRRRRR_w )
-/*TODO*///{
-/*TODO*///	paletteram[offset] = data;
-/*TODO*///	changecolor_xBBBBBGGGGGRRRRR(offset / 2,paletteram[offset & ~1] | (paletteram[offset | 1] << 8));
-/*TODO*///}
-/*TODO*///
+
+
+    public static void changecolor_xBBBBBGGGGGRRRRR(int color,int data)
+    {
+            int r,g,b;
+
+
+            r = (data >>  0) & 0x1f;
+            g = (data >>  5) & 0x1f;
+            b = (data >> 10) & 0x1f;
+
+            r = (r << 3) | (r >> 2);
+            g = (g << 3) | (g >> 2);
+            b = (b << 3) | (b >> 2);
+
+            palette_set_color(color,r,g,b);
+    }
+
+    public static WriteHandlerPtr paletteram_xBBBBBGGGGGRRRRR_w = new WriteHandlerPtr() {
+        public void handler(int offset, int data) {
+            paletteram.write(offset, data);
+            changecolor_xBBBBBGGGGGRRRRR(offset / 2,paletteram.read(offset & ~1) | (paletteram.read(offset | 1) << 8));
+        }
+    };
+    
+
 /*TODO*///WRITE_HANDLER( paletteram_xBBBBBGGGGGRRRRR_swap_w )
 /*TODO*///{
 /*TODO*///	paletteram[offset] = data;
