@@ -540,35 +540,36 @@ public class palette {
 /*TODO*///
 /*TODO*///	palette_set_color(offset,r,g,b);
 /*TODO*///}
-/*TODO*///
-/*TODO*///WRITE_HANDLER( paletteram_BBGGGRRR_w )
-/*TODO*///{
-/*TODO*///	int r,g,b;
-/*TODO*///	int bit0,bit1,bit2;
-/*TODO*///
-/*TODO*///
-/*TODO*///	paletteram[offset] = data;
-/*TODO*///
-/*TODO*///	/* red component */
-/*TODO*///	bit0 = (data >> 0) & 0x01;
-/*TODO*///	bit1 = (data >> 1) & 0x01;
-/*TODO*///	bit2 = (data >> 2) & 0x01;
-/*TODO*///	r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
-/*TODO*///	/* green component */
-/*TODO*///	bit0 = (data >> 3) & 0x01;
-/*TODO*///	bit1 = (data >> 4) & 0x01;
-/*TODO*///	bit2 = (data >> 5) & 0x01;
-/*TODO*///	g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
-/*TODO*///	/* blue component */
-/*TODO*///	bit0 = 0;
-/*TODO*///	bit1 = (data >> 6) & 0x01;
-/*TODO*///	bit2 = (data >> 7) & 0x01;
-/*TODO*///	b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
-/*TODO*///
-/*TODO*///	palette_set_color(offset,r,g,b);
-/*TODO*///}
-/*TODO*///
-/*TODO*///
+
+    public static WriteHandlerPtr paletteram_BBGGGRRR_w = new WriteHandlerPtr() {
+        public void handler(int offset, int data) {
+            int r,g,b;
+            int bit0,bit1,bit2;
+
+
+            paletteram.write(offset, data);
+
+            /* red component */
+            bit0 = (data >> 0) & 0x01;
+            bit1 = (data >> 1) & 0x01;
+            bit2 = (data >> 2) & 0x01;
+            r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
+            /* green component */
+            bit0 = (data >> 3) & 0x01;
+            bit1 = (data >> 4) & 0x01;
+            bit2 = (data >> 5) & 0x01;
+            g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
+            /* blue component */
+            bit0 = 0;
+            bit1 = (data >> 6) & 0x01;
+            bit2 = (data >> 7) & 0x01;
+            b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
+
+            palette_set_color(offset,r,g,b);
+        }
+    };
+    
+
 /*TODO*///WRITE_HANDLER( paletteram_IIBBGGRR_w )
 /*TODO*///{
 /*TODO*///	int r,g,b,i;
