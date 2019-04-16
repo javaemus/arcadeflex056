@@ -61,6 +61,7 @@ import static mame056.drivers.ladybug.*;
 import static mame056.drivers.docastle.*;
 import static mame056.drivers.mcr1.*;
 import static mame056.drivers.yiear.*;
+import static mame056.drivers.jailbrek.*;
 
 public class driver {
 
@@ -2658,8 +2659,8 @@ public class driver {
         driver_rushatck, /* GX577 (c) 1985 */
         driver_gberetb, /* bootleg on different hardware */
         driver_mrgoemon, /* GX621 (c) 1986 (Japan) */
-        /*TODO*///	driver_jailbrek,	/* GX507 (c) 1986 */
-        /*TODO*///	driver_manhatan,	/* GX507 (c) 1986 (Japan) */
+        driver_jailbrek,	/* GX507 (c) 1986 */
+        driver_manhatan,	/* GX507 (c) 1986 (Japan) */
         /*TODO*///	driver_finalizr,	/* GX523 (c) 1985 */
         /*TODO*///	driver_finalizb,	/* bootleg */
         /*TODO*///	driver_ironhors,	/* GX560 (c) 1986 */
