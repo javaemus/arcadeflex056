@@ -1,6 +1,7 @@
 16/04/2019
 ==========
 -Added champbas driver (fully playable)
+-Added jackal driver (WIP)
 -Added sgladiat driver (fully playable)
 -Added jack driver (fully playable)
 -Added shisen driver (NO SOUND still)
