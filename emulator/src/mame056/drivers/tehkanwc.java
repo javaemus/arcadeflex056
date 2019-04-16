@@ -44,6 +44,8 @@ import static mame056.sndintrfH.*;
 import static mame056.sndintrf.*;
 import static mame056.sound.samples.*;
 import static mame056.sound.samplesH.*;
+import static mame056.sound.MSM5205.*;
+import static mame056.sound.MSM5205H.*;
 
 import static mame056.vidhrdw.generic.*;
 
@@ -167,28 +169,27 @@ public class tehkanwc
 	
 	public static WriteHandlerPtr msm_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		/*TODO*///MSM5205_reset_w(0,data ? 0 : 1);
+		MSM5205_reset_w.handler(0,data!=0 ? 0 : 1);
 	} };
 	
         static int toggle=0;
         
-	void tehkanwc_adpcm_int (int data)
-	{
-		
-	
-		UBytePtr SAMPLES = memory_region(REGION_SOUND1);
+	public static vclk_interruptPtr tehkanwc_adpcm_int = new vclk_interruptPtr() {
+            public void handler(int num) {
+                UBytePtr SAMPLES = memory_region(REGION_SOUND1);
 		int msm_data = SAMPLES.read(msm_data_offs & 0x7fff);
 	
 		if (toggle == 0){
-			/*TODO*///MSM5205_data_w(0,(msm_data >> 4) & 0x0f);
+			MSM5205_data_w.handler(0,(msm_data >> 4) & 0x0f);
                 }else
 		{
-			/*TODO*///MSM5205_data_w(0,msm_data & 0x0f);
+			MSM5205_data_w.handler(0,msm_data & 0x0f);
 			msm_data_offs++;
 		}
 	
 		toggle ^= 1;
-	}
+            }
+        };
 	
 	/* End of MSM with counters emulation */
 	
@@ -666,14 +667,14 @@ public class tehkanwc
 		new WriteHandlerPtr[] { tehkanwc_portB_w, null }
 	);
 	
-	/*TODO*///static struct MSM5205interface msm5205_interface =
-	/*TODO*///{
-	/*TODO*///	1,					/* 1 chip             */
-	/*TODO*///	384000,				/* 384KHz             */
-	/*TODO*///	{ tehkanwc_adpcm_int },/* interrupt function */
-	/*TODO*///	{ MSM5205_S48_4B },	/* 8KHz               */
-	/*TODO*///	{ 25 }
-	/*TODO*///};
+	static MSM5205interface msm5205_interface = new MSM5205interface
+	(
+		1,					/* 1 chip             */
+		384000,				/* 384KHz             */
+		new vclk_interruptPtr[]{ tehkanwc_adpcm_int },/* interrupt function */
+                new int[]{ MSM5205_S48_4B },	/* 8KHz               */
+                new int[]{ 25 }
+        );
 	
 	static MachineDriver machine_driver_tehkanwc = new MachineDriver
 	(
@@ -720,10 +721,10 @@ public class tehkanwc
 			new MachineSound(
 				SOUND_AY8910,
 				ay8910_interface
-			/*TODO*///),
-			/*TODO*///new MachineSound(
-			/*TODO*///	SOUND_MSM5205,
-                        /*TODO*///      msm5205_interface
+			),
+			new MachineSound(
+				SOUND_MSM5205,
+                              msm5205_interface
 			)
 		}
 	);

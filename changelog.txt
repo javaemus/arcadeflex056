@@ -1,3 +1,7 @@
+16/04/2019
+==========
+-Added support for ym3812 and ym3526
+
 15/04/2019
 ==========
 -Added support for ym2203 sound driver (0.56) using fm classes in 0.37b11

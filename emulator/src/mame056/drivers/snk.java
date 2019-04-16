@@ -82,6 +82,8 @@ import static mame056.sndintrfH.*;
 import static mame056.sndintrf.*;
 import static mame056.sound.samples.*;
 import static mame056.sound.samplesH.*;
+import static mame056.sound._3812intf.*;
+import static mame056.sound._3812intfH.*;
 
 import static mame056.vidhrdw.generic.*;
 
@@ -94,6 +96,7 @@ import static mame056.vidhrdw.snk.*;
 import static arcadeflex036.osdepend.logerror;
 import static mame056.drivers.hal21.aso_vh_convert_color_prom;
 import static mame056.drivers.snk.*;
+import mame056.sound._3812intfH;
 
 
 public class snk
@@ -253,42 +256,50 @@ public class snk
 		return snk_sound_register;// | 0x2; /* hack; lets chopper1 play music */
 	} };
 	
-	void snk_sound_callback0_w( int state ){ /* ? */
+	public static WriteYmHandlerPtr snk_sound_callback0_w = new WriteYmHandlerPtr() {
+            public void handler(int state) {
 		if( state != 0 ) snk_sound_register |= 0x01;
-	}
+            }
+        };
 	
-	void snk_sound_callback1_w( int state ){ /* ? */
-		if( state != 0 ) snk_sound_register |= 0x02;
-	}
+	public static WriteYmHandlerPtr snk_sound_callback1_w = new WriteYmHandlerPtr() {
+            public void handler(int state) {
+                if( state != 0 ) snk_sound_register |= 0x02;
+            }
+        };
+		
+	public static YM3526interface ym3526_interface = new YM3526interface
+        (
+		1,			/* number of chips */
+		4000000,	/* 4 MHz */
+		new int[]{ 50 },		/* mixing level */
+		new WriteYmHandlerPtr[]{ snk_sound_callback0_w } /* ? */
+        );
 	
-	/*TODO*///static YM3526interface ym3526_interface = {
-	/*TODO*///	1,			/* number of chips */
-	/*TODO*///	4000000,	/* 4 MHz */
-	/*TODO*///	{ 50 },		/* mixing level */
-	/*TODO*///	{ snk_sound_callback0_w } /* ? */
-	/*TODO*///};
+	public static YM3526interface ym3526_ym3526_interface = new YM3526interface
+        (
+		2,			/* number of chips */
+		4000000,	/* 4 MHz */
+		new int[]{ 50,50 },	/* mixing level */
+		new WriteYmHandlerPtr[]{ snk_sound_callback0_w, snk_sound_callback1_w } /* ? */
+        );
 	
-	/*TODO*///static struct YM3526interface ym3526_ym3526_interface = {
-	/*TODO*///	2,			/* number of chips */
-	/*TODO*///	4000000,	/* 4 MHz */
-	/*TODO*///	{ 50,50 },	/* mixing level */
-	/*TODO*///	{ snk_sound_callback0_w, snk_sound_callback1_w } /* ? */
-	/*TODO*///};
+	public static Y8950interface y8950_interface = new Y8950interface
+        (
+		1,			/* number of chips */
+		4000000,	/* 4 MHz */
+		new int[]{ 50 },		/* mixing level */
+		new WriteYmHandlerPtr[]{ snk_sound_callback1_w }, /* ? */
+		new int[]{ REGION_SOUND1 }	/* memory region */
+        );
 	
-	/*TODO*///static struct Y8950interface y8950_interface = {
-	/*TODO*///	1,			/* number of chips */
-	/*TODO*///	4000000,	/* 4 MHz */
-	/*TODO*///	{ 50 },		/* mixing level */
-	/*TODO*///	{ snk_sound_callback1_w }, /* ? */
-	/*TODO*///	{ REGION_SOUND1 }	/* memory region */
-	/*TODO*///};
-	
-	/*TODO*///static struct YM3812interface ym3812_interface = {
-	/*TODO*///	1,			/* number of chips */
-	/*TODO*///	4000000,	/* 4 MHz */
-	/*TODO*///	{ 50,50 },	/* mixing level */
-	/*TODO*///	{ snk_sound_callback0_w } /* ? */
-	/*TODO*///};
+	static YM3812interface ym3812_interface = new YM3812interface
+        (
+		1,			/* number of chips */
+		4000000,	/* 4 MHz */
+		new int[]{ 50,50 },	/* mixing level */
+		new WriteYmHandlerPtr[]{ snk_sound_callback0_w } /* ? */
+        );
 	
 	/*	We don't actually have any games that use two Y8950s,
 		but the soundchip implementation misbehaves if we
@@ -296,13 +307,14 @@ public class snk
 	
 		Since Y8950 is a superset of YM3526, this works.
 	*/
-	/*TODO*///static struct Y8950interface ym3526_y8950_interface = {
-	/*TODO*///	2,			/* number of chips */
-	/*TODO*///	4000000,	/* 4 MHz */
-	/*TODO*///	{ 50, 50 },		/* mixing level */
-	/*TODO*///	{ snk_sound_callback0_w, snk_sound_callback1_w }, /* ? */
-	/*TODO*///	{ REGION_SOUND1, REGION_SOUND1 }
-	/*TODO*///};
+	public static Y8950interface ym3526_y8950_interface = new Y8950interface
+        (
+		2,			/* number of chips */
+		4000000,	/* 4 MHz */
+		new int[]{ 50, 50 },		/* mixing level */
+		new WriteYmHandlerPtr[]{ snk_sound_callback0_w, snk_sound_callback1_w }, /* ? */
+		new int[]{ REGION_SOUND1, REGION_SOUND1 }
+        );
 	
 	public static WriteHandlerPtr snk_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		snk_sound_register |= 0x08 | 0x04;
@@ -387,7 +399,7 @@ public class snk
 		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
 		new Memory_ReadAddress( 0xc000, 0xcfff, MRA_RAM ),
 		new Memory_ReadAddress( 0xe000, 0xe000, soundlatch_r ),
-		/*TODO*///new Memory_ReadAddress( 0xe800, 0xe800, YM3812_status_port_0_r ),
+		new Memory_ReadAddress( 0xe800, 0xe800, YM3812_status_port_0_r ),
 		/*TODO*///new Memory_ReadAddress( 0xf000, 0xf000, Y8950_status_port_0_r ),
 		new Memory_ReadAddress( 0xf800, 0xf800, snk_sound_register_r ),
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
@@ -397,8 +409,8 @@ public class snk
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
 		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAM ),
-		/*TODO*///new Memory_WriteAddress( 0xe800, 0xe800, YM3812_control_port_0_w ),
-		/*TODO*///new Memory_WriteAddress( 0xec00, 0xec00, YM3812_write_port_0_w ),
+		new Memory_WriteAddress( 0xe800, 0xe800, YM3812_control_port_0_w ),
+		new Memory_WriteAddress( 0xec00, 0xec00, YM3812_write_port_0_w ),
 		/*TODO*///new Memory_WriteAddress( 0xf000, 0xf000, Y8950_control_port_0_w ),
 		/*TODO*///new Memory_WriteAddress( 0xf400, 0xf400, Y8950_write_port_0_w ),
 		new Memory_WriteAddress( 0xf800, 0xf800, snk_sound_register_w ),
@@ -1060,13 +1072,13 @@ public class snk
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_Y8950,
-		/*TODO*///		ym3526_y8950_interface
-		/*TODO*///	)
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_Y8950,
+				ym3526_y8950_interface
+			)
+		}
+                
 	);
 	
 	static MachineDriver machine_driver_gwar = new MachineDriver
@@ -1109,13 +1121,13 @@ public class snk
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_Y8950,
-		/*TODO*///		ym3526_y8950_interface
-		/*TODO*///	)
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_Y8950,
+				ym3526_y8950_interface
+			)
+		}
+                
 	);
 	
 	static MachineDriver machine_driver_bermudat = new MachineDriver
@@ -1159,13 +1171,13 @@ public class snk
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_Y8950,
-		/*TODO*///		ym3526_y8950_interface
-		/*TODO*///	)
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_Y8950,
+				ym3526_y8950_interface
+			)
+		}
+                
 	);
 	
 	static MachineDriver machine_driver_psychos = new MachineDriver
@@ -1208,13 +1220,13 @@ public class snk
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_Y8950,
-		/*TODO*///		ym3526_y8950_interface
-		/*TODO*///	)
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_Y8950,
+				ym3526_y8950_interface
+			)
+		}
+                
 	);
 	
 	static MachineDriver machine_driver_chopper1 = new MachineDriver
@@ -1257,17 +1269,17 @@ public class snk
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_YM3812,
-		/*TODO*///		ym3812_interface
-		/*TODO*///    ),
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_Y8950,
-		/*TODO*///		y8950_interface
-		/*TODO*///	)
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_YM3812,
+				ym3812_interface
+		    ),
+			new MachineSound(
+				SOUND_Y8950,
+				y8950_interface
+			)
+		}
+                
 	);
 	
 	static MachineDriver machine_driver_tdfever = new MachineDriver

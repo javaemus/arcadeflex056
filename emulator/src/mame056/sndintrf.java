@@ -27,6 +27,8 @@ import mame056.sound.ay8910;
 import mame056.sound.namco;
 import mame056.sound.MSM5205;
 import mame056.sound._2203intf;
+import mame056.sound._3526intf;
+import mame056.sound._3812intf;
 import mame056.sound.vlm5030;
 
 public class sndintrf {
@@ -484,7 +486,7 @@ public class sndintrf {
                 /*TODO*///		0,
                 /*TODO*///		0
                 /*TODO*///	},
-                new Dummy_snd(),
+                new _3812intf(),
                 /*TODO*///#endif
                 /*TODO*///#if (HAS_YM3526)
                 /*TODO*///    {
@@ -497,7 +499,7 @@ public class sndintrf {
                 /*TODO*///		0,
                 /*TODO*///		0
                 /*TODO*///	},
-                new Dummy_snd(),
+                new _3526intf(),
                 /*TODO*///#endif
                 /*TODO*///#if (HAS_YMZ280B)
                 /*TODO*///    {

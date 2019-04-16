@@ -79,6 +79,9 @@ import static mame056.palette.game_palette;
 import static arcadeflex036.osdepend.logerror;
 import static mame056.sound._2203intf.*;
 import static mame056.sound._2203intfH.*;
+import static mame056.sound._3526intf.*;
+import mame056.sound._3812intfH;
+import mame056.sound._3812intfH.YM3526interface;
 
 import static mame056.vidhrdw.brkthru.*;
 
@@ -185,8 +188,8 @@ public class brkthru
 	public static Memory_WriteAddress sound_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_RAM ),
-		/*TODO*///new Memory_WriteAddress( 0x2000, 0x2000, YM3526_control_port_0_w  ),
-		/*TODO*///new Memory_WriteAddress( 0x2001, 0x2001, YM3526_write_port_0_w ),
+		new Memory_WriteAddress( 0x2000, 0x2000, YM3526_control_port_0_w  ),
+		new Memory_WriteAddress( 0x2001, 0x2001, YM3526_write_port_0_w ),
 		new Memory_WriteAddress( 0x6000, 0x6000, YM2203_control_port_0_w ),
 		new Memory_WriteAddress( 0x6001, 0x6001, YM2203_write_port_0_w ),
 		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
@@ -473,11 +476,12 @@ public class brkthru
 	};
 	
 	/* handler called by the 3812 emulator when the internal timers cause an IRQ */
-	static void irqhandler(int linestate)
-	{
-		cpu_set_irq_line(1,0,linestate);
+	static WriteYmHandlerPtr irqhandler = new WriteYmHandlerPtr() {
+            public void handler(int linestate) {
+                cpu_set_irq_line(1,0,linestate);
 		//cpu_cause_interrupt(1,M6809_INT_IRQ);
-	}
+            }
+        };
 	
 	public static YM2203interface ym2203_interface = new YM2203interface
 	(
@@ -490,13 +494,13 @@ public class brkthru
 		new WriteHandlerPtr[]{ null }
         );
 	
-	/*TODO*///static struct YM3526interface ym3526_interface =
-	/*TODO*///{
-	/*TODO*///	1,			/* 1 chip */
-	/*TODO*///	3000000,	/* 3 MHz? */
-	/*TODO*///	{ 50 },		/* volume */
-	/*TODO*///	{ irqhandler },
-	/*TODO*///};
+	public static YM3526interface ym3526_interface = new YM3526interface
+	(
+		1,			/* 1 chip */
+		3000000,	/* 3 MHz? */
+		new int[]{ 50 },		/* volume */
+		new WriteYmHandlerPtr[]{ irqhandler }
+        );
 	
 	
 	
@@ -539,10 +543,10 @@ public class brkthru
 			new MachineSound(
 				SOUND_YM2203,
 				ym2203_interface
-		/*TODO*///	),
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_YM3526,
-		/*TODO*///		ym3526_interface
+			),
+			new MachineSound(
+				SOUND_YM3526,
+				ym3526_interface
 			)
 		}
                 
@@ -599,10 +603,10 @@ public class brkthru
 			new MachineSound(
 				SOUND_YM2203,
 				ym2203_interface
-		/*TODO*///	),
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_YM3526,
-		/*TODO*///		ym3526_interface
+			),
+			new MachineSound(
+				SOUND_YM3526,
+				ym3526_interface
 			)
 		}
                 
