@@ -64,6 +64,7 @@ import static mame056.drivers.yiear.*;
 import static mame056.drivers.jailbrek.*;
 import static mame056.drivers.shisen.*;
 import static mame056.drivers.jack.*;
+import static mame056.drivers.sgladiat.*;
 
 public class driver {
 
@@ -3111,7 +3112,7 @@ public class driver {
         driver_mnchmobl, /* A2001      (c) 1983 + Centuri license */ /*TODO*///	driver_marvins,	/* A2003      (c) 1983 */
         /*TODO*///	driver_madcrash,	/* A2005      (c) 1984 */
         /*TODO*///	driver_vangrd2,	/*            (c) 1984 */
-        /*TODO*///	driver_sgladiat,	/* A3006      (c) 1984 */
+        driver_sgladiat,	/* A3006      (c) 1984 */
         driver_hal21,		/*            (c) 1985 */
         driver_hal21j,	/*            (c) 1985 (Japan) */
         driver_aso,		/*            (c) 1985 */

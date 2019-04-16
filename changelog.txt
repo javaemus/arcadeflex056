@@ -1,5 +1,6 @@
 16/04/2019
 ==========
+-Added sgladiat driver (fully playable)
 -Added jack driver (fully playable)
 -Added shisen driver (NO SOUND still)
 -Added jailbrek driver (full playable)
