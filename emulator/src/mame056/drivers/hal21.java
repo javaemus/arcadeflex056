@@ -76,6 +76,8 @@ import static mame056.vidhrdw.snk.*;
 import static arcadeflex036.osdepend.logerror;
 import static mame056.drawgfx.*;
 import static mame056.mame.Machine;
+import static mame056.sound._3526intf.*;
+import mame056.sound._3812intfH.YM3526interface;
 import static mame056.sound.ay8910H.*;
 import static mame056.sound.ay8910.*;
 
@@ -560,18 +562,19 @@ public class hal21
 	
 	/**************************************************************************/
 	
-	/*TODO*///static struct YM3526interface ym3526_interface ={
-	/*TODO*///	1,			/* number of chips */
-	/*TODO*///	4000000,	/* 4 MHz? (hand tuned) */
-	/*TODO*///	{ 50 }		/* (not supported) */
-	/*TODO*///};
+	static YM3526interface ym3526_interface = new YM3526interface
+        (
+		1,			/* number of chips */
+		4000000,	/* 4 MHz? (hand tuned) */
+		new int[]{ 50 }		/* (not supported) */
+        );
 	
 	public static Memory_ReadAddress aso_readmem_sound[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
 		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
 		new Memory_ReadAddress( 0xd000, 0xd000, snk_soundcommand_r ),
-		/*TODO*///new Memory_ReadAddress( 0xf000, 0xf000, YM3526_status_port_0_r ),
+		new Memory_ReadAddress( 0xf000, 0xf000, YM3526_status_port_0_r ),
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -579,8 +582,8 @@ public class hal21
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
 		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
-		/*TODO*///new Memory_WriteAddress( 0xf000, 0xf000, YM3526_control_port_0_w ), /* YM3526 #1 control port? */
-		/*TODO*///new Memory_WriteAddress( 0xf001, 0xf001, YM3526_write_port_0_w ),   /* YM3526 #1 write port?  */
+		new Memory_WriteAddress( 0xf000, 0xf000, YM3526_control_port_0_w ), /* YM3526 #1 control port? */
+		new Memory_WriteAddress( 0xf001, 0xf001, YM3526_write_port_0_w ),   /* YM3526 #1 write port?  */
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -770,13 +773,13 @@ public class hal21
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///    new MachineSound(
-		/*TODO*///       SOUND_YM3526,
-		/*TODO*///       ym3526_interface
-		/*TODO*///    )
-		/*TODO*///}
-                null
+		new MachineSound[] {
+		    new MachineSound(
+		       SOUND_YM3526,
+		       ym3526_interface
+		    )
+		}
+                
 	);
 	
 	static MachineDriver machine_driver_hal21 = new MachineDriver(

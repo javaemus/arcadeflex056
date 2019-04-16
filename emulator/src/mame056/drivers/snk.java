@@ -919,13 +919,13 @@ public class snk
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_YM3526,
-		/*TODO*///		ym3526_interface
-		/*TODO*///    )
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_YM3526,
+				ym3526_interface
+		    )
+		}
+                
 	);
 	
 	static MachineDriver machine_driver_athena = new MachineDriver
@@ -971,13 +971,13 @@ public class snk
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_YM3526,
-		/*TODO*///		ym3526_ym3526_interface
-		/*TODO*///    )
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_YM3526,
+				ym3526_ym3526_interface
+		    )
+		}
+                
 	);
 	
 	static MachineDriver machine_driver_ikari = new MachineDriver
@@ -1021,13 +1021,13 @@ public class snk
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_YM3526,
-		/*TODO*///		ym3526_ym3526_interface
-		/*TODO*///    )
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_YM3526,
+				ym3526_ym3526_interface
+		    )
+		}
+                
 	);
 	
 	static MachineDriver machine_driver_victroad = new MachineDriver
@@ -1324,17 +1324,17 @@ public class snk
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_YM3526,
-		/*TODO*///		ym3526_ym3526_interface
-		/*TODO*///    )
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_YM3526,
+				ym3526_ym3526_interface
+		    )
 	//		new MachineSound(
 	//			SOUND_Y8950,
 	//			ym3526_y8950_interface
 	//		)
-		/*TODO*///}
-                null
+		}
+                
 	);
 	
 	static MachineDriver machine_driver_ftsoccer = new MachineDriver
@@ -1378,17 +1378,17 @@ public class snk
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_YM3526,
-		/*TODO*///		ym3526_interface
-		/*TODO*///    )
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_YM3526,
+				ym3526_interface
+		    )
 	//		new MachineSound(
 	//			SOUND_Y8950,
 	//			y8950_interface
 	//		)
-		/*TODO*///}
-                null
+		}
+                
 	);
 	
 	/***********************************************************************/
