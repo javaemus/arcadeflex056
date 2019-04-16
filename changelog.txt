@@ -1,5 +1,7 @@
 16/04/2019
 ==========
+-Added marineb driver (fully playable)
+-Added espial driver (fully playable)
 -Added champbas driver (fully playable)
 -Added jackal driver (WIP)
 -Added sgladiat driver (fully playable)

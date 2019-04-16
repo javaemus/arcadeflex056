@@ -67,6 +67,8 @@ import static mame056.drivers.jack.*;
 import static mame056.drivers.sgladiat.*;
 import static mame056.drivers.jackal.*;
 import static mame056.drivers.champbas.*;
+import static mame056.drivers.espial.*;
+import static mame056.drivers.marineb.*;
 
 public class driver {
 
@@ -3523,26 +3525,26 @@ public class driver {
         /*TODO*///	driver_btlkrodj,	/* (c) 1994 */
         /*TODO*///TESTdriver_s1945,		/* (c) 1995 */
         /*TODO*///TESTdriver_sngkblad,	/* (c) 1996 */
-        /*TODO*///
-        /*TODO*///	/* Orca games */
-        /*TODO*///	driver_marineb,	/* (c) 1982 Orca */
-        /*TODO*///	driver_changes,	/* (c) 1982 Orca */
-        /*TODO*///	driver_looper,	/* (c) 1982 Orca */
-        /*TODO*///	driver_springer,	/* (c) 1982 Orca */
-        /*TODO*///	driver_hoccer,	/* (c) 1983 Eastern Micro Electronics, Inc. */
-        /*TODO*///	driver_hoccer2,	/* (c) 1983 Eastern Micro Electronics, Inc. */
-        /*TODO*///	driver_bcruzm12,	/* (c) 1983 Sigma Ent. Inc. */
-        /*TODO*///	driver_hopprobo,	/* (c) 1983 Sega */
-        /*TODO*///	driver_wanted,	/* (c) 1984 Sigma Ent. Inc. */
-        /*TODO*///	driver_funkybee,	/* (c) 1982 Orca */
-        /*TODO*///	driver_skylancr,	/* (c) 1983 Orca + Esco Trading Co license */
-        /*TODO*///	driver_zodiack,	/* (c) 1983 Orca + Esco Trading Co license */
-        /*TODO*///	driver_dogfight,	/* (c) 1983 Thunderbolt */
-        /*TODO*///	driver_moguchan,	/* (c) 1982 Orca + Eastern Commerce Inc. license (doesn't appear on screen) */
-        /*TODO*///	driver_percuss,	/* (c) 1981 Orca */
-        /*TODO*///	driver_bounty,	/* (c) 1982 Orca */
-        /*TODO*///	driver_espial,	/* (c) 1983 Thunderbolt, Orca logo is hidden in title screen */
-        /*TODO*///	driver_espiale,	/* (c) 1983 Thunderbolt, Orca logo is hidden in title screen */
+        
+        	/* Orca games */
+        	driver_marineb,	/* (c) 1982 Orca */
+        	driver_changes,	/* (c) 1982 Orca */
+        	driver_looper,	/* (c) 1982 Orca */
+        	driver_springer,	/* (c) 1982 Orca */
+        	driver_hoccer,	/* (c) 1983 Eastern Micro Electronics, Inc. */
+        	driver_hoccer2,	/* (c) 1983 Eastern Micro Electronics, Inc. */
+        	driver_bcruzm12,	/* (c) 1983 Sigma Ent. Inc. */
+        	driver_hopprobo,	/* (c) 1983 Sega */
+        	driver_wanted,	/* (c) 1984 Sigma Ent. Inc. */
+        	/*TODO*///driver_funkybee,	/* (c) 1982 Orca */
+        	/*TODO*///driver_skylancr,	/* (c) 1983 Orca + Esco Trading Co license */
+        	/*TODO*///driver_zodiack,	/* (c) 1983 Orca + Esco Trading Co license */
+        	/*TODO*///driver_dogfight,	/* (c) 1983 Thunderbolt */
+        	/*TODO*///driver_moguchan,	/* (c) 1982 Orca + Eastern Commerce Inc. license (doesn't appear on screen) */
+        	/*TODO*///driver_percuss,	/* (c) 1981 Orca */
+        	/*TODO*///driver_bounty,	/* (c) 1982 Orca */
+        	driver_espial,	/* (c) 1983 Thunderbolt, Orca logo is hidden in title screen */
+        	driver_espiale,	/* (c) 1983 Thunderbolt, Orca logo is hidden in title screen */
         /*TODO*///	/* Vastar was made by Orca, but when it was finished, Orca had already bankrupted. */
         /*TODO*///	/* So they sold this game as "Made by Sesame Japan" because they couldn't use */
         /*TODO*///	/* the name "Orca" */
