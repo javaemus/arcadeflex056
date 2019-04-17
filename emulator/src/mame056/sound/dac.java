@@ -61,55 +61,47 @@ public class dac extends snd_interface {
         }
     };
 
-    public static WriteHandlerPtr DAC_data_w = new WriteHandlerPtr() {
-        public void handler(int num, int data) {
-            int out = UnsignedVolTable[data];
+    public static void DAC_data_w(int num, int data) {
+        int out = UnsignedVolTable[data];
 
-            if (output[num] != out) {
-                /* update the output buffer before changing the registers */
-                stream_update(channel[num], 0);
-                output[num] = out;
-            }
+        if (output[num] != out) {
+            /* update the output buffer before changing the registers */
+            stream_update(channel[num], 0);
+            output[num] = out;
         }
-    };
+    }
 
-    public static WriteHandlerPtr DAC_signed_data_w = new WriteHandlerPtr() {
-        public void handler(int num, int data) {
-            int out = SignedVolTable[data];
+    public static void DAC_signed_data_w(int num, int data) {
+        int out = SignedVolTable[data];
 
-            if (output[num] != out) {
-                /* update the output buffer before changing the registers */
-                stream_update(channel[num], 0);
-                output[num] = out;
-            }
+        if (output[num] != out) {
+            /* update the output buffer before changing the registers */
+            stream_update(channel[num], 0);
+            output[num] = out;
         }
-    };
+    }
 
-    public static WriteHandlerPtr DAC_data_16_w = new WriteHandlerPtr() {
-        public void handler(int num, int data) {
-            int out = data >> 1;
-            /* range      0..32767 */
+    public static void DAC_data_16_w(int num, int data) {
+        int out = data >> 1;
+        /* range      0..32767 */
 
-            if (output[num] != out) {
-                /* update the output buffer before changing the registers */
-                stream_update(channel[num], 0);
-                output[num] = out;
-            }
+        if (output[num] != out) {
+            /* update the output buffer before changing the registers */
+            stream_update(channel[num], 0);
+            output[num] = out;
         }
-    };
+    }
 
-    public static WriteHandlerPtr DAC_signed_data_16_w = new WriteHandlerPtr() {
-        public void handler(int num, int data) {
-            int out = data - 0x8000;
-            /* range -32768..32767 */
+    public static void DAC_signed_data_16_w(int num, int data) {
+        int out = data - 0x8000;
+        /* range -32768..32767 */
 
-            if (output[num] != out) {
-                /* update the output buffer before changing the registers */
-                stream_update(channel[num], 0);
-                output[num] = out;
-            }
+        if (output[num] != out) {
+            /* update the output buffer before changing the registers */
+            stream_update(channel[num], 0);
+            output[num] = out;
         }
-    };
+    }
 
     static void DAC_build_voltable() {
         int i;
@@ -150,25 +142,25 @@ public class dac extends snd_interface {
     }
     public static WriteHandlerPtr DAC_0_data_w = new WriteHandlerPtr() {
         public void handler(int offset, int data) {
-            DAC_data_w.handler(0, data);
+            DAC_data_w(0, data);
         }
     };
 
     public static WriteHandlerPtr DAC_1_data_w = new WriteHandlerPtr() {
         public void handler(int offset, int data) {
-            DAC_data_w.handler(1, data);
+            DAC_data_w(1, data);
         }
     };
 
     public static WriteHandlerPtr DAC_0_signed_data_w = new WriteHandlerPtr() {
         public void handler(int offset, int data) {
-            DAC_signed_data_w.handler(0, data);
+            DAC_signed_data_w(0, data);
         }
     };
 
     public static WriteHandlerPtr DAC_1_signed_data_w = new WriteHandlerPtr() {
         public void handler(int offset, int data) {
-            DAC_signed_data_w.handler(1, data);
+            DAC_signed_data_w(1, data);
         }
     };
 

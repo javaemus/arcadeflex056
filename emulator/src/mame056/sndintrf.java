@@ -31,6 +31,7 @@ import mame056.sound._3526intf;
 import mame056.sound._3812intf;
 import mame056.sound.vlm5030;
 import mame056.sound.y8950intf;
+import mame056.sound._2151intf;
 
 public class sndintrf {
 
@@ -302,10 +303,6 @@ public class sndintrf {
 /*TODO*///#if (HAS_TMS5220)
 /*TODO*///int TMS5220_clock(const struct MachineSound *msound) { return ((struct TMS5220interface*)msound->sound_interface)->baseclock; }
 /*TODO*///#endif
-/*TODO*///#if (HAS_YM2151 || HAS_YM2151_ALT)
-/*TODO*///int YM2151_clock(const struct MachineSound *msound) { return ((struct YM2151interface*)msound->sound_interface)->baseclock; }
-/*TODO*///int YM2151_num(const struct MachineSound *msound) { return ((struct YM2151interface*)msound->sound_interface)->num; }
-/*TODO*///#endif
 /*TODO*///#if (HAS_NES)
 /*TODO*///int NES_num(const struct MachineSound *msound) { return ((struct NESinterface*)msound->sound_interface)->num; }
 /*TODO*///#endif
@@ -384,19 +381,7 @@ public class sndintrf {
                 new Dummy_snd(),
                 new ay8910(),
                 new _2203intf(),
-                /*TODO*///#endif
-                /*TODO*///#if (HAS_YM2151 || HAS_YM2151_ALT)
-                /*TODO*///    {
-                /*TODO*///		SOUND_YM2151,
-                /*TODO*///		"YM2151",
-                /*TODO*///		YM2151_num,
-                /*TODO*///		YM2151_clock,
-                /*TODO*///		YM2151_sh_start,
-                /*TODO*///		YM2151_sh_stop,
-                /*TODO*///		0,
-                /*TODO*///		YM2151_sh_reset
-                /*TODO*///	},
-                new Dummy_snd(),
+                new _2151intf(),
                 /*TODO*///#endif
                 /*TODO*///#if (HAS_YM2608)
                 /*TODO*///    {

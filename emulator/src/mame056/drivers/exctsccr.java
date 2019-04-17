@@ -32,7 +32,7 @@ public class exctsccr {
 
     public static WriteHandlerPtr exctsccr_DAC_data_w = new WriteHandlerPtr() {
         public void handler(int offset, int data) {
-            DAC_signed_data_w.handler(offset, data << 2);
+            DAC_signed_data_w(offset, data << 2);
         }
     };
 

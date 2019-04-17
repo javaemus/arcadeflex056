@@ -81,7 +81,7 @@ public class champbas
 	
 	public static WriteHandlerPtr champbas_dac_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		DAC_signed_data_w.handler(0,data<<2);
+		DAC_signed_data_w(0,data<<2);
 	} };
 	
 	
