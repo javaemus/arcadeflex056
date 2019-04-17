@@ -2,6 +2,7 @@
 ==========
 -Added superpac driver (fully playable)
 -Added sidearms driver (imperfect colors/no sound)
+-Video problem with the first pixel column solved
 
 16/04/2019
 ==========

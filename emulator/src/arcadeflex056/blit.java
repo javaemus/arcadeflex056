@@ -206,9 +206,8 @@ public class blit {
 
                             int p = (curr<<8) + (pre);
 
-                            pos++;
-
                             back_buffer[pos+(i * Machine.scrbitmap.width)] = (char) p;
+                            pos++;
                         }
                     } else if (Machine.color_depth==8){
                         back_buffer[r+(i * Machine.scrbitmap.width)] = (char) curr;
