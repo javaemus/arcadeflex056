@@ -69,6 +69,8 @@ import static mame056.drivers.jackal.*;
 import static mame056.drivers.champbas.*;
 import static mame056.drivers.espial.*;
 import static mame056.drivers.marineb.*;
+import static mame056.drivers.sidearms.*;
+import static mame056.drivers.superpac.*;
 
 public class driver {
 
@@ -463,11 +465,11 @@ public class driver {
         /*TODO*///	driver_xeviousa,	/* (c) 1982 + Atari license */
         /*TODO*///	driver_xevios,	/* bootleg */
         /*TODO*///	driver_sxevious,	/* (c) 1984 */
-        /*TODO*///	driver_superpac,	/* (c) 1982 */
-        /*TODO*///	driver_superpcm,	/* (c) 1982 Midway */
-        /*TODO*///	driver_pacnpal,	/* (c) 1983 */
-        /*TODO*///	driver_pacnpal2,	/* (c) 1983 */
-        /*TODO*///	driver_pacnchmp,	/* (c) 1983 */
+        	driver_superpac,	/* (c) 1982 */
+        	driver_superpcm,	/* (c) 1982 Midway */
+        	driver_pacnpal,	/* (c) 1983 */
+        	driver_pacnpal2,	/* (c) 1983 */
+        	driver_pacnchmp,	/* (c) 1983 */
         /*TODO*///	driver_phozon,	/* (c) 1983 */
         /*TODO*///	driver_mappy,		/* (c) 1983 */
         /*TODO*///	driver_mappyjp,	/* (c) 1983 */
@@ -1684,12 +1686,12 @@ public class driver {
         /*TODO*///	driver_lwings,	/* 11/1986 (c) 1986 */
         /*TODO*///	driver_lwings2,	/* 11/1986 (c) 1986 */
         /*TODO*///	driver_lwingsjp,	/* 11/1986 (c) 1986 */
-        /*TODO*///	driver_sidearms,	/* 12/1986 (c) 1986 (World) */
-        /*TODO*///	driver_sidearmr,	/* 12/1986 (c) 1986 + Romstar license (US) */
-        /*TODO*///	driver_sidearjp,	/* 12/1986 (c) 1986 (Japan) */
-        /*TODO*///	driver_turtship,	/* (c) 1988 Philco (NOT A CAPCOM GAME but runs on modified Sidearms hardware) */
-        /*TODO*///	driver_dyger,		/* (c) 1989 Philco (NOT A CAPCOM GAME but runs on modified Sidearms hardware) */
-        /*TODO*///	driver_dygera,	/* (c) 1989 Philco (NOT A CAPCOM GAME but runs on modified Sidearms hardware) */
+        	driver_sidearms,	/* 12/1986 (c) 1986 (World) */
+        	driver_sidearmr,	/* 12/1986 (c) 1986 + Romstar license (US) */
+        	driver_sidearjp,	/* 12/1986 (c) 1986 (Japan) */
+        	driver_turtship,	/* (c) 1988 Philco (NOT A CAPCOM GAME but runs on modified Sidearms hardware) */
+        	driver_dyger,		/* (c) 1989 Philco (NOT A CAPCOM GAME but runs on modified Sidearms hardware) */
+        	driver_dygera,	/* (c) 1989 Philco (NOT A CAPCOM GAME but runs on modified Sidearms hardware) */
         /*TODO*///	driver_avengers,	/*  2/1987 (c) 1987 (US) */
         /*TODO*///	driver_avenger2,	/*  2/1987 (c) 1987 (US) */
         /*TODO*///	driver_buraiken,	/*  2/1987 (c) 1987 (Japan) */
