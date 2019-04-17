@@ -1,5 +1,6 @@
 18/04/2019
 ==========
+-Added mario driver (no sound/fully playable/correct colors)
 -Added superpac driver (fully playable)
 -Added sidearms driver (imperfect colors/no sound)
 -Video problem with the first pixel column solved

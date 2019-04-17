@@ -71,6 +71,7 @@ import static mame056.drivers.espial.*;
 import static mame056.drivers.marineb.*;
 import static mame056.drivers.sidearms.*;
 import static mame056.drivers.superpac.*;
+import static mame056.drivers.mario.*;
 
 public class driver {
 
@@ -684,9 +685,9 @@ public class driver {
         /*TODO*///	driver_dkngjnrb,	/* (c) 1982 Nintendo of America */
         /*TODO*///	driver_dkong3,	/* (c) 1983 Nintendo of America */
         /*TODO*///	driver_dkong3j,	/* (c) 1983 Nintendo */
-        /*TODO*///	driver_mario,		/* (c) 1983 Nintendo of America */
-        /*TODO*///	driver_mariojp,	/* (c) 1983 Nintendo */
-        /*TODO*///	driver_masao,		/* bootleg */
+        	driver_mario,		/* (c) 1983 Nintendo of America */
+        	driver_mariojp,	/* (c) 1983 Nintendo */
+        	driver_masao,		/* bootleg */
         /*TODO*///	driver_hunchbkd,	/* (c) 1983 Century */
         /*TODO*///	driver_herbiedk,	/* (c) 1984 CVS */
         /*TODO*///TESTdriver_herocast,
