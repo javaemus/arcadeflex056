@@ -51,9 +51,14 @@ import static mame056.vidhrdw.generic.*;
 import static arcadeflex056.fileio.*;
 // refactor
 import static arcadeflex036.osdepend.logerror;
+import static mame056.drivers.shisen.ym2151_interface;
 import static mame056.palette.*;
 import static mame056.machine.jackal.*;
 import static mame056.palette.*;
+import static mame056.sound._2151intf.*;
+import mame056.sound._2151intfH.YM2151interface;
+import static mame056.sound._2151intfH.YM3012_VOL;
+import static mame056.sound.mixerH.*;
 
 import static mame056.vidhrdw.jackal.*;
 
@@ -122,7 +127,7 @@ public class jackal
 	
 	public static Memory_ReadAddress jackal_sound_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		/*TODO*///new Memory_ReadAddress( 0x2001, 0x2001, YM2151_status_port_0_r ),
+		new Memory_ReadAddress( 0x2001, 0x2001, YM2151_status_port_0_r ),
 		new Memory_ReadAddress( 0x4000, 0x43ff, MRA_RAM ),		/* COLOR RAM (Self test only check 0x4000-0x423f */
 		new Memory_ReadAddress( 0x6000, 0x605f, MRA_RAM ),		/* SOUND RAM (Self test check 0x6000-605f, 0x7c00-0x7fff */
 		new Memory_ReadAddress( 0x6060, 0x7fff, jackal_commonram1_r ), /* COMMON RAM */
@@ -132,8 +137,8 @@ public class jackal
 	
 	public static Memory_WriteAddress jackal_sound_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		/*TODO*///new Memory_WriteAddress( 0x2000, 0x2000, YM2151_register_port_0_w ),
-		/*TODO*///new Memory_WriteAddress( 0x2001, 0x2001, YM2151_data_port_0_w ),
+		new Memory_WriteAddress( 0x2000, 0x2000, YM2151_register_port_0_w ),
+		new Memory_WriteAddress( 0x2001, 0x2001, YM2151_data_port_0_w ),
 		new Memory_WriteAddress( 0x4000, 0x43ff, paletteram_xBBBBBGGGGGRRRRR_w, paletteram ),
 		new Memory_WriteAddress( 0x6000, 0x605f, MWA_RAM ),
 		new Memory_WriteAddress( 0x6060, 0x7fff, jackal_commonram1_w ),
@@ -387,13 +392,13 @@ public class jackal
 	
 	
 	
-	/*TODO*///static struct YM2151interface ym2151_interface =
-	/*TODO*///{
-	/*TODO*///	1,
-	/*TODO*///	3580000,
-	/*TODO*///	{ YM3012_VOL(50,MIXER_PAN_LEFT,50,MIXER_PAN_RIGHT) },
-	/*TODO*///	{ 0 },
-	/*TODO*///};
+	static YM2151interface ym2151_interface = new YM2151interface
+	(
+		1,
+		3580000,
+		new int[]{ YM3012_VOL(50,MIXER_PAN_LEFT,50,MIXER_PAN_RIGHT) },
+		new WriteYmHandlerPtr[]{ null }
+        );
 	
 	
 	static MachineDriver machine_driver_jackal = new MachineDriver
@@ -431,13 +436,13 @@ public class jackal
 	
 		/* sound hardware */
 		SOUND_SUPPORTS_STEREO,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_YM2151,
-		/*TODO*///		ym2151_interface
-		/*TODO*///	)
-		/*TODO*///}
-                null
+                new MachineSound[] {
+			new MachineSound(
+				SOUND_YM2151,
+				ym2151_interface
+			)
+		}
+                
 	);
 	
 	

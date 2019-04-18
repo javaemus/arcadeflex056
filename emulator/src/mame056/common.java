@@ -62,7 +62,7 @@ public class common {
         UBytePtr regionbase;/* base of current region */
         int /*UINT32*/ regionlength;/* length of current region */
         String errorbuf = "";/* accumulated errors */
- /*TODO*///	UINT8		tempbuf[65536];			/* temporary buffer */
+ 	UBytePtr		tempbuf=new UBytePtr(1024 * 64);			/* temporary buffer */
     }
 
     /**
@@ -1199,80 +1199,87 @@ public class common {
         if (datamask == 0xff && (groupsize == 1 || reversed == 0) && skip == 0) {
             return rom_fread(romdata, base, numbytes);
         }
-        throw new UnsupportedOperationException("Unsupported");
-        /*TODO*///
-/*TODO*///	/* chunky reads for complex loads */
-/*TODO*///	skip += groupsize;
-/*TODO*///	while (numbytes)
-/*TODO*///	{
-/*TODO*///		int evengroupcount = (sizeof(romdata->tempbuf) / groupsize) * groupsize;
-/*TODO*///		int bytesleft = (numbytes > evengroupcount) ? evengroupcount : numbytes;
-/*TODO*///		UINT8 *bufptr = romdata->tempbuf;
-/*TODO*///
-/*TODO*///		/* read as much as we can */
+        
+        /* chunky reads for complex loads */
+	skip += groupsize;
+	while (numbytes != 0)
+	{
+		int evengroupcount = ((romdata.tempbuf.memory.length) / groupsize) * groupsize;
+		int bytesleft = (numbytes > evengroupcount) ? evengroupcount : numbytes;
+		UBytePtr bufptr = new UBytePtr(romdata.tempbuf);
+                int _bufptr=0;
+
+		/* read as much as we can */
 /*TODO*///		debugload("  Reading %X bytes into buffer\n", bytesleft);
-/*TODO*///		if (rom_fread(romdata, romdata->tempbuf, bytesleft) != bytesleft)
-/*TODO*///			return 0;
-/*TODO*///		numbytes -= bytesleft;
-/*TODO*///
+
+		if (rom_fread(romdata, romdata.tempbuf, bytesleft) != bytesleft)
+			return 0;
+		numbytes -= bytesleft;
+
 /*TODO*///		debugload("  Copying to %08X\n", (int)base);
-/*TODO*///
-/*TODO*///		/* unmasked cases */
-/*TODO*///		if (datamask == 0xff)
-/*TODO*///		{
-/*TODO*///			/* non-grouped data */
-/*TODO*///			if (groupsize == 1)
-/*TODO*///				for (i = 0; i < bytesleft; i++, base += skip)
-/*TODO*///					*base = *bufptr++;
-/*TODO*///
-/*TODO*///			/* grouped data -- non-reversed case */
-/*TODO*///			else if (!reversed)
-/*TODO*///				while (bytesleft)
-/*TODO*///				{
-/*TODO*///					for (i = 0; i < groupsize && bytesleft; i++, bytesleft--)
-/*TODO*///						base[i] = *bufptr++;
-/*TODO*///					base += skip;
-/*TODO*///				}
-/*TODO*///
-/*TODO*///			/* grouped data -- reversed case */
-/*TODO*///			else
-/*TODO*///				while (bytesleft)
-/*TODO*///				{
-/*TODO*///					for (i = groupsize - 1; i >= 0 && bytesleft; i--, bytesleft--)
-/*TODO*///						base[i] = *bufptr++;
-/*TODO*///					base += skip;
-/*TODO*///				}
-/*TODO*///		}
-/*TODO*///
-/*TODO*///		/* masked cases */
-/*TODO*///		else
-/*TODO*///		{
-/*TODO*///			/* non-grouped data */
-/*TODO*///			if (groupsize == 1)
-/*TODO*///				for (i = 0; i < bytesleft; i++, base += skip)
-/*TODO*///					*base = (*base & ~datamask) | ((*bufptr++ << datashift) & datamask);
-/*TODO*///
-/*TODO*///			/* grouped data -- non-reversed case */
-/*TODO*///			else if (!reversed)
-/*TODO*///				while (bytesleft)
-/*TODO*///				{
-/*TODO*///					for (i = 0; i < groupsize && bytesleft; i++, bytesleft--)
-/*TODO*///						base[i] = (base[i] & ~datamask) | ((*bufptr++ << datashift) & datamask);
-/*TODO*///					base += skip;
-/*TODO*///				}
-/*TODO*///
-/*TODO*///			/* grouped data -- reversed case */
-/*TODO*///			else
-/*TODO*///				while (bytesleft)
-/*TODO*///				{
-/*TODO*///					for (i = groupsize - 1; i >= 0 && bytesleft; i--, bytesleft--)
-/*TODO*///						base[i] = (base[i] & ~datamask) | ((*bufptr++ << datashift) & datamask);
-/*TODO*///					base += skip;
-/*TODO*///				}
-/*TODO*///		}
-/*TODO*///	}
+
+		/* unmasked cases */
+		if (datamask == 0xff)
+		{
+			/* non-grouped data */
+			if (groupsize == 1)
+				for (i = 0; i < bytesleft; i++, base.inc(skip)){
+					base.write( bufptr.read(_bufptr++) );                                        
+                                }
+
+			/* grouped data -- non-reversed case */
+			else if (reversed==0)
+				while (bytesleft!=0)
+				{
+					for (i = 0; i < groupsize && (bytesleft!=0); i++, bytesleft--){
+						base.write(i, bufptr.read(_bufptr++));
+                                        }
+					base.inc(skip);
+				}
+
+			/* grouped data -- reversed case */
+			else
+				while (bytesleft != 0)
+				{
+					for (i = groupsize - 1; i >= 0 && (bytesleft!=0); i--, bytesleft--){
+						base.write(i, bufptr.read(_bufptr++));
+                                        }
+					base.inc(skip);
+				}
+		}
+
+		/* masked cases */
+		else
+		{
+			/* non-grouped data */
+			if (groupsize == 1)
+				for (i = 0; i < bytesleft; i++, base.inc(skip)){
+					base.write( (base.read() & ~datamask) | ((bufptr.read(_bufptr++) << datashift) & datamask) );
+                                }
+
+			/* grouped data -- non-reversed case */
+			else if (reversed==0)
+				while (bytesleft!=0)
+				{
+					for (i = 0; i < groupsize && (bytesleft!=0); i++, bytesleft--){
+                                            base.write(i, (base.read(i) & ~datamask) | ((bufptr.read(_bufptr++) << datashift) & datamask));
+                                        }
+					base.inc(skip);
+				}
+
+			/* grouped data -- reversed case */
+			else
+				while (bytesleft!=0)
+				{
+					for (i = groupsize - 1; i >= 0 && (bytesleft!=0); i--, bytesleft--){
+                                            base.write(i, (base.read(i) & ~datamask) | ((bufptr.read(_bufptr++) << datashift) & datamask));
+                                        }
+					base.inc(skip);
+				}
+		}
+	}
 /*TODO*///	debugload("  All done\n");
-/*TODO*///	return ROM_GETLENGTH(romp);
+	return ROM_GETLENGTH(romp, rom_ptr);
     }
 
 

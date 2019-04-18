@@ -16,6 +16,7 @@
 package mame056.machine;
 
 import static arcadeflex056.fucPtr.*;
+import static mame056.common.*;
 import static mame056.drawgfxH.*;
 import static mame056.cpuexec.*;
 import static mame056.cpuexecH.*;
@@ -384,34 +385,34 @@ public class mcr
 /*TODO*///	}
 /*TODO*///	
 /*TODO*///	
-/*TODO*///	
-/*TODO*///	/*************************************
-/*TODO*///	 *
-/*TODO*///	 *	Generic MCR port write handlers
-/*TODO*///	 *
-/*TODO*///	 *************************************/
-/*TODO*///	
-/*TODO*///	public static WriteHandlerPtr mcr_control_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-/*TODO*///	{
-/*TODO*///		/*
-/*TODO*///			Bit layout is as follows:
-/*TODO*///				D7 = n/c
-/*TODO*///				D6 = cocktail flip
-/*TODO*///				D5 = red LED
-/*TODO*///				D4 = green LED
-/*TODO*///				D3 = n/c
-/*TODO*///				D2 = coin meter 3
-/*TODO*///				D1 = coin meter 2
-/*TODO*///				D0 = coin meter 1
-/*TODO*///		*/
-/*TODO*///	
-/*TODO*///		coin_counter_w(0, (data >> 0) & 1);
-/*TODO*///		coin_counter_w(1, (data >> 1) & 1);
-/*TODO*///		coin_counter_w(2, (data >> 2) & 1);
-/*TODO*///		mcr_cocktail_flip = (data >> 6) & 1;
-/*TODO*///	} };
-/*TODO*///	
-/*TODO*///	
+	
+	/*************************************
+	 *
+	 *	Generic MCR port write handlers
+	 *
+	 *************************************/
+	
+	public static WriteHandlerPtr mcr_control_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
+	{
+		/*
+			Bit layout is as follows:
+				D7 = n/c
+				D6 = cocktail flip
+				D5 = red LED
+				D4 = green LED
+				D3 = n/c
+				D2 = coin meter 3
+				D1 = coin meter 2
+				D0 = coin meter 1
+		*/
+	
+		coin_counter_w(0, (data >> 0) & 1);
+		coin_counter_w(1, (data >> 1) & 1);
+		coin_counter_w(2, (data >> 2) & 1);
+		mcr_cocktail_flip = (data >> 6) & 1;
+	} };
+	
+	
 /*TODO*///	public static WriteHandlerPtr mcrmono_control_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 /*TODO*///	{
 /*TODO*///		/*

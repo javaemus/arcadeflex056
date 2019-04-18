@@ -87,6 +87,7 @@ import static mame056.cpuexecH.*;
 import static mame056.cpuintrfH.*;
 import static mame056.driverH.*;
 import static mame056.memoryH.*;
+import static mame056.memory.*;
 import static mame056.inptport.*;
 import static mame056.drawgfxH.*;
 import static mame056.inputH.*;
@@ -414,7 +415,7 @@ public class mcr1
 		mcr1_vh_screenrefresh,
 	
 		/* sound hardware */
-		SOUND_SUPPORTS_STEREO,0,0,0,
+		0,0,0,0,
 		/*TODO*///new MachineSound[] {
 		/*TODO*///	SOUND_SSIO
 		/*TODO*///},
@@ -438,8 +439,8 @@ public class mcr1
                     nvram_init.write(i, hiscore_init[i]);
 	
 		/*TODO*///MCR_CONFIGURE_SOUND(MCR_SSIO);
-		/*TODO*///install_port_read_handler(0, 0x00, 0x00, solarfox_input_0_r);
-		/*TODO*///install_port_read_handler(0, 0x01, 0x01, solarfox_input_1_r);
+		install_port_read_handler(0, 0x00, 0x00, solarfox_input_0_r);
+		install_port_read_handler(0, 0x01, 0x01, solarfox_input_1_r);
 		/*TODO*///install_port_write_handler(0, 0x01, 0x01, mcr_control_port_w);
 	
 		mcr12_sprite_xoffs = 16;
@@ -452,7 +453,7 @@ public class mcr1
 		nvram_init = null;
 	
 		/*TODO*///MCR_CONFIGURE_SOUND(MCR_SSIO);
-		/*TODO*///install_port_read_handler(0, 0x01, 0x01, kick_dial_r);
+		install_port_read_handler(0, 0x01, 0x01, kick_dial_r);
 		/*TODO*///install_port_write_handler(0, 0x03, 0x03, mcr_control_port_w);
 	
 		mcr12_sprite_xoffs = 0;

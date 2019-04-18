@@ -1,5 +1,6 @@
 18/04/2019
 ==========
+-Added ROM_LOAD16_BYTE functionality in common class (now jackal shows the sprites, not the background)
 -Added mario driver (no sound/fully playable/correct colors)
 -Added superpac driver (fully playable)
 -Added sidearms driver (imperfect colors/no sound)
