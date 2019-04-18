@@ -221,7 +221,7 @@ public class brkthru
 			}
 		}
 	
-	spriteram.offset=0;
+	//spriteram.offset=0;
 		/* copy the background graphics */
 		{
 			int scroll;
