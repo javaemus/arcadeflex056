@@ -441,7 +441,7 @@ public class mcr1
 		/*TODO*///MCR_CONFIGURE_SOUND(MCR_SSIO);
 		install_port_read_handler(0, 0x00, 0x00, solarfox_input_0_r);
 		install_port_read_handler(0, 0x01, 0x01, solarfox_input_1_r);
-		/*TODO*///install_port_write_handler(0, 0x01, 0x01, mcr_control_port_w);
+		install_port_write_handler(0, 0x01, 0x01, mcr_control_port_w);
 	
 		mcr12_sprite_xoffs = 16;
 		mcr12_sprite_xoffs_flip = 0;
@@ -454,7 +454,7 @@ public class mcr1
 	
 		/*TODO*///MCR_CONFIGURE_SOUND(MCR_SSIO);
 		install_port_read_handler(0, 0x01, 0x01, kick_dial_r);
-		/*TODO*///install_port_write_handler(0, 0x03, 0x03, mcr_control_port_w);
+		install_port_write_handler(0, 0x03, 0x03, mcr_control_port_w);
 	
 		mcr12_sprite_xoffs = 0;
 		mcr12_sprite_xoffs_flip = 16;
