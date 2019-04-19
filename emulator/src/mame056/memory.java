@@ -607,29 +607,29 @@ public class memory {
 /*TODO*///	mem_dump();
 /*TODO*///#endif
 /*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*////*-------------------------------------------------
-/*TODO*///	install_port_write_handler - install dynamic
-/*TODO*///	read handler for 8-bit case
-/*TODO*///-------------------------------------------------*/
-/*TODO*///
-/*TODO*///void install_port_write_handler(int cpunum, offs_t start, offs_t end, port_write_handler handler)
-/*TODO*///{
-/*TODO*///	/* sanity check */
-/*TODO*///	if (cpudata[cpunum].port.dbits != 8)
-/*TODO*///	{
-/*TODO*///		printf("fatal: install_port_write_handler called on %d-bit cpu\n",cpudata[cpunum].port.dbits);
-/*TODO*///		exit(1);
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	/* install the handler */
-/*TODO*///	install_port_handler(&cpudata[cpunum].port, 1, start, end, (void *)handler);
-/*TODO*///#ifdef MEM_DUMP
-/*TODO*///	/* dump the new memory configuration */
-/*TODO*///	mem_dump();
-/*TODO*///#endif
-/*TODO*///}
+
+
+/*-------------------------------------------------
+	install_port_write_handler - install dynamic
+	read handler for 8-bit case
+-------------------------------------------------*/
+
+    public static void install_port_write_handler(int cpunum, int start, int end, WriteHandlerPtr handler)
+    {
+            /* sanity check */
+            if (cpudata[cpunum].port.dbits != 8)
+            {
+                    printf("fatal: install_port_write_handler called on %d-bit cpu\n",cpudata[cpunum].port.dbits);
+                    exit(1);
+            }
+
+            /* install the handler */
+            install_port_handler(cpudata[cpunum].port, 1, start, end, -15000, handler);
+    /*TODO*///#ifdef MEM_DUMP
+    /*TODO*///	/* dump the new memory configuration */
+    /*TODO*///	mem_dump();
+    /*TODO*///#endif
+    }
 /*TODO*///
 /*TODO*///
 /*TODO*////*-------------------------------------------------

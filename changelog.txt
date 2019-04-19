@@ -1,3 +1,7 @@
+19/04/2019
+==========
+-Added install_port_write_handler method in memory class
+
 18/04/2019
 ==========
 -brkthru game works perfectly now!

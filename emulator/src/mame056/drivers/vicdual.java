@@ -1907,7 +1907,7 @@ public class vicdual
 		install_port_read_handler(0, 0x08, 0x08, depthch_input_port_1_r);
 	
 		/* install sample trigger */
-		/*TODO*///install_port_write_handler(0, 0x04, 0x04, depthch_sh_port1_w);
+		install_port_write_handler(0, 0x04, 0x04, depthch_sh_port1_w);
 	
 		vicdual_decode();
 	} };
@@ -1924,8 +1924,8 @@ public class vicdual
 	public static InitDriverPtr init_carnival = new InitDriverPtr() { public void handler()
 	{
 		/* install sample triggers */
-		/*TODO*///install_port_write_handler(0, 0x01, 0x01, carnival_sh_port1_w);
-		/*TODO*///install_port_write_handler(0, 0x02, 0x02, carnival_sh_port2_w);
+		install_port_write_handler(0, 0x01, 0x01, carnival_sh_port1_w);
+		install_port_write_handler(0, 0x02, 0x02, carnival_sh_port2_w);
 	
 		vicdual_decode();
 	} };
@@ -1933,7 +1933,7 @@ public class vicdual
 	public static InitDriverPtr init_invinco = new InitDriverPtr() { public void handler()
 	{
 		/* install sample trigger */
-		/*TODO*///install_port_write_handler(0, 0x02, 0x02, invinco_sh_port2_w);
+		install_port_write_handler(0, 0x02, 0x02, invinco_sh_port2_w);
 	
 		vicdual_decode();
 	} };
@@ -1941,7 +1941,7 @@ public class vicdual
 	public static InitDriverPtr init_invho2 = new InitDriverPtr() { public void handler()
 	{
 		/* install sample trigger */
-		/*TODO*///install_port_write_handler(0, 0x02, 0x02, invinco_sh_port2_w);
+		install_port_write_handler(0, 0x02, 0x02, invinco_sh_port2_w);
 	
 		vicdual_decode();
 	} };
@@ -1949,7 +1949,7 @@ public class vicdual
 	public static InitDriverPtr init_invds = new InitDriverPtr() { public void handler()
 	{
 		/* install sample trigger */
-		/*TODO*///install_port_write_handler(0, 0x01, 0x01, invinco_sh_port2_w);
+		install_port_write_handler(0, 0x01, 0x01, invinco_sh_port2_w);
 	
 		vicdual_decode();
 	} };
@@ -1957,8 +1957,8 @@ public class vicdual
 	public static InitDriverPtr init_pulsar = new InitDriverPtr() { public void handler()
 	{
 		/* install sample triggers */
-		/*TODO*///install_port_write_handler(0, 0x01, 0x01, pulsar_sh_port1_w);
-		/*TODO*///install_port_write_handler(0, 0x02, 0x02, pulsar_sh_port2_w);
+		install_port_write_handler(0, 0x01, 0x01, pulsar_sh_port1_w);
+		install_port_write_handler(0, 0x02, 0x02, pulsar_sh_port2_w);
 	
 		vicdual_decode();
 	} };
