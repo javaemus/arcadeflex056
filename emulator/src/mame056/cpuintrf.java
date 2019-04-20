@@ -14,6 +14,7 @@ import static mame056.memory.*;
 import mame056.cpu.dummy_cpu;
 import mame056.cpu.z80.z80;
 import mame056.cpu.m6809.m6809;
+import mame056.cpu.i8039.i8039;
 
 public class cpuintrf {
 
@@ -200,7 +201,7 @@ public class cpuintrf {
                 new dummy_cpu(),/*TODO*///	CPU0(V33,	   v33, 	 1,  0,1.00,-1000,		    8, 20,	  0,20,LE,1, 5	),
                 new dummy_cpu(),/*TODO*///	CPU0(V60,	   v60, 	 1,  0,1.00,-1000,		   16, 24lew, 0,24,LE,1, 11	),
                 new dummy_cpu(),/*TODO*///	CPU0(I8035,    i8035,	 1,  0,1.00,0,              8, 16,	  0,16,LE,1, 2	),
-                new dummy_cpu(),/*TODO*///	CPU0(I8039,    i8039,	 1,  0,1.00,0,              8, 16,	  0,16,LE,1, 2	),
+                new i8039(),/*TODO*///	CPU0(I8039,    i8039,	 1,  0,1.00,0,              8, 16,	  0,16,LE,1, 2	),
                 new dummy_cpu(),/*TODO*///	CPU0(I8048,    i8048,	 1,  0,1.00,0,              8, 16,	  0,16,LE,1, 2	),
                 new dummy_cpu(),/*TODO*///	CPU0(N7751,    n7751,	 1,  0,1.00,0,              8, 16,	  0,16,LE,1, 2	),
                 new dummy_cpu(),/*TODO*///	CPU0(I8X41,    i8x41,	 1,  0,1.00,I8X41_INT_IBF,  8, 16,	  0,16,LE,1, 2	),

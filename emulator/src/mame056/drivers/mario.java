@@ -106,7 +106,7 @@ import static mame056.sndhrdw.mario.*;
 import static mame056.sound.ay8910.*;
 import static mame056.sound.ay8910H.*;
 import static mame056.sound.samplesH.*;
-
+import static mame056.cpu.i8039.i8039H.*;
 
 public class mario
 {
@@ -244,17 +244,17 @@ public class mario
 	public static IO_ReadPort readport_sound[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
 		new IO_ReadPort( 0x00,     0xff,     mario_sh_tune_r ),
-		/*TODO*///new IO_ReadPort( I8039_p1, I8039_p1, mario_sh_p1_r ),
-		/*TODO*///new IO_ReadPort( I8039_p2, I8039_p2, mario_sh_p2_r ),
-		/*TODO*///new IO_ReadPort( I8039_t0, I8039_t0, mario_sh_t0_r ),
-		/*TODO*///new IO_ReadPort( I8039_t1, I8039_t1, mario_sh_t1_r ),
+		new IO_ReadPort( I8039_p1, I8039_p1, mario_sh_p1_r ),
+		new IO_ReadPort( I8039_p2, I8039_p2, mario_sh_p2_r ),
+		new IO_ReadPort( I8039_t0, I8039_t0, mario_sh_t0_r ),
+		new IO_ReadPort( I8039_t1, I8039_t1, mario_sh_t1_r ),
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	public static IO_WritePort writeport_sound[]={
 		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
 		new IO_WritePort( 0x00,     0xff,     mario_sh_sound_w ),
-		/*TODO*///new IO_WritePort( I8039_p1, I8039_p1, mario_sh_p1_w ),
-		/*TODO*///new IO_WritePort( I8039_p2, I8039_p2, mario_sh_p2_w ),
+		new IO_WritePort( I8039_p1, I8039_p1, mario_sh_p1_w ),
+		new IO_WritePort( I8039_p2, I8039_p2, mario_sh_p2_w ),
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
@@ -457,12 +457,12 @@ public class mario
 				3072000,	/* 3.072 MHz (?) */
 				readmem,writemem,null,mario_writeport,
 				nmi_interrupt,1
-		/*TODO*///	),
-		/*TODO*///	new MachineCPU(
-		/*TODO*///		CPU_I8039 | CPU_AUDIO_CPU,
-		/*TODO*///		730000,         /* 730 kHz */
-		/*TODO*///		readmem_sound,writemem_sound,readport_sound,writeport_sound,
-		/*TODO*///		ignore_interrupt,1
+			),
+			new MachineCPU(
+				CPU_I8039 | CPU_AUDIO_CPU,
+				730000,         /* 730 kHz */
+				readmem_sound,writemem_sound,readport_sound,writeport_sound,
+				ignore_interrupt,1
 			)
 		},
 		60, DEFAULT_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */

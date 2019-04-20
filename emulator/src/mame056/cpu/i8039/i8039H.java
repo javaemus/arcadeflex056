@@ -8,7 +8,8 @@ import static mame056.memoryH.*;
 
 public class i8039H {
 
-    /*TODO*///enum { I8039_PC=1, I8039_SP, I8039_PSW, I8039_A,  I8039_IRQ_STATE,
+    public static final int I8039_PC = 1;
+    /*TODO*///I8039_SP, I8039_PSW, I8039_A,  I8039_IRQ_STATE,
 /*TODO*///	   I8039_R0,   I8039_R1, I8039_R2,  I8039_R3, I8039_R4,
 /*TODO*///	   I8039_R5,   I8039_R6, I8039_R7,  I8039_P1, I8039_P2
 /*TODO*///};
