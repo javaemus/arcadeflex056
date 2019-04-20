@@ -72,6 +72,7 @@ import static mame056.drivers.marineb.*;
 import static mame056.drivers.sidearms.*;
 import static mame056.drivers.superpac.*;
 import static mame056.drivers.mario.*;
+import static mame056.drivers.gyruss.*;
 
 public class driver {
 
@@ -2637,9 +2638,9 @@ public class driver {
         /*TODO*///	driver_megazone,	/* GX319 (c) 1983 */
         /*TODO*///	driver_megaznik,	/* GX319 (c) 1983 + Interlogic / Kosuka */
         /*TODO*///	driver_pandoras,	/* GX328 (c) 1984 + Interlogic */
-        /*TODO*///	driver_gyruss,	/* GX347 (c) 1983 */
-        /*TODO*///	driver_gyrussce,	/* GX347 (c) 1983 + Centuri license */
-        /*TODO*///	driver_venus,		/* bootleg */
+        	driver_gyruss,	/* GX347 (c) 1983 */
+        	driver_gyrussce,	/* GX347 (c) 1983 + Centuri license */
+        	driver_venus,		/* bootleg */
         driver_trackfld,	/* GX361 (c) 1983 */
         driver_trackflc,	/* GX361 (c) 1983 + Centuri license */
         driver_hyprolym,	/* GX361 (c) 1983 */
