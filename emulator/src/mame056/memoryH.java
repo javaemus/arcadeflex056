@@ -78,6 +78,7 @@ public class memoryH {
             return a;
         }
     };
+
     /*TODO*///
 /*TODO*///
 /*TODO*///
@@ -98,8 +99,11 @@ public class memoryH {
 /*TODO*///
 /*TODO*////* ----- macros for accessing bytes and words within larger chunks ----- */
 /*TODO*///#ifdef LSB_FIRST
-	public static int BYTE_XOR_BE(int a){ return((a) ^ 1); }				/* read/write a byte to a 16-bit space */
-/*TODO*///	#define BYTE_XOR_LE(a)  	(a)
+    public static int BYTE_XOR_BE(int a) {
+        return ((a) ^ 1);
+    }
+    /* read/write a byte to a 16-bit space */
+ /*TODO*///	#define BYTE_XOR_LE(a)  	(a)
 /*TODO*///	#define BYTE4_XOR_BE(a) 	((a) ^ 3)				/* read/write a byte to a 32-bit space */
 /*TODO*///	#define BYTE4_XOR_LE(a) 	(a)
 /*TODO*///	#define WORD_XOR_BE(a)  	((a) ^ 2)				/* read/write a word to a 32-bit space */
@@ -380,17 +384,18 @@ public class memoryH {
 /*TODO*///#define MWA32_ROM				((mem_write32_handler)STATIC_ROM)
 /*TODO*///
 /*TODO*///
-/*TODO*///
-/*TODO*////***************************************************************************
-/*TODO*///
-/*TODO*///	Constants for static entries in port read/write arrays
-/*TODO*///
-/*TODO*///***************************************************************************/
-/*TODO*///
-/*TODO*////* 8-bit port reads */
-/*TODO*///#define IORP_NOP				((port_read_handler)STATIC_NOP)
-/*TODO*///
-/*TODO*////* 8-bit port writes */
+    /**
+     * *************************************************************************
+     *
+     * Constants for static entries in port read/write arrays
+     *
+     **************************************************************************
+     */
+
+    /* 8-bit port reads */
+    public static final int IORP_NOP = STATIC_NOP;
+
+    /* 8-bit port writes */
     public static final int IOWP_NOP = STATIC_NOP;
 
     /*TODO*///
@@ -1047,11 +1052,11 @@ public class memoryH {
     /*TODO*///
 /*TODO*///
     /* ----- forces the next branch to generate a call to the opbase handler ----- */
-    public static void catch_nextBranch(){
+    public static void catch_nextBranch() {
         opcode_entry = 0xff;
     }
 
-/*TODO*////* ----- bank switching macro ----- */
+    /*TODO*////* ----- bank switching macro ----- */
 /*TODO*///#define cpu_setbank(bank, base) 														
 /*TODO*///do {	
     public static void cpu_setbank(int bank, UBytePtr base) {

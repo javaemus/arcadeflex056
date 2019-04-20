@@ -73,6 +73,7 @@ import static mame056.drivers.sidearms.*;
 import static mame056.drivers.superpac.*;
 import static mame056.drivers.mario.*;
 import static mame056.drivers.gyruss.*;
+import static mame056.drivers.megazone.*;
 
 public class driver {
 
@@ -2635,8 +2636,8 @@ public class driver {
         /*TODO*///	driver_timepltc,	/* GX393 (c) 1982 + Centuri license*/
         /*TODO*///	driver_spaceplt,	/* bootleg */
         /*TODO*///	driver_psurge,	/* (c) 1988 unknown (NOT Konami) */
-        /*TODO*///	driver_megazone,	/* GX319 (c) 1983 */
-        /*TODO*///	driver_megaznik,	/* GX319 (c) 1983 + Interlogic / Kosuka */
+        	driver_megazone,	/* GX319 (c) 1983 */
+        	driver_megaznik,	/* GX319 (c) 1983 + Interlogic / Kosuka */
         /*TODO*///	driver_pandoras,	/* GX328 (c) 1984 + Interlogic */
         	driver_gyruss,	/* GX347 (c) 1983 */
         	driver_gyrussce,	/* GX347 (c) 1983 + Centuri license */
