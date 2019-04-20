@@ -116,7 +116,8 @@ public class jackal
 	static void jackal_draw_sprites(mame_bitmap bitmap, UBytePtr sram,int length,int bank)
 	{
 		int offs, spritenum, sx, sy, color;
-		int sn1, sn2, sp, flipx, flipy;	
+		int sn1, sn2, sp, flipx, flipy;
+	
 		for (offs = 0;offs < length;offs += 5)
 		{
 			sn1 = sram.read(offs+0);
@@ -233,7 +234,7 @@ public class jackal
 	{
 		UBytePtr sr=new UBytePtr(), ss=new UBytePtr();
 		int offs,i;
-		UBytePtr RAM = (memory_region(REGION_CPU1));
+		UBytePtr RAM = new UBytePtr(memory_region(REGION_CPU1));
 	
 	
 		jackal_scrollram = new UBytePtr(RAM, 0x0020);

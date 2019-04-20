@@ -15,7 +15,7 @@ public class drawgfxH {
     public static final int MAX_GFX_SIZE = 64;
 
     public static int RGN_FRAC(int num, int den) {
-        return (0x80000000 | (((num) & 0x0f) << 27) | (((den) & 0x0f) << 23));
+        return (0x80000000 | ((num & 0x0f) << 27) | ((den & 0x0f) << 23));
     }
 
     public static int IS_FRAC(int offset) {

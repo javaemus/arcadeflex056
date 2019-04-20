@@ -6627,6 +6627,7 @@ public class drawgfx {
 /*TODO*/// 					break;
 /*TODO*/// 			}
 /*TODO*///         }
+
         switch (transparency) {
             case TRANSPARENCY_NONE:
                 if ((gfx.flags & GFX_PACKED) != 0) {

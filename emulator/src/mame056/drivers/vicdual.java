@@ -81,6 +81,7 @@ import common.ptr.UBytePtr;
 import static mame056.common.memory_region;
 
 import static mame056.commonH.*;
+import static mame056.cpu.i8039.i8039H.*;
 import static mame056.cpuexec.*;
 import static mame056.inptportH.*;
 import static mame056.cpuexecH.*;
@@ -292,14 +293,14 @@ public class vicdual
 	
 	public static IO_ReadPort i8039_readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
-		/*TODO*///new IO_ReadPort( I8039_t1, I8039_t1, carnival_music_port_t1_r ),
+		new IO_ReadPort( I8039_t1, I8039_t1, carnival_music_port_t1_r ),
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
 	public static IO_WritePort i8039_writeport[]={
 		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
-		/*TODO*///new IO_WritePort( I8039_p1, I8039_p1, carnival_music_port_1_w ),
-		/*TODO*///new IO_WritePort( I8039_p2, I8039_p2, carnival_music_port_2_w ),
+		new IO_WritePort( I8039_p1, I8039_p1, carnival_music_port_1_w ),
+		new IO_WritePort( I8039_p2, I8039_p2, carnival_music_port_2_w ),
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
@@ -1411,12 +1412,12 @@ public class vicdual
 				15468480/8,
 				vicdual_readmem,vicdual_writemem,readport_4ports,writeport,
 				ignore_interrupt,1
-			/*TODO*///),
-			/*TODO*///new MachineCPU(
-			/*TODO*///	CPU_I8039 | CPU_AUDIO_CPU,
-			/*TODO*///	( ( 3579545 / 5 ) / 3 ),
-			/*TODO*///	i8039_readmem,i8039_writemem,i8039_readport,i8039_writeport,
-			/*TODO*///	ignore_interrupt,1
+			),
+			new MachineCPU(
+				CPU_I8039 | CPU_AUDIO_CPU,
+				( ( 3579545 / 5 ) / 3 ),
+				i8039_readmem,i8039_writemem,i8039_readport,i8039_writeport,
+				ignore_interrupt,1
 			)
 		},
 		60, 5000,	/* frames per second, vblank duration */

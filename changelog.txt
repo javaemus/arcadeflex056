@@ -1,3 +1,7 @@
+20/04/2019
+==========
+-Added i8039 sound to vicdual driver
+
 19/04/2019
 ==========
 -Added install_port_write_handler method in memory class
