@@ -74,6 +74,9 @@ import static mame056.drivers.superpac.*;
 import static mame056.drivers.mario.*;
 import static mame056.drivers.gyruss.*;
 import static mame056.drivers.megazone.*;
+import static mame056.drivers.ironhors.*;
+import static mame056.drivers.tutankhm.*;
+import static mame056.drivers.junofrst.*;
 
 public class driver {
 
@@ -2624,13 +2627,13 @@ public class driver {
         /*TODO*///	driver_wc90b,		/* bootleg */
         /*TODO*///	driver_fstarfrc,	/* (c) 1992 Tecmo */
         /*TODO*///	driver_ginkun,	/* (c) 1995 Tecmo */
-        /*TODO*///
-        /*TODO*///	/* Konami bitmap games */
-        /*TODO*///	driver_tutankhm,	/* GX350 (c) 1982 Konami */
-        /*TODO*///	driver_tutankst,	/* GX350 (c) 1982 Stern */
-        /*TODO*///	driver_junofrst,	/* GX310 (c) 1983 Konami */
-        /*TODO*///	driver_junofstg,	/* GX310 (c) 1983 Konami + Gottlieb license */
-        /*TODO*///
+        
+        	/* Konami bitmap games */
+        	driver_tutankhm,	/* GX350 (c) 1982 Konami */
+        	driver_tutankst,	/* GX350 (c) 1982 Stern */
+        	driver_junofrst,	/* GX310 (c) 1983 Konami */
+        	driver_junofstg,	/* GX310 (c) 1983 Konami + Gottlieb license */
+        
         /*TODO*///	/* Konami games */
         /*TODO*///	driver_timeplt,	/* GX393 (c) 1982 */
         /*TODO*///	driver_timepltc,	/* GX393 (c) 1982 + Centuri license*/
@@ -2675,9 +2678,9 @@ public class driver {
         driver_manhatan,	/* GX507 (c) 1986 (Japan) */
         /*TODO*///	driver_finalizr,	/* GX523 (c) 1985 */
         /*TODO*///	driver_finalizb,	/* bootleg */
-        /*TODO*///	driver_ironhors,	/* GX560 (c) 1986 */
-        /*TODO*///	driver_dairesya,	/* GX560 (c) 1986 (Japan) */
-        /*TODO*///	driver_farwest,
+        driver_ironhors,	/* GX560 (c) 1986 */
+        driver_dairesya,	/* GX560 (c) 1986 (Japan) */
+        driver_farwest,
         driver_jackal,	/* GX631 (c) 1986 (World) */
         driver_topgunr,	/* GX631 (c) 1986 (US) */
         driver_jackalj,	/* GX631 (c) 1986 (Japan) */

@@ -1950,7 +1950,7 @@ public class vicdual
 	public static InitDriverPtr init_invds = new InitDriverPtr() { public void handler()
 	{
 		/* install sample trigger */
-		install_port_write_handler(0, 0x01, 0x01, invinco_sh_port2_w);
+		install_port_write_handler(0, 0x02, 0x02, invinco_sh_port2_w);
 	
 		vicdual_decode();
 	} };

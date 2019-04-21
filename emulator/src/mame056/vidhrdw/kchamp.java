@@ -62,8 +62,7 @@ public class kchamp
 	
 	public static VhStartPtr kchamp1p_vh_start = new VhStartPtr() { public int handler()  {
             
-            System.out.println("kchamp1p_vh_start");
-	
+            
 		kchamp_drawsprites_method = kchamp_1p_drawsprites_method;
 	
 		return generic_vh_start.handler();
@@ -82,13 +81,12 @@ public class kchamp
         
 	public static VhConvertColorPromPtr kchamp_vh_convert_color_prom = new VhConvertColorPromPtr() {
             public void handler(char[] palette, char[] colortable, UBytePtr color_prom) {
-                System.out.println("kchamp_vh_convert_color_prom");
+                
                 int i, red, green, blue;
 	        int _palPos = 0;
                 int _colTabPos = 0;
                 
-                System.out.println("Total Colors: "+Machine.drv.total_colors);
-	
+                
 		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 	                red = color_prom.read(i);
@@ -100,8 +98,7 @@ public class kchamp
 	                palette[_palPos++] = (char) (green*0x11);
 	                palette[_palPos++] = (char) (blue*0x11);
                         
-                        System.out.println("Colors["+i+"]: RED "+red*0x11+" GREEN "+green*0x11+" BLUE "+blue*0x11);
-	                colortable[_colTabPos++] = (char) i;
+                        colortable[_colTabPos++] = (char) i;
                         
                         palette_set_color(i,red*0x11,green*0x11,blue*0x11);
 		}

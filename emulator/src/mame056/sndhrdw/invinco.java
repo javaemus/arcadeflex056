@@ -60,16 +60,13 @@ public class invinco
 		public static int SND_MOVE3     = 6;
 		public static int SND_MOVE4     = 7;
 	//};
-	
+	static int port2State = 0;
+	static int bitsChanged;
+	static int bitsGoneHigh;
+	static int bitsGoneLow;
 	
 	public static WriteHandlerPtr invinco_sh_port2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		int port2State = 0;
-		int bitsChanged;
-		int bitsGoneHigh;
-		int bitsGoneLow;
-	
-	
 		bitsChanged  = port2State ^ data;
 		bitsGoneHigh = bitsChanged & data;
 		bitsGoneLow  = bitsChanged & ~data;
@@ -78,12 +75,12 @@ public class invinco
 	
 		if (( bitsGoneLow & OUT_PORT_2_SAUCER ) != 0)
 		{
-			PLAY( SND_SAUCER, 0 );
+        		PLAY( SND_SAUCER, 0 );
 		}
 	
 		if (( bitsGoneLow & OUT_PORT_2_MOVE1 ) != 0)
 		{
-			PLAY( SND_MOVE1, 0 );
+	            PLAY( SND_MOVE1, 0 );
 		}
 	
 		if (( bitsGoneLow & OUT_PORT_2_MOVE2 ) != 0)
@@ -93,7 +90,7 @@ public class invinco
 	
 		if (( bitsGoneLow & OUT_PORT_2_FIRE ) != 0)
 		{
-			PLAY( SND_FIRE, 0 );
+        		PLAY( SND_FIRE, 0 );
 		}
 	
 		if (( bitsGoneLow & OUT_PORT_2_INVHIT ) != 0)
@@ -103,7 +100,7 @@ public class invinco
 	
 		if (( bitsGoneLow & OUT_PORT_2_SHIPHIT ) != 0)
 		{
-			PLAY( SND_SHIPHIT, 0 );
+        		PLAY( SND_SHIPHIT, 0 );
 		}
 	
 	//#if 0
