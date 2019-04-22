@@ -80,6 +80,7 @@ import static mame056.drivers.junofrst.*;
 import static mame056.drivers.finalizr.*;
 import static mame056.drivers.turbo.*;
 import static mame056.drivers.sbasketb.*;
+import static mame056.drivers.retofinv.*;
 
 public class driver {
 
@@ -1170,9 +1171,9 @@ public class driver {
         /*TODO*///	driver_lkageb,	/* bootleg */
         /*TODO*///	driver_lkageb2,	/* bootleg */
         /*TODO*///	driver_lkageb3,	/* bootleg */
-        /*TODO*///	driver_retofinv,	/* A37 (c) 1985 Taito Corporation */
-        /*TODO*///	driver_retofin1,	/* bootleg */
-        /*TODO*///	driver_retofin2,	/* bootleg */
+        	driver_retofinv,	/* A37 (c) 1985 Taito Corporation */
+        	driver_retofin1,	/* bootleg */
+        	driver_retofin2,	/* bootleg */
         /*TODO*///	driver_fightrol,	/* (c) 1983 Taito */
         /*TODO*///	driver_rollrace,	/* (c) 1983 Williams */
         /*TODO*///	driver_vsgongf,	/* (c) 1984 Kaneko */

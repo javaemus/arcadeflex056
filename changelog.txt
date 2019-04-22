@@ -1,6 +1,7 @@
 22/04/2019
 ==========
 -Solved palette colors problem!!! (now drivers like system1, jackal, etc. work now)
+-Added retofinv driver (retofin1 and retofin2 drivers fully playable)
 
 21/04/2019
 ==========
