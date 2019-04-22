@@ -16,7 +16,7 @@ import static arcadeflex056.fucPtr.*;
 import static common.libc.cstring.memset;
 
 import static common.ptr.*;
-import common.subArrays.IntArray;
+
 import static mame056.common.*;
 
 import static mame056.palette.*;
@@ -52,7 +52,7 @@ public class turbo
 	/* sprite tracking */
 	public static class sprite_params_data
 	{
-		public /*UINT32*/ IntArray base;
+		public UBytePtr base;
 		public int offset, rowbytes;
 		public int yscale, miny, maxy;
 		public int xscale, xoffs;
@@ -62,7 +62,7 @@ public class turbo
             for (int i=0 ; i<16 ; i++)
                 sprite_params[i] = new sprite_params_data();
         }
-	static /*UINT32*/ IntArray sprite_expanded_data;
+	static /*UINT32*/ UBytePtr sprite_expanded_data=new UBytePtr();
 	
 	/* misc other stuff */
 	static UBytePtr back_expanded_data=new UBytePtr();
@@ -75,13 +75,14 @@ public class turbo
 	  Convert the color PROMs into a more useable format.
 	
 	***************************************************************************/
+        
+        //public static char[] _my_colortable;
 	
 	public static VhConvertColorPromPtr turbo_vh_convert_color_prom= new VhConvertColorPromPtr() {
             public void handler(char[] palette, char[] colortable, UBytePtr color_prom) {
                 int i;
-                int _color_prom = 0;
-	
-		for (i = 0; i < 512; i++, _color_prom++)
+                
+		for (i = 0; i < 512; i++, color_prom.inc())
 		{
 			int bit0, bit1, bit2;
 	
@@ -91,21 +92,21 @@ public class turbo
 			int adjusted_index = i ^ 0x70;
 	
 			/* red component */
-			bit0 = (color_prom.read(_color_prom) >> 0) & 1;
-			bit1 = (color_prom.read(_color_prom) >> 1) & 1;
-			bit2 = (color_prom.read(_color_prom) >> 2) & 1;
+			bit0 = (color_prom.read() >> 0) & 1;
+			bit1 = (color_prom.read() >> 1) & 1;
+			bit2 = (color_prom.read() >> 2) & 1;
 			palette[adjusted_index * 3 + 0] = (char) (0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2);
 	
 			/* green component */
-			bit0 = (color_prom.read(_color_prom) >> 3) & 1;
-			bit1 = (color_prom.read(_color_prom) >> 4) & 1;
-			bit2 = (color_prom.read(_color_prom) >> 5) & 1;
+			bit0 = (color_prom.read() >> 3) & 1;
+			bit1 = (color_prom.read() >> 4) & 1;
+			bit2 = (color_prom.read() >> 5) & 1;
 			palette[adjusted_index * 3 + 1] = (char) (0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2);
 	
 			/* blue component */
 			bit0 = 0;
-			bit1 = (color_prom.read(_color_prom) >> 6) & 1;
-			bit2 = (color_prom.read(_color_prom) >> 7) & 1;
+			bit1 = (color_prom.read() >> 6) & 1;
+			bit2 = (color_prom.read() >> 7) & 1;
 			palette[adjusted_index * 3 + 2] = (char) (0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2);
 		}
 	
@@ -130,13 +131,7 @@ public class turbo
 		palette[517 * 3 + 1] = 0xff;
 		palette[517 * 3 + 2] = 0x00;
                 
-                palette[0]=0x00;
-                palette[1]=0x00;
-                palette[2]=0x00;
-                
-                palette[3]=0xFF;
-                palette[4]=0xFF;
-                palette[5]=0xFF;
+                //_my_colortable = colortable;
             }
         };
 	
@@ -149,15 +144,15 @@ public class turbo
 	public static VhStartPtr turbo_vh_start = new VhStartPtr() { public int handler() 
 	{
 		int i, j, sprite_length, sprite_bank_size, back_length;
-		IntArray sprite_expand=new IntArray(16);
-		IntArray dst;
+		UBytePtr sprite_expand=new UBytePtr(16);
+		UBytePtr dst;
 		UBytePtr bdst=new UBytePtr();
 		UBytePtr src=new UBytePtr();
 	
 		/* allocate the expanded sprite data */
 		sprite_length = memory_region_length(REGION_GFX1);
 		sprite_bank_size = sprite_length / 8;
-		sprite_expanded_data = new IntArray(sprite_length * 2);
+		sprite_expanded_data = new UBytePtr(sprite_length * 2);
 		if (sprite_expanded_data == null)
 			return 1;
 	
@@ -213,11 +208,11 @@ public class turbo
 	
 		/* expand the sprite ROMs */
 		src = sprite_gfxdata;
-		dst = new IntArray(sprite_expanded_data);
+		dst = new UBytePtr(sprite_expanded_data);
                 dst.offset=0;
                 
                 System.out.println("sprite_bank_size "+sprite_bank_size);
-                System.out.println("dst "+dst.buffer.length);
+                System.out.println("dst "+dst.memory.length);
                 System.out.println("dst offset"+dst.offset);
                 
 		for (i = 0; i < 8; i++)
@@ -287,7 +282,7 @@ public class turbo
 	
 	static void update_sprite_info()
 	{
-		sprite_params_data[] data = sprite_params;
+		//sprite_params_data[] data = sprite_params;
                 int _data = 0;
 		int i;
 	
@@ -297,14 +292,14 @@ public class turbo
 			UBytePtr sprite_base = new UBytePtr(spriteram, 16 * i);
 	
 			/* snarf all the data */
-			data[_data].base = new IntArray(sprite_expanded_data, (i & 7) * 0x8000);
-			data[_data].offset = (sprite_base.read(6) + 256 * sprite_base.read(7)) & 0x7fff;
-			data[_data].rowbytes = (sprite_base.read(4) + 256 * sprite_base.read(5));
-			data[_data].miny = sprite_base.read(0);
-			data[_data].maxy = sprite_base.read(1);
-			data[_data].xscale = ((5 * 256 - 4 * sprite_base.read(2)) << 16) / (5 * 256);
-			data[_data].yscale = (4 << 16) / (sprite_base.read(3) + 4);
-			data[_data].xoffs = -1;
+			sprite_params[_data].base = new UBytePtr(sprite_expanded_data, (i & 7) * 0x8000);
+			sprite_params[_data].offset = (sprite_base.read(6) + 256 * sprite_base.read(7)) & 0x7fff;
+			sprite_params[_data].rowbytes = (sprite_base.read(4) + 256 * sprite_base.read(5));
+			sprite_params[_data].miny = sprite_base.read(0);
+			sprite_params[_data].maxy = sprite_base.read(1);
+			sprite_params[_data].xscale = ((5 * 256 - 4 * sprite_base.read(2)) << 16) / (5 * 256);
+			sprite_params[_data].yscale = (4 << 16) / (sprite_base.read(3) + 4);
+			sprite_params[_data].xoffs = -1;
 		}
 	
 		/* now find the X positions */
@@ -320,6 +315,8 @@ public class turbo
 						sprite_params[base + which].xoffs = i & 0xff;
 			}
 		}
+                
+                
 	}
 	
 	
@@ -331,10 +328,11 @@ public class turbo
 	
 	static void draw_one_sprite(sprite_params_data data, UBytePtr dest, int xclip, int scanline)
 	{
+            
 		int xstep = data.xscale;
 		int xoffs = data.xoffs;
 		int xcurr, offset;
-		IntArray src;
+		UBytePtr src;
 	
 		/* xoffs of -1 means don't draw */
 		if (xoffs == -1) return;
@@ -353,16 +351,16 @@ public class turbo
 		offset = data.offset + (scanline + 1) * data.rowbytes;
 	
 		/* determine the bitmap location */
-		src = new IntArray(data.base,offset & 0x7fff);
+		src = new UBytePtr(data.base,offset & 0x7fff);
 	
 		/* loop over columns */
 		while (xoffs < VIEW_WIDTH)
 		{
-			IntArray srcval = new IntArray(src, xcurr >> 16);
+			UBytePtr srcval = new UBytePtr(src, xcurr >> 16);
 	
 			/* stop on the end-of-row signal */
 			if (srcval.read() == 0x12345678) break;
-			dest.write(xoffs++, (dest.read(xoffs)| srcval.read()));
+			sprite_buffer.write(xoffs++, (sprite_buffer.read(xoffs)| srcval.read()));
 			xcurr += xstep;
 		}
 	}
@@ -481,14 +479,15 @@ public class turbo
 		Core drawing routine
 	
 	***************************************************************************/
-	
+	static UBytePtr sprite_buffer;
+        
 	static void draw_everything(mame_bitmap bitmap, int yoffs)
 	{
 		UBytePtr overall_priority_base = new UBytePtr(overall_priority, (turbo_fbpla & 8) << 6);
 		UBytePtr sprite_priority_base = new UBytePtr(sprite_priority, (turbo_fbpla & 7) << 7);
 		UBytePtr road_gfxdata_base = new UBytePtr(road_gfxdata, (turbo_opc << 5) & 0x7e0);
 		UShortPtr road_palette_base = new UShortPtr(road_expanded_palette, (turbo_fbcol & 1) << 4);
-		int[] colortable;
+		char[] colortable;
 		int x, y, i;
                 
                 back_expanded_data.offset = 0;
@@ -497,16 +496,18 @@ public class turbo
                 int _col_offset = Machine.pens[(turbo_fbcol & 6) << 6];
 		int _col_size = Machine.pens.length;
                 
-                colortable = new int[_col_size - _col_offset];
+                //colortable = &Machine->pens[(turbo_fbcol & 6) << 6];
+                
+                colortable = new char[4096];
                 
                 for (int _c=_col_offset ; _c<(_col_size) ; _c++)
-                    colortable[_c-_col_offset] = Machine.pens[_c];
+                    colortable[_c-_col_offset] = (char) Machine.pens[_c];
 	
 		/* loop over rows */
 		for (y = 4; y < VIEW_HEIGHT - 4; y++)
 		{
 			int sel, coch, babit, slipar_acciar, area, area1, area2, area3, area4, area5, road = 0;
-			UBytePtr sprite_buffer = new UBytePtr(VIEW_WIDTH + 256);
+			sprite_buffer = new UBytePtr(VIEW_WIDTH + 256);
 			UBytePtr sprite_data = sprite_buffer;
 			char[] scanline = new char[VIEW_WIDTH];
 	
@@ -619,6 +620,7 @@ public class turbo
 			/* render the scanline */
 			if (bitmap != null){
 				draw_scanline8(bitmap, 8, y + yoffs, VIEW_WIDTH - 8, new UBytePtr(scanline, 8), colortable, -1);
+                                
                             //System.out.println("draw_scanline8 to be implemented!!!!");
                         }
 		}

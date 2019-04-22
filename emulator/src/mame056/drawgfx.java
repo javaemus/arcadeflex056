@@ -7437,9 +7437,10 @@ public class drawgfx {
 /*TODO*///		dst = ((type *)bitmap->line[0]) + dy * ty + tx;						\
 /*TODO*///	}
 /*TODO*///
-    public static void draw_scanline8(mame_bitmap bitmap,int x,int y,int length,UBytePtr src,int[] pens,int transparent_pen){
-            int dy = (bitmap.line[1]).read() - (bitmap.line[0]).read();
+    public static void draw_scanline8(mame_bitmap bitmap,int x,int y,int length,UBytePtr src,char[] pens,int transparent_pen){
+            int dy = (bitmap.line[1]).read(0) - (bitmap.line[0]).read(0);
             UBytePtr dst = new UBytePtr(bitmap.line[0], y * dy + x);
+            dst.offset = 0;
 		int xadv = 1;
         /* with pen lookups */
 		if (pens != null)
