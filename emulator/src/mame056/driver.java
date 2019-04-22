@@ -81,6 +81,7 @@ import static mame056.drivers.finalizr.*;
 import static mame056.drivers.turbo.*;
 import static mame056.drivers.sbasketb.*;
 import static mame056.drivers.retofinv.*;
+import static mame056.drivers.momoko.*;
 
 public class driver {
 
@@ -3450,7 +3451,7 @@ public class driver {
         /*TODO*///	driver_cruisin,	/* (c) 1985 Jaleco/Kitkorp */
         /*TODO*///	driver_pinbo,		/* (c) 1984 Jaleco */
         /*TODO*///	driver_pinbos,	/* (c) 1985 Strike */
-        /*TODO*///	driver_momoko,	/* (c) 1986 Jaleco */
+        	driver_momoko,	/* (c) 1986 Jaleco */
         /*TODO*///	driver_argus,		/* (c) 1986 Jaleco */
         /*TODO*///	driver_valtric,	/* (c) 1986 Jaleco */
         /*TODO*///	driver_butasan,	/* (c) 1987 Jaleco */
