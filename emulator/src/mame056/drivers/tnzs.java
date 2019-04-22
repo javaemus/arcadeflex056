@@ -1446,7 +1446,7 @@ public class tnzs
 				CPU_Z80,
 				8000000,	/* ?? Hz (only crystal is 12MHz) */
 							/* 8MHz is wrong, but extrmatn doesn't work properly at 6MHz */
-				readmem,writemem,0,null,
+				readmem,writemem,null,null,
 				tnzs_interrupt,1
 			),
 			new MachineCPU(
