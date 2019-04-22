@@ -78,6 +78,7 @@ import static mame056.drivers.ironhors.*;
 import static mame056.drivers.tutankhm.*;
 import static mame056.drivers.junofrst.*;
 import static mame056.drivers.finalizr.*;
+import static mame056.drivers.turbo.*;
 
 public class driver {
 
@@ -2217,11 +2218,11 @@ public class driver {
         /*TODO*///	driver_ridleofp,	/* (c) 1986 Sega / Nasco */
         /*TODO*///TESTdriver_fantzn2,
         /*TODO*///TESTdriver_opaopa,
-        /*TODO*///
-        /*TODO*///	/* other Sega 8-bit games */
-        /*TODO*///	driver_turbo,		/* (c) 1981 Sega */
-        /*TODO*///	driver_turboa,	/* (c) 1981 Sega */
-        /*TODO*///	driver_turbob,	/* (c) 1981 Sega */
+        
+        	/* other Sega 8-bit games */
+        	driver_turbo,		/* (c) 1981 Sega */
+        	driver_turboa,	/* (c) 1981 Sega */
+        	driver_turbob,	/* (c) 1981 Sega */
         /*TODO*///TESTdriver_kopunch,	/* 834-0103 (c) 1981 Sega */
         /*TODO*///	driver_suprloco,	/* (c) 1982 Sega */
         /*TODO*///	driver_appoooh,	/* (c) 1984 Sega */

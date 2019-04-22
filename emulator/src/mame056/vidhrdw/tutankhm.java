@@ -165,13 +165,13 @@ public class tutankhm
 				| ((JunoBLTRom.read((int) (srcaddress+x)) & 0x0f) << 4));
         }
         
-        public static void JUNOCLEARPIXEL(UBytePtr JunoBLTRom, int x, long srcaddress, long destaddress){
-		if ((JunoBLTRom.read((int) (srcaddress+x)) & 0xF0) != 0)
-			tutankhm_videoram_w.handler((int) (destaddress+x),		
-				videoram.read((int) (destaddress+x)) & 0xF0);	
+        public static void JUNOCLEARPIXEL(UBytePtr JunoBLTRom, int x, int srcaddress, int destaddress){
+		if ((JunoBLTRom.read( (srcaddress+x)) & 0xF0) != 0)
+			tutankhm_videoram_w.handler( (destaddress+x),		
+				videoram.read( (destaddress+x)) & 0xF0);	
 		if ((JunoBLTRom.read((int) (srcaddress+x)) & 0x0F) != 0)
-			tutankhm_videoram_w.handler((int) (destaddress+x),		
-				videoram.read((int) (destaddress+x)) & 0x0F);
+			tutankhm_videoram_w.handler( (destaddress+x),		
+				videoram.read( (destaddress+x)) & 0x0F);
         }
 	
 	public static WriteHandlerPtr junofrst_blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -185,19 +185,19 @@ public class tutankhm
 		if (offset==3)
 		{
 			int i;
-			long srcaddress;
-			long destaddress;
+			int srcaddress;
+			int destaddress;
 			int srcflag;
 			int destflag;
-			UBytePtr JunoBLTRom = memory_region(REGION_GFX1);
+			UBytePtr JunoBLTRom = new UBytePtr(memory_region(REGION_GFX1));
 	
 			srcaddress = (blitterdata.read(0x2)<<8) | (blitterdata.read(0x3));
-			srcflag = (int) (srcaddress & 1);
+			srcflag =  (srcaddress & 1);
 			srcaddress >>= 1;
 			srcaddress &= 0x7FFE;
 			destaddress = (blitterdata.read(0x0)<<8)  | (blitterdata.read(0x1));
 	
-			destflag = (int) (destaddress & 1);
+			destflag =  (destaddress & 1);
 	
 			destaddress >>= 1;
 			destaddress &= 0x7fff;

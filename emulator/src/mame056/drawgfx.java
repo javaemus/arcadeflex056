@@ -987,6 +987,8 @@ public class drawgfx {
 /*TODO*///
     public static void common_drawgfx(mame_bitmap dest, GfxElement gfx,/*unsigned*/ int code,/*unsigned*/ int color, int flipx, int flipy, int sx, int sy, rectangle clip, int transparency, int transparent_color, mame_bitmap pri_buffer, int/*UINT32*/ pri_mask) {
         rectangle myclip = new rectangle();
+        
+        //System.out.println("color_drawgfx: "+color);
 
         if (gfx == null) {
             usrintf_showmessage("drawgfx() gfx == 0");
@@ -1087,6 +1089,7 @@ public class drawgfx {
         if (dest.depth == 8) {
             drawgfx_core8(dest, gfx, code, color, flipx, flipy, sx, sy, clip, transparency, transparent_color, pri_buffer, pri_mask);
         } else if (dest.depth == 15 || dest.depth == 16) {
+            //System.out.println("color-->"+color);
             drawgfx_core16(dest, gfx, code, color, flipx, flipy, sx, sy, clip, transparency, transparent_color, pri_buffer, pri_mask);
         } else {
             System.out.println("drawgfx_core32 TODO");
@@ -1095,6 +1098,7 @@ public class drawgfx {
     }
 
     public static void drawgfx(mame_bitmap dest, GfxElement gfx,/*unsigned*/ int code,/*unsigned*/ int color, int flipx, int flipy, int sx, int sy, rectangle clip, int transparency, int transparent_color) {
+        //System.out.println("drawgfx_color "+color);
         common_drawgfx(dest, gfx, code, color, flipx, flipy, sx, sy, clip, transparency, transparent_color, null, 0);
     }
 
@@ -6540,7 +6544,6 @@ public class drawgfx {
         int ex;
         int ey;
 
-
         /* check bounds */
         ox = sx;
         oy = sy;
@@ -7434,6 +7437,52 @@ public class drawgfx {
 /*TODO*///		dst = ((type *)bitmap->line[0]) + dy * ty + tx;						\
 /*TODO*///	}
 /*TODO*///
+    public static void draw_scanline8(mame_bitmap bitmap,int x,int y,int length,UBytePtr src,int[] pens,int transparent_pen){
+            int dy = (bitmap.line[1]).read() - (bitmap.line[0]).read();
+            UBytePtr dst = new UBytePtr(bitmap.line[0], y * dy + x);
+		int xadv = 1;
+        /* with pen lookups */
+		if (pens != null)
+		{
+			if (transparent_pen == -1)
+				while ((length--)!=0)
+				{
+					dst.write( pens[src.read()]);
+                                        src.inc();
+					dst.inc(xadv);
+				}
+			else
+				while ((length--)!=0)
+				{
+					int spixel = src.read();
+                                        src.inc();
+					if (spixel != transparent_pen)
+						dst.write( pens[spixel] );
+					dst.inc(xadv);
+				}
+		}
+
+		/* without pen lookups */
+		else
+		{
+			if (transparent_pen == -1)
+				while ((length--)!=0)
+				{
+					dst.write(src.read());
+                                        src.inc();
+					dst.inc(xadv);
+				}
+			else
+				while ((length--)!=0)
+				{
+					int spixel = src.read();
+                                        src.inc();
+					if (spixel != transparent_pen)
+						dst.write(spixel);
+					dst.inc(xadv);
+				}
+		}
+    }
 /*TODO*///DECLAREG(draw_scanline, (
 /*TODO*///		struct mame_bitmap *bitmap,int x,int y,int length,
 /*TODO*///		const DATA_TYPE *src,pen_t *pens,int transparent_pen),
@@ -7934,6 +7983,8 @@ public class drawgfx {
     }
 
     public static void blockmove_8toN_opaque16(UBytePtr srcdata, int srcwidth, int srcheight, int srcmodulo, int leftskip, int topskip, int flipx, int flipy, UShortPtr dstdata, int dstwidth, int dstheight, int dstmodulo, IntArray paldata) {
+        //for (int i=0 ; i<paldata.buffer.length ; i++)
+        //    System.out.println("color:: "+i+"="+paldata.read(i));
         int ydir;
         if (flipy != 0) {
             dstdata.inc(dstmodulo * (dstheight - 1));

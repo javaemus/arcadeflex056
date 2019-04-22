@@ -66,7 +66,7 @@ public class blit {
     public static void set_color(int index,RGB entry)
     {
         int rgb =  entry.r<<16 | entry.g<<8 | entry.b;
-        //palette_16bit_lookup[index]=rgb;
+        palette_16bit_lookup.write(index, (char) rgb);
         palette[index]=rgb;
     }
     
@@ -229,7 +229,7 @@ public class blit {
                         if ((x + (y * w))<(screen._pixels.length)){
                             // HACK -> &0xFF for using with 8 bit drivers using 16 bits (to be removed)
                             screen._pixels[x + (y * w)] = 
-                                palette[(back_buffer[sbi + x + (y * w)]&0xFF)];
+                                palette[(back_buffer[sbi + x + (y * w)]&0xFFFF)];
                         }
 
                     }
