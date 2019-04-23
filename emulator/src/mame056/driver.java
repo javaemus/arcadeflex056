@@ -82,6 +82,7 @@ import static mame056.drivers.turbo.*;
 import static mame056.drivers.sbasketb.*;
 import static mame056.drivers.retofinv.*;
 import static mame056.drivers.momoko.*;
+import static mame056.drivers._1943.*;
 
 public class driver {
 
@@ -203,6 +204,9 @@ public class driver {
         /*gaplus*/ driver_galaga3,
         /*gaplus*/ driver_galaga3a,
         /*gaplus*/ driver_galaga3b,
+        /*1943*/ driver_1943,
+        /*1943*/ driver_1943j,
+        /*1943*/ driver_1943kai,
         /**
          * GAME NOT WORKING FLAG
          */
@@ -1172,9 +1176,9 @@ public class driver {
         /*TODO*///	driver_lkageb,	/* bootleg */
         /*TODO*///	driver_lkageb2,	/* bootleg */
         /*TODO*///	driver_lkageb3,	/* bootleg */
-        	driver_retofinv,	/* A37 (c) 1985 Taito Corporation */
-        	driver_retofin1,	/* bootleg */
-        	driver_retofin2,	/* bootleg */
+        driver_retofinv, /* A37 (c) 1985 Taito Corporation */
+        driver_retofin1, /* bootleg */
+        driver_retofin2, /* bootleg */
         /*TODO*///	driver_fightrol,	/* (c) 1983 Taito */
         /*TODO*///	driver_rollrace,	/* (c) 1983 Williams */
         /*TODO*///	driver_vsgongf,	/* (c) 1984 Kaneko */
@@ -1706,8 +1710,7 @@ public class driver {
         /*TODO*///	driver_bionicc,	/*  3/1987 (c) 1987 (US) */
         /*TODO*///	driver_bionicc2,	/*  3/1987 (c) 1987 (US) */
         /*TODO*///	driver_topsecrt,	/*  3/1987 (c) 1987 (Japan) */
-        /*TODO*///	driver_1943,		/*  6/1987 (c) 1987 (US) */
-        /*TODO*///	driver_1943j,		/*  6/1987 (c) 1987 (Japan) */
+
         /*TODO*///	driver_blktiger,	/*  8/1987 (c) 1987 (US) */
         /*TODO*///	driver_bktigerb,	/* bootleg */
         /*TODO*///	driver_blkdrgon,	/*  8/1987 (c) 1987 (Japan) */
@@ -1719,7 +1722,7 @@ public class driver {
         /*TODO*///	driver_toramich,	/* 11/1987 (c) 1987 (Japan) */
         /*TODO*///	driver_f1dream,	/*  4/1988 (c) 1988 + Romstar */
         /*TODO*///	driver_f1dreamb,	/* bootleg */
-        /*TODO*///	driver_1943kai,	/*  6/1988 (c) 1987 (Japan) */
+
         /*TODO*///	driver_lastduel,	/*  7/1988 (c) 1988 (US) */
         /*TODO*///	driver_lstduela,	/*  7/1988 (c) 1988 (US) */
         /*TODO*///	driver_lstduelb,	/* bootleg */
@@ -3121,7 +3124,8 @@ public class driver {
         /*TODO*///	driver_chameleo,	/* (c) 1983 Jaleco */
         /*TODO*///	driver_wwjgtin,	/* (c) 1984 Jaleco / Casio */
         driver_joyfulr, /* A2001      (c) 1983 */
-        driver_mnchmobl, /* A2001      (c) 1983 + Centuri license */ /*TODO*///	driver_marvins,	/* A2003      (c) 1983 */
+        driver_mnchmobl, /* A2001      (c) 1983 + Centuri license */
+        /*TODO*///	driver_marvins,	/* A2003      (c) 1983 */
         /*TODO*///	driver_madcrash,	/* A2005      (c) 1984 */
         /*TODO*///	driver_vangrd2,	/*            (c) 1984 */
         driver_sgladiat, /* A3006      (c) 1984 */
@@ -3451,7 +3455,7 @@ public class driver {
         /*TODO*///	driver_cruisin,	/* (c) 1985 Jaleco/Kitkorp */
         /*TODO*///	driver_pinbo,		/* (c) 1984 Jaleco */
         /*TODO*///	driver_pinbos,	/* (c) 1985 Strike */
-        	driver_momoko,	/* (c) 1986 Jaleco */
+        driver_momoko, /* (c) 1986 Jaleco */
         /*TODO*///	driver_argus,		/* (c) 1986 Jaleco */
         /*TODO*///	driver_valtric,	/* (c) 1986 Jaleco */
         /*TODO*///	driver_butasan,	/* (c) 1987 Jaleco */
