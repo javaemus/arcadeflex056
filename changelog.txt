@@ -6,6 +6,8 @@
 -Added grobda driver (fully playable all games)
 -Added cosmic driver (fully playable games)
 -Added WIP commando and balsente drivers
+-Implemented strstr in cstring
+-Implemented cpu_getscanlineperiod in cpuexec
 
 22/04/2019
 ==========

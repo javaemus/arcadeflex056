@@ -852,19 +852,19 @@ public class cpuexec {
     }
 
 
-/*TODO*///
-/*TODO*////*************************************
-/*TODO*/// *
-/*TODO*/// *	Returns time for one scanline
-/*TODO*/// *
-/*TODO*/// *************************************/
-/*TODO*///
-/*TODO*///double cpu_getscanlineperiod(void)
-/*TODO*///{
-/*TODO*///	return scanline_period;
-/*TODO*///}
-/*TODO*///
-/*TODO*///
+
+    /*************************************
+     *
+     *	Returns time for one scanline
+     *
+     *************************************/
+
+    public static double cpu_getscanlineperiod()
+    {
+            return scanline_period;
+    }
+
+
 /*TODO*///
 /*TODO*////*************************************
 /*TODO*/// *

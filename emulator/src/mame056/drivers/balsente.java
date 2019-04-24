@@ -299,7 +299,7 @@ public class balsente
 		cpu_set_irq_line(0, M6809_IRQ_LINE, ASSERT_LINE);
 	
 		/* it will turn off on the next HBLANK */
-		/*TODO*///timer_set(cpu_getscanlineperiod() * 0.9, 0, irq_off);
+		timer_set(cpu_getscanlineperiod() * 0.9, 0, irq_off);
 	
 		/* if we're a shooter, we do a little more work */
 		if (balsente_shooter != 0)
@@ -1142,7 +1142,7 @@ public class balsente
 			for (ch = 0; ch < MIXER_MAX_CHANNELS; ch++)
 			{
 				String name = mixer_get_name(ch);
-				/*TODO*///if ((name!=null) && (strstr(name, "3394")!=-1) )
+				if ((name!=null) && (strstr(name, "3394")!=-1) )
 					mixer_set_volume(ch, (data & 0x01)!=0 ? 100 : 0);
 			}
 		}
