@@ -205,12 +205,17 @@ public class blit {
                             int pre=Machine.scrbitmap.line[i].memory[r-1+offs];
 
                             int p = (curr<<8) + (pre);
-
-                            back_buffer[pos+(i * Machine.scrbitmap.width)] = (char) p;
+                            if ((pos>=Machine.uixmin) && (pos<=(Machine.uiwidth + Machine.uixmin - 1))
+                                   // && (i>=Machine.uiymin)
+                                )
+                                back_buffer[pos+(i * Machine.scrbitmap.width)] = (char) p;
+                            //else 
+                            //    back_buffer[pos+(i * Machine.scrbitmap.width)] = 0;
                             pos++;
                         }
                     } else if (Machine.color_depth==8){
-                        back_buffer[r+(i * Machine.scrbitmap.width)] = (char) curr;
+                        if ((r>=Machine.uixmin) && (r<=(Machine.visible_area.max_x - Machine.uixmin)))
+                            back_buffer[r+(i * Machine.scrbitmap.width)] = (char) curr;
                     }
                 }
 

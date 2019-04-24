@@ -1,3 +1,7 @@
+24/04/2019
+==========
+-Offscreen drawing bug fixed
+
 22/04/2019
 ==========
 -Solved palette colors problem!!! (now drivers like system1, jackal, etc. work now)
