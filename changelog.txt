@@ -1,6 +1,7 @@
 24/04/2019
 ==========
 -Offscreen drawing bug fixed
+-Added locomotn driver (fully playable all games)
 
 22/04/2019
 ==========
