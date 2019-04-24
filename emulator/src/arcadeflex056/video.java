@@ -1138,9 +1138,7 @@ public class video {
 
             /* round to a multiple of 4 to avoid missing pixels on the right side */
             gfx_display_columns  = (gfx_display_columns + 3) & ~3;
-System.out.println("viswidth="+viswidth);
-System.out.println("visheight="+visheight);
-System.out.println("gfx_xoffset="+gfx_xoffset);
+
             /*HACKISH*/
             tempCreation();
     }
