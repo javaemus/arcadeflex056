@@ -4,6 +4,7 @@
 -Added locomotn driver (fully playable all games)
 -Added mappy driver (fully playable all games)
 -Added grobda driver (fully playable all games)
+-Added cosmic driver (fully playable games)
 
 22/04/2019
 ==========

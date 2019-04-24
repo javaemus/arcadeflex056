@@ -86,6 +86,7 @@ import static mame056.drivers._1943.*;
 import static mame056.drivers.locomotn.*;
 import static mame056.drivers.mappy.*;
 import static mame056.drivers.grobda.*;
+import static mame056.drivers.cosmic.*;
 
 public class driver {
 
@@ -651,21 +652,21 @@ public class driver {
         /*TODO*///	driver_ncv1j2,	/* (c) 1995 (Japan) */
         /*TODO*///TESTdriver_ncv2,		/* (c) 1996 */
         /*TODO*///TESTdriver_ncv2j,		/* (c) 1996 (Japan) */
-        /*TODO*///
-        /*TODO*///	/* Universal games */
-        /*TODO*///	driver_cosmicg,	/* 7907 (c) 1979 */
-        /*TODO*///	driver_cosmica,	/* 7910 (c) [1979] */
-        /*TODO*///	driver_cosmica2,	/* 7910 (c) 1979 */
-        /*TODO*///	driver_panic,		/* (c) 1980 */
-        /*TODO*///	driver_panica,	/* (c) 1980 */
-        /*TODO*///	driver_panicger,	/* (c) 1980 */
+        
+        /* Universal games */
+        driver_cosmicg,	/* 7907 (c) 1979 */
+        driver_cosmica,	/* 7910 (c) [1979] */
+        driver_cosmica2,	/* 7910 (c) 1979 */
+        driver_panic,		/* (c) 1980 */
+        driver_panica,	/* (c) 1980 */
+        driver_panicger,	/* (c) 1980 */
         /*TODO*///	driver_zerohour,	/* 8011 (c) Universal */
         /*TODO*///	driver_redclash,	/* (c) 1981 Tehkan */
         /*TODO*///	driver_redclask,	/* (c) Kaneko (bootleg?) */
-        /*TODO*///	driver_magspot2,	/* 8013 (c) [1980] */
-        /*TODO*///	driver_devzone,	/* 8022 (c) [1980] */
-        /*TODO*///	driver_nomnlnd,	/* (c) [1980?] */
-        /*TODO*///	driver_nomnlndg,	/* (c) [1980?] + Gottlieb */
+        driver_magspot2,	/* 8013 (c) [1980] */
+        driver_devzone,	/* 8022 (c) [1980] */
+        driver_nomnlnd,	/* (c) [1980?] */
+        driver_nomnlndg,	/* (c) [1980?] + Gottlieb */
         /*TODO*///	driver_cheekyms,	/* (c) [1980?] */
         driver_ladybug, /* (c) 1981 */
         driver_ladybugb, /* bootleg */
