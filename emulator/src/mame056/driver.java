@@ -87,6 +87,8 @@ import static mame056.drivers.locomotn.*;
 import static mame056.drivers.mappy.*;
 import static mame056.drivers.grobda.*;
 import static mame056.drivers.cosmic.*;
+import static mame056.drivers.balsente.*;
+import static mame056.drivers.commando.*;
 
 public class driver {
 
@@ -979,34 +981,34 @@ public class driver {
         /*TODO*///	driver_archriv2,	/* (c) 1989 */
         /*TODO*///	driver_trisport,	/* (c) 1989 */
         /*TODO*///	driver_pigskin,	/* (c) 1990 */
-        /*TODO*///
-        /*TODO*///	/* Bally / Sente games */
-        /*TODO*///	driver_sentetst,
-        /*TODO*///	driver_cshift,	/* (c) 1984 */
-        /*TODO*///	driver_gghost,	/* (c) 1984 */
-        /*TODO*///	driver_hattrick,	/* (c) 1984 */
-        /*TODO*///	driver_otwalls,	/* (c) 1984 */
-        /*TODO*///	driver_snakepit,	/* (c) 1984 */
-        /*TODO*///	driver_snakjack,	/* (c) 1984 */
-        /*TODO*///	driver_stocker,	/* (c) 1984 */
-        /*TODO*///	driver_triviag1,	/* (c) 1984 */
-        /*TODO*///	driver_triviag2,	/* (c) 1984 */
-        /*TODO*///	driver_triviasp,	/* (c) 1984 */
-        /*TODO*///	driver_triviayp,	/* (c) 1984 */
-        /*TODO*///	driver_triviabb,	/* (c) 1984 */
-        /*TODO*///	driver_gimeabrk,	/* (c) 1985 */
-        /*TODO*///	driver_minigolf,	/* (c) 1985 */
-        /*TODO*///	driver_minigol2,	/* (c) 1985 */
-        /*TODO*///	driver_toggle,	/* (c) 1985 */
-        /*TODO*///	driver_nametune,	/* (c) 1986 */
-        /*TODO*///	driver_nstocker,	/* (c) 1986 */
-        /*TODO*///	driver_sfootbal,	/* (c) 1986 */
-        /*TODO*///	driver_spiker,	/* (c) 1986 */
-        /*TODO*///	driver_stompin,	/* (c) 1986 */
-        /*TODO*///	driver_rescraid,	/* (c) 1987 */
-        /*TODO*///	driver_rescrdsa,	/* (c) 1987 */
-        /*TODO*///	driver_gridlee,	/* [1983 Videa] prototype - no copyright notice */
-        /*TODO*///
+        
+        	/* Bally / Sente games */
+        	driver_sentetst,
+        	driver_cshift,	/* (c) 1984 */
+        	driver_gghost,	/* (c) 1984 */
+        	driver_hattrick,	/* (c) 1984 */
+        	driver_otwalls,	/* (c) 1984 */
+        	driver_snakepit,	/* (c) 1984 */
+        	driver_snakjack,	/* (c) 1984 */
+        	driver_stocker,	/* (c) 1984 */
+        	driver_triviag1,	/* (c) 1984 */
+        	driver_triviag2,	/* (c) 1984 */
+        	driver_triviasp,	/* (c) 1984 */
+        	driver_triviayp,	/* (c) 1984 */
+        	driver_triviabb,	/* (c) 1984 */
+        	driver_gimeabrk,	/* (c) 1985 */
+        	driver_minigolf,	/* (c) 1985 */
+        	driver_minigol2,	/* (c) 1985 */
+        	driver_toggle,	/* (c) 1985 */
+        	driver_nametune,	/* (c) 1986 */
+        	driver_nstocker,	/* (c) 1986 */
+        	driver_sfootbal,	/* (c) 1986 */
+        	driver_spiker,	/* (c) 1986 */
+        	driver_stompin,	/* (c) 1986 */
+        	driver_rescraid,	/* (c) 1987 */
+        	driver_rescrdsa,	/* (c) 1987 */
+        	/*TODO*///driver_gridlee,	/* [1983 Videa] prototype - no copyright notice */
+        
         /*TODO*///	/* Irem games */
         /*TODO*///	/* trivia: IREM means "International Rental Electronics Machines" */
         /*TODO*///TESTdriver_iremm10,	/* M10 */
@@ -1676,10 +1678,10 @@ public class driver {
         /*TODO*///	driver_1942b,		/* 12/1984 (c) 1984 */
         /*TODO*///	driver_exedexes,	/*  2/1985 (c) 1985 */
         /*TODO*///	driver_savgbees,	/*  2/1985 (c) 1985 + Memetron license */
-        /*TODO*///	driver_commando,	/*  5/1985 (c) 1985 (World) */
-        /*TODO*///	driver_commandu,	/*  5/1985 (c) 1985 + Data East license (US) */
-        /*TODO*///	driver_commandj,	/*  5/1985 (c) 1985 (Japan) */
-        /*TODO*///	driver_spaceinv,	/* bootleg */
+        	driver_commando,	/*  5/1985 (c) 1985 (World) */
+        	driver_commandu,	/*  5/1985 (c) 1985 + Data East license (US) */
+        	driver_commandj,	/*  5/1985 (c) 1985 (Japan) */
+        	driver_spaceinv,	/* bootleg */
         /*TODO*///	driver_gng,		/*  9/1985 (c) 1985 */
         /*TODO*///	driver_gnga,		/*  9/1985 (c) 1985 */
         /*TODO*///	driver_gngt,		/*  9/1985 (c) 1985 */
