@@ -85,6 +85,7 @@ import static mame056.drivers.momoko.*;
 import static mame056.drivers._1943.*;
 import static mame056.drivers.locomotn.*;
 import static mame056.drivers.mappy.*;
+import static mame056.drivers.grobda.*;
 
 public class driver {
 
@@ -495,9 +496,9 @@ public class driver {
         driver_todruaga,	/* (c) 1984 */
         driver_todruagb,	/* (c) 1984 */
         driver_motos,		/* (c) 1985 */
-        /*TODO*///	driver_grobda,	/* (c) 1984 */
-        /*TODO*///	driver_grobda2,	/* (c) 1984 */
-        /*TODO*///	driver_grobda3,	/* (c) 1984 */
+        driver_grobda,	/* (c) 1984 */
+        driver_grobda2,	/* (c) 1984 */
+        driver_grobda3,	/* (c) 1984 */
 
         /*TODO*///	/* Libble Rabble board (first Japanese game using a 68000) */
         /*TODO*///	driver_liblrabl,	/* (c) 1983 */
