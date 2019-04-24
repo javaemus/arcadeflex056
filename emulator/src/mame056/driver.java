@@ -84,6 +84,7 @@ import static mame056.drivers.retofinv.*;
 import static mame056.drivers.momoko.*;
 import static mame056.drivers._1943.*;
 import static mame056.drivers.locomotn.*;
+import static mame056.drivers.mappy.*;
 
 public class driver {
 
@@ -487,13 +488,13 @@ public class driver {
         driver_pacnpal2, /* (c) 1983 */
         driver_pacnchmp, /* (c) 1983 */
         /*TODO*///	driver_phozon,	/* (c) 1983 */
-        /*TODO*///	driver_mappy,		/* (c) 1983 */
-        /*TODO*///	driver_mappyjp,	/* (c) 1983 */
-        /*TODO*///	driver_digdug2,	/* (c) 1985 */
-        /*TODO*///	driver_digdug2a,	/* (c) 1985 */
-        /*TODO*///	driver_todruaga,	/* (c) 1984 */
-        /*TODO*///	driver_todruagb,	/* (c) 1984 */
-        /*TODO*///	driver_motos,		/* (c) 1985 */
+        driver_mappy,		/* (c) 1983 */
+        driver_mappyjp,	/* (c) 1983 */
+        driver_digdug2,	/* (c) 1985 */
+        driver_digdug2a,	/* (c) 1985 */
+        driver_todruaga,	/* (c) 1984 */
+        driver_todruagb,	/* (c) 1984 */
+        driver_motos,		/* (c) 1985 */
         /*TODO*///	driver_grobda,	/* (c) 1984 */
         /*TODO*///	driver_grobda2,	/* (c) 1984 */
         /*TODO*///	driver_grobda3,	/* (c) 1984 */
