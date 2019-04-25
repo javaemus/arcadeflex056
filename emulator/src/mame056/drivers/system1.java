@@ -44,7 +44,7 @@ import static mame056.memory.*;
 import static mame056.memoryH.*;
 import static mame056.sndintrfH.*;
 import static mame056.cpuexec.*;
-import static mame056.machine.segacrpt.*;
+import static WIP.mame056.machine.segacrpt.*;
 import static mame056.sndintrf.*;
 import static mame056.vidhrdw.generic.spriteram;
 import static mame056.vidhrdw.generic.spriteram_size;

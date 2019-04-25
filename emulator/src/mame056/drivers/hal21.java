@@ -40,7 +40,7 @@ import static mame056.vidhrdw.generic.*;
 import static arcadeflex056.fileio.*;
 import static mame056.palette.*;
 
-import static mame056.vidhrdw.snk.*;
+import static WIP.mame056.vidhrdw.snk.*;
 
 // refactor
 import static arcadeflex036.osdepend.logerror;
@@ -70,7 +70,7 @@ import static mame056.vidhrdw.generic.*;
 import static arcadeflex056.fileio.*;
 import static mame056.palette.*;
 
-import static mame056.vidhrdw.snk.*;
+import static WIP.mame056.vidhrdw.snk.*;
 
 // refactor
 import static arcadeflex036.osdepend.logerror;

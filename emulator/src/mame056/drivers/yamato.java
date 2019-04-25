@@ -26,7 +26,7 @@ import static mame056.memoryH.*;
 import static mame056.sndintrfH.*;
 import static mame056.cpuexec.*;
 import static mame056.sndhrdw.cclimber.*;
-import static mame056.machine.segacrpt.*;
+import static WIP.mame056.machine.segacrpt.*;
 import static mame056.sndintrf.*;
 import static mame056.sound.ay8910.*;
 import mame056.sound.ay8910H.*;

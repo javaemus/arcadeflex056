@@ -37,7 +37,7 @@ import static mame056.drivers.hal21.aso_vh_convert_color_prom;
 import static mame056.palette.*;
 import static mame056.sound.ay8910.*;
 import mame056.sound.ay8910H.AY8910interface;
-import static mame056.vidhrdw.snk.*;
+import static WIP.mame056.vidhrdw.snk.*;
 
 public class sgladiat
 {
