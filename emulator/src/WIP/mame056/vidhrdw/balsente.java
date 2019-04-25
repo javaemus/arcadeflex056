@@ -362,7 +362,7 @@ public class balsente
 			int beamx = balsente_shooter_x;
 			int beamy = balsente_shooter_y - 10;
 	
-			/*TODO*///draw_crosshair(bitmap,beamx,beamy,Machine.visible_area);
+			draw_crosshair(bitmap,beamx,beamy,Machine.visible_area);
 			for (y = -6; y <= 6; y++)
 			{
 				int yoffs = beamy + y;

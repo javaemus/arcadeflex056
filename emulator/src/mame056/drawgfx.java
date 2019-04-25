@@ -4639,31 +4639,31 @@ public class drawgfx {
         is_raw[TRANSPARENCY_BLEND_RAW] = 1;
     }
 
-    /*TODO*///
-/*TODO*///INLINE void plotclip(struct mame_bitmap *bitmap,int x,int y,int pen,const struct rectangle *clip)
-/*TODO*///{
-/*TODO*///	if (x >= clip->min_x && x <= clip->max_x && y >= clip->min_y && y <= clip->max_y)
-/*TODO*///		plot_pixel(bitmap,x,y,pen);
-/*TODO*///}
-/*TODO*///
-/*TODO*///void draw_crosshair(struct mame_bitmap *bitmap,int x,int y,const struct rectangle *clip)
-/*TODO*///{
-/*TODO*///	unsigned short black,white;
-/*TODO*///	int i;
-/*TODO*///
-/*TODO*///	black = Machine->uifont->colortable[0];
-/*TODO*///	white = Machine->uifont->colortable[1];
-/*TODO*///
-/*TODO*///	for (i = 1;i < 6;i++)
-/*TODO*///	{
-/*TODO*///		plotclip(bitmap,x+i,y,white,clip);
-/*TODO*///		plotclip(bitmap,x-i,y,white,clip);
-/*TODO*///		plotclip(bitmap,x,y+i,white,clip);
-/*TODO*///		plotclip(bitmap,x,y-i,white,clip);
-/*TODO*///	}
-/*TODO*///}
-/*TODO*///
-/*TODO*///
+    
+    public static void plotclip(mame_bitmap bitmap,int x,int y,int pen,rectangle clip)
+    {
+            if (x >= clip.min_x && x <= clip.max_x && y >= clip.min_y && y <= clip.max_y)
+                    plot_pixel.handler(bitmap,x,y,pen);
+    }
+
+    public static void draw_crosshair(mame_bitmap bitmap,int x,int y,rectangle clip)
+    {
+            int black,white;
+            int i;
+
+            black = Machine.uifont.colortable.read(0);
+            white = Machine.uifont.colortable.read(1);
+
+            for (i = 1;i < 6;i++)
+            {
+                    plotclip(bitmap,x+i,y,white,clip);
+                    plotclip(bitmap,x-i,y,white,clip);
+                    plotclip(bitmap,x,y+i,white,clip);
+                    plotclip(bitmap,x,y-i,white,clip);
+            }
+    }
+
+
 /*TODO*///#else /* DECLARE */
 /*TODO*///
 /*TODO*////* -------------------- included inline section --------------------- */
