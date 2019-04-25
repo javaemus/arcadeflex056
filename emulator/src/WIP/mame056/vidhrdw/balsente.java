@@ -346,13 +346,9 @@ public class balsente
 			if (scanline_dirty.read(y) !=0 || full_refresh!=0)
 			{
 				int _pens_offset = scanline_palette.read(y) * 256;
-                                int[] pens = new int[Machine.pens.length - _pens_offset];
+                                IntArray pens = new IntArray(Machine.pens, _pens_offset);
                                 
-                                for (int _c = _pens_offset ; _c<Machine.pens.length ; _c++){
-                                    pens[_c-_pens_offset] = Machine.pens[_c];
-                                }
-                                
-				/*TODO*///draw_scanline8(bitmap, 0, y, 256, new UBytePtr(local_videoram,y * 256), pens, -1);
+				draw_scanline8(bitmap, 0, y, 256, new UBytePtr(local_videoram,y * 256), pens, -1);
 				scanline_dirty.write(y, 0);
 			}
 	
