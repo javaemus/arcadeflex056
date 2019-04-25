@@ -18,7 +18,8 @@ import static mame056.sound.streams.*;
 import static mame056.sound.namcoH.*;
 
 import static arcadeflex036.osdepend.*;
-
+import static mame056.sound.mixerH.*;
+import static mame056.sound.mixer.*;
 
 
 public class namco extends snd_interface {
@@ -191,9 +192,9 @@ public class namco extends snd_interface {
     /*TODO*///
     /*TODO*///
     /*TODO*////* generate sound to the mix buffer in stereo */
-    /*TODO*///static void namco_update_stereo(int ch, INT16 **buffer, int length)
-    /*TODO*///{
-    /*TODO*///	sound_channel *voice;
+    public static StreamInitMultiPtr namco_update_stereo = new StreamInitMultiPtr() {
+        public void handler(int ch, ShortPtr[] buffer, int length) {
+            /*TODO*///	sound_channel *voice;
     /*TODO*///	short *lmix, *rmix;
     /*TODO*///	int i;
     /*TODO*///
@@ -307,10 +308,9 @@ public class namco extends snd_interface {
     /*TODO*///			*dest2++ = mixer_lookup[*rmix++];
     /*TODO*///		}
     /*TODO*///	}
-    /*TODO*///}
-    /*TODO*///
-    /*TODO*///
-    @Override
+        }
+    };
+  
     public int start(MachineSound msound) {
         String mono_name = "NAMCO sound";
         String[] stereo_names = {"NAMCO sound left", "NAMCO sound right"};
@@ -320,13 +320,12 @@ public class namco extends snd_interface {
         namco_clock = intf.samplerate;
         sample_rate = Machine.sample_rate;
         /* get stream channels */
-        if (intf.stereo != 0) {
-            throw new UnsupportedOperationException("Namco stereo unsupported ");
-            /*TODO*///		int vol[2];
-            /*TODO*///
-            /*TODO*///		vol[0] = MIXER(intf->volume,MIXER_PAN_LEFT);
-            /*TODO*///		vol[1] = MIXER(intf->volume,MIXER_PAN_RIGHT);
-            /*TODO*///		stream = stream_init_multi(2, stereo_names, vol, intf->samplerate, 0, namco_update_stereo);
+        if (intf.stereo != 0) {            
+            		int[] vol=new int[2];
+            
+            		vol[0] = MIXER(intf.volume,MIXER_PAN_LEFT);
+            		vol[1] = MIXER(intf.volume,MIXER_PAN_RIGHT);
+            		stream = stream_init_multi(2, stereo_names, vol, intf.samplerate, 0, namco_update_stereo);
         } else {
             stream = stream_init(mono_name, intf.volume, intf.samplerate, 0, namco_update_mono);
         }
