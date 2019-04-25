@@ -77,6 +77,7 @@ import static mame056.cpuexecH.*;
 import static mame056.cpuintrfH.*;
 import static mame056.driverH.*;
 import static mame056.memoryH.*;
+import static mame056.memory.*;
 import static mame056.inptport.*;
 import static mame056.drawgfxH.*;
 import static mame056.inputH.*;
@@ -95,6 +96,7 @@ import static WIP.mame056.sndhrdw.polepos.*;
 import static mame056.sound.namco.*;
 import static mame056.sound.namcoH.*;
 import static WIP.mame056.vidhrdw.polepos.*;
+import mame056.memory;
 
 public class polepos
 {
@@ -169,7 +171,7 @@ public class polepos
 	};
 	public static Memory_ReadAddress z8002_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		/*TODO*///new Memory_ReadAddress( 0x0000, 0x7fff, MRA16_ROM ),			/* ROM */
+		/*TODO*///new Memory_ReadAddress( 0x0000, 0x7fff, MRA16_ROM ),			/* ROM */                
 		new Memory_ReadAddress( 0x8000, 0x8fff, polepos_sprite16_r ), /* Motion Object */
 		new Memory_ReadAddress( 0x9000, 0x97ff, polepos_road16_r ),	/* Road Memory */
 		new Memory_ReadAddress( 0x9800, 0x9fff, polepos_alpha16_r ),	/* Alphanumeric (char ram) */
@@ -181,7 +183,7 @@ public class polepos
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),	new Memory_WriteAddress( 0x0000, 0x2fff, MWA_ROM ),						/* ROM */
 		new Memory_WriteAddress( 0x6000, 0x6003, polepos_z8002_nvi_enable_w ), 	/* NVI enable */
 		/*TODO*///new Memory_WriteAddress( 0x0000, 0x7fff, MWA16_ROM ),                   /* ROM */
-		new Memory_WriteAddress( 0x8000, 0x8fff, polepos_sprite16_w, polepos_sprite16_memory ),	/* Motion Object */
+                new Memory_WriteAddress( 0x8000, 0x8fff, polepos_sprite16_w, polepos_sprite16_memory ),	/* Motion Object */
 		new Memory_WriteAddress( 0x9000, 0x97ff, polepos_road16_w, polepos_road16_memory ),		/* Road Memory */
 		new Memory_WriteAddress( 0x9800, 0x9fff, polepos_alpha16_w, polepos_alpha16_memory ), 	/* Alphanumeric (char ram) */
 		new Memory_WriteAddress( 0xa000, 0xafff, polepos_view16_w, polepos_view16_memory ),		/* Background memory */
@@ -377,18 +379,18 @@ public class polepos
 				3125000,	/* 3.125 MHz */
 				z80_readmem,z80_writemem,z80_readport,z80_writeport,
 				ignore_interrupt,1
-			),
-			new MachineCPU(
-				CPU_Z8000,
-				3125000,	/* 3.125 MHz */
-				z8002_readmem,z8002_writemem,null,null,
-				polepos_z8002_1_interrupt,1
-			),
-			new MachineCPU(
-				CPU_Z8000,
-				3125000,	/* 3.125 MHz */
-				z8002_readmem,z8002_writemem,null,null,
-				polepos_z8002_2_interrupt,1
+			/*TODO*///),
+			/*TODO*///new MachineCPU(
+			/*TODO*///	CPU_Z8000,
+			/*TODO*///	3125000,	/* 3.125 MHz */
+			/*TODO*///	z8002_readmem,z8002_writemem,null,null,
+			/*TODO*///	polepos_z8002_1_interrupt,1
+			/*TODO*///),
+			/*TODO*///new MachineCPU(
+			/*TODO*///	CPU_Z8000,
+			/*TODO*///	3125000,	/* 3.125 MHz */
+			/*TODO*///	z8002_readmem,z8002_writemem,null,null,
+			/*TODO*///	polepos_z8002_2_interrupt,1
 			)
 		},
 		60.606060f, DEFAULT_REAL_60HZ_VBLANK_DURATION,	 /* frames per second, vblank duration */
@@ -436,9 +438,13 @@ public class polepos
 		/* Z80 memory/ROM data */
 		ROM_REGION( 0x10000, REGION_CPU1, 0 );	ROM_LOAD	 ( "014-105.rom",   0x0000, 0x2000, 0xc918c043 );	ROM_LOAD	 ( "014-116.rom",   0x2000, 0x1000, 0x7174bcb7 );
 		/* Z8002 #1 memory/ROM data */
-		ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD16_BYTE( "pp1_1b",        0x0001, 0x2000, 0x361c56dd );	ROM_LOAD16_BYTE( "pp1_2b",        0x0000, 0x2000, 0x582b530a );
+		/*TODO*///ROM_REGION( 0x10000, REGION_CPU2, 0 );	
+                /*TODO*///ROM_LOAD16_BYTE( "pp1_1b",        0x0001, 0x2000, 0x361c56dd );	
+                /*TODO*///ROM_LOAD16_BYTE( "pp1_2b",        0x0000, 0x2000, 0x582b530a );
 		/* Z8002 #2 memory/ROM data */
-		ROM_REGION( 0x10000, REGION_CPU3, 0 );	ROM_LOAD16_BYTE( "pp1_5b",        0x0001, 0x2000, 0x5cdf5294 );	ROM_LOAD16_BYTE( "pp1_6b",        0x0000, 0x2000, 0x81696272 );
+		/*TODO*///ROM_REGION( 0x10000, REGION_CPU3, 0 );	
+                /*TODO*///ROM_LOAD16_BYTE( "pp1_5b",        0x0001, 0x2000, 0x5cdf5294 );	
+                /*TODO*///ROM_LOAD16_BYTE( "pp1_6b",        0x0000, 0x2000, 0x81696272 );
 		/* graphics data */
 		ROM_REGION( 0x02000, REGION_GFX1, ROMREGION_DISPOSE );	/* 2bpp alpha layer */
 		ROM_LOAD	 ( "pp1_28",        0x0000, 0x1000, 0x5b277daf );
@@ -485,9 +491,11 @@ public class polepos
 		/* Z80 memory/ROM data */
 		ROM_REGION( 0x10000, REGION_CPU1, 0 );	ROM_LOAD	 ( "014-105.rom",   0x0000, 0x2000, 0xc918c043 );	ROM_LOAD	 ( "014-116.rom",   0x2000, 0x1000, 0x7174bcb7 );
 		/* Z8002 #1 memory/ROM data */
-		ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD16_BYTE( "014-101.rom",   0x0001, 0x2000, 0x8c2cf172 );	ROM_LOAD16_BYTE( "014-102.rom",   0x0000, 0x2000, 0x51018857 );
+		/*TODO*///ROM_REGION( 0x10000, REGION_CPU2, 0 );	
+                /*TODO*///ROM_LOAD16_BYTE( "014-101.rom",   0x0001, 0x2000, 0x8c2cf172 );	
+                /*TODO*///ROM_LOAD16_BYTE( "014-102.rom",   0x0000, 0x2000, 0x51018857 );
 		/* Z8002 #2 memory/ROM data */
-		ROM_REGION( 0x10000, REGION_CPU3, 0 );	ROM_LOAD16_BYTE( "014-203.rom",   0x0001, 0x2000, 0xeedea6e7 );	ROM_LOAD16_BYTE( "014-204.rom",   0x0000, 0x2000, 0xc52c98ed );
+		/*TODO*///ROM_REGION( 0x10000, REGION_CPU3, 0 );	ROM_LOAD16_BYTE( "014-203.rom",   0x0001, 0x2000, 0xeedea6e7 );	ROM_LOAD16_BYTE( "014-204.rom",   0x0000, 0x2000, 0xc52c98ed );
 		/* graphics data */
 		ROM_REGION( 0x02000, REGION_GFX1, ROMREGION_DISPOSE );	/* 2bpp alpha layer */
 		ROM_LOAD	 ( "014-132.rom",   0x0000, 0x1000, 0xa949aa85 );
@@ -532,9 +540,9 @@ public class polepos
 		/* Z80 memory/ROM data */
 		ROM_REGION( 0x10000, REGION_CPU1, 0 );	ROM_LOAD	 ( "014-105.rom",   0x0000, 0x2000, 0xc918c043 );	ROM_LOAD	 ( "014-116.rom",   0x2000, 0x1000, 0x7174bcb7 );
 		/* Z8002 #1 memory/ROM data */
-		ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD16_BYTE( "014-101.rom",   0x0001, 0x2000, 0x8c2cf172 );	ROM_LOAD16_BYTE( "014-102.rom",   0x0000, 0x2000, 0x51018857 );
+		/*TODO*///ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD16_BYTE( "014-101.rom",   0x0001, 0x2000, 0x8c2cf172 );	ROM_LOAD16_BYTE( "014-102.rom",   0x0000, 0x2000, 0x51018857 );
 		/* Z8002 #2 memory/ROM data */
-		ROM_REGION( 0x10000, REGION_CPU3, 0 );	ROM_LOAD16_BYTE( "103.3e",        0x0001, 0x2000, 0xaf4fc019 );	ROM_LOAD16_BYTE( "104.4e",        0x0000, 0x2000, 0xba0045f3 );
+		/*TODO*///ROM_REGION( 0x10000, REGION_CPU3, 0 );	ROM_LOAD16_BYTE( "103.3e",        0x0001, 0x2000, 0xaf4fc019 );	ROM_LOAD16_BYTE( "104.4e",        0x0000, 0x2000, 0xba0045f3 );
 		/* graphics data */
 		ROM_REGION( 0x02000, REGION_GFX1, ROMREGION_DISPOSE );	/* 2bpp alpha layer */
 		ROM_LOAD	 ( "014-132.rom",   0x0000, 0x1000, 0xa949aa85 );
@@ -820,7 +828,8 @@ public class polepos
 	public static InitDriverPtr init_polepos2 = new InitDriverPtr() { public void handler()
 	{
 		/* note that the bootleg versions don't need this custom IC; they have a hacked ROM in its place */
-		/*TODO*///install_mem_read16_handler(1, 0x4000, 0x5fff, polepos2_ic25_r);
+		//install_mem_read16_handler(1, 0x4000, 0x5fff, polepos2_ic25_r);
+                install_mem_read_handler(1, 0x4000, 0x5fff, polepos2_ic25_r);
 	} };
 	
 	
