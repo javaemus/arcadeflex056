@@ -147,8 +147,8 @@ public class turbo
 		int i, j, sprite_length, sprite_bank_size, back_length;
 		UBytePtr sprite_expand=new UBytePtr(16);
 		UBytePtr dst;
-		UBytePtr bdst=new UBytePtr();
-		UBytePtr src=new UBytePtr();
+		UBytePtr bdst;
+		UBytePtr src;
 	
 		/* allocate the expanded sprite data */
 		sprite_length = memory_region_length(REGION_GFX1);
@@ -208,9 +208,9 @@ public class turbo
 		}
 	
 		/* expand the sprite ROMs */
-		src = sprite_gfxdata;
+		src = new UBytePtr(sprite_gfxdata);
 		dst = new UBytePtr(sprite_expanded_data);
-                dst.offset=0;
+                
                 
                 System.out.println("sprite_bank_size "+sprite_bank_size);
                 System.out.println("dst "+dst.memory.length);
@@ -235,8 +235,8 @@ public class turbo
 		}
 	
 		/* expand the background ROMs */
-		src = back_gfxdata;
-		bdst = back_expanded_data;
+		src = new UBytePtr(back_gfxdata);
+		bdst = new UBytePtr(back_expanded_data);
 		for (i = 0; i < back_length / 2; i++, src.inc())
 		{
 			int bits1 = src.read(0);
@@ -252,8 +252,8 @@ public class turbo
 		}
 	
 		/* expand the road palette */
-		src = road_palette;
-		bdst = road_expanded_palette;
+		src = new UBytePtr(road_palette);
+		bdst = new UBytePtr(road_expanded_palette);
 		for (i = 0; i < 0x20; i++, src.inc()){
 			bdst.write((char) (src.read(0) | (src.read(0x20) << 8)));
                         bdst.inc();
