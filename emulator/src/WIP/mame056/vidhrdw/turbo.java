@@ -29,6 +29,7 @@ import static mame056.vidhrdw.generic.*;
 
 // refactor
 import static arcadeflex036.osdepend.logerror;
+import common.subArrays.IntArray;
 import static mame056.inptport.readinputport;
 import static WIP.mame056.machine.turbo.*;
 
@@ -487,21 +488,15 @@ public class turbo
 		UBytePtr sprite_priority_base = new UBytePtr(sprite_priority, (turbo_fbpla & 7) << 7);
 		UBytePtr road_gfxdata_base = new UBytePtr(road_gfxdata, (turbo_opc << 5) & 0x7e0);
 		UShortPtr road_palette_base = new UShortPtr(road_expanded_palette, (turbo_fbcol & 1) << 4);
-		char[] colortable;
+		IntArray colortable;
 		int x, y, i;
                 
                 back_expanded_data.offset = 0;
 	
-		/* determine the color offset */
-                int _col_offset = Machine.pens[(turbo_fbcol & 6) << 6];
-		int _col_size = Machine.pens.length;
+		/* determine the color offset */             
+                colortable = new IntArray(Machine.pens,(turbo_fbcol & 6) << 6);
                 
-                //colortable = &Machine->pens[(turbo_fbcol & 6) << 6];
                 
-                colortable = new char[4096];
-                
-                for (int _c=_col_offset ; _c<(_col_size) ; _c++)
-                    colortable[_c-_col_offset] = (char) Machine.pens[_c];
 	
 		/* loop over rows */
 		for (y = 4; y < VIEW_HEIGHT - 4; y++)

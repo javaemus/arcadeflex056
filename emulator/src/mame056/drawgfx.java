@@ -29,7 +29,7 @@ public class drawgfx {
     public static final int SHIFT2 = 16;
     public static final int SHIFT3 = 24;
 
-    public static int[] gfx_drawmode_table=new int[256];
+    public static int[] gfx_drawmode_table = new int[256];
     public static plot_pixel_procPtr plot_pixel;
     public static read_pixel_procPtr read_pixel;
     public static plot_box_procPtr plot_box;
@@ -73,19 +73,18 @@ public class drawgfx {
         return src.read(bitnum / 8) & (0x80 >> (bitnum % 8));
     }
 
-    public static _alpha_cache alpha_cache=new _alpha_cache();
+    public static _alpha_cache alpha_cache = new _alpha_cache();
     public static int alpha_active;
 
-    
-    public static void alpha_init()
-    {
-            int lev, _byte;
-            for(lev=0; lev<257; lev++)
-                    for(_byte=0; _byte<256; _byte++)
-                            alpha_cache.alpha[lev][_byte] = (_byte*lev) >> 8;
-            alpha_set_level(255);
+    public static void alpha_init() {
+        int lev, _byte;
+        for (lev = 0; lev < 257; lev++) {
+            for (_byte = 0; _byte < 256; _byte++) {
+                alpha_cache.alpha[lev][_byte] = (_byte * lev) >> 8;
+            }
+        }
+        alpha_set_level(255);
     }
-
 
     static void calc_penusage(GfxElement gfx, int num) {
         int x, y;
@@ -987,9 +986,8 @@ public class drawgfx {
 /*TODO*///
     public static void common_drawgfx(mame_bitmap dest, GfxElement gfx,/*unsigned*/ int code,/*unsigned*/ int color, int flipx, int flipy, int sx, int sy, rectangle clip, int transparency, int transparent_color, mame_bitmap pri_buffer, int/*UINT32*/ pri_mask) {
         rectangle myclip = new rectangle();
-        
-        //System.out.println("color_drawgfx: "+color);
 
+        //System.out.println("color_drawgfx: "+color);
         if (gfx == null) {
             usrintf_showmessage("drawgfx() gfx == 0");
             return;
@@ -1102,16 +1100,15 @@ public class drawgfx {
         common_drawgfx(dest, gfx, code, color, flipx, flipy, sx, sy, clip, transparency, transparent_color, null, 0);
     }
 
-    
     public static void pdrawgfx(mame_bitmap dest, GfxElement gfx,
-		int code, int color,int flipx,int flipy,int sx,int sy,
-		rectangle clip,int transparency,int transparent_color,int priority_mask)
-{
-/*TODO*///	profiler_mark(PROFILER_DRAWGFX);
-            common_drawgfx(dest,gfx,code,color,flipx,flipy,sx,sy,clip,transparency,transparent_color,priority_bitmap,priority_mask | (1<<31));
-/*TODO*///	profiler_mark(PROFILER_END);
+            int code, int color, int flipx, int flipy, int sx, int sy,
+            rectangle clip, int transparency, int transparent_color, int priority_mask) {
+        /*TODO*///	profiler_mark(PROFILER_DRAWGFX);
+        common_drawgfx(dest, gfx, code, color, flipx, flipy, sx, sy, clip, transparency, transparent_color, priority_bitmap, priority_mask | (1 << 31));
+        /*TODO*///	profiler_mark(PROFILER_END);
     }
-/*TODO*///
+
+    /*TODO*///
 /*TODO*///void mdrawgfx(struct mame_bitmap *dest,const struct GfxElement *gfx,
 /*TODO*///		unsigned int code,unsigned int color,int flipx,int flipy,int sx,int sy,
 /*TODO*///		const struct rectangle *clip,int transparency,int transparent_color,UINT32 priority_mask)
@@ -3833,7 +3830,7 @@ public class drawgfx {
 
     public static read_pixel_procPtr rp_16 = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
-            return new UShortPtr(bitmap.line[y]).read(x); 
+            return new UShortPtr(bitmap.line[y]).read(x);
         }
     };
     public static read_pixel_procPtr rp_16_fx = new read_pixel_procPtr() {
@@ -3858,7 +3855,7 @@ public class drawgfx {
     };
     public static read_pixel_procPtr rp_16_fx_s = new read_pixel_procPtr() {
         public int handler(mame_bitmap b, int x, int y) {
-            return (new UShortPtr(b.line[x]).read(b.width-1-y));
+            return (new UShortPtr(b.line[x]).read(b.width - 1 - y));
         }
     };
     public static read_pixel_procPtr rp_16_fy_s = new read_pixel_procPtr() {
@@ -4088,7 +4085,8 @@ public class drawgfx {
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {new UShortPtr(b.line[x]).write(y, (char)p);
+                while (c-- > 0) {
+                    new UShortPtr(b.line[x]).write(y, (char) p);
                     x++;
                 }
                 y--;
@@ -6630,7 +6628,6 @@ public class drawgfx {
 /*TODO*/// 					break;
 /*TODO*/// 			}
 /*TODO*///         }
-
         switch (transparency) {
             case TRANSPARENCY_NONE:
                 if ((gfx.flags & GFX_PACKED) != 0) {
@@ -7437,54 +7434,159 @@ public class drawgfx {
 /*TODO*///		dst = ((type *)bitmap->line[0]) + dy * ty + tx;						\
 /*TODO*///	}
 /*TODO*///
-    public static void draw_scanline8(mame_bitmap bitmap,int x,int y,int length,UBytePtr src,char[] pens,int transparent_pen){
-            int dy = (bitmap.line[1]).read(0) - (bitmap.line[0]).read(0);
-            UBytePtr dst = new UBytePtr(bitmap.line[0], y * dy + x);
-            dst.offset = 0;
-		int xadv = 1;
-        /* with pen lookups */
-		if (pens != null)
-		{
-			if (transparent_pen == -1)
-				while ((length--)!=0)
-				{
-					dst.write( pens[src.read()]);
-                                        src.inc();
-					dst.inc(xadv);
-				}
-			else
-				while ((length--)!=0)
-				{
-					int spixel = src.read();
-                                        src.inc();
-					if (spixel != transparent_pen)
-						dst.write( pens[spixel] );
-					dst.inc(xadv);
-				}
-		}
+    public static void draw_scanline8(mame_bitmap bitmap, int x, int y, int length, UBytePtr src, IntArray pens, int transparent_pen) {
+        /* 8bpp destination */
+        if (bitmap.depth == 8) {
+            throw new UnsupportedOperationException("Unsupported");
+            /*TODO*///		/* adjust in case we're oddly oriented */
+/*TODO*///		ADJUST_FOR_ORIENTATION(UINT8, Machine->orientation, bitmap, x, y);
+/*TODO*///
+/*TODO*///		/* with pen lookups */
+/*TODO*///		if (pens)
+/*TODO*///		{
+/*TODO*///			if (transparent_pen == -1)
+/*TODO*///				while (length--)
+/*TODO*///				{
+/*TODO*///					*dst = pens[*src++];
+/*TODO*///					dst += xadv;
+/*TODO*///				}
+/*TODO*///			else
+/*TODO*///				while (length--)
+/*TODO*///				{
+/*TODO*///					UINT32 spixel = *src++;
+/*TODO*///					if (spixel != transparent_pen)
+/*TODO*///						*dst = pens[spixel];
+/*TODO*///					dst += xadv;
+/*TODO*///				}
+/*TODO*///		}
+/*TODO*///
+/*TODO*///		/* without pen lookups */
+/*TODO*///		else
+/*TODO*///		{
+/*TODO*///			if (transparent_pen == -1)
+/*TODO*///				while (length--)
+/*TODO*///				{
+/*TODO*///					*dst = *src++;
+/*TODO*///					dst += xadv;
+/*TODO*///				}
+/*TODO*///			else
+/*TODO*///				while (length--)
+/*TODO*///				{
+/*TODO*///					UINT32 spixel = *src++;
+/*TODO*///					if (spixel != transparent_pen)
+/*TODO*///						*dst = spixel;
+/*TODO*///					dst += xadv;
+/*TODO*///				}
+/*TODO*///		}
+        } /* 16bpp destination */ else if (bitmap.depth == 15 || bitmap.depth == 16) {
+            /* adjust in case we're oddly oriented */
+ /*TODO*///#define ADJUST_FOR_ORIENTATION(type, orientation, bitmap, x, y)				
+            int dy = bitmap.line[1].offset/2 - bitmap.line[0].offset/2;
+            UShortPtr dst = new UShortPtr(bitmap.line[0], (y * dy + x)*2);
+            int xadv = 1;
+            if (Machine.orientation != 0) {
+                int tx = x, ty = y, temp;
+                if (((Machine.orientation) & ORIENTATION_SWAP_XY) != 0) {
+                    temp = tx;
+                    tx = ty;
+                    ty = temp;
+                    xadv = dy;
+                }
+                if (((Machine.orientation) & ORIENTATION_FLIP_X) != 0) {
+                    tx = bitmap.width - 1 - tx;
+                    if (((Machine.orientation) & ORIENTATION_SWAP_XY) == 0) {
+                        xadv = -xadv;
+                    }
+                }
+                if (((Machine.orientation) & ORIENTATION_FLIP_Y) != 0) {
+                    ty = bitmap.height - 1 - ty;
+                    if (((Machine.orientation) & ORIENTATION_SWAP_XY) != 0) {
+                        xadv = -xadv;
+                    }
+                }
+                /* can't lookup line because it may be negative! */
+                dst = new UShortPtr(bitmap.line[0], (dy * ty + tx)*2);
+            }
 
-		/* without pen lookups */
-		else
-		{
-			if (transparent_pen == -1)
-				while ((length--)!=0)
-				{
-					dst.write(src.read());
-                                        src.inc();
-					dst.inc(xadv);
-				}
-			else
-				while ((length--)!=0)
-				{
-					int spixel = src.read();
-                                        src.inc();
-					if (spixel != transparent_pen)
-						dst.write(spixel);
-					dst.inc(xadv);
-				}
-		}
+            /* with pen lookups */
+            if (pens != null) {
+                if (transparent_pen == -1) {
+                    while (length-- != 0) {
+                        dst.write((char) pens.read((src.readinc())));
+                        dst.inc(xadv);
+                    }
+                } else {
+                    while (length-- != 0) {
+                        int/*UINT32*/ spixel = src.readinc();
+                        if (spixel != transparent_pen) {
+                            dst.write((char) pens.read(spixel));
+                        }
+                        dst.inc(xadv);
+                    }
+                }
+            } /* without pen lookups */ else {
+                throw new UnsupportedOperationException("Unsupported");
+                /*TODO*///			if (transparent_pen == -1)
+/*TODO*///				while (length--)
+/*TODO*///				{
+/*TODO*///					*dst = *src++;
+/*TODO*///					dst += xadv;
+/*TODO*///				}
+/*TODO*///			else
+/*TODO*///				while (length--)
+/*TODO*///				{
+/*TODO*///					UINT32 spixel = *src++;
+/*TODO*///					if (spixel != transparent_pen)
+/*TODO*///						*dst = spixel;
+/*TODO*///					dst += xadv;
+/*TODO*///				}
+            }
+        } /* 32bpp destination */ else {
+            throw new UnsupportedOperationException("Unsupported");
+            /*TODO*///		/* adjust in case we're oddly oriented */
+/*TODO*///		ADJUST_FOR_ORIENTATION(UINT32, Machine->orientation, bitmap, x, y);
+/*TODO*///
+/*TODO*///		/* with pen lookups */
+/*TODO*///		if (pens)
+/*TODO*///		{
+/*TODO*///			if (transparent_pen == -1)
+/*TODO*///				while (length--)
+/*TODO*///				{
+/*TODO*///					*dst = pens[*src++];
+/*TODO*///					dst += xadv;
+/*TODO*///				}
+/*TODO*///			else
+/*TODO*///				while (length--)
+/*TODO*///				{
+/*TODO*///					UINT32 spixel = *src++;
+/*TODO*///					if (spixel != transparent_pen)
+/*TODO*///						*dst = pens[spixel];
+/*TODO*///					dst += xadv;
+/*TODO*///				}
+/*TODO*///		}
+/*TODO*///
+/*TODO*///		/* without pen lookups */
+/*TODO*///		else
+/*TODO*///		{
+/*TODO*///			if (transparent_pen == -1)
+/*TODO*///				while (length--)
+/*TODO*///				{
+/*TODO*///					*dst = *src++;
+/*TODO*///					dst += xadv;
+/*TODO*///				}
+/*TODO*///			else
+/*TODO*///				while (length--)
+/*TODO*///				{
+/*TODO*///					UINT32 spixel = *src++;
+/*TODO*///					if (spixel != transparent_pen)
+/*TODO*///						*dst = spixel;
+/*TODO*///					dst += xadv;
+/*TODO*///				}
+/*TODO*///		}
+        }
     }
-/*TODO*///DECLAREG(draw_scanline, (
+
+    /*TODO*///DECLAREG(draw_scanline, (
 /*TODO*///		struct mame_bitmap *bitmap,int x,int y,int length,
 /*TODO*///		const DATA_TYPE *src,pen_t *pens,int transparent_pen),
 /*TODO*///{
@@ -7905,7 +8007,7 @@ public class drawgfx {
 /*TODO*///#undef ADJUST_FOR_ORIENTATION
 /*TODO*///
 /*TODO*///#endif /* DECLARE */
-/*TODO*///    
+/*TODO*///
     public static void blockmove_8toN_opaque8(UBytePtr srcdata, int srcwidth, int srcheight, int srcmodulo, int leftskip, int topskip, int flipx, int flipy, UBytePtr dstdata, int dstwidth, int dstheight, int dstmodulo, IntArray paldata) {
         int ydir;
         if (flipy != 0) {
@@ -8147,7 +8249,7 @@ public class drawgfx {
 
                     col = srcdata.readinc();
                     if (col != transpen) {
-                        dstdata.write(0, (char)paldata.read(col));
+                        dstdata.write(0, (char) paldata.read(col));
                     }
                     dstdata.dec();
                 }
@@ -8162,16 +8264,16 @@ public class drawgfx {
 
                         xod4 = col4 ^ trans4;
                         if ((xod4 & (0xff << SHIFT0)) != 0) {
-                            dstdata.write(4, (char)paldata.read(((col4 >> SHIFT0) & 0xff)));
+                            dstdata.write(4, (char) paldata.read(((col4 >> SHIFT0) & 0xff)));
                         }
                         if ((xod4 & (0xff << SHIFT1)) != 0) {
-                            dstdata.write(3, (char)paldata.read((((col4 >> SHIFT1) & 0xff))));
+                            dstdata.write(3, (char) paldata.read((((col4 >> SHIFT1) & 0xff))));
                         }
                         if ((xod4 & (0xff << SHIFT2)) != 0) {
-                            dstdata.write(2, (char)paldata.read((((col4 >> SHIFT2) & 0xff))));
+                            dstdata.write(2, (char) paldata.read((((col4 >> SHIFT2) & 0xff))));
                         }
                         if ((xod4 & (0xff << SHIFT3)) != 0) {
-                            dstdata.write(1, (char)paldata.read((((col4 >> SHIFT3) & 0xff))));
+                            dstdata.write(1, (char) paldata.read((((col4 >> SHIFT3) & 0xff))));
                         }
                     }
                     sd4.base += 4;
@@ -8182,7 +8284,7 @@ public class drawgfx {
 
                     col = srcdata.readinc();
                     if (col != transpen) {
-                        dstdata.write(0, (char)paldata.read(col));
+                        dstdata.write(0, (char) paldata.read(col));
                     }
                     dstdata.dec();
                 }
@@ -8205,7 +8307,7 @@ public class drawgfx {
 
                     col = srcdata.readinc();
                     if (col != transpen) {
-                        dstdata.write(0, (char)paldata.read(col));
+                        dstdata.write(0, (char) paldata.read(col));
                     }
                     dstdata.inc();
                 }
@@ -8218,16 +8320,16 @@ public class drawgfx {
 
                         xod4 = col4 ^ trans4;
                         if ((xod4 & (0xff << SHIFT0)) != 0) {
-                            dstdata.write(0, (char)paldata.read(((col4 >> SHIFT0) & 0xff)));
+                            dstdata.write(0, (char) paldata.read(((col4 >> SHIFT0) & 0xff)));
                         }
                         if ((xod4 & (0xff << SHIFT1)) != 0) {
-                            dstdata.write(1, (char)paldata.read((char) (((col4 >> SHIFT1) & 0xff))));
+                            dstdata.write(1, (char) paldata.read((char) (((col4 >> SHIFT1) & 0xff))));
                         }
                         if ((xod4 & (0xff << SHIFT2)) != 0) {
-                            dstdata.write(2, (char)paldata.read((((col4 >> SHIFT2) & 0xff))));
+                            dstdata.write(2, (char) paldata.read((((col4 >> SHIFT2) & 0xff))));
                         }
                         if ((xod4 & (0xff << SHIFT3)) != 0) {
-                            dstdata.write(3, (char)paldata.read((((col4 >> SHIFT3) & 0xff))));
+                            dstdata.write(3, (char) paldata.read((((col4 >> SHIFT3) & 0xff))));
                         }
                     }
                     dstdata.inc(4);
@@ -8239,7 +8341,7 @@ public class drawgfx {
 
                     col = srcdata.readinc();
                     if (col != transpen) {
-                        dstdata.write(0, (char)paldata.read(col));
+                        dstdata.write(0, (char) paldata.read(col));
                     }
                     dstdata.inc();
                 }
