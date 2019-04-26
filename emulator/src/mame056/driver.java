@@ -91,6 +91,7 @@ import static WIP.mame056.drivers.balsente.*;
 import static WIP.mame056.drivers.commando.*;
 import static WIP.mame056.drivers.polepos.*;
 import static mame056.drivers.bagman.*;
+import static WIP.mame056.drivers.gridlee.*;
 
 public class driver {
 
@@ -1015,7 +1016,7 @@ public class driver {
         driver_stompin, /* (c) 1986 */
         driver_rescraid, /* (c) 1987 */
         driver_rescrdsa, /* (c) 1987 */
-        /*TODO*///driver_gridlee,	/* [1983 Videa] prototype - no copyright notice */
+        driver_gridlee,	/* [1983 Videa] prototype - no copyright notice */
 
         /*TODO*///	/* Irem games */
         /*TODO*///	/* trivia: IREM means "International Rental Electronics Machines" */
