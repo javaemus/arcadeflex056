@@ -438,7 +438,7 @@ public class polepos
 			}
 	
 			/* draw the scanline */
-			/*TODO*///draw_scanline8(bitmap, 0, y, 256, &scanline[xscroll], colortable, -1);
+			draw_scanline8(bitmap, 0, y, 256, new UBytePtr(scanline, xscroll), colortable, -1);
 		}
 	}
 	
