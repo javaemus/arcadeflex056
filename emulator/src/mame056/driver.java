@@ -90,6 +90,7 @@ import static mame056.drivers.cosmic.*;
 import static WIP.mame056.drivers.balsente.*;
 import static WIP.mame056.drivers.commando.*;
 import static WIP.mame056.drivers.polepos.*;
+import static mame056.drivers.bagman.*;
 
 public class driver {
 
@@ -214,6 +215,13 @@ public class driver {
         /*1943*/ driver_1943,
         /*1943*/ driver_1943j,
         /*1943*/ driver_1943kai,
+        /*bagman*/ driver_bagman,
+        /*bagman*/ driver_bagnard,
+        /*bagman*/ driver_bagmans,
+        /*bagman*/ driver_bagmans2,
+        /*bagman*/ driver_sbagman,
+        /*bagman*/ driver_sbagmans,
+        /*bagman*/ driver_pickin,
         /**
          * GAME NOT WORKING FLAG
          */
@@ -464,12 +472,12 @@ public class driver {
         driver_rallyx, /* (c) 1980 Namco */
         driver_rallyxm, /* (c) 1980 Midway */
         driver_nrallyx, /* (c) 1981 Namco */
-        driver_jungler,	/* GX327 (c) 1981 Konami */
-        driver_junglers,	/* GX327 (c) 1981 Stern */
-        driver_locomotn,	/* GX359 (c) 1982 Konami + Centuri license */
-        driver_gutangtn,	/* GX359 (c) 1982 Konami + Sega license */
-        driver_cottong,	/* bootleg */
-        driver_commsega,	/* (c) 1983 Sega */
+        driver_jungler, /* GX327 (c) 1981 Konami */
+        driver_junglers, /* GX327 (c) 1981 Stern */
+        driver_locomotn, /* GX359 (c) 1982 Konami + Centuri license */
+        driver_gutangtn, /* GX359 (c) 1982 Konami + Sega license */
+        driver_cottong, /* bootleg */
+        driver_commsega, /* (c) 1983 Sega */
         /* the following ones all have a custom I/O chip */
         driver_bosco, /* (c) 1981 */
         driver_boscoo, /* (c) 1981 */
@@ -493,29 +501,28 @@ public class driver {
         driver_pacnpal2, /* (c) 1983 */
         driver_pacnchmp, /* (c) 1983 */
         /*TODO*///	driver_phozon,	/* (c) 1983 */
-        driver_mappy,		/* (c) 1983 */
-        driver_mappyjp,	/* (c) 1983 */
-        driver_digdug2,	/* (c) 1985 */
-        driver_digdug2a,	/* (c) 1985 */
-        driver_todruaga,	/* (c) 1984 */
-        driver_todruagb,	/* (c) 1984 */
-        driver_motos,		/* (c) 1985 */
-        driver_grobda,	/* (c) 1984 */
-        driver_grobda2,	/* (c) 1984 */
-        driver_grobda3,	/* (c) 1984 */
-
+        driver_mappy, /* (c) 1983 */
+        driver_mappyjp, /* (c) 1983 */
+        driver_digdug2, /* (c) 1985 */
+        driver_digdug2a, /* (c) 1985 */
+        driver_todruaga, /* (c) 1984 */
+        driver_todruagb, /* (c) 1984 */
+        driver_motos, /* (c) 1985 */
+        driver_grobda, /* (c) 1984 */
+        driver_grobda2, /* (c) 1984 */
+        driver_grobda3, /* (c) 1984 */
         /*TODO*///	/* Libble Rabble board (first Japanese game using a 68000) */
         /*TODO*///	driver_liblrabl,	/* (c) 1983 */
         /*TODO*///	driver_toypop,	/* (c) 1986 */
         /* Z8000 games */
-        driver_polepos,	/* (c) 1982  */
-        driver_poleposa,	/* (c) 1982 + Atari license */
-        driver_polepos1,	/* (c) 1982 Atari */
-        driver_topracer,	/* bootleg */
-        driver_polepos2,	/* (c) 1983 */
-        driver_poleps2a,	/* (c) 1983 + Atari license */
-        driver_poleps2b,	/* bootleg */
-        driver_poleps2c,	/* bootleg */
+        driver_polepos, /* (c) 1982  */
+        driver_poleposa, /* (c) 1982 + Atari license */
+        driver_polepos1, /* (c) 1982 Atari */
+        driver_topracer, /* bootleg */
+        driver_polepos2, /* (c) 1983 */
+        driver_poleps2a, /* (c) 1983 + Atari license */
+        driver_poleps2b, /* bootleg */
+        driver_poleps2c, /* bootleg */
         /*TODO*///	/* no custom I/O in the following, HD63701 (or compatible) microcontroller instead */
         /*TODO*///	driver_pacland,	/* (c) 1984 */
         /*TODO*///	driver_pacland2,	/* (c) 1984 */
@@ -655,21 +662,21 @@ public class driver {
         /*TODO*///	driver_ncv1j2,	/* (c) 1995 (Japan) */
         /*TODO*///TESTdriver_ncv2,		/* (c) 1996 */
         /*TODO*///TESTdriver_ncv2j,		/* (c) 1996 (Japan) */
-        
+
         /* Universal games */
-        driver_cosmicg,	/* 7907 (c) 1979 */
-        driver_cosmica,	/* 7910 (c) [1979] */
-        driver_cosmica2,	/* 7910 (c) 1979 */
-        driver_panic,		/* (c) 1980 */
-        driver_panica,	/* (c) 1980 */
-        driver_panicger,	/* (c) 1980 */
+        driver_cosmicg, /* 7907 (c) 1979 */
+        driver_cosmica, /* 7910 (c) [1979] */
+        driver_cosmica2, /* 7910 (c) 1979 */
+        driver_panic, /* (c) 1980 */
+        driver_panica, /* (c) 1980 */
+        driver_panicger, /* (c) 1980 */
         /*TODO*///	driver_zerohour,	/* 8011 (c) Universal */
         /*TODO*///	driver_redclash,	/* (c) 1981 Tehkan */
         /*TODO*///	driver_redclask,	/* (c) Kaneko (bootleg?) */
-        driver_magspot2,	/* 8013 (c) [1980] */
-        driver_devzone,	/* 8022 (c) [1980] */
-        driver_nomnlnd,	/* (c) [1980?] */
-        driver_nomnlndg,	/* (c) [1980?] + Gottlieb */
+        driver_magspot2, /* 8013 (c) [1980] */
+        driver_devzone, /* 8022 (c) [1980] */
+        driver_nomnlnd, /* (c) [1980?] */
+        driver_nomnlndg, /* (c) [1980?] + Gottlieb */
         /*TODO*///	driver_cheekyms,	/* (c) [1980?] */
         driver_ladybug, /* (c) 1981 */
         driver_ladybugb, /* bootleg */
@@ -982,34 +989,34 @@ public class driver {
         /*TODO*///	driver_archriv2,	/* (c) 1989 */
         /*TODO*///	driver_trisport,	/* (c) 1989 */
         /*TODO*///	driver_pigskin,	/* (c) 1990 */
-        
-        	/* Bally / Sente games */
-        	driver_sentetst,
-        	driver_cshift,	/* (c) 1984 */
-        	driver_gghost,	/* (c) 1984 */
-        	driver_hattrick,	/* (c) 1984 */
-        	driver_otwalls,	/* (c) 1984 */
-        	driver_snakepit,	/* (c) 1984 */
-        	driver_snakjack,	/* (c) 1984 */
-        	driver_stocker,	/* (c) 1984 */
-        	driver_triviag1,	/* (c) 1984 */
-        	driver_triviag2,	/* (c) 1984 */
-        	driver_triviasp,	/* (c) 1984 */
-        	driver_triviayp,	/* (c) 1984 */
-        	driver_triviabb,	/* (c) 1984 */
-        	driver_gimeabrk,	/* (c) 1985 */
-        	driver_minigolf,	/* (c) 1985 */
-        	driver_minigol2,	/* (c) 1985 */
-        	driver_toggle,	/* (c) 1985 */
-        	driver_nametune,	/* (c) 1986 */
-        	driver_nstocker,	/* (c) 1986 */
-        	driver_sfootbal,	/* (c) 1986 */
-        	driver_spiker,	/* (c) 1986 */
-        	driver_stompin,	/* (c) 1986 */
-        	driver_rescraid,	/* (c) 1987 */
-        	driver_rescrdsa,	/* (c) 1987 */
-        	/*TODO*///driver_gridlee,	/* [1983 Videa] prototype - no copyright notice */
-        
+
+        /* Bally / Sente games */
+        driver_sentetst,
+        driver_cshift, /* (c) 1984 */
+        driver_gghost, /* (c) 1984 */
+        driver_hattrick, /* (c) 1984 */
+        driver_otwalls, /* (c) 1984 */
+        driver_snakepit, /* (c) 1984 */
+        driver_snakjack, /* (c) 1984 */
+        driver_stocker, /* (c) 1984 */
+        driver_triviag1, /* (c) 1984 */
+        driver_triviag2, /* (c) 1984 */
+        driver_triviasp, /* (c) 1984 */
+        driver_triviayp, /* (c) 1984 */
+        driver_triviabb, /* (c) 1984 */
+        driver_gimeabrk, /* (c) 1985 */
+        driver_minigolf, /* (c) 1985 */
+        driver_minigol2, /* (c) 1985 */
+        driver_toggle, /* (c) 1985 */
+        driver_nametune, /* (c) 1986 */
+        driver_nstocker, /* (c) 1986 */
+        driver_sfootbal, /* (c) 1986 */
+        driver_spiker, /* (c) 1986 */
+        driver_stompin, /* (c) 1986 */
+        driver_rescraid, /* (c) 1987 */
+        driver_rescrdsa, /* (c) 1987 */
+        /*TODO*///driver_gridlee,	/* [1983 Videa] prototype - no copyright notice */
+
         /*TODO*///	/* Irem games */
         /*TODO*///	/* trivia: IREM means "International Rental Electronics Machines" */
         /*TODO*///TESTdriver_iremm10,	/* M10 */
@@ -1679,10 +1686,10 @@ public class driver {
         /*TODO*///	driver_1942b,		/* 12/1984 (c) 1984 */
         /*TODO*///	driver_exedexes,	/*  2/1985 (c) 1985 */
         /*TODO*///	driver_savgbees,	/*  2/1985 (c) 1985 + Memetron license */
-        	driver_commando,	/*  5/1985 (c) 1985 (World) */
-        	driver_commandu,	/*  5/1985 (c) 1985 + Data East license (US) */
-        	driver_commandj,	/*  5/1985 (c) 1985 (Japan) */
-        	driver_spaceinv,	/* bootleg */
+        driver_commando, /*  5/1985 (c) 1985 (World) */
+        driver_commandu, /*  5/1985 (c) 1985 + Data East license (US) */
+        driver_commandj, /*  5/1985 (c) 1985 (Japan) */
+        driver_spaceinv, /* bootleg */
         /*TODO*///	driver_gng,		/*  9/1985 (c) 1985 */
         /*TODO*///	driver_gnga,		/*  9/1985 (c) 1985 */
         /*TODO*///	driver_gngt,		/*  9/1985 (c) 1985 */
@@ -3398,14 +3405,6 @@ public class driver {
         /*TODO*///	driver_machomou,	/* (c) 1982 Techstar */
         /*TODO*///	driver_timelimt,	/* (c) 1983 Chuo Co. Ltd */
         /*TODO*///
-        /*TODO*///	/* Valadon Automation games */
-        /*TODO*///	driver_bagman,	/* (c) 1982 */
-        /*TODO*///	driver_bagnard,	/* (c) 1982 */
-        /*TODO*///	driver_bagmans,	/* (c) 1982 + Stern license */
-        /*TODO*///	driver_bagmans2,	/* (c) 1982 + Stern license */
-        /*TODO*///	driver_sbagman,	/* (c) 1984 */
-        /*TODO*///	driver_sbagmans,	/* (c) 1984 + Stern license */
-        /*TODO*///	driver_pickin,	/* (c) 1983 */
         /*TODO*///
         /*TODO*///	/* Seibu Denshi / Seibu Kaihatsu games */
         /*TODO*///	driver_stinger,	/* (c) 1983 Seibu Denshi */

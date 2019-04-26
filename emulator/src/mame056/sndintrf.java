@@ -33,6 +33,7 @@ import mame056.sound.vlm5030;
 import mame056.sound.y8950intf;
 import mame056.sound._2151intf;
 import mame056.sound.cem3394;
+import mame056.sound._5110intf;
 
 public class sndintrf {
 
@@ -298,9 +299,6 @@ public class sndintrf {
 /*TODO*///#if (HAS_VLM5030)
 /*TODO*///int VLM5030_clock(const struct MachineSound *msound) { return ((struct VLM5030interface*)msound->sound_interface)->baseclock; }
 /*TODO*///#endif
-/*TODO*///#if (HAS_TMS5110)
-/*TODO*///int TMS5110_clock(const struct MachineSound *msound) { return ((struct TMS5110interface*)msound->sound_interface)->baseclock; }
-/*TODO*///#endif
 /*TODO*///#if (HAS_TMS5220)
 /*TODO*///int TMS5220_clock(const struct MachineSound *msound) { return ((struct TMS5220interface*)msound->sound_interface)->baseclock; }
 /*TODO*///#endif
@@ -556,19 +554,7 @@ public class sndintrf {
                 new Dummy_snd(),
                 new namco(),
                 new tms36xx(),
-                /*TODO*///#endif
-                /*TODO*///#if (HAS_TMS5110)
-                /*TODO*///    {
-                /*TODO*///		SOUND_TMS5110,
-                /*TODO*///		"TMS5110",
-                /*TODO*///		0,
-                /*TODO*///		TMS5110_clock,
-                /*TODO*///		tms5110_sh_start,
-                /*TODO*///		tms5110_sh_stop,
-                /*TODO*///		tms5110_sh_update,
-                /*TODO*///		0
-                /*TODO*///	},
-                new Dummy_snd(),
+                new _5110intf(),
                 /*TODO*///#endif
                 /*TODO*///#if (HAS_TMS5220)
                 /*TODO*///    {
