@@ -32,6 +32,7 @@ import mame056.sound._3812intf;
 import mame056.sound.vlm5030;
 import mame056.sound.y8950intf;
 import mame056.sound._2151intf;
+import mame056.sound.cem3394;
 
 public class sndintrf {
 
@@ -738,7 +739,7 @@ public class sndintrf {
                 /*TODO*///		0,
                 /*TODO*///		0
                 /*TODO*///	},
-                new Dummy_snd(),
+                new cem3394(),
                 /*TODO*///#endif
                 /*TODO*///#if (HAS_C140)
                 /*TODO*///	{

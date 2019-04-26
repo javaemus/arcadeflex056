@@ -148,7 +148,7 @@
 package WIP.mame056.drivers;
 
 import static arcadeflex056.fucPtr.*;
-import common.ptr.UBytePtr;
+import static common.ptr.*;
 import static common.libc.cstring.*;
 
 import static mame056.common.*;
@@ -181,6 +181,9 @@ import static mame056.timerH.*;
 
 // refactor
 import static arcadeflex036.osdepend.logerror;
+import common.ptr;
+import static mame056.sound.cem3394.*;
+import static mame056.sound.cem3394H.*;
 import static mame056.sound.mixerH.*;
 import static mame056.sound.mixer.*;
 
@@ -402,8 +405,9 @@ public class balsente {
         }
     }
 
-    static void noise_gen(int chip, int count, UBytePtr buffer) {
-        int _buffer = 0;
+    public static ExternalSamplesHandlerPtr noise_gen = new ExternalSamplesHandlerPtr() {
+        public void handler(int chip, int count, ShortPtr ext_buffer) {
+            int _buffer = 0;
 
         if (Machine.sample_rate != 0) {
             /* noise generator runs at 100kHz */
@@ -413,20 +417,21 @@ public class balsente {
             /* try to use the poly17 if we can */
             if (poly17 != null) {
                 while ((count--) != 0) {
-                    buffer.write(_buffer++, poly17.read((int) ((noise_counter >> 14) & POLY17_SIZE)) << 12);
+                    ext_buffer.write(_buffer++, (short) (poly17.read((int) ((noise_counter >> 14) & POLY17_SIZE)) << 12));
                     noise_counter += step;
                 }
             } /* otherwise just use random numbers */ else {
                 while ((count--) != 0) {
-                    buffer.write(_buffer++, rand() & 0x1000);
+                    ext_buffer.write(_buffer++, (short) (rand() & 0x1000));
                 }
             }
 
             /* remember the noise position */
             noise_position[chip] = (int) noise_counter;
         }
-    }
-
+       }
+    };
+    
     /**
      * ***********************************
      *
@@ -1030,19 +1035,19 @@ public class balsente {
         counter_0_timer = null;
 
         /* find the counter with the maximum frequency */
- /* this is used to calibrate the timers at startup */
- /*TODO*///for (i = 0; i < 6; i++)
-        /*TODO*///	if (cem3394_get_parameter(i, CEM3394_FINAL_GAIN) < 10.0)
-        /*TODO*///	{
-        /*TODO*///		double tempfreq;
-        /*TODO*///		/* if the filter resonance is high, then they're calibrating the filter frequency */
-        /*TODO*///		if (cem3394_get_parameter(i, CEM3394_FILTER_RESONANCE) > 0.9)
-        /*TODO*///			tempfreq = cem3394_get_parameter(i, CEM3394_FILTER_FREQENCY);
-        /*TODO*///		/* otherwise, they're calibrating the VCO frequency */
-        /*TODO*///		else
-        /*TODO*///			tempfreq = cem3394_get_parameter(i, CEM3394_VCO_FREQUENCY);
-        /*TODO*///		if (tempfreq > maxfreq) maxfreq = tempfreq;
-        /*TODO*///	}
+        /* this is used to calibrate the timers at startup */
+        for (i = 0; i < 6; i++)
+        	if (cem3394_get_parameter(i, CEM3394_FINAL_GAIN) < 10.0)
+        	{
+        		double tempfreq;
+        		/* if the filter resonance is high, then they're calibrating the filter frequency */
+        		if (cem3394_get_parameter(i, CEM3394_FILTER_RESONANCE) > 0.9)
+        			tempfreq = cem3394_get_parameter(i, CEM3394_FILTER_FREQENCY);
+        		/* otherwise, they're calibrating the VCO frequency */
+        		else
+        			tempfreq = cem3394_get_parameter(i, CEM3394_VCO_FREQUENCY);
+        		if (tempfreq > maxfreq) maxfreq = tempfreq;
+        	}
         /* reprime the timer */
         if (maxfreq > 0.0) {
             counter_0_timer = timer_pulse(TIME_IN_HZ(maxfreq), 0, clock_counter_0_ff);
@@ -1174,17 +1179,16 @@ public class balsente {
     public static int CEM3394_PULSE_WIDTH = 6;
     public static int CEM3394_WAVE_SELECT = 7;
 
-    static int register_map[]
-            = {
-                CEM3394_VCO_FREQUENCY,
-                CEM3394_FINAL_GAIN,
-                CEM3394_FILTER_RESONANCE,
-                CEM3394_FILTER_FREQENCY,
-                CEM3394_MIXER_BALANCE,
-                CEM3394_MODULATION_AMOUNT,
-                CEM3394_PULSE_WIDTH,
-                CEM3394_WAVE_SELECT
-            };
+    static int register_map[] = {
+        CEM3394_VCO_FREQUENCY,
+        CEM3394_FINAL_GAIN,
+        CEM3394_FILTER_RESONANCE,
+        CEM3394_FILTER_FREQENCY,
+        CEM3394_MIXER_BALANCE,
+        CEM3394_MODULATION_AMOUNT,
+        CEM3394_PULSE_WIDTH,
+        CEM3394_WAVE_SELECT
+    };
 
     static String names[]
             = {
@@ -1214,9 +1218,9 @@ public class balsente {
                     double temp = 0;
 
                     /* remember the previous value */
- /*TODO*///temp = cem3394_get_parameter(i, reg);
+                    temp = cem3394_get_parameter(i, reg);
                     /* set the voltage */
- /*TODO*///cem3394_set_voltage(i, reg, voltage);
+                    cem3394_set_voltage(i, reg, voltage);
                     /* only log changes */
                     //#if LOG_CEM_WRITES
                     /*TODO*///			if (temp != cem3394_get_parameter(i, reg) )
@@ -2618,14 +2622,14 @@ public class balsente {
      *
      ************************************
      */
-    /*TODO*///static struct cem3394_interface cem_interface =
-    /*TODO*///{
-    /*TODO*///	6,
-    /*TODO*///	{ 90, 90, 90, 90, 90, 90 },
-    /*TODO*///	{ 431.894, 431.894, 431.894, 431.894, 431.894, 431.894 },
-    /*TODO*///	{ 1300.0, 1300.0, 1300.0, 1300.0, 1300.0, 1300.0 },
-    /*TODO*///	{ noise_gen, noise_gen, noise_gen, noise_gen, noise_gen, noise_gen }
-    /*TODO*///};
+    static cem3394_interface cem_interface = new cem3394_interface
+    (
+    	6,
+    	new int[]{ 90, 90, 90, 90, 90, 90 },
+    	new double[]{ 431.894, 431.894, 431.894, 431.894, 431.894, 431.894 },
+    	new double[]{ 1300.0, 1300.0, 1300.0, 1300.0, 1300.0, 1300.0 },
+    	new ExternalSamplesHandlerPtr[]{ noise_gen, noise_gen, noise_gen, noise_gen, noise_gen, noise_gen }
+    );
     /**
      * ***********************************
      *
@@ -2664,10 +2668,10 @@ public class balsente {
             balsente_vh_screenrefresh,
             /* sound hardware */
             0, 0, 0, 0,
-            /*TODO*///new MachineSound[] {
-            /*TODO*///	new MachineSound( SOUND_CEM3394, cem_interface )
-            /*TODO*///},
-            null,
+            new MachineSound[] {
+            	new MachineSound( SOUND_CEM3394, cem_interface )
+            },
+            
             nvram_handler
     );
 
