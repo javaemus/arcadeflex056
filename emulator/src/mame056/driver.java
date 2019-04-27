@@ -87,7 +87,7 @@ import static mame056.drivers.locomotn.*;
 import static mame056.drivers.mappy.*;
 import static mame056.drivers.grobda.*;
 import static mame056.drivers.cosmic.*;
-import static WIP.mame056.drivers.balsente.*;
+import static mame056.drivers.balsente.*;
 import static WIP.mame056.drivers.commando.*;
 import static WIP.mame056.drivers.polepos.*;
 import static mame056.drivers.bagman.*;
@@ -223,6 +223,30 @@ public class driver {
         /*bagman*/ driver_sbagman,
         /*bagman*/ driver_sbagmans,
         /*bagman*/ driver_pickin,
+        /*balsente*/driver_sentetst,
+        /*balsente*/driver_cshift, 
+        /*balsente*/driver_gghost,
+        /*balsente*/driver_hattrick,
+        /*balsente*/driver_otwalls,
+        /*balsente*/driver_snakepit, 
+        /*balsente*/driver_snakjack, 
+        /*balsente*/driver_stocker, 
+        /*balsente*/driver_triviag1, 
+        /*balsente*/driver_triviag2, 
+        /*balsente*/driver_triviasp, 
+        /*balsente*/driver_triviayp,
+        /*balsente*/driver_triviabb, 
+        /*balsente*/driver_gimeabrk, 
+        /*balsente*/driver_minigolf, 
+        /*balsente*/driver_minigol2, 
+        /*balsente*/driver_toggle, 
+        /*balsente*/driver_nametune, 
+        /*balsente*/driver_nstocker, 
+        /*balsente*/driver_sfootbal,
+        /*balsente*/driver_spiker, 
+        /*balsente*/driver_stompin, 
+        /*balsente*/driver_rescraid,
+        /*balsente*/driver_rescrdsa, 
         /**
          * GAME NOT WORKING FLAG
          */
@@ -992,30 +1016,7 @@ public class driver {
         /*TODO*///	driver_pigskin,	/* (c) 1990 */
 
         /* Bally / Sente games */
-        driver_sentetst,
-        driver_cshift, /* (c) 1984 */
-        driver_gghost, /* (c) 1984 */
-        driver_hattrick, /* (c) 1984 */
-        driver_otwalls, /* (c) 1984 */
-        driver_snakepit, /* (c) 1984 */
-        driver_snakjack, /* (c) 1984 */
-        driver_stocker, /* (c) 1984 */
-        driver_triviag1, /* (c) 1984 */
-        driver_triviag2, /* (c) 1984 */
-        driver_triviasp, /* (c) 1984 */
-        driver_triviayp, /* (c) 1984 */
-        driver_triviabb, /* (c) 1984 */
-        driver_gimeabrk, /* (c) 1985 */
-        driver_minigolf, /* (c) 1985 */
-        driver_minigol2, /* (c) 1985 */
-        driver_toggle, /* (c) 1985 */
-        driver_nametune, /* (c) 1986 */
-        driver_nstocker, /* (c) 1986 */
-        driver_sfootbal, /* (c) 1986 */
-        driver_spiker, /* (c) 1986 */
-        driver_stompin, /* (c) 1986 */
-        driver_rescraid, /* (c) 1987 */
-        driver_rescrdsa, /* (c) 1987 */
+        
         driver_gridlee,	/* [1983 Videa] prototype - no copyright notice */
 
         /*TODO*///	/* Irem games */

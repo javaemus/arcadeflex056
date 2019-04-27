@@ -7,7 +7,7 @@
  * =========
  * 25/04/2019 Rewrote balsente vidhrdw driver (shadow)
  */
-package WIP.mame056.vidhrdw;
+package mame056.vidhrdw;
 
 import static arcadeflex056.fucPtr.*;
 import static arcadeflex036.osdepend.*;
@@ -23,7 +23,7 @@ import static mame056.drawgfx.*;
 import static mame056.mame.*;
 import static mame056.cpuexec.*;
 
-import static WIP.mame056.drivers.balsente.*;
+import static mame056.drivers.balsente.*;
 
 import static mame056.vidhrdw.generic.*;
 
