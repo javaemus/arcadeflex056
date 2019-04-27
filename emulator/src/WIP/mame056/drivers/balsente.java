@@ -5,6 +5,7 @@
 /**
  * Changelog
  * =========
+ * 27/04/2019 Sound seems to work now (shadow)
  * 27/04/2019 Rewrote balsente  driver . Still have issues with cem3394 (shadow)
  */
 package WIP.mame056.drivers;
@@ -232,10 +233,10 @@ public class balsente
     public static int POLY17_ADD = 0x18000;
     
     static void poly17_init() {
-        /*UINT32*/
-        int i, x = 0;
-        UBytePtr p;
-        UBytePtr r;
+        long i, x = 0;
+        UBytePtr p = new UBytePtr(), r = new UBytePtr();
+        int _p = 0;
+        int _r = 0;
 
         /* free stale memory */
         if (poly17 != null) {
@@ -252,12 +253,12 @@ public class balsente
         /* generate the polynomial */
         for (i = 0; i < POLY17_SIZE; i++) {
             /* store new values */
-            p.writeinc(x & 1);
-            r.writeinc(x >> 3);
+            p.write(_p++, (int) (x & 1));
+            r.write(_r++, (int) (x >> 3));
 
             /* calculate next bit */
             x = ((x << POLY17_SHL) + (x >> POLY17_SHR) + POLY17_ADD) & POLY17_SIZE;
-        }
+}
     }
 
     public static externalPtr noise_gen = new externalPtr() {
@@ -310,7 +311,7 @@ public class balsente
 	
 		/* 12.5 = 8 + 4 + 0.5 */
 		cc = (cc << 3) + (cc << 2) + (cc >> 1);
-		return rand17.read(cc & POLY17_SIZE);
+		return rand17.read((cc & POLY17_SIZE));
 	} };
 	
 	

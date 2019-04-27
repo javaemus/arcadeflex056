@@ -2,12 +2,14 @@
  * ported to v0.56
  * using automatic conversion tool v0.01
  */
+/**
+ * Changelog
+ * =========
+ * 27/04/2019 ported to mame 0.56 (shadow)
+ */
 package mame056.sound;
 
-import common.ptr.ShortPtr;
-import common.ptr.UBytePtr;
-import mame056.sndintrfH;
-
+import static common.ptr.*;
 
 public class cem3394H {
 

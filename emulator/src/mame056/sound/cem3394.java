@@ -1,26 +1,17 @@
-/***************************************************************************
-
-	CEM3394 sound driver.
-
-	This driver handles CEM-3394 analog synth chip. Very crudely.
-
-	Still to do:
-		- adjust the overall volume when multiple waves are being generated
-		- filter internal sound
-		- support resonance (don't understand how it works)
-
-***************************************************************************/
-
 /*
  * ported to v0.56
  * using automatic conversion tool v0.01
  */ 
+/**
+ * Changelog
+ * =========
+ * 27/04/2019 ported to mame 0.56 (shadow)
+ */
 package mame056.sound;
 
 import static common.libc.cstdio.*;
 import static common.libc.cstring.*;
 import static common.ptr.*;
-import static java.lang.Math.pow;
 import static mame056.mame.*;
 import static mame056.sndintrf.*;
 import static mame056.sndintrfH.*;
@@ -170,8 +161,8 @@ public class cem3394 extends snd_interface {
             int int_volume = (chip_list[ch].volume * chip_list[ch].mixer_internal) / 256;
             int ext_volume = (chip_list[ch].volume * chip_list[ch].mixer_external) / 256;
             int/*UINT32*/ step = chip_list[ch].step, position, end_position = 0;
-            ShortPtr mix;
-            ShortPtr ext;
+            int /*ShortPtr*/ mix;
+            int /*ShortPtr*/ ext;
             int i;
 
             /* external volume is effectively 0 if no external function */
@@ -196,7 +187,7 @@ public class cem3394 extends snd_interface {
                 short last_ext = chip_list[ch].last_ext;
 
                 /* fetch the external data */
-                (chip_list[ch].external).handler(ch, length, external_buffer);
+                (chip_list[ch].external).handler(ch, length, new ShortPtr(external_buffer));
 
                 /* compute the modulation depth, and adjust fstep to the maximum frequency */
  /* we lop off 13 bits of depth so that we can multiply by stepadjust, below, */
@@ -207,7 +198,7 @@ public class cem3394 extends snd_interface {
 
                 /* "apply" the filter: note this is pretty cheesy; it basically just downsamples the
 			   external sample to filter_freq by allowing only 2 transitions for every cycle */
-                for (i = 0, ext = external_buffer, position = chip_list[ch].position; i < length; i++, ext.inc()) {
+                for (i = 0, ext = 0, position = chip_list[ch].position; i < length; i++, ext++) {
                     int/*UINT32*/ newposition;
                     int stepadjust;
 
@@ -222,9 +213,9 @@ public class cem3394 extends snd_interface {
                     /* if we cross a half-step boundary, allow the next byte of the external input */
                     newposition = fposition + fstep - (stepadjust * depth);
                     if (((newposition ^ fposition) & ~(FRACTION_MASK >> 1)) != 0) {
-                        last_ext = ext.read();
+                        last_ext = external_buffer.read(ext);
                     } else {
-                        ext.write(last_ext);
+                        external_buffer.write(ext,last_ext);
                     }
                     fposition = newposition & FRACTION_MASK;
                 }
@@ -259,22 +250,22 @@ public class cem3394 extends snd_interface {
 
                     /* if the width is wider than the step, we're guaranteed to hit it once per cycle */
                     if (pulse_width >= step) {
-                        for (i = 0, mix = mixer_buffer, position = chip_list[ch].position; i < length; i++, mix.inc()) {
+                        for (i = 0, mix = 0, position = chip_list[ch].position; i < length; i++, mix++) {
                             if (position < pulse_width) {
-                                mix.write((short) 0x1932);
+                                mixer_buffer.write(mix,(short) 0x1932);
                             } else {
-                                mix.write((short) 0x0000);
+                                mixer_buffer.write(mix,(short) 0x0000);
                             }
                             position = (position + step) & FRACTION_MASK;
                         }
                     } /* otherwise, we compute a volume and watch for cycle boundary crossings */ else {
                         short volume = (short) (0x1932 * pulse_width / step);
-                        for (i = 0, mix = mixer_buffer, position = chip_list[ch].position; i < length; i++, mix.inc()) {
+                        for (i = 0, mix = 0, position = chip_list[ch].position; i < length; i++, mix++) {
                             int/*UINT32*/ newposition = position + step;
                             if (((newposition ^ position) & ~FRACTION_MASK) != 0) {
-                                mix.write(volume);
+                                mixer_buffer.write(mix,volume);
                             } else {
-                                mix.write((short) 0x0000);
+                                mixer_buffer.write(mix,(short) 0x0000);
                             }
                             position = newposition & FRACTION_MASK;
                         }
@@ -287,8 +278,8 @@ public class cem3394 extends snd_interface {
                 /* handle the sawtooth component; it maxes out at 0x2000, which is 27% larger */
  /* than the pulse */
                 if (ENABLE_SAWTOOTH != 0 && (chip_list[ch].wave_select & WAVE_SAWTOOTH) != 0) {
-                    for (i = 0, mix = mixer_buffer, position = chip_list[ch].position; i < length; i++, mix.inc()) {
-                        mix.write((short) (mix.read() + ((position >> (FRACTION_BITS - 14)) & 0x3fff) - 0x2000));
+                    for (i = 0, mix = 0, position = chip_list[ch].position; i < length; i++, mix++) {
+                        mixer_buffer.write(mix,(short) (mixer_buffer.read(mix) + ((position >> (FRACTION_BITS - 14)) & 0x3fff) - 0x2000));
                         position += step;
                     }
                     end_position = position & FRACTION_MASK;
@@ -298,14 +289,14 @@ public class cem3394 extends snd_interface {
  /* than the sawtooth (should be 27% according to the specs, but 25% saves us */
  /* a multiplication) */
                 if (ENABLE_TRIANGLE != 0 && (chip_list[ch].wave_select & WAVE_TRIANGLE) != 0) {
-                    for (i = 0, mix = mixer_buffer, position = chip_list[ch].position; i < length; i++, mix.inc()) {
+                    for (i = 0, mix = 0, position = chip_list[ch].position; i < length; i++, mix++) {
                         short value;
                         if ((position & (1 << (FRACTION_BITS - 1))) != 0) {
                             value = (short) (0x2000 - ((position >> (FRACTION_BITS - 14)) & 0x1fff));
                         } else {
                             value = (short) ((position >> (FRACTION_BITS - 14)) & 0x1fff);
                         }
-                        mix.write((short) (mix.read() + value + (value >> 2)));
+                        mixer_buffer.write(mix,(short) (mixer_buffer.read(mix) + value + (value >> 2)));
                         position += step;
                     }
                     end_position = position & FRACTION_MASK;
@@ -316,21 +307,21 @@ public class cem3394 extends snd_interface {
             }
 
             /* mix it down */
-            mix = new ShortPtr(mixer_buffer);
-            ext = new ShortPtr(external_buffer);
+            mix = 0;//new ShortPtr(mixer_buffer);
+            ext = 0;//new ShortPtr(external_buffer);
             {
                 /* internal + external */
                 if (ext_volume != 0 && int_volume != 0) {
-                    for (i = 0; i < length; i++, mix.inc(), ext.inc()) {
-                        buffer.writeinc((short) ((mix.read() * int_volume + ext.read() * ext_volume) / 128));
+                    for (i = 0; i < length; i++, mix++, ext++) {
+                        buffer.writeinc((short) ((mixer_buffer.read(mix) * int_volume + external_buffer.read(ext) * ext_volume) / 128));
                     }
                 } /* internal only */ else if (int_volume != 0) {
-                    for (i = 0; i < length; i++, mix.inc()) {
-                        buffer.writeinc((short) ((mix.read() * int_volume / 128)));
+                    for (i = 0; i < length; i++, mix++) {
+                        buffer.writeinc((short) ((mixer_buffer.read(mix) * int_volume / 128)));
                     }
                 } /* external only */ else {
-                    for (i = 0; i < length; i++, ext.inc()) {
-                        buffer.writeinc((short) ((ext.read() * ext_volume / 128)));
+                    for (i = 0; i < length; i++, ext++) {
+                        buffer.writeinc((short) ((external_buffer.read(ext) * ext_volume / 128)));
                     }
                 }
             }

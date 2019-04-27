@@ -2429,7 +2429,9 @@ public class m6809 extends cpu_interface {
                 ea = RM16(ea);
                 m6809_ICount[0] -= 4;
                 break;
-            /*TODO*///	case 0x99: IMMWORD(ea); 	EA+=X;				EAD=RM16(EAD);	m6809_ICount[0]-=7;   break;
+            	case 0x99: ea=IMMWORD(); 	
+                ea =(ea+m6809.x)&0xFFFF;				
+                ea=RM16(ea);	m6809_ICount[0]-=7;   break;
             /*TODO*///	case 0x9a: EA=0;																   break; /*   ILLEGAL*/
             case 0x9b:
                 ea = m6809.x + getDreg();
