@@ -905,17 +905,17 @@ public class cpuintrf {
         return result;
     }
 
-    /*TODO*///
-/*TODO*///
-/*TODO*///void cpunum_set_reg(int cpunum, int regnum, unsigned val)
-/*TODO*///{
-/*TODO*///	VERIFY_CPUNUM_VOID(cpunum_set_reg);
-/*TODO*///	cpuintrf_push_context(cpunum);
-/*TODO*///	(*cpu[cpunum].intf.set_reg)(regnum, val);
-/*TODO*///	cpuintrf_pop_context();
-/*TODO*///}
-/*TODO*///
-/*TODO*///
+    
+
+    public static void cpunum_set_reg(int cpunum, int regnum, int val)
+    {
+            /*TODO*///VERIFY_CPUNUM_VOID(cpunum_set_reg);
+            cpuintrf_push_context(cpunum);
+            cpu[cpunum].intf.set_reg(regnum, val);
+            cpuintrf_pop_context();
+    }
+
+
 /*TODO*////*--------------------------
 /*TODO*/// 	Get/set PC
 /*TODO*///--------------------------*/
