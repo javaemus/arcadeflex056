@@ -5,7 +5,7 @@
 /**
  * Changelog
  * =========
- * Rewrote balsente driver (shadow)
+ * 25/04/2019 Rewrote balsente vidhrdw driver (shadow)
  */
 package WIP.mame056.vidhrdw;
 
