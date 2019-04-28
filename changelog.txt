@@ -1,3 +1,7 @@
+28/04/2019
+==========
+-Added exidy440 working driver (sound WIP)
+
 25/04/2019
 ==========
 -Moved WIP drivers to WIP folder

@@ -92,6 +92,7 @@ import static WIP.mame056.drivers.commando.*;
 import static WIP.mame056.drivers.polepos.*;
 import static mame056.drivers.bagman.*;
 import static WIP.mame056.drivers.gridlee.*;
+import static WIP.mame056.drivers.exidy440.*;
 
 public class driver {
 
@@ -2907,20 +2908,20 @@ public class driver {
         /*TODO*///	driver_fireone,	/* (c) 1979 Exidy */
         /*TODO*///	driver_victory,	/* (c) 1982 */
         /*TODO*///	driver_victorba,	/* (c) 1982 */
-        /*TODO*///
-        /*TODO*///	/* Exidy 440 games */
-        /*TODO*///	driver_crossbow,	/* (c) 1983 */
-        /*TODO*///	driver_cheyenne,	/* (c) 1984 */
-        /*TODO*///	driver_combat,	/* (c) 1985 */
-        /*TODO*///	driver_cracksht,	/* (c) 1985 */
-        /*TODO*///	driver_claypign,	/* (c) 1986 */
-        /*TODO*///	driver_chiller,	/* (c) 1986 */
-        /*TODO*///	driver_topsecex,	/* (c) 1986 */
-        /*TODO*///	driver_hitnmiss,	/* (c) 1987 */
-        /*TODO*///	driver_hitnmis2,	/* (c) 1987 */
-        /*TODO*///	driver_whodunit,	/* (c) 1988 */
-        /*TODO*///	driver_showdown,	/* (c) 1988 */
-        /*TODO*///
+        
+        	/* Exidy 440 games */
+        	driver_crossbow,	/* (c) 1983 */
+        	driver_cheyenne,	/* (c) 1984 */
+        	driver_combat,	/* (c) 1985 */
+        	driver_cracksht,	/* (c) 1985 */
+        	driver_claypign,	/* (c) 1986 */
+        	driver_chiller,	/* (c) 1986 */
+        	driver_topsecex,	/* (c) 1986 */
+        	driver_hitnmiss,	/* (c) 1987 */
+        	driver_hitnmis2,	/* (c) 1987 */
+        	driver_whodunit,	/* (c) 1988 */
+        	driver_showdown,	/* (c) 1988 */
+        
         /*TODO*///	/* Atari b/w games */
         /*TODO*///	/* Tank 8 */  		/* ??????			1976/04 [6800] */
         /*TODO*///	driver_copsnrob,	/* 005625			1976/07 [6502] */
