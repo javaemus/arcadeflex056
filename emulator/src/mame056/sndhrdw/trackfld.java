@@ -2,19 +2,28 @@
  * ported to v0.56
  * using automatic conversion tool v0.01
  */
+/**
+ * Changelog
+ * =========
+ * 28/04/2019 ported to mame 0.56 (shadow)
+ */
 package mame056.sndhrdw;
 
 import static arcadeflex056.fucPtr.*;
-import static common.ptr.UBytePtr;
+
+import static common.ptr.*;
+
 import static mame056.commonH.*;
 import static mame056.common.*;
 import static mame056.cpuexec.*;
-import static mame056.memory.*;
+
 import static mame056.sound.dacH.*;
 import static mame056.sound.sn76496.*;
 import static mame056.sound.sn76496H.*;
 import static mame056.sound.vlm5030H.*;
 import static mame056.sound.vlm5030.*;
+import static mame056.sound.adpcm.*;
+import static mame056.sound.adpcmH.*;
 
 public class trackfld {
 
@@ -38,13 +47,12 @@ public class trackfld {
             new int[]{80}
     );
 
-    /*TOOD*///    public static ADPCMinterface hyprolyb_adpcm_interface = new ADPCMinterface(
-/*TOOD*///            1, /* 1 channel */
-/*TOOD*///            4000, /* 4000Hz playback */
-/*TOOD*///            REGION_CPU3, /* memory region */
-/*TOOD*///            null,
-/*TOOD*///            new int[]{100}
-/*TOOD*///    );
+    public static ADPCMinterface hyprolyb_adpcm_interface = new ADPCMinterface(
+            1, /* 1 channel */
+            4000, /* 4000Hz playback */
+            REGION_CPU3, /* memory region */
+            new int[]{100}
+    );
     static int SN76496_latch;
 
     /* The timer port on TnF and HyperSports sound hardware is derived from
@@ -152,11 +160,9 @@ public class trackfld {
 
     public static ReadHandlerPtr hyprolyb_speech_r = new ReadHandlerPtr() {
         public int handler(int offset) {
-            /*TODO*///return ADPCM_playing(0) ? 0x10 : 0x00;
-            return 0;
+            return ADPCM_playing(0) != 0 ? 0x10 : 0x00;
         }
     };
-
     public static WriteHandlerPtr hyprolyb_ADPCM_data_w = new WriteHandlerPtr() {
         public void handler(int offset, int data) {
             int cmd, start, end;
@@ -167,7 +173,7 @@ public class trackfld {
             start = RAM.read(cmd + 1) + 256 * RAM.read(cmd);
             end = RAM.read(cmd + 3) + 256 * RAM.read(cmd + 2);
             if (end > start) {
-                /*TODO*///ADPCM_play(0,start,(end - start)*2);
+                ADPCM_play(0, start, (end - start) * 2);
             }
         }
     };

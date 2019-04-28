@@ -223,30 +223,34 @@ public class driver {
         /*bagman*/ driver_sbagman,
         /*bagman*/ driver_sbagmans,
         /*bagman*/ driver_pickin,
-        /*balsente*/driver_sentetst,
-        /*balsente*/driver_cshift, 
-        /*balsente*/driver_gghost,
-        /*balsente*/driver_hattrick,
-        /*balsente*/driver_otwalls,
-        /*balsente*/driver_snakepit, 
-        /*balsente*/driver_snakjack, 
-        /*balsente*/driver_stocker, 
-        /*balsente*/driver_triviag1, 
-        /*balsente*/driver_triviag2, 
-        /*balsente*/driver_triviasp, 
-        /*balsente*/driver_triviayp,
-        /*balsente*/driver_triviabb, 
-        /*balsente*/driver_gimeabrk, 
-        /*balsente*/driver_minigolf, 
-        /*balsente*/driver_minigol2, 
-        /*balsente*/driver_toggle, 
-        /*balsente*/driver_nametune, 
-        /*balsente*/driver_nstocker, 
-        /*balsente*/driver_sfootbal,
-        /*balsente*/driver_spiker, 
-        /*balsente*/driver_stompin, 
-        /*balsente*/driver_rescraid,
-        /*balsente*/driver_rescrdsa, 
+        /*balsente*/ driver_sentetst,
+        /*balsente*/ driver_cshift,
+        /*balsente*/ driver_gghost,
+        /*balsente*/ driver_hattrick,
+        /*balsente*/ driver_otwalls,
+        /*balsente*/ driver_snakepit,
+        /*balsente*/ driver_snakjack,
+        /*balsente*/ driver_stocker,
+        /*balsente*/ driver_triviag1,
+        /*balsente*/ driver_triviag2,
+        /*balsente*/ driver_triviasp,
+        /*balsente*/ driver_triviayp,
+        /*balsente*/ driver_triviabb,
+        /*balsente*/ driver_gimeabrk,
+        /*balsente*/ driver_minigolf,
+        /*balsente*/ driver_minigol2,
+        /*balsente*/ driver_toggle,
+        /*balsente*/ driver_nametune,
+        /*balsente*/ driver_nstocker,
+        /*balsente*/ driver_sfootbal,
+        /*balsente*/ driver_spiker,
+        /*balsente*/ driver_stompin,
+        /*balsente*/ driver_rescraid,
+        /*balsente*/ driver_rescrdsa,
+        /*trackfld*/ driver_trackfld,
+        /*trackfld*/ driver_trackflc,
+        /*trackfld*/ driver_hyprolym,
+        /*trackfld*/ driver_hyprolyb,
         /**
          * GAME NOT WORKING FLAG
          */
@@ -1016,9 +1020,7 @@ public class driver {
         /*TODO*///	driver_pigskin,	/* (c) 1990 */
 
         /* Bally / Sente games */
-        
-        driver_gridlee,	/* [1983 Videa] prototype - no copyright notice */
-
+        driver_gridlee, /* [1983 Videa] prototype - no copyright notice */
         /*TODO*///	/* Irem games */
         /*TODO*///	/* trivia: IREM means "International Rental Electronics Machines" */
         /*TODO*///TESTdriver_iremm10,	/* M10 */
@@ -2664,10 +2666,6 @@ public class driver {
         driver_gyruss, /* GX347 (c) 1983 */
         driver_gyrussce, /* GX347 (c) 1983 + Centuri license */
         driver_venus, /* bootleg */
-        driver_trackfld, /* GX361 (c) 1983 */
-        driver_trackflc, /* GX361 (c) 1983 + Centuri license */
-        driver_hyprolym, /* GX361 (c) 1983 */
-        driver_hyprolyb, /* bootleg */
         driver_rocnrope, /* GX364 (c) 1983 */
         driver_rocnropk, /* GX364 (c) 1983 + Kosuka */
         /*TODO*///	driver_circusc,	/* GX380 (c) 1984 */

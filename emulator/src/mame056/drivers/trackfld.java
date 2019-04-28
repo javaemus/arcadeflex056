@@ -1,35 +1,22 @@
-/** *************************************************************************
- *
- * Konami games memory map (preliminary)
- *
- * Based on drivers from Juno First emulator by Chris Hardy (chrish@kcbbs.gen.nz)
- *
- * Track'n'Field
- *
- * MAIN BOARD:
- * 0000-17ff RAM
- * 1800-183f Sprite RAM Pt 1
- * 1C00-1C3f Sprite RAM Pt 2
- * 3800-3bff Color RAM
- * 3000-33ff Video RAM
- * 6000-ffff ROM
- * 1200-12ff IO
- *
- ************************************************************************** */
-
 /*
  * ported to v0.56
  * using automatic conversion tool v0.01
  */
+/**
+ * Changelog
+ * =========
+ * 28/04/2019 ported to mame 0.56 (shadow)
+ */
 package mame056.drivers;
 
 import static arcadeflex056.fucPtr.*;
-import static common.ptr.*;
-import static mame056.common.*;
-import static common.libc.cstring.*;
 import static arcadeflex056.fileio.*;
+
+import static common.ptr.*;
+import static common.libc.cstring.*;
+
+import static mame056.common.*;
 import static mame056.mame.*;
-import static common.libc.cstdlib.*;
 import static mame056.commonH.*;
 import static mame056.cpuexec.*;
 import static mame056.inptportH.*;
@@ -39,26 +26,25 @@ import static mame056.driverH.*;
 import static mame056.memoryH.*;
 import static mame056.inptport.*;
 import static mame056.drawgfxH.*;
-import static mame056.memory.*;
 import static mame056.sndintrfH.*;
 import static mame056.sndintrf.*;
-import static mame056.sound.vlm5030.*;
-import static mame056.sound.vlm5030H.*;
 
-// refactor
-import static arcadeflex036.osdepend.logerror;
+import static mame056.machine.konami.*;
 
 import static mame056.sndhrdw.trackfld.*;
+
+import static mame056.sound.vlm5030.*;
+import static mame056.sound.vlm5030H.*;
 import static mame056.sound.sn76496.*;
 import static mame056.sound.dac.*;
+
 import static mame056.vidhrdw.generic.*;
 import static mame056.vidhrdw.trackfld.*;
-import static mame056.machine.konami.*;
 
 public class trackfld {
 
-    /* handle fake button for speed cheat */
     static int cheat = 0;
+    /* handle fake button for speed cheat */
     public static ReadHandlerPtr konami_IN1_r = new ReadHandlerPtr() {
         public int handler(int offset) {
             int res;
@@ -85,27 +71,24 @@ public class trackfld {
 
     public static nvramPtr nvram_handler = new nvramPtr() {
         public void handler(Object file, int read_or_write) {
-            int _in = 0;
             if (read_or_write != 0) {
                 osd_fwrite(file, nvram, nvram_size[0]);
 
                 if (we_flipped_the_switch != 0) {
-                    InputPort[] in;
-
                     /* find the dip switch which resets the high score table, and set it */
  /* back to off. */
-                    in = Machine.input_ports;
+                    int in_ptr = 0;//in = Machine.input_ports;
 
-                    while (in[_in].type != IPT_END) {
-                        if (in[_in].name != null && in[_in].name != IP_NAME_DEFAULT
-                                && strcmp(in[_in].name, "World Records") == 0) {
-                            if (in[_in].default_value == 0) {
-                                in[_in].default_value = in[_in].mask;
+                    while (Machine.input_ports[in_ptr].type != IPT_END) {
+                        if (Machine.input_ports[in_ptr].name != null && Machine.input_ports[in_ptr].name != IP_NAME_DEFAULT
+                                && strcmp(Machine.input_ports[in_ptr].name, "World Records") == 0) {
+                            if (Machine.input_ports[in_ptr].default_value == 0) {
+                                Machine.input_ports[in_ptr].default_value = Machine.input_ports[in_ptr].mask;
                             }
                             break;
                         }
 
-                        _in++;
+                        in_ptr++;
                     }
 
                     we_flipped_the_switch = 0;
@@ -115,23 +98,20 @@ public class trackfld {
                     osd_fread(file, nvram, nvram_size[0]);
                     we_flipped_the_switch = 0;
                 } else {
-                    InputPort[] in;
-                    _in = 0;
-
                     /* find the dip switch which resets the high score table, and set it on */
-                    in = Machine.input_ports;
+                    int in_ptr = 0;//in = Machine.input_ports;
 
-                    while (in[_in].type != IPT_END) {
-                        if (in[_in].name != null && in[_in].name != IP_NAME_DEFAULT
-                                && strcmp(in[_in].name, "World Records") == 0) {
-                            if (in[_in].default_value == in[_in].mask) {
-                                in[_in].default_value = 0;
+                    while (Machine.input_ports[in_ptr].type != IPT_END) {
+                        if (Machine.input_ports[in_ptr].name != null && Machine.input_ports[in_ptr].name != IP_NAME_DEFAULT
+                                && strcmp(Machine.input_ports[in_ptr].name, "World Records") == 0) {
+                            if (Machine.input_ports[in_ptr].default_value == Machine.input_ports[in_ptr].mask) {
+                                Machine.input_ports[in_ptr].default_value = 0;
                                 we_flipped_the_switch = 1;
                             }
                             break;
                         }
 
-                        _in++;
+                        in_ptr++;//in++;
                     }
                 }
             }
@@ -385,13 +365,14 @@ public class trackfld {
                 null
             };
 
-    public static VLM5030interface trackfld_vlm5030_interface = new VLM5030interface(
+    static VLM5030interface trackfld_vlm5030_interface = new VLM5030interface(
             3580000, /* master clock  */
             255, /* volume        */
             REGION_SOUND1, /* memory region  */
             0, /* memory size    */
             trackfld_sample_names
     );
+
     static MachineDriver machine_driver_tracklfd = new MachineDriver(
             /* basic machine hardware */
             new MachineCPU[]{
@@ -481,10 +462,10 @@ public class trackfld {
                 new MachineSound(
                         SOUND_SN76496,
                         konami_sn76496_interface
-                /*TODO*///),
-                /*TODO*///new MachineSound(
-                /*TODO*///	SOUND_ADPCM,
-                /*TODO*///	hyprolyb_adpcm_interface
+                ),
+                new MachineSound(
+                        SOUND_ADPCM,
+                        hyprolyb_adpcm_interface
                 )
             },
             nvram_handler
