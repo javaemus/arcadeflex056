@@ -34,6 +34,7 @@ import mame056.sound.y8950intf;
 import mame056.sound._2151intf;
 import mame056.sound.cem3394;
 import mame056.sound._5110intf;
+import mame056.sound.adpcm;
 
 public class sndintrf {
 
@@ -248,12 +249,7 @@ public class sndintrf {
         public abstract void reset();/* resets sound emulation */
     }
 
-    /*TODO*///#if (HAS_DAC)
-/*TODO*///int DAC_num(const struct MachineSound *msound) { return ((struct DACinterface*)msound->sound_interface)->num; }
-/*TODO*///#endif
-/*TODO*///#if (HAS_ADPCM)
-/*TODO*///int ADPCM_num(const struct MachineSound *msound) { return ((struct ADPCMinterface*)msound->sound_interface)->num; }
-/*TODO*///#endif
+
 /*TODO*///#if (HAS_OKIM6295)
 /*TODO*///int OKIM6295_num(const struct MachineSound *msound) { return ((struct OKIM6295interface*)msound->sound_interface)->num; }
 /*TODO*///int OKIM6295_clock(const struct MachineSound *msound) { return ((struct OKIM6295interface*)msound->sound_interface)->frequency[0]; }
@@ -569,19 +565,7 @@ public class sndintrf {
                 /*TODO*///	},
                 new Dummy_snd(),
                 new vlm5030(),
-                /*TODO*///#endif
-                /*TODO*///#if (HAS_ADPCM)
-                /*TODO*///    {
-                /*TODO*///		SOUND_ADPCM,
-                /*TODO*///		"ADPCM",
-                /*TODO*///		ADPCM_num,
-                /*TODO*///		0,
-                /*TODO*///		ADPCM_sh_start,
-                /*TODO*///		ADPCM_sh_stop,
-                /*TODO*///		ADPCM_sh_update,
-                /*TODO*///		0
-                /*TODO*///	},
-                new Dummy_snd(),
+                new adpcm(),
                 /*TODO*///#endif
                 /*TODO*///#if (HAS_OKIM6295)
                 /*TODO*///    {
