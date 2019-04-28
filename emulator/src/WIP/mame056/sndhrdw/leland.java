@@ -165,9 +165,9 @@ public class leland
             }
         };
 	
-	int leland_sh_start(MachineSound msound)
-	{
-		/* reset globals */
+	public static ShStartPtr leland_sh_start = new ShStartPtr() {
+            public int handler(MachineSound msound) {
+                /* reset globals */
 		dac_buffer[0] = null;
                 dac_buffer[1] = null;
 		dac_bufin[0]  = dac_bufin[1]  = 0;
@@ -190,18 +190,19 @@ public class leland
 		}
 	
 		return 0;
-	}
+            }
+        };
 	
 	
-	void leland_sh_stop()
-	{
-		if (dac_buffer[0] != null)
+	public static ShStopPtr leland_sh_stop = new ShStopPtr() {
+            public void handler() {
+                if (dac_buffer[0] != null)
 			dac_buffer[0]=null;
 		if (dac_buffer[1] != null)
 			dac_buffer[1]=null;
 		dac_buffer[0] = dac_buffer[1] = null;
-	}
-	
+            }
+        };
 	
 	public static void leland_dac_update(int dacnum, int sample)
 	{
@@ -566,9 +567,9 @@ public class leland
 	 *
 	 *************************************/
 	
-	int leland_i186_sh_start(MachineSound msound)
-	{
-		int i;
+	public static ShStartPtr leland_i186_sh_start = new ShStartPtr() {
+            public int handler(MachineSound msound) {
+                int i;
 	
 		/* bail if nothing to play */
 		if (Machine.sample_rate == 0)
@@ -594,15 +595,17 @@ public class leland
 		/* by default, we're not redline racer */
 		is_redline = 0;
 		return 0;
-	}
+            }
+        };
 	
 	
-	int redline_i186_sh_start(MachineSound msound)
-	{
-		int result = leland_i186_sh_start(msound);
+	public static ShStartPtr redline_i186_sh_start = new ShStartPtr() {
+            public int handler(MachineSound msound) {
+                int result = leland_i186_sh_start.handler(msound);
 		is_redline = 1;
 		return result;
-	}
+            }
+        };
 	
 	
 	static void leland_i186_reset()
@@ -644,7 +647,7 @@ public class leland
 	}
 	
 	
-	void leland_i186_sound_init()
+	public static void leland_i186_sound_init()
 	{
 		/* RAM is multiply mapped in the first 128k of address space */
 		cpu_setbank(6, ram_base);
@@ -2216,7 +2219,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	void leland_i86_optimize_address(int offset)
+	public static void leland_i86_optimize_address(int offset)
 	{
 		if (offset != 0)
 			active_mask = new UBytePtr(memory_region(REGION_CPU3), offset);

@@ -74,7 +74,7 @@ public class leland
 	static mame_bitmap fgbitmap;
 	static UBytePtr leland_video_ram = new UBytePtr();
 	static UBytePtr ataxx_qram = new UBytePtr();
-	static int leland_last_scanline_int;
+	public static int leland_last_scanline_int;
 	
 	/* video RAM bitmap drawing */
 	static vram_state_data[] vram_state = new vram_state_data[2];
@@ -563,9 +563,9 @@ public class leland
             }
         };	
         
-	void leland_vh_eof()
-	{
-		/* reset scrolling */
+	public static VhEofCallbackPtr leland_vh_eof = new VhEofCallbackPtr() {
+            public void handler() {
+                /* reset scrolling */
 		scroll_index = 0;
 		scroll_pos[0].scanline = 0;
 		scroll_pos[0].x = xscroll;
@@ -577,8 +577,8 @@ public class leland
 	
 		/* set a timer to go off at the top of the frame */
 		timer_set(cpu_getscanlinetime(0), 0, scanline_reset);
-	}
-	
+            }
+        };
 	
 	
 	/*************************************
