@@ -22,7 +22,7 @@ import static mame056.sound.samples.*;
 
 // refactor
 import static arcadeflex036.osdepend.logerror;
-import static WIP.mame056.vidhrdw.turbo.turbo_collision;
+import static WIP.mame056.vidhrdw.turbo.*;
 
 public class turbo
 {
@@ -273,12 +273,12 @@ public class turbo
 	
 	public static ReadHandlerPtr turbo_collision_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return readinputport(3) | (turbo_collision & 15);
+		return readinputport(3) | (u8_turbo_collision & 15);
 	} };
 	
 	public static WriteHandlerPtr turbo_collision_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		turbo_collision = 0;
+		u8_turbo_collision = 0;
 	} };
 	
 	public static WriteHandlerPtr turbo_coin_and_lamp_w = new WriteHandlerPtr() {public void handler(int offset, int data)
