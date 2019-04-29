@@ -67,7 +67,10 @@ import static mame056.sound.ay8910H.*;
 
 // refactor
 import static arcadeflex036.osdepend.logerror;
-import static mame056.mame.Machine;
+
+import static mame056.mame.*;
+import static mame056.machine.eepromH.*;
+import static mame056.machine.eeprom.*;
 
 public class leland
 {
@@ -127,15 +130,16 @@ public class leland
 	static int battery_ram_enable;
 	static UBytePtr battery_ram = new UBytePtr();
 	
-	static int[] eeprom_data = new int[64*2];
-	/*TODO*///static EEPROM_interface eeprom_interface =
-	/*TODO*///{
-	/*TODO*///	6,
-	/*TODO*///	16,
-	/*TODO*///	"110",
-	/*TODO*///	"101",
-	/*TODO*///	"111"
-	/*TODO*///};
+	static UBytePtr eeprom_data = new UBytePtr(64*2);
+        
+	static EEPROM_interface eeprom_interface = new EEPROM_interface
+	(
+		6,
+		16,
+		"110",
+		"101",
+		"111"
+        );
 	
 	
 	/*************************************
@@ -572,89 +576,90 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static int SERIAL_TYPE_NONE		= 0;
-	public static int SERIAL_TYPE_ADD               = 1;
-	public static int SERIAL_TYPE_ADD_XOR           = 2;
-	public static int SERIAL_TYPE_ENCRYPT                     = 3;
-	public static int SERIAL_TYPE_ENCRYPT_XOR                 = 4;
+	public static final int SERIAL_TYPE_NONE		= 0;
+	public static final int SERIAL_TYPE_ADD               = 1;
+	public static final int SERIAL_TYPE_ADD_XOR           = 2;
+	public static final int SERIAL_TYPE_ENCRYPT                     = 3;
+	public static final int SERIAL_TYPE_ENCRYPT_XOR                 = 4;
 	
-	public static InitDriverPtr init_eeprom = new InitDriverPtr() { 
-            public void handler() /*TODO*///(UINT8 default_val, const UINT16 *data, UINT8 serial_offset, UINT8 serial_type)
+	public static void init_eeprom(int default_val, int[] data, int serial_offset, int serial_type)
 	{
-		/*TODO*///int xorval = (serial_type == SERIAL_TYPE_ADD_XOR || serial_type == SERIAL_TYPE_ENCRYPT_XOR) ? 0xff : 0x00;
-		/*TODO*///int serial;
+		int xorval = (serial_type == SERIAL_TYPE_ADD_XOR || serial_type == SERIAL_TYPE_ENCRYPT_XOR) ? 0xff : 0x00;
+		int serial;
+                int _data = 0;
 	
 		/* initialize everything to the default value */
 		/*TODO*///memset(eeprom_data, default_val, sizeof(eeprom_data));
 	
 		/* fill in the preset data */
-		/*TODO*///while (data.read() != 0xffff)
-		/*TODO*///{
-		/*TODO*///	int offset = *data++;
-		/*TODO*///	int value = *data++;
-		/*TODO*///	eeprom_data[offset * 2 + 0] = value >> 8;
-		/*TODO*///	eeprom_data[offset * 2 + 1] = value & 0xff;
-		/*TODO*///}
+		while (data[_data] != 0xffff)
+		{
+			int offset = data[_data++];
+                        int value = data[_data++];
+                        
+			eeprom_data.write(offset * 2 + 0, value >> 8);
+			eeprom_data.write(offset * 2 + 1, value & 0xff);
+		}
 	
 		/* pick a serial number -- examples of real serial numbers:
 	
 			Team QB:      21101957
 			AAFB:         26101119 and 26101039
 		*/
-		/*TODO*///serial = 0x12345678;
+		serial = 0x12345678;
 	
 		/* switch off the serial number type */
-		/*TODO*///switch (serial_type)
-		/*TODO*///{
-		/*TODO*///	case SERIAL_TYPE_ADD:
-		/*TODO*///	case SERIAL_TYPE_ADD_XOR:
-		/*TODO*///	{
-		/*TODO*///		int i;
-		/*TODO*///		for (i = 0; i < 10; i++)
-		/*TODO*///		{
-		/*TODO*///			int digit;
+		switch (serial_type)
+		{
+			case SERIAL_TYPE_ADD:
+			case SERIAL_TYPE_ADD_XOR:
+			{
+				int i;
+				for (i = 0; i < 10; i++)
+				{
+					int digit;
 	
-		/*TODO*///			if (i >= 8)
-		/*TODO*///				digit = 0;
-		/*TODO*///			else
-		/*TODO*///				digit = ((serial << (i * 4)) >> 28) & 15;
-		/*TODO*///			digit = ('0' + digit) * 2;
+					if (i >= 8)
+						digit = 0;
+					else
+						digit = ((serial << (i * 4)) >> 28) & 15;
+					digit = ('0' + digit) * 2;
 	
-		/*TODO*///			eeprom_data[serial_offset * 2 +  0 + (i ^ 1)] = (digit / 3) ^ xorval;
-		/*TODO*///			eeprom_data[serial_offset * 2 + 10 + (i ^ 1)] = (digit / 3) ^ xorval;
-		/*TODO*///			eeprom_data[serial_offset * 2 + 20 + (i ^ 1)] = (digit - (2 * (digit / 3))) ^ xorval;
-		/*TODO*///		}
-		/*TODO*///		break;
-		/*TODO*///	}
+					eeprom_data.write(serial_offset * 2 +  0 + (i ^ 1), (digit / 3) ^ xorval);
+					eeprom_data.write(serial_offset * 2 + 10 + (i ^ 1), (digit / 3) ^ xorval);
+					eeprom_data.write(serial_offset * 2 + 20 + (i ^ 1), (digit - (2 * (digit / 3))) ^ xorval);
+				}
+				break;
+			}
 	
-		/*TODO*///	case SERIAL_TYPE_ENCRYPT:
-		/*TODO*///	case SERIAL_TYPE_ENCRYPT_XOR:
-		/*TODO*///	{
-		/*TODO*///		int d, e, h, l;
+			case SERIAL_TYPE_ENCRYPT:
+			case SERIAL_TYPE_ENCRYPT_XOR:
+			{
+				int d, e, h, l;
 	
 				/* break the serial number out into pieces */
-		/*TODO*///		l = (serial >> 24) & 0xff;
-		/*TODO*///		h = (serial >> 16) & 0xff;
-		/*TODO*///		e = (serial >> 8) & 0xff;
-		/*TODO*///		d = serial & 0xff;
+				l = (serial >> 24) & 0xff;
+				h = (serial >> 16) & 0xff;
+				e = (serial >> 8) & 0xff;
+				d = serial & 0xff;
 	
 				/* decrypt the data */
-		/*TODO*///		h = ((h ^ 0x2a ^ l) ^ 0xff) + 5;
-		/*TODO*///		d = ((d + 0x2a) ^ e) ^ 0xff;
-		/*TODO*///		l ^= e;
-		/*TODO*///		e ^= 0x2a;
+				h = ((h ^ 0x2a ^ l) ^ 0xff) + 5;
+				d = ((d + 0x2a) ^ e) ^ 0xff;
+				l ^= e;
+				e ^= 0x2a;
 	
 				/* store the bytes */
-		/*TODO*///		eeprom_data[serial_offset * 2 + 0] = h ^ xorval;
-		/*TODO*///		eeprom_data[serial_offset * 2 + 1] = l ^ xorval;
-		/*TODO*///		eeprom_data[serial_offset * 2 + 2] = d ^ xorval;
-		/*TODO*///		eeprom_data[serial_offset * 2 + 3] = e ^ xorval;
-		/*TODO*///		break;
-		/*TODO*///	}
-		/*TODO*///}
+				eeprom_data.write(serial_offset * 2 + 0, h ^ xorval);
+				eeprom_data.write(serial_offset * 2 + 1, l ^ xorval);
+				eeprom_data.write(serial_offset * 2 + 2, d ^ xorval);
+				eeprom_data.write(serial_offset * 2 + 3, e ^ xorval);
+				break;
+			}
+		}
 	
-		/*TODO*///EEPROM_init(&eeprom_interface);
-	} };
+		EEPROM_init(eeprom_interface);
+	}
 	
 	
 	
@@ -681,17 +686,17 @@ public class leland
             public void handler(Object file, int read_or_write) {
                 if (read_or_write != 0)
 		{
-			/*TODO*///EEPROM_save(file);
+			EEPROM_save(file);
 			osd_fwrite(file, memory_region(REGION_USER2), battery_ram_size);
 		}
 		else if (file != null)
 		{
-			/*TODO*///EEPROM_load(file);
+			EEPROM_load(file);
 			osd_fread(file, memory_region(REGION_USER2), battery_ram_size);
 		}
 		else
 		{
-			/*TODO*///EEPROM_set_data(eeprom_data, 64*2);
+			EEPROM_set_data(eeprom_data, 64*2);
 			memset(new UBytePtr(memory_region(REGION_USER2)), 0x00, battery_ram_size);
 		}
             }
@@ -937,7 +942,7 @@ public class leland
 			case 0x11:	/* /GIN1 */
 				result = readinputport(3);
 				/*TODO*///if (LOG_EEPROM) logerror("%04X:EE read\n", cpu_getpreviouspc());
-				/*TODO*///result = (result & ~0x01) | EEPROM_read_bit();
+				result = (result & ~0x01) | EEPROM_read_bit();
 				break;
 	
 			default:
@@ -960,9 +965,9 @@ public class leland
 	
 				/*TODO*///if (LOG_EEPROM) logerror("%04X:EE write %d%d%d\n", cpu_getpreviouspc(),
 				/*TODO*///		(data >> 6) & 1, (data >> 5) & 1, (data >> 4) & 1);
-				/*TODO*///EEPROM_write_bit     ((data & 0x10) >> 4);
-				/*TODO*///EEPROM_set_clock_line((data & 0x20) ? ASSERT_LINE : CLEAR_LINE);
-				/*TODO*///EEPROM_set_cs_line  ((~data & 0x40) ? ASSERT_LINE : CLEAR_LINE);
+				EEPROM_write_bit     ((data & 0x10) >> 4);
+				EEPROM_set_clock_line((data & 0x20)!=0 ? ASSERT_LINE : CLEAR_LINE);
+				EEPROM_set_cs_line  ((~data & 0x40)!=0 ? ASSERT_LINE : CLEAR_LINE);
 				break;
 	
 			case 0x0a:	/* /OGIA */
@@ -2116,7 +2121,7 @@ public class leland
 			0x3f,0x001d,
 			0xffff
 		};
-		/*TODO*///init_eeprom(0x00, cerberus_eeprom_data, 0, SERIAL_TYPE_NONE);
+		init_eeprom(0x00, cerberus_eeprom_data, 0, SERIAL_TYPE_NONE);
 	
 		/* master CPU bankswitching */
 		update_master_bank = cerberus_bankswitch;
@@ -2160,7 +2165,7 @@ public class leland
 			0x3f,0x0818,
 			0xffff
 		};
-		/*TODO*///init_eeprom(0x00, mayhem_eeprom_data, 0x28, SERIAL_TYPE_ADD);
+		init_eeprom(0x00, mayhem_eeprom_data, 0x28, SERIAL_TYPE_ADD);
 	
 		/* master CPU bankswitching */
 		update_master_bank = mayhem_bankswitch;
@@ -2188,7 +2193,7 @@ public class leland
 			0x2c,0xfffb,
 			0xffff
 		};
-		/*TODO*///init_eeprom(0xff, powrplay_eeprom_data, 0x2d, SERIAL_TYPE_ADD_XOR);
+		init_eeprom(0xff, powrplay_eeprom_data, 0x2d, SERIAL_TYPE_ADD_XOR);
 	
 		/* master CPU bankswitching */
 		update_master_bank = mayhem_bankswitch;
@@ -2208,7 +2213,7 @@ public class leland
 			0x1d,0x00ff,
 			0xffff
 		};
-		/*TODO*///init_eeprom(0xff, wseries_eeprom_data, 0x12, SERIAL_TYPE_ENCRYPT_XOR);
+		init_eeprom(0xff, wseries_eeprom_data, 0x12, SERIAL_TYPE_ENCRYPT_XOR);
 	
 		/* master CPU bankswitching */
 		update_master_bank = mayhem_bankswitch;
@@ -2230,7 +2235,7 @@ public class leland
 			0x37,0x00ff,
 			0xffff
 		};
-		/*TODO*///init_eeprom(0xff, alleymas_eeprom_data, 0x0c, SERIAL_TYPE_ENCRYPT_XOR);
+		init_eeprom(0xff, alleymas_eeprom_data, 0x0c, SERIAL_TYPE_ENCRYPT_XOR);
 	
 		/* master CPU bankswitching */
 		update_master_bank = mayhem_bankswitch;
@@ -2259,7 +2264,7 @@ public class leland
 			0x3a,0x8007,
 			0xffff
 		};
-		/*TODO*///init_eeprom(0xff, dangerz_eeprom_data, 0x10, SERIAL_TYPE_ENCRYPT_XOR);
+		init_eeprom(0xff, dangerz_eeprom_data, 0x10, SERIAL_TYPE_ENCRYPT_XOR);
 	
 		/* master CPU bankswitching */
 		update_master_bank = dangerz_bankswitch;
@@ -2284,7 +2289,7 @@ public class leland
 			0x1d,0x00ff,
 			0xffff
 		};
-		/*TODO*///init_eeprom(0xff, basebal2_eeprom_data, 0x12, SERIAL_TYPE_ENCRYPT_XOR);
+		init_eeprom(0xff, basebal2_eeprom_data, 0x12, SERIAL_TYPE_ENCRYPT_XOR);
 	
 		/* master CPU bankswitching */
 		update_master_bank = basebal2_bankswitch;
@@ -2305,7 +2310,7 @@ public class leland
 			0x3b,0xffe1,
 			0xffff
 		};
-		/*TODO*///init_eeprom(0xff, dblplay_eeprom_data, 0x11, SERIAL_TYPE_ENCRYPT_XOR);
+		init_eeprom(0xff, dblplay_eeprom_data, 0x11, SERIAL_TYPE_ENCRYPT_XOR);
 	
 		/* master CPU bankswitching */
 		update_master_bank = basebal2_bankswitch;
@@ -2326,7 +2331,7 @@ public class leland
 			0x1b,0xffe1,
 			0xffff
 		};
-		/*TODO*///init_eeprom(0xff, strkzone_eeprom_data, 0x0f, SERIAL_TYPE_ENCRYPT_XOR);
+		init_eeprom(0xff, strkzone_eeprom_data, 0x0f, SERIAL_TYPE_ENCRYPT_XOR);
 	
 		/* master CPU bankswitching */
 		update_master_bank = basebal2_bankswitch;
@@ -2346,7 +2351,7 @@ public class leland
 			0x22,0xfffe,
 			0xffff
 		};
-		/*TODO*///init_eeprom(0xff, redlin2p_eeprom_data, 0x18, SERIAL_TYPE_ENCRYPT_XOR);
+		init_eeprom(0xff, redlin2p_eeprom_data, 0x18, SERIAL_TYPE_ENCRYPT_XOR);
 	
 		/* master CPU bankswitching */
 		update_master_bank = redline_bankswitch;
@@ -2379,7 +2384,7 @@ public class leland
 			0x3a,0xffd9,
 			0xffff
 		};
-		/*TODO*///init_eeprom(0xff, quarterb_eeprom_data, 0x24, SERIAL_TYPE_ENCRYPT_XOR);
+		init_eeprom(0xff, quarterb_eeprom_data, 0x24, SERIAL_TYPE_ENCRYPT_XOR);
 	
 		/* master CPU bankswitching */
 		update_master_bank = viper_bankswitch;
@@ -2406,7 +2411,7 @@ public class leland
 			0x1b,0xfffe,
 			0xffff
 		};
-		/*TODO*///init_eeprom(0xff, viper_eeprom_data, 0x0c, SERIAL_TYPE_ENCRYPT_XOR);
+		init_eeprom(0xff, viper_eeprom_data, 0x0c, SERIAL_TYPE_ENCRYPT_XOR);
 	
 		/* master CPU bankswitching */
 		update_master_bank = viper_bankswitch;
@@ -2439,7 +2444,7 @@ public class leland
 			0x3b,0xffd9,
 			0xffff
 		};
-		/*TODO*///init_eeprom(0xff, teamqb_eeprom_data, 0x1a, SERIAL_TYPE_ENCRYPT_XOR);
+		init_eeprom(0xff, teamqb_eeprom_data, 0x1a, SERIAL_TYPE_ENCRYPT_XOR);
 	
 		/* master CPU bankswitching */
 		update_master_bank = viper_bankswitch;
@@ -2471,7 +2476,7 @@ public class leland
 			0x3b,0xffd9,
 			0xffff
 		};
-		/*TODO*///init_eeprom(0xff, aafb_eeprom_data, 0x1a, SERIAL_TYPE_ENCRYPT_XOR);
+		init_eeprom(0xff, aafb_eeprom_data, 0x1a, SERIAL_TYPE_ENCRYPT_XOR);
 	
 		/* master CPU bankswitching */
 		update_master_bank = viper_bankswitch;
@@ -2503,7 +2508,7 @@ public class leland
 			0x3b,0xffd9,
 			0xffff
 		};
-		/*TODO*///init_eeprom(0xff, aafb_eeprom_data, 0x1a, SERIAL_TYPE_ENCRYPT_XOR);
+		init_eeprom(0xff, aafb_eeprom_data, 0x1a, SERIAL_TYPE_ENCRYPT_XOR);
 	
 		/* master CPU bankswitching */
 		update_master_bank = viper_bankswitch;
@@ -2535,7 +2540,7 @@ public class leland
 			0x3b,0xffd9,
 			0xffff
 		};
-		/*TODO*///init_eeprom(0xff, aafb_eeprom_data, 0x1a, SERIAL_TYPE_ENCRYPT_XOR);
+		init_eeprom(0xff, aafb_eeprom_data, 0x1a, SERIAL_TYPE_ENCRYPT_XOR);
 	
 		/* master CPU bankswitching */
 		update_master_bank = viper_bankswitch;
@@ -2572,7 +2577,7 @@ public class leland
 			0x3b,0xffad,
 			0xffff
 		};
-		/*TODO*///init_eeprom(0xff, offroad_eeprom_data, 0x00, SERIAL_TYPE_ENCRYPT_XOR);
+		init_eeprom(0xff, offroad_eeprom_data, 0x00, SERIAL_TYPE_ENCRYPT_XOR);
 	
 		/* master CPU bankswitching */
 		update_master_bank = offroad_bankswitch;
@@ -2611,7 +2616,7 @@ public class leland
 			0x3b,0xffad,
 			0xffff
 		};
-		/*TODO*///init_eeprom(0xff, offroadt_eeprom_data, 0x00, SERIAL_TYPE_ENCRYPT_XOR);
+		init_eeprom(0xff, offroadt_eeprom_data, 0x00, SERIAL_TYPE_ENCRYPT_XOR);
 	
 		/* master CPU bankswitching */
 		update_master_bank = offroad_bankswitch;
@@ -2647,7 +2652,7 @@ public class leland
 			0x3b,0xfffc,
 			0xffff
 		};
-		/*TODO*///init_eeprom(0xff, pigout_eeprom_data, 0x00, SERIAL_TYPE_ENCRYPT);
+		init_eeprom(0xff, pigout_eeprom_data, 0x00, SERIAL_TYPE_ENCRYPT);
 	
 		/* master CPU bankswitching */
 		update_master_bank = offroad_bankswitch;
