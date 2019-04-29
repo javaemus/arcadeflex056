@@ -1,203 +1,168 @@
-/***************************************************************************
-
-	Exidy 440 sound system
-
-	Special thanks to Zonn Moore and Neil Bradley for letting me hack
-	their Retrocade CVSD decoder into the sound system here.
-
-***************************************************************************/
-
 /*
  * ported to v0.56
  * using automatic conversion tool v0.01
- */ 
+ */
 package WIP.mame056.sndhrdw;
 
-import static arcadeflex056.fucPtr.*;
+import arcadeflex056.fucPtr.*;
 
 import static common.ptr.*;
 
-import static mame056.sndintrfH.*;
-import static mame056.mame.Machine;
-import static mame056.common.*;
-import static mame056.commonH.*;
-import static mame056.timerH.*;
-import static mame056.timer.*;
-import static mame056.cpuintrf.*;
-
-import static mame056.sound.samples.*;
-import static mame056.sound.streams.*;
-
-import static mame056.sound.samplesH.*;
-import static mame056.sound.mixer.*;
-import static mame056.sound.dac.*;
-import static mame056.sound.dacH.*;
-import static mame037b11.sound.mixer.*;
-import static mame056.sound.mixerH.*;
-import static mame056.usrintrf.usrintf_showmessage;
-
-import static mame056.memory.*;
-import static mame056.memoryH.*;
-
-// refactor
-import static arcadeflex036.osdepend.logerror;
-
-import static common.libc.cstring.memset;
-import common.subArrays.IntArray;
-import static mame056.sound.streams.*;
 import static mame056.cpuexec.*;
-import static mame056.cpuexecH.*;
 import static mame056.cpuintrfH.*;
-import static mame056.driverH.*;
+import mame056.sndintrfH.MachineSound;
 
-public class exidy440
-{
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	public static int MAKE_WAVES = 0;
-/*TODO*///	public static int SOUND_LOG = 0;
-/*TODO*///	public static int FADE_TO_ZERO = 1;
+import static mame056.sound.streams.*;
+
+public class exidy440 {
+
+    /*TODO*///	#define	FADE_TO_ZERO	1
 /*TODO*///	
 /*TODO*///	
 /*TODO*///	
 /*TODO*///	/* sample rates for each chip */
-/*TODO*///	public static int SAMPLE_RATE_FAST = (12979200/256);	/* FCLK */
-/*TODO*///	public static int SAMPLE_RATE_SLOW = (12979200/512);	/* SCLK */
+/*TODO*///	#define	SAMPLE_RATE_FAST		(12979200/256)	/* FCLK */
+/*TODO*///	#define	SAMPLE_RATE_SLOW		(12979200/512)	/* SCLK */
 /*TODO*///	
 /*TODO*///	/* internal caching */
-/*TODO*///	public static int MAX_CACHE_ENTRIES = 1024;				/* maximum separate samples we expect to ever see */
-/*TODO*///	public static int SAMPLE_BUFFER_LENGTH = 1024;				/* size of temporary decode buffer on the stack */
+/*TODO*///	#define	MAX_CACHE_ENTRIES		1024				/* maximum separate samples we expect to ever see */
+/*TODO*///	#define	SAMPLE_BUFFER_LENGTH	1024				/* size of temporary decode buffer on the stack */
 /*TODO*///	
 /*TODO*///	/* FIR digital filter parameters */
-/*TODO*///	public static int FIR_HISTORY_LENGTH = 57;					/* number of FIR coefficients */
+/*TODO*///	#define	FIR_HISTORY_LENGTH		57					/* number of FIR coefficients */
 /*TODO*///	
 /*TODO*///	/* CVSD decoding parameters */
-/*TODO*///	public static double INTEGRATOR_LEAK_TC = (10e3 * 0.1e-6);
-/*TODO*///	public static double FILTER_DECAY_TC = ((18e3 + 3.3e3) * 0.33e-6);
-/*TODO*///	public static double FILTER_CHARGE_TC = (18e3 * 0.33e-6);
-/*TODO*///	public static double FILTER_MIN = 0.0416;
-/*TODO*///	public static double FILTER_MAX = 1.0954;
-/*TODO*///	public static double SAMPLE_GAIN = 10000.0;
+/*TODO*///	#define	INTEGRATOR_LEAK_TC		(10e3 * 0.1e-6)
+/*TODO*///	#define	FILTER_DECAY_TC			((18e3 + 3.3e3) * 0.33e-6)
+/*TODO*///	#define	FILTER_CHARGE_TC		(18e3 * 0.33e-6)
+/*TODO*///	#define	FILTER_MIN				0.0416
+/*TODO*///	#define	FILTER_MAX				1.0954
+/*TODO*///	#define	SAMPLE_GAIN				10000.0
 /*TODO*///	
-/*TODO*///	
-/*TODO*///	/* channel_data structure holds info about each 6844 DMA channel */
-/*TODO*///	public static class m6844_channel_data
-/*TODO*///	{
-/*TODO*///		public int active;
-/*TODO*///		public int address;
-/*TODO*///		public int counter;
-/*TODO*///		public int control;
-/*TODO*///		public int start_address;
-/*TODO*///		public int start_counter;
-/*TODO*///	};
-/*TODO*///	
+    /* channel_data structure holds info about each 6844 DMA channel */
+    public static class m6844_channel_data {
+
+        int active;
+        int address;
+        int counter;
+        int/*UINT8*/ u8_control;
+        int start_address;
+        int start_counter;
+
+        public static m6844_channel_data[] create(int n) {
+            m6844_channel_data[] a = new m6844_channel_data[n];
+            for (int k = 0; k < n; k++) {
+                a[k] = new m6844_channel_data();
+            }
+            return a;
+        }
+    }
+    /*TODO*///	
 /*TODO*///	
 /*TODO*///	/* channel_data structure holds info about each active sound channel */
-/*TODO*///	public static class sound_channel_data
+/*TODO*///	typedef struct sound_channel_data
 /*TODO*///	{
-/*TODO*///		public ShortPtr base;
-/*TODO*///		public int offset;
-/*TODO*///		public int remaining;
-/*TODO*///	};
+/*TODO*///		INT16 *base;
+/*TODO*///		int offset;
+/*TODO*///		int remaining;
+/*TODO*///	} sound_channel_data;
 /*TODO*///	
 /*TODO*///	
 /*TODO*///	/* sound_cache_entry structure contains info on each decoded sample */
-/*TODO*///	public static class sound_cache_entry
+/*TODO*///	typedef struct sound_cache_entry
 /*TODO*///	{
-/*TODO*///		public sound_cache_entry next;
-/*TODO*///		public int address;
-/*TODO*///		public int length;
-/*TODO*///		public int bits;
-/*TODO*///		public int frequency;
-/*TODO*///		public int[] data=new int[1];
-/*TODO*///	};
-	
-	
-	
-	/* globals */
-	public static UBytePtr exidy440_m6844_data = new UBytePtr();
-	public static UBytePtr exidy440_sound_banks = new UBytePtr();
-	public static UBytePtr exidy440_sound_volume = new UBytePtr();
-	public static int exidy440_sound_command;
-        public static int exidy440_sound_command_ack;
+/*TODO*///		struct sound_cache_entry *next;
+/*TODO*///		int address;
+/*TODO*///		int length;
+/*TODO*///		int bits;
+/*TODO*///		int frequency;
+/*TODO*///		INT16 data[1];
+/*TODO*///	} sound_cache_entry;
+/*TODO*///	
+/*TODO*///	
+/*TODO*///	
+    /* globals */
+    public static UBytePtr exidy440_m6844_data = new UBytePtr();
+    public static UBytePtr exidy440_sound_banks = new UBytePtr();
+    public static UBytePtr exidy440_sound_volume = new UBytePtr();
+    public static int /*UINT8*/ u8_exidy440_sound_command;
+    public static int /*UINT8*/ u8_exidy440_sound_command_ack;
 
-/*TODO*///	/* local allocated storage */
-/*TODO*///	static IntArray mixer_buffer_left;
-/*TODO*///	static IntArray mixer_buffer_right;
-/*TODO*///	static sound_cache_entry[] sound_cache;
-/*TODO*///	static sound_cache_entry sound_cache_end;
-/*TODO*///	static sound_cache_entry sound_cache_max;
+    /*TODO*///	/* local allocated storage */
+/*TODO*///	static INT32 *mixer_buffer_left;
+/*TODO*///	static INT32 *mixer_buffer_right;
+/*TODO*///	static sound_cache_entry *sound_cache;
+/*TODO*///	static sound_cache_entry *sound_cache_end;
+/*TODO*///	static sound_cache_entry *sound_cache_max;
 /*TODO*///	
-/*TODO*///	/* 6844 description */
-/*TODO*///	static m6844_channel_data[] m6844_channel=new m6844_channel_data[4];
-/*TODO*///	static int m6844_priority;
-/*TODO*///	static int m6844_interrupt;
-/*TODO*///	static int m6844_chain;
-/*TODO*///	
-/*TODO*///	/* sound interface parameters */
-/*TODO*///	static int sound_stream;
-/*TODO*///	static sound_channel_data[] sound_channel=new sound_channel_data[4];
+	/* 6844 description */
+	static m6844_channel_data[] m6844_channel=m6844_channel_data.create(4);
+	static int m6844_priority;
+	static int m6844_interrupt;
+	static int m6844_chain;
+	
+    /* sound interface parameters */
+    static int sound_stream;
+    /*TODO*///	static sound_channel_data sound_channel[4];
 /*TODO*///	
 /*TODO*///	/* debugging */
-/*TODO*///	static Object debuglog;
+/*TODO*///	static FILE *debuglog;
 /*TODO*///	
 /*TODO*///	/* constant channel parameters */
-/*TODO*///	static int channel_frequency[] =
+/*TODO*///	static const int channel_frequency[4] =
 /*TODO*///	{
 /*TODO*///		SAMPLE_RATE_FAST, SAMPLE_RATE_FAST,		/* channels 0 and 1 are run by FCLK */
 /*TODO*///		SAMPLE_RATE_SLOW, SAMPLE_RATE_SLOW		/* channels 2 and 3 are run by SCLK */
 /*TODO*///	};
-/*TODO*///	static int channel_bits[] =
+/*TODO*///	static const int channel_bits[4] =
 /*TODO*///	{
 /*TODO*///		4, 4,									/* channels 0 and 1 are MC3418s, 4-bit CVSD */
 /*TODO*///		3, 3									/* channels 2 and 3 are MC3417s, 3-bit CVSD */
 /*TODO*///	};
 /*TODO*///	
 /*TODO*///	
-/*TODO*///	/* debugging */
-/*TODO*///	/*TODO*///#if MAKE_WAVES
+/*TODO*///	/* function prototypes */
+/*TODO*///	static void channel_update(int ch, INT16 **buffer, int length);
+/*TODO*///	static void m6844_finished(int ch);
+/*TODO*///	static void play_cvsd(int ch);
+/*TODO*///	static void stop_cvsd(int ch);
 /*TODO*///	
-/*TODO*///	/*TODO*///#ifdef LSB_FIRST
-/*TODO*///	/*TODO*///#define intelShort(x) (x)
-/*TODO*///	/*TODO*///#define intelLong(x) (x)
-/*TODO*///	/*TODO*///#else
-/*TODO*///	/*TODO*///#define intelShort(x) (((x) << 8) | ((x) >> 8))
-/*TODO*///	/*TODO*///#define intelLong(x) ((((x) << 24) | (((unsigned long) (x)) >> 24) | (( (x) & 0x0000ff00) << 8) | (( (x) & 0x00ff0000) >> 8)))
-/*TODO*///	/*TODO*///#endif
+/*TODO*///	static static INT16 *add_to_sound_cache(UINT8 *input, int address, int length, int bits, int frequency);
+/*TODO*///	static INT16 *find_or_add_to_sound_cache(int address, int length, int bits, int frequency);
 /*TODO*///	
-/*TODO*///	static Object wavfile;
-/*TODO*///	static int wavlength;
-/*TODO*///	
-	
-	/*************************************
-	 *
-	 *	Initialize the sound system
-	 *
-	 *************************************/
-	
-	public static ShStartPtr exidy440_sh_start = new ShStartPtr() {
-            public int handler(MachineSound msound) {
-                String names[] =
-		{
-			"Exidy 440 sound left",
-			"Exidy 440 sound right"
-		};
-		int i, length;
-/*TODO*///		int[] vol=new int[2];
-/*TODO*///	
-/*TODO*///		/* reset the system */
-/*TODO*///		exidy440_sound_command = 0;
-/*TODO*///		exidy440_sound_command_ack = 1;
-/*TODO*///	
-/*TODO*///		/* reset the 6844 */
-/*TODO*///		for (i = 0; i < 4; i++)
+/*TODO*///	static void decode_and_filter_cvsd(UINT8 *data, int bytes, int maskbits, int frequency, INT16 *dest);
+/*TODO*///	static void fir_filter(INT32 *input, INT16 *output, int count);
+
+    /**
+     * ***********************************
+     *
+     * Initialize the sound system
+     *
+     ************************************
+     */
+    public static ShStartPtr exidy440_sh_start = new ShStartPtr() {
+        public int handler(MachineSound msound) {
+            /*TODO*///		const char *names[] =
 /*TODO*///		{
-/*TODO*///			m6844_channel[i].active = 0;
-/*TODO*///			m6844_channel[i].control = 0x00;
-/*TODO*///		}
-/*TODO*///		m6844_priority = 0x00;
-/*TODO*///		m6844_interrupt = 0x00;
-/*TODO*///		m6844_chain = 0x00;
+/*TODO*///			"Exidy 440 sound left",
+/*TODO*///			"Exidy 440 sound right"
+/*TODO*///		};
+		int i, length;
+/*TODO*///		int vol[2];
+
+            /* reset the system */
+            u8_exidy440_sound_command = 0;
+            u8_exidy440_sound_command_ack = 1;
+
+            /* reset the 6844 */
+ 		for (i = 0; i < 4; i++)
+		{
+			m6844_channel[i].active = 0;
+			m6844_channel[i].u8_control = 0x00;
+		}
+		m6844_priority = 0x00;
+		m6844_interrupt = 0x00;
+		m6844_chain = 0x00;
 /*TODO*///	
 /*TODO*///		/* get stream channels */
 /*TODO*///		vol[0] = MIXER(100, MIXER_PAN_LEFT);
@@ -205,87 +170,82 @@ public class exidy440
 /*TODO*///		sound_stream = stream_init_multi(2, names, vol, SAMPLE_RATE_FAST, 0, channel_update);
 /*TODO*///	
 /*TODO*///		/* allocate the sample cache */
-/*TODO*///		length = memory_region_length(REGION_SOUND1) * 16 + MAX_CACHE_ENTRIES;
-/*TODO*///		sound_cache = new sound_cache_entry[length];
-/*TODO*///		if (sound_cache == null)
+/*TODO*///		length = memory_region_length(REGION_SOUND1) * 16 + MAX_CACHE_ENTRIES * sizeof(sound_cache_entry);
+/*TODO*///		sound_cache = malloc(length);
+/*TODO*///		if (sound_cache == 0)
 /*TODO*///			return 1;
 /*TODO*///	
 /*TODO*///		/* determine the hard end of the cache and reset */
-/*TODO*///		//sound_cache_max = (sound_cache_entry *)((UINT8 *)sound_cache + length);
-/*TODO*///                sound_cache_max = sound_cache[length];
+/*TODO*///		sound_cache_max = (sound_cache_entry *)((UINT8 *)sound_cache + length);
 /*TODO*///		reset_sound_cache();
 /*TODO*///	
 /*TODO*///		/* allocate the mixer buffer */
-/*TODO*///		mixer_buffer_left = new IntArray(2 * SAMPLE_RATE_FAST);
-/*TODO*///		if (mixer_buffer_left == null)
+/*TODO*///		mixer_buffer_left = malloc(2 * SAMPLE_RATE_FAST * sizeof(INT32));
+/*TODO*///		if (mixer_buffer_left == 0)
 /*TODO*///		{
-/*TODO*///			//free(sound_cache);
-/*TODO*///			sound_cache = null;
+/*TODO*///			free(sound_cache);
+/*TODO*///			sound_cache = NULL;
 /*TODO*///			return 1;
 /*TODO*///		}
 /*TODO*///		mixer_buffer_right = mixer_buffer_left + SAMPLE_RATE_FAST;
 /*TODO*///	
-/*TODO*///		/*TODO*///if (SOUND_LOG)
-/*TODO*///		/*TODO*///	debuglog = fopen("sound.log", "w");
-/*TODO*///	
-		return 0;
-            }
-        };
-	
-	
-	
-	/*************************************
-	 *
-	 *	Tear down the sound system
-	 *
-	 *************************************/
-	
-	public static ShStopPtr exidy440_sh_stop = new ShStopPtr() {
-            public void handler() {
-/*TODO*///                /*TODO*///if (SOUND_LOG && debuglog)
-/*TODO*///		/*TODO*///	fclose(debuglog);
-/*TODO*///	
-/*TODO*///		if (sound_cache != null)
-/*TODO*///                    sound_cache = null;
-/*TODO*///	
-/*TODO*///		if (mixer_buffer_left != null)
-/*TODO*///                    mixer_buffer_left = mixer_buffer_right = null;
-            }
-        };
-	
-	
-	/*************************************
-	 *
-	 *	Periodic sound update
-	 *
-	 *************************************/
-	
-	public static ShUpdatePtr exidy440_sh_update = new ShUpdatePtr() {
-            public void handler() {
+            return 0;
+        }
+    };
 
-            }
-        };
-	
-	
-/*TODO*///	/*************************************
-/*TODO*///	 *
-/*TODO*///	 *	Add a bunch of samples to the mix
-/*TODO*///	 *
-/*TODO*///	 *************************************/
+    /**
+     * ***********************************
+     *
+     * Tear down the sound system
+     *
+     ************************************
+     */
+    public static ShStopPtr exidy440_sh_stop = new ShStopPtr() {
+        public void handler() {
+            /*TODO*///		if (sound_cache)
+/*TODO*///			free(sound_cache);
+/*TODO*///		sound_cache = NULL;
 /*TODO*///	
-/*TODO*///	static void add_and_scale_samples(int ch, ShortPtr dest, int samples, int volume)
+/*TODO*///		if (mixer_buffer_left)
+/*TODO*///			free(mixer_buffer_left);
+/*TODO*///		mixer_buffer_left = mixer_buffer_right = NULL;
+        }
+    };
+
+    /**
+     * ***********************************
+     *
+     * Periodic sound update
+     *
+     ************************************
+     */
+    public static ShUpdatePtr exidy440_sh_update = new ShUpdatePtr() {
+        public void handler() {
+
+        }
+    };
+
+    /**
+     * ***********************************
+     *
+     * Add a bunch of samples to the mix
+     *
+     ************************************
+     */
+    /*TODO*///	
+/*TODO*///	static void add_and_scale_samples(int ch, INT32 *dest, int samples, int volume)
 /*TODO*///	{
-/*TODO*///		sound_channel_data channel = sound_channel[ch];
-/*TODO*///		ShortPtr srcdata;
+/*TODO*///		sound_channel_data *channel = &sound_channel[ch];
+/*TODO*///		INT16 *srcdata;
 /*TODO*///		int i;
 /*TODO*///	
 /*TODO*///		/* channels 2 and 3 are half-rate samples */
-/*TODO*///		if ((ch & 2) != 0)
+/*TODO*///		if (ch & 2)
 /*TODO*///		{
-/*TODO*///			srcdata = new ShortPtr(channel.base, channel.offset >> 1);
+/*TODO*///			srcdata = &channel->base[channel->offset >> 1];
 /*TODO*///	
 /*TODO*///			/* handle the edge case */
-/*TODO*///			if ((channel.offset & 1) != 0)
+/*TODO*///			if (channel->offset & 1)
 /*TODO*///			{
 /*TODO*///				*dest++ += *srcdata++ * volume / 256;
 /*TODO*///				samples--;
@@ -303,7 +263,7 @@ public class exidy440
 /*TODO*///		/* channels 0 and 1 are full-rate samples */
 /*TODO*///		else
 /*TODO*///		{
-/*TODO*///			srcdata = &channel.base[channel.offset];
+/*TODO*///			srcdata = &channel->base[channel->offset];
 /*TODO*///			for (i = 0; i < samples; i++)
 /*TODO*///				*dest++ += *srcdata++ * volume / 256;
 /*TODO*///		}
@@ -346,8 +306,7 @@ public class exidy440
 /*TODO*///	 *
 /*TODO*///	 *************************************/
 /*TODO*///	
-/*TODO*///	public static StreamInitMultiPtr channel_update = new StreamInitMultiPtr()
-/*TODO*///}
+/*TODO*///	static void channel_update(int ch, INT16 **buffer, int length)
 /*TODO*///	{
 /*TODO*///		/* reset the mixer buffers */
 /*TODO*///		memset(mixer_buffer_left, 0, length * sizeof(INT32));
@@ -361,11 +320,11 @@ public class exidy440
 /*TODO*///			int effective_offset;
 /*TODO*///	
 /*TODO*///			/* if we're not active, bail */
-/*TODO*///			if (channel.remaining <= 0)
+/*TODO*///			if (channel->remaining <= 0)
 /*TODO*///				continue;
 /*TODO*///	
 /*TODO*///			/* see how many samples to copy */
-/*TODO*///			samples = (left > channel.remaining) ? channel.remaining : left;
+/*TODO*///			samples = (left > channel->remaining) ? channel->remaining : left;
 /*TODO*///	
 /*TODO*///			/* get a pointer to the sample data and copy to the left */
 /*TODO*///			volume = exidy440_sound_volume[2 * ch + 0];
@@ -378,18 +337,16 @@ public class exidy440
 /*TODO*///				add_and_scale_samples(ch, mixer_buffer_right, samples, volume);
 /*TODO*///	
 /*TODO*///			/* update our counters */
-/*TODO*///			channel.offset += samples;
-/*TODO*///			channel.remaining -= samples;
+/*TODO*///			channel->offset += samples;
+/*TODO*///			channel->remaining -= samples;
 /*TODO*///			left -= samples;
 /*TODO*///	
 /*TODO*///			/* update the MC6844 */
-/*TODO*///			effective_offset = (ch & 2) ? channel.offset / 2 : channel.offset;
+/*TODO*///			effective_offset = (ch & 2) ? channel->offset / 2 : channel->offset;
 /*TODO*///			m6844_channel[ch].address = m6844_channel[ch].start_address + effective_offset / 8;
 /*TODO*///			m6844_channel[ch].counter = m6844_channel[ch].start_counter - effective_offset / 8;
 /*TODO*///			if (m6844_channel[ch].counter <= 0)
 /*TODO*///			{
-/*TODO*///				if (SOUND_LOG && debuglog)
-/*TODO*///					fprintf(debuglog, "Channel %d finished\n", ch);
 /*TODO*///				m6844_finished(ch);
 /*TODO*///			}
 /*TODO*///		}
@@ -399,177 +356,175 @@ public class exidy440
 /*TODO*///	}
 /*TODO*///	
 /*TODO*///	
+    /**
+     * ***********************************
+     *
+     * Sound command register
+     *
+     ************************************
+     */
+    public static ReadHandlerPtr exidy440_sound_command_r = new ReadHandlerPtr() {
+        public int handler(int offset) {
+            /* clear the FIRQ that got us here and acknowledge the read to the main CPU */
+            cpu_set_irq_line(1, 1, CLEAR_LINE);
+            u8_exidy440_sound_command_ack = 1;
+
+            return u8_exidy440_sound_command;
+        }
+    };
+
+    /**
+     * ***********************************
+     *
+     * Sound volume registers
+     *
+     ************************************
+     */
+    public static WriteHandlerPtr exidy440_sound_volume_w = new WriteHandlerPtr() {
+        public void handler(int offset, int data) {
+            /* update the stream */
+            stream_update(sound_stream, 0);
+
+            /* set the new volume */
+            exidy440_sound_volume.write(offset, ~data);
+        }
+    };
+
+    /**
+     * ***********************************
+     *
+     * Sound interrupt handling
+     *
+     ************************************
+     */
+    public static InterruptPtr exidy440_sound_interrupt = new InterruptPtr() {
+        public int handler() {
+            cpu_set_irq_line(1, 0, ASSERT_LINE);
+            return ignore_interrupt.handler();
+        }
+    };
+
+    public static WriteHandlerPtr exidy440_sound_interrupt_clear_w = new WriteHandlerPtr() {
+        public void handler(int offset, int data) {
+            cpu_set_irq_line(1, 0, CLEAR_LINE);
+        }
+    };
+
+    	
 	
 	/*************************************
 	 *
-	 *	Sound command register
+	 *	MC6844 DMA controller interface
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr exidy440_sound_command_r  = new ReadHandlerPtr() { public int handler(int offset)
+	public static void exidy440_m6844_update()
 	{
-		/* clear the FIRQ that got us here and acknowledge the read to the main CPU */
-		cpu_set_irq_line(1, 1, CLEAR_LINE);
-		exidy440_sound_command_ack = 1;
+		/* update the stream */
+		stream_update(sound_stream, 0);
+	}
 	
-		return exidy440_sound_command;
-	} };
-	
-	
-	
-	/*************************************
-	 *
-	 *	Sound volume registers
-	 *
-	 *************************************/
-	
-	public static WriteHandlerPtr exidy440_sound_volume_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-/*TODO*///		if (SOUND_LOG && debuglog)
-/*TODO*///			fprintf(debuglog, "Volume %02X=%02X\n", offset, data);
-/*TODO*///	
-/*TODO*///		/* update the stream */
-/*TODO*///		stream_update(sound_stream, 0);
-/*TODO*///	
-/*TODO*///		/* set the new volume */
-/*TODO*///		exidy440_sound_volume[offset] = ~data;
-	} };
-	
-	
-	
-	/*************************************
-	 *
-	 *	Sound interrupt handling
-	 *
-	 *************************************/
-	
-	public static InterruptPtr exidy440_sound_interrupt = new InterruptPtr() { public int handler() 
-	{
-		cpu_set_irq_line(1, 0, ASSERT_LINE);
-		return ignore_interrupt.handler();
-	} };
-	
-	
-	public static WriteHandlerPtr exidy440_sound_interrupt_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		cpu_set_irq_line(1, 0, CLEAR_LINE);
-	} };
-	
-	
-/*TODO*///	
-/*TODO*///	/*************************************
-/*TODO*///	 *
-/*TODO*///	 *	MC6844 DMA controller interface
-/*TODO*///	 *
-/*TODO*///	 *************************************/
-/*TODO*///	
-/*TODO*///	void exidy440_m6844_update(void)
-/*TODO*///	{
-/*TODO*///		/* update the stream */
-/*TODO*///		stream_update(sound_stream, 0);
-/*TODO*///	}
-/*TODO*///	
 /*TODO*///	
 /*TODO*///	void m6844_finished(int ch)
 /*TODO*///	{
 /*TODO*///		m6844_channel_data *channel = &m6844_channel[ch];
 /*TODO*///	
 /*TODO*///		/* mark us inactive */
-/*TODO*///		channel.active = 0;
+/*TODO*///		channel->active = 0;
 /*TODO*///	
 /*TODO*///		/* set the final address and counter */
-/*TODO*///		channel.counter = 0;
-/*TODO*///		channel.address = channel.start_address + channel.start_counter;
+/*TODO*///		channel->counter = 0;
+/*TODO*///		channel->address = channel->start_address + channel->start_counter;
 /*TODO*///	
 /*TODO*///		/* clear the DMA busy bit and set the DMA end bit */
-/*TODO*///		channel.control &= ~0x40;
-/*TODO*///		channel.control |= 0x80;
+/*TODO*///		channel->control &= ~0x40;
+/*TODO*///		channel->control |= 0x80;
 /*TODO*///	}
 /*TODO*///	
 /*TODO*///	
-/*TODO*///	
-/*TODO*///	/*************************************
-/*TODO*///	 *
-/*TODO*///	 *	MC6844 DMA controller I/O
-/*TODO*///	 *
-/*TODO*///	 *************************************/
+	
+	/*************************************
+	 *
+	 *	MC6844 DMA controller I/O
+	 *
+	 *************************************/
 	
 	public static ReadHandlerPtr exidy440_m6844_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int result = 0;
-/*TODO*///	
-/*TODO*///		/* first update the current state of the DMA transfers */
-/*TODO*///		exidy440_m6844_update();
-/*TODO*///	
-/*TODO*///		/* switch off the offset we were given */
-/*TODO*///		switch (offset)
-/*TODO*///		{
-/*TODO*///			/* upper byte of address */
-/*TODO*///			case 0x00:
-/*TODO*///			case 0x04:
-/*TODO*///			case 0x08:
-/*TODO*///			case 0x0c:
-/*TODO*///				result = m6844_channel[offset / 4].address >> 8;
-/*TODO*///				break;
-/*TODO*///	
-/*TODO*///			/* lower byte of address */
-/*TODO*///			case 0x01:
-/*TODO*///			case 0x05:
-/*TODO*///			case 0x09:
-/*TODO*///			case 0x0d:
-/*TODO*///				result = m6844_channel[offset / 4].address & 0xff;
-/*TODO*///				break;
-/*TODO*///	
-/*TODO*///			/* upper byte of counter */
-/*TODO*///			case 0x02:
-/*TODO*///			case 0x06:
-/*TODO*///			case 0x0a:
-/*TODO*///			case 0x0e:
-/*TODO*///				result = m6844_channel[offset / 4].counter >> 8;
-/*TODO*///				break;
-/*TODO*///	
-/*TODO*///			/* lower byte of counter */
-/*TODO*///			case 0x03:
-/*TODO*///			case 0x07:
-/*TODO*///			case 0x0b:
-/*TODO*///			case 0x0f:
-/*TODO*///				result = m6844_channel[offset / 4].counter & 0xff;
-/*TODO*///				break;
-/*TODO*///	
-/*TODO*///			/* channel control */
-/*TODO*///			case 0x10:
-/*TODO*///			case 0x11:
-/*TODO*///			case 0x12:
-/*TODO*///			case 0x13:
-/*TODO*///				result = m6844_channel[offset - 0x10].control;
-/*TODO*///	
-/*TODO*///				/* a read here clears the DMA end flag */
-/*TODO*///				m6844_channel[offset - 0x10].control &= ~0x80;
-/*TODO*///				break;
-/*TODO*///	
-/*TODO*///			/* priority control */
-/*TODO*///			case 0x14:
-/*TODO*///				result = m6844_priority;
-/*TODO*///				break;
-/*TODO*///	
-/*TODO*///			/* interrupt control */
-/*TODO*///			case 0x15:
-/*TODO*///	
-/*TODO*///				/* update the global DMA end flag */
-/*TODO*///				m6844_interrupt &= ~0x80;
-/*TODO*///				m6844_interrupt |= (m6844_channel[0].control & 0x80) |
-/*TODO*///				                   (m6844_channel[1].control & 0x80) |
-/*TODO*///				                   (m6844_channel[2].control & 0x80) |
-/*TODO*///				                   (m6844_channel[3].control & 0x80);
-/*TODO*///	
-/*TODO*///				result = m6844_interrupt;
-/*TODO*///				break;
-/*TODO*///	
-/*TODO*///			/* chaining control */
-/*TODO*///			case 0x16:
-/*TODO*///				result = m6844_chain;
-/*TODO*///				break;
-/*TODO*///		}
+	
+		/* first update the current state of the DMA transfers */
+		exidy440_m6844_update();
+	
+		/* switch off the offset we were given */
+		switch (offset)
+		{
+			/* upper byte of address */
+			case 0x00:
+			case 0x04:
+			case 0x08:
+			case 0x0c:
+				result = m6844_channel[offset / 4].address >> 8;
+				break;
+	
+			/* lower byte of address */
+			case 0x01:
+			case 0x05:
+			case 0x09:
+			case 0x0d:
+				result = m6844_channel[offset / 4].address & 0xff;
+				break;
+	
+			/* upper byte of counter */
+			case 0x02:
+			case 0x06:
+			case 0x0a:
+			case 0x0e:
+				result = m6844_channel[offset / 4].counter >> 8;
+				break;
+	
+			/* lower byte of counter */
+			case 0x03:
+			case 0x07:
+			case 0x0b:
+			case 0x0f:
+				result = m6844_channel[offset / 4].counter & 0xff;
+				break;
+	
+			/* channel control */
+			case 0x10:
+			case 0x11:
+			case 0x12:
+			case 0x13:
+				result = m6844_channel[offset - 0x10].u8_control&0xFF;
+	
+				/* a read here clears the DMA end flag */
+				m6844_channel[offset - 0x10].u8_control = (m6844_channel[offset - 0x10].u8_control&  ~0x80)&0xFF;
+				break;
+	
+			/* priority control */
+			case 0x14:
+				result = m6844_priority;
+				break;
+	
+			/* interrupt control */
+			case 0x15:
+	
+				/* update the global DMA end flag */
+				m6844_interrupt &= ~0x80;
+				m6844_interrupt |= (m6844_channel[0].u8_control & 0x80) |
+				                   (m6844_channel[1].u8_control & 0x80) |
+				                   (m6844_channel[2].u8_control & 0x80) |
+				                   (m6844_channel[3].u8_control & 0x80);
+	
+				result = m6844_interrupt;
+				break;
+	
+			/* chaining control */
+			case 0x16:
+				result = m6844_chain;
+				break;
+		}
 	
 		return result;
 	} };
@@ -578,103 +533,103 @@ public class exidy440
 	public static WriteHandlerPtr exidy440_m6844_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int i;
-/*TODO*///	
-/*TODO*///		/* first update the current state of the DMA transfers */
-/*TODO*///		exidy440_m6844_update();
-/*TODO*///	
-/*TODO*///		/* switch off the offset we were given */
-/*TODO*///		switch (offset)
-/*TODO*///		{
-/*TODO*///			/* upper byte of address */
-/*TODO*///			case 0x00:
-/*TODO*///			case 0x04:
-/*TODO*///			case 0x08:
-/*TODO*///			case 0x0c:
-/*TODO*///				m6844_channel[offset / 4].address = (m6844_channel[offset / 4].address & 0xff) | (data << 8);
-/*TODO*///				break;
-/*TODO*///	
-/*TODO*///			/* lower byte of address */
-/*TODO*///			case 0x01:
-/*TODO*///			case 0x05:
-/*TODO*///			case 0x09:
-/*TODO*///			case 0x0d:
-/*TODO*///				m6844_channel[offset / 4].address = (m6844_channel[offset / 4].address & 0xff00) | (data & 0xff);
-/*TODO*///				break;
-/*TODO*///	
-/*TODO*///			/* upper byte of counter */
-/*TODO*///			case 0x02:
-/*TODO*///			case 0x06:
-/*TODO*///			case 0x0a:
-/*TODO*///			case 0x0e:
-/*TODO*///				m6844_channel[offset / 4].counter = (m6844_channel[offset / 4].counter & 0xff) | (data << 8);
-/*TODO*///				break;
-/*TODO*///	
-/*TODO*///			/* lower byte of counter */
-/*TODO*///			case 0x03:
-/*TODO*///			case 0x07:
-/*TODO*///			case 0x0b:
-/*TODO*///			case 0x0f:
-/*TODO*///				m6844_channel[offset / 4].counter = (m6844_channel[offset / 4].counter & 0xff00) | (data & 0xff);
-/*TODO*///				break;
-/*TODO*///	
-/*TODO*///			/* channel control */
-/*TODO*///			case 0x10:
-/*TODO*///			case 0x11:
-/*TODO*///			case 0x12:
-/*TODO*///			case 0x13:
-/*TODO*///				m6844_channel[offset - 0x10].control = (m6844_channel[offset - 0x10].control & 0xc0) | (data & 0x3f);
-/*TODO*///				break;
-/*TODO*///	
-/*TODO*///			/* priority control */
-/*TODO*///			case 0x14:
-/*TODO*///				m6844_priority = data;
-/*TODO*///	
-/*TODO*///				/* update the sound playback on each channel */
-/*TODO*///				for (i = 0; i < 4; i++)
-/*TODO*///				{
-/*TODO*///					/* if we're going active... */
-/*TODO*///					if (!m6844_channel[i].active && (data & (1 << i)))
-/*TODO*///					{
-/*TODO*///						/* mark us active */
-/*TODO*///						m6844_channel[i].active = 1;
-/*TODO*///	
-/*TODO*///						/* set the DMA busy bit and clear the DMA end bit */
-/*TODO*///						m6844_channel[i].control |= 0x40;
-/*TODO*///						m6844_channel[i].control &= ~0x80;
-/*TODO*///	
-/*TODO*///						/* set the starting address, counter, and time */
-/*TODO*///						m6844_channel[i].start_address = m6844_channel[i].address;
-/*TODO*///						m6844_channel[i].start_counter = m6844_channel[i].counter;
-/*TODO*///	
-/*TODO*///						/* generate and play the sample */
-/*TODO*///						play_cvsd(i);
-/*TODO*///					}
-/*TODO*///	
-/*TODO*///					/* if we're going inactive... */
-/*TODO*///					else if (m6844_channel[i].active && !(data & (1 << i)))
-/*TODO*///					{
-/*TODO*///						/* mark us inactive */
-/*TODO*///						m6844_channel[i].active = 0;
-/*TODO*///	
-/*TODO*///						/* stop playing the sample */
-/*TODO*///						stop_cvsd(i);
-/*TODO*///					}
-/*TODO*///				}
-/*TODO*///				break;
-/*TODO*///	
-/*TODO*///			/* interrupt control */
-/*TODO*///			case 0x15:
-/*TODO*///				m6844_interrupt = (m6844_interrupt & 0x80) | (data & 0x7f);
-/*TODO*///				break;
-/*TODO*///	
-/*TODO*///			/* chaining control */
-/*TODO*///			case 0x16:
-/*TODO*///				m6844_chain = data;
-/*TODO*///				break;
-/*TODO*///		}
+	
+		/* first update the current state of the DMA transfers */
+		exidy440_m6844_update();
+	
+		/* switch off the offset we were given */
+		switch (offset)
+		{
+			/* upper byte of address */
+			case 0x00:
+			case 0x04:
+			case 0x08:
+			case 0x0c:
+				m6844_channel[offset / 4].address = (m6844_channel[offset / 4].address & 0xff) | (data << 8);
+				break;
+	
+			/* lower byte of address */
+			case 0x01:
+			case 0x05:
+			case 0x09:
+			case 0x0d:
+				m6844_channel[offset / 4].address = (m6844_channel[offset / 4].address & 0xff00) | (data & 0xff);
+				break;
+	
+			/* upper byte of counter */
+			case 0x02:
+			case 0x06:
+			case 0x0a:
+			case 0x0e:
+				m6844_channel[offset / 4].counter = (m6844_channel[offset / 4].counter & 0xff) | (data << 8);
+				break;
+	
+			/* lower byte of counter */
+			case 0x03:
+			case 0x07:
+			case 0x0b:
+			case 0x0f:
+				m6844_channel[offset / 4].counter = (m6844_channel[offset / 4].counter & 0xff00) | (data & 0xff);
+				break;
+	
+			/* channel control */
+			case 0x10:
+			case 0x11:
+			case 0x12:
+			case 0x13:
+				m6844_channel[offset - 0x10].u8_control = ((m6844_channel[offset - 0x10].u8_control & 0xc0) | (data & 0x3f))&0xFF;
+				break;
+	
+			/* priority control */
+			case 0x14:
+				m6844_priority = data;
+	
+				/* update the sound playback on each channel */
+				for (i = 0; i < 4; i++)
+				{
+					/* if we're going active... */
+					if (m6844_channel[i].active==0 && (data & (1 << i))!=0)
+					{
+						/* mark us active */
+						m6844_channel[i].active = 1;
+	
+						/* set the DMA busy bit and clear the DMA end bit */
+						m6844_channel[i].u8_control =  (m6844_channel[i].u8_control| 0x40)&0xFF;
+						m6844_channel[i].u8_control =(m6844_channel[i].u8_control& ~0x80)&0xFF;
+	
+						/* set the starting address, counter, and time */
+						m6844_channel[i].start_address = m6844_channel[i].address;
+						m6844_channel[i].start_counter = m6844_channel[i].counter;
+	
+						/* generate and play the sample */
+						play_cvsd(i);
+					}
+	
+					/* if we're going inactive... */
+					else if (m6844_channel[i].active!=0 && (data & (1 << i))==0)
+					{
+						/* mark us inactive */
+						m6844_channel[i].active = 0;
+	
+						/* stop playing the sample */
+						stop_cvsd(i);
+					}
+				}
+				break;
+	
+			/* interrupt control */
+			case 0x15:
+				m6844_interrupt = (m6844_interrupt & 0x80) | (data & 0x7f);
+				break;
+	
+			/* chaining control */
+			case 0x16:
+				m6844_chain = data;
+				break;
+		}
 	} };
-	
-	
+/*TODO*///	
+/*TODO*///	
 /*TODO*///	
 /*TODO*///	/*************************************
 /*TODO*///	 *
@@ -682,7 +637,7 @@ public class exidy440
 /*TODO*///	 *
 /*TODO*///	 *************************************/
 /*TODO*///	
-/*TODO*///	public static void reset_sound_cache()
+/*TODO*///	void reset_sound_cache(void)
 /*TODO*///	{
 /*TODO*///		sound_cache_end = sound_cache;
 /*TODO*///	}
@@ -703,15 +658,15 @@ public class exidy440
 /*TODO*///		}
 /*TODO*///	
 /*TODO*///		/* fill in this entry */
-/*TODO*///		current.next = sound_cache_end;
-/*TODO*///		current.address = address;
-/*TODO*///		current.length = length;
-/*TODO*///		current.bits = bits;
-/*TODO*///		current.frequency = frequency;
+/*TODO*///		current->next = sound_cache_end;
+/*TODO*///		current->address = address;
+/*TODO*///		current->length = length;
+/*TODO*///		current->bits = bits;
+/*TODO*///		current->frequency = frequency;
 /*TODO*///	
 /*TODO*///		/* decode the data into the cache */
-/*TODO*///		decode_and_filter_cvsd(input, length, bits, frequency, current.data);
-/*TODO*///		return current.data;
+/*TODO*///		decode_and_filter_cvsd(input, length, bits, frequency, current->data);
+/*TODO*///		return current->data;
 /*TODO*///	}
 /*TODO*///	
 /*TODO*///	
@@ -719,9 +674,9 @@ public class exidy440
 /*TODO*///	{
 /*TODO*///		sound_cache_entry *current;
 /*TODO*///	
-/*TODO*///		for (current = sound_cache; current < sound_cache_end; current = current.next)
-/*TODO*///			if (current.address == address && current.length == length && current.bits == bits && current.frequency == frequency)
-/*TODO*///				return current.data;
+/*TODO*///		for (current = sound_cache; current < sound_cache_end; current = current->next)
+/*TODO*///			if (current->address == address && current->length == length && current->bits == bits && current->frequency == frequency)
+/*TODO*///				return current->data;
 /*TODO*///	
 /*TODO*///		return add_to_sound_cache(&memory_region(REGION_SOUND1)[address], address, length, bits, frequency);
 /*TODO*///	}
@@ -734,8 +689,8 @@ public class exidy440
 /*TODO*///	 *
 /*TODO*///	 *************************************/
 /*TODO*///	
-/*TODO*///	void play_cvsd(int ch)
-/*TODO*///	{
+	public static void play_cvsd(int ch)
+	{
 /*TODO*///		sound_channel_data *channel = &sound_channel[ch];
 /*TODO*///		int address = m6844_channel[ch].address;
 /*TODO*///		int length = m6844_channel[ch].counter;
@@ -759,37 +714,30 @@ public class exidy440
 /*TODO*///		/* if the length is 0 or 1, just do an immediate end */
 /*TODO*///		if (length <= 3)
 /*TODO*///		{
-/*TODO*///			channel.base = base;
-/*TODO*///			channel.offset = length;
-/*TODO*///			channel.remaining = 0;
+/*TODO*///			channel->base = base;
+/*TODO*///			channel->offset = length;
+/*TODO*///			channel->remaining = 0;
 /*TODO*///			m6844_finished(ch);
 /*TODO*///			return;
 /*TODO*///		}
 /*TODO*///	
-/*TODO*///		if (SOUND_LOG && debuglog)
-/*TODO*///			fprintf(debuglog, "Sound channel %d play at %02X,%04X, length = %04X, volume = %02X/%02X\n",
-/*TODO*///					ch, exidy440_sound_banks[ch], m6844_channel[ch].address,
-/*TODO*///					m6844_channel[ch].counter, exidy440_sound_volume[ch * 2], exidy440_sound_volume[ch * 2 + 1]);
-/*TODO*///	
 /*TODO*///		/* set the pointer and count */
-/*TODO*///		channel.base = base;
-/*TODO*///		channel.offset = 0;
-/*TODO*///		channel.remaining = length * 8;
+/*TODO*///		channel->base = base;
+/*TODO*///		channel->offset = 0;
+/*TODO*///		channel->remaining = length * 8;
 /*TODO*///	
 /*TODO*///		/* channels 2 and 3 play twice as slow, so we need to count twice as many samples */
-/*TODO*///		if (ch & 2) channel.remaining *= 2;
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	void stop_cvsd(int ch)
-/*TODO*///	{
+/*TODO*///		if (ch & 2) channel->remaining *= 2;
+	}
+	
+	
+	public static void stop_cvsd(int ch)
+	{
 /*TODO*///		/* the DMA channel is marked inactive; that will kill the audio */
 /*TODO*///		sound_channel[ch].remaining = 0;
 /*TODO*///		stream_update(sound_stream, 0);
 /*TODO*///	
-/*TODO*///		if (SOUND_LOG && debuglog)
-/*TODO*///			fprintf(debuglog, "Channel %d stop\n", ch);
-/*TODO*///	}
+	}
 /*TODO*///	
 /*TODO*///	
 /*TODO*///	
@@ -844,15 +792,6 @@ public class exidy440
 /*TODO*///		int steps;
 /*TODO*///		int chunk_start;
 /*TODO*///	
-/*TODO*///	#if MAKE_WAVES
-/*TODO*///	{
-/*TODO*///		static int file_index;
-/*TODO*///		char file_name[100];
-/*TODO*///		sprintf(file_name, "cvsd%03d.wav", file_index++);
-/*TODO*///		wavfile = fopen(file_name, "wb");
-/*TODO*///		write_wav_header(frequency);
-/*TODO*///	}
-/*TODO*///	#endif
 /*TODO*///	
 /*TODO*///		/* compute the charge, decay, and leak constants */
 /*TODO*///		charge = pow(exp(-1), 1.0 / (FILTER_CHARGE_TC * (double)frequency));
@@ -942,18 +881,6 @@ public class exidy440
 /*TODO*///				}
 /*TODO*///			}
 /*TODO*///	
-/*TODO*///	#if MAKE_WAVES
-/*TODO*///			for (ind = 0; ind < chunk_bytes * 8; ind++)
-/*TODO*///			{
-/*TODO*///				int sample = buffer[FIR_HISTORY_LENGTH + ind];
-/*TODO*///				INT16 temp;
-/*TODO*///				if (sample > 32767) sample = 32767;
-/*TODO*///				else if (sample < -32768) sample = -32768;
-/*TODO*///				temp = intelShort(sample);
-/*TODO*///				fwrite(&temp, 1, 2, wavfile);
-/*TODO*///			}
-/*TODO*///			wavlength += chunk_bytes * 8 * 2;
-/*TODO*///	#endif
 /*TODO*///	
 /*TODO*///			/* all done with this chunk, run the filter on it */
 /*TODO*///			fir_filter(&buffer[FIR_HISTORY_LENGTH], &output[chunk_start], chunk_bytes * 8);
@@ -962,10 +889,6 @@ public class exidy440
 /*TODO*///			memcpy(&buffer[0], &buffer[SAMPLE_BUFFER_LENGTH], FIR_HISTORY_LENGTH * sizeof(INT32));
 /*TODO*///		}
 /*TODO*///	
-/*TODO*///	#if MAKE_WAVES
-/*TODO*///		finish_wav_file();
-/*TODO*///		fclose(wavfile);
-/*TODO*///	#endif
 /*TODO*///	
 /*TODO*///		/* make sure the volume goes smoothly to 0 over the last 512 samples */
 /*TODO*///		if (FADE_TO_ZERO)
@@ -984,58 +907,4 @@ public class exidy440
 /*TODO*///	
 /*TODO*///	
 /*TODO*///	
-/*TODO*///	/*************************************
-/*TODO*///	 *
-/*TODO*///	 *	Debugging
-/*TODO*///	 *
-/*TODO*///	 *************************************/
-/*TODO*///	
-/*TODO*///	#if MAKE_WAVES
-/*TODO*///	
-/*TODO*///	static void write_wav_header(int frequency)
-/*TODO*///	{
-/*TODO*///		UINT32 temp32;
-/*TODO*///		UINT16 temp16;
-/*TODO*///	
-/*TODO*///		fwrite("RIFF", 1, 4, wavfile);
-/*TODO*///		temp32 = intelLong(0);
-/*TODO*///		fwrite(&temp32, 1, 4, wavfile);
-/*TODO*///		fwrite("WAVE", 1, 4, wavfile);
-/*TODO*///	
-/*TODO*///		fwrite("fmt ", 1, 4, wavfile);
-/*TODO*///		temp32 = intelLong(16);
-/*TODO*///		fwrite(&temp32, 1, 4, wavfile);
-/*TODO*///		temp16 = intelShort(1);				/* format: PCM */
-/*TODO*///		fwrite(&temp16, 1, 2, wavfile);
-/*TODO*///		temp16 = intelShort(1);				/* channels: 1 */
-/*TODO*///		fwrite(&temp16, 1, 2, wavfile);
-/*TODO*///		temp32 = intelLong(frequency);		/* sample rate */
-/*TODO*///		fwrite(&temp32, 1, 4, wavfile);
-/*TODO*///		temp32 = intelLong(frequency * 2);	/* bytes/second */
-/*TODO*///		fwrite(&temp32, 1, 4, wavfile);
-/*TODO*///		temp16 = intelShort(2);				/* block align */
-/*TODO*///		fwrite(&temp16, 1, 2, wavfile);
-/*TODO*///		temp16 = intelShort(16);			/* bits/sample */
-/*TODO*///		fwrite(&temp16, 1, 2, wavfile);
-/*TODO*///	
-/*TODO*///		fwrite("data", 1, 4, wavfile);
-/*TODO*///		temp32 = intelLong(0);
-/*TODO*///		fwrite(&temp32, 1, 4, wavfile);
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	static void finish_wav_file(void)
-/*TODO*///	{
-/*TODO*///		UINT32 temp32;
-/*TODO*///	
-/*TODO*///		fseek(wavfile, 4, SEEK_SET);
-/*TODO*///		temp32 = intelLong(wavlength + 4 + 8 + 16 + 8);
-/*TODO*///		fwrite(&temp32, 1, 4, wavfile);
-/*TODO*///	
-/*TODO*///		fseek(wavfile, 40, SEEK_SET);
-/*TODO*///		temp32 = intelLong(wavlength);
-/*TODO*///		fwrite(&temp32, 1, 4, wavfile);
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	#endif
 }

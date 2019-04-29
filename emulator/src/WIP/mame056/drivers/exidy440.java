@@ -400,7 +400,7 @@ public class exidy440
 		switch (offset & 0xe0)
 		{
 			case 0x00:										/* sound command */
-				result = exidy440_sound_command;
+				result = u8_exidy440_sound_command&0xFF;
 				break;
 	
 			case 0x20:										/* coin bits I/O1 */
@@ -408,7 +408,7 @@ public class exidy440
 				result ^= port_3_xor;
 	
 				/* sound command acknowledgements come on bit 3 here */
-				if (exidy440_sound_command_ack == 0)
+				if (u8_exidy440_sound_command_ack == 0)
 					result ^= 0x08;
 	
 				/* I/O1 accesses clear the CIRQ flip/flop */
@@ -432,7 +432,7 @@ public class exidy440
 				result ^= port_3_xor;
 	
 				/* sound command acknowledgements come on bit 3 here */
-				if (exidy440_sound_command_ack != 0)
+				if (u8_exidy440_sound_command_ack != 0)
 					result ^= 0x08;
 				break;
 	
@@ -465,8 +465,8 @@ public class exidy440
 	
 	public static timer_callback delayed_sound_command_w = new timer_callback() {
             public void handler(int param) {
-                exidy440_sound_command = param;
-		exidy440_sound_command_ack = 0;
+                u8_exidy440_sound_command = param&0xFF;
+		u8_exidy440_sound_command_ack = 0;
 	
 		/* cause an FIRQ on the sound CPU */
 		cpu_set_irq_line(1, 1, ASSERT_LINE);
