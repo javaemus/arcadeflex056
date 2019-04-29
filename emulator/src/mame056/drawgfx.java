@@ -7525,21 +7525,23 @@ public class drawgfx {
                     }
                 }
             } /* without pen lookups */ else {
-                throw new UnsupportedOperationException("Unsupported");
-                /*TODO*///			if (transparent_pen == -1)
-/*TODO*///				while (length--)
-/*TODO*///				{
-/*TODO*///					*dst = *src++;
-/*TODO*///					dst += xadv;
-/*TODO*///				}
-/*TODO*///			else
-/*TODO*///				while (length--)
-/*TODO*///				{
-/*TODO*///					UINT32 spixel = *src++;
-/*TODO*///					if (spixel != transparent_pen)
-/*TODO*///						*dst = spixel;
-/*TODO*///					dst += xadv;
-/*TODO*///				}
+                //throw new UnsupportedOperationException("Unsupported");
+                	if (transparent_pen == -1)
+				while ((length--)!=0)
+				{
+					//*dst = *src++;
+                                        dst = new UShortPtr(src);
+                                        src.inc();
+					dst.inc(xadv);
+				}
+			else
+				while ((length--)!=0)
+				{
+					int/*UINT32*/ spixel = src.readinc();
+					if (spixel != transparent_pen)
+						dst.write((char) pens.read(spixel));
+					dst.inc(xadv);
+				}
             }
         } /* 32bpp destination */ else {
             throw new UnsupportedOperationException("Unsupported");

@@ -78,6 +78,10 @@ public class leland
 	
 	/* video RAM bitmap drawing */
 	static vram_state_data[] vram_state = new vram_state_data[2];
+        static {
+            for (int i=0 ; i<2 ; i++)
+                vram_state[i] = new vram_state_data();
+        }
 	static int sync_next_write;
 	
 	/* partial screen updating */
@@ -238,6 +242,7 @@ public class leland
         
 	public static void leland_video_addr_w(int offset, int data, int num)
 	{
+            
 		vram_state_data state = vram_state[_vram_state + num];
 	
 		if (offset == 0)
