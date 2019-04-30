@@ -95,6 +95,7 @@ import static WIP.mame056.drivers.gridlee.*;
 import static WIP.mame056.drivers.exidy440.*;
 import static WIP.mame056.drivers.leland.*;
 import static WIP.mame056.drivers.toypop.*;
+import static mame056.drivers.arabian.*;
 
 public class driver {
 
@@ -3676,8 +3677,8 @@ public class driver {
         /*TODO*///	driver_kangaroo,	/* (c) 1982 Sun Electronics */
         /*TODO*///	driver_kangaroa,	/* 136008			(c) 1982 Atari */
         /*TODO*///	driver_kangarob,	/* (bootleg) */
-        /*TODO*///	driver_arabian,	/* TVG13 (c) 1983 Sun Electronics */
-        /*TODO*///	driver_arabiana,	/* 136019			(c) 1983 Atari */
+        	driver_arabian,	/* TVG13 (c) 1983 Sun Electronics */
+        	driver_arabiana,	/* 136019			(c) 1983 Atari */
         /*TODO*///	driver_markham,	/* TVG14 (c) 1983 Sun Electronics */
         /*TODO*///	driver_strnskil,	/* TVG15 (c) 1984 Sun Electronics */
         /*TODO*///	driver_guiness,	/* TVG15 (c) 1984 Sun Electronics */

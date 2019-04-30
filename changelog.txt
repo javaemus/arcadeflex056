@@ -1,3 +1,7 @@
+30/04/2019
+==========
+-Added arabian driver (fully playable)
+
 28/04/2019
 ==========
 -Added exidy440 working driver (sound WIP)
