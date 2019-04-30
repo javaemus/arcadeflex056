@@ -94,6 +94,7 @@ import static mame056.drivers.bagman.*;
 import static WIP.mame056.drivers.gridlee.*;
 import static WIP.mame056.drivers.exidy440.*;
 import static WIP.mame056.drivers.leland.*;
+import static WIP.mame056.drivers.toypop.*;
 
 public class driver {
 
@@ -542,9 +543,9 @@ public class driver {
         driver_grobda, /* (c) 1984 */
         driver_grobda2, /* (c) 1984 */
         driver_grobda3, /* (c) 1984 */
-        /*TODO*///	/* Libble Rabble board (first Japanese game using a 68000) */
-        /*TODO*///	driver_liblrabl,	/* (c) 1983 */
-        /*TODO*///	driver_toypop,	/* (c) 1986 */
+        /* Libble Rabble board (first Japanese game using a 68000) */
+        driver_liblrabl,	/* (c) 1983 */
+        driver_toypop,	/* (c) 1986 */
         /* Z8000 games */
         driver_polepos, /* (c) 1982  */
         driver_poleposa, /* (c) 1982 + Atari license */
