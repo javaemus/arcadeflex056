@@ -11,6 +11,7 @@ import static common.ptr.*;
 import static mame056.cpuexec.*;
 import static mame056.cpuintrfH.*;
 import mame056.sndintrfH.MachineSound;
+import static mame056.sound.mixerH.*;
 
 import static mame056.sound.streams.*;
 
@@ -20,10 +21,10 @@ public class exidy440 {
 /*TODO*///	
 /*TODO*///	
 /*TODO*///	
-/*TODO*///	/* sample rates for each chip */
-/*TODO*///	#define	SAMPLE_RATE_FAST		(12979200/256)	/* FCLK */
-/*TODO*///	#define	SAMPLE_RATE_SLOW		(12979200/512)	/* SCLK */
-/*TODO*///	
+    /* sample rates for each chip */
+    public static final int SAMPLE_RATE_FAST = (12979200 / 256);/* FCLK */
+    public static final int SAMPLE_RATE_SLOW = (12979200 / 512);/* SCLK */
+ /*TODO*///	
 /*TODO*///	/* internal caching */
 /*TODO*///	#define	MAX_CACHE_ENTRIES		1024				/* maximum separate samples we expect to ever see */
 /*TODO*///	#define	SAMPLE_BUFFER_LENGTH	1024				/* size of temporary decode buffer on the stack */
@@ -57,17 +58,24 @@ public class exidy440 {
             return a;
         }
     }
+
+    /* channel_data structure holds info about each active sound channel */
+    public static class sound_channel_data {
+
+        ShortPtr base;
+        int offset;
+        int remaining;
+
+        public static sound_channel_data[] create(int n) {
+            sound_channel_data[] a = new sound_channel_data[n];
+            for (int k = 0; k < n; k++) {
+                a[k] = new sound_channel_data();
+            }
+            return a;
+        }
+    }
+
     /*TODO*///	
-/*TODO*///	
-/*TODO*///	/* channel_data structure holds info about each active sound channel */
-/*TODO*///	typedef struct sound_channel_data
-/*TODO*///	{
-/*TODO*///		INT16 *base;
-/*TODO*///		int offset;
-/*TODO*///		int remaining;
-/*TODO*///	} sound_channel_data;
-/*TODO*///	
-/*TODO*///	
 /*TODO*///	/* sound_cache_entry structure contains info on each decoded sample */
 /*TODO*///	typedef struct sound_cache_entry
 /*TODO*///	{
@@ -95,43 +103,25 @@ public class exidy440 {
 /*TODO*///	static sound_cache_entry *sound_cache_end;
 /*TODO*///	static sound_cache_entry *sound_cache_max;
 /*TODO*///	
-	/* 6844 description */
-	static m6844_channel_data[] m6844_channel=m6844_channel_data.create(4);
-	static int m6844_priority;
-	static int m6844_interrupt;
-	static int m6844_chain;
-	
+    /* 6844 description */
+    static m6844_channel_data[] m6844_channel = m6844_channel_data.create(4);
+    static int m6844_priority;
+    static int m6844_interrupt;
+    static int m6844_chain;
+
     /* sound interface parameters */
     static int sound_stream;
-    /*TODO*///	static sound_channel_data sound_channel[4];
-/*TODO*///	
-/*TODO*///	/* debugging */
-/*TODO*///	static FILE *debuglog;
-/*TODO*///	
-/*TODO*///	/* constant channel parameters */
-/*TODO*///	static const int channel_frequency[4] =
-/*TODO*///	{
-/*TODO*///		SAMPLE_RATE_FAST, SAMPLE_RATE_FAST,		/* channels 0 and 1 are run by FCLK */
-/*TODO*///		SAMPLE_RATE_SLOW, SAMPLE_RATE_SLOW		/* channels 2 and 3 are run by SCLK */
-/*TODO*///	};
-/*TODO*///	static const int channel_bits[4] =
-/*TODO*///	{
-/*TODO*///		4, 4,									/* channels 0 and 1 are MC3418s, 4-bit CVSD */
-/*TODO*///		3, 3									/* channels 2 and 3 are MC3417s, 3-bit CVSD */
-/*TODO*///	};
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	/* function prototypes */
-/*TODO*///	static void channel_update(int ch, INT16 **buffer, int length);
-/*TODO*///	static void m6844_finished(int ch);
-/*TODO*///	static void play_cvsd(int ch);
-/*TODO*///	static void stop_cvsd(int ch);
-/*TODO*///	
-/*TODO*///	static static INT16 *add_to_sound_cache(UINT8 *input, int address, int length, int bits, int frequency);
-/*TODO*///	static INT16 *find_or_add_to_sound_cache(int address, int length, int bits, int frequency);
-/*TODO*///	
-/*TODO*///	static void decode_and_filter_cvsd(UINT8 *data, int bytes, int maskbits, int frequency, INT16 *dest);
-/*TODO*///	static void fir_filter(INT32 *input, INT16 *output, int count);
+    static sound_channel_data[] sound_channel = sound_channel_data.create(4);
+
+    /* constant channel parameters */
+    static int channel_frequency[]
+            = {
+                SAMPLE_RATE_FAST, SAMPLE_RATE_FAST,/* channels 0 and 1 are run by FCLK */
+                SAMPLE_RATE_SLOW, SAMPLE_RATE_SLOW/* channels 2 and 3 are run by SCLK */};
+    static int channel_bits[]
+            = {
+                4, 4,/* channels 0 and 1 are MC3418s, 4-bit CVSD */
+                3, 3/* channels 2 and 3 are MC3417s, 3-bit CVSD */};
 
     /**
      * ***********************************
@@ -142,33 +132,32 @@ public class exidy440 {
      */
     public static ShStartPtr exidy440_sh_start = new ShStartPtr() {
         public int handler(MachineSound msound) {
-            /*TODO*///		const char *names[] =
-/*TODO*///		{
-/*TODO*///			"Exidy 440 sound left",
-/*TODO*///			"Exidy 440 sound right"
-/*TODO*///		};
-		int i, length;
-/*TODO*///		int vol[2];
+            String names[]
+                    = {
+                        "Exidy 440 sound left",
+                        "Exidy 440 sound right"
+                    };
+            int i, length;
+            int[] vol = new int[2];
 
             /* reset the system */
             u8_exidy440_sound_command = 0;
             u8_exidy440_sound_command_ack = 1;
 
             /* reset the 6844 */
- 		for (i = 0; i < 4; i++)
-		{
-			m6844_channel[i].active = 0;
-			m6844_channel[i].u8_control = 0x00;
-		}
-		m6844_priority = 0x00;
-		m6844_interrupt = 0x00;
-		m6844_chain = 0x00;
-/*TODO*///	
-/*TODO*///		/* get stream channels */
-/*TODO*///		vol[0] = MIXER(100, MIXER_PAN_LEFT);
-/*TODO*///		vol[1] = MIXER(100, MIXER_PAN_RIGHT);
-/*TODO*///		sound_stream = stream_init_multi(2, names, vol, SAMPLE_RATE_FAST, 0, channel_update);
-/*TODO*///	
+            for (i = 0; i < 4; i++) {
+                m6844_channel[i].active = 0;
+                m6844_channel[i].u8_control = 0x00;
+            }
+            m6844_priority = 0x00;
+            m6844_interrupt = 0x00;
+            m6844_chain = 0x00;
+
+            /* get stream channels */
+            vol[0] = MIXER(100, MIXER_PAN_LEFT);
+            vol[1] = MIXER(100, MIXER_PAN_RIGHT);
+            sound_stream = stream_init_multi(2, names, vol, SAMPLE_RATE_FAST, 0, channel_update);
+            /*TODO*///	
 /*TODO*///		/* allocate the sample cache */
 /*TODO*///		length = memory_region_length(REGION_SOUND1) * 16 + MAX_CACHE_ENTRIES * sizeof(sound_cache_entry);
 /*TODO*///		sound_cache = malloc(length);
@@ -297,36 +286,34 @@ public class exidy440 {
 /*TODO*///			*dest_right++ = sample_right;
 /*TODO*///		}
 /*TODO*///	}
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	/*************************************
-/*TODO*///	 *
-/*TODO*///	 *	Stream callback
-/*TODO*///	 *
-/*TODO*///	 *************************************/
-/*TODO*///	
-/*TODO*///	static void channel_update(int ch, INT16 **buffer, int length)
-/*TODO*///	{
-/*TODO*///		/* reset the mixer buffers */
+    /**
+     * ***********************************
+     *
+     * Stream callback
+     *
+     ************************************
+     */
+    public static StreamInitMultiPtr channel_update = new StreamInitMultiPtr() {
+        public void handler(int ch, ShortPtr[] buffer, int length) {
+            /*TODO*///		/* reset the mixer buffers */
 /*TODO*///		memset(mixer_buffer_left, 0, length * sizeof(INT32));
 /*TODO*///		memset(mixer_buffer_right, 0, length * sizeof(INT32));
 /*TODO*///	
-/*TODO*///		/* loop over channels */
-/*TODO*///		for (ch = 0; ch < 4; ch++)
-/*TODO*///		{
-/*TODO*///			sound_channel_data *channel = &sound_channel[ch];
-/*TODO*///			int samples, volume, left = length;
-/*TODO*///			int effective_offset;
-/*TODO*///	
-/*TODO*///			/* if we're not active, bail */
-/*TODO*///			if (channel->remaining <= 0)
-/*TODO*///				continue;
-/*TODO*///	
-/*TODO*///			/* see how many samples to copy */
-/*TODO*///			samples = (left > channel->remaining) ? channel->remaining : left;
-/*TODO*///	
-/*TODO*///			/* get a pointer to the sample data and copy to the left */
+            /* loop over channels */
+            for (ch = 0; ch < 4; ch++) {
+                sound_channel_data channel = sound_channel[ch];
+                int samples, volume, left = length;
+                int effective_offset;
+
+                /* if we're not active, bail */
+                if (channel.remaining <= 0) {
+                    continue;
+                }
+
+                /* see how many samples to copy */
+                samples = (left > channel.remaining) ? channel.remaining : left;
+
+                /*TODO*///			/* get a pointer to the sample data and copy to the left */
 /*TODO*///			volume = exidy440_sound_volume[2 * ch + 0];
 /*TODO*///			if (volume)
 /*TODO*///				add_and_scale_samples(ch, mixer_buffer_left, samples, volume);
@@ -336,26 +323,24 @@ public class exidy440 {
 /*TODO*///			if (volume)
 /*TODO*///				add_and_scale_samples(ch, mixer_buffer_right, samples, volume);
 /*TODO*///	
-/*TODO*///			/* update our counters */
-/*TODO*///			channel->offset += samples;
-/*TODO*///			channel->remaining -= samples;
-/*TODO*///			left -= samples;
-/*TODO*///	
-/*TODO*///			/* update the MC6844 */
-/*TODO*///			effective_offset = (ch & 2) ? channel->offset / 2 : channel->offset;
-/*TODO*///			m6844_channel[ch].address = m6844_channel[ch].start_address + effective_offset / 8;
-/*TODO*///			m6844_channel[ch].counter = m6844_channel[ch].start_counter - effective_offset / 8;
-/*TODO*///			if (m6844_channel[ch].counter <= 0)
-/*TODO*///			{
-/*TODO*///				m6844_finished(ch);
-/*TODO*///			}
-/*TODO*///		}
-/*TODO*///	
+                /* update our counters */
+                channel.offset += samples;
+                channel.remaining -= samples;
+                left -= samples;
+
+                /* update the MC6844 */
+                effective_offset = (ch & 2) != 0 ? channel.offset / 2 : channel.offset;
+                m6844_channel[ch].address = m6844_channel[ch].start_address + effective_offset / 8;
+                m6844_channel[ch].counter = m6844_channel[ch].start_counter - effective_offset / 8;
+                if (m6844_channel[ch].counter <= 0) {
+                    m6844_finished(ch);
+                }
+            }
+            /*TODO*///	
 /*TODO*///		/* all done, time to mix it */
 /*TODO*///		mix_to_16(length, buffer[0], buffer[1]);
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	
+        }
+    };
     /**
      * ***********************************
      *
@@ -410,225 +395,214 @@ public class exidy440 {
         }
     };
 
-    	
-	
-	/*************************************
-	 *
-	 *	MC6844 DMA controller interface
-	 *
-	 *************************************/
-	
-	public static void exidy440_m6844_update()
-	{
-		/* update the stream */
-		stream_update(sound_stream, 0);
-	}
-	
-/*TODO*///	
-/*TODO*///	void m6844_finished(int ch)
-/*TODO*///	{
-/*TODO*///		m6844_channel_data *channel = &m6844_channel[ch];
-/*TODO*///	
-/*TODO*///		/* mark us inactive */
-/*TODO*///		channel->active = 0;
-/*TODO*///	
-/*TODO*///		/* set the final address and counter */
-/*TODO*///		channel->counter = 0;
-/*TODO*///		channel->address = channel->start_address + channel->start_counter;
-/*TODO*///	
-/*TODO*///		/* clear the DMA busy bit and set the DMA end bit */
-/*TODO*///		channel->control &= ~0x40;
-/*TODO*///		channel->control |= 0x80;
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	
-	
-	/*************************************
-	 *
-	 *	MC6844 DMA controller I/O
-	 *
-	 *************************************/
-	
-	public static ReadHandlerPtr exidy440_m6844_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		int result = 0;
-	
-		/* first update the current state of the DMA transfers */
-		exidy440_m6844_update();
-	
-		/* switch off the offset we were given */
-		switch (offset)
-		{
-			/* upper byte of address */
-			case 0x00:
-			case 0x04:
-			case 0x08:
-			case 0x0c:
-				result = m6844_channel[offset / 4].address >> 8;
-				break;
-	
-			/* lower byte of address */
-			case 0x01:
-			case 0x05:
-			case 0x09:
-			case 0x0d:
-				result = m6844_channel[offset / 4].address & 0xff;
-				break;
-	
-			/* upper byte of counter */
-			case 0x02:
-			case 0x06:
-			case 0x0a:
-			case 0x0e:
-				result = m6844_channel[offset / 4].counter >> 8;
-				break;
-	
-			/* lower byte of counter */
-			case 0x03:
-			case 0x07:
-			case 0x0b:
-			case 0x0f:
-				result = m6844_channel[offset / 4].counter & 0xff;
-				break;
-	
-			/* channel control */
-			case 0x10:
-			case 0x11:
-			case 0x12:
-			case 0x13:
-				result = m6844_channel[offset - 0x10].u8_control&0xFF;
-	
-				/* a read here clears the DMA end flag */
-				m6844_channel[offset - 0x10].u8_control = (m6844_channel[offset - 0x10].u8_control&  ~0x80)&0xFF;
-				break;
-	
-			/* priority control */
-			case 0x14:
-				result = m6844_priority;
-				break;
-	
-			/* interrupt control */
-			case 0x15:
-	
-				/* update the global DMA end flag */
-				m6844_interrupt &= ~0x80;
-				m6844_interrupt |= (m6844_channel[0].u8_control & 0x80) |
-				                   (m6844_channel[1].u8_control & 0x80) |
-				                   (m6844_channel[2].u8_control & 0x80) |
-				                   (m6844_channel[3].u8_control & 0x80);
-	
-				result = m6844_interrupt;
-				break;
-	
-			/* chaining control */
-			case 0x16:
-				result = m6844_chain;
-				break;
-		}
-	
-		return result;
-	} };
-	
-	
-	public static WriteHandlerPtr exidy440_m6844_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		int i;
-	
-		/* first update the current state of the DMA transfers */
-		exidy440_m6844_update();
-	
-		/* switch off the offset we were given */
-		switch (offset)
-		{
-			/* upper byte of address */
-			case 0x00:
-			case 0x04:
-			case 0x08:
-			case 0x0c:
-				m6844_channel[offset / 4].address = (m6844_channel[offset / 4].address & 0xff) | (data << 8);
-				break;
-	
-			/* lower byte of address */
-			case 0x01:
-			case 0x05:
-			case 0x09:
-			case 0x0d:
-				m6844_channel[offset / 4].address = (m6844_channel[offset / 4].address & 0xff00) | (data & 0xff);
-				break;
-	
-			/* upper byte of counter */
-			case 0x02:
-			case 0x06:
-			case 0x0a:
-			case 0x0e:
-				m6844_channel[offset / 4].counter = (m6844_channel[offset / 4].counter & 0xff) | (data << 8);
-				break;
-	
-			/* lower byte of counter */
-			case 0x03:
-			case 0x07:
-			case 0x0b:
-			case 0x0f:
-				m6844_channel[offset / 4].counter = (m6844_channel[offset / 4].counter & 0xff00) | (data & 0xff);
-				break;
-	
-			/* channel control */
-			case 0x10:
-			case 0x11:
-			case 0x12:
-			case 0x13:
-				m6844_channel[offset - 0x10].u8_control = ((m6844_channel[offset - 0x10].u8_control & 0xc0) | (data & 0x3f))&0xFF;
-				break;
-	
-			/* priority control */
-			case 0x14:
-				m6844_priority = data;
-	
-				/* update the sound playback on each channel */
-				for (i = 0; i < 4; i++)
-				{
-					/* if we're going active... */
-					if (m6844_channel[i].active==0 && (data & (1 << i))!=0)
-					{
-						/* mark us active */
-						m6844_channel[i].active = 1;
-	
-						/* set the DMA busy bit and clear the DMA end bit */
-						m6844_channel[i].u8_control =  (m6844_channel[i].u8_control| 0x40)&0xFF;
-						m6844_channel[i].u8_control =(m6844_channel[i].u8_control& ~0x80)&0xFF;
-	
-						/* set the starting address, counter, and time */
-						m6844_channel[i].start_address = m6844_channel[i].address;
-						m6844_channel[i].start_counter = m6844_channel[i].counter;
-	
-						/* generate and play the sample */
-						play_cvsd(i);
-					}
-	
-					/* if we're going inactive... */
-					else if (m6844_channel[i].active!=0 && (data & (1 << i))==0)
-					{
-						/* mark us inactive */
-						m6844_channel[i].active = 0;
-	
-						/* stop playing the sample */
-						stop_cvsd(i);
-					}
-				}
-				break;
-	
-			/* interrupt control */
-			case 0x15:
-				m6844_interrupt = (m6844_interrupt & 0x80) | (data & 0x7f);
-				break;
-	
-			/* chaining control */
-			case 0x16:
-				m6844_chain = data;
-				break;
-		}
-	} };
-/*TODO*///	
+    /**
+     * ***********************************
+     *
+     * MC6844 DMA controller interface
+     *
+     ************************************
+     */
+    public static void exidy440_m6844_update() {
+        /* update the stream */
+        stream_update(sound_stream, 0);
+    }
+
+    public static void m6844_finished(int ch) {
+        m6844_channel_data channel = m6844_channel[ch];
+
+        /* mark us inactive */
+        channel.active = 0;
+
+        /* set the final address and counter */
+        channel.counter = 0;
+        channel.address = channel.start_address + channel.start_counter;
+
+        /* clear the DMA busy bit and set the DMA end bit */
+        channel.u8_control = (channel.u8_control & ~0x40) & 0xFF;
+        channel.u8_control = (channel.u8_control | 0x80) & 0xFF;
+    }
+
+    /**
+     * ***********************************
+     *
+     * MC6844 DMA controller I/O
+     *
+     ************************************
+     */
+    public static ReadHandlerPtr exidy440_m6844_r = new ReadHandlerPtr() {
+        public int handler(int offset) {
+            int result = 0;
+
+            /* first update the current state of the DMA transfers */
+            exidy440_m6844_update();
+
+            /* switch off the offset we were given */
+            switch (offset) {
+                /* upper byte of address */
+                case 0x00:
+                case 0x04:
+                case 0x08:
+                case 0x0c:
+                    result = m6844_channel[offset / 4].address >> 8;
+                    break;
+
+                /* lower byte of address */
+                case 0x01:
+                case 0x05:
+                case 0x09:
+                case 0x0d:
+                    result = m6844_channel[offset / 4].address & 0xff;
+                    break;
+
+                /* upper byte of counter */
+                case 0x02:
+                case 0x06:
+                case 0x0a:
+                case 0x0e:
+                    result = m6844_channel[offset / 4].counter >> 8;
+                    break;
+
+                /* lower byte of counter */
+                case 0x03:
+                case 0x07:
+                case 0x0b:
+                case 0x0f:
+                    result = m6844_channel[offset / 4].counter & 0xff;
+                    break;
+
+                /* channel control */
+                case 0x10:
+                case 0x11:
+                case 0x12:
+                case 0x13:
+                    result = m6844_channel[offset - 0x10].u8_control & 0xFF;
+
+                    /* a read here clears the DMA end flag */
+                    m6844_channel[offset - 0x10].u8_control = (m6844_channel[offset - 0x10].u8_control & ~0x80) & 0xFF;
+                    break;
+
+                /* priority control */
+                case 0x14:
+                    result = m6844_priority;
+                    break;
+
+                /* interrupt control */
+                case 0x15:
+
+                    /* update the global DMA end flag */
+                    m6844_interrupt &= ~0x80;
+                    m6844_interrupt |= (m6844_channel[0].u8_control & 0x80)
+                            | (m6844_channel[1].u8_control & 0x80)
+                            | (m6844_channel[2].u8_control & 0x80)
+                            | (m6844_channel[3].u8_control & 0x80);
+
+                    result = m6844_interrupt;
+                    break;
+
+                /* chaining control */
+                case 0x16:
+                    result = m6844_chain;
+                    break;
+            }
+
+            return result;
+        }
+    };
+
+    public static WriteHandlerPtr exidy440_m6844_w = new WriteHandlerPtr() {
+        public void handler(int offset, int data) {
+            int i;
+
+            /* first update the current state of the DMA transfers */
+            exidy440_m6844_update();
+
+            /* switch off the offset we were given */
+            switch (offset) {
+                /* upper byte of address */
+                case 0x00:
+                case 0x04:
+                case 0x08:
+                case 0x0c:
+                    m6844_channel[offset / 4].address = (m6844_channel[offset / 4].address & 0xff) | (data << 8);
+                    break;
+
+                /* lower byte of address */
+                case 0x01:
+                case 0x05:
+                case 0x09:
+                case 0x0d:
+                    m6844_channel[offset / 4].address = (m6844_channel[offset / 4].address & 0xff00) | (data & 0xff);
+                    break;
+
+                /* upper byte of counter */
+                case 0x02:
+                case 0x06:
+                case 0x0a:
+                case 0x0e:
+                    m6844_channel[offset / 4].counter = (m6844_channel[offset / 4].counter & 0xff) | (data << 8);
+                    break;
+
+                /* lower byte of counter */
+                case 0x03:
+                case 0x07:
+                case 0x0b:
+                case 0x0f:
+                    m6844_channel[offset / 4].counter = (m6844_channel[offset / 4].counter & 0xff00) | (data & 0xff);
+                    break;
+
+                /* channel control */
+                case 0x10:
+                case 0x11:
+                case 0x12:
+                case 0x13:
+                    m6844_channel[offset - 0x10].u8_control = ((m6844_channel[offset - 0x10].u8_control & 0xc0) | (data & 0x3f)) & 0xFF;
+                    break;
+
+                /* priority control */
+                case 0x14:
+                    m6844_priority = data;
+
+                    /* update the sound playback on each channel */
+                    for (i = 0; i < 4; i++) {
+                        /* if we're going active... */
+                        if (m6844_channel[i].active == 0 && (data & (1 << i)) != 0) {
+                            /* mark us active */
+                            m6844_channel[i].active = 1;
+
+                            /* set the DMA busy bit and clear the DMA end bit */
+                            m6844_channel[i].u8_control = (m6844_channel[i].u8_control | 0x40) & 0xFF;
+                            m6844_channel[i].u8_control = (m6844_channel[i].u8_control & ~0x80) & 0xFF;
+
+                            /* set the starting address, counter, and time */
+                            m6844_channel[i].start_address = m6844_channel[i].address;
+                            m6844_channel[i].start_counter = m6844_channel[i].counter;
+
+                            /* generate and play the sample */
+                            play_cvsd(i);
+                        } /* if we're going inactive... */ else if (m6844_channel[i].active != 0 && (data & (1 << i)) == 0) {
+                            /* mark us inactive */
+                            m6844_channel[i].active = 0;
+
+                            /* stop playing the sample */
+                            stop_cvsd(i);
+                        }
+                    }
+                    break;
+
+                /* interrupt control */
+                case 0x15:
+                    m6844_interrupt = (m6844_interrupt & 0x80) | (data & 0x7f);
+                    break;
+
+                /* chaining control */
+                case 0x16:
+                    m6844_chain = data;
+                    break;
+            }
+        }
+    };
+
+    /*TODO*///	
 /*TODO*///	
 /*TODO*///	
 /*TODO*///	/*************************************
@@ -689,9 +663,8 @@ public class exidy440 {
 /*TODO*///	 *
 /*TODO*///	 *************************************/
 /*TODO*///	
-	public static void play_cvsd(int ch)
-	{
-/*TODO*///		sound_channel_data *channel = &sound_channel[ch];
+    public static void play_cvsd(int ch) {
+        /*TODO*///		sound_channel_data *channel = &sound_channel[ch];
 /*TODO*///		int address = m6844_channel[ch].address;
 /*TODO*///		int length = m6844_channel[ch].counter;
 /*TODO*///		INT16 *base;
@@ -728,19 +701,16 @@ public class exidy440 {
 /*TODO*///	
 /*TODO*///		/* channels 2 and 3 play twice as slow, so we need to count twice as many samples */
 /*TODO*///		if (ch & 2) channel->remaining *= 2;
-	}
+    }
+
+    public static void stop_cvsd(int ch) {
+        /* the DMA channel is marked inactive; that will kill the audio */
+        sound_channel[ch].remaining = 0;
+        stream_update(sound_stream, 0);
+    }
+    	
 	
 	
-	public static void stop_cvsd(int ch)
-	{
-/*TODO*///		/* the DMA channel is marked inactive; that will kill the audio */
-/*TODO*///		sound_channel[ch].remaining = 0;
-/*TODO*///		stream_update(sound_stream, 0);
-/*TODO*///	
-	}
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	
 /*TODO*///	/*************************************
 /*TODO*///	 *
 /*TODO*///	 *	FIR digital filter
