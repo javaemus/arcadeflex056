@@ -58,10 +58,16 @@ public class eeprom
                 int _buf = 0;
                 int _cmd = 0;
 	
-		for (;len>0;)
+		for (;( (len>0)  );)
 		{
 			char b = (char) buf[_buf];
-			char c = cmd.charAt(_cmd);
+                        //System.out.println(b);
+			char c;
+                        if (_cmd<cmd.length())
+                            c = cmd.charAt(_cmd);
+                        else
+                            c = 0;
+                        //System.out.println(c);
 	
 			if ((b==0) || (c==0))
 				return (b==c)?1:0;
