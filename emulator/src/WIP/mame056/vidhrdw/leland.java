@@ -294,10 +294,12 @@ public class leland
 			scanline = 256;
 		for (i = next_update_scanline; i < scanline; i++)
 		{
-			if ((leland_dac_control & 0x01) == 0)
-				leland_dac_update(0, leland_video_ram.read(i * 256 + 160));
-			if ((leland_dac_control & 0x02) == 0)
-				leland_dac_update(1, leland_video_ram.read(i * 256 + 161));
+			if ((leland_dac_control & 0x01) == 0){
+				/*TODO*///leland_dac_update(0, leland_video_ram.read(i * 256 + 160));
+                        }
+			if ((leland_dac_control & 0x02) == 0){
+				/*TODO*///leland_dac_update(1, leland_video_ram.read(i * 256 + 161));
+                        }
 		}
 	
 		/* set the new last update */

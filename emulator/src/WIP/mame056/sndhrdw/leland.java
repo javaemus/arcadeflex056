@@ -133,6 +133,10 @@ public class leland
 	public static int DAC_BUFFER_MASK = (DAC_BUFFER_SIZE - 1);
 	
 	static UBytePtr[] dac_buffer = new UBytePtr[2];
+        static {
+            for (int i=0 ; i<2 ; i++)
+                dac_buffer[i] = new UBytePtr();
+        }
 	static int[] dac_bufin=new int[2];
 	static int[] dac_bufout=new int[2];
 	
@@ -168,8 +172,8 @@ public class leland
 	public static ShStartPtr leland_sh_start = new ShStartPtr() {
             public int handler(MachineSound msound) {
                 /* reset globals */
-		dac_buffer[0] = null;
-                dac_buffer[1] = null;
+		dac_buffer[0] = new UBytePtr();
+                dac_buffer[1] = new UBytePtr();
 		dac_bufin[0]  = dac_bufin[1]  = 0;
 		dac_bufout[0] = dac_bufout[1] = 0;
 	
@@ -207,6 +211,7 @@ public class leland
 	public static void leland_dac_update(int dacnum, int sample)
 	{
 		UBytePtr buffer = new UBytePtr(dac_buffer[dacnum]);
+                System.out.println(dac_buffer[dacnum]);
 		int bufin = dac_bufin[dacnum];
 	
 		/* skip if nothing */
@@ -321,11 +326,16 @@ public class leland
 	{
 		public timer_state[]	timer   = new timer_state[3];
 		public dma_state[]	dma     = new dma_state[2];
-		public intr_state	intr;
-		public mem_state	mem;
+		public intr_state	intr    = new intr_state();
+		public mem_state	mem     = new mem_state();
 	};
         
         public static i186_state i186 = new i186_state();
+        
+        static {
+            for (int i=0 ; i<2 ; i++)
+                i186.dma[i] = new dma_state();
+        }
 	
 	
 	//public static final int  DAC_BUFFER_SIZE = 1024;
@@ -346,6 +356,11 @@ public class leland
 	};
         
         static dac_state[] dac = new dac_state[8];
+        
+        static {
+            for (int i=0 ; i<8 ; i++)
+                dac[i] = new dac_state();
+        }
 	
 	public static class counter_state
 	{

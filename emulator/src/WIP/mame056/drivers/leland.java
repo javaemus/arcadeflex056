@@ -446,7 +446,7 @@ public class leland
 		update_master_bank.handler();
 	
 		/* sound control is in the rest */
-		leland_i86_control_w.handler(offset, data);
+		/*TODO*///leland_i86_control_w.handler(offset, data);
 	} };
 	
 	
@@ -1578,13 +1578,13 @@ public class leland
 				slave_small_readmem,slave_small_writemem,
 				slave_readport,slave_writeport,
 		    	ignore_interrupt,1
-			),
-			new MachineCPU(
-		    	CPU_I186 | CPU_AUDIO_CPU,
-				16000000/2,
-				leland_i86_readmem,leland_i86_writemem,
-				leland_i86_readport,redline_i86_writeport,
-				ignore_interrupt,1
+			/*TODO*///),
+			/*TODO*///new MachineCPU(
+		    	/*TODO*///CPU_I186 | CPU_AUDIO_CPU,
+			/*TODO*///	16000000/2,
+			/*TODO*///	leland_i86_readmem,leland_i86_writemem,
+			/*TODO*///	leland_i86_readport,redline_i86_writeport,
+			/*TODO*///	ignore_interrupt,1
 			)
 		},
 		60, (1000000*16)/(256*60),
@@ -1630,13 +1630,13 @@ public class leland
 				slave_small_readmem,slave_small_writemem,
 				slave_readport,slave_writeport,
 		    	ignore_interrupt,1
-			),
-			new MachineCPU(
-		    	CPU_I186 | CPU_AUDIO_CPU,
-				16000000/2,
-				leland_i86_readmem,leland_i86_writemem,
-				leland_i86_readport,leland_i86_writeport,
-				ignore_interrupt,1
+			/*TODO*///),
+			/*TODO*///new MachineCPU(
+		    	/*TODO*///CPU_I186 | CPU_AUDIO_CPU,
+			/*TODO*///	16000000/2,
+			/*TODO*///	leland_i86_readmem,leland_i86_writemem,
+			/*TODO*///	leland_i86_readport,leland_i86_writeport,
+			/*TODO*///	ignore_interrupt,1
 			)
 		},
 		60, (1000000*16)/(256*60),
@@ -1682,13 +1682,13 @@ public class leland
 				slave_large_readmem,slave_large_writemem,
 				slave_readport,slave_writeport,
 		    	ignore_interrupt,1
-			),
-			new MachineCPU(
-		    	CPU_I186 | CPU_AUDIO_CPU,
-				16000000/2,
-				leland_i86_readmem,leland_i86_writemem,
-				leland_i86_readport,leland_i86_writeport,
-				ignore_interrupt,1
+			/*TODO*///),
+			/*TODO*///new MachineCPU(
+		    	/*TODO*///CPU_I186 | CPU_AUDIO_CPU,
+			/*TODO*///	16000000/2,
+			/*TODO*///	leland_i86_readmem,leland_i86_writemem,
+			/*TODO*///	leland_i86_readport,leland_i86_writeport,
+			/*TODO*///	ignore_interrupt,1
 			)
 		},
 		60, (1000000*16)/(256*60),
