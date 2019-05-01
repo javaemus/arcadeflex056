@@ -1,0 +1,98 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package mame056.machine;
+
+import static arcadeflex056.fucPtr.*;
+
+
+/**
+ *
+ * @author jagsanchez
+ */
+public class z80fmlyH {
+    /*  Z80 FMLY.H   Z80 FAMILY IC EMURATION */
+    public static int MAX_CTC = 2;
+/*TODO*///
+/*TODO*///#define NOTIMER_0 (1<<0)
+/*TODO*///#define NOTIMER_1 (1<<1)
+/*TODO*///#define NOTIMER_2 (1<<2)
+/*TODO*///#define NOTIMER_3 (1<<3)
+
+    public static class z80ctc_interface
+    {
+            public int num;                                      /* number of CTCs to emulate */
+            public int[] baseclock=new int[MAX_CTC];                           /* timer clock */
+            public int[] notimer=new int[MAX_CTC];                         /* timer disablers */
+            public ReadHandlerPtr[] intr=new ReadHandlerPtr[MAX_CTC];             /* callback when change interrupt status */
+            public WriteHandlerPtr[] zc0=new WriteHandlerPtr[MAX_CTC];   /* ZC/TO0 callback */
+            public WriteHandlerPtr[] zc1=new WriteHandlerPtr[MAX_CTC];   /* ZC/TO1 callback */
+            public WriteHandlerPtr[] zc2=new WriteHandlerPtr[MAX_CTC];   /* ZC/TO2 callback */
+
+        public z80ctc_interface(int i, int[] i0, int[] i1, ReadHandlerPtr[] interruptPtr, WriteHandlerPtr[] writeHandlerPtr, WriteHandlerPtr[] writeHandlerPtr0, WriteHandlerPtr[] writeHandlerPtr1) {
+            num = i;
+            baseclock = i0;
+            notimer = i1;
+            intr = interruptPtr;
+            zc0 = writeHandlerPtr;
+            zc1 = writeHandlerPtr0;
+            zc2 = writeHandlerPtr1;
+        }
+    };
+
+/*TODO*///void z80ctc_init (z80ctc_interface *intf);
+/*TODO*///
+/*TODO*///double z80ctc_getperiod (int which, int ch);
+/*TODO*///
+/*TODO*///void z80ctc_reset (int which);
+/*TODO*///
+/*TODO*///void z80ctc_w (int which, int offset, int data);
+/*TODO*///
+/*TODO*///int z80ctc_r (int which, int offset);
+/*TODO*///
+/*TODO*///void z80ctc_trg_w (int which, int trg, int offset, int data);
+/*TODO*///
+/*TODO*////* Z80 DaisyChain controll */
+/*TODO*///int z80ctc_interrupt( int which );
+/*TODO*///void z80ctc_reti( int which );
+/*TODO*////*--------------------------------------------------------------------*/
+/*TODO*///#define MAX_PIO 1
+/*TODO*///
+/*TODO*///typedef struct
+/*TODO*///{
+/*TODO*///	int num;                                      /* number of PIOs to emulate */
+/*TODO*///	void (*intr[MAX_CTC])(int which);             /* callback when change interrupt status */
+/*TODO*///	void (*rdyA[MAX_PIO])(int data );             /* portA ready active callback (do not support yet)*/
+/*TODO*///	void (*rdyB[MAX_PIO])(int data );             /* portB ready active callback (do not support yet)*/
+/*TODO*///} z80pio_interface;
+/*TODO*///
+/*TODO*///
+/*TODO*///void z80pio_init (z80pio_interface *intf);
+/*TODO*///void z80pio_reset (int which);
+/*TODO*///void z80pio_d_w( int which , int ch , int data );
+/*TODO*///void z80pio_c_w( int which , int ch , int data );
+/*TODO*///int z80pio_c_r( int which , int ch );
+/*TODO*///int z80pio_d_r( int which , int ch );
+/*TODO*///
+/*TODO*////* set/clear /astb input */
+/*TODO*///void	z80pio_astb_w(int which, int state);
+/*TODO*////* set/clear /bstb input */
+/*TODO*///void	z80pio_bstb_w(int which, int state);
+/*TODO*///
+/*TODO*///void z80pio_p_w( int which , int ch , int data );
+/*TODO*///int z80pio_p_r( int which , int ch );
+/*TODO*///
+/*TODO*////* Z80 DaisyChain controll */
+/*TODO*///int z80pio_interrupt( int which );
+/*TODO*///void z80pio_reti( int which );
+/*TODO*///
+/*TODO*////* mame interface */
+/*TODO*///
+/*TODO*////* this functions can use when C/D = A0 , A/B = A1 */
+/*TODO*///
+/*TODO*///
+/*TODO*///
+
+}

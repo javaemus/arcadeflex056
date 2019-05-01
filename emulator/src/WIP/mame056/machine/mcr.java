@@ -20,6 +20,9 @@ import static mame056.common.*;
 import static mame056.drawgfxH.*;
 import static mame056.cpuexec.*;
 import static mame056.cpuexecH.*;
+import static mame056.machine.z80fmly.*;
+import static mame056.machine.z80fmlyH.*;
+import static mame056.mame.*;
 
 public class mcr
 {
@@ -180,41 +183,42 @@ public class mcr
 /*TODO*///		/*outputs: A/B,CA/B2       */ 0, 0, 0, 0,
 /*TODO*///		/*irqs   : A/B             */ 0, 0
 /*TODO*///	};
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	/*************************************
-/*TODO*///	 *
-/*TODO*///	 *	Generic MCR CTC interface
-/*TODO*///	 *
-/*TODO*///	 *************************************/
-/*TODO*///	
-/*TODO*///	static void ctc_interrupt(int state)
-/*TODO*///	{
-/*TODO*///		cpu_cause_interrupt(0, Z80_VECTOR(0, state));
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	
+	
+	
+	
+	/*************************************
+	 *
+	 *	Generic MCR CTC interface
+	 *
+	 *************************************/
+	
+	public static ReadHandlerPtr ctc_interrupt = new ReadHandlerPtr() {
+            public int handler(int state) {
+                cpu_cause_interrupt(0, Z80_VECTOR(0, state));
+                return 1;
+            }
+        };
+          
 	public static Z80_DaisyChain mcr_daisy_chain[] =
 	{
-/*TODO*///		{ z80ctc_reset, z80ctc_interrupt, z80ctc_reti, 0 }, /* CTC number 0 */
-/*TODO*///		{ 0, 0, 0, -1 }		/* end mark */
+		new Z80_DaisyChain( z80ctc_reset, z80ctc_interrupt, z80ctc_reti, 0 ), /* CTC number 0 */
+		new Z80_DaisyChain( null, null, null, -1 )		/* end mark */
 	};
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	static z80ctc_interface ctc_intf =
-/*TODO*///	{
-/*TODO*///		1,                  /* 1 chip */
-/*TODO*///		{ 0 },              /* clock (filled in from the CPU 0 clock) */
-/*TODO*///		{ 0 },              /* timer disables */
-/*TODO*///		{ ctc_interrupt },  /* interrupt handler */
-/*TODO*///		{ z80ctc_0_trg1_w },/* ZC/TO0 callback */
-/*TODO*///		{ 0 },              /* ZC/TO1 callback */
-/*TODO*///		{ 0 }               /* ZC/TO2 callback */
-/*TODO*///	};
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	
+	
+	
+	static z80ctc_interface ctc_intf = new z80ctc_interface
+	(
+		1,                  /* 1 chip */
+		new int[]{ 0 },              /* clock (filled in from the CPU 0 clock) */
+		new int[]{ 0 },              /* timer disables */
+		new ReadHandlerPtr[]{ ctc_interrupt },  /* interrupt handler */
+		new WriteHandlerPtr[]{ z80ctc_0_trg1_w },/* ZC/TO0 callback */
+		new WriteHandlerPtr[]{ null },              /* ZC/TO1 callback */
+		new WriteHandlerPtr[]{ null }               /* ZC/TO2 callback */
+        );
+	
+	
+	
 /*TODO*///	/*************************************
 /*TODO*///	 *
 /*TODO*///	 *	Generic MCR machine initialization
@@ -223,15 +227,15 @@ public class mcr
 /*TODO*///	
 	public static InitMachinePtr mcr_init_machine = new InitMachinePtr() { public void handler() 
 	{
-/*TODO*///		/* initialize the CTC */
-/*TODO*///		ctc_intf.baseclock[0] = Machine->drv->cpu[0].cpu_clock;
-/*TODO*///		z80ctc_init(&ctc_intf);
-/*TODO*///	
-/*TODO*///		/* reset cocktail flip */
-/*TODO*///		mcr_cocktail_flip = 0;
-/*TODO*///	
-/*TODO*///		/* initialize the sound */
-/*TODO*///		mcr_sound_init();
+		/* initialize the CTC */
+		ctc_intf.baseclock[0] = Machine.drv.cpu[0].cpu_clock;
+		z80ctc_init(ctc_intf);
+	
+		/* reset cocktail flip */
+		mcr_cocktail_flip = 0;
+	
+		/* initialize the sound */
+		/*TODO*///mcr_sound_init();
 	} };
 /*TODO*///	
 /*TODO*///	

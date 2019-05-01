@@ -105,6 +105,7 @@ import static common.libc.cstring.memcpy;
 import static WIP.mame056.machine.mcr.*;
 import static mame056.palette.*;
 import static WIP.mame056.vidhrdw.mcr12.*;
+import static mame056.machine.z80fmly.*;
 
 public class mcr1
 {
@@ -217,7 +218,7 @@ public class mcr1
 		new IO_ReadPort( 0x04, 0x04, input_port_4_r ),
 		/*TODO*///new IO_ReadPort( 0x07, 0x07, ssio_status_r ),
 		new IO_ReadPort( 0x10, 0x10, input_port_0_r ),
-		/*TODO*///new IO_ReadPort( 0xf0, 0xf3, z80ctc_0_r ),
+		new IO_ReadPort( 0xf0, 0xf3, z80ctc_0_r ),
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
@@ -227,7 +228,7 @@ public class mcr1
 		/*TODO*///new IO_WritePort( 0x1c, 0x1f, ssio_data_w ),
 		new IO_WritePort( 0xe0, 0xe0, watchdog_reset_w ),
 		new IO_WritePort( 0xe8, 0xe8, MWA_NOP ),
-		/*TODO*///new IO_WritePort( 0xf0, 0xf3, z80ctc_0_w ),
+		new IO_WritePort( 0xf0, 0xf3, z80ctc_0_w ),
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
