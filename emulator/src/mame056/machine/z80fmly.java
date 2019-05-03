@@ -102,6 +102,7 @@ public class z80fmly {
 	
 		for (i = 0; i < intf.num; i++)
 		{
+                        ctcs[i] = new z80ctc();
 			ctcs[i].clock = intf.baseclock[i];
 			ctcs[i].invclock16 = 16.0 / (double)intf.baseclock[i];
 			ctcs[i].invclock256 = 256.0 / (double)intf.baseclock[i];

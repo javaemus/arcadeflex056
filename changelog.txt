@@ -1,3 +1,8 @@
+03/05/2019
+=========
+-Added sauro fully playable driver
+-Added WIP speedbal driver
+
 30/04/2019
 ==========
 -Added arabian driver (fully playable)

@@ -96,6 +96,8 @@ import static WIP.mame056.drivers.exidy440.*;
 import static WIP.mame056.drivers.leland.*;
 import static WIP.mame056.drivers.toypop.*;
 import static mame056.drivers.arabian.*;
+import static mame056.drivers.sauro.*;
+import static WIP.mame056.drivers.speedbal.*;
 
 public class driver {
 
@@ -3770,8 +3772,8 @@ public class driver {
         /*TODO*///	/* Tecfri games */
         /*TODO*///	driver_holeland,	/* (c) 1984 */
         /*TODO*///	driver_crzrally,	/* (c) 1985 */
-        /*TODO*///	driver_speedbal,	/* (c) 1987 */
-        /*TODO*///	driver_sauro,		/* (c) 1987 */
+                driver_speedbal,	/* (c) 1987 */
+        	driver_sauro,		/* (c) 1987 */
         /*TODO*///
         /*TODO*///	/* Metro games */
         /*TODO*///	driver_karatour,	/* (c) Mitchell */

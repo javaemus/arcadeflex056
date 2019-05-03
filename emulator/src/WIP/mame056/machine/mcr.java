@@ -219,12 +219,12 @@ public class mcr
 	
 	
 	
-/*TODO*///	/*************************************
-/*TODO*///	 *
-/*TODO*///	 *	Generic MCR machine initialization
-/*TODO*///	 *
-/*TODO*///	 *************************************/
-/*TODO*///	
+	/*************************************
+	 *
+	 *	Generic MCR machine initialization
+	 *
+	 *************************************/
+	
 	public static InitMachinePtr mcr_init_machine = new InitMachinePtr() { public void handler() 
 	{
 		/* initialize the CTC */
