@@ -22,9 +22,6 @@ import static mame056.drawgfxH.*;
 
 import static mame056.vidhrdw.generic.*;
 
-
-
-
 public class kncljoe {
 
     /*TODO*///	static struct tilemap *bg_tilemap;
@@ -172,8 +169,8 @@ public class kncljoe {
             flipscreen = data & 0x01;
             /*TODO*///		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? TILEMAP_FLIPX : TILEMAP_FLIPY);
 
-            coin_counter_w(0, data & 0x02);
-            coin_counter_w(1, data & 0x20);
+            coin_counter_w.handler(0, data & 0x02);
+            coin_counter_w.handler(1, data & 0x20);
 
             if (tile_bank != ((data & 0x10) >> 4)) {
                 tile_bank = (data & 0x10) >> 4;
