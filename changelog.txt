@@ -1,5 +1,6 @@
 06/05/2019
 ==========
+-video border issue solved (e.g. in swimmer driver)
 -kingobox is fully playable (moved to mame056 branch)
 -Added kingobox driver
 -coin_counter_w method is now a WriteHandlerPtr (many classes have been updated)

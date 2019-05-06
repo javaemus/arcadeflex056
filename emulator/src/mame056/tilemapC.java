@@ -274,12 +274,13 @@ public static void SWAP(int X, int Y) { int temp=X; X=Y; Y=temp; }
             }
         };
 		
-/*TODO*///	UINT32 tilemap_scan_cols( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
-/*TODO*///	{
-/*TODO*///		/* logical (col,row) -> memory offset */
-/*TODO*///		return col*num_rows + row;
-/*TODO*///	}
-/*TODO*///	
+	public static TilemapScanHandler tilemap_scan_cols = new TilemapScanHandler() {
+            public int handler(int col, int row, int num_cols, int num_rows) {
+                /* logical (col,row) -> memory offset */
+		return col*num_rows + row;
+            }
+        };
+	
 	/***********************************************************************************/
 	
 	public static int mappings_create( tilemap tilemap )

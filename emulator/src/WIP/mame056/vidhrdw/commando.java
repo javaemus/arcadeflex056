@@ -81,7 +81,7 @@ public class commando
 	public static VhStartPtr commando_vh_start = new VhStartPtr() { public int handler() 
 	{
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);
-		/*TODO*///bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,     16,16,32,32);
+		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,     16,16,32,32);
 	
 		if (fg_tilemap==null || bg_tilemap==null)
 			return 1;

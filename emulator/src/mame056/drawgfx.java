@@ -1630,30 +1630,36 @@ public class drawgfx {
         } else if (dest.depth == 15 || dest.depth == 16) {
             if ((pen >> 8) == (pen & 0xff)) {
                 for (y = sy; y <= ey; y++) {
-                    UShortPtr z = new UShortPtr(dest.line[y], sx);
-                    for (int i = 0; i < (ex - sx + 1) * 2; i++) {
-                        z.write(i, (char) (pen & 0xff));////memset(((UINT16 *)dest.line[y]) + sx,pen&0xff,(ex-sx+1)*2);
+                    if (y>=Machine.uiymin){
+                        UShortPtr z = new UShortPtr(dest.line[y], sx);
+                        for (int i = 0; i < (ex - sx + 1) * 2; i++) {
+                            z.write(i, (char) (pen & 0xff));////memset(((UINT16 *)dest.line[y]) + sx,pen&0xff,(ex-sx+1)*2);
+                        }
                     }
                 }
             } else {
-                UShortPtr sp = new UShortPtr(dest.line[sy]);
-                int x;
+                
+                    UShortPtr sp = new UShortPtr(dest.line[sy]);
+                    int x;
 
-                for (x = sx; x <= ex; x++) {
-                    sp.write(x, (char) pen);
-                }
-                sp.inc(sx);
-
-                for (y = sy + 1; y <= ey; y++) {
-                    UShortPtr z = new UShortPtr(dest.line[y], sx);
-                    for (int i = 0; i < (ex - sx + 1) * 2; i++) {
-                        z.write(i, sp.read(i));
+                    for (x = sx; x <= ex; x++) {
+                        sp.write(x, (char) pen);
                     }
-                }
+                    sp.inc(sx);
+
+                    for (y = sy + 1; y <= ey; y++) {
+                        UShortPtr z = new UShortPtr(dest.line[y], sx);
+                        for (int i = 0; i < (ex - sx + 1) * 2; i++) {
+                            z.write(i, sp.read(i));
+                        }
+                    }
+                
             }
         } else {
             for (y = sy; y <= ey; y++) {
-                memset(dest.line[y], sx, pen, ex - sx + 1);
+                if (y>=Machine.uiymin){
+                    memset(dest.line[y], sx, pen, ex - sx + 1);
+                }
             }
 
         }

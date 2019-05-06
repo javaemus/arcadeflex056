@@ -481,39 +481,39 @@ public class mame {
 
         /* create spriteram buffers if necessary */
         if ((drv.video_attributes & VIDEO_BUFFERS_SPRITERAM) != 0) {
-            throw new UnsupportedOperationException("Unsupported");
-            /*TODO*///		if (spriteram_size)
-/*TODO*///		{
-/*TODO*///			buffered_spriteram = malloc(spriteram_size);
-/*TODO*///			if (!buffered_spriteram)
-/*TODO*///			{
-/*TODO*///				vh_close();
-/*TODO*///				return 1;
-/*TODO*///			}
-/*TODO*///
+            //throw new UnsupportedOperationException("Unsupported");
+            	if (spriteram_size[0] != 0)
+		{
+			buffered_spriteram = new UBytePtr(spriteram_size[0]);
+			if (buffered_spriteram==null)
+			{
+				vh_close();
+				return 1;
+			}
+
 /*TODO*///			state_save_register_UINT8("generic_video", 0, "buffered_spriteram", buffered_spriteram, spriteram_size);
 /*TODO*///
-/*TODO*///			if (spriteram_2_size)
-/*TODO*///			{
-/*TODO*///				buffered_spriteram_2 = malloc(spriteram_2_size);
-/*TODO*///				if (!buffered_spriteram_2)
-/*TODO*///				{
-/*TODO*///					vh_close();
-/*TODO*///					return 1;
-/*TODO*///				}
-/*TODO*///
+			if (spriteram_2_size[0] != 0)
+			{
+				buffered_spriteram_2 = new UBytePtr(spriteram_2_size[0]);
+				if (buffered_spriteram_2==null)
+				{
+					vh_close();
+					return 1;
+				}
+
 /*TODO*///				state_save_register_UINT8("generic_video", 0, "buffered_spriteram_2", buffered_spriteram_2, spriteram_2_size);
-/*TODO*///			}
-/*TODO*///
-/*TODO*///			buffered_spriteram16 = (data16_t *)buffered_spriteram;
-/*TODO*///			buffered_spriteram32 = (data32_t *)buffered_spriteram;
-/*TODO*///			buffered_spriteram16_2 = (data16_t *)buffered_spriteram_2;
-/*TODO*///			buffered_spriteram32_2 = (data32_t *)buffered_spriteram_2;
-/*TODO*///		}
-/*TODO*///		else
-/*TODO*///		{
-/*TODO*///			logerror("vh_open():  Video buffers spriteram but spriteram_size is 0\n");
-/*TODO*///		}
+			}
+
+/*TODO*///			buffered_spriteram16 = buffered_spriteram;
+/*TODO*///			buffered_spriteram32 = buffered_spriteram;
+/*TODO*///			buffered_spriteram16_2 = buffered_spriteram_2;
+/*TODO*///			buffered_spriteram32_2 = buffered_spriteram_2;
+		}
+		else
+		{
+			logerror("vh_open():  Video buffers spriteram but spriteram_size is 0\n");
+		}
         }
 
         /* build our private user interface font */
