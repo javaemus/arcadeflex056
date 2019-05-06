@@ -1,5 +1,6 @@
 06/05/2019
 ==========
+-kingobox is fully playable (moved to mame056 branch)
 -Added kingobox driver
 -coin_counter_w method is now a WriteHandlerPtr (many classes have been updated)
 
