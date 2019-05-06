@@ -15,6 +15,8 @@ import mame056.cpu.dummy_cpu;
 import mame056.cpu.z80.z80;
 import mame056.cpu.m6809.m6809;
 import mame056.cpu.i8039.i8039;
+import mame056.cpu.m6800.m6800;
+import mame056.cpu.m6800.m6803;
 
 public class cpuintrf {
 
@@ -201,14 +203,14 @@ public class cpuintrf {
                 new dummy_cpu(),/*TODO*///	CPU0(V33,	   v33, 	 1,  0,1.00,-1000,		    8, 20,	  0,20,LE,1, 5	),
                 new dummy_cpu(),/*TODO*///	CPU0(V60,	   v60, 	 1,  0,1.00,-1000,		   16, 24lew, 0,24,LE,1, 11	),
                 new dummy_cpu(),/*TODO*///	CPU0(I8035,    i8035,	 1,  0,1.00,0,              8, 16,	  0,16,LE,1, 2	),
-                new i8039(),/*TODO*///	CPU0(I8039,    i8039,	 1,  0,1.00,0,              8, 16,	  0,16,LE,1, 2	),
+                new i8039(),//CPU0(I8039,    i8039,	 1,  0,1.00,0,              8, 16,	  0,16,LE,1, 2	),
                 new dummy_cpu(),/*TODO*///	CPU0(I8048,    i8048,	 1,  0,1.00,0,              8, 16,	  0,16,LE,1, 2	),
                 new dummy_cpu(),/*TODO*///	CPU0(N7751,    n7751,	 1,  0,1.00,0,              8, 16,	  0,16,LE,1, 2	),
                 new dummy_cpu(),/*TODO*///	CPU0(I8X41,    i8x41,	 1,  0,1.00,I8X41_INT_IBF,  8, 16,	  0,16,LE,1, 2	),
-                new dummy_cpu(),/*TODO*///	CPU0(M6800,    m6800,	 1,  0,1.00,M6800_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
+                new m6800(),//CPU0(M6800,    m6800,	 1,  0,1.00,M6800_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
                 new dummy_cpu(),/*TODO*///	CPU0(M6801,    m6801,	 1,  0,1.00,M6801_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
                 new dummy_cpu(),/*TODO*///	CPU0(M6802,    m6802,	 1,  0,1.00,M6802_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
-                new dummy_cpu(),/*TODO*///	CPU0(M6803,    m6803,	 1,  0,1.00,M6803_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
+                new m6803(),/*TODO*///	CPU0(M6803,    m6803,	 1,  0,1.00,M6803_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
                 new dummy_cpu(),/*TODO*///	CPU0(M6808,    m6808,	 1,  0,1.00,M6808_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
                 new dummy_cpu(),/*TODO*///	CPU0(HD63701,  hd63701,  1,  0,1.00,HD63701_IRQ_LINE,8, 16,	  0,16,BE,1, 4	),
                 new dummy_cpu(),/*TODO*///	CPU0(NSC8105,  nsc8105,  1,  0,1.00,NSC8105_IRQ_LINE,8, 16,	  0,16,BE,1, 4	),
@@ -216,7 +218,7 @@ public class cpuintrf {
                 new dummy_cpu(),/*TODO*///	CPU0(M68705,   m68705,	 1,  0,1.00,M68705_IRQ_LINE, 8, 16,	  0,11,BE,1, 3	),
                 new dummy_cpu(),/*TODO*///	CPU0(HD63705,  hd63705,  8,  0,1.00,HD63705_INT_IRQ1,8, 16,	  0,16,BE,1, 3	),
                 new dummy_cpu(),/*TODO*///	CPU0(HD6309,   hd6309,	 2,  0,1.00,HD6309_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
-                new m6809(),/*TODO*///	CPU0(M6809,    m6809,	 2,  0,1.00,M6809_IRQ_LINE,  8, 16,	  0,16,BE,1, 4	),
+                new m6809(),//CPU0(M6809,    m6809,	 2,  0,1.00,M6809_IRQ_LINE,  8, 16,	  0,16,BE,1, 4	),
             /*TODO*///#endif
             /*TODO*///#if (HAS_KONAMI)
             /*TODO*///	CPU0(KONAMI,   konami,	 2,  0,1.00,KONAMI_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
