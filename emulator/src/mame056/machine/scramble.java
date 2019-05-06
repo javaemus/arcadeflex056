@@ -194,7 +194,7 @@ public class scramble {
 
     public static WriteHandlerPtr theend_coin_counter_w = new WriteHandlerPtr() {
         public void handler(int offset, int data) {
-            coin_counter_w(0, data & 0x80);
+            coin_counter_w.handler(0, data & 0x80);
         }
     };
 

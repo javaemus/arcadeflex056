@@ -153,17 +153,17 @@ public class scramble
 	
 	public static WriteHandlerPtr scramble_coin_counter_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		coin_counter_w(0, data);
+		coin_counter_w.handler(0, data);
 	} };
 	
 	public static WriteHandlerPtr scramble_coin_counter_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		coin_counter_w(1, data);
+		coin_counter_w.handler(1, data);
 	} };
 	
 	public static WriteHandlerPtr scramble_coin_counter_3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		coin_counter_w(2, data);
+		coin_counter_w.handler(2, data);
 	} };
 	
 	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)

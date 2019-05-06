@@ -89,11 +89,11 @@ public class starwars
 		switch (offset)
 		{
 			case 0:		/* Coin counter 1 */
-				coin_counter_w(0, data);
+				coin_counter_w.handler(0, data);
 				break;
 	
 			case 1:		/* Coin counter 2 */
-				coin_counter_w(1, data);
+				coin_counter_w.handler(1, data);
 				break;
 	
 			case 2:		/* LED 3 */

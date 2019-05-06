@@ -107,8 +107,8 @@ public class gberet
 	public static WriteHandlerPtr gberet_coincounter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bits 0/1 = coin counters */
-		coin_counter_w(0,data & 1);
-		coin_counter_w(1,data & 2);
+		coin_counter_w.handler(0,data & 1);
+		coin_counter_w.handler(1,data & 2);
 	} };
 	
 	public static WriteHandlerPtr mrgoemon_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -117,8 +117,8 @@ public class gberet
 		int offs;
 	
 		/* bits 0/1 = coin counters */
-		coin_counter_w(0,data & 1);
-		coin_counter_w(1,data & 2);
+		coin_counter_w.handler(0,data & 1);
+		coin_counter_w.handler(1,data & 2);
 	
 		/* bits 5-7 = ROM bank select */
 		offs = 0x10000 + ((data & 0xe0) >> 5) * 0x800;

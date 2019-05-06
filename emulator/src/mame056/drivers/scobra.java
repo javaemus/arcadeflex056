@@ -182,13 +182,13 @@ public class scobra
 	
 	public static WriteHandlerPtr type1_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		coin_counter_w(offset,data);
+		coin_counter_w.handler(offset,data);
 	} };
 	
 	public static WriteHandlerPtr type2_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 1 selects coin counter */
-		coin_counter_w(offset >> 1, data);
+		coin_counter_w.handler(offset >> 1, data);
 	} };
 	
 	

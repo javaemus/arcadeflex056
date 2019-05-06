@@ -72,7 +72,7 @@ public class epos {
             set_led_status(0, data & 1);
             set_led_status(1, data & 2);
 
-            coin_counter_w(0, data & 4);
+            coin_counter_w.handler(0, data & 4);
 
             if (current_palette != ((data & 8) << 1)) {
                 current_palette = (data & 8) << 1;

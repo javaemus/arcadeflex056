@@ -1,3 +1,8 @@
+06/05/2019
+==========
+-Added kingobox driver
+-coin_counter_w method is now a WriteHandlerPtr (many classes have been updated)
+
 03/05/2019
 =========
 -Added sauro fully playable driver

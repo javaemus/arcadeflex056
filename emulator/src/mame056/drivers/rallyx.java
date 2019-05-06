@@ -97,7 +97,7 @@ public class rallyx
 	
 	public static WriteHandlerPtr rallyx_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		coin_counter_w(offset, data);
+		coin_counter_w.handler(offset, data);
 	} };
 	
 	public static WriteHandlerPtr rallyx_leds_w = new WriteHandlerPtr() {public void handler(int offset, int data)

@@ -46,7 +46,7 @@ public class hyperspt
 {
 	public static WriteHandlerPtr hyperspt_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		coin_counter_w(offset,data);
+		coin_counter_w.handler(offset,data);
 	} };
 	
 	/* handle fake button for speed cheat */

@@ -73,8 +73,8 @@ public class jackal
 	public static WriteHandlerPtr jackal_rambank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	if ((data & 0xc4)!=0) usrintf_showmessage("jackal_rambank_w %02x",data);
-		coin_counter_w(0,data & 0x01);
-		coin_counter_w(1,data & 0x02);
+		coin_counter_w.handler(0,data & 0x01);
+		coin_counter_w.handler(1,data & 0x02);
 		jackal_rambank = new UBytePtr((memory_region(REGION_CPU1)),((data & 0x10) << 12));
 		jackal_spritebank = new UBytePtr((memory_region(REGION_CPU1)),((data & 0x08) << 13));
 		cpu_setbank(1,new UBytePtr((memory_region(REGION_CPU1)),((data & 0x20) << 11) + 0x4000));

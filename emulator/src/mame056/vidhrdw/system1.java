@@ -212,7 +212,7 @@ public class system1
 	if ((data & 0x6e) != 0) logerror("videomode = %02x\n",data);
 	
 		/* bit 0 is coin counter */
-		coin_counter_w(0, data & 1);
+		coin_counter_w.handler(0, data & 1);
 	
 		/* bit 4 is screen blank */
 		system1_video_mode = data;

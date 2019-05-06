@@ -70,8 +70,8 @@ public class shisen {
                 logerror("coin ctrl = %02x\n", data);
             }
 
-            coin_counter_w(0, data & 2);
-            coin_counter_w(1, data & 4);
+            coin_counter_w.handler(0, data & 2);
+            coin_counter_w.handler(1, data & 4);
         }
     };
 

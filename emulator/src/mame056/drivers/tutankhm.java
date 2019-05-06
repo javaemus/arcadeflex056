@@ -229,7 +229,7 @@ public class tutankhm
 	
 	public static WriteHandlerPtr tutankhm_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		coin_counter_w(offset ^ 1, data);
+		coin_counter_w.handler(offset ^ 1, data);
 	} };
 	
 	public static WriteHandlerPtr flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)

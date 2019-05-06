@@ -164,8 +164,8 @@ public class gunsmoke
 	
 	
 		/* bits 0 and 1 are for coin counters */
-		coin_counter_w(1,data & 1);
-		coin_counter_w(0,data & 2);
+		coin_counter_w.handler(1,data & 1);
+		coin_counter_w.handler(0,data & 2);
 	
 		/* bits 2 and 3 select the ROM bank */
 		bankaddress = 0x10000 + (data & 0x0c) * 0x1000;

@@ -149,7 +149,7 @@ public class galaxian {
 
     public static WriteHandlerPtr galaxian_coin_counter_w = new WriteHandlerPtr() {
         public void handler(int offset, int data) {
-            coin_counter_w(offset, data & 0x01);
+            coin_counter_w.handler(offset, data & 0x01);
         }
     };
 

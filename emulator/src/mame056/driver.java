@@ -98,6 +98,7 @@ import static WIP.mame056.drivers.toypop.*;
 import static mame056.drivers.arabian.*;
 import static mame056.drivers.sauro.*;
 import static WIP.mame056.drivers.speedbal.*;
+import static WIP.mame056.drivers.kingobox.*;
 
 public class driver {
 
@@ -3854,10 +3855,10 @@ public class driver {
         /*TODO*///	driver_hexa,		/* D. R. Korea */
         /*TODO*///	driver_stactics,	/* [1981 Sega] */
         /*TODO*///	driver_exterm,	/* (c) 1989 Premier Technology - a Gottlieb game */
-        /*TODO*///	driver_kingofb,	/* (c) 1985 Woodplace Inc. */
-        /*TODO*///	driver_ringking,	/* (c) 1985 Data East USA */
-        /*TODO*///	driver_ringkin2,	/* (c) 1985 Data East USA */
-        /*TODO*///	driver_ringkin3,	/* (c) 1985 Data East USA */
+        	driver_kingofb,	/* (c) 1985 Woodplace Inc. */
+        	driver_ringking,	/* (c) 1985 Data East USA */
+        	driver_ringkin2,	/* (c) 1985 Data East USA */
+        	driver_ringkin3,	/* (c) 1985 Data East USA */
         /*TODO*///	driver_ambush,	/* (c) 1983 Nippon Amuse Co-Ltd */
         /*TODO*///	driver_starcrus,	/* [1977 Ramtek] */
         /*TODO*///	driver_homo,		/* bootleg */

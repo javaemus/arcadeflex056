@@ -322,7 +322,7 @@ public class gridlee
 	
 	public static WriteHandlerPtr gridlee_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		coin_counter_w(0, data & 1);
+		coin_counter_w.handler(0, data & 1);
 		logerror("coin counter %s\n", (data & 1)!=0 ? "on" : "off");
 	} };
 	

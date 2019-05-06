@@ -32,8 +32,8 @@ public class pingpong {
             intenable = data & 0x0c;
 
             /* bit 0/1 = coin counters */
-            coin_counter_w(0, data & 1);
-            coin_counter_w(1, data & 2);
+            coin_counter_w.handler(0, data & 1);
+            coin_counter_w.handler(1, data & 2);
 
             /* other bits unknown */
         }

@@ -21,6 +21,7 @@ import static mame056.cpuexecH.*;
 import static mame056.cpuintrf.*;
 import static mame056.cpuintrfH.*;
 import static mame056.drawgfxH.*;
+import static arcadeflex056.fucPtr.*;
 import static mame056.tilemapH.*;
 import static arcadeflex056.video.osd_set_visible_area;
 
@@ -435,18 +436,20 @@ public class common {
     /*-------------------------------------------------
 	coin_counter_w - sets input for coin counter
     -------------------------------------------------*/
-    public static void coin_counter_w(int num, int on) {
-        if (num >= COIN_COUNTERS) {
-            return;
+    public static WriteHandlerPtr coin_counter_w = new WriteHandlerPtr() {
+        public void handler(int num, int on) {
+            if (num >= COIN_COUNTERS) {
+                return;
+            }
+            /* Count it only if the data has changed from 0 to non-zero */
+            if (on != 0 && (lastcoin[num] == 0)) {
+                coins[num]++;
+            }
+            lastcoin[num] = on;
         }
-        /* Count it only if the data has changed from 0 to non-zero */
-        if (on != 0 && (lastcoin[num] == 0)) {
-            coins[num]++;
-        }
-        lastcoin[num] = on;
-    }
-
-
+    };
+        
+    
     /*-------------------------------------------------
 	coin_lockout_w - locks out one coin input
     -------------------------------------------------*/

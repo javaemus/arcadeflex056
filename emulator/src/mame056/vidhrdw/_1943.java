@@ -172,8 +172,8 @@ public class _1943 {
             UBytePtr RAM = memory_region(REGION_CPU1);
 
             /* bits 0 and 1 are coin counters */
-            coin_counter_w(0, data & 1);
-            coin_counter_w(1, data & 2);
+            coin_counter_w.handler(0, data & 1);
+            coin_counter_w.handler(1, data & 2);
 
             /* bits 2, 3 and 4 select the ROM bank */
             bankaddress = 0x10000 + (data & 0x1c) * 0x1000;

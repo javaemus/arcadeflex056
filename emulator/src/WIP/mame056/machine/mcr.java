@@ -410,9 +410,9 @@ public class mcr
 				D0 = coin meter 1
 		*/
 	
-		coin_counter_w(0, (data >> 0) & 1);
-		coin_counter_w(1, (data >> 1) & 1);
-		coin_counter_w(2, (data >> 2) & 1);
+		coin_counter_w.handler(0, (data >> 0) & 1);
+		coin_counter_w.handler(1, (data >> 1) & 1);
+		coin_counter_w.handler(2, (data >> 2) & 1);
 		mcr_cocktail_flip = (data >> 6) & 1;
 	} };
 	

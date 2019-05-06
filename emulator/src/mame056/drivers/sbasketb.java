@@ -53,7 +53,7 @@ public class sbasketb {
 
     public static WriteHandlerPtr sbasketb_coin_counter_w = new WriteHandlerPtr() {
         public void handler(int offset, int data) {
-            coin_counter_w(offset, data);
+            coin_counter_w.handler(offset, data);
         }
     };
 

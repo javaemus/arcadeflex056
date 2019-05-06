@@ -152,8 +152,8 @@ public class ironhors
 			memset(dirtybuffer,1,videoram_size[0]);
 		}
 	
-		coin_counter_w(0,data & 0x10);
-		coin_counter_w(1,data & 0x20);
+		coin_counter_w.handler(0,data & 0x10);
+		coin_counter_w.handler(1,data & 0x20);
 	
 	if ((data & 0xc8)!=0) usrintf_showmessage("ironhors_palettebank_w %02x",data);
 	} };

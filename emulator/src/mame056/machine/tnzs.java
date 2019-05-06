@@ -117,7 +117,7 @@ public class tnzs
 				{
 					logerror("Coin dropped into slot A\n");
 					coin_lockout_global_w(0); /* Unlock all coin slots */
-					coin_counter_w(0,1); coin_counter_w(0,0); /* Count slot A */
+					coin_counter_w.handler(0,1); coin_counter_w.handler(0,0); /* Count slot A */
 					mcu_coinsA++;
 					if (mcu_coinsA >= mcu_coinage[0])
 					{
@@ -136,7 +136,7 @@ public class tnzs
 				{
 					logerror("Coin dropped into slot B\n");
 					coin_lockout_global_w(0); /* Unlock all coin slots */
-					coin_counter_w(1,1); coin_counter_w(1,0); /* Count slot B */
+					coin_counter_w.handler(1,1); coin_counter_w.handler(1,0); /* Count slot B */
 					mcu_coinsB++;
 					if (mcu_coinsB >= mcu_coinage[2])
 					{

@@ -46,7 +46,7 @@ public class zaxxon
 	
 	public static WriteHandlerPtr zaxxon_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		coin_counter_w(offset,data);
+		coin_counter_w.handler(offset,data);
 	} };
 	
 	public static WriteHandlerPtr zaxxon_screen_flip_w = new WriteHandlerPtr() {public void handler(int offset, int data)

@@ -133,7 +133,7 @@ public class megazone {
 
     public static WriteHandlerPtr megazone_coin_counter_w = new WriteHandlerPtr() {
         public void handler(int offset, int data) {
-            coin_counter_w(1 - offset, data);
+            coin_counter_w.handler(1 - offset, data);
             /* 1-offset, because coin counters are in reversed order */
         }
     };

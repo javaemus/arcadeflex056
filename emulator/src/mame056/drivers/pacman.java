@@ -122,7 +122,7 @@ public class pacman {
 
     public static WriteHandlerPtr pacman_coin_counter_w = new WriteHandlerPtr() {
         public void handler(int offset, int data) {
-            coin_counter_w(offset, data & 1);
+            coin_counter_w.handler(offset, data & 1);
         }
     };
 

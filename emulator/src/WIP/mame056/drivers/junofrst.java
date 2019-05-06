@@ -121,11 +121,11 @@ public class junofrst
 	
 	public static WriteHandlerPtr junofrst_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		int bankaddress;
-		UBytePtr RAM = memory_region(REGION_CPU1);
-	
-		bankaddress = 0x10000 + (data & 0x0f) * 0x1000;
-		cpu_setbank(1,new UBytePtr(RAM, bankaddress));
+            int bankaddress;
+            UBytePtr RAM = memory_region(REGION_CPU1);
+
+            bankaddress = 0x10000 + (data & 0x0f) * 0x1000;
+            cpu_setbank(1, new UBytePtr(RAM, bankaddress));
 	} };
 	
 	
@@ -135,63 +135,61 @@ public class junofrst
 	public static ReadHandlerPtr junofrst_portA_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int timer;
-	
-	
-		/* main xtal 14.318MHz, divided by 8 to get the CPU clock, further */
-		/* divided by 1024 to get this timer */
-		/* (divide by (1024/2), and not 1024, because the CPU cycle counter is */
-		/* incremented every other state change of the clock) */
-		timer = (cpu_gettotalcycles() / (1024/2)) & 0x0f;
-	
-		/* low three bits come from the 8039 */
-	
-		return (timer << 4) | i8039_status;
+
+            /* main xtal 14.318MHz, divided by 8 to get the CPU clock, further */
+            /* divided by 1024 to get this timer */
+            /* (divide by (1024/2), and not 1024, because the CPU cycle counter is */
+            /* incremented every other state change of the clock) */
+            timer = (cpu_gettotalcycles() / (1024 / 2)) & 0x0f;
+
+            /* low three bits come from the 8039 */
+            return (timer << 4) | i8039_status;
 	} };
 	
 	public static WriteHandlerPtr junofrst_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		int i;
-	
-	
-		for (i = 0;i < 3;i++)
-		{
-			int C;
-	
-	
-			C = 0;
-			if ((data & 1)!=0) C += 47000;	/* 47000pF = 0.047uF */
-			if ((data & 2)!=0) C += 220000;	/* 220000pF = 0.22uF */
-			data >>= 2;
-			set_RC_filter(i,1000,2200,200,C);
-		}
+            int i;
+
+            for (i = 0; i < 3; i++) {
+                int C;
+
+                C = 0;
+                if ((data & 1) != 0) {
+                    C += 47000;
+                    /* 47000pF = 0.047uF */
+                }
+                if ((data & 2) != 0) {
+                    C += 220000;
+                    /* 220000pF = 0.22uF */
+                }
+                data >>= 2;
+                set_RC_filter(i, 1000, 2200, 200, C);
+            }
 	} };
         
         static int last;
 	
 	public static WriteHandlerPtr junofrst_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		
-	
-	
-		if (last == 0 && data == 1)
-		{
-			/* setting bit 0 low then high triggers IRQ on the sound CPU */
-			cpu_cause_interrupt(1,0xff);
-		}
-	
-		last = data;
+            if (last == 0 && data == 1) {
+                /* setting bit 0 low then high triggers IRQ on the sound CPU */
+                cpu_cause_interrupt(1, 0xff);
+            }
+
+            last = data;
 	} };
 	
 	public static WriteHandlerPtr junofrst_i8039_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (i8039_irqenable != 0)
-			cpu_cause_interrupt(2,I8039_EXT_INT);
+            if (i8039_irqenable != 0) {
+                cpu_cause_interrupt(2, I8039_EXT_INT);
+            }
 	} };
 	
 	public static WriteHandlerPtr i8039_irqen_and_status_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		i8039_irqenable = data & 0x80;
-		i8039_status = (data & 0x70) >> 4;
+            i8039_irqenable = data & 0x80;
+            i8039_status = (data & 0x70) >> 4;
 	} };
 	
 	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -201,40 +199,40 @@ public class junofrst
 	
 	public static WriteHandlerPtr junofrst_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		coin_counter_w(offset,data);
+		coin_counter_w.handler(offset,data);
 	} };
 	
 	
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_RAM ),
-		new Memory_ReadAddress( 0x8010, 0x8010, input_port_0_r ),	/* DSW2 (inverted bits) */
-		new Memory_ReadAddress( 0x801c, 0x801c, watchdog_reset_r ),
-		new Memory_ReadAddress( 0x8020, 0x8020, input_port_1_r ),	/* IN0 I/O: Coin slots, service, 1P/2P buttons */
-		new Memory_ReadAddress( 0x8024, 0x8024, input_port_2_r ),	/* IN1: Player 1 I/O */
-		new Memory_ReadAddress( 0x8028, 0x8028, input_port_3_r ),	/* IN2: Player 2 I/O */
-		new Memory_ReadAddress( 0x802c, 0x802c, input_port_4_r ),	/* DSW1 (inverted bits) */
-		new Memory_ReadAddress( 0x8100, 0x8fff, MRA_RAM ),
-		new Memory_ReadAddress( 0x9000, 0x9fff, MRA_BANK1 ),
-		new Memory_ReadAddress( 0xa000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(0x0000, 0x7fff, MRA_RAM),
+                new Memory_ReadAddress(0x8010, 0x8010, input_port_0_r), /* DSW2 (inverted bits) */
+                new Memory_ReadAddress(0x801c, 0x801c, watchdog_reset_r),
+                new Memory_ReadAddress(0x8020, 0x8020, input_port_1_r), /* IN0 I/O: Coin slots, service, 1P/2P buttons */
+                new Memory_ReadAddress(0x8024, 0x8024, input_port_2_r), /* IN1: Player 1 I/O */
+                new Memory_ReadAddress(0x8028, 0x8028, input_port_3_r), /* IN2: Player 2 I/O */
+                new Memory_ReadAddress(0x802c, 0x802c, input_port_4_r), /* DSW1 (inverted bits) */
+                new Memory_ReadAddress(0x8100, 0x8fff, MRA_RAM),
+                new Memory_ReadAddress(0x9000, 0x9fff, MRA_BANK1),
+                new Memory_ReadAddress(0xa000, 0xffff, MRA_ROM),
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
 	
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_WriteAddress( 0x0000, 0x7fff, tutankhm_videoram_w, videoram, videoram_size ),
-		new Memory_WriteAddress( 0x8000, 0x800f, paletteram_BBGGGRRR_w, paletteram ),
-		new Memory_WriteAddress( 0x8030, 0x8030, interrupt_enable_w ),
-		new Memory_WriteAddress( 0x8031, 0x8032, junofrst_coin_counter_w ),
-		new Memory_WriteAddress( 0x8033, 0x8033, MWA_RAM, tutankhm_scrollx ),              /* video x pan hardware reg - Not USED in Juno*/
-		new Memory_WriteAddress( 0x8034, 0x8035, flip_screen_w ),
-		new Memory_WriteAddress( 0x8040, 0x8040, junofrst_sh_irqtrigger_w ),
-		new Memory_WriteAddress( 0x8050, 0x8050, soundlatch_w ),
-		new Memory_WriteAddress( 0x8060, 0x8060, junofrst_bankselect_w ),
-		new Memory_WriteAddress( 0x8070, 0x8073, junofrst_blitter_w ),
-		new Memory_WriteAddress( 0x8100, 0x8fff, MWA_RAM ),
-		new Memory_WriteAddress( 0x9000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(0x0000, 0x7fff, tutankhm_videoram_w, videoram, videoram_size),
+                new Memory_WriteAddress(0x8000, 0x800f, paletteram_BBGGGRRR_w, paletteram),
+                new Memory_WriteAddress(0x8030, 0x8030, interrupt_enable_w),
+                new Memory_WriteAddress(0x8031, 0x8032, coin_counter_w),
+                new Memory_WriteAddress(0x8033, 0x8033, MWA_RAM, tutankhm_scrollx), /* video x pan hardware reg - Not USED in Juno*/
+                new Memory_WriteAddress(0x8034, 0x8035, flip_screen_w),
+                new Memory_WriteAddress(0x8040, 0x8040, junofrst_sh_irqtrigger_w),
+                new Memory_WriteAddress(0x8050, 0x8050, soundlatch_w),
+                new Memory_WriteAddress(0x8060, 0x8060, junofrst_bankselect_w),
+                new Memory_WriteAddress(0x8070, 0x8073, junofrst_blitter_w),
+                new Memory_WriteAddress(0x8100, 0x8fff, MWA_RAM),
+                new Memory_WriteAddress(0x9000, 0xffff, MWA_ROM),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -262,27 +260,27 @@ public class junofrst
 	
 	public static Memory_ReadAddress i8039_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM ),
+		new Memory_ReadAddress(0x0000, 0x0fff, MRA_ROM),
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
 	
 	public static Memory_WriteAddress i8039_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_ROM ),
+		new Memory_WriteAddress(0x0000, 0x0fff, MWA_ROM),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
 	public static IO_ReadPort i8039_readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
-		new IO_ReadPort( 0x00, 0xff, soundlatch2_r ),
-		new IO_ReadPort( 0x111,0x111, IORP_NOP ),
+		new IO_ReadPort(0x00, 0xff, soundlatch2_r),
+                new IO_ReadPort(0x111, 0x111, IORP_NOP),
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
 	public static IO_WritePort i8039_writeport[]={
 		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
-		new IO_WritePort( I8039_p1, I8039_p1, DAC_0_data_w ),
-		new IO_WritePort( I8039_p2, I8039_p2, i8039_irqen_and_status_w ),
+		new IO_WritePort(I8039_p1, I8039_p1, DAC_0_data_w),
+                new IO_WritePort(I8039_p2, I8039_p2, i8039_irqen_and_status_w),
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
@@ -406,30 +404,30 @@ public class junofrst
 		/* basic machine hardware */
 		new MachineCPU[] {
 			new MachineCPU(
-				CPU_M6809,
-				1500000,			/* 1.5 MHz ??? */
-				readmem,writemem,null,null,
-				interrupt,1
-			),
-			new MachineCPU(
-				CPU_Z80 | CPU_AUDIO_CPU,
-				14318000/8,	/* 1.78975 MHz */
-				sound_readmem,sound_writemem,null,null,
-				ignore_interrupt,1	/* interrupts are triggered by the main CPU */
-			),
-			new MachineCPU(
-				CPU_I8039 | CPU_AUDIO_CPU,
-				8000000/15,	/* 8MHz crystal */
-				i8039_readmem,i8039_writemem,i8039_readport,i8039_writeport,
-				ignore_interrupt,1
-			)
+                        CPU_M6809,
+                        1500000, /* 1.5 MHz ??? */
+                        readmem, writemem, null, null,
+                        interrupt, 1
+                ),
+                new MachineCPU(
+                        CPU_Z80 | CPU_AUDIO_CPU,
+                        14318000 / 8, /* 1.78975 MHz */
+                        sound_readmem, sound_writemem, null, null,
+                        ignore_interrupt, 1 /* interrupts are triggered by the main CPU */
+                ),
+                new MachineCPU(
+                        CPU_I8039 | CPU_AUDIO_CPU,
+                        8000000 / 15, /* 8MHz crystal */
+                        i8039_readmem, i8039_writemem, i8039_readport, i8039_writeport,
+                        ignore_interrupt, 1
+                )
 		},
 		30, DEFAULT_30HZ_VBLANK_DURATION,	/* frames per second, vblank duration */
 		1,	/* 1 CPU slice per frame - interleaving is forced when a sound command is written */
 		null,				/* init machine routine */
 	
 		/* video hardware */
-		32*8, 32*8, new rectangle( 0*8, 32*8-1, 2*8, 30*8-1 ),	/* not sure about the visible area */
+		32 * 8, 32 * 8, new rectangle(0 * 8, 32 * 8 - 1, 2 * 8, 30 * 8 - 1), /* not sure about the visible area */
 		null,					/* GfxDecodeInfo * */
 		16,                                  /* total colors */
 		0,                                      /* color table length */
@@ -457,28 +455,28 @@ public class junofrst
 	
 	
 	static RomLoadPtr rom_junofrst = new RomLoadPtr(){ public void handler(){ 
-		ROM_REGION( 2*0x1c000, REGION_CPU1, 0 );/* code + space for decrypted opcodes */
-		ROM_LOAD( "jfa_b9.bin",   0x0a000, 0x2000, 0xf5a7ab9d );/* program ROMs */
-		ROM_LOAD( "jfb_b10.bin",  0x0c000, 0x2000, 0xf20626e0 );
-		ROM_LOAD( "jfc_a10.bin",  0x0e000, 0x2000, 0x1e7744a7 );
-	
-		ROM_LOAD( "jfc1_a4.bin",  0x10000, 0x2000, 0x03ccbf1d );/* graphic and code ROMs (banked) */
-		ROM_LOAD( "jfc2_a5.bin",  0x12000, 0x2000, 0xcb372372 );
-		ROM_LOAD( "jfc3_a6.bin",  0x14000, 0x2000, 0x879d194b );
-		ROM_LOAD( "jfc4_a7.bin",  0x16000, 0x2000, 0xf28af80b );
-		ROM_LOAD( "jfc5_a8.bin",  0x18000, 0x2000, 0x0539f328 );
-		ROM_LOAD( "jfc6_a9.bin",  0x1a000, 0x2000, 0x1da2ad6e );
-	
-		ROM_REGION(  0x10000 , REGION_CPU2, 0 );/* 64k for Z80 sound CPU code */
-		ROM_LOAD( "jfs1_j3.bin",  0x0000, 0x1000, 0x235a2893 );
-	
-		ROM_REGION( 0x1000, REGION_CPU3, 0 );/* 8039 */
-		ROM_LOAD( "jfs2_p4.bin",  0x0000, 0x1000, 0xd0fa5d5f );
-	
-		ROM_REGION( 0x6000, REGION_GFX1, 0 );/* BLTROM, used at runtime */
-		ROM_LOAD( "jfs3_c7.bin",  0x00000, 0x2000, 0xaeacf6db );
-		ROM_LOAD( "jfs4_d7.bin",  0x02000, 0x2000, 0x206d954c );
-		ROM_LOAD( "jfs5_e7.bin",  0x04000, 0x2000, 0x1eb87a6e );
+		ROM_REGION(2 * 0x1c000, REGION_CPU1, 0);/* code + space for decrypted opcodes */
+            ROM_LOAD("jfa_b9.bin", 0x0a000, 0x2000, 0xf5a7ab9d);/* program ROMs */
+            ROM_LOAD("jfb_b10.bin", 0x0c000, 0x2000, 0xf20626e0);
+            ROM_LOAD("jfc_a10.bin", 0x0e000, 0x2000, 0x1e7744a7);
+
+            ROM_LOAD("jfc1_a4.bin", 0x10000, 0x2000, 0x03ccbf1d);/* graphic and code ROMs (banked) */
+            ROM_LOAD("jfc2_a5.bin", 0x12000, 0x2000, 0xcb372372);
+            ROM_LOAD("jfc3_a6.bin", 0x14000, 0x2000, 0x879d194b);
+            ROM_LOAD("jfc4_a7.bin", 0x16000, 0x2000, 0xf28af80b);
+            ROM_LOAD("jfc5_a8.bin", 0x18000, 0x2000, 0x0539f328);
+            ROM_LOAD("jfc6_a9.bin", 0x1a000, 0x2000, 0x1da2ad6e);
+
+            ROM_REGION(0x10000, REGION_CPU2, 0);/* 64k for Z80 sound CPU code */
+            ROM_LOAD("jfs1_j3.bin", 0x0000, 0x1000, 0x235a2893);
+
+            ROM_REGION(0x1000, REGION_CPU3, 0);/* 8039 */
+            ROM_LOAD("jfs2_p4.bin", 0x0000, 0x1000, 0xd0fa5d5f);
+
+            ROM_REGION(0x6000, REGION_GFX1, 0);/* BLTROM, used at runtime */
+            ROM_LOAD("jfs3_c7.bin", 0x00000, 0x2000, 0xaeacf6db);
+            ROM_LOAD("jfs4_d7.bin", 0x02000, 0x2000, 0x206d954c);
+            ROM_LOAD("jfs5_e7.bin", 0x04000, 0x2000, 0x1eb87a6e);
 	ROM_END(); }}; 
 	
 	static RomLoadPtr rom_junofstg = new RomLoadPtr(){ public void handler(){ 

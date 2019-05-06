@@ -29,7 +29,7 @@ import static mame056.vidhrdw.generic.*;
 public class toypop
 {
 	
-	public static UBytePtr toypop_bg_image = new UBytePtr(4096);
+	public static UBytePtr toypop_bg_image = new UBytePtr(288+0x200);
 	static int flipscreen, palettebank;
 	
 	/***************************************************************************
@@ -122,7 +122,7 @@ public class toypop
 	public static void draw_background_and_characters(mame_bitmap bitmap)
 	{
 		int offs, x, y;
-		UBytePtr scanline=new UBytePtr(300);
+		UBytePtr scanline=new UBytePtr(1024*128);
                 scanline.offset=0;
                 toypop_bg_image.offset=0;
 	
@@ -144,10 +144,11 @@ public class toypop
 		}
 		else
 		{
-                        toypop_bg_image.offset=0;
+                        //toypop_bg_image.offset=0;
 			offs = 0x200/2;
 			for (y = 0; y < 224; y++)
 			{
+                            toypop_bg_image.offset=0;
 				for (x = 0; x < 288; x+=2)
 				{
 					int data = toypop_bg_image.read(offs);

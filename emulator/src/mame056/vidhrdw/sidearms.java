@@ -84,8 +84,8 @@ public class sidearms
 	public static WriteHandlerPtr sidearms_c804_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bits 0 and 1 are coin counters */
-		coin_counter_w(0,data & 0x01);
-		coin_counter_w(1,data & 0x02);
+		coin_counter_w.handler(0,data & 0x01);
+		coin_counter_w.handler(1,data & 0x02);
 	
 		/* bit 4 probably resets the sound CPU */
 	

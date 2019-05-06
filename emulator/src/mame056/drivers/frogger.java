@@ -34,13 +34,13 @@ public class frogger {
 
     public static WriteHandlerPtr frogger_coin_counter_0_w = new WriteHandlerPtr() {
         public void handler(int offset, int data) {
-            coin_counter_w(0, data);
+            coin_counter_w.handler(0, data);
         }
     };
 
     public static WriteHandlerPtr frogger_coin_counter_1_w = new WriteHandlerPtr() {
         public void handler(int offset, int data) {
-            coin_counter_w(1, data);
+            coin_counter_w.handler(1, data);
         }
     };
 

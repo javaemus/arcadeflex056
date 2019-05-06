@@ -83,7 +83,7 @@ public class sega {
     };
     public static WriteHandlerPtr sega_coin_counter_w = new WriteHandlerPtr() {
         public void handler(int offset, int data) {
-            coin_counter_w(offset, data);
+            coin_counter_w.handler(offset, data);
         }
     };
 

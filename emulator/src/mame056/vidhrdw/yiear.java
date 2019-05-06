@@ -102,8 +102,8 @@ public class yiear
 		interrupt_enable_w.handler(0, data & 0x04);
 	
 		/* bits 3 and 4 are coin counters */
-		coin_counter_w(0, (data >> 3) & 0x01);
-		coin_counter_w(1, (data >> 4) & 0x01);
+		coin_counter_w.handler(0, (data >> 3) & 0x01);
+		coin_counter_w.handler(1, (data >> 4) & 0x01);
 	} };
 	
 	
