@@ -314,19 +314,19 @@ public class mcr
 	
 	public static InterruptPtr mcr_interrupt = new InterruptPtr() { public int handler() 
 	{
-/*TODO*///		/* CTC line 2 is connected to VBLANK, which is once every 1/2 frame */
-/*TODO*///		/* for the 30Hz interlaced display */
-/*TODO*///		z80ctc_0_trg2_w(0, 1);
-/*TODO*///		z80ctc_0_trg2_w(0, 0);
-/*TODO*///	
-/*TODO*///		/* CTC line 3 is connected to 493, which is signalled once every */
-/*TODO*///		/* frame at 30Hz */
-/*TODO*///		if (cpu_getiloops() == 0)
-/*TODO*///		{
-/*TODO*///			z80ctc_0_trg3_w(0, 1);
-/*TODO*///			z80ctc_0_trg3_w(0, 0);
-/*TODO*///		}
-/*TODO*///	
+		/* CTC line 2 is connected to VBLANK, which is once every 1/2 frame */
+		/* for the 30Hz interlaced display */
+		z80ctc_0_trg2_w.handler(0, 1);
+		z80ctc_0_trg2_w.handler(0, 0);
+	
+		/* CTC line 3 is connected to 493, which is signalled once every */
+		/* frame at 30Hz */
+		if (cpu_getiloops() == 0)
+		{
+			z80ctc_0_trg3_w.handler(0, 1);
+			z80ctc_0_trg3_w.handler(0, 0);
+		}
+	
 		return ignore_interrupt.handler();
 	} };
 	
