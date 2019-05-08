@@ -1756,6 +1756,68 @@ public class balsente {
             INPUT_PORTS_END();
         }
     };
+    
+    static InputPortPtr input_ports_triviaes = new InputPortPtr() {
+        public void handler() {
+            PORT_START();
+            /* IN0 */
+            PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coinage" ) );
+            PORT_DIPSETTING(    0x02, DEF_STR( "2C_1C" ) );
+            PORT_DIPSETTING(    0x03, DEF_STR( "Free_Play" ) );
+            PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
+            PORT_DIPSETTING(    0x01, DEF_STR( "1C_2C" ) );
+            PORT_BIT(0x1c, IP_ACTIVE_LOW, IPT_UNUSED);
+            PORT_DIPNAME(0x20, 0x00, "Sound");
+            PORT_DIPSETTING(0x20, DEF_STR("Off"));
+            PORT_DIPSETTING(0x00, DEF_STR("On"));
+            PORT_DIPNAME(0x40, 0x00, "Sound Test");
+            PORT_DIPSETTING(0x40, DEF_STR("Off"));
+            PORT_DIPSETTING(0x00, DEF_STR("On"));
+            PORT_DIPNAME(0x80, 0x80, "High Scores");
+            PORT_DIPSETTING(0x00, "Keep Top 5");
+            PORT_DIPSETTING(0x80, "Keep Top 10");
+
+            PORT_START();
+            /* IN1 */
+            PORT_BIT(0x03, IP_ACTIVE_LOW, IPT_UNUSED);
+            PORT_DIPNAME( 0x0c, 0x04, "Guesses" );
+            PORT_DIPSETTING(    0x00, "2" );
+            PORT_DIPSETTING(    0x04, "3" );
+            PORT_DIPSETTING(    0x08, "4" );
+            PORT_DIPSETTING(    0x0c, "5" );
+            PORT_BIT(0x70, IP_ACTIVE_LOW, IPT_UNUSED);
+            PORT_DIPNAME(0x80, 0x00, DEF_STR("Demo_Sounds"));
+            PORT_DIPSETTING(0x80, DEF_STR("Off"));
+            PORT_DIPSETTING(0x00, DEF_STR("On"));
+
+            PORT_START();
+            /* IN2 */
+            PORT_BIT(0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_PLAYER1);
+            PORT_BIT(0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_PLAYER1);
+            PORT_BIT(0x04, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_PLAYER1);
+            PORT_BIT(0x08, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_PLAYER1);
+            PORT_BIT(0x10, IP_ACTIVE_LOW, IPT_BUTTON1);
+            PORT_BIT(0x20, IP_ACTIVE_LOW, IPT_UNUSED);
+            PORT_BIT(0x40, IP_ACTIVE_LOW, IPT_COIN1);
+            PORT_SERVICE(0x80, IP_ACTIVE_LOW);
+
+            PORT_START();
+            /* IN3 */
+            PORT_BIT(0x01, IP_ACTIVE_LOW, IPT_START1);
+            PORT_BIT(0x02, IP_ACTIVE_LOW, IPT_START2);
+            PORT_BIT(0x04, IP_ACTIVE_LOW, IPT_START3);
+            PORT_BIT(0x08, IP_ACTIVE_LOW, IPT_START4);
+            PORT_BITX(0x10, IP_ACTIVE_LOW, IPT_BUTTON2, "Red Button", IP_KEY_DEFAULT, IP_JOY_DEFAULT);
+            PORT_BITX(0x20, IP_ACTIVE_LOW, IPT_BUTTON1, "Green Button", IP_KEY_DEFAULT, IP_JOY_DEFAULT);
+            PORT_BIT(0x40, IP_ACTIVE_LOW, IPT_COIN2);
+            PORT_BIT(0x80, IP_ACTIVE_HIGH, IPT_VBLANK);
+
+            /* analog ports */
+            UNUSED_ANALOG_X4();
+            INPUT_PORTS_END();
+
+        }
+    };
 
     static InputPortPtr input_ports_triviag2 = new InputPortPtr() {
         public void handler() {
@@ -3718,5 +3780,5 @@ public class balsente {
     public static GameDriver driver_rescrdsa = new GameDriver("1987", "rescrdsa", "balsente.java", rom_rescrdsa, driver_rescraid, machine_driver_balsente, input_ports_rescraid, init_rescraid, ROT0, "Bally/Sente", "Rescue Raider (Stand-Alone)");
     
     // more games (from mame 0.104u7)
-    public static GameDriver driver_triviaes = new GameDriver("1987", "triviaes", "balsente.java", rom_triviaes, null, machine_driver_balsente, input_ports_triviag1, init_triviaes, ROT0, "Bally/Sente (Maibesa license)",  "Trivial Pursuit (Spanish Edition)");
+    public static GameDriver driver_triviaes = new GameDriver("1987", "triviaes", "balsente.java", rom_triviaes, null, machine_driver_balsente, input_ports_triviaes, init_triviaes, ROT0, "Bally/Sente (Maibesa license)",  "Trivial Pursuit (Spanish Edition)");
 }
