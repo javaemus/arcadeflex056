@@ -1,3 +1,8 @@
+08/05/2019
+==========
+-Added mpatrol driver
+-Added kungfum game in m62 driver (WIP)
+
 06/05/2019
 ==========
 -video border issue solved (e.g. in swimmer driver)

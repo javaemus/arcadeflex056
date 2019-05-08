@@ -135,7 +135,7 @@ public class leland
 	static UBytePtr[] dac_buffer = new UBytePtr[2];
         static {
             for (int i=0 ; i<2 ; i++)
-                dac_buffer[i] = new UBytePtr();
+                dac_buffer[i] = new UBytePtr(1024);
         }
 	static int[] dac_bufin=new int[2];
 	static int[] dac_bufout=new int[2];
@@ -213,6 +213,8 @@ public class leland
 		UBytePtr buffer = new UBytePtr(dac_buffer[dacnum]);
                 System.out.println(dac_buffer[dacnum]);
 		int bufin = dac_bufin[dacnum];
+                System.out.println(dac_bufin[dacnum]);
+                System.out.println(sample);
 	
 		/* skip if nothing */
 		if (buffer == null)

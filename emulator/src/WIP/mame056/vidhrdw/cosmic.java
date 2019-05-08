@@ -10,7 +10,7 @@
  * ported to v0.56
  * using automatic conversion tool v0.01
  */ 
-package mame056.vidhrdw;
+package WIP.mame056.vidhrdw;
 
 import static arcadeflex056.fucPtr.*;
 import static common.libc.cstring.memset;

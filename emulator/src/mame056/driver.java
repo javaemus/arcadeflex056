@@ -86,7 +86,7 @@ import static mame056.drivers._1943.*;
 import static mame056.drivers.locomotn.*;
 import static mame056.drivers.mappy.*;
 import static mame056.drivers.grobda.*;
-import static mame056.drivers.cosmic.*;
+import static WIP.mame056.drivers.cosmic.*;
 import static mame056.drivers.balsente.*;
 import static WIP.mame056.drivers.commando.*;
 import static WIP.mame056.drivers.polepos.*;
@@ -100,6 +100,8 @@ import static mame056.drivers.sauro.*;
 import static WIP.mame056.drivers.speedbal.*;
 import static mame056.drivers.kingobox.*;
 import static mame056.drivers.skydiver.*;
+import static WIP.mame056.drivers.mpatrol.*;
+import static WIP.mame056.drivers.m62.*;
 
 public class driver {
 
@@ -1038,8 +1040,8 @@ public class driver {
         /*TODO*///
         /*TODO*///	driver_redalert,	/* (c) 1981 + "GDI presents" */
         /*TODO*///	driver_olibochu,	/* M47 (c) 1981 + "GDI presents" */
-        /*TODO*///	driver_mpatrol,	/* M52 (c) 1982 */
-        /*TODO*///	driver_mpatrolw,	/* M52 (c) 1982 + Williams license */
+        	driver_mpatrol,	/* M52 (c) 1982 */
+        	driver_mpatrolw,	/* M52 (c) 1982 + Williams license */
         /*TODO*///	driver_troangel,	/* (c) 1983 */
         /*TODO*///	driver_yard,		/* (c) 1983 */
         /*TODO*///	driver_vsyard,	/* (c) 1983/1984 */
@@ -1047,7 +1049,7 @@ public class driver {
         /*TODO*///	driver_travrusa,	/* (c) 1983 */
         /*TODO*///	driver_motorace,	/* (c) 1983 Williams license */
         /*TODO*///	/* M62 */
-        /*TODO*///	driver_kungfum,	/* (c) 1984 */
+        	driver_kungfum,	/* (c) 1984 */
         /*TODO*///	driver_kungfud,	/* (c) 1984 + Data East license */
         /*TODO*///	driver_spartanx,	/* (c) 1984 (Japan) */
         /*TODO*///	driver_kungfub,	/* bootleg */

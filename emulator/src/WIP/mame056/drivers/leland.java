@@ -589,7 +589,7 @@ public class leland
                 int _data = 0;
 	
 		/* initialize everything to the default value */
-		/*TODO*///memset(eeprom_data, default_val, sizeof(eeprom_data));
+		memset(eeprom_data, default_val, (eeprom_data.memory.length));
 	
 		/* fill in the preset data */
 		while (data[_data] != 0xffff)

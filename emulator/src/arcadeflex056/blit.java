@@ -179,12 +179,6 @@ public class blit {
     {
         //blitscreen_dirty0_palettized16(Machine.scrbitmap);
         int w, h;
-        
-        
-        /*int _long_screen = Machine.scrbitmap.height;
-        for (int i=0 ; i<_long_screen ; i++){
-            Machine.scrbitmap.line[i]=new UBytePtr(Machine.scrbitmap.width);
-        }*/
 
 
             for (int i = 0; i < Machine.scrbitmap.height; i++)
@@ -204,26 +198,24 @@ public class blit {
 
                     int offs=Machine.scrbitmap.line[i].offset;
                     int curr=Machine.scrbitmap.line[i].memory[r + offs];
-                    //Machine.scrbitmap.line[i].memory[r + offs] = 0;
 
                     if (Machine.color_depth==16){
                         if ((r%nBytes)==1){
 
                             int pre=Machine.scrbitmap.line[i].memory[r-1+offs];
-                            //Machine.scrbitmap.line[i].memory[r-1+offs] = 0;
 
                             int p = (curr<<8) + (pre);
                             if ((pos>=Machine.uixmin) && (pos<=(Machine.uiwidth + Machine.uixmin - 1))
-                                    && (i>=Machine.uiymin) && (ISDIRTY(pos,i) != 0)
+                                    && (i>=Machine.uiymin)
                                 )
                                 back_buffer[pos+(i * Machine.scrbitmap.width)] = (char) p;
-                            else 
-                                back_buffer[pos+(i * Machine.scrbitmap.width)] = '0';
+                            //else 
+                            //    back_buffer[pos+(i * Machine.scrbitmap.width)] = 0;
                             pos++;
                         }
                     } else if (Machine.color_depth==8){
                         if ((r>=Machine.uixmin) && (r<=(Machine.visible_area.max_x - Machine.uixmin))
-                                && (i>=Machine.uiymin) && (ISDIRTY(pos,i) != 0))
+                                && (i>=Machine.uiymin))
                             back_buffer[r+(i * Machine.scrbitmap.width)] = (char) curr;
                     }
                 }
@@ -233,11 +225,6 @@ public class blit {
 
                 w = Machine.scrbitmap.width;                    
                 h = Machine.scrbitmap.height;
-                
-                // clears the screen
-            /*int _long_screen = screen._pixels.length;
-            for (int i=0 ; i<_long_screen ; i++)
-                screen._pixels[i] = 0;*/
 
           
             for (int y = 0; y < h; y++) {
@@ -250,18 +237,13 @@ public class blit {
                             //System.out.println(back_buffer.length);
                             //System.out.println(palette.length);
                             if ((back_buffer[sbi + x + (y * w)]&0xFFFF) > palette.length) {
-                                if ((ISDIRTY(x,y) != 0) 
-                                    && (x>=Machine.uixmin) && (x<=(Machine.uiwidth + Machine.uixmin - 1))
-                                    && (y>=Machine.uiymin) )
-                                    screen._pixels[x + (y * w)] = palette[(back_buffer[sbi + x + (y * w)]&0xFF)];
-                                else 
-                                    screen._pixels[x + (y * w)] = 0;
+                                
+                                screen._pixels[x + (y * w)] = palette[(back_buffer[sbi + x + (y * w)]&0xFF)];
+                            
                             } else {
-                                 if ((ISDIRTY(x,y) != 0)&& (x>=Machine.uixmin) && (x<=(Machine.uiwidth + Machine.uixmin - 1))
-                                    && (y>=Machine.uiymin) )
-                                    screen._pixels[x + (y * w)] = palette[(back_buffer[sbi + x + (y * w)]&0xFFFF)];
-                                 else 
-                                    screen._pixels[x + (y * w)] = 0; 
+                                
+                                screen._pixels[x + (y * w)] = palette[(back_buffer[sbi + x + (y * w)]&0xFFFF)];
+                                
                             }
                         }
 
@@ -270,7 +252,6 @@ public class blit {
             }
                 screen.blit();
                 
-
     }
     
     public static void blitscreen_dirty1_vga(mame_bitmap bitmap)

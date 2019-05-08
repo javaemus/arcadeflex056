@@ -88,7 +88,7 @@ write:
  * ported to v0.56
  * using automatic conversion tool v0.01
  */ 
-package mame056.drivers;
+package WIP.mame056.drivers;
 
 import static arcadeflex056.fucPtr.*;
 import common.ptr.UBytePtr;
@@ -117,7 +117,7 @@ import static arcadeflex056.fileio.*;
 import static mame056.palette.game_palette;
 import static mame056.inptport.*;
 
-import static mame056.vidhrdw.cosmic.*;
+import static WIP.mame056.vidhrdw.cosmic.*;
 
 public class cosmic
 {
@@ -1081,9 +1081,9 @@ public class cosmic
 		new MachineCPU[] {
 			new MachineCPU(
 	//#if COSMICG_USES_TMS9980
-				CPU_TMS9980,
+	//			CPU_TMS9980,
 	//#else
-	//			CPU_TMS9900,
+				CPU_TMS9900,
 	//#endif
 				1228500,			/* 9.828 MHz Crystal */
 				/* R Nabet : huh ? This would imply the crystal frequency is somehow divided by 2 before being
@@ -1170,7 +1170,7 @@ public class cosmic
 				18432000/6,	/* 3.072 MHz ???? */
 				nomnlnd_readmem,nomnlnd_writemem,null,null,
 				magspot2_interrupt,1
-			),
+			)
 		},
 		60, DEFAULT_REAL_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */
 		1,	/* 1 CPU slice per frame */
