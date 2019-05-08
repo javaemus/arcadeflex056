@@ -29,7 +29,7 @@ import static mame056.vidhrdw.generic.*;
 public class toypop
 {
 	
-	public static UBytePtr toypop_bg_image = new UBytePtr(288+0x200);
+	public static UBytePtr toypop_bg_image = new UBytePtr(128*1024);
 	static int flipscreen, palettebank;
 	
 	/***************************************************************************
@@ -106,11 +106,11 @@ public class toypop
 	public static WriteHandlerPtr toypop_merged_background_w = new WriteHandlerPtr() {
             public void handler(int offset, int data) {
 		// 0xabcd is written as 0x0a0b0c0d in the background image
-		/*TODO*///if (ACCESSING_MSB != 0)
+		//if (ACCESSING_MSB)
 			toypop_bg_image.write(2*offset, ((data & 0xf00) >> 8) | ((data & 0xf000) >> 4));
 	
-		/*TODO*///if (ACCESSING_LSB != 0)
-		/*TODO*///	toypop_bg_image[2*offset+1] = (data & 0xf) | ((data & 0xf0) << 4);
+		//if (ACCESSING_LSB)
+			toypop_bg_image.write(2*offset+1, (data & 0xf) | ((data & 0xf0) << 4));
 	}};
 	
 	public static void toypop_draw_sprite(mame_bitmap dest, int code, int color,
@@ -122,9 +122,9 @@ public class toypop
 	public static void draw_background_and_characters(mame_bitmap bitmap)
 	{
 		int offs, x, y;
-		UBytePtr scanline=new UBytePtr(1024*128);
-                scanline.offset=0;
-                toypop_bg_image.offset=0;
+		char[] scanline=new char[288];
+                //scanline.offset=0;
+                //toypop_bg_image.offset=0;
 	
 		// copy the background image from RAM (0x190200-0x19FDFF) to bitmap
 		if (flipscreen != 0)
@@ -135,11 +135,11 @@ public class toypop
 				for (x = 0; x < 288; x+=2)
 				{
 					int data = toypop_bg_image.read(offs);
-					scanline.write(x, data);
-					scanline.write(x+1, data >> 8);
+					scanline[x]   = (char) data;
+					scanline[x+1] = (char) (data >> 8);
 					offs--;
 				}
-				draw_scanline8(bitmap, 0, y, 288, scanline, new IntArray(Machine.pens, palettebank), -1);
+				draw_scanline8(bitmap, 0, y, 288, new UBytePtr(scanline), new IntArray(Machine.pens, palettebank), -1);
 			}
 		}
 		else
@@ -148,15 +148,16 @@ public class toypop
 			offs = 0x200/2;
 			for (y = 0; y < 224; y++)
 			{
-                            toypop_bg_image.offset=0;
+                            //toypop_bg_image.offset=0;
 				for (x = 0; x < 288; x+=2)
 				{
+                                    
 					int data = toypop_bg_image.read(offs);
-					scanline.write(x, data >> 8);
-					scanline.write(x+1, data);
+					scanline[x]   = (char) (data >> 8);
+					scanline[x+1] = (char) data;
 					offs++;
 				}
-				draw_scanline8(bitmap, 0, y, 288, scanline, new IntArray(Machine.pens, palettebank), -1);
+				draw_scanline8(bitmap, 0, y, 288, new UBytePtr(scanline), new IntArray(Machine.pens, palettebank), -1);
 			}
 		}
 	

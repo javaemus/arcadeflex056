@@ -5,14 +5,14 @@ package mame056;
 
 import static arcadeflex056.video.osd_allocate_colors;
 import static arcadeflex056.video.osd_modify_pen;
-import common.subArrays.IntArray;
+import static common.subArrays.*;
 import static mame056.commonH.REGION_PROMS;
 import static mame056.common.memory_region;
 import static mame056.usrintrf.usrintf_showmessage;
 import static arcadeflex036.osdepend.logerror;
 import static arcadeflex056.fucPtr.*;
 
-import common.ptr.UBytePtr;
+import static common.ptr.*;
 import static mame056.mame.Machine;
 
 public class palette {
@@ -35,7 +35,7 @@ public class palette {
 /*TODO*///
 /*TODO*///
 /*TODO*///
-/*TODO*///UINT16 *palette_shadow_table;
+    public static UShortPtr palette_shadow_table = new UShortPtr();
 /*TODO*///
     public static int palette_start() {
         /*TODO*///	int i;
