@@ -1630,7 +1630,7 @@ public class drawgfx {
         } else if (dest.depth == 15 || dest.depth == 16) {
             if ((pen >> 8) == (pen & 0xff)) {
                 for (y = sy; y <= ey; y++) {
-                    if (y>=Machine.uiymin){
+                    if (y >= Machine.uiymin) {
                         UShortPtr z = new UShortPtr(dest.line[y], sx);
                         for (int i = 0; i < (ex - sx + 1) * 2; i++) {
                             z.write(i, (char) (pen & 0xff));////memset(((UINT16 *)dest.line[y]) + sx,pen&0xff,(ex-sx+1)*2);
@@ -1638,26 +1638,26 @@ public class drawgfx {
                     }
                 }
             } else {
-                
-                    UShortPtr sp = new UShortPtr(dest.line[sy]);
-                    int x;
 
-                    for (x = sx; x <= ex; x++) {
-                        sp.write(x, (char) pen);
-                    }
-                    sp.inc(sx);
+                UShortPtr sp = new UShortPtr(dest.line[sy]);
+                int x;
 
-                    for (y = sy + 1; y <= ey; y++) {
-                        UShortPtr z = new UShortPtr(dest.line[y], sx);
-                        for (int i = 0; i < (ex - sx + 1) * 2; i++) {
-                            z.write(i, sp.read(i));
-                        }
+                for (x = sx; x <= ex; x++) {
+                    sp.write(x, (char) pen);
+                }
+                sp.inc(sx);
+
+                for (y = sy + 1; y <= ey; y++) {
+                    UShortPtr z = new UShortPtr(dest.line[y], sx);
+                    for (int i = 0; i < (ex - sx + 1) * 2; i++) {
+                        z.write(i, sp.read(i));
                     }
-                
+                }
+
             }
         } else {
             for (y = sy; y <= ey; y++) {
-                if (y>=Machine.uiymin){
+                if (y >= Machine.uiymin) {
                     memset(dest.line[y], sx, pen, ex - sx + 1);
                 }
             }
@@ -4645,32 +4645,29 @@ public class drawgfx {
         is_raw[TRANSPARENCY_BLEND_RAW] = 1;
     }
 
-    
-    public static void plotclip(mame_bitmap bitmap,int x,int y,int pen,rectangle clip)
-    {
-            if (x >= clip.min_x && x <= clip.max_x && y >= clip.min_y && y <= clip.max_y)
-                    plot_pixel.handler(bitmap,x,y,pen);
+    public static void plotclip(mame_bitmap bitmap, int x, int y, int pen, rectangle clip) {
+        if (x >= clip.min_x && x <= clip.max_x && y >= clip.min_y && y <= clip.max_y) {
+            plot_pixel.handler(bitmap, x, y, pen);
+        }
     }
 
-    public static void draw_crosshair(mame_bitmap bitmap,int x,int y,rectangle clip)
-    {
-            int black,white;
-            int i;
+    public static void draw_crosshair(mame_bitmap bitmap, int x, int y, rectangle clip) {
+        int black, white;
+        int i;
 
-            black = Machine.uifont.colortable.read(0);
-            white = Machine.uifont.colortable.read(1);
+        black = Machine.uifont.colortable.read(0);
+        white = Machine.uifont.colortable.read(1);
 
-            for (i = 1;i < 6;i++)
-            {
-                    plotclip(bitmap,x+i,y,white,clip);
-                    plotclip(bitmap,x-i,y,white,clip);
-                    plotclip(bitmap,x,y+i,white,clip);
-                    plotclip(bitmap,x,y-i,white,clip);
-            }
+        for (i = 1; i < 6; i++) {
+            plotclip(bitmap, x + i, y, white, clip);
+            plotclip(bitmap, x - i, y, white, clip);
+            plotclip(bitmap, x, y + i, white, clip);
+            plotclip(bitmap, x, y - i, white, clip);
+        }
     }
 
 
-/*TODO*///#else /* DECLARE */
+    /*TODO*///#else /* DECLARE */
 /*TODO*///
 /*TODO*////* -------------------- included inline section --------------------- */
 /*TODO*///
@@ -6605,7 +6602,7 @@ public class drawgfx {
         if (gfx.colortable != null) {
             paldata = new IntArray(gfx.colortable, gfx.color_granularity * color);
         }
-        UBytePtr pribuf = null;/*TODO*///		UINT8 *pribuf = (pri_buffer) ? ((UINT8 *)pri_buffer->line[sy]) + sx : NULL;
+        UBytePtr pribuf = (pri_buffer) != null ? new UBytePtr(pri_buffer.line[sy], sx) : null;
 
 
         /* optimizations for 1:1 mapping */
@@ -7487,8 +7484,8 @@ public class drawgfx {
         } /* 16bpp destination */ else if (bitmap.depth == 15 || bitmap.depth == 16) {
             /* adjust in case we're oddly oriented */
  /*TODO*///#define ADJUST_FOR_ORIENTATION(type, orientation, bitmap, x, y)				
-            int dy = bitmap.line[1].offset/2 - bitmap.line[0].offset/2;
-            UShortPtr dst = new UShortPtr(bitmap.line[0], (y * dy + x)*2);
+            int dy = bitmap.line[1].offset / 2 - bitmap.line[0].offset / 2;
+            UShortPtr dst = new UShortPtr(bitmap.line[0], (y * dy + x) * 2);
             int xadv = 1;
             if (Machine.orientation != 0) {
                 int tx = x, ty = y, temp;
@@ -7511,7 +7508,7 @@ public class drawgfx {
                     }
                 }
                 /* can't lookup line because it may be negative! */
-                dst = new UShortPtr(bitmap.line[0], (dy * ty + tx)*2);
+                dst = new UShortPtr(bitmap.line[0], (dy * ty + tx) * 2);
             }
 
             /* with pen lookups */
@@ -7532,22 +7529,22 @@ public class drawgfx {
                 }
             } /* without pen lookups */ else {
                 //throw new UnsupportedOperationException("Unsupported");
-                	if (transparent_pen == -1)
-				while ((length--)!=0)
-				{
-					//*dst = *src++;
-                                        dst = new UShortPtr(src);
-                                        src.inc();
-					dst.inc(xadv);
-				}
-			else
-				while ((length--)!=0)
-				{
-					int/*UINT32*/ spixel = src.readinc();
-					if (spixel != transparent_pen)
-						dst.write((char) pens.read(spixel));
-					dst.inc(xadv);
-				}
+                if (transparent_pen == -1) {
+                    while ((length--) != 0) {
+                        //*dst = *src++;
+                        dst = new UShortPtr(src);
+                        src.inc();
+                        dst.inc(xadv);
+                    }
+                } else {
+                    while ((length--) != 0) {
+                        int/*UINT32*/ spixel = src.readinc();
+                        if (spixel != transparent_pen) {
+                            dst.write((char) pens.read(spixel));
+                        }
+                        dst.inc(xadv);
+                    }
+                }
             }
         } /* 32bpp destination */ else {
             throw new UnsupportedOperationException("Unsupported");
