@@ -409,7 +409,10 @@ public class commonH {
     }
 
     /*TODO*///#define ROM_REGION16_LE(length,type,flags)			ROM_REGION(length, type, (flags) | ROMREGION_16BIT | ROMREGION_LE)
-/*TODO*///#define ROM_REGION16_BE(length,type,flags)			ROM_REGION(length, type, (flags) | ROMREGION_16BIT | ROMREGION_BE)
+    public static void ROM_REGION16_BE(int length, int type, int flags){
+        ROM_REGION(length, type, (flags) | ROMREGION_16BIT | ROMREGION_BE);
+    }
+    
 /*TODO*///#define ROM_REGION32_LE(length,type,flags)			ROM_REGION(length, type, (flags) | ROMREGION_32BIT | ROMREGION_LE)
 /*TODO*///#define ROM_REGION32_BE(length,type,flags)			ROM_REGION(length, type, (flags) | ROMREGION_32BIT | ROMREGION_BE)
 /*TODO*///

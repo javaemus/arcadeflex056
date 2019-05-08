@@ -352,7 +352,7 @@ public class irobot
 		public int ramsel;
 	};
 	
-	static irmb_ops mbops;
+	static irmb_ops[] mbops;
 	
 	static irmb_ops[] irmb_stack=new irmb_ops[16];
 	static int[] irmb_regs=new int[16];
@@ -397,94 +397,94 @@ public class irobot
 /*TODO*///				((UINT16 *)mbRAM)[ad & 0xfff] = d;				/* MB RAM write */
 /*TODO*///		}
 /*TODO*///	}
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	/* Convert microcode roms to a more usable form */
-/*TODO*///	void load_oproms()
-/*TODO*///	{
-/*TODO*///		UINT8 *MB = memory_region(REGION_PROMS) + 0x20;
-/*TODO*///		int i;
-/*TODO*///	
-/*TODO*///		/* allocate RAM */
-/*TODO*///		mbops = malloc(sizeof(irmb_ops) * 1024);
-/*TODO*///		if (mbops == 0) return;
-/*TODO*///	
-/*TODO*///		for (i = 0; i < 1024; i++)
-/*TODO*///		{
-/*TODO*///			int nxtadd, func, ramsel, diradd, latchmask, dirmask, time;
-/*TODO*///	
-/*TODO*///			mbops[i].areg = &irmb_regs[MB[0x0000 + i] & 0x0F];
-/*TODO*///			mbops[i].breg = &irmb_regs[MB[0x0400 + i] & 0x0F];
-/*TODO*///			func = (MB[0x0800 + i] & 0x0F) << 5;
-/*TODO*///			func |= ((MB[0x0C00 +i] & 0x0F) << 1);
-/*TODO*///			func |= (MB[0x1000 + i] & 0x08) >> 3;
-/*TODO*///			time = MB[0x1000 + i] & 0x03;
-/*TODO*///			mbops[i].flags = (MB[0x1000 + i] & 0x04) >> 2;
-/*TODO*///			nxtadd = (MB[0x1400 + i] & 0x0C) >> 2;
-/*TODO*///			diradd = MB[0x1400 + i] & 0x03;
-/*TODO*///			nxtadd |= ((MB[0x1800 + i] & 0x0F) << 6);
-/*TODO*///			nxtadd |= ((MB[0x1C00 + i] & 0x0F) << 2);
-/*TODO*///			diradd |= (MB[0x2000 + i] & 0x0F) << 2;
-/*TODO*///			func |= (MB[0x2400 + i] & 0x0E) << 9;
-/*TODO*///			mbops[i].flags |= (MB[0x2400 + i] & 0x01) << 1;
-/*TODO*///			mbops[i].flags |= (MB[0x2800 + i] & 0x0F) << 2;
-/*TODO*///			mbops[i].flags |= ((MB[0x2C00 + i] & 0x01) << 6);
-/*TODO*///			mbops[i].flags |= (MB[0x2C00 + i] & 0x08) << 4;
-/*TODO*///			ramsel = (MB[0x2C00 + i] & 0x06) >> 1;
-/*TODO*///			diradd |= (MB[0x3000 + i] & 0x03) << 6;
-/*TODO*///	
-/*TODO*///			if (mbops[i].flags & FL_shift) func |= 0x200;
-/*TODO*///	
-/*TODO*///			mbops[i].func = func;
-/*TODO*///			mbops[i].nxtop = &mbops[nxtadd];
-/*TODO*///	
-/*TODO*///			/* determine the number of 12MHz cycles for this operation */
-/*TODO*///			if (time == 3)
-/*TODO*///				mbops[i].cycles = 2;
-/*TODO*///			else
-/*TODO*///				mbops[i].cycles = 3 + time;
-/*TODO*///	
-/*TODO*///			/* precompute the hardcoded address bits and the mask to be used on the latch value */
-/*TODO*///			if (ramsel == 0)
-/*TODO*///			{
-/*TODO*///				dirmask = 0x00FC;
-/*TODO*///				latchmask = 0x3000;
-/*TODO*///			}
-/*TODO*///			else
-/*TODO*///			{
-/*TODO*///				dirmask = 0x0000;
-/*TODO*///				latchmask = 0x3FFC;
-/*TODO*///			}
-/*TODO*///			if (ramsel & 2)
-/*TODO*///				latchmask |= 0x0003;
-/*TODO*///			else
-/*TODO*///				dirmask |= 0x0003;
-/*TODO*///	
-/*TODO*///			mbops[i].ramsel = ramsel;
-/*TODO*///			mbops[i].diradd = diradd & dirmask;
-/*TODO*///			mbops[i].latchmask = latchmask;
-/*TODO*///			mbops[i].diren = (ramsel == 0);
-/*TODO*///	
+	
+	
+	/* Convert microcode roms to a more usable form */
+	public static void load_oproms()
+	{
+		UBytePtr MB = new UBytePtr(memory_region(REGION_PROMS), 0x20);
+		int i;
+	
+		/* allocate RAM */
+		mbops = new irmb_ops[1024];
+		if (mbops == null) return;
+	
+		for (i = 0; i < 1024; i++)
+		{
+			int nxtadd=0, func=0, ramsel=0, diradd=0, latchmask=0, dirmask=0, time=0;
+	
+			/*TODO*///mbops[i].areg = irmb_regs[MB[0x0000 + i] & 0x0F];
+			/*TODO*///mbops[i].breg = &irmb_regs[MB[0x0400 + i] & 0x0F];
+			/*TODO*///func = (MB[0x0800 + i] & 0x0F) << 5;
+			/*TODO*///func |= ((MB[0x0C00 +i] & 0x0F) << 1);
+			/*TODO*///func |= (MB[0x1000 + i] & 0x08) >> 3;
+			/*TODO*///time = MB[0x1000 + i] & 0x03;
+			/*TODO*///mbops[i].flags = (MB[0x1000 + i] & 0x04) >> 2;
+			/*TODO*///nxtadd = (MB[0x1400 + i] & 0x0C) >> 2;
+			/*TODO*///diradd = MB[0x1400 + i] & 0x03;
+			/*TODO*///nxtadd |= ((MB[0x1800 + i] & 0x0F) << 6);
+			/*TODO*///nxtadd |= ((MB[0x1C00 + i] & 0x0F) << 2);
+			/*TODO*///diradd |= (MB[0x2000 + i] & 0x0F) << 2;
+			/*TODO*///func |= (MB[0x2400 + i] & 0x0E) << 9;
+			/*TODO*///mbops[i].flags |= (MB[0x2400 + i] & 0x01) << 1;
+			/*TODO*///mbops[i].flags |= (MB[0x2800 + i] & 0x0F) << 2;
+			/*TODO*///mbops[i].flags |= ((MB[0x2C00 + i] & 0x01) << 6);
+			/*TODO*///mbops[i].flags |= (MB[0x2C00 + i] & 0x08) << 4;
+			/*TODO*///ramsel = (MB[0x2C00 + i] & 0x06) >> 1;
+			/*TODO*///diradd |= (MB[0x3000 + i] & 0x03) << 6;
+	
+			/*TODO*///if (mbops[i].flags & FL_shift) func |= 0x200;
+	
+			/*TODO*///mbops[i].func = func;
+			/*TODO*///mbops[i].nxtop = &mbops[nxtadd];
+	
+			/* determine the number of 12MHz cycles for this operation */
+			if (time == 3)
+				mbops[i].cycles = 2;
+			else
+				mbops[i].cycles = 3 + time;
+	
+			/* precompute the hardcoded address bits and the mask to be used on the latch value */
+			if (ramsel == 0)
+			{
+				dirmask = 0x00FC;
+				latchmask = 0x3000;
+			}
+			else
+			{
+				dirmask = 0x0000;
+				latchmask = 0x3FFC;
+			}
+			if ((ramsel & 2)!=0)
+				latchmask |= 0x0003;
+			else
+				dirmask |= 0x0003;
+	
+			mbops[i].ramsel = ramsel;
+			mbops[i].diradd = diradd & dirmask;
+			mbops[i].latchmask = latchmask;
+			mbops[i].diren = (ramsel == 0)?1:0;
+	
 /*TODO*///	#if DISASSEMBLE_MB_ROM
 /*TODO*///			disassemble_instruction(&mbops[i]);
 /*TODO*///	#endif
-/*TODO*///		}
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	/* Init mathbox (only called once) */
-/*TODO*///	public static InitDriverPtr init_irobot = new InitDriverPtr() { public void handler() 
-/*TODO*///	{
-/*TODO*///		int i;
-/*TODO*///		for (i = 0; i < 16; i++)
-/*TODO*///		{
-/*TODO*///			irmb_stack[i] = &mbops[0];
-/*TODO*///			irmb_regs[i] = 0;
-/*TODO*///		}
-/*TODO*///		irmb_latch=0;
-/*TODO*///		load_oproms();
-/*TODO*///	} };
-/*TODO*///	
+		}
+	}
+	
+	
+	/* Init mathbox (only called once) */
+	public static InitDriverPtr init_irobot = new InitDriverPtr() { public void handler() 
+	{
+		int i;
+		for (i = 0; i < 16; i++)
+		{
+			irmb_stack[i] = mbops[0];
+			irmb_regs[i] = 0;
+		}
+		irmb_latch=0;
+		load_oproms();
+	} };
+	
 /*TODO*///	static void irmb_done_callback (int param)
 /*TODO*///	{
 /*TODO*///	    logerror("mb done. ");

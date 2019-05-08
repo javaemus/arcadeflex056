@@ -69,292 +69,327 @@ Notes:
  */ 
 package WIP.mame056.drivers;
 
+import static arcadeflex056.fucPtr.*;
+import static common.libc.cstring.memcpy;
+import static common.ptr.*;
+import static mame056.common.*;
+
+import static mame056.commonH.*;
+import static mame056.cpuexec.*;
+import static mame056.inptportH.*;
+import static mame056.cpuexecH.*;
+import static mame056.cpuexec.*;
+import static mame056.cpuintrfH.*;
+import static mame056.driverH.*;
+import static mame056.memoryH.*;
+import static mame056.memory.*;
+import static mame056.inptport.*;
+import static mame056.drawgfxH.*;
+import static mame056.inputH.*;
+import static mame056.sndintrfH.*;
+import static mame056.sound.streams.*;
+import static mame056.timerH.*;
+import static mame056.timer.*;
+import static mame056.palette.*;
+import static mame056.sndintrf.*;
+import static mame056.vidhrdw.generic.*;
+import static common.libc.cstring.*;
+import static arcadeflex056.fileio.*;
+// refactor
+import static arcadeflex036.osdepend.logerror;
+
+import static mame056.cpu.m6809.m6809H.*;
+import static WIP.mame056.machine.irobot.*;
+import static WIP.mame056.vidhrdw.irobot.*;
+
 public class irobot
 {
-/*TODO*///	static unsigned char *nvram;
-/*TODO*///	static size_t nvram_size;
-/*TODO*///	
-/*TODO*///	static void nvram_handler(void *file, int read_or_write)
-/*TODO*///	{
-/*TODO*///		if (read_or_write)
-/*TODO*///			osd_fwrite(file,nvram,nvram_size);
-/*TODO*///		else
-/*TODO*///		{
-/*TODO*///			if (file)
-/*TODO*///				osd_fread(file,nvram,nvram_size);
-/*TODO*///			else
-/*TODO*///				memset(nvram,0,nvram_size);
-/*TODO*///		}
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	public static WriteHandlerPtr irobot_nvram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-/*TODO*///	{
-/*TODO*///		nvram[offset] = data & 0x0f;
-/*TODO*///	} };
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	public static WriteHandlerPtr irobot_clearirq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-/*TODO*///	{
-/*TODO*///	    cpu_set_irq_line(0, M6809_IRQ_LINE ,CLEAR_LINE);
-/*TODO*///	} };
-/*TODO*///	
-/*TODO*///	public static WriteHandlerPtr irobot_clearfirq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-/*TODO*///	{
-/*TODO*///	    cpu_set_irq_line(0, M6809_FIRQ_LINE ,CLEAR_LINE);
-/*TODO*///	} };
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	public static Memory_ReadAddress readmem[]={
-/*TODO*///		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-/*TODO*///	    new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ),
-/*TODO*///	    new Memory_ReadAddress( 0x0800, 0x0fff, MRA_BANK2 ),
-/*TODO*///	    new Memory_ReadAddress( 0x1000, 0x103f, input_port_0_r ),
-/*TODO*///	    new Memory_ReadAddress( 0x1040, 0x1040, input_port_1_r ),
-/*TODO*///	    new Memory_ReadAddress( 0x1080, 0x1080, irobot_status_r ),
-/*TODO*///	    new Memory_ReadAddress( 0x10c0, 0x10c0, input_port_3_r ),
-/*TODO*///	    new Memory_ReadAddress( 0x1200, 0x12ff, MRA_RAM ),
-/*TODO*///	    new Memory_ReadAddress( 0x1300, 0x13ff, irobot_control_r ),
-/*TODO*///	    new Memory_ReadAddress( 0x1400, 0x143f, quad_pokey_r ),
-/*TODO*///	    new Memory_ReadAddress( 0x1c00, 0x1fff, MRA_RAM ),
-/*TODO*///	    new Memory_ReadAddress( 0x2000, 0x3fff, irobot_sharedmem_r ),
-/*TODO*///	    new Memory_ReadAddress( 0x4000, 0x5fff, MRA_BANK1 ),
-/*TODO*///	    new Memory_ReadAddress( 0x6000, 0xffff, MRA_ROM ),
-/*TODO*///		new Memory_ReadAddress(MEMPORT_MARKER, 0)
-/*TODO*///	};
-/*TODO*///	
-/*TODO*///	public static Memory_WriteAddress writemem[]={
-/*TODO*///		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-/*TODO*///	    new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM ),
-/*TODO*///	    new Memory_WriteAddress( 0x0800, 0x0fff, MWA_BANK2 ),
-/*TODO*///	    new Memory_WriteAddress( 0x1100, 0x1100, irobot_clearirq_w ),
-/*TODO*///	    new Memory_WriteAddress( 0x1140, 0x1140, irobot_statwr_w ),
-/*TODO*///	    new Memory_WriteAddress( 0x1180, 0x1180, irobot_out0_w ),
-/*TODO*///	    new Memory_WriteAddress( 0x11c0, 0x11c0, irobot_rom_banksel_w ),
-/*TODO*///	    new Memory_WriteAddress( 0x1200, 0x12ff, irobot_nvram_w, nvram, nvram_size ),
-/*TODO*///	    new Memory_WriteAddress( 0x1400, 0x143f, quad_pokey_w ),
-/*TODO*///	    new Memory_WriteAddress( 0x1800, 0x18ff, irobot_paletteram_w ),
-/*TODO*///	    new Memory_WriteAddress( 0x1900, 0x19ff, MWA_RAM ),            /* Watchdog reset */
-/*TODO*///	    new Memory_WriteAddress( 0x1a00, 0x1a00, irobot_clearfirq_w ),
-/*TODO*///	    new Memory_WriteAddress( 0x1b00, 0x1bff, irobot_control_w ),
-/*TODO*///	    new Memory_WriteAddress( 0x1c00, 0x1fff, MWA_RAM, videoram, videoram_size ),
-/*TODO*///	    new Memory_WriteAddress( 0x2000, 0x3fff, irobot_sharedmem_w),
-/*TODO*///	    new Memory_WriteAddress( 0x4000, 0xffff, MWA_ROM ),
-/*TODO*///		new Memory_WriteAddress(MEMPORT_MARKER, 0)
-/*TODO*///	};
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	static InputPortPtr input_ports_irobot = new InputPortPtr(){ public void handler() { 
-/*TODO*///		PORT_START(); 	/* IN0 */
-/*TODO*///	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
-/*TODO*///	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
-/*TODO*///	    PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN );
-/*TODO*///	    PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN );
-/*TODO*///	    PORT_SERVICE( 0x10, IP_ACTIVE_LOW );
-/*TODO*///	    PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_COIN3 );
-/*TODO*///	    PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_COIN1 );
-/*TODO*///	    PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_COIN2 );
-/*TODO*///	
-/*TODO*///		PORT_START(); 	/* IN1 */
-/*TODO*///	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
-/*TODO*///	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
-/*TODO*///	    PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN );
-/*TODO*///	    PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN );
-/*TODO*///	    PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 );
-/*TODO*///	    PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON2 );
-/*TODO*///	    PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_START2 );
-/*TODO*///	    PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START1 );
-/*TODO*///	
-/*TODO*///		PORT_START(); 	/* IN2 */
-/*TODO*///	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
-/*TODO*///	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
-/*TODO*///	    PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN );
-/*TODO*///	    PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN );
-/*TODO*///	    PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN );
-/*TODO*///	    PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* MB DONE */
-/*TODO*///	    PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* EXT DONE */
-/*TODO*///	    PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_VBLANK );
-/*TODO*///	
-/*TODO*///		PORT_START();  /* DSW1 */
-/*TODO*///		PORT_DIPNAME(    0x03, 0x00, "Coins Per Credit" );
-/*TODO*///		PORT_DIPSETTING( 0x00, "1 Coin 1 Credit" );
-/*TODO*///		PORT_DIPSETTING( 0x01, "2 Coins 1 Credit" );
-/*TODO*///		PORT_DIPSETTING( 0x02, "3 Coins 1 Credit" );
-/*TODO*///		PORT_DIPSETTING( 0x03, "4 Coins 1 Credit" );
-/*TODO*///		PORT_DIPNAME(    0x0c, 0x00, "Right Coin" );
-/*TODO*///		PORT_DIPSETTING( 0x00, "1 Coin for 1 Coin Unit" );
-/*TODO*///		PORT_DIPSETTING( 0x04, "1 Coin for 4 Coin Units" );
-/*TODO*///		PORT_DIPSETTING( 0x08, "1 Coin for 5 Coin Units" );
-/*TODO*///		PORT_DIPSETTING( 0x0c, "1 Coin for 6 Coin Units" );
-/*TODO*///		PORT_DIPNAME(    0x10, 0x00, "Left Coin" );
-/*TODO*///		PORT_DIPSETTING( 0x00, "1 Coin for 1 Coin Unit" );
-/*TODO*///		PORT_DIPSETTING( 0x10, "1 Coin for 2 Coin Units" );
-/*TODO*///		PORT_DIPNAME(    0xe0, 0x00, "Bonus Adder" );
-/*TODO*///		PORT_DIPSETTING( 0x00, "None" );
-/*TODO*///		PORT_DIPSETTING( 0x20, "1 Credit for 2 Coin Units" );
-/*TODO*///		PORT_DIPSETTING( 0xa0, "1 Credit for 3 Coin Units" );
-/*TODO*///		PORT_DIPSETTING( 0x40, "1 Credit for 4 Coin Units" );
-/*TODO*///		PORT_DIPSETTING( 0x80, "1 Credit for 5 Coin Units" );
-/*TODO*///		PORT_DIPSETTING( 0x60, "2 Credits for 4 Coin Units" );
-/*TODO*///		PORT_DIPSETTING( 0xe0, DEF_STR( "Free_Play") );
-/*TODO*///	
-/*TODO*///		PORT_START();  /* DSW2 */
-/*TODO*///		PORT_DIPNAME(    0x01, 0x01, "Language" );
-/*TODO*///		PORT_DIPSETTING( 0x01, "English" );
-/*TODO*///		PORT_DIPSETTING( 0x00, "German" );
-/*TODO*///		PORT_DIPNAME(    0x02, 0x02, "Min Game Time" );
-/*TODO*///		PORT_DIPSETTING( 0x00, "90 Sec" );
-/*TODO*///		PORT_DIPSETTING( 0x02, "3 Lives" );
-/*TODO*///		PORT_DIPNAME(    0x0c, 0x0c, DEF_STR( "Bonus_Life") );
-/*TODO*///		PORT_DIPSETTING( 0x08, "None" );
-/*TODO*///		PORT_DIPSETTING( 0x0c, "20000" );
-/*TODO*///		PORT_DIPSETTING( 0x00, "30000" );
-/*TODO*///		PORT_DIPSETTING( 0x04, "50000" );
-/*TODO*///		PORT_DIPNAME(    0x30, 0x30, DEF_STR( "Lives") );
-/*TODO*///		PORT_DIPSETTING( 0x20, "2" );
-/*TODO*///		PORT_DIPSETTING( 0x30, "3" );
-/*TODO*///		PORT_DIPSETTING( 0x00, "4" );
-/*TODO*///		PORT_DIPSETTING( 0x10, "5" );
-/*TODO*///		PORT_DIPNAME(    0x40, 0x40, DEF_STR( "Difficulty") );
-/*TODO*///		PORT_DIPSETTING( 0x00, "Easy" );
-/*TODO*///		PORT_DIPSETTING( 0x40, "Medium" );
-/*TODO*///		PORT_DIPNAME(    0x80, 0x80, "Demo Mode" );
-/*TODO*///		PORT_DIPSETTING( 0x80, DEF_STR( "Off") );
-/*TODO*///		PORT_DIPSETTING( 0x00, DEF_STR( "On") );
-/*TODO*///	
-/*TODO*///		PORT_START(); 	/* IN4 */
-/*TODO*///		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_Y | IPF_CENTER, 70, 50, 95, 159 );
-/*TODO*///	
-/*TODO*///		PORT_START(); 	/* IN5 */
-/*TODO*///		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X | IPF_REVERSE | IPF_CENTER, 50, 50, 95, 159 );
-/*TODO*///	
-/*TODO*///	INPUT_PORTS_END(); }}; 
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	static GfxLayout charlayout = new GfxLayout
-/*TODO*///	(
-/*TODO*///		8,8,    /* 8*8 characters */
-/*TODO*///	    64,    /* 64 characters */
-/*TODO*///	    1,      /* 1 bit per pixel */
-/*TODO*///	    new int[] { 0 }, /* the bitplanes are packed in one nibble */
-/*TODO*///	    new int[] { 4, 5, 6, 7, 12, 13, 14, 15},
-/*TODO*///	    new int[] { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16},
-/*TODO*///	    16*8   /* every char takes 16 consecutive bytes */
-/*TODO*///	);
-/*TODO*///	
-/*TODO*///	static GfxDecodeInfo gfxdecodeinfo[] =
-/*TODO*///	{
-/*TODO*///	    new GfxDecodeInfo( REGION_GFX1, 0, charlayout, 64, 16 ),
-/*TODO*///		new GfxDecodeInfo( -1 )
-/*TODO*///	};
-/*TODO*///	
-/*TODO*///	static struct POKEYinterface pokey_interface =
-/*TODO*///	{
-/*TODO*///		4,	/* 4 chips */
-/*TODO*///		1250000,	/* 1.25 MHz??? */
-/*TODO*///		{ 25, 25, 25, 25 },
-/*TODO*///		/* The 8 pot handlers */
-/*TODO*///		{ 0, 0, 0, 0 },
-/*TODO*///		{ 0, 0, 0, 0 },
-/*TODO*///		{ 0, 0, 0, 0 },
-/*TODO*///		{ 0, 0, 0, 0 },
-/*TODO*///		{ 0, 0, 0, 0 },
-/*TODO*///		{ 0, 0, 0, 0 },
-/*TODO*///		{ 0, 0, 0, 0 },
-/*TODO*///		{ 0, 0, 0, 0 },
-/*TODO*///		/* The allpot handler */
-/*TODO*///	    { input_port_4_r, 0, 0, 0 },
-/*TODO*///	};
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	static MachineDriver machine_driver_irobot = new MachineDriver
-/*TODO*///	(
-/*TODO*///		/* basic machine hardware */
-/*TODO*///		new MachineCPU[] {
-/*TODO*///			new MachineCPU(
-/*TODO*///	            CPU_M6809,
-/*TODO*///	            1500000,    /* 1.5 MHz */
-/*TODO*///				readmem,writemem,null,null,
-/*TODO*///	            ignore_interrupt,0		/* interrupt handled by scanline callbacks */
-/*TODO*///	         ),
-/*TODO*///		},
-/*TODO*///		60, DEFAULT_REAL_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */
-/*TODO*///	    1,
-/*TODO*///	    irobot_init_machine,
-/*TODO*///	
-/*TODO*///		/* video hardware */
-/*TODO*///		32*8, 32*8, new rectangle( 0*8, 32*8-1, 0*8, 29*8-1 ),
-/*TODO*///		gfxdecodeinfo,
-/*TODO*///	    64 + 32,64 + 32, /* 64 for polygons, 32 for text */
-/*TODO*///	    irobot_vh_convert_color_prom,
-/*TODO*///	
-/*TODO*///	    VIDEO_TYPE_RASTER,
-/*TODO*///		null,
-/*TODO*///	    irobot_vh_start,
-/*TODO*///	    irobot_vh_stop,
-/*TODO*///	    irobot_vh_screenrefresh,
-/*TODO*///	
-/*TODO*///		/* sound hardware */
-/*TODO*///		0,0,0,0,
-/*TODO*///		new MachineSound[] {
-/*TODO*///			new MachineSound(
-/*TODO*///				SOUND_POKEY,
-/*TODO*///				pokey_interface
-/*TODO*///			)
-/*TODO*///		},
-/*TODO*///	
-/*TODO*///		nvram_handler
-/*TODO*///	);
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	/***************************************************************************
-/*TODO*///	
-/*TODO*///	  Game driver(s)
-/*TODO*///	
-/*TODO*///	***************************************************************************/
-/*TODO*///	
-/*TODO*///	static RomLoadPtr rom_irobot = new RomLoadPtr(){ public void handler(){ 
-/*TODO*///		ROM_REGION( 0x20000, REGION_CPU1, 0 );/* 64k for code + 48K Banked ROM*/
-/*TODO*///		ROM_LOAD( "136029.208",     0x06000, 0x2000, 0xb4d0be59 );
-/*TODO*///		ROM_LOAD( "136029.209",     0x08000, 0x4000, 0xf6be3cd0 );
-/*TODO*///		ROM_LOAD( "136029.210",     0x0c000, 0x4000, 0xc0eb2133 );
-/*TODO*///		ROM_LOAD( "136029.405",     0x10000, 0x4000, 0x9163efe4 );
-/*TODO*///		ROM_LOAD( "136029.206",     0x14000, 0x4000, 0xe114a526 );
-/*TODO*///		ROM_LOAD( "136029.207",     0x18000, 0x4000, 0xb4556cb0 );
-/*TODO*///	
-/*TODO*///		ROM_REGION16_BE( 0x10000, REGION_CPU2, 0 ); /* mathbox region */
-/*TODO*///		ROM_LOAD16_BYTE( "ir104.bin", 0x0000,  0x2000, 0x0a6cdcca );
-/*TODO*///		ROM_LOAD16_BYTE( "ir103.bin", 0x0001,  0x2000, 0x0c83296d );/* ROM data from 0000-bfff */
-/*TODO*///		ROM_LOAD16_BYTE( "ir102.bin", 0x4000,  0x4000, 0x9d588f22 );
-/*TODO*///		ROM_LOAD16_BYTE( "ir101.bin", 0x4001,  0x4000, 0x62a38c08 );
-/*TODO*///		/* RAM data from c000-dfff */
-/*TODO*///		/* COMRAM from   e000-ffff */
-/*TODO*///	
-/*TODO*///		ROM_REGION( 0x800, REGION_GFX1, ROMREGION_DISPOSE );
-/*TODO*///		ROM_LOAD( "136029.124",     0x0000,  0x0800, 0x848948b6 );
-/*TODO*///	
-/*TODO*///		ROM_REGION( 0x3420, REGION_PROMS, 0 );
-/*TODO*///		ROM_LOAD( "ir125.bin",      0x0000,  0x0020, 0x446335ba );
-/*TODO*///		ROM_LOAD( "ir111.bin",      0x0020,  0x0400, 0x9fbc9bf3 );/* program ROMs from c000-f3ff */
-/*TODO*///		ROM_LOAD( "ir112.bin",      0x0420,  0x0400, 0xb2713214 );
-/*TODO*///		ROM_LOAD( "ir113.bin",      0x0820,  0x0400, 0x7875930a );
-/*TODO*///		ROM_LOAD( "ir114.bin",      0x0c20,  0x0400, 0x51d29666 );
-/*TODO*///		ROM_LOAD( "ir115.bin",      0x1020,  0x0400, 0x00f9b304 );
-/*TODO*///		ROM_LOAD( "ir116.bin",      0x1420,  0x0400, 0x326aba54 );
-/*TODO*///		ROM_LOAD( "ir117.bin",      0x1820,  0x0400, 0x98efe8d0 );
-/*TODO*///		ROM_LOAD( "ir118.bin",      0x1c20,  0x0400, 0x4a6aa7f9 );
-/*TODO*///		ROM_LOAD( "ir119.bin",      0x2020,  0x0400, 0xa5a13ad8 );
-/*TODO*///		ROM_LOAD( "ir120.bin",      0x2420,  0x0400, 0x2a083465 );
-/*TODO*///		ROM_LOAD( "ir121.bin",      0x2820,  0x0400, 0xadebcb99 );
-/*TODO*///		ROM_LOAD( "ir122.bin",      0x2c20,  0x0400, 0xda7b6f79 );
-/*TODO*///		ROM_LOAD( "ir123.bin",      0x3020,  0x0400, 0x39fff18f );
-/*TODO*///	ROM_END(); }}; 
-/*TODO*///	
-/*TODO*///		/*  Colorprom from John's driver. ? */
-/*TODO*///		/*  ROM_LOAD( "136029.125",    0x0000, 0x0020, 0xc05abf82 );*/
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	public static GameDriver driver_irobot	   = new GameDriver("1983"	,"irobot"	,"irobot.java"	,rom_irobot,null	,machine_driver_irobot	,input_ports_irobot	,init_irobot	,ROT0	,	"Atari", "I, Robot" )
+	static UBytePtr nvram = new UBytePtr();
+	static int[] nvram_size=new int[1];
+	
+	public static nvramPtr nvram_handler = new nvramPtr() {
+            public void handler(Object file, int read_or_write) {
+                if (read_or_write != 0)
+			osd_fwrite(file,nvram,nvram_size[0]);
+		else
+		{
+			if (file != null)
+				osd_fread(file,nvram,nvram_size[0]);
+			else
+				memset(nvram,0,nvram_size[0]);
+		}
+            }
+        };
+	
+	public static WriteHandlerPtr irobot_nvram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
+	{
+		nvram.write(offset, data & 0x0f);
+	} };
+	
+	
+	public static WriteHandlerPtr irobot_clearirq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
+	{
+	    cpu_set_irq_line(0, M6809_IRQ_LINE ,CLEAR_LINE);
+	} };
+	
+	public static WriteHandlerPtr irobot_clearfirq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
+	{
+	    cpu_set_irq_line(0, M6809_FIRQ_LINE ,CLEAR_LINE);
+	} };
+	
+	
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+	    new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ),
+	    new Memory_ReadAddress( 0x0800, 0x0fff, MRA_BANK2 ),
+	    new Memory_ReadAddress( 0x1000, 0x103f, input_port_0_r ),
+	    new Memory_ReadAddress( 0x1040, 0x1040, input_port_1_r ),
+	    new Memory_ReadAddress( 0x1080, 0x1080, irobot_status_r ),
+	    new Memory_ReadAddress( 0x10c0, 0x10c0, input_port_3_r ),
+	    new Memory_ReadAddress( 0x1200, 0x12ff, MRA_RAM ),
+	    new Memory_ReadAddress( 0x1300, 0x13ff, irobot_control_r ),
+	    /*TODO*///new Memory_ReadAddress( 0x1400, 0x143f, quad_pokey_r ),
+	    new Memory_ReadAddress( 0x1c00, 0x1fff, MRA_RAM ),
+	    new Memory_ReadAddress( 0x2000, 0x3fff, irobot_sharedmem_r ),
+	    new Memory_ReadAddress( 0x4000, 0x5fff, MRA_BANK1 ),
+	    new Memory_ReadAddress( 0x6000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+	    new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM ),
+	    new Memory_WriteAddress( 0x0800, 0x0fff, MWA_BANK2 ),
+	    new Memory_WriteAddress( 0x1100, 0x1100, irobot_clearirq_w ),
+	    new Memory_WriteAddress( 0x1140, 0x1140, irobot_statwr_w ),
+	    new Memory_WriteAddress( 0x1180, 0x1180, irobot_out0_w ),
+	    new Memory_WriteAddress( 0x11c0, 0x11c0, irobot_rom_banksel_w ),
+	    new Memory_WriteAddress( 0x1200, 0x12ff, irobot_nvram_w, nvram, nvram_size ),
+	    /*TODO*///new Memory_WriteAddress( 0x1400, 0x143f, quad_pokey_w ),
+	    new Memory_WriteAddress( 0x1800, 0x18ff, irobot_paletteram_w ),
+	    new Memory_WriteAddress( 0x1900, 0x19ff, MWA_RAM ),            /* Watchdog reset */
+	    new Memory_WriteAddress( 0x1a00, 0x1a00, irobot_clearfirq_w ),
+	    new Memory_WriteAddress( 0x1b00, 0x1bff, irobot_control_w ),
+	    new Memory_WriteAddress( 0x1c00, 0x1fff, MWA_RAM, videoram, videoram_size ),
+	    new Memory_WriteAddress( 0x2000, 0x3fff, irobot_sharedmem_w),
+	    new Memory_WriteAddress( 0x4000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	
+	static InputPortPtr input_ports_irobot = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 	/* IN0 */
+	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
+	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
+	    PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN );
+	    PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN );
+	    PORT_SERVICE( 0x10, IP_ACTIVE_LOW );
+	    PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_COIN3 );
+	    PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_COIN1 );
+	    PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_COIN2 );
+	
+		PORT_START(); 	/* IN1 */
+	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
+	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
+	    PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN );
+	    PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN );
+	    PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 );
+	    PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON2 );
+	    PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_START2 );
+	    PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START1 );
+	
+		PORT_START(); 	/* IN2 */
+	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
+	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
+	    PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN );
+	    PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN );
+	    PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN );
+	    PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* MB DONE */
+	    PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* EXT DONE */
+	    PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_VBLANK );
+	
+		PORT_START();  /* DSW1 */
+		PORT_DIPNAME(    0x03, 0x00, "Coins Per Credit" );
+		PORT_DIPSETTING( 0x00, "1 Coin 1 Credit" );
+		PORT_DIPSETTING( 0x01, "2 Coins 1 Credit" );
+		PORT_DIPSETTING( 0x02, "3 Coins 1 Credit" );
+		PORT_DIPSETTING( 0x03, "4 Coins 1 Credit" );
+		PORT_DIPNAME(    0x0c, 0x00, "Right Coin" );
+		PORT_DIPSETTING( 0x00, "1 Coin for 1 Coin Unit" );
+		PORT_DIPSETTING( 0x04, "1 Coin for 4 Coin Units" );
+		PORT_DIPSETTING( 0x08, "1 Coin for 5 Coin Units" );
+		PORT_DIPSETTING( 0x0c, "1 Coin for 6 Coin Units" );
+		PORT_DIPNAME(    0x10, 0x00, "Left Coin" );
+		PORT_DIPSETTING( 0x00, "1 Coin for 1 Coin Unit" );
+		PORT_DIPSETTING( 0x10, "1 Coin for 2 Coin Units" );
+		PORT_DIPNAME(    0xe0, 0x00, "Bonus Adder" );
+		PORT_DIPSETTING( 0x00, "None" );
+		PORT_DIPSETTING( 0x20, "1 Credit for 2 Coin Units" );
+		PORT_DIPSETTING( 0xa0, "1 Credit for 3 Coin Units" );
+		PORT_DIPSETTING( 0x40, "1 Credit for 4 Coin Units" );
+		PORT_DIPSETTING( 0x80, "1 Credit for 5 Coin Units" );
+		PORT_DIPSETTING( 0x60, "2 Credits for 4 Coin Units" );
+		PORT_DIPSETTING( 0xe0, DEF_STR( "Free_Play") );
+	
+		PORT_START();  /* DSW2 */
+		PORT_DIPNAME(    0x01, 0x01, "Language" );
+		PORT_DIPSETTING( 0x01, "English" );
+		PORT_DIPSETTING( 0x00, "German" );
+		PORT_DIPNAME(    0x02, 0x02, "Min Game Time" );
+		PORT_DIPSETTING( 0x00, "90 Sec" );
+		PORT_DIPSETTING( 0x02, "3 Lives" );
+		PORT_DIPNAME(    0x0c, 0x0c, DEF_STR( "Bonus_Life") );
+		PORT_DIPSETTING( 0x08, "None" );
+		PORT_DIPSETTING( 0x0c, "20000" );
+		PORT_DIPSETTING( 0x00, "30000" );
+		PORT_DIPSETTING( 0x04, "50000" );
+		PORT_DIPNAME(    0x30, 0x30, DEF_STR( "Lives") );
+		PORT_DIPSETTING( 0x20, "2" );
+		PORT_DIPSETTING( 0x30, "3" );
+		PORT_DIPSETTING( 0x00, "4" );
+		PORT_DIPSETTING( 0x10, "5" );
+		PORT_DIPNAME(    0x40, 0x40, DEF_STR( "Difficulty") );
+		PORT_DIPSETTING( 0x00, "Easy" );
+		PORT_DIPSETTING( 0x40, "Medium" );
+		PORT_DIPNAME(    0x80, 0x80, "Demo Mode" );
+		PORT_DIPSETTING( 0x80, DEF_STR( "Off") );
+		PORT_DIPSETTING( 0x00, DEF_STR( "On") );
+	
+		PORT_START(); 	/* IN4 */
+		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_Y | IPF_CENTER, 70, 50, 95, 159 );
+	
+		PORT_START(); 	/* IN5 */
+		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X | IPF_REVERSE | IPF_CENTER, 50, 50, 95, 159 );
+	
+	INPUT_PORTS_END(); }}; 
+	
+	
+	static GfxLayout charlayout = new GfxLayout
+	(
+		8,8,    /* 8*8 characters */
+	    64,    /* 64 characters */
+	    1,      /* 1 bit per pixel */
+	    new int[] { 0 }, /* the bitplanes are packed in one nibble */
+	    new int[] { 4, 5, 6, 7, 12, 13, 14, 15},
+	    new int[] { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16},
+	    16*8   /* every char takes 16 consecutive bytes */
+	);
+	
+	static GfxDecodeInfo gfxdecodeinfo[] =
+	{
+	    new GfxDecodeInfo( REGION_GFX1, 0, charlayout, 64, 16 ),
+		new GfxDecodeInfo( -1 )
+	};
+	
+	/*TODO*///static POKEYinterface pokey_interface =
+	/*TODO*///{
+	/*TODO*///	4,	/* 4 chips */
+	/*TODO*///	1250000,	/* 1.25 MHz??? */
+	/*TODO*///	{ 25, 25, 25, 25 },
+	/*TODO*///	/* The 8 pot handlers */
+	/*TODO*///	{ 0, 0, 0, 0 },
+	/*TODO*///	{ 0, 0, 0, 0 },
+	/*TODO*///	{ 0, 0, 0, 0 },
+	/*TODO*///	{ 0, 0, 0, 0 },
+	/*TODO*///	{ 0, 0, 0, 0 },
+	/*TODO*///	{ 0, 0, 0, 0 },
+	/*TODO*///	{ 0, 0, 0, 0 },
+	/*TODO*///	{ 0, 0, 0, 0 },
+		/* The allpot handler */
+	/*TODO*///    { input_port_4_r, 0, 0, 0 },
+	/*TODO*///};
+	
+	
+	static MachineDriver machine_driver_irobot = new MachineDriver
+	(
+		/* basic machine hardware */
+		new MachineCPU[] {
+			new MachineCPU(
+	            CPU_M6809,
+	            1500000,    /* 1.5 MHz */
+				readmem,writemem,null,null,
+	            ignore_interrupt,0		/* interrupt handled by scanline callbacks */
+	         ),
+		},
+		60, DEFAULT_REAL_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */
+	    1,
+	    irobot_init_machine,
+	
+		/* video hardware */
+		32*8, 32*8, new rectangle( 0*8, 32*8-1, 0*8, 29*8-1 ),
+		gfxdecodeinfo,
+	    64 + 32,64 + 32, /* 64 for polygons, 32 for text */
+	    irobot_vh_convert_color_prom,
+	
+	    VIDEO_TYPE_RASTER,
+		null,
+	    irobot_vh_start,
+	    irobot_vh_stop,
+	    irobot_vh_screenrefresh,
+	
+		/* sound hardware */
+		0,0,0,0,
+		/*TODO*///new MachineSound[] {
+		/*TODO*///	new MachineSound(
+		/*TODO*///		SOUND_POKEY,
+		/*TODO*///		pokey_interface
+		/*TODO*///	)
+		/*TODO*///},
+                null,
+	
+		nvram_handler
+	);
+	
+	
+	
+	/***************************************************************************
+	
+	  Game driver(s)
+	
+	***************************************************************************/
+	
+	static RomLoadPtr rom_irobot = new RomLoadPtr(){ public void handler(){ 
+		ROM_REGION( 0x20000, REGION_CPU1, 0 );/* 64k for code + 48K Banked ROM*/
+		ROM_LOAD( "136029.208",     0x06000, 0x2000, 0xb4d0be59 );
+		ROM_LOAD( "136029.209",     0x08000, 0x4000, 0xf6be3cd0 );
+		ROM_LOAD( "136029.210",     0x0c000, 0x4000, 0xc0eb2133 );
+		ROM_LOAD( "136029.405",     0x10000, 0x4000, 0x9163efe4 );
+		ROM_LOAD( "136029.206",     0x14000, 0x4000, 0xe114a526 );
+		ROM_LOAD( "136029.207",     0x18000, 0x4000, 0xb4556cb0 );
+	
+		ROM_REGION16_BE( 0x10000, REGION_CPU2, 0 ); /* mathbox region */
+		ROM_LOAD16_BYTE( "ir104.bin", 0x0000,  0x2000, 0x0a6cdcca );
+		ROM_LOAD16_BYTE( "ir103.bin", 0x0001,  0x2000, 0x0c83296d );/* ROM data from 0000-bfff */
+		ROM_LOAD16_BYTE( "ir102.bin", 0x4000,  0x4000, 0x9d588f22 );
+		ROM_LOAD16_BYTE( "ir101.bin", 0x4001,  0x4000, 0x62a38c08 );
+		/* RAM data from c000-dfff */
+		/* COMRAM from   e000-ffff */
+	
+		ROM_REGION( 0x800, REGION_GFX1, ROMREGION_DISPOSE );
+		ROM_LOAD( "136029.124",     0x0000,  0x0800, 0x848948b6 );
+	
+		ROM_REGION( 0x3420, REGION_PROMS, 0 );
+		ROM_LOAD( "ir125.bin",      0x0000,  0x0020, 0x446335ba );
+		ROM_LOAD( "ir111.bin",      0x0020,  0x0400, 0x9fbc9bf3 );/* program ROMs from c000-f3ff */
+		ROM_LOAD( "ir112.bin",      0x0420,  0x0400, 0xb2713214 );
+		ROM_LOAD( "ir113.bin",      0x0820,  0x0400, 0x7875930a );
+		ROM_LOAD( "ir114.bin",      0x0c20,  0x0400, 0x51d29666 );
+		ROM_LOAD( "ir115.bin",      0x1020,  0x0400, 0x00f9b304 );
+		ROM_LOAD( "ir116.bin",      0x1420,  0x0400, 0x326aba54 );
+		ROM_LOAD( "ir117.bin",      0x1820,  0x0400, 0x98efe8d0 );
+		ROM_LOAD( "ir118.bin",      0x1c20,  0x0400, 0x4a6aa7f9 );
+		ROM_LOAD( "ir119.bin",      0x2020,  0x0400, 0xa5a13ad8 );
+		ROM_LOAD( "ir120.bin",      0x2420,  0x0400, 0x2a083465 );
+		ROM_LOAD( "ir121.bin",      0x2820,  0x0400, 0xadebcb99 );
+		ROM_LOAD( "ir122.bin",      0x2c20,  0x0400, 0xda7b6f79 );
+		ROM_LOAD( "ir123.bin",      0x3020,  0x0400, 0x39fff18f );
+	ROM_END(); }}; 
+	
+		/*  Colorprom from John's driver. ? */
+		/*  ROM_LOAD( "136029.125",    0x0000, 0x0020, 0xc05abf82 );*/
+	
+	
+	
+	public static GameDriver driver_irobot	   = new GameDriver("1983"	,"irobot"	,"irobot.java"	,rom_irobot,null	,machine_driver_irobot	,input_ports_irobot	,init_irobot	,ROT0	,	"Atari", "I, Robot" );
 }

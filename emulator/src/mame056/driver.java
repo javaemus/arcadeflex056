@@ -102,6 +102,7 @@ import static mame056.drivers.kingobox.*;
 import static mame056.drivers.skydiver.*;
 import static WIP.mame056.drivers.mpatrol.*;
 import static WIP.mame056.drivers.m62.*;
+import static WIP.mame056.drivers.irobot.*;
 
 public class driver {
 
@@ -3046,9 +3047,9 @@ public class driver {
         /*TODO*///	driver_720b,		/* 136047			(c) 1986 */
         /*TODO*///	driver_apb,		/* 136051			(c) 1987 */
         /*TODO*///	driver_apb2,		/* 136051			(c) 1987 */
-        /*TODO*///
-        /*TODO*///	/* Atari polygon games */
-        /*TODO*///	driver_irobot,	/* 136029			(c) 1983 */
+        
+        	/* Atari polygon games */
+        	driver_irobot,	/* 136029			(c) 1983 */
         /*TODO*///	driver_harddriv,	/* 136052			(c) 1988 */
         /*TODO*///TESTdriver_harddrvc,	/* 136068			(c) 1990 */
         /*TODO*///	driver_stunrun,	/* 136070			(c) 1989 */

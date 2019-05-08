@@ -436,7 +436,7 @@ public class irobot
 	
 		/* copy the polygon bitmap */
 		for (y = Machine.visible_area.min_y; y < Machine.visible_area.max_y; y++){
-			/*TODO*///draw_scanline8(bitmap, 0, y, BITMAP_WIDTH, bitmap_base.read(y * BITMAP_WIDTH), Machine.pens, -1);
+			draw_scanline8(bitmap, 0, y, BITMAP_WIDTH, new UBytePtr(bitmap_base, y * BITMAP_WIDTH), new IntArray(Machine.pens), -1);
                 }
 	
 		/* redraw the non-zero characters in the alpha layer */
