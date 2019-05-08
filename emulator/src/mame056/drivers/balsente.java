@@ -2979,6 +2979,13 @@ public class balsente {
             /* noanalog */
         }
     };
+    
+    public static InitDriverPtr init_triviaes = new InitDriverPtr() {
+        public void handler() {
+            expand_roms(EXPAND_NONE | SWAP_HALVES);
+            balsente_shooter = 0;
+            /* noanalog */ }
+    };
     public static InitDriverPtr init_gimeabrk = new InitDriverPtr() {
         public void handler() {
             expand_roms(EXPAND_ALL);
@@ -3290,6 +3297,31 @@ public class balsente {
             ROM_LOAD("tpg1-gr3.bin", 0x06000, 0x2000, 0x323a8640);
             ROM_LOAD("tpg1-gr4.bin", 0x08000, 0x2000, 0x673acf42);
             ROM_LOAD("tpg1-gr5.bin", 0x0a000, 0x2000, 0x067bfd66);
+            ROM_END();
+        }
+    };
+    
+    static RomLoadPtr rom_triviaes = new RomLoadPtr() {
+        public void handler() {
+        
+	
+            ROM_REGION(0x40000, REGION_CPU1, 0);
+            ROM_LOAD( "tp_a2.bin",  0x10000, 0x04000, 0xb4d69463);
+            ROM_LOAD( "tp_a7.bin",  0x14000, 0x04000, 0xd78bd4b6);
+            ROM_LOAD( "tp_a4.bin",  0x18000, 0x04000, 0x0de9e14d);
+            ROM_LOAD( "tp_a5.bin",  0x1c000, 0x04000, 0xe749adac);
+            ROM_LOAD( "tp_a8.bin",  0x20000, 0x04000, 0x168ef5ed);
+            ROM_LOAD( "tp_a1.bin",  0x24000, 0x04000, 0x1f6ef37f);
+            ROM_LOAD( "tp_a6.bin",  0x28000, 0x04000, 0x421c1a29);
+            ROM_LOAD( "tp_a3.bin",  0x2c000, 0x04000, 0xc6254f46);
+
+            ROM_REGION( 0x10000, REGION_CPU2, 0 );		/* 64k for Z80 */
+            ROM_LOAD( "tpsonido.bin",  0x00000, 0x2000, 0x4dd0a525);
+
+            ROM_REGION( 0x10000, REGION_GFX1, 0 );		/* up to 64k of sprites */
+            ROM_LOAD( "tp_gr3.bin", 0x00000, 0x4000, 0x6829de8e);
+            ROM_LOAD( "tp_gr2.bin", 0x04000, 0x4000, 0x89398700);
+            ROM_LOAD( "tp_gr1.bin", 0x08000, 0x4000, 0x1242033e);
             ROM_END();
         }
     };
@@ -3684,4 +3716,7 @@ public class balsente {
     public static GameDriver driver_stompin = new GameDriver("1986", "stompin", "balsente.java", rom_stompin, null, machine_driver_balsente, input_ports_stompin, init_stompin, ROT0, "Bally/Sente", "Stompin'");
     public static GameDriver driver_rescraid = new GameDriver("1987", "rescraid", "balsente.java", rom_rescraid, null, machine_driver_balsente, input_ports_rescraid, init_rescraid, ROT0, "Bally/Sente", "Rescue Raider");
     public static GameDriver driver_rescrdsa = new GameDriver("1987", "rescrdsa", "balsente.java", rom_rescrdsa, driver_rescraid, machine_driver_balsente, input_ports_rescraid, init_rescraid, ROT0, "Bally/Sente", "Rescue Raider (Stand-Alone)");
+    
+    // more games (from mame 0.104u7)
+    public static GameDriver driver_triviaes = new GameDriver("1987", "triviaes", "balsente.java", rom_triviaes, null, machine_driver_balsente, input_ports_triviag1, init_triviaes, ROT0, "Bally/Sente (Maibesa license)",  "Trivial Pursuit (Spanish Edition)");
 }

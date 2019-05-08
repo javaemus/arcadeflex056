@@ -247,6 +247,7 @@ public class driver {
         /*balsente*/ driver_triviasp,
         /*balsente*/ driver_triviayp,
         /*balsente*/ driver_triviabb,
+        driver_triviaes,
         /*balsente*/ driver_gimeabrk,
         /*balsente*/ driver_minigolf,
         /*balsente*/ driver_minigol2,
