@@ -137,18 +137,18 @@ public class m6800H {
 /*TODO*///
 /*TODO*///#define HD63701_WAI 				 M6800_WAI
 /*TODO*///#define HD63701_SLP 				 M6800_SLP
-/*TODO*///#define HD63701_IRQ_LINE			 M6800_IRQ_LINE
-/*TODO*///#define HD63701_TIN_LINE			 M6800_TIN_LINE
+    public static final int HD63701_IRQ_LINE = M6800_IRQ_LINE;
+    /*TODO*///#define HD63701_TIN_LINE			 M6800_TIN_LINE
 /*TODO*///
 /*TODO*///#define hd63701_ICount				 m6800_ICount
 /*TODO*///
 /*TODO*///
-/*TODO*///#define HD63701_DDR1 M6803_DDR1
-/*TODO*///#define HD63701_DDR2 M6803_DDR2
-/*TODO*///
-/*TODO*///#define HD63701_PORT1 M6803_PORT1
-/*TODO*///#define HD63701_PORT2 M6803_PORT2
-/*TODO*///
+    public static final int HD63701_DDR1 = M6803_DDR1;
+    public static final int HD63701_DDR2 = M6803_DDR2;
+
+    public static final int HD63701_PORT1 = M6803_PORT1;
+    public static final int HD63701_PORT2 = M6803_PORT2;
+    /*TODO*///
 /*TODO*///READ_HANDLER( hd63701_internal_registers_r );
 /*TODO*///WRITE_HANDLER( hd63701_internal_registers_w );
 /*TODO*///
