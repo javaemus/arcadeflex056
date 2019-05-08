@@ -1050,24 +1050,24 @@ public class driver {
         /*TODO*///	driver_motorace,	/* (c) 1983 Williams license */
         /*TODO*///	/* M62 */
         	driver_kungfum,	/* (c) 1984 */
-        /*TODO*///	driver_kungfud,	/* (c) 1984 + Data East license */
-        /*TODO*///	driver_spartanx,	/* (c) 1984 (Japan) */
-        /*TODO*///	driver_kungfub,	/* bootleg */
-        /*TODO*///	driver_kungfub2,	/* bootleg */
-        /*TODO*///	driver_battroad,	/* (c) 1984 */
-        /*TODO*///	driver_ldrun,		/* (c) 1984 licensed from Broderbund */
-        /*TODO*///	driver_ldruna,	/* (c) 1984 licensed from Broderbund */
-        /*TODO*///	driver_ldrun2,	/* (c) 1984 licensed from Broderbund */
-        /*TODO*///	driver_ldrun3,	/* (c) 1985 licensed from Broderbund */
-        /*TODO*///	driver_ldrun4,	/* (c) 1986 licensed from Broderbund */
-        /*TODO*///	driver_lotlot,	/* (c) 1985 licensed from Tokuma Shoten */
-        /*TODO*///	driver_kidniki,	/* (c) 1986 + Data East USA license */
-        /*TODO*///	driver_yanchamr,	/* (c) 1986 (Japan) */
-        /*TODO*///	driver_spelunkr,	/* (c) 1985 licensed from Broderbund */
-        /*TODO*///	driver_spelnkrj,	/* (c) 1985 licensed from Broderbund */
-        /*TODO*///	driver_spelunk2,	/* (c) 1986 licensed from Broderbund */
-        /*TODO*///	driver_youjyudn,	/* (c) 1986 (Japan) */
-        /*TODO*///
+        	driver_kungfud,	/* (c) 1984 + Data East license */
+        	driver_spartanx,	/* (c) 1984 (Japan) */
+        	driver_kungfub,	/* bootleg */
+        	driver_kungfub2,	/* bootleg */
+        	driver_battroad,	/* (c) 1984 */
+        	driver_ldrun,		/* (c) 1984 licensed from Broderbund */
+        	driver_ldruna,	/* (c) 1984 licensed from Broderbund */
+        	driver_ldrun2,	/* (c) 1984 licensed from Broderbund */
+        	driver_ldrun3,	/* (c) 1985 licensed from Broderbund */
+        	driver_ldrun4,	/* (c) 1986 licensed from Broderbund */
+        	driver_lotlot,	/* (c) 1985 licensed from Tokuma Shoten */
+        	driver_kidniki,	/* (c) 1986 + Data East USA license */
+        	driver_yanchamr,	/* (c) 1986 (Japan) */
+        	driver_spelunkr,	/* (c) 1985 licensed from Broderbund */
+        	driver_spelnkrj,	/* (c) 1985 licensed from Broderbund */
+        	driver_spelunk2,	/* (c) 1986 licensed from Broderbund */
+        	driver_youjyudn,	/* (c) 1986 (Japan) */
+        
         /*TODO*///	driver_vigilant,	/* (c) 1988 (World) */
         /*TODO*///	driver_vigilntu,	/* (c) 1988 (US) */
         /*TODO*///	driver_vigilntj,	/* (c) 1988 (Japan) */

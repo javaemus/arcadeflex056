@@ -1,5 +1,6 @@
 08/05/2019
 ==========
+-All games of m62 driver are fully playable
 -Added mpatrol driver
 -Added kungfum game in m62 driver (WIP)
 

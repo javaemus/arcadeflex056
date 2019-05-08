@@ -1132,19 +1132,356 @@ public class m62
 	#define	ldrun3_vh_screenrefresh ldrun_vh_screenrefresh
 	*/
 	
-	/*              GAMENAME READPORT WRITEPORT CLOCK    WIDTH GFXDECODE COLS PALETTE */
 	
-	/*MACHINE_DRIVER( battroad, ldrun,  battroad, 18432000, 256, battroad, 544, battroad );
-	MACHINE_DRIVER( ldrun,    ldrun,  ldrun,    24000000, 384, kungfum,  512, irem );
-	MACHINE_DRIVER( ldrun2,   ldrun2, ldrun2,   24000000, 384, kungfum,  512, irem );
-	MACHINE_DRIVER( ldrun3,   ldrun,  ldrun3,   24000000, 384, ldrun3,   512, irem );
-	MACHINE_DRIVER( ldrun4,   ldrun,  ldrun4,   24000000, 384, ldrun3,   512, irem );
-	MACHINE_DRIVER( lotlot,   ldrun,  ldrun,    24000000, 384, lotlot,   768, irem );
-	MACHINE_DRIVER( kidniki,  ldrun,  kidniki,  24000000, 384, kidniki,  512, irem );
-	MACHINE_DRIVER( spelunkr, ldrun,  ldrun,    24000000, 384, spelunkr, 512, irem );
-	MACHINE_DRIVER( spelunk2, ldrun,  ldrun,    24000000, 384, spelunk2, 768, spelunk2 );
-	MACHINE_DRIVER( youjyudn, ldrun,  youjyudn, 18432000, 256, youjyudn, 512, irem );
-	*/
+	//MACHINE_DRIVER( battroad, ldrun,  battroad, 18432000, 256, battroad, 544, battroad );
+        static MachineDriver machine_driver_battroad = new MachineDriver
+	(                                                                                            
+		/* basic machine hardware */                                                             
+		new MachineCPU[] {                                                                                        
+			new MachineCPU(                                                                                    
+				CPU_Z80,                                                                         
+				18432000/6,                                                                         
+				battroad_readmem,battroad_writemem,ldrun_readport,battroad_writeport, 
+				interrupt,1                                                                      
+			),                                                                                   
+			IREM_AUDIO_CPU                                                                       
+		},                                                                                       
+		55, 1790, /* frames per second and vblank duration from the Lode Runner manual */        
+		1,	/* 1 CPU slice per frame - interleaving is forced when a sound command is written */ 
+		null,                                                                                       
+	                                                                                             
+		/* video hardware */                                                                     
+		64*8, 32*8, new rectangle( (64*8-256)/2, 64*8-(64*8-256)/2-1, 0*8, 32*8-1 ),  
+		battroad_gfxdecodeinfo,                                                               
+		544, 0,                                                                               
+		battroad_vh_convert_color_prom,                                                    
+	                                                                                             
+		VIDEO_TYPE_RASTER,                                                                       
+		null,                                                                                       
+		kidniki_vh_start,                                                                     
+		generic_vh_stop,                                                                         
+		battroad_vh_screenrefresh,                                                             
+	                                                                                             
+		/* sound hardware */                                                                     
+		0,0,0,0,                                                                                 
+		IREM_AUDIO                                                                           
+		                                                                                        
+	);
+        
+	//MACHINE_DRIVER( ldrun,    ldrun,  ldrun,    24000000, 384, kungfum,  512, irem );
+        static MachineDriver machine_driver_ldrun = new MachineDriver
+	(                                                                                            
+		/* basic machine hardware */                                                             
+		new MachineCPU[] {                                                                                        
+			new MachineCPU(                                                                                    
+				CPU_Z80,                                                                         
+				24000000/6,                                                                         
+				ldrun_readmem,ldrun_writemem,ldrun_readport,ldrun_writeport, 
+				interrupt,1                                                                      
+			),                                                                                   
+			IREM_AUDIO_CPU                                                                       
+		},                                                                                       
+		55, 1790, /* frames per second and vblank duration from the Lode Runner manual */        
+		1,	/* 1 CPU slice per frame - interleaving is forced when a sound command is written */ 
+		null,                                                                                       
+	                                                                                             
+		/* video hardware */                                                                     
+		64*8, 32*8, new rectangle( (64*8-384)/2, 64*8-(64*8-384)/2-1, 0*8, 32*8-1 ),  
+		kungfum_gfxdecodeinfo,                                                               
+		512, 0,                                                                               
+		irem_vh_convert_color_prom,                                                    
+	                                                                                             
+		VIDEO_TYPE_RASTER,                                                                       
+		null,                                                                                       
+		ldrun_vh_start,                                                                     
+		generic_vh_stop,                                                                         
+		ldrun_vh_screenrefresh,                                                             
+	                                                                                             
+		/* sound hardware */                                                                     
+		0,0,0,0,                                                                                 
+		IREM_AUDIO                                                                           
+		                                                                                        
+	);
+        
+	//MACHINE_DRIVER( ldrun2,   ldrun2, ldrun2,   24000000, 384, kungfum,  512, irem );
+        static MachineDriver machine_driver_ldrun2 = new MachineDriver
+	(                                                                                            
+		/* basic machine hardware */                                                             
+		new MachineCPU[] {                                                                                        
+			new MachineCPU(                                                                                    
+				CPU_Z80,                                                                         
+				24000000/6,                                                                         
+				ldrun2_readmem,ldrun2_writemem,ldrun2_readport,ldrun2_writeport, 
+				interrupt,1                                                                      
+			),                                                                                   
+			IREM_AUDIO_CPU                                                                       
+		},                                                                                       
+		55, 1790, /* frames per second and vblank duration from the Lode Runner manual */        
+		1,	/* 1 CPU slice per frame - interleaving is forced when a sound command is written */ 
+		null,                                                                                       
+	                                                                                             
+		/* video hardware */                                                                     
+		64*8, 32*8, new rectangle( (64*8-384)/2, 64*8-(64*8-384)/2-1, 0*8, 32*8-1 ),  
+		kungfum_gfxdecodeinfo,                                                               
+		512, 0,                                                                               
+		irem_vh_convert_color_prom,                                                    
+	                                                                                             
+		VIDEO_TYPE_RASTER,                                                                       
+		null,                                                                                       
+		ldrun_vh_start,                                                                     
+		generic_vh_stop,                                                                         
+		ldrun_vh_screenrefresh,                                                             
+	                                                                                             
+		/* sound hardware */                                                                     
+		0,0,0,0,                                                                                 
+		IREM_AUDIO
+		                                                                                      
+	);
+        
+	//MACHINE_DRIVER( ldrun3,   ldrun,  ldrun3,   24000000, 384, ldrun3,   512, irem );
+        static MachineDriver machine_driver_ldrun3 = new MachineDriver
+	(                                                                                            
+		/* basic machine hardware */                                                             
+		new MachineCPU[] {                                                                                        
+			new MachineCPU(                                                                                    
+				CPU_Z80,                                                                         
+				24000000/6,                                                                         
+				ldrun3_readmem,ldrun3_writemem,ldrun_readport,ldrun3_writeport, 
+				interrupt,1                                                                      
+			),                                                                                   
+			IREM_AUDIO_CPU                                                                       
+		},                                                                                       
+		55, 1790, /* frames per second and vblank duration from the Lode Runner manual */        
+		1,	/* 1 CPU slice per frame - interleaving is forced when a sound command is written */ 
+		null,                                                                                       
+	                                                                                             
+		/* video hardware */                                                                     
+		64*8, 32*8, new rectangle( (64*8-384)/2, 64*8-(64*8-384)/2-1, 0*8, 32*8-1 ),  
+		ldrun3_gfxdecodeinfo,                                                               
+		512, 0,                                                                               
+		irem_vh_convert_color_prom,                                                    
+	                                                                                             
+		VIDEO_TYPE_RASTER,                                                                       
+		null,                                                                                       
+		ldrun_vh_start,                                                                     
+		generic_vh_stop,                                                                         
+		ldrun_vh_screenrefresh,                                                             
+	                                                                                             
+		/* sound hardware */                                                                     
+		0,0,0,0,                                                                                 
+		IREM_AUDIO                                                                           
+		                                                                                        
+	);
+        
+	//MACHINE_DRIVER( ldrun4,   ldrun,  ldrun4,   24000000, 384, ldrun3,   512, irem );
+        static MachineDriver machine_driver_ldrun4 = new MachineDriver
+	(                                                                                            
+		/* basic machine hardware */                                                             
+		new MachineCPU[] {                                                                                        
+			new MachineCPU(                                                                                    
+				CPU_Z80,                                                                         
+				24000000/6,                                                                         
+				ldrun4_readmem,ldrun4_writemem,ldrun_readport,ldrun4_writeport, 
+				interrupt,1                                                                      
+			),                                                                                   
+			IREM_AUDIO_CPU                                                                       
+		},                                                                                       
+		55, 1790, /* frames per second and vblank duration from the Lode Runner manual */        
+		1,	/* 1 CPU slice per frame - interleaving is forced when a sound command is written */ 
+		null,                                                                                       
+	                                                                                             
+		/* video hardware */                                                                     
+		64*8, 32*8, new rectangle( (64*8-384)/2, 64*8-(64*8-384)/2-1, 0*8, 32*8-1 ),  
+		ldrun3_gfxdecodeinfo,                                                               
+		512, 0,                                                                               
+		irem_vh_convert_color_prom,                                                    
+	                                                                                             
+		VIDEO_TYPE_RASTER,                                                                       
+		null,                                                                                       
+		ldrun_vh_start,                                                                     
+		generic_vh_stop,                                                                         
+		ldrun4_vh_screenrefresh,                                                             
+	                                                                                             
+		/* sound hardware */                                                                     
+		0,0,0,0,                                                                                 
+		IREM_AUDIO                                                                           
+		                                                                                        
+	);
+        
+	//MACHINE_DRIVER( lotlot,   ldrun,  ldrun,    24000000, 384, lotlot,   768, irem );
+        static MachineDriver machine_driver_lotlot = new MachineDriver
+	(                                                                                            
+		/* basic machine hardware */                                                             
+		new MachineCPU[] {                                                                                        
+			new MachineCPU(                                                                                    
+				CPU_Z80,                                                                         
+				24000000/6,                                                                         
+				lotlot_readmem,lotlot_writemem,ldrun_readport,ldrun_writeport, 
+				interrupt,1                                                                      
+			),                                                                                   
+			IREM_AUDIO_CPU                                                                       
+		},                                                                                       
+		55, 1790, /* frames per second and vblank duration from the Lode Runner manual */        
+		1,	/* 1 CPU slice per frame - interleaving is forced when a sound command is written */ 
+		null,                                                                                       
+	                                                                                             
+		/* video hardware */                                                                     
+		64*8, 32*8, new rectangle( (64*8-384)/2, 64*8-(64*8-384)/2-1, 0*8, 32*8-1 ),  
+		lotlot_gfxdecodeinfo,                                                               
+		768, 0,                                                                               
+		irem_vh_convert_color_prom,                                                    
+	                                                                                             
+		VIDEO_TYPE_RASTER,                                                                       
+		null,                                                                                       
+		ldrun_vh_start,                                                                     
+		generic_vh_stop,                                                                         
+		lotlot_vh_screenrefresh,                                                             
+	                                                                                             
+		/* sound hardware */                                                                     
+		0,0,0,0,                                                                                 
+		IREM_AUDIO                                                                           
+		                                                                                        
+	);
+        
+	//MACHINE_DRIVER( kidniki,  ldrun,  kidniki,  24000000, 384, kidniki,  512, irem );
+        static MachineDriver machine_driver_kidniki = new MachineDriver
+	(                                                                                            
+		/* basic machine hardware */                                                             
+		new MachineCPU[] {                                                                                        
+			new MachineCPU(                                                                                    
+				CPU_Z80,                                                                         
+				24000000/6,                                                                         
+				kidniki_readmem,kidniki_writemem,ldrun_readport,kidniki_writeport, 
+				interrupt,1                                                                      
+			),                                                                                   
+			IREM_AUDIO_CPU                                                                       
+		},                                                                                       
+		55, 1790, /* frames per second and vblank duration from the Lode Runner manual */        
+		1,	/* 1 CPU slice per frame - interleaving is forced when a sound command is written */ 
+		null,                                                                                       
+	                                                                                             
+		/* video hardware */                                                                     
+		64*8, 32*8, new rectangle( (64*8-384)/2, 64*8-(64*8-384)/2-1, 0*8, 32*8-1 ),  
+		kidniki_gfxdecodeinfo,                                                               
+		512, 0,                                                                               
+		irem_vh_convert_color_prom,                                                    
+	                                                                                             
+		VIDEO_TYPE_RASTER,                                                                       
+		null,                                                                                       
+		kidniki_vh_start,                                                                     
+		generic_vh_stop,                                                                         
+		kidniki_vh_screenrefresh,                                                             
+	                                                                                             
+		/* sound hardware */                                                                     
+		0,0,0,0,                                                                                 
+		IREM_AUDIO                                                                           
+		                                                                                        
+	);
+        
+	//MACHINE_DRIVER( spelunkr, ldrun,  ldrun,    24000000, 384, spelunkr, 512, irem );
+        static MachineDriver machine_driver_spelunkr = new MachineDriver
+	(                                                                                            
+		/* basic machine hardware */                                                             
+		new MachineCPU[] {                                                                                        
+			new MachineCPU(                                                                                    
+				CPU_Z80,                                                                         
+				24000000/6,                                                                         
+				spelunkr_readmem,spelunkr_writemem,ldrun_readport,ldrun_writeport, 
+				interrupt,1                                                                      
+			),                                                                                   
+			IREM_AUDIO_CPU                                                                       
+		},                                                                                       
+		55, 1790, /* frames per second and vblank duration from the Lode Runner manual */        
+		1,	/* 1 CPU slice per frame - interleaving is forced when a sound command is written */ 
+		null,                                                                                       
+	                                                                                             
+		/* video hardware */                                                                     
+		64*8, 32*8, new rectangle( (64*8-384)/2, 64*8-(64*8-384)/2-1, 0*8, 32*8-1 ),  
+		spelunkr_gfxdecodeinfo,                                                               
+		512, 0,                                                                               
+		irem_vh_convert_color_prom,                                                    
+	                                                                                             
+		VIDEO_TYPE_RASTER,                                                                       
+		null,                                                                                       
+		spelunkr_vh_start,                                                                     
+		generic_vh_stop,                                                                         
+		spelunkr_vh_screenrefresh,                                                             
+	                                                                                             
+		/* sound hardware */                                                                     
+		0,0,0,0,                                                                                 
+		IREM_AUDIO                                                                           
+		                                                                                        
+	);
+	
+        //MACHINE_DRIVER( spelunk2, ldrun,  ldrun,    24000000, 384, spelunk2, 768, spelunk2 );
+        static MachineDriver machine_driver_spelunk2 = new MachineDriver
+	(                                                                                            
+		/* basic machine hardware */                                                             
+		new MachineCPU[] {                                                                                        
+			new MachineCPU(                                                                                    
+				CPU_Z80,                                                                         
+				24000000/6,                                                                         
+				spelunk2_readmem,spelunk2_writemem,ldrun_readport,ldrun_writeport, 
+				interrupt,1                                                                      
+			),                                                                                   
+			IREM_AUDIO_CPU                                                                       
+		},                                                                                       
+		55, 1790, /* frames per second and vblank duration from the Lode Runner manual */        
+		1,	/* 1 CPU slice per frame - interleaving is forced when a sound command is written */ 
+		null,                                                                                       
+	                                                                                             
+		/* video hardware */                                                                     
+		64*8, 32*8, new rectangle( (64*8-384)/2, 64*8-(64*8-384)/2-1, 0*8, 32*8-1 ),  
+		spelunk2_gfxdecodeinfo,                                                               
+		768, 0,                                                                               
+		spelunk2_vh_convert_color_prom,                                                    
+	                                                                                             
+		VIDEO_TYPE_RASTER,                                                                       
+		null,                                                                                       
+		spelunkr_vh_start,                                                                     
+		generic_vh_stop,                                                                         
+		spelunk2_vh_screenrefresh,                                                             
+	                                                                                             
+		/* sound hardware */                                                                     
+		0,0,0,0,                                                                                 
+		IREM_AUDIO                                                                           
+		                                                                                        
+	);
+        /*              GAMENAME READPORT WRITEPORT CLOCK    WIDTH GFXDECODE COLS PALETTE */
+	//MACHINE_DRIVER( youjyudn, ldrun,  youjyudn, 18432000, 256, youjyudn, 512, irem );
+	static MachineDriver machine_driver_youjyudn = new MachineDriver
+	(                                                                                            
+		/* basic machine hardware */                                                             
+		new MachineCPU[] {                                                                                        
+			new MachineCPU(                                                                                    
+				CPU_Z80,                                                                         
+				18432000/6,                                                                         
+				youjyudn_readmem,youjyudn_writemem,ldrun_readport,youjyudn_writeport, 
+				interrupt,1                                                                      
+			),                                                                                   
+			IREM_AUDIO_CPU                                                                       
+		},                                                                                       
+		55, 1790, /* frames per second and vblank duration from the Lode Runner manual */        
+		1,	/* 1 CPU slice per frame - interleaving is forced when a sound command is written */ 
+		null,                                                                                       
+	                                                                                             
+		/* video hardware */                                                                     
+		64*8, 32*8, new rectangle( (64*8-256)/2, 64*8-(64*8-256)/2-1, 0*8, 32*8-1 ),  
+		youjyudn_gfxdecodeinfo,                                                               
+		512, 0,                                                                               
+		irem_vh_convert_color_prom,                                                    
+	                                                                                             
+		VIDEO_TYPE_RASTER,                                                                       
+		null,                                                                                       
+		youjyudn_vh_start,                                                                     
+		generic_vh_stop,                                                                         
+		youjyudn_vh_screenrefresh,                                                             
+	                                                                                             
+		/* sound hardware */                                                                     
+		0,0,0,0,                                                                                 
+		IREM_AUDIO                                                                           
+		                                                                                        
+	);
 	
 	
 	/***************************************************************************
@@ -1585,21 +1922,21 @@ public class m62
 	
 	
 	public static GameDriver driver_kungfum	   = new GameDriver("1984"	,"kungfum"	,"m62.java"	,rom_kungfum,null	,machine_driver_kungfum	,input_ports_kungfum	,null	,ROT0	,	"Irem", "Kung-Fu Master" );
-	/*TODO*///public static GameDriver driver_kungfud	   = new GameDriver("1984"	,"kungfud"	,"m62.java"	,rom_kungfud,driver_kungfum	,machine_driver_kungfum	,input_ports_kungfum	,null	,ROT0	,	"Irem (Data East license)", "Kung-Fu Master (Data East)" )
-	/*TODO*///public static GameDriver driver_spartanx	   = new GameDriver("1984"	,"spartanx"	,"m62.java"	,rom_spartanx,driver_kungfum	,machine_driver_kungfum	,input_ports_kungfum	,null	,ROT0	,	"Irem", "Spartan X (Japan)" )
-	/*TODO*///public static GameDriver driver_kungfub	   = new GameDriver("1984"	,"kungfub"	,"m62.java"	,rom_kungfub,driver_kungfum	,machine_driver_kungfum	,input_ports_kungfum	,null	,ROT0	,	"bootleg", "Kung-Fu Master (bootleg set 1)" )
-	/*TODO*///public static GameDriver driver_kungfub2	   = new GameDriver("1984"	,"kungfub2"	,"m62.java"	,rom_kungfub2,driver_kungfum	,machine_driver_kungfum	,input_ports_kungfum	,null	,ROT0	,	"bootleg", "Kung-Fu Master (bootleg set 2)" )
-	/*TODO*///public static GameDriver driver_battroad	   = new GameDriver("1984"	,"battroad"	,"m62.java"	,rom_battroad,null	,machine_driver_battroad	,input_ports_battroad	,null	,ROT90	,	"Irem", "The Battle-Road" )
-	/*TODO*///public static GameDriver driver_ldrun	   = new GameDriver("1984"	,"ldrun"	,"m62.java"	,rom_ldrun,null	,machine_driver_ldrun	,input_ports_ldrun	,null	,ROT0	,	"Irem (licensed from Broderbund)", "Lode Runner (set 1)" )
-	/*TODO*///public static GameDriver driver_ldruna	   = new GameDriver("1984"	,"ldruna"	,"m62.java"	,rom_ldruna,driver_ldrun	,machine_driver_ldrun	,input_ports_ldrun	,null	,ROT0	,	"Irem (licensed from Broderbund)", "Lode Runner (set 2)" )
-	/*TODO*///public static GameDriver driver_ldrun2	   = new GameDriver("1984"	,"ldrun2"	,"m62.java"	,rom_ldrun2,null	,machine_driver_ldrun2	,input_ports_ldrun2	,null	,ROT0	,	"Irem (licensed from Broderbund)", "Lode Runner II - The Bungeling Strikes Back" )	/* Japanese version is called Bangeringu Teikoku No Gyakushuu */
-	/*TODO*///public static GameDriver driver_ldrun3	   = new GameDriver("1985"	,"ldrun3"	,"m62.java"	,rom_ldrun3,null	,machine_driver_ldrun3	,input_ports_ldrun3	,null	,ROT0	,	"Irem (licensed from Broderbund)", "Lode Runner III - Majin No Fukkatsu" )
-	/*TODO*///public static GameDriver driver_ldrun4	   = new GameDriver("1986"	,"ldrun4"	,"m62.java"	,rom_ldrun4,null	,machine_driver_ldrun4	,input_ports_ldrun4	,null	,ROT0	,	"Irem (licensed from Broderbund)", "Lode Runner IV - Teikoku Karano Dasshutsu" )
-	/*TODO*///public static GameDriver driver_lotlot	   = new GameDriver("1985"	,"lotlot"	,"m62.java"	,rom_lotlot,null	,machine_driver_lotlot	,input_ports_lotlot	,null	,ROT0	,	"Irem (licensed from Tokuma Shoten)", "Lot Lot" )
-	/*TODO*///public static GameDriver driver_kidniki	   = new GameDriver("1986"	,"kidniki"	,"m62.java"	,rom_kidniki,null	,machine_driver_kidniki	,input_ports_kidniki	,null	,ROT0	,	"Irem (Data East USA license)", "Kid Niki - Radical Ninja (US)", GAME_IMPERFECT_SOUND )
-	/*TODO*///public static GameDriver driver_yanchamr	   = new GameDriver("1986"	,"yanchamr"	,"m62.java"	,rom_yanchamr,driver_kidniki	,machine_driver_kidniki	,input_ports_kidniki	,null	,ROT0	,	"Irem", "Kaiketsu Yanchamaru (Japan)", GAME_IMPERFECT_SOUND )
-	/*TODO*///public static GameDriver driver_spelunkr	   = new GameDriver("1985"	,"spelunkr"	,"m62.java"	,rom_spelunkr,null	,machine_driver_spelunkr	,input_ports_spelunkr	,null	,ROT0	,	"Irem (licensed from Broderbund)", "Spelunker" )
-	/*TODO*///public static GameDriver driver_spelnkrj	   = new GameDriver("1985"	,"spelnkrj"	,"m62.java"	,rom_spelnkrj,driver_spelunkr	,machine_driver_spelunkr	,input_ports_spelunkr	,null	,ROT0	,	"Irem (licensed from Broderbund)", "Spelunker (Japan)" )
-	/*TODO*///public static GameDriver driver_spelunk2	   = new GameDriver("1986"	,"spelunk2"	,"m62.java"	,rom_spelunk2,null	,machine_driver_spelunk2	,input_ports_spelunk2	,null	,ROT0	,	"Irem (licensed from Broderbund)", "Spelunker II" )
-	/*TODO*///public static GameDriver driver_youjyudn	   = new GameDriver("1986"	,"youjyudn"	,"m62.java"	,rom_youjyudn,null	,machine_driver_youjyudn	,input_ports_youjyudn	,null	,ROT270	,	"Irem", "Youjyuden (Japan)" )
+	public static GameDriver driver_kungfud	   = new GameDriver("1984"	,"kungfud"	,"m62.java"	,rom_kungfud,driver_kungfum	,machine_driver_kungfum	,input_ports_kungfum	,null	,ROT0	,	"Irem (Data East license)", "Kung-Fu Master (Data East)" );
+	public static GameDriver driver_spartanx	   = new GameDriver("1984"	,"spartanx"	,"m62.java"	,rom_spartanx,driver_kungfum	,machine_driver_kungfum	,input_ports_kungfum	,null	,ROT0	,	"Irem", "Spartan X (Japan)" );
+	public static GameDriver driver_kungfub	   = new GameDriver("1984"	,"kungfub"	,"m62.java"	,rom_kungfub,driver_kungfum	,machine_driver_kungfum	,input_ports_kungfum	,null	,ROT0	,	"bootleg", "Kung-Fu Master (bootleg set 1)" );
+	public static GameDriver driver_kungfub2	   = new GameDriver("1984"	,"kungfub2"	,"m62.java"	,rom_kungfub2,driver_kungfum	,machine_driver_kungfum	,input_ports_kungfum	,null	,ROT0	,	"bootleg", "Kung-Fu Master (bootleg set 2)" );
+	public static GameDriver driver_battroad	   = new GameDriver("1984"	,"battroad"	,"m62.java"	,rom_battroad,null	,machine_driver_battroad	,input_ports_battroad	,null	,ROT90	,	"Irem", "The Battle-Road" );
+	public static GameDriver driver_ldrun	   = new GameDriver("1984"	,"ldrun"	,"m62.java"	,rom_ldrun,null	,machine_driver_ldrun	,input_ports_ldrun	,null	,ROT0	,	"Irem (licensed from Broderbund)", "Lode Runner (set 1)" );
+	public static GameDriver driver_ldruna	   = new GameDriver("1984"	,"ldruna"	,"m62.java"	,rom_ldruna,driver_ldrun	,machine_driver_ldrun	,input_ports_ldrun	,null	,ROT0	,	"Irem (licensed from Broderbund)", "Lode Runner (set 2)" );
+	public static GameDriver driver_ldrun2	   = new GameDriver("1984"	,"ldrun2"	,"m62.java"	,rom_ldrun2,null	,machine_driver_ldrun2	,input_ports_ldrun2	,null	,ROT0	,	"Irem (licensed from Broderbund)", "Lode Runner II - The Bungeling Strikes Back" );	/* Japanese version is called Bangeringu Teikoku No Gyakushuu */
+	public static GameDriver driver_ldrun3	   = new GameDriver("1985"	,"ldrun3"	,"m62.java"	,rom_ldrun3,null	,machine_driver_ldrun3	,input_ports_ldrun3	,null	,ROT0	,	"Irem (licensed from Broderbund)", "Lode Runner III - Majin No Fukkatsu" );
+	public static GameDriver driver_ldrun4	   = new GameDriver("1986"	,"ldrun4"	,"m62.java"	,rom_ldrun4,null	,machine_driver_ldrun4	,input_ports_ldrun4	,null	,ROT0	,	"Irem (licensed from Broderbund)", "Lode Runner IV - Teikoku Karano Dasshutsu" );
+	public static GameDriver driver_lotlot	   = new GameDriver("1985"	,"lotlot"	,"m62.java"	,rom_lotlot,null	,machine_driver_lotlot	,input_ports_lotlot	,null	,ROT0	,	"Irem (licensed from Tokuma Shoten)", "Lot Lot" );
+	public static GameDriver driver_kidniki	   = new GameDriver("1986"	,"kidniki"	,"m62.java"	,rom_kidniki,null	,machine_driver_kidniki	,input_ports_kidniki	,null	,ROT0	,	"Irem (Data East USA license)", "Kid Niki - Radical Ninja (US)", GAME_IMPERFECT_SOUND );
+	public static GameDriver driver_yanchamr	   = new GameDriver("1986"	,"yanchamr"	,"m62.java"	,rom_yanchamr,driver_kidniki	,machine_driver_kidniki	,input_ports_kidniki	,null	,ROT0	,	"Irem", "Kaiketsu Yanchamaru (Japan)", GAME_IMPERFECT_SOUND );
+	public static GameDriver driver_spelunkr	   = new GameDriver("1985"	,"spelunkr"	,"m62.java"	,rom_spelunkr,null	,machine_driver_spelunkr	,input_ports_spelunkr	,null	,ROT0	,	"Irem (licensed from Broderbund)", "Spelunker" );
+	public static GameDriver driver_spelnkrj	   = new GameDriver("1985"	,"spelnkrj"	,"m62.java"	,rom_spelnkrj,driver_spelunkr	,machine_driver_spelunkr	,input_ports_spelunkr	,null	,ROT0	,	"Irem (licensed from Broderbund)", "Spelunker (Japan)" );
+	public static GameDriver driver_spelunk2	   = new GameDriver("1986"	,"spelunk2"	,"m62.java"	,rom_spelunk2,null	,machine_driver_spelunk2	,input_ports_spelunk2	,null	,ROT0	,	"Irem (licensed from Broderbund)", "Spelunker II" );
+	public static GameDriver driver_youjyudn	   = new GameDriver("1986"	,"youjyudn"	,"m62.java"	,rom_youjyudn,null	,machine_driver_youjyudn	,input_ports_youjyudn	,null	,ROT270	,	"Irem", "Youjyuden (Japan)" );
 }
