@@ -436,7 +436,11 @@ public class commonH {
     public static void ROM_RELOAD(int offset, int length) {
         ROMX_LOAD(ROMENTRY_RELOAD, offset, length, 0, ROM_INHERITFLAGS);
     }
-    /*TODO*///#define ROM_FILL(offset,length,value)				ROM_LOAD(ROMENTRY_FILL, offset, length, value)
+    
+    public static void ROM_FILL(int offset, int length, int value){
+        ROM_LOAD(ROMENTRY_FILL, offset, length, value);
+    }
+    
 /*TODO*///#define ROM_COPY(rgn,srcoffset,offset,length)		ROMX_LOAD(ROMENTRY_COPY, offset, length, srcoffset, (rgn) << 24)
 /*TODO*///
 /*TODO*////* ----- nibble loading macros ----- */

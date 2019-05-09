@@ -103,6 +103,7 @@ import static mame056.drivers.skydiver.*;
 import static WIP.mame056.drivers.mpatrol.*;
 import static WIP.mame056.drivers.m62.*;
 import static WIP.mame056.drivers.irobot.*;
+import static WIP.mame056.drivers.pacland.*;
 
 public class driver {
 
@@ -564,11 +565,11 @@ public class driver {
         driver_poleps2a, /* (c) 1983 + Atari license */
         driver_poleps2b, /* bootleg */
         driver_poleps2c, /* bootleg */
-        /*TODO*///	/* no custom I/O in the following, HD63701 (or compatible) microcontroller instead */
-        /*TODO*///	driver_pacland,	/* (c) 1984 */
-        /*TODO*///	driver_pacland2,	/* (c) 1984 */
-        /*TODO*///	driver_pacland3,	/* (c) 1984 */
-        /*TODO*///	driver_paclandm,	/* (c) 1984 Midway */
+        /* no custom I/O in the following, HD63701 (or compatible) microcontroller instead */
+        driver_pacland,	/* (c) 1984 */
+        driver_pacland2,	/* (c) 1984 */
+        driver_pacland3,	/* (c) 1984 */
+        driver_paclandm,	/* (c) 1984 Midway */
         /*TODO*///	driver_drgnbstr,	/* (c) 1984 */
         /*TODO*///	driver_skykid,	/* (c) 1985 */
         /*TODO*///	driver_skykidb,	/* (c) 1985 */
