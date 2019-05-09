@@ -70,21 +70,21 @@ public class mcr {
 /*TODO*///	static UINT8 squawkntalk_tms_strobes;
 /*TODO*///	extern struct pia6821_interface squawkntalk_pia0_intf;
 /*TODO*///	extern struct pia6821_interface squawkntalk_pia1_intf;
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	/*************************************
-/*TODO*///	 *
-/*TODO*///	 *	Generic MCR sound initialization
-/*TODO*///	 *
-/*TODO*///	 *************************************/
-/*TODO*///	
-/*TODO*///	void mcr_sound_init(void)
-/*TODO*///	{
-/*TODO*///		int sound_cpu = 1;
-/*TODO*///		int dac_index = 0;
-/*TODO*///	
-/*TODO*///		/* SSIO */
+	
+	
+	
+	/*************************************
+	 *
+	 *	Generic MCR sound initialization
+	 *
+	 *************************************/
+	
+	public static void mcr_sound_init()
+	{
+		int sound_cpu = 1;
+		int dac_index = 0;
+	
+		/* SSIO */
 /*TODO*///		if (mcr_sound_config & MCR_SSIO)
 /*TODO*///		{
 /*TODO*///			ssio_sound_cpu = sound_cpu++;
@@ -144,7 +144,7 @@ public class mcr {
 /*TODO*///	
 /*TODO*///		/* reset any PIAs */
 /*TODO*///		pia_reset();
-/*TODO*///	}
+	}
 	
 	
 	

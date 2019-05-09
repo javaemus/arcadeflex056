@@ -23,6 +23,7 @@ import static mame056.cpuexecH.*;
 import static mame056.machine.z80fmly.*;
 import static mame056.machine.z80fmlyH.*;
 import static mame056.mame.*;
+import static WIP.mame056.sndhrdw.mcr.*;
 
 public class mcr
 {
@@ -235,7 +236,7 @@ public class mcr
 		mcr_cocktail_flip = 0;
 	
 		/* initialize the sound */
-		/*TODO*///mcr_sound_init();
+		mcr_sound_init();
 	} };
 /*TODO*///	
 /*TODO*///	
