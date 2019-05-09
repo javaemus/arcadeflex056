@@ -4,32 +4,42 @@
  */ 
 package WIP.mame056.machine;
 
+import static arcadeflex056.fucPtr.*;
+import static common.ptr.*;
+import static mame056.commonH.*;
+import static mame056.common.*;
+import static mame056.cpuexec.*;
+import static mame056.cpuexecH.*;
+import static mame056.mame.*;
+import static mame056.memoryH.*;
+
+
 public class namcos1
 {
-/*TODO*///	
-/*TODO*///	#define NEW_TIMER 0 /* CPU slice optimize with new timer system */
-/*TODO*///	
-/*TODO*///	#define NAMCOS1_MAX_BANK 0x400
-/*TODO*///	
-/*TODO*///	/* from vidhrdw */
-/*TODO*///	
-/*TODO*///	#define NAMCOS1_MAX_KEY 0x100
-/*TODO*///	static unsigned char key[NAMCOS1_MAX_KEY];
-/*TODO*///	
-/*TODO*///	static unsigned char *s1ram;
-/*TODO*///	
-/*TODO*///	static int namcos1_cpu1_banklatch;
-/*TODO*///	static int namcos1_reset = 0;
-/*TODO*///	
-/*TODO*///	static int berabohm_input_counter;
-/*TODO*///	
-/*TODO*///	/*******************************************************************************
-/*TODO*///	*																			   *
-/*TODO*///	*	BANK area handling															*
-/*TODO*///	*																			   *
-/*TODO*///	*******************************************************************************/
-/*TODO*///	
-/*TODO*///	/* Bank handler definitions */
+	
+	public static int NEW_TIMER = 0; /* CPU slice optimize with new timer system */
+	
+	public static int NAMCOS1_MAX_BANK = 0x400;
+	
+	/* from vidhrdw */
+
+        public static int NAMCOS1_MAX_KEY = 0x100;
+        public static int[] key = new int[NAMCOS1_MAX_KEY];
+
+        static UBytePtr s1ram = new UBytePtr();
+
+        static int namcos1_cpu1_banklatch;
+        public static int namcos1_reset = 0;
+
+        static int berabohm_input_counter;
+	
+	/*******************************************************************************
+	*																			   *
+	*	BANK area handling															*
+	*																			   *
+	*******************************************************************************/
+	
+	/* Bank handler definitions */
 /*TODO*///	typedef struct {
 /*TODO*///		mem_read_handler bank_handler_r;
 /*TODO*///		mem_write_handler bank_handler_w;
@@ -39,14 +49,14 @@ public class namcos1
 /*TODO*///	
 /*TODO*///	/* hardware elements of 1Mbytes physical memory space */
 /*TODO*///	static bankhandler namcos1_bank_element[NAMCOS1_MAX_BANK];
-/*TODO*///	
-/*TODO*///	static const mem_read_handler org_bank_handler_r[16] =
-/*TODO*///	{
-/*TODO*///		MRA_BANK1 ,MRA_BANK2 ,MRA_BANK3 ,MRA_BANK4 ,
-/*TODO*///		MRA_BANK5 ,MRA_BANK6 ,MRA_BANK7 ,MRA_BANK8 ,
-/*TODO*///		MRA_BANK9 ,MRA_BANK10,MRA_BANK11,MRA_BANK12,
-/*TODO*///		MRA_BANK13,MRA_BANK14,MRA_BANK15,MRA_BANK16
-/*TODO*///	};
+	
+	static int org_bank_handler_r[] =
+	{
+		MRA_BANK1 ,MRA_BANK2 ,MRA_BANK3 ,MRA_BANK4 ,
+		MRA_BANK5 ,MRA_BANK6 ,MRA_BANK7 ,MRA_BANK8 ,
+		MRA_BANK9 ,MRA_BANK10,MRA_BANK11,MRA_BANK12,
+		MRA_BANK13,MRA_BANK14,MRA_BANK15,MRA_BANK16
+	};
 /*TODO*///	
 /*TODO*///	static const mem_write_handler org_bank_handler_w[16] =
 /*TODO*///	{

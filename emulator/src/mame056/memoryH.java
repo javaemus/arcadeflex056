@@ -212,15 +212,15 @@ public class memoryH {
     public static final int MRA_BANK5 = STATIC_BANK5;
     public static final int MRA_BANK6 = STATIC_BANK6;
     public static final int MRA_BANK7 = STATIC_BANK7;
-/*TODO*///#define MRA_BANK8				((mem_read_handler)STATIC_BANK8)
-/*TODO*///#define MRA_BANK9				((mem_read_handler)STATIC_BANK9)
-/*TODO*///#define MRA_BANK10				((mem_read_handler)STATIC_BANK10)
-/*TODO*///#define MRA_BANK11				((mem_read_handler)STATIC_BANK11)
-/*TODO*///#define MRA_BANK12				((mem_read_handler)STATIC_BANK12)
-/*TODO*///#define MRA_BANK13				((mem_read_handler)STATIC_BANK13)
-/*TODO*///#define MRA_BANK14				((mem_read_handler)STATIC_BANK14)
-/*TODO*///#define MRA_BANK15				((mem_read_handler)STATIC_BANK15)
-/*TODO*///#define MRA_BANK16				((mem_read_handler)STATIC_BANK16)
+    public static final int MRA_BANK8 = STATIC_BANK8;
+    public static final int MRA_BANK9 = STATIC_BANK9;
+    public static final int MRA_BANK10 = STATIC_BANK10;
+    public static final int MRA_BANK11= STATIC_BANK11;
+    public static final int MRA_BANK12 = STATIC_BANK12;
+    public static final int MRA_BANK13 = STATIC_BANK13;
+    public static final int MRA_BANK14 = STATIC_BANK14;
+    public static final int MRA_BANK15 = STATIC_BANK15;
+    public static final int MRA_BANK16 = STATIC_BANK16;
 /*TODO*///#define MRA_BANK17				((mem_read_handler)STATIC_BANK17)
 /*TODO*///#define MRA_BANK18				((mem_read_handler)STATIC_BANK18)
 /*TODO*///#define MRA_BANK19				((mem_read_handler)STATIC_BANK19)
