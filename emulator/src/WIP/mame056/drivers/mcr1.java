@@ -103,6 +103,9 @@ import static arcadeflex056.fileio.*;
 import static common.libc.cstring.memcpy;
 
 import static WIP.mame056.machine.mcr.*;
+import static WIP.mame056.sndhrdw.mcr.*;
+import static WIP.mame056.sndhrdw.mcrH.*;
+
 import static mame056.palette.*;
 import static WIP.mame056.vidhrdw.mcr12.*;
 import static mame056.machine.z80fmly.*;
@@ -216,7 +219,7 @@ public class mcr1
 		new IO_ReadPort( 0x02, 0x02, input_port_2_r ),
 		new IO_ReadPort( 0x03, 0x03, input_port_3_r ),
 		new IO_ReadPort( 0x04, 0x04, input_port_4_r ),
-		/*TODO*///new IO_ReadPort( 0x07, 0x07, ssio_status_r ),
+		new IO_ReadPort( 0x07, 0x07, ssio_status_r ),
 		new IO_ReadPort( 0x10, 0x10, input_port_0_r ),
 		new IO_ReadPort( 0xf0, 0xf3, z80ctc_0_r ),
 		new IO_ReadPort(MEMPORT_MARKER, 0)
@@ -225,7 +228,7 @@ public class mcr1
 	
 	public static IO_WritePort writeport[]={
 		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
-		/*TODO*///new IO_WritePort( 0x1c, 0x1f, ssio_data_w ),
+		new IO_WritePort( 0x1c, 0x1f, ssio_data_w ),
 		new IO_WritePort( 0xe0, 0xe0, watchdog_reset_w ),
 		new IO_WritePort( 0xe8, 0xe8, MWA_NOP ),
 		new IO_WritePort( 0xf0, 0xf3, z80ctc_0_w ),
@@ -395,9 +398,9 @@ public class mcr1
 				readmem,writemem,readport,writeport,
 				mcr_interrupt,2,
 				null,0,mcr_daisy_chain
-			/*TODO*///),
-			/*TODO*///SOUND_CPU_SSIO
-                        )
+			),
+			SOUND_CPU_SSIO
+                        
 		},
 		30, DEFAULT_REAL_30HZ_VBLANK_DURATION,
 		1,
@@ -417,10 +420,10 @@ public class mcr1
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	SOUND_SSIO
-		/*TODO*///},
-                null,
+		new MachineSound[] {
+			SOUND_SSIO
+		},
+                
 		mcr1_nvram_handler
 	);
 	
@@ -439,7 +442,7 @@ public class mcr1
                 for (int i=0 ; i<hiscore_init.length ; i++)
                     nvram_init.write(i, hiscore_init[i]);
 	
-		/*TODO*///MCR_CONFIGURE_SOUND(MCR_SSIO);
+		MCR_CONFIGURE_SOUND(MCR_SSIO);
 		install_port_read_handler(0, 0x00, 0x00, solarfox_input_0_r);
 		install_port_read_handler(0, 0x01, 0x01, solarfox_input_1_r);
 		install_port_write_handler(0, 0x01, 0x01, mcr_control_port_w);
@@ -453,7 +456,7 @@ public class mcr1
 	{
 		nvram_init = null;
 	
-		/*TODO*///MCR_CONFIGURE_SOUND(MCR_SSIO);
+		MCR_CONFIGURE_SOUND(MCR_SSIO);
 		install_port_read_handler(0, 0x01, 0x01, kick_dial_r);
 		install_port_write_handler(0, 0x03, 0x03, mcr_control_port_w);
 	
