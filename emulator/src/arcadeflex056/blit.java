@@ -48,7 +48,7 @@ public class blit {
     /*TODO*/////extern int mmxlfb;
     
     // OLD VARIABLES
-    public static int[] palette = new int[1024*4];
+    public static int[] palette = new int[1024*10];
     public static char[] back_buffer;
     
     public static int[] doublepixel=new int[256];
