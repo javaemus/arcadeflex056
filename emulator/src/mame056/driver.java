@@ -104,6 +104,7 @@ import static WIP.mame056.drivers.mpatrol.*;
 import static WIP.mame056.drivers.m62.*;
 import static WIP.mame056.drivers.irobot.*;
 import static WIP.mame056.drivers.pacland.*;
+import static WIP.mame056.drivers.namcos1.*;
 
 public class driver {
 
@@ -585,41 +586,41 @@ public class driver {
         /*TODO*///	driver_rthunder,	/* (c) 1986 new version */
         /*TODO*///	driver_rthundro,	/* (c) 1986 old version */
         /*TODO*///	driver_wndrmomo,	/* (c) 1987 */
-        /*TODO*///
-        /*TODO*///	/* Namco System 1 games */
-        /*TODO*///	driver_shadowld,	/* (c) 1987 */
-        /*TODO*///	driver_youkaidk,	/* (c) 1987 (Japan new version) */
-        /*TODO*///	driver_yokaidko,	/* (c) 1987 (Japan old version) */
-        /*TODO*///	driver_dspirit,	/* (c) 1987 new version */
-        /*TODO*///	driver_dspirito,	/* (c) 1987 old version */
-        /*TODO*///	driver_blazer,	/* (c) 1987 (Japan) */
-        /*TODO*///	driver_quester,	/* (c) 1987 (Japan) */
-        /*TODO*///	driver_pacmania,	/* (c) 1987 */
-        /*TODO*///	driver_pacmanij,	/* (c) 1987 (Japan) */
-        /*TODO*///	driver_galaga88,	/* (c) 1987 */
-        /*TODO*///	driver_galag88b,	/* (c) 1987 */
-        /*TODO*///	driver_galag88j,	/* (c) 1987 (Japan) */
-        /*TODO*///	driver_ws,		/* (c) 1988 (Japan) */
-        /*TODO*///	driver_berabohm,	/* (c) 1988 (Japan) */
-        /*TODO*///	/* 1988 Alice in Wonderland (English version of Marchen maze) */
-        /*TODO*///	driver_mmaze,		/* (c) 1988 (Japan) */
+        
+        	/* Namco System 1 games */
+        	driver_shadowld,	/* (c) 1987 */
+        	driver_youkaidk,	/* (c) 1987 (Japan new version) */
+        	driver_yokaidko,	/* (c) 1987 (Japan old version) */
+        	driver_dspirit,	/* (c) 1987 new version */
+        	driver_dspirito,	/* (c) 1987 old version */
+        	driver_blazer,	/* (c) 1987 (Japan) */
+        	driver_quester,	/* (c) 1987 (Japan) */
+        	driver_pacmania,	/* (c) 1987 */
+        	driver_pacmanij,	/* (c) 1987 (Japan) */
+        	driver_galaga88,	/* (c) 1987 */
+        	driver_galag88b,	/* (c) 1987 */
+        	driver_galag88j,	/* (c) 1987 (Japan) */
+        	driver_ws,		/* (c) 1988 (Japan) */
+        	driver_berabohm,	/* (c) 1988 (Japan) */
+        	/* 1988 Alice in Wonderland (English version of Marchen maze) */
+        	driver_mmaze,		/* (c) 1988 (Japan) */
         /*TODO*///TESTdriver_bakutotu,	/* (c) 1988 */
-        /*TODO*///	driver_wldcourt,	/* (c) 1988 (Japan) */
-        /*TODO*///	driver_splatter,	/* (c) 1988 (Japan) */
-        /*TODO*///	driver_faceoff,	/* (c) 1988 (Japan) */
-        /*TODO*///	driver_rompers,	/* (c) 1989 (Japan) */
-        /*TODO*///	driver_romperso,	/* (c) 1989 (Japan) */
-        /*TODO*///	driver_blastoff,	/* (c) 1989 (Japan) */
-        /*TODO*///	driver_ws89,		/* (c) 1989 (Japan) */
-        /*TODO*///	driver_dangseed,	/* (c) 1989 (Japan) */
-        /*TODO*///	driver_ws90,		/* (c) 1990 (Japan) */
-        /*TODO*///	driver_pistoldm,	/* (c) 1990 (Japan) */
-        /*TODO*///	driver_boxyboy,	/* (c) 1990 (US) */
-        /*TODO*///	driver_soukobdx,	/* (c) 1990 (Japan) */
-        /*TODO*///	driver_puzlclub,	/* (c) 1990 (Japan) */
-        /*TODO*///	driver_tankfrce,	/* (c) 1991 (US) */
-        /*TODO*///	driver_tankfrcj,	/* (c) 1991 (Japan) */
-        /*TODO*///
+        	driver_wldcourt,	/* (c) 1988 (Japan) */
+        	driver_splatter,	/* (c) 1988 (Japan) */
+        	driver_faceoff,	/* (c) 1988 (Japan) */
+        	driver_rompers,	/* (c) 1989 (Japan) */
+        	driver_romperso,	/* (c) 1989 (Japan) */
+        	driver_blastoff,	/* (c) 1989 (Japan) */
+        	driver_ws89,		/* (c) 1989 (Japan) */
+        	driver_dangseed,	/* (c) 1989 (Japan) */
+        	driver_ws90,		/* (c) 1990 (Japan) */
+        	driver_pistoldm,	/* (c) 1990 (Japan) */
+        	driver_boxyboy,	/* (c) 1990 (US) */
+        	driver_soukobdx,	/* (c) 1990 (Japan) */
+        	driver_puzlclub,	/* (c) 1990 (Japan) */
+        	driver_tankfrce,	/* (c) 1991 (US) */
+        	driver_tankfrcj,	/* (c) 1991 (Japan) */
+        
         /*TODO*///	/* Namco System 2 games */
         /*TODO*///TESTdriver_finallap,	/* 87.12 Final Lap */
         /*TODO*///TESTdriver_finalapd,	/* 87.12 Final Lap */
