@@ -1,3 +1,7 @@
+09/05/2019
+==========
+-Correct colors in snk, taitosj and hal21 drivers
+
 08/05/2019
 ==========
 -Added support for triviaes game (from mame 0.104u7) in balsente driver
