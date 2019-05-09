@@ -80,6 +80,10 @@ public class namcos1
 	};
 	
 	static playfield[] playfields=new playfield[MAX_PLAYFIELDS];
+        static {
+            for (int i=0 ; i<MAX_PLAYFIELDS ; i++)
+                playfields[i]=new playfield();
+        }
 	
 	/* playfields maskdata for tilemap */
 	static UBytePtr[] mask_ptr;
@@ -446,6 +450,10 @@ public class namcos1
 				return 1;
 			}
 			mask_data = new UBytePtr[total * 8];
+                        
+                        for (int ii=0 ; ii<(total * 8) ; ii++)
+                            mask_data[ii] = new UBytePtr(1024);
+                        
 			if(mask_data == null)
 			{
 				namcos1_videoram = null;
@@ -456,6 +464,7 @@ public class namcos1
 			for(c=0;c<total;c++)
 			{
 				UBytePtr src_mask = mask_data[c*8];
+                                
 				for(line=0;line<height;line++)
 				{
 					UBytePtr maskbm = get_gfx_pointer(mask,c,line);

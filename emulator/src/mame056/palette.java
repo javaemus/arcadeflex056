@@ -13,6 +13,7 @@ import static arcadeflex036.osdepend.logerror;
 import static arcadeflex056.fucPtr.*;
 
 import static common.ptr.*;
+import static mame056.driverH.VIDEO_HAS_SHADOWS;
 import static mame056.mame.Machine;
 
 public class palette {
@@ -35,10 +36,10 @@ public class palette {
 /*TODO*///
 /*TODO*///
 /*TODO*///
-    public static UShortPtr palette_shadow_table = new UShortPtr();
+    public static UShortPtr palette_shadow_table = new UShortPtr(1024 * 128);
 /*TODO*///
     public static int palette_start() {
-        /*TODO*///	int i;
+/*TODO*///        	int i;
 /*TODO*///
 /*TODO*///	if ((Machine->drv->video_attributes & VIDEO_RGB_DIRECT) &&
 /*TODO*///			Machine->drv->color_table_len)
@@ -81,24 +82,24 @@ public class palette {
             Machine.remapped_colortable = new IntArray(Machine.pens);/* straight 1:1 mapping from palette to colortable */
         }
 
-        /*TODO*///	if (colormode == PALETTIZED_16BIT)
-/*TODO*///	{
-/*TODO*///		palette_shadow_table = malloc(total_colors * sizeof(*palette_shadow_table));
-/*TODO*///		if (palette_shadow_table == 0)
-/*TODO*///		{
-/*TODO*///			palette_stop();
-/*TODO*///			return 1;
-/*TODO*///		}
-/*TODO*///		for (i = 0;i < total_colors;i++)
-/*TODO*///		{
-/*TODO*///			palette_shadow_table[i] = i;
-/*TODO*///			if ((Machine->drv->video_attributes & VIDEO_HAS_SHADOWS) && i < Machine->drv->total_colors)
-/*TODO*///				palette_shadow_table[i] += Machine->drv->total_colors;
-/*TODO*///		}
-/*TODO*///	}
-/*TODO*///	else
-/*TODO*///		palette_shadow_table = NULL;
-/*TODO*///
+        if (colormode == PALETTIZED_16BIT)
+	{
+		palette_shadow_table = new UShortPtr(total_colors*2);
+		if (palette_shadow_table == null)
+		{
+			palette_stop();
+			return 1;
+		}
+		for (int i = 0;i < total_colors;i++)
+		{
+			palette_shadow_table.write(i, (char) i);
+			if (((Machine.drv.video_attributes & VIDEO_HAS_SHADOWS)!=0) && (i < Machine.drv.total_colors))
+				palette_shadow_table.write(i, (char) (palette_shadow_table.read(i)+ Machine.drv.total_colors));
+		}
+	}
+	else
+		palette_shadow_table = null;
+
 /*TODO*///	if ((Machine->drv->color_table_len && (Machine->game_colortable == 0 || Machine->remapped_colortable == 0))
 /*TODO*///			|| game_palette == 0 || actual_palette == 0 || brightness == 0
 /*TODO*///			|| Machine->pens == 0 || Machine->debug_pens == 0 || Machine->debug_remapped_colortable == 0)

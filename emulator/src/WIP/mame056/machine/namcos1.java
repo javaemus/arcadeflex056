@@ -4,6 +4,7 @@
  */ 
 package WIP.mame056.machine;
 
+import static WIP.mame056.vidhrdw.namcos1.*;
 import static arcadeflex056.fucPtr.*;
 import static common.ptr.*;
 import static mame056.commonH.*;
@@ -12,12 +13,17 @@ import static mame056.cpuexec.*;
 import static mame056.cpuexecH.*;
 import static mame056.mame.*;
 import static mame056.memoryH.*;
+import static mame056.memory.*;
 import static mame056.cpuintrfH.*;
 
 // refactor
 import static arcadeflex036.osdepend.logerror;
 
 import static mame056.sound.namco.*;
+import static mame056.timerH.*;
+import static mame056.timer.*;
+
+
 public class namcos1
 {
 	
@@ -44,15 +50,19 @@ public class namcos1
 	*******************************************************************************/
 	
 	/* Bank handler definitions */
-/*TODO*///	typedef struct {
-/*TODO*///		mem_read_handler bank_handler_r;
-/*TODO*///		mem_write_handler bank_handler_w;
-/*TODO*///		int 		  bank_offset;
-/*TODO*///		unsigned char *bank_pointer;
-/*TODO*///	} bankhandler;
-/*TODO*///	
-/*TODO*///	/* hardware elements of 1Mbytes physical memory space */
-/*TODO*///	static bankhandler namcos1_bank_element[NAMCOS1_MAX_BANK];
+	public static class bankhandler {
+		public ReadHandlerPtr bank_handler_r;
+		public WriteHandlerPtr bank_handler_w;
+		public int 		  bank_offset;
+		public UBytePtr bank_pointer = new UBytePtr();
+	};
+	
+	/* hardware elements of 1Mbytes physical memory space */
+	static bankhandler[] namcos1_bank_element = new bankhandler[NAMCOS1_MAX_BANK];
+        static {
+            for (int i=0 ; i<NAMCOS1_MAX_BANK ; i++)
+                namcos1_bank_element[i] = new bankhandler();
+        }
 	
 	static int org_bank_handler_r[] =
 	{
@@ -618,68 +628,70 @@ public class namcos1
 		logerror("CPU #%d PC %04x: warning - wrote to unknown chip\n",cpu_getactivecpu(),cpu_get_pc() );
 	} };
 	
-/*TODO*///	/* Main bankswitching routine */
-/*TODO*///	void namcos1_bankswitch(int cpu, offs_t offset, data8_t data)
-/*TODO*///	{
-/*TODO*///		static int chip = 0;
-/*TODO*///		mem_read_handler handler_r;
-/*TODO*///		mem_write_handler handler_w;
-/*TODO*///		offs_t offs;
-/*TODO*///	
-/*TODO*///		if ( offset & 1 ) {
-/*TODO*///			int bank = (cpu*8) + ( ( offset >> 9 ) & 0x07 );
-/*TODO*///			chip &= 0x0300;
-/*TODO*///			chip |= ( data & 0xff );
-/*TODO*///	
-/*TODO*///			/* for BANK handlers , memory direct and OP-code base */
-/*TODO*///			cpu_setbank(bank+1,namcos1_bank_element[chip].bank_pointer);
-/*TODO*///	
-/*TODO*///			/* Addition OFFSET for stub handlers */
-/*TODO*///			offs = namcos1_bank_element[chip].bank_offset;
-/*TODO*///	
-/*TODO*///			/* read hardware */
-/*TODO*///			handler_r = namcos1_bank_element[chip].bank_handler_r;
-/*TODO*///			if( handler_r )
-/*TODO*///				/* I/O handler */
-/*TODO*///				memory_set_bankhandler_r( bank+1,offs,handler_r);
-/*TODO*///			else	/* memory direct */
-/*TODO*///				memory_set_bankhandler_r( bank+1,0,org_bank_handler_r[bank] );
-/*TODO*///	
-/*TODO*///			/* write hardware */
-/*TODO*///			handler_w = namcos1_bank_element[chip].bank_handler_w;
-/*TODO*///			if( handler_w )
-/*TODO*///				/* I/O handler */
-/*TODO*///				memory_set_bankhandler_w( bank+1,offs,handler_w);
-/*TODO*///			else	/* memory direct */
-/*TODO*///				memory_set_bankhandler_w( bank+1,0,org_bank_handler_w[bank] );
-/*TODO*///	
-/*TODO*///			/* unmapped bank warning */
-/*TODO*///			if( handler_r == unknown_r)
-/*TODO*///			{
-/*TODO*///				logerror("CPU #%d PC %04x:warning unknown chip selected bank %x=$%04x\n", cpu , cpu_get_pc(), bank , chip );
-/*TODO*///			}
-/*TODO*///	
-/*TODO*///			/* renew pc base */
-/*TODO*///	//		change_pc16(cpu_get_pc());
-/*TODO*///		} else {
-/*TODO*///			chip &= 0x00ff;
-/*TODO*///			chip |= ( data & 0xff ) << 8;
-/*TODO*///		}
-/*TODO*///	}
-/*TODO*///	
+	/* Main bankswitching routine */
+	public static void namcos1_bankswitch(int cpu, int offset, int data)
+	{
+		int chip = 0;
+		ReadHandlerPtr handler_r;
+		WriteHandlerPtr handler_w;
+		int offs;
+	
+		if (( offset & 1 ) != 0) {
+			int bank = (cpu*8) + ( ( offset >> 9 ) & 0x07 );
+			chip &= 0x0300;
+			chip |= ( data & 0xff );
+	
+			/* for BANK handlers , memory direct and OP-code base */
+			cpu_setbank(bank+1,namcos1_bank_element[chip].bank_pointer);
+	
+			/* Addition OFFSET for stub handlers */
+			offs = namcos1_bank_element[chip].bank_offset;
+	
+			/* read hardware */
+			handler_r = namcos1_bank_element[chip].bank_handler_r;
+			if( handler_r != null ){
+				/* I/O handler */
+				/*TODO*///memory_set_bankhandler_r( bank+1,offs,handler_r);
+                        } else {	/* memory direct */
+				/*TODO*///memory_set_bankhandler_r( bank+1,0,org_bank_handler_r[bank] );
+                        }
+	
+			/* write hardware */
+			handler_w = namcos1_bank_element[chip].bank_handler_w;
+			if( handler_w != null){
+				/* I/O handler */
+				/*TODO*///memory_set_bankhandler_w( bank+1,offs,handler_w);
+                        } else {	/* memory direct */
+				/*TODO*///memory_set_bankhandler_w( bank+1,0,org_bank_handler_w[bank] );
+                        }
+	
+			/* unmapped bank warning */
+			if( handler_r == unknown_r)
+			{
+				logerror("CPU #%d PC %04x:warning unknown chip selected bank %x=$%04x\n", cpu , cpu_get_pc(), bank , chip );
+			}
+	
+			/* renew pc base */
+	//		change_pc16(cpu_get_pc());
+		} else {
+			chip &= 0x00ff;
+			chip |= ( data & 0xff ) << 8;
+		}
+	}
+	
 	public static WriteHandlerPtr namcos1_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
-/*TODO*///		namcos1_bankswitch(cpu_getactivecpu(), offset, data);
+		namcos1_bankswitch(cpu_getactivecpu(), offset, data);
 	} };
 
 	/* Sub cpu set start bank port */
 	public static WriteHandlerPtr namcos1_subcpu_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-/*TODO*///		//logerror("cpu1 bank selected %02x=%02x\n",offset,data);
-/*TODO*///		namcos1_cpu1_banklatch = (namcos1_cpu1_banklatch&0x300)|data;
-/*TODO*///		/* Prepare code for Cpu 1 */
-/*TODO*///		namcos1_bankswitch( 1, 0x0e00, namcos1_cpu1_banklatch>>8  );
-/*TODO*///		namcos1_bankswitch( 1, 0x0e01, namcos1_cpu1_banklatch&0xff);
-/*TODO*///		/* cpu_set_reset_line(1,PULSE_LINE); */
+		//logerror("cpu1 bank selected %02x=%02x\n",offset,data);
+		namcos1_cpu1_banklatch = (namcos1_cpu1_banklatch&0x300)|data;
+		/* Prepare code for Cpu 1 */
+		namcos1_bankswitch( 1, 0x0e00, namcos1_cpu1_banklatch>>8  );
+		namcos1_bankswitch( 1, 0x0e01, namcos1_cpu1_banklatch&0xff);
+		/* cpu_set_reset_line(1,PULSE_LINE); */
 	
 	} };
 	
@@ -752,26 +764,26 @@ public class namcos1
 	/* mcu banked rom area select */
 	public static WriteHandlerPtr namcos1_mcu_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-/*TODO*///		int addr;
-/*TODO*///		/* bit 2-7 : chip select line of ROM chip */
-/*TODO*///		switch(data&0xfc)
-/*TODO*///		{
-/*TODO*///		case 0xf8: addr = 0x10000; break; /* bit 2 : ROM 0 */
-/*TODO*///		case 0xf4: addr = 0x30000; break; /* bit 3 : ROM 1 */
-/*TODO*///		case 0xec: addr = 0x50000; break; /* bit 4 : ROM 2 */
-/*TODO*///		case 0xdc: addr = 0x70000; break; /* bit 5 : ROM 3 */
-/*TODO*///		case 0xbc: addr = 0x90000; break; /* bit 6 : ROM 4 */
-/*TODO*///		case 0x7c: addr = 0xb0000; break; /* bit 7 : ROM 5 */
-/*TODO*///		default:   addr = 0x100000; /* illegal */
-/*TODO*///		}
-/*TODO*///		/* bit 0-1 : address line A15-A16 */
-/*TODO*///		addr += (data&3)*0x8000;
-/*TODO*///		if( addr >= memory_region_length(REGION_CPU4))
-/*TODO*///		{
-/*TODO*///			logerror("unmapped mcu bank selected pc=%04x bank=%02x\n",cpu_get_pc(),data);
-/*TODO*///			addr = 0x4000;
-/*TODO*///		}
-/*TODO*///		cpu_setbank( 20, memory_region(REGION_CPU4)+addr );
+		int addr;
+		/* bit 2-7 : chip select line of ROM chip */
+		switch(data&0xfc)
+		{
+		case 0xf8: addr = 0x10000; break; /* bit 2 : ROM 0 */
+		case 0xf4: addr = 0x30000; break; /* bit 3 : ROM 1 */
+		case 0xec: addr = 0x50000; break; /* bit 4 : ROM 2 */
+		case 0xdc: addr = 0x70000; break; /* bit 5 : ROM 3 */
+		case 0xbc: addr = 0x90000; break; /* bit 6 : ROM 4 */
+		case 0x7c: addr = 0xb0000; break; /* bit 7 : ROM 5 */
+		default:   addr = 0x100000; /* illegal */
+		}
+		/* bit 0-1 : address line A15-A16 */
+		addr += (data&3)*0x8000;
+		if( addr >= memory_region_length(REGION_CPU4))
+		{
+			logerror("unmapped mcu bank selected pc=%04x bank=%02x\n",cpu_get_pc(),data);
+			addr = 0x4000;
+		}
+		cpu_setbank( 20, new UBytePtr(memory_region(REGION_CPU4), addr) );
 	} };
 	
 	/* This point is very obscure, but i havent found any better way yet. */
@@ -788,128 +800,128 @@ public class namcos1
 	
 	public static WriteHandlerPtr namcos1_mcu_patch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-/*TODO*///		//logerror("mcu C000 write pc=%04x data=%02x\n",cpu_get_pc(),data);
-/*TODO*///		if(mcu_patch_data == 0xa6) return;
-/*TODO*///		mcu_patch_data = data;
-/*TODO*///		cpu_bankbase[19][offset] = data;
+		//logerror("mcu C000 write pc=%04x data=%02x\n",cpu_get_pc(),data);
+		if(mcu_patch_data == 0xa6) return;
+		mcu_patch_data = data;
+		cpu_bankbase[19].offset = data;
 	} };
-/*TODO*///	
-/*TODO*///	/*******************************************************************************
-/*TODO*///	*																			   *
-/*TODO*///	*	Initialization															   *
-/*TODO*///	*																			   *
-/*TODO*///	*******************************************************************************/
-/*TODO*///	
-/*TODO*///	static void namcos1_install_bank(int start,int end,mem_read_handler hr,mem_write_handler hw,
-/*TODO*///				  int offset,unsigned char *pointer)
-/*TODO*///	{
-/*TODO*///		int i;
-/*TODO*///		for(i=start;i<=end;i++)
-/*TODO*///		{
-/*TODO*///			namcos1_bank_element[i].bank_handler_r = hr;
-/*TODO*///			namcos1_bank_element[i].bank_handler_w = hw;
-/*TODO*///			namcos1_bank_element[i].bank_offset    = offset;
-/*TODO*///			namcos1_bank_element[i].bank_pointer   = pointer;
-/*TODO*///			offset	+= 0x2000;
-/*TODO*///			if(pointer) pointer += 0x2000;
-/*TODO*///		}
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	static void namcos1_install_rom_bank(int start,int end,int size,int offset)
-/*TODO*///	{
-/*TODO*///		unsigned char *BROM = memory_region(REGION_USER1);
-/*TODO*///		int step = size/0x2000;
-/*TODO*///		while(start < end)
-/*TODO*///		{
-/*TODO*///			namcos1_install_bank(start,start+step-1,0,rom_w,0,&BROM[offset]);
-/*TODO*///			start += step;
-/*TODO*///		}
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	static void namcos1_build_banks(mem_read_handler key_r,mem_write_handler key_w)
-/*TODO*///	{
-/*TODO*///		int i;
-/*TODO*///	
-/*TODO*///		/* S1 RAM pointer set */
-/*TODO*///		s1ram = memory_region(REGION_USER2);
-/*TODO*///	
-/*TODO*///		/* clear all banks to unknown area */
-/*TODO*///		for(i=0;i<NAMCOS1_MAX_BANK;i++)
-/*TODO*///			namcos1_install_bank(i,i,unknown_r,unknown_w,0,0);
-/*TODO*///	
-/*TODO*///		/* RAM 6 banks - palette */
-/*TODO*///		namcos1_install_bank(0x170,0x172,namcos1_paletteram_r,namcos1_paletteram_w,0,s1ram);
-/*TODO*///		/* RAM 6 banks - work ram */
-/*TODO*///		namcos1_install_bank(0x173,0x173,0,0,0,&s1ram[0x6000]);
-/*TODO*///		/* RAM 5 banks - videoram */
-/*TODO*///		namcos1_install_bank(0x178,0x17b,namcos1_videoram_r,namcos1_videoram_w,0,0);
-/*TODO*///		/* key chip bank (rev1_key_w / rev2_key_w ) */
-/*TODO*///		namcos1_install_bank(0x17c,0x17c,key_r,key_w,0,0);
-/*TODO*///		/* RAM 7 banks - display control, playfields, sprites */
-/*TODO*///		namcos1_install_bank(0x17e,0x17e,0,namcos1_videocontrol_w,0,&s1ram[0x8000]);
-/*TODO*///		/* RAM 1 shared ram, PSG device */
-/*TODO*///		namcos1_install_bank(0x17f,0x17f,soundram_r,soundram_w,0,namco_wavedata);
-/*TODO*///		/* RAM 3 banks */
-/*TODO*///		namcos1_install_bank(0x180,0x183,0,0,0,&s1ram[0xc000]);
-/*TODO*///		/* PRG0 */
-/*TODO*///		namcos1_install_rom_bank(0x200,0x23f,0x20000 , 0xe0000);
-/*TODO*///		/* PRG1 */
-/*TODO*///		namcos1_install_rom_bank(0x240,0x27f,0x20000 , 0xc0000);
-/*TODO*///		/* PRG2 */
-/*TODO*///		namcos1_install_rom_bank(0x280,0x2bf,0x20000 , 0xa0000);
-/*TODO*///		/* PRG3 */
-/*TODO*///		namcos1_install_rom_bank(0x2c0,0x2ff,0x20000 , 0x80000);
-/*TODO*///		/* PRG4 */
-/*TODO*///		namcos1_install_rom_bank(0x300,0x33f,0x20000 , 0x60000);
-/*TODO*///		/* PRG5 */
-/*TODO*///		namcos1_install_rom_bank(0x340,0x37f,0x20000 , 0x40000);
-/*TODO*///		/* PRG6 */
-/*TODO*///		namcos1_install_rom_bank(0x380,0x3bf,0x20000 , 0x20000);
-/*TODO*///		/* PRG7 */
-/*TODO*///		namcos1_install_rom_bank(0x3c0,0x3ff,0x20000 , 0x00000);
-/*TODO*///	}
+	
+	/*******************************************************************************
+	*																			   *
+	*	Initialization															   *
+	*																			   *
+	*******************************************************************************/
+	
+	static void namcos1_install_bank(int start,int end,ReadHandlerPtr hr,WriteHandlerPtr hw,
+				  int offset,UBytePtr pointer)
+	{
+		int i;
+		for(i=start;i<=end;i++)
+		{
+			namcos1_bank_element[i].bank_handler_r = hr;
+			namcos1_bank_element[i].bank_handler_w = hw;
+			namcos1_bank_element[i].bank_offset    = offset;
+			namcos1_bank_element[i].bank_pointer   = pointer;
+			offset	+= 0x2000;
+			if(pointer != null) pointer.inc(0x2000);
+		}
+	}
+	
+	static void namcos1_install_rom_bank(int start,int end,int size,int offset)
+	{
+		UBytePtr BROM = new UBytePtr(memory_region(REGION_USER1));
+		int step = size/0x2000;
+		while(start < end)
+		{
+			namcos1_install_bank(start,start+step-1,null,rom_w,0,new UBytePtr(BROM,offset));
+			start += step;
+		}
+	}
+	
+	static void namcos1_build_banks(ReadHandlerPtr key_r,WriteHandlerPtr key_w)
+	{
+		int i;
+	
+		/* S1 RAM pointer set */
+		s1ram = memory_region(REGION_USER2);
+	
+		/* clear all banks to unknown area */
+		for(i=0;i<NAMCOS1_MAX_BANK;i++)
+			namcos1_install_bank(i,i,unknown_r,unknown_w,0,null);
+	
+		/* RAM 6 banks - palette */
+		namcos1_install_bank(0x170,0x172,namcos1_paletteram_r,namcos1_paletteram_w,0,s1ram);
+		/* RAM 6 banks - work ram */
+		namcos1_install_bank(0x173,0x173,null,null,0,new UBytePtr(s1ram,0x6000));
+		/* RAM 5 banks - videoram */
+		namcos1_install_bank(0x178,0x17b,namcos1_videoram_r,namcos1_videoram_w,0,null);
+		/* key chip bank (rev1_key_w / rev2_key_w ) */
+		namcos1_install_bank(0x17c,0x17c,key_r,key_w,0,null);
+		/* RAM 7 banks - display control, playfields, sprites */
+		namcos1_install_bank(0x17e,0x17e,null,namcos1_videocontrol_w,0,new UBytePtr(s1ram,0x8000));
+		/* RAM 1 shared ram, PSG device */
+		namcos1_install_bank(0x17f,0x17f,soundram_r,soundram_w,0,namco_wavedata);
+		/* RAM 3 banks */
+		namcos1_install_bank(0x180,0x183,null,null,0,new UBytePtr(s1ram,0xc000));
+		/* PRG0 */
+		namcos1_install_rom_bank(0x200,0x23f,0x20000 , 0xe0000);
+		/* PRG1 */
+		namcos1_install_rom_bank(0x240,0x27f,0x20000 , 0xc0000);
+		/* PRG2 */
+		namcos1_install_rom_bank(0x280,0x2bf,0x20000 , 0xa0000);
+		/* PRG3 */
+		namcos1_install_rom_bank(0x2c0,0x2ff,0x20000 , 0x80000);
+		/* PRG4 */
+		namcos1_install_rom_bank(0x300,0x33f,0x20000 , 0x60000);
+		/* PRG5 */
+		namcos1_install_rom_bank(0x340,0x37f,0x20000 , 0x40000);
+		/* PRG6 */
+		namcos1_install_rom_bank(0x380,0x3bf,0x20000 , 0x20000);
+		/* PRG7 */
+		namcos1_install_rom_bank(0x3c0,0x3ff,0x20000 , 0x00000);
+	}
 	
 	public static InitMachinePtr init_namcos1 = new InitMachinePtr() {
             public void handler() {
                 
 	
-/*TODO*///		int bank;
-/*TODO*///	
-/*TODO*///		/* Point all of our bankhandlers to the error handlers */
-/*TODO*///		for( bank =0 ; bank < 2*8 ; bank++ )
-/*TODO*///		{
-/*TODO*///			/* set bank pointer & handler for cpu interface */
-/*TODO*///			memory_set_bankhandler_r( bank+1,0,unknown_r);
-/*TODO*///			memory_set_bankhandler_w( bank+1,0,unknown_w);
-/*TODO*///		}
-/*TODO*///	
-/*TODO*///		/* Prepare code for Cpu 0 */
-/*TODO*///		namcos1_bankswitch(0, 0x0e00, 0x03 ); /* bank7 = 0x3ff(PRG7) */
-/*TODO*///		namcos1_bankswitch(0, 0x0e01, 0xff );
-/*TODO*///	
-/*TODO*///		/* Prepare code for Cpu 1 */
-/*TODO*///		namcos1_bankswitch(1, 0x0e00, 0x03);
-/*TODO*///		namcos1_bankswitch(1, 0x0e01, 0xff);
-/*TODO*///	
-/*TODO*///		namcos1_cpu1_banklatch = 0x03ff;
-/*TODO*///	
-/*TODO*///		/* Point mcu & sound shared RAM to destination */
-/*TODO*///		{
-/*TODO*///			unsigned char *RAM = namco_wavedata + 0x1000; /* Ram 1, bank 1, offset 0x1000 */
-/*TODO*///			cpu_setbank( 18, RAM );
-/*TODO*///			cpu_setbank( 19, RAM );
-/*TODO*///		}
-/*TODO*///	
-/*TODO*///		/* In case we had some cpu's suspended, resume them now */
-/*TODO*///		cpu_set_reset_line(1,ASSERT_LINE);
-/*TODO*///		cpu_set_reset_line(2,ASSERT_LINE);
-/*TODO*///		cpu_set_reset_line(3,ASSERT_LINE);
-/*TODO*///	
-/*TODO*///		namcos1_reset = 0;
-/*TODO*///		/* mcu patch data clear */
-/*TODO*///		mcu_patch_data = 0;
-/*TODO*///	
-/*TODO*///		berabohm_input_counter = 4;	/* for berabohm pressure sensitive buttons */
+		int bank;
+	
+		/* Point all of our bankhandlers to the error handlers */
+		for( bank =0 ; bank < 2*8 ; bank++ )
+		{
+			/* set bank pointer & handler for cpu interface */
+			/*TODO*///memory_set_bankhandler_r( bank+1,0,unknown_r);
+			/*TODO*///memory_set_bankhandler_w( bank+1,0,unknown_w);
+		}
+	
+		/* Prepare code for Cpu 0 */
+		namcos1_bankswitch(0, 0x0e00, 0x03 ); /* bank7 = 0x3ff(PRG7) */
+		namcos1_bankswitch(0, 0x0e01, 0xff );
+	
+		/* Prepare code for Cpu 1 */
+		namcos1_bankswitch(1, 0x0e00, 0x03);
+		namcos1_bankswitch(1, 0x0e01, 0xff);
+	
+		namcos1_cpu1_banklatch = 0x03ff;
+	
+		/* Point mcu & sound shared RAM to destination */
+		{
+			UBytePtr RAM = new UBytePtr(namco_wavedata, 0x1000); /* Ram 1, bank 1, offset 0x1000 */
+			cpu_setbank( 18, RAM );
+			cpu_setbank( 19, RAM );
+		}
+	
+		/* In case we had some cpu's suspended, resume them now */
+		cpu_set_reset_line(1,ASSERT_LINE);
+		cpu_set_reset_line(2,ASSERT_LINE);
+		cpu_set_reset_line(3,ASSERT_LINE);
+	
+		namcos1_reset = 0;
+		/* mcu patch data clear */
+		mcu_patch_data = 0;
+	
+		berabohm_input_counter = 4;	/* for berabohm pressure sensitive buttons */
 	} };
 	
 	
@@ -934,69 +946,77 @@ public class namcos1
 		public WriteHandlerPtr key_w;
 		/* cpu slice timer */
 		//const struct namcos1_slice_timer *slice_timer;
-                public namcos1_slice_timer slice_timer = new namcos1_slice_timer();
+                public namcos1_slice_timer[] slice_timer;
+                
+                public namcos1_specific(int key_id_query , int key_id, ReadHandlerPtr key_r, WriteHandlerPtr key_w, namcos1_slice_timer[] slice_timer){
+                    this.key_id_query = key_id_query;
+                    this.key_id = key_id;
+                    this.key_r = key_r;
+                    this.key_w = key_w;
+                    this.slice_timer = slice_timer;
+                }
 	};
 	
-/*TODO*///	static void namcos1_driver_init(const struct namcos1_specific *specific )
-/*TODO*///	{
-/*TODO*///		/* keychip id */
-/*TODO*///		key_id_query = specific->key_id_query;
-/*TODO*///		key_id		 = specific->key_id;
-/*TODO*///	
-/*TODO*///		/* build bank elements */
-/*TODO*///		namcos1_build_banks(specific->key_r,specific->key_w);
-/*TODO*///	
-/*TODO*///		/* sound cpu speedup optimize (auto detect) */
-/*TODO*///		{
-/*TODO*///			unsigned char *RAM = memory_region(REGION_CPU3); /* sound cpu */
-/*TODO*///			int addr,flag_ptr;
-/*TODO*///	
-/*TODO*///			for(addr=0xd000;addr<0xd0ff;addr++)
-/*TODO*///			{
-/*TODO*///				if(RAM[addr+0]==0xb6 &&   /* lda xxxx */
-/*TODO*///				   RAM[addr+3]==0x27 &&   /* BEQ addr */
-/*TODO*///				   RAM[addr+4]==0xfb )
-/*TODO*///				{
-/*TODO*///					flag_ptr = RAM[addr+1]*256 + RAM[addr+2];
-/*TODO*///					if(flag_ptr>0x5140 && flag_ptr<0x5400)
-/*TODO*///					{
-/*TODO*///						sound_spinlock_pc	= addr+3;
-/*TODO*///						sound_spinlock_ram	= install_mem_read_handler(2,flag_ptr,flag_ptr,namcos1_sound_spinlock_r);
-/*TODO*///						logerror("Set sound cpu spinlock : pc=%04x , addr = %04x\n",sound_spinlock_pc,flag_ptr);
-/*TODO*///						break;
-/*TODO*///					}
-/*TODO*///				}
-/*TODO*///			}
-/*TODO*///		}
+	static void namcos1_driver_init( namcos1_specific specific )
+	{
+		/* keychip id */
+		key_id_query = specific.key_id_query;
+		key_id		 = specific.key_id;
+	
+		/* build bank elements */
+		namcos1_build_banks(specific.key_r,specific.key_w);
+	
+		/* sound cpu speedup optimize (auto detect) */
+		{
+			UBytePtr RAM = new UBytePtr(memory_region(REGION_CPU3)); /* sound cpu */
+			int addr,flag_ptr;
+	
+			for(addr=0xd000;addr<0xd0ff;addr++)
+			{
+				if(RAM.read(addr+0)==0xb6 &&   /* lda xxxx */
+				   RAM.read(addr+3)==0x27 &&   /* BEQ addr */
+				   RAM.read(addr+4)==0xfb )
+				{
+					flag_ptr = RAM.read(addr+1)*256 + RAM.read(addr+2);
+					if(flag_ptr>0x5140 && flag_ptr<0x5400)
+					{
+						sound_spinlock_pc	= addr+3;
+						sound_spinlock_ram	= install_mem_read_handler(2,flag_ptr,flag_ptr,namcos1_sound_spinlock_r);
+						logerror("Set sound cpu spinlock : pc=%04x , addr = %04x\n",sound_spinlock_pc,flag_ptr);
+						break;
+					}
+				}
+			}
+		}
 /*TODO*///	#if NEW_TIMER
 /*TODO*///		/* all cpu's does not need synchronization to all timers */
 /*TODO*///		cpu_set_full_synchronize(SYNC_NO_CPU);
 /*TODO*///		{
-/*TODO*///			const struct namcos1_slice_timer *slice = specific->slice_timer;
-/*TODO*///			while(slice->sync_cpu != SYNC_NO_CPU)
+/*TODO*///			const struct namcos1_slice_timer *slice = specific.slice_timer;
+/*TODO*///			while(slice.sync_cpu != SYNC_NO_CPU)
 /*TODO*///			{
 /*TODO*///				/* start CPU slice timer */
-/*TODO*///				cpu_start_extend_time_slice(slice->sync_cpu,
-/*TODO*///					TIME_IN_HZ(slice->delayHz),TIME_IN_HZ(slice->sliceHz) );
+/*TODO*///				cpu_start_extend_time_slice(slice.sync_cpu,
+/*TODO*///					TIME_IN_HZ(slice.delayHz),TIME_IN_HZ(slice.sliceHz) );
 /*TODO*///				slice++;
 /*TODO*///			}
 /*TODO*///		}
 /*TODO*///	#else
-/*TODO*///		/* compatible with old timer system */
-/*TODO*///		timer_pulse(TIME_IN_HZ(60*25),0,0);
+		/* compatible with old timer system */
+		timer_pulse(TIME_IN_HZ(60*25),0,null);
 /*TODO*///	#endif
 /*TODO*///	}
 /*TODO*///	
 /*TODO*///	#if NEW_TIMER
-/*TODO*///	/* normaly CPU slice optimize */
-/*TODO*///	/* slice order is 0:2:1:x:0:3:1:x */
-/*TODO*///	static const struct namcos1_slice_timer normal_slice[]={
-/*TODO*///		{ SYNC_2CPU(0,1),60*20,-60*20*2 },	/* CPU 0,1 20/vblank , slide slice */
+	/* normaly CPU slice optimize */
+	/* slice order is 0:2:1:x:0:3:1:x */
+/*TODO*///	static namcos1_slice_timer normal_slice[]={
+/*TODO*///		new namcos1_slice_timer( SYNC_2CPU(0,1),60*20,-60*20*2 ),	/* CPU 0,1 20/vblank , slide slice */
 /*TODO*///		{ SYNC_2CPU(2,3),60*5,-(60*5*2+60*20*4) },	/* CPU 2,3 10/vblank */
 /*TODO*///		{ SYNC_NO_CPU }
-/*TODO*///	};
+	};
 /*TODO*///	#else
-/*TODO*///	static const struct namcos1_slice_timer normal_slice[]={{0}};
+	static namcos1_slice_timer normal_slice[]={null};
 /*TODO*///	#endif
 	
 	/*******************************************************************************
@@ -1004,12 +1024,12 @@ public class namcos1
 	*******************************************************************************/
 	public static InitDriverPtr init_shadowld = new InitDriverPtr() { public void handler() 
 	{
-/*TODO*///		const struct namcos1_specific shadowld_specific=
-/*TODO*///		{
-/*TODO*///			0x00,0x00,				/* key query , key id */
-/*TODO*///			rev1_key_r,rev1_key_w,	/* key handler */
-/*TODO*///			normal_slice,			/* CPU slice normal */
-/*TODO*///		};
+		namcos1_specific shadowld_specific=new namcos1_specific
+		(
+			0x00,0x00,				/* key query , key id */
+			rev1_key_r,rev1_key_w,	/* key handler */
+			normal_slice			/* CPU slice normal */
+                );
 /*TODO*///		namcos1_driver_init(&shadowld_specific);
 	} };
 	
@@ -1060,13 +1080,13 @@ public class namcos1
 	*******************************************************************************/
 	public static InitDriverPtr init_pacmania = new InitDriverPtr() { public void handler() 
 	{
-/*TODO*///		const struct namcos1_specific pacmania_specific=
-/*TODO*///		{
-/*TODO*///			0x4b,0x12,				/* key query , key id */
-/*TODO*///			rev1_key_r,rev1_key_w,	/* key handler */
-/*TODO*///			normal_slice,			/* CPU slice normal */
-/*TODO*///		};
-/*TODO*///		namcos1_driver_init(&pacmania_specific);
+		namcos1_specific pacmania_specific=new namcos1_specific
+		(
+			0x4b,0x12,				/* key query , key id */
+			rev1_key_r,rev1_key_w,	/* key handler */
+			normal_slice			/* CPU slice normal */
+                );
+		namcos1_driver_init(pacmania_specific);
 	} };
 	
 	/*******************************************************************************
