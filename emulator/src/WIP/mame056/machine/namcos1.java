@@ -15,6 +15,7 @@ import static mame056.mame.*;
 import static mame056.memoryH.*;
 import static mame056.memory.*;
 import static mame056.cpuintrfH.*;
+import static mame056.inptport.*;
 
 // refactor
 import static arcadeflex036.osdepend.logerror;
@@ -1030,7 +1031,7 @@ public class namcos1
 			rev1_key_r,rev1_key_w,	/* key handler */
 			normal_slice			/* CPU slice normal */
                 );
-/*TODO*///		namcos1_driver_init(&shadowld_specific);
+		namcos1_driver_init(shadowld_specific);
 	} };
 	
 	/*******************************************************************************
@@ -1038,13 +1039,13 @@ public class namcos1
 	*******************************************************************************/
 	public static InitDriverPtr init_dspirit = new InitDriverPtr() { public void handler() 
 	{
-/*TODO*///		const struct namcos1_specific dspirit_specific=
-/*TODO*///		{
-/*TODO*///			0x00,0x36,						/* key query , key id */
-/*TODO*///			dspirit_key_r,dspirit_key_w,	/* key handler */
-/*TODO*///			normal_slice,					/* CPU slice normal */
-/*TODO*///		};
-/*TODO*///		namcos1_driver_init(&dspirit_specific);
+		namcos1_specific dspirit_specific=new namcos1_specific
+		(
+			0x00,0x36,						/* key query , key id */
+			dspirit_key_r,dspirit_key_w,	/* key handler */
+			normal_slice					/* CPU slice normal */
+                );
+		namcos1_driver_init(dspirit_specific);
 	} };
 	
 	/*******************************************************************************
@@ -1052,13 +1053,13 @@ public class namcos1
 	*******************************************************************************/
 	public static InitDriverPtr init_quester = new InitDriverPtr() { public void handler() 
 	{
-/*TODO*///		const struct namcos1_specific quester_specific=
-/*TODO*///		{
-/*TODO*///			0x00,0x00,				/* key query , key id */
-/*TODO*///			rev1_key_r,rev1_key_w,	/* key handler */
-/*TODO*///			normal_slice,			/* CPU slice normal */
-/*TODO*///		};
-/*TODO*///		namcos1_driver_init(&quester_specific);
+		namcos1_specific quester_specific=new namcos1_specific
+		(
+			0x00,0x00,				/* key query , key id */
+			rev1_key_r,rev1_key_w,	/* key handler */
+			normal_slice			/* CPU slice normal */
+                );
+		namcos1_driver_init(quester_specific);
 	} };
 	
 	/*******************************************************************************
@@ -1066,13 +1067,13 @@ public class namcos1
 	*******************************************************************************/
 	public static InitDriverPtr init_blazer = new InitDriverPtr() { public void handler() 
 	{
-/*TODO*///		const struct namcos1_specific blazer_specific=
-/*TODO*///		{
-/*TODO*///			0x00,0x13,					/* key query , key id */
-/*TODO*///			blazer_key_r,blazer_key_w,	/* key handler */
-/*TODO*///			normal_slice,				/* CPU slice normal */
-/*TODO*///		};
-/*TODO*///		namcos1_driver_init(&blazer_specific);
+		namcos1_specific blazer_specific=new namcos1_specific
+		(
+			0x00,0x13,					/* key query , key id */
+			blazer_key_r,blazer_key_w,	/* key handler */
+			normal_slice				/* CPU slice normal */
+                );
+		namcos1_driver_init(blazer_specific);
 	} };
 	
 	/*******************************************************************************
@@ -1094,13 +1095,13 @@ public class namcos1
 	*******************************************************************************/
 	public static InitDriverPtr init_galaga88 = new InitDriverPtr() { public void handler() 
 	{
-/*TODO*///		const struct namcos1_specific galaga88_specific=
-/*TODO*///		{
-/*TODO*///			0x2d,0x31,				/* key query , key id */
-/*TODO*///			rev1_key_r,rev1_key_w,	/* key handler */
-/*TODO*///			normal_slice,			/* CPU slice normal */
-/*TODO*///		};
-/*TODO*///		namcos1_driver_init(&galaga88_specific);
+		namcos1_specific galaga88_specific=new namcos1_specific
+		(
+			0x2d,0x31,				/* key query , key id */
+			rev1_key_r,rev1_key_w,	/* key handler */
+			normal_slice			/* CPU slice normal */
+                );
+		namcos1_driver_init(galaga88_specific);
 	} };
 	
 	/*******************************************************************************
@@ -1108,81 +1109,83 @@ public class namcos1
 	*******************************************************************************/
 	public static InitDriverPtr init_ws = new InitDriverPtr() { public void handler() 
 	{
-/*TODO*///		const struct namcos1_specific ws_specific=
-/*TODO*///		{
-/*TODO*///			0xd3,0x07,				/* key query , key id */
-/*TODO*///			ws_key_r,ws_key_w,		/* key handler */
-/*TODO*///			normal_slice,			/* CPU slice normal */
-/*TODO*///		};
-/*TODO*///		namcos1_driver_init(&ws_specific);
+		namcos1_specific ws_specific=new namcos1_specific
+		(
+			0xd3,0x07,				/* key query , key id */
+			ws_key_r,ws_key_w,		/* key handler */
+			normal_slice			/* CPU slice normal */
+                );
+		namcos1_driver_init(ws_specific);
 	} };
 	
-/*TODO*///	/*******************************************************************************
-/*TODO*///	*	Beraboh Man specific													   *
-/*TODO*///	*******************************************************************************/
-/*TODO*///	public static ReadHandlerPtr berabohm_buttons_r  = new ReadHandlerPtr() { public int handler(int offset)
-/*TODO*///	{
-/*TODO*///		int res;
-/*TODO*///	
-/*TODO*///	
-/*TODO*///		if (offset == 0)
-/*TODO*///		{
-/*TODO*///			if (berabohm_input_counter == 0) res = readinputport(0);
-/*TODO*///			else
-/*TODO*///			{
-/*TODO*///				static int counter[4];
-/*TODO*///	
-/*TODO*///				res = readinputport(4 + (berabohm_input_counter-1));
-/*TODO*///				if (res & 0x80)
-/*TODO*///				{
-/*TODO*///					if (counter[berabohm_input_counter-1] >= 0)
-/*TODO*///	//					res = 0x40 | counter[berabohm_input_counter-1];	I can't get max power with this...
-/*TODO*///						res = 0x40 | (counter[berabohm_input_counter-1]>>1);
-/*TODO*///					else
-/*TODO*///					{
-/*TODO*///						if (res & 0x40) res = 0x40;
-/*TODO*///						else res = 0x00;
-/*TODO*///					}
-/*TODO*///				}
-/*TODO*///				else if (res & 0x40)
-/*TODO*///				{
-/*TODO*///					if (counter[berabohm_input_counter-1] < 0x3f)
-/*TODO*///					{
-/*TODO*///						counter[berabohm_input_counter-1]++;
-/*TODO*///						res = 0x00;
-/*TODO*///					}
-/*TODO*///					else res = 0x7f;
-/*TODO*///				}
-/*TODO*///				else
-/*TODO*///					counter[berabohm_input_counter-1] = -1;
-/*TODO*///			}
-/*TODO*///			berabohm_input_counter = (berabohm_input_counter+1) % 5;
-/*TODO*///		}
-/*TODO*///		else
-/*TODO*///		{
-/*TODO*///			static int clk;
-/*TODO*///	
-/*TODO*///			res = 0;
-/*TODO*///			clk++;
-/*TODO*///			if (clk & 1) res |= 0x40;
-/*TODO*///			else if (berabohm_input_counter == 4) res |= 0x10;
-/*TODO*///	
-/*TODO*///			res |= (readinputport(1) & 0x8f);
-/*TODO*///		}
-/*TODO*///	
-/*TODO*///		return res;
-/*TODO*///	} };
+	/*******************************************************************************
+	*	Beraboh Man specific													   *
+	*******************************************************************************/
+        static int[] counter=new int[4];
+        static int clk;
+        
+	public static ReadHandlerPtr berabohm_buttons_r  = new ReadHandlerPtr() { public int handler(int offset)
+	{
+		int res;
+	
+	
+		if (offset == 0)
+		{
+			if (berabohm_input_counter == 0) res = readinputport(0);
+			else
+			{
+				
+	
+				res = readinputport(4 + (berabohm_input_counter-1));
+				if ((res & 0x80)!=0)
+				{
+					if (counter[berabohm_input_counter-1] >= 0)
+	//					res = 0x40 | counter[berabohm_input_counter-1];	I can't get max power with this...
+						res = 0x40 | (counter[berabohm_input_counter-1]>>1);
+					else
+					{
+						if ((res & 0x40)!=0) res = 0x40;
+						else res = 0x00;
+					}
+				}
+				else if ((res & 0x40)!=0)
+				{
+					if (counter[berabohm_input_counter-1] < 0x3f)
+					{
+						counter[berabohm_input_counter-1]++;
+						res = 0x00;
+					}
+					else res = 0x7f;
+				}
+				else
+					counter[berabohm_input_counter-1] = -1;
+			}
+			berabohm_input_counter = (berabohm_input_counter+1) % 5;
+		}
+		else
+		{
+			
+			res = 0;
+			clk++;
+			if ((clk & 1)!=0) res |= 0x40;
+			else if (berabohm_input_counter == 4) res |= 0x10;
+	
+			res |= (readinputport(1) & 0x8f);
+		}
+	
+		return res;
+	} };
 	
 	public static InitDriverPtr init_berabohm = new InitDriverPtr() { public void handler() 
 	{
-/*TODO*///		const struct namcos1_specific berabohm_specific=
-/*TODO*///		{
-/*TODO*///			0x00,0x00,				/* key query , key id */
-/*TODO*///			rev1_key_r,rev1_key_w,	/* key handler */
-/*TODO*///			normal_slice,			/* CPU slice normal */
-/*TODO*///		};
-/*TODO*///		namcos1_driver_init(&berabohm_specific);
-/*TODO*///		install_mem_read_handler(3,0x1400,0x1401,berabohm_buttons_r);
+		namcos1_specific berabohm_specific=new namcos1_specific
+		(
+			0x00,0x00,				/* key query , key id */
+			rev1_key_r,rev1_key_w,	/* key handler */
+			normal_slice			/* CPU slice normal */
+                );
+		namcos1_driver_init(berabohm_specific);
+		install_mem_read_handler(3,0x1400,0x1401,berabohm_buttons_r);
 	} };
 	
 	/*******************************************************************************
@@ -1190,13 +1193,13 @@ public class namcos1
 	*******************************************************************************/
 	public static InitDriverPtr init_alice = new InitDriverPtr() { public void handler() 
 	{
-/*TODO*///		const struct namcos1_specific alice_specific=
-/*TODO*///		{
-/*TODO*///			0x5b,0x25,				/* key query , key id */
-/*TODO*///			rev1_key_r,rev1_key_w,	/* key handler */
-/*TODO*///			normal_slice,			/* CPU slice normal */
-/*TODO*///		};
-/*TODO*///		namcos1_driver_init(&alice_specific);
+		namcos1_specific alice_specific=new namcos1_specific
+		(
+			0x5b,0x25,				/* key query , key id */
+			rev1_key_r,rev1_key_w,	/* key handler */
+			normal_slice			/* CPU slice normal */
+                );
+		namcos1_driver_init(alice_specific);
 	} };
 	
 	/*******************************************************************************
@@ -1204,13 +1207,13 @@ public class namcos1
 	*******************************************************************************/
 	public static InitDriverPtr init_bakutotu = new InitDriverPtr() { public void handler() 
 	{
-/*TODO*///		const struct namcos1_specific bakutotu_specific=
-/*TODO*///		{
-/*TODO*///			0x03,0x22,				/* key query , key id */
-/*TODO*///			rev1_key_r,rev1_key_w,	/* key handler */
-/*TODO*///			normal_slice,			/* CPU slice normal */
-/*TODO*///		};
-/*TODO*///		namcos1_driver_init(&bakutotu_specific);
+		namcos1_specific bakutotu_specific=new namcos1_specific
+		(
+			0x03,0x22,				/* key query , key id */
+			rev1_key_r,rev1_key_w,	/* key handler */
+			normal_slice			/* CPU slice normal */
+                );
+		namcos1_driver_init(bakutotu_specific);
 	} };
 	
 	/*******************************************************************************
@@ -1218,13 +1221,13 @@ public class namcos1
 	*******************************************************************************/
 	public static InitDriverPtr init_wldcourt = new InitDriverPtr() { public void handler() 
 	{
-/*TODO*///		const struct namcos1_specific worldcourt_specific=
-/*TODO*///		{
-/*TODO*///			0x00,0x35,				/* key query , key id */
-/*TODO*///			rev2_key_r,rev2_key_w,	/* key handler */
-/*TODO*///			normal_slice,			/* CPU slice normal */
-/*TODO*///		};
-/*TODO*///		namcos1_driver_init(&worldcourt_specific);
+		namcos1_specific worldcourt_specific=new namcos1_specific
+		(
+			0x00,0x35,				/* key query , key id */
+			rev2_key_r,rev2_key_w,	/* key handler */
+			normal_slice			/* CPU slice normal */
+                );
+		namcos1_driver_init(worldcourt_specific);
 	} };
 	
 	/*******************************************************************************
@@ -1232,13 +1235,13 @@ public class namcos1
 	*******************************************************************************/
 	public static InitDriverPtr init_splatter = new InitDriverPtr() { public void handler() 
 	{
-/*TODO*///		const struct namcos1_specific splatter_specific=
-/*TODO*///		{
-/*TODO*///			0x00,0x00,						/* key query , key id */
-/*TODO*///			splatter_key_r,splatter_key_w,	/* key handler */
-/*TODO*///			normal_slice,					/* CPU slice normal */
-/*TODO*///		};
-/*TODO*///		namcos1_driver_init(&splatter_specific);
+		namcos1_specific splatter_specific=new namcos1_specific
+		(
+			0x00,0x00,						/* key query , key id */
+			splatter_key_r,splatter_key_w,	/* key handler */
+			normal_slice					/* CPU slice normal */
+                );
+		namcos1_driver_init(splatter_specific);
 	} };
 	
 	/*******************************************************************************
@@ -1246,13 +1249,13 @@ public class namcos1
 	*******************************************************************************/
 	public static InitDriverPtr init_faceoff = new InitDriverPtr() { public void handler() 
 	{
-/*TODO*///		const struct namcos1_specific faceoff_specific=
-/*TODO*///		{
-/*TODO*///			0x00,0x00,				/* key query , key id */
-/*TODO*///			rev1_key_r,rev1_key_w,	/* key handler */
-/*TODO*///			normal_slice,			/* CPU slice normal */
-/*TODO*///		};
-/*TODO*///		namcos1_driver_init(&faceoff_specific);
+		namcos1_specific faceoff_specific=new namcos1_specific
+		(
+			0x00,0x00,				/* key query , key id */
+			rev1_key_r,rev1_key_w,	/* key handler */
+			normal_slice			/* CPU slice normal */
+                );
+		namcos1_driver_init(faceoff_specific);
 	} };
 	
 	/*******************************************************************************
@@ -1260,14 +1263,14 @@ public class namcos1
 	*******************************************************************************/
 	public static InitDriverPtr init_rompers = new InitDriverPtr() { public void handler() 
 	{
-/*TODO*///		const struct namcos1_specific rompers_specific=
-/*TODO*///		{
-/*TODO*///			0x00,0x00,				/* key query , key id */
-/*TODO*///			rev1_key_r,rev1_key_w,	/* key handler */
-/*TODO*///			normal_slice,			/* CPU slice normal */
-/*TODO*///		};
-/*TODO*///		namcos1_driver_init(&rompers_specific);
-/*TODO*///		key[0x70] = 0xb6;
+		namcos1_specific rompers_specific=new namcos1_specific
+		(
+			0x00,0x00,				/* key query , key id */
+			rev1_key_r,rev1_key_w,	/* key handler */
+			normal_slice			/* CPU slice normal */
+                );
+		namcos1_driver_init(rompers_specific);
+		key[0x70] = 0xb6;
 	} };
 	
 	/*******************************************************************************
@@ -1275,14 +1278,14 @@ public class namcos1
 	*******************************************************************************/
 	public static InitDriverPtr init_blastoff = new InitDriverPtr() { public void handler() 
 	{
-/*TODO*///		const struct namcos1_specific blastoff_specific=
-/*TODO*///		{
-/*TODO*///			0x00,0x00,				/* key query , key id */
-/*TODO*///			rev1_key_r,rev1_key_w,	/* key handler */
-/*TODO*///			normal_slice,			/* CPU slice normal */
-/*TODO*///		};
-/*TODO*///		namcos1_driver_init(&blastoff_specific);
-/*TODO*///		key[0] = 0xb7;
+		namcos1_specific blastoff_specific=new namcos1_specific
+		(
+			0x00,0x00,				/* key query , key id */
+			rev1_key_r,rev1_key_w,	/* key handler */
+			normal_slice			/* CPU slice normal */
+                );
+		namcos1_driver_init(blastoff_specific);
+		key[0] = 0xb7;
 	} };
 	
 	/*******************************************************************************
@@ -1290,15 +1293,15 @@ public class namcos1
 	*******************************************************************************/
 	public static InitDriverPtr init_ws89 = new InitDriverPtr() { public void handler() 
 	{
-/*TODO*///		const struct namcos1_specific ws89_specific=
-/*TODO*///		{
-/*TODO*///			0x00,0x00,				/* key query , key id */
-/*TODO*///			rev1_key_r,rev1_key_w,	/* key handler */
-/*TODO*///			normal_slice,			/* CPU slice normal */
-/*TODO*///		};
-/*TODO*///		namcos1_driver_init(&ws89_specific);
-/*TODO*///	
-/*TODO*///		key[0x20] = 0xb8;
+		namcos1_specific ws89_specific=new namcos1_specific
+		(
+			0x00,0x00,				/* key query , key id */
+			rev1_key_r,rev1_key_w,	/* key handler */
+			normal_slice			/* CPU slice normal */
+                );
+		namcos1_driver_init(ws89_specific);
+	
+		key[0x20] = 0xb8;
 	} };
 	
 	/*******************************************************************************
@@ -1306,13 +1309,13 @@ public class namcos1
 	*******************************************************************************/
 	public static InitDriverPtr init_dangseed = new InitDriverPtr() { public void handler() 
 	{
-/*TODO*///		const struct namcos1_specific dangseed_specific=
-/*TODO*///		{
-/*TODO*///			0x00,0x34,						/* key query , key id */
-/*TODO*///			dangseed_key_r,dangseed_key_w,	/* key handler */
-/*TODO*///			normal_slice,					/* CPU slice normal */
-/*TODO*///		};
-/*TODO*///		namcos1_driver_init(&dangseed_specific);
+		namcos1_specific dangseed_specific=new namcos1_specific
+		(
+			0x00,0x34,						/* key query , key id */
+			dangseed_key_r,dangseed_key_w,	/* key handler */
+			normal_slice					/* CPU slice normal */
+                );
+		namcos1_driver_init(dangseed_specific);
 	} };
 	
 	/*******************************************************************************
@@ -1320,16 +1323,16 @@ public class namcos1
 	*******************************************************************************/
 	public static InitDriverPtr init_ws90 = new InitDriverPtr() { public void handler() 
 	{
-/*TODO*///		const struct namcos1_specific ws90_specific=
-/*TODO*///		{
-/*TODO*///			0x00,0x00,				/* key query , key id */
-/*TODO*///			rev1_key_r,rev1_key_w,	/* key handler */
-/*TODO*///			normal_slice,			/* CPU slice normal */
-/*TODO*///		};
-/*TODO*///		namcos1_driver_init(&ws90_specific);
-/*TODO*///	
-/*TODO*///		key[0x47] = 0x36;
-/*TODO*///		key[0x40] = 0x36;
+		namcos1_specific ws90_specific=new namcos1_specific
+		(
+			0x00,0x00,				/* key query , key id */
+			rev1_key_r,rev1_key_w,	/* key handler */
+			normal_slice			/* CPU slice normal */
+                );
+		namcos1_driver_init(ws90_specific);
+	
+		key[0x47] = 0x36;
+		key[0x40] = 0x36;
 	} };
 	
 	/*******************************************************************************
@@ -1337,16 +1340,16 @@ public class namcos1
 	*******************************************************************************/
 	public static InitDriverPtr init_pistoldm = new InitDriverPtr() { public void handler() 
 	{
-/*TODO*///		const struct namcos1_specific pistoldm_specific=
-/*TODO*///		{
-/*TODO*///			0x00,0x00,				/* key query , key id */
-/*TODO*///			rev1_key_r,rev1_key_w,	/* key handler */
-/*TODO*///			normal_slice,			/* CPU slice normal */
-/*TODO*///		};
-/*TODO*///		namcos1_driver_init(&pistoldm_specific);
-/*TODO*///		//key[0x17] = ;
-/*TODO*///		//key[0x07] = ;
-/*TODO*///		key[0x43] = 0x35;
+		namcos1_specific pistoldm_specific=new namcos1_specific
+		(
+			0x00,0x00,				/* key query , key id */
+			rev1_key_r,rev1_key_w,	/* key handler */
+			normal_slice			/* CPU slice normal */
+                );
+		namcos1_driver_init(pistoldm_specific);
+		//key[0x17] = ;
+		//key[0x07] = ;
+		key[0x43] = 0x35;
 	} };
 	
 	/*******************************************************************************
@@ -1354,16 +1357,16 @@ public class namcos1
 	*******************************************************************************/
 	public static InitDriverPtr init_soukobdx = new InitDriverPtr() { public void handler() 
 	{
-/*TODO*///		const struct namcos1_specific soukobdx_specific=
-/*TODO*///		{
-/*TODO*///			0x00,0x00,				/* key query , key id */
-/*TODO*///			rev1_key_r,rev1_key_w,	/* key handler */
-/*TODO*///			normal_slice,			/* CPU slice normal */
-/*TODO*///		};
-/*TODO*///		namcos1_driver_init(&soukobdx_specific);
-/*TODO*///		//key[0x27] = ;
-/*TODO*///		//key[0x07] = ;
-/*TODO*///		key[0x43] = 0x37;
+		namcos1_specific soukobdx_specific=new namcos1_specific
+		(
+			0x00,0x00,				/* key query , key id */
+			rev1_key_r,rev1_key_w,	/* key handler */
+			normal_slice			/* CPU slice normal */
+                );
+		namcos1_driver_init(soukobdx_specific);
+		//key[0x27] = ;
+		//key[0x07] = ;
+		key[0x43] = 0x37;
 	} };
 	
 	/*******************************************************************************
@@ -1371,14 +1374,14 @@ public class namcos1
 	*******************************************************************************/
 	public static InitDriverPtr init_puzlclub = new InitDriverPtr() { public void handler() 
 	{
-/*TODO*///		const struct namcos1_specific puzlclub_specific=
-/*TODO*///		{
-/*TODO*///			0x00,0x00,				/* key query , key id */
-/*TODO*///			rev1_key_r,rev1_key_w,	/* key handler */
-/*TODO*///			normal_slice,			/* CPU slice normal */
-/*TODO*///		};
-/*TODO*///		namcos1_driver_init(&puzlclub_specific);
-/*TODO*///		key[0x03] = 0x35;
+		namcos1_specific puzlclub_specific=new namcos1_specific
+		(
+			0x00,0x00,				/* key query , key id */
+			rev1_key_r,rev1_key_w,	/* key handler */
+			normal_slice			/* CPU slice normal */
+                );
+		namcos1_driver_init(puzlclub_specific);
+		key[0x03] = 0x35;
 	} };
 	
 	/*******************************************************************************
@@ -1386,16 +1389,16 @@ public class namcos1
 	*******************************************************************************/
 	public static InitDriverPtr init_tankfrce = new InitDriverPtr() { public void handler() 
 	{
-/*TODO*///		const struct namcos1_specific tankfrce_specific=
-/*TODO*///		{
-/*TODO*///			0x00,0x00,				/* key query , key id */
-/*TODO*///			rev1_key_r,rev1_key_w,	/* key handler */
-/*TODO*///			normal_slice,			/* CPU slice normal */
-/*TODO*///		};
-/*TODO*///		namcos1_driver_init(&tankfrce_specific);
-/*TODO*///		//key[0x57] = ;
-/*TODO*///		//key[0x17] = ;
-/*TODO*///		key[0x2b] = 0xb9;
-/*TODO*///		key[0x50] = 0xb9;
+		namcos1_specific tankfrce_specific=new namcos1_specific
+		(
+			0x00,0x00,				/* key query , key id */
+			rev1_key_r,rev1_key_w,	/* key handler */
+			normal_slice			/* CPU slice normal */
+                );
+		namcos1_driver_init(tankfrce_specific);
+		//key[0x57] = ;
+		//key[0x17] = ;
+		key[0x2b] = 0xb9;
+		key[0x50] = 0xb9;
 	} };
 }
