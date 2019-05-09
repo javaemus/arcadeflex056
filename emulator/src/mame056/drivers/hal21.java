@@ -148,6 +148,9 @@ public class hal21
                         //palette[_palette++] = (char) b;
 			palette_set_color(i,r,g,b);
 		}
+                
+                palette_set_color(0, 0, 0, 0);
+                palette_set_color(1, 0xff, 0xff, 0xff);
             }
         };
         

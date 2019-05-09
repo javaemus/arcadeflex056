@@ -130,6 +130,8 @@ public class taitosj
 				draworder[i][j] = data;
 			}
 		}
+                palette_set_color(0, 0, 0, 0);
+                palette_set_color(1, 0xff, 0xff, 0xff);
 	} };
 	
 	
