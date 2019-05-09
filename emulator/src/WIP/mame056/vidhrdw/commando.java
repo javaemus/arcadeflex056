@@ -34,7 +34,7 @@ public class commando
 	
 	public static UBytePtr commando_fgvideoram=new UBytePtr(), commando_bgvideoram=new UBytePtr();
 	
-	static tilemap fg_tilemap, bg_tilemap;
+	static struct_tilemap fg_tilemap, bg_tilemap;
 	
 	
 	

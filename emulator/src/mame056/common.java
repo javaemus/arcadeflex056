@@ -23,6 +23,7 @@ import static mame056.cpuintrfH.*;
 import static mame056.drawgfxH.*;
 import static arcadeflex056.fucPtr.*;
 import static mame056.tilemapH.*;
+import static mame056.tilemapC.*;
 import static arcadeflex056.video.osd_set_visible_area;
 
 //to refactor
@@ -488,7 +489,7 @@ public class common {
     public static void updateflip() {
         int min_x, max_x, min_y, max_y;
 
-        /*TODO*///tilemap_set_flip(ALL_TILEMAPS,(TILEMAP_FLIPX & flip_screen_x[0]) | (TILEMAP_FLIPY & flip_screen_y[0]));
+        tilemap_set_flip(ALL_TILEMAPS,(TILEMAP_FLIPX & flip_screen_x[0]) | (TILEMAP_FLIPY & flip_screen_y[0]));
         min_x = Machine.drv.default_visible_area.min_x;
         max_x = Machine.drv.default_visible_area.max_x;
         min_y = Machine.drv.default_visible_area.min_y;

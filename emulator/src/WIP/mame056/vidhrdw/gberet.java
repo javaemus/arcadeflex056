@@ -33,7 +33,7 @@ public class gberet
 	public static UBytePtr gberet_videoram=new UBytePtr(),gberet_colorram=new UBytePtr();
 	public static UBytePtr gberet_spritebank=new UBytePtr();
 	public static UBytePtr gberet_scrollram=new UBytePtr();
-	public static tilemap bg_tilemap;
+	public static struct_tilemap bg_tilemap;
 	static int interruptenable;
 	static int flipscreen;
 	
