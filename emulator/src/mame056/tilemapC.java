@@ -3,7 +3,10 @@
  */
 package mame056;
 
+import static mame056.common.*;
 import static mame056.commonH.*;
+import static mame056.driverH.*;
+import static mame056.mame.*;
 import static mame056.tilemapH.*;
 
 public class tilemapC {
@@ -51,11 +54,11 @@ public class tilemapC {
 /*TODO*///	int scrollx_delta, scrolly_delta;
 /*TODO*///
 /*TODO*///	int enable;
-/*TODO*///	int attributes;
-/*TODO*///
+        public int attributes;
+        /*TODO*///
 /*TODO*///	int type;
-/*TODO*///	int transparent_pen;
-/*TODO*///	UINT32 fgmask[4], bgmask[4]; /* for TILEMAP_SPLIT */
+        public int transparent_pen;
+        /*TODO*///	UINT32 fgmask[4], bgmask[4]; /* for TILEMAP_SPLIT */
 /*TODO*///
 /*TODO*///	UINT32 *pPenToPixel[8];
 /*TODO*///
@@ -63,14 +66,14 @@ public class tilemapC {
 /*TODO*///
 /*TODO*///	void (*draw)( struct tilemap *tilemap, int xpos, int ypos, int mask, int value );
 /*TODO*///
-/*TODO*///	int cached_scroll_rows, cached_scroll_cols;
-/*TODO*///	int *cached_rowscroll, *cached_colscroll;
+        public int cached_scroll_rows, cached_scroll_cols;
+        /*TODO*///	int *cached_rowscroll, *cached_colscroll;
 /*TODO*///
-/*TODO*///	int logical_scroll_rows, logical_scroll_cols;
-/*TODO*///	int *logical_rowscroll, *logical_colscroll;
+        public int logical_scroll_rows, logical_scroll_cols;
+        /*TODO*///	int *logical_rowscroll, *logical_colscroll;
 /*TODO*///
-/*TODO*///	int orientation;
-/*TODO*///	int clip_left,clip_right,clip_top,clip_bottom;
+        public int orientation;
+        /*TODO*///	int clip_left,clip_right,clip_top,clip_bottom;
 /*TODO*///	struct rectangle logical_clip;
 /*TODO*///
 /*TODO*///	UINT16 tile_depth, tile_granularity;
@@ -86,15 +89,15 @@ public class tilemapC {
 /*TODO*///	UINT32 transparency_bitmap_pitch_row;
 /*TODO*///	UINT8 *transparency_data, **transparency_data_row;
 /*TODO*///
-/*TODO*///	struct tilemap *next; /* resource tracking */
+        public struct_tilemap next;/* resource tracking */
     }
     public static mame_bitmap priority_bitmap;
 
-    /*TODO*///UINT32					priority_bitmap_pitch_line;
-/*TODO*///UINT32					priority_bitmap_pitch_row;
-/*TODO*///
-/*TODO*///static struct tilemap *	first_tilemap; /* resource tracking */
-/*TODO*///static UINT32			screen_width, screen_height;
+    public static int/*UINT32*/ priority_bitmap_pitch_line;
+    public static int/*UINT32*/ priority_bitmap_pitch_row;
+
+    static struct_tilemap first_tilemap = null;/* resource tracking */
+    static int/*UINT32*/ screen_width, screen_height;
     public static struct_tile_info tile_info = new struct_tile_info();
 
     /*TODO*///
@@ -202,8 +205,7 @@ public class tilemapC {
 /*TODO*///}
 /*TODO*///
     public static void tilemap_set_transparent_pen(struct_tilemap tilemap, int pen) {
-        System.out.println("dummy tilemap_transparent_pen");
-        /*TODO*///	tilemap->transparent_pen = pen;
+        tilemap.transparent_pen = pen;
     }
 
     /*TODO*///
@@ -571,34 +573,28 @@ public class tilemapC {
 /*TODO*///{
 /*TODO*///	tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 /*TODO*///}
-/*TODO*///
     public static int tilemap_init() {
-        System.out.println("dummy tilemap_init");
-        /*TODO*///	screen_width	= Machine->scrbitmap->width;
-/*TODO*///	screen_height	= Machine->scrbitmap->height;
-/*TODO*///	first_tilemap	= NULL;
-/*TODO*///
-/*TODO*///	state_save_register_func_postload(tilemap_reset);
-/*TODO*///	priority_bitmap = bitmap_alloc_depth( screen_width, screen_height, -8 );
-/*TODO*///	if( priority_bitmap )
-/*TODO*///	{
-/*TODO*///		priority_bitmap_pitch_line = ((UINT8 *)priority_bitmap->line[1]) - ((UINT8 *)priority_bitmap->line[0]);
-        return 0;
-        /*TODO*///	}
-/*TODO*///	return -1;
+        screen_width = Machine.scrbitmap.width;
+        screen_height = Machine.scrbitmap.height;
+        first_tilemap = null;
+        /*TODO*///	state_save_register_func_postload(tilemap_reset);
+        priority_bitmap = bitmap_alloc_depth(screen_width, screen_height, -8);
+        if (priority_bitmap != null) {
+            priority_bitmap_pitch_line = priority_bitmap.line[1].offset - priority_bitmap.line[0].offset;
+            return 0;
+        }
+        return -1;
     }
 
     public static void tilemap_close() {
-        System.out.println("dummy tilemap_close");
-        /*TODO*///	struct tilemap *next;
-/*TODO*///
-/*TODO*///	while( first_tilemap )
-/*TODO*///	{
-/*TODO*///		next = first_tilemap->next;
-/*TODO*///		tilemap_dispose( first_tilemap );
-/*TODO*///		first_tilemap = next;
-/*TODO*///	}
-/*TODO*///	bitmap_free( priority_bitmap );
+        struct_tilemap next;
+
+        while (first_tilemap != null) {
+            next = first_tilemap.next;
+            tilemap_dispose(first_tilemap);
+            first_tilemap = next;
+        }
+        bitmap_free(priority_bitmap);
     }
 
     /**
@@ -638,15 +634,15 @@ public class tilemapC {
 /*TODO*///		tilemap->cached_height = tile_height*num_rows;
 /*TODO*///		tilemap->tile_get_info = tile_get_info;
 /*TODO*///		tilemap->get_memory_offset = get_memory_offset;
-/*TODO*///		tilemap->orientation = Machine->orientation;
-/*TODO*///
+            tilemap.orientation = Machine.orientation;
+            /*TODO*///
 /*TODO*///		/* various defaults */
 /*TODO*///		tilemap->enable = 1;
 /*TODO*///		tilemap->type = type;
-/*TODO*///		tilemap->logical_scroll_rows = tilemap->cached_scroll_rows = 1;
-/*TODO*///		tilemap->logical_scroll_cols = tilemap->cached_scroll_cols = 1;
-/*TODO*///		tilemap->transparent_pen = -1;
-/*TODO*///		tilemap->tile_depth = 0;
+            tilemap.logical_scroll_rows = tilemap.cached_scroll_rows = 1;
+            tilemap.logical_scroll_cols = tilemap.cached_scroll_cols = 1;
+            tilemap.transparent_pen = -1;
+            /*TODO*///		tilemap->tile_depth = 0;
 /*TODO*///		tilemap->tile_granularity = 0;
 /*TODO*///		tilemap->tile_dirty_map = 0;
 /*TODO*///
@@ -695,10 +691,9 @@ public class tilemapC {
         return null;
     }
 
-    /*TODO*///
-/*TODO*///void tilemap_dispose( struct tilemap *tilemap )
-/*TODO*///{
-/*TODO*///	struct tilemap *prev;
+    public static void tilemap_dispose(struct_tilemap tilemap) {
+        System.out.println("dummy tilemap_dispose");
+        /*TODO*///	struct tilemap *prev;
 /*TODO*///
 /*TODO*///	if( tilemap==first_tilemap )
 /*TODO*///	{
@@ -721,8 +716,9 @@ public class tilemapC {
 /*TODO*///	bitmap_free( tilemap->pixmap );
 /*TODO*///	mappings_dispose( tilemap );
 /*TODO*///	free( tilemap );
-/*TODO*///}
-/*TODO*///
+    }
+
+    /*TODO*///
 /*TODO*////***********************************************************************************/
 /*TODO*///
 /*TODO*///void tilemap_set_enable( struct tilemap *tilemap, int enable )
@@ -732,19 +728,15 @@ public class tilemapC {
 /*TODO*///
 /*TODO*///
     public static void tilemap_set_flip(struct_tilemap tilemap, int attributes) {
-        System.out.println("dummy tilemap_set_flip");
-        /*TODO*///	if( tilemap==ALL_TILEMAPS )
-/*TODO*///	{
-/*TODO*///		tilemap = first_tilemap;
-/*TODO*///		while( tilemap )
-/*TODO*///		{
-/*TODO*///			tilemap_set_flip( tilemap, attributes );
-/*TODO*///			tilemap = tilemap->next;
-/*TODO*///		}
-/*TODO*///	}
-/*TODO*///	else if( tilemap->attributes!=attributes )
-/*TODO*///	{
-/*TODO*///		tilemap->attributes = attributes;
+        if (tilemap == ALL_TILEMAPS) {
+            tilemap = first_tilemap;
+            while (tilemap != null) {
+                tilemap_set_flip(tilemap, attributes);
+                tilemap = tilemap.next;
+            }
+        } else if (tilemap.attributes != attributes) {
+            System.out.println("dummy tilemap_set_flip (tilemap.attributes != attributes)");
+            /*TODO*///		tilemap->attributes = attributes;
 /*TODO*///		tilemap->orientation = Machine->orientation;
 /*TODO*///		if( attributes&TILEMAP_FLIPY )
 /*TODO*///		{
@@ -759,7 +751,7 @@ public class tilemapC {
 /*TODO*///		mappings_update( tilemap );
 /*TODO*///		recalculate_scroll( tilemap );
 /*TODO*///		tilemap_mark_all_tiles_dirty( tilemap );
-/*TODO*///	}
+        }
     }
 
     /*TODO*///
@@ -827,16 +819,12 @@ public class tilemapC {
 /*TODO*///}
 /*TODO*///
     public static void tilemap_set_scroll_rows(struct_tilemap tilemap, int n) {
-        System.out.println("dummy tilemap_set_scroll_rows");
-        /*TODO*///	tilemap->logical_scroll_rows = n;
-/*TODO*///	if( tilemap->orientation & ORIENTATION_SWAP_XY )
-/*TODO*///	{
-/*TODO*///		tilemap->cached_scroll_cols = n;
-/*TODO*///	}
-/*TODO*///	else
-/*TODO*///	{
-/*TODO*///		tilemap->cached_scroll_rows = n;
-/*TODO*///	}
+        tilemap.logical_scroll_rows = n;
+        if ((tilemap.orientation & ORIENTATION_SWAP_XY) != 0) {
+            tilemap.cached_scroll_cols = n;
+        } else {
+            tilemap.cached_scroll_rows = n;
+        }
     }
 
     /*TODO*///
