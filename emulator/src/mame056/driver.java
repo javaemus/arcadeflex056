@@ -106,6 +106,7 @@ import static WIP.mame056.drivers.irobot.*;
 import static WIP.mame056.drivers.pacland.*;
 import static WIP.mame056.drivers.namcos1.*;
 import static WIP.mame056.drivers.mcr3.*;
+import static WIP.mame056.drivers.yard.*;
 
 public class driver {
 
@@ -1048,9 +1049,9 @@ public class driver {
         	driver_mpatrol,	/* M52 (c) 1982 */
         	driver_mpatrolw,	/* M52 (c) 1982 + Williams license */
         /*TODO*///	driver_troangel,	/* (c) 1983 */
-        /*TODO*///	driver_yard,		/* (c) 1983 */
-        /*TODO*///	driver_vsyard,	/* (c) 1983/1984 */
-        /*TODO*///	driver_vsyard2,	/* (c) 1983/1984 */
+        	driver_yard,		/* (c) 1983 */
+        	driver_vsyard,	/* (c) 1983/1984 */
+        	driver_vsyard2,	/* (c) 1983/1984 */
         /*TODO*///	driver_travrusa,	/* (c) 1983 */
         /*TODO*///	driver_motorace,	/* (c) 1983 Williams license */
         /*TODO*///	/* M62 */
