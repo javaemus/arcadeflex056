@@ -18,7 +18,6 @@ J Clegg
 package WIP.mame056.vidhrdw;
 
 import static common.ptr.*;
-import static mame056.tilemapH.*;
 
 import static arcadeflex056.fucPtr.*;
 import static common.ptr.*;

@@ -107,6 +107,7 @@ import static WIP.mame056.drivers.pacland.*;
 import static WIP.mame056.drivers.namcos1.*;
 import static WIP.mame056.drivers.mcr3.*;
 import static WIP.mame056.drivers.yard.*;
+import static WIP.mame056.drivers.troangel.*;
 
 public class driver {
 
@@ -1048,7 +1049,7 @@ public class driver {
         /*TODO*///	driver_olibochu,	/* M47 (c) 1981 + "GDI presents" */
         	driver_mpatrol,	/* M52 (c) 1982 */
         	driver_mpatrolw,	/* M52 (c) 1982 + Williams license */
-        /*TODO*///	driver_troangel,	/* (c) 1983 */
+        	driver_troangel,	/* (c) 1983 */
         	driver_yard,		/* (c) 1983 */
         	driver_vsyard,	/* (c) 1983/1984 */
         	driver_vsyard2,	/* (c) 1983/1984 */
