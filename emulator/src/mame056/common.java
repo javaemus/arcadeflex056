@@ -1077,7 +1077,7 @@ public class common {
         int type = ROMREGION_GETTYPE(regiondata, rom_ptr);
         int datawidth = ROMREGION_GETWIDTH(regiondata, rom_ptr) / 8;
         boolean littleendian = ROMREGION_ISLITTLEENDIAN(regiondata, rom_ptr);
-        /*TODO*///	UINT8 *base;
+        UBytePtr base=new UBytePtr();
         int i, j;
 
         debugload("+ datawidth=%d little=%d\n", datawidth, littleendian ? 1 : 0);
@@ -1102,15 +1102,17 @@ public class common {
         /*TODO*///
         /* swap the endianness if we need to */
         if (datawidth > 1 && !littleendian) {
-            throw new UnsupportedOperationException("Unimplemented");
+            //throw new UnsupportedOperationException("Unimplemented");
             /*TODO*///		debugload("+ Byte swapping region\n");
-/*TODO*///		for (i = 0, base = romdata->regionbase; i < romdata->regionlength; i += datawidth)
-/*TODO*///		{
-/*TODO*///			UINT8 temp[8];
-/*TODO*///			memcpy(temp, base, datawidth);
-/*TODO*///			for (j = datawidth - 1; j >= 0; j--)
-/*TODO*///				*base++ = temp[j];
-/*TODO*///		}
+		for (i = 0, base = romdata.regionbase; i < romdata.regionlength; i += datawidth)
+		{
+			UBytePtr temp=new UBytePtr(8);
+			memcpy(temp, base, datawidth);
+			for (j = datawidth - 1; j >= 0; j--){
+				base.write(temp.read(j));
+                                base.inc();
+                        }
+		}
         }
     }
 
