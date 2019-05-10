@@ -115,7 +115,7 @@ public class m6800H {
 /*TODO*///#define M6808_IRQ_STATE 			M6800_IRQ_STATE
 /*TODO*///
 /*TODO*///#define M6808_WAI                   M6800_WAI
-/*TODO*///#define M6808_IRQ_LINE              M6800_IRQ_LINE
+    public static final int M6808_IRQ_LINE = M6800_IRQ_LINE;
 /*TODO*///
 /*TODO*///#define m6808_ICount                m6800_ICount
 /*TODO*///
