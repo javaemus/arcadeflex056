@@ -398,14 +398,14 @@ public class mcr {
 /*TODO*///		pia_1_portb_w(0, (param >> 1) & 0x0f);
 /*TODO*///		pia_1_ca1_w(0, ~param & 0x01);
 /*TODO*///	}
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	/********* external interfaces ***********/
-/*TODO*///	public static WriteHandlerPtr soundsgood_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-/*TODO*///	{
+	
+	
+	/********* external interfaces ***********/
+	public static WriteHandlerPtr soundsgood_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
+	{
 /*TODO*///		timer_set(TIME_NOW, data, soundsgood_delayed_data_w);
-/*TODO*///	} };
-/*TODO*///	
+	} };
+	
 /*TODO*///	public static ReadHandlerPtr soundsgood_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 /*TODO*///	{
 /*TODO*///		return soundsgood_status;
@@ -478,20 +478,20 @@ public class mcr {
 /*TODO*///	{
 /*TODO*///		cpu_set_irq_line(turbocs_sound_cpu, M6809_IRQ_LINE, state ? ASSERT_LINE : CLEAR_LINE);
 /*TODO*///	}
-/*TODO*///	
-/*TODO*///	static void turbocs_delayed_data_w(int param)
-/*TODO*///	{
+	
+	public static timer_callback turbocs_delayed_data_w = new timer_callback() {
+            public void handler(int i) {
 /*TODO*///		pia_0_portb_w(0, (param >> 1) & 0x0f);
 /*TODO*///		pia_0_ca1_w(0, ~param & 0x01);
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	/********* external interfaces ***********/
-/*TODO*///	public static WriteHandlerPtr turbocs_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-/*TODO*///	{
-/*TODO*///		timer_set(TIME_NOW, data, turbocs_delayed_data_w);
-/*TODO*///	} };
-/*TODO*///	
+            }
+        };
+	
+	/********* external interfaces ***********/
+	public static WriteHandlerPtr turbocs_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
+	{
+		timer_set(TIME_NOW, data, turbocs_delayed_data_w);
+	} };
+	
 /*TODO*///	public static ReadHandlerPtr turbocs_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 /*TODO*///	{
 /*TODO*///		return turbocs_status;

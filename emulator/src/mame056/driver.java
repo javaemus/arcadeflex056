@@ -105,6 +105,7 @@ import static WIP.mame056.drivers.m62.*;
 import static WIP.mame056.drivers.irobot.*;
 import static WIP.mame056.drivers.pacland.*;
 import static WIP.mame056.drivers.namcos1.*;
+import static WIP.mame056.drivers.mcr3.*;
 
 public class driver {
 
@@ -1003,25 +1004,25 @@ public class driver {
         /*TODO*///	driver_twotigra,	/* (c) 1984 */
         /*TODO*///	/* MCR2 + MCR3 sprites */
         /*TODO*///	driver_journey,	/* (c) 1983 */
-        /*TODO*///	/* MCR3 */
-        /*TODO*///	driver_tapper,	/* (c) 1983 */
-        /*TODO*///	driver_tappera,	/* (c) 1983 */
-        /*TODO*///	driver_sutapper,	/* (c) 1983 */
-        /*TODO*///	driver_rbtapper,	/* (c) 1984 */
-        /*TODO*///	driver_timber,	/* (c) 1984 */
-        /*TODO*///	driver_dotron,	/* (c) 1983 */
-        /*TODO*///	driver_dotrone,	/* (c) 1983 */
-        /*TODO*///	driver_demoderb,	/* (c) 1984 */
-        /*TODO*///	driver_demoderm,	/* (c) 1984 */
-        /*TODO*///	driver_sarge,		/* (c) 1985 */
-        /*TODO*///	driver_rampage,	/* (c) 1986 */
-        /*TODO*///	driver_rampage2,	/* (c) 1986 */
-        /*TODO*///	driver_powerdrv,	/* (c) 1986 */
-        /*TODO*///	driver_stargrds,	/* (c) 1987 */
-        /*TODO*///	driver_maxrpm,	/* (c) 1986 */
-        /*TODO*///	driver_spyhunt,	/* (c) 1983 */
-        /*TODO*///	driver_turbotag,	/* (c) 1985 */
-        /*TODO*///	driver_crater,	/* (c) 1984 */
+        	/* MCR3 */
+        	driver_tapper,	/* (c) 1983 */
+        	driver_tappera,	/* (c) 1983 */
+        	driver_sutapper,	/* (c) 1983 */
+        	driver_rbtapper,	/* (c) 1984 */
+        	driver_timber,	/* (c) 1984 */
+        	driver_dotron,	/* (c) 1983 */
+        	driver_dotrone,	/* (c) 1983 */
+        	driver_demoderb,	/* (c) 1984 */
+        	driver_demoderm,	/* (c) 1984 */
+        	driver_sarge,		/* (c) 1985 */
+        	driver_rampage,	/* (c) 1986 */
+        	driver_rampage2,	/* (c) 1986 */
+        	driver_powerdrv,	/* (c) 1986 */
+        	driver_stargrds,	/* (c) 1987 */
+        	driver_maxrpm,	/* (c) 1986 */
+        	driver_spyhunt,	/* (c) 1983 */
+        	driver_turbotag,	/* (c) 1985 */
+        	driver_crater,	/* (c) 1984 */
         /*TODO*///	/* MCR 68000 */
         /*TODO*///	driver_zwackery,	/* (c) 1984 */
         /*TODO*///	driver_xenophob,	/* (c) 1987 */

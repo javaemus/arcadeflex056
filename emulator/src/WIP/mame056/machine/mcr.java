@@ -24,6 +24,8 @@ import static mame056.machine.z80fmly.*;
 import static mame056.machine.z80fmlyH.*;
 import static mame056.mame.*;
 import static WIP.mame056.sndhrdw.mcr.*;
+import static WIP.mame056.vidhrdw.mcr3.spyhunt_scrollx;
+import static WIP.mame056.vidhrdw.mcr3.spyhunt_scrolly;
 
 public class mcr
 {
@@ -418,49 +420,49 @@ public class mcr
 	} };
 	
 	
-/*TODO*///	public static WriteHandlerPtr mcrmono_control_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-/*TODO*///	{
-/*TODO*///		/*
-/*TODO*///			Bit layout is as follows:
-/*TODO*///				D7 = n/c
-/*TODO*///				D6 = cocktail flip
-/*TODO*///				D5 = n/c
-/*TODO*///				D4 = n/c
-/*TODO*///				D3 = n/c
-/*TODO*///				D2 = n/c
-/*TODO*///				D1 = n/c
-/*TODO*///				D0 = coin meter 1
-/*TODO*///		*/
-/*TODO*///	
-/*TODO*///		coin_counter_w(0, (data >> 0) & 1);
-/*TODO*///		mcr_cocktail_flip = (data >> 6) & 1;
-/*TODO*///	} };
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	public static WriteHandlerPtr mcr_scroll_value_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-/*TODO*///	{
-/*TODO*///		switch (offset)
-/*TODO*///		{
-/*TODO*///			case 0:
-/*TODO*///				/* low 8 bits of horizontal scroll */
-/*TODO*///				spyhunt_scrollx = (spyhunt_scrollx & ~0xff) | data;
-/*TODO*///				break;
-/*TODO*///	
-/*TODO*///			case 1:
-/*TODO*///				/* upper 3 bits of horizontal scroll and upper 1 bit of vertical scroll */
-/*TODO*///				spyhunt_scrollx = (spyhunt_scrollx & 0xff) | ((data & 0x07) << 8);
-/*TODO*///				spyhunt_scrolly = (spyhunt_scrolly & 0xff) | ((data & 0x80) << 1);
-/*TODO*///				break;
-/*TODO*///	
-/*TODO*///			case 2:
-/*TODO*///				/* low 8 bits of vertical scroll */
-/*TODO*///				spyhunt_scrolly = (spyhunt_scrolly & ~0xff) | data;
-/*TODO*///				break;
-/*TODO*///		}
-/*TODO*///	} };
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	
+	public static WriteHandlerPtr mcrmono_control_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
+	{
+		/*
+			Bit layout is as follows:
+				D7 = n/c
+				D6 = cocktail flip
+				D5 = n/c
+				D4 = n/c
+				D3 = n/c
+				D2 = n/c
+				D1 = n/c
+				D0 = coin meter 1
+		*/
+	
+		coin_counter_w.handler(0, (data >> 0) & 1);
+		mcr_cocktail_flip = (data >> 6) & 1;
+	} };
+	
+	
+	public static WriteHandlerPtr mcr_scroll_value_w = new WriteHandlerPtr() {public void handler(int offset, int data)
+	{
+		switch (offset)
+		{
+			case 0:
+				/* low 8 bits of horizontal scroll */
+				spyhunt_scrollx = (spyhunt_scrollx & ~0xff) | data;
+				break;
+	
+			case 1:
+				/* upper 3 bits of horizontal scroll and upper 1 bit of vertical scroll */
+				spyhunt_scrollx = (spyhunt_scrollx & 0xff) | ((data & 0x07) << 8);
+				spyhunt_scrolly = (spyhunt_scrolly & 0xff) | ((data & 0x80) << 1);
+				break;
+	
+			case 2:
+				/* low 8 bits of vertical scroll */
+				spyhunt_scrolly = (spyhunt_scrolly & ~0xff) | data;
+				break;
+		}
+	} };
+	
+	
+	
 /*TODO*///	/*************************************
 /*TODO*///	 *
 /*TODO*///	 *	Zwackery-specific interfaces

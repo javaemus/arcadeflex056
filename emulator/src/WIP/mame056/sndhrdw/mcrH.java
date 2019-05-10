@@ -33,14 +33,14 @@ public class mcrH {
 /*TODO*///	/************ Sound Configuration ***************/
 /*TODO*///	
 /*TODO*///	extern UINT8 mcr_sound_config;
-/*TODO*///	
+
     public static int MCR_SSIO = 0x01;
-/*TODO*///	#define MCR_CHIP_SQUEAK_DELUXE	0x02
-/*TODO*///	#define MCR_SOUNDS_GOOD			0x04
-/*TODO*///	#define MCR_TURBO_CHIP_SQUEAK	0x08
-/*TODO*///	#define MCR_SQUAWK_N_TALK		0x10
-/*TODO*///	#define MCR_WILLIAMS_SOUND		0x20
-/*TODO*///	
+    public static int MCR_CHIP_SQUEAK_DELUXE = 0x02;
+    public static int MCR_SOUNDS_GOOD = 0x04;
+    public static int MCR_TURBO_CHIP_SQUEAK = 0x08;
+    public static int MCR_SQUAWK_N_TALK = 0x10;
+    public static int MCR_WILLIAMS_SOUND = 0x20;
+
     public static void MCR_CONFIGURE_SOUND(int x){
 		mcr_sound_config = x;
     }
