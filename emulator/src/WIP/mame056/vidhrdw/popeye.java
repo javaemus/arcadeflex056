@@ -304,7 +304,7 @@ public class popeye
 	
 		set_background_palette((popeye_palettebank.read() & 0x08) >> 3);
 	
-		if (popeye_background_pos.read(0) == 0)	/* no background */
+		if (popeye_background_pos.read(0) != 0)	/* no background */
 		{
 			fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 		}

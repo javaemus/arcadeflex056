@@ -352,9 +352,17 @@ public class irobot
 		public int ramsel;
 	};
 	
-	static irmb_ops[] mbops;
+	static irmb_ops[] mbops=new irmb_ops[1024];
+        static{
+            for (int i=0 ; i<1024 ; i++)
+                mbops[i]=new irmb_ops();
+        }
 	
 	static irmb_ops[] irmb_stack=new irmb_ops[16];
+        static{
+            for (int i=0 ; i<16 ; i++)
+                irmb_stack[i]=new irmb_ops();
+        }
 	static int[] irmb_regs=new int[16];
 	static int irmb_latch;
 	
@@ -412,6 +420,7 @@ public class irobot
 		for (i = 0; i < 1024; i++)
 		{
 			int nxtadd=0, func=0, ramsel=0, diradd=0, latchmask=0, dirmask=0, time=0;
+                        mbops[i]=new irmb_ops();
 	
 			/*TODO*///mbops[i].areg = irmb_regs[MB[0x0000 + i] & 0x0F];
 			/*TODO*///mbops[i].breg = &irmb_regs[MB[0x0400 + i] & 0x0F];

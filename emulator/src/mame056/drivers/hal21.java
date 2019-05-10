@@ -201,7 +201,7 @@ public class hal21
 			int xscroll, int yscroll,
 			GfxElement gfx
 	){
-		UBytePtr source = spriteram;
+		UBytePtr source = new UBytePtr(spriteram);
 		UBytePtr finish = new UBytePtr(source, 60*4);
 	
                 rectangle clip = Machine.visible_area;

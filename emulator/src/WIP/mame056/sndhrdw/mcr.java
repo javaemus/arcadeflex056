@@ -21,6 +21,9 @@ import static mame056.sound.mixerH.*;
 import static mame056.sound.mixer.*;
 import static mame056.timerH.*;
 import static mame056.timer.*;
+import static WIP.mame056.sndhrdw.mcrH.*;
+import static mame056.cpuexec.*;
+import static mame056.cpuintrfH.*;
 
 public class mcr {
 	/*************************************
@@ -40,9 +43,9 @@ public class mcr {
 /*TODO*///	 *************************************/
 /*TODO*///	
 /*TODO*///	static UINT16 dacval;
-/*TODO*///	
-/*TODO*///	/* SSIO-specific globals */
-/*TODO*///	static UINT8 ssio_sound_cpu;
+	
+	/* SSIO-specific globals */
+	static int ssio_sound_cpu;
 	static int[] ssio_data=new int[4];
 	static int ssio_status;
 	static int[][] ssio_duty_cycle=new int[2][3];
@@ -85,13 +88,13 @@ public class mcr {
 		int dac_index = 0;
 	
 		/* SSIO */
-/*TODO*///		if (mcr_sound_config & MCR_SSIO)
-/*TODO*///		{
-/*TODO*///			ssio_sound_cpu = sound_cpu++;
-/*TODO*///			ssio_reset_w(1);
-/*TODO*///			ssio_reset_w(0);
-/*TODO*///		}
-/*TODO*///	
+		if ((mcr_sound_config & MCR_SSIO) != 0)
+		{
+			ssio_sound_cpu = sound_cpu++;
+			ssio_reset_w(1);
+			ssio_reset_w(0);
+		}
+	
 /*TODO*///		/* Turbo Chip Squeak */
 /*TODO*///		if (mcr_sound_config & MCR_TURBO_CHIP_SQUEAK)
 /*TODO*///		{
@@ -219,25 +222,25 @@ public class mcr {
 		return ssio_status;
 	} };
 	
-/*TODO*///	void ssio_reset_w(int state)
-/*TODO*///	{
-/*TODO*///		/* going high halts the CPU */
-/*TODO*///		if (state)
-/*TODO*///		{
-/*TODO*///			int i;
-/*TODO*///	
-/*TODO*///			cpu_set_reset_line(ssio_sound_cpu, ASSERT_LINE);
-/*TODO*///	
-/*TODO*///			/* latches also get reset */
-/*TODO*///			for (i = 0; i < 4; i++)
-/*TODO*///				ssio_data[i] = 0;
-/*TODO*///			ssio_status = 0;
-/*TODO*///		}
-/*TODO*///		/* going low resets and reactivates the CPU */
-/*TODO*///		else
-/*TODO*///			cpu_set_reset_line(ssio_sound_cpu, CLEAR_LINE);
-/*TODO*///	}
-/*TODO*///	
+	public static void ssio_reset_w(int state)
+	{
+		/* going high halts the CPU */
+		if (state != 0)
+		{
+			int i;
+	
+			cpu_set_reset_line(ssio_sound_cpu, ASSERT_LINE);
+	
+			/* latches also get reset */
+			for (i = 0; i < 4; i++)
+				ssio_data[i] = 0;
+			ssio_status = 0;
+		}
+		/* going low resets and reactivates the CPU */
+		else
+			cpu_set_reset_line(ssio_sound_cpu, CLEAR_LINE);
+	}
+	
 	
 	/********* sound interfaces ***********/
 	static AY8910interface ssio_ay8910_interface = new AY8910interface

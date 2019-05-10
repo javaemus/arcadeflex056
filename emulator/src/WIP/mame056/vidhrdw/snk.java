@@ -130,6 +130,9 @@ public class snk
                     palette[p_inc+i*3+1]=((char)(14)); 
                     palette[p_inc+i*3+2]=((char)(14));
             }
+            
+            palette_set_color(0, 0, 0, 0);
+                palette_set_color(1, 0xff, 0xff, 0xff);
         }};
 	
 	public static VhStartPtr snk_vh_start = new VhStartPtr() { public int handler() 
