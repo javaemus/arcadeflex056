@@ -97,7 +97,7 @@ import static WIP.mame056.drivers.leland.*;
 import static WIP.mame056.drivers.toypop.*;
 import static mame056.drivers.arabian.*;
 import static mame056.drivers.sauro.*;
-import static WIP.mame056.drivers.speedbal.*;
+import static mame056.drivers.speedbal.*;
 import static mame056.drivers.kingobox.*;
 import static mame056.drivers.skydiver.*;
 import static WIP.mame056.drivers.mpatrol.*;
