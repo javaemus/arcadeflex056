@@ -112,6 +112,8 @@ import static WIP.mame056.drivers.naughtyb.*;
 import static WIP.mame056.drivers.vigilant.*;
 import static WIP.mame056.drivers.segar.*;
 import static mame056.drivers.polyplay.*;
+import static mame056.drivers.hexa.*;
+
 public class driver {
 
     public static GameDriver drivers[] = {
@@ -271,8 +273,9 @@ public class driver {
         /*trackfld*/ driver_trackflc,
         /*trackfld*/ driver_hyprolym,
         /*trackfld*/ driver_hyprolyb,
-         /*speedbal*/driver_speedbal,
-        /*polyplay*/driver_polyplay,
+        /*speedbal*/ driver_speedbal,
+        /*polyplay*/ driver_polyplay,
+        /*hexa*/ driver_hexa,
         /**
          * GAME NOT WORKING FLAG
          */
@@ -500,11 +503,11 @@ public class driver {
         /*TODO*///	driver_pleiadbl,	/* bootleg */
         /*TODO*///	driver_pleiadce,	/* (c) 1981 Centuri + Tehkan */
         /*TODO*///TESTdriver_survival,	/* (c) 1982 Rock-ola */
-        	driver_naughtyb,	/* (c) 1982 Jaleco */
-        	driver_naughtya,	/* bootleg */
-        	driver_naughtyc,	/* (c) 1982 Jaleco + Cinematronics */
-        	driver_popflame,	/* (c) 1982 Jaleco */
-        	driver_popflama,	/* (c) 1982 Jaleco */
+        driver_naughtyb, /* (c) 1982 Jaleco */
+        driver_naughtya, /* bootleg */
+        driver_naughtyc, /* (c) 1982 Jaleco + Cinematronics */
+        driver_popflame, /* (c) 1982 Jaleco */
+        driver_popflama, /* (c) 1982 Jaleco */
         /*TODO*///TESTdriver_popflamb,
         /*TODO*///
         /*TODO*///	/* Namco games (plus some intruders on similar hardware) */
@@ -563,8 +566,8 @@ public class driver {
         driver_grobda2, /* (c) 1984 */
         driver_grobda3, /* (c) 1984 */
         /* Libble Rabble board (first Japanese game using a 68000) */
-        driver_liblrabl,	/* (c) 1983 */
-        driver_toypop,	/* (c) 1986 */
+        driver_liblrabl, /* (c) 1983 */
+        driver_toypop, /* (c) 1986 */
         /* Z8000 games */
         driver_polepos, /* (c) 1982  */
         driver_poleposa, /* (c) 1982 + Atari license */
@@ -575,10 +578,10 @@ public class driver {
         driver_poleps2b, /* bootleg */
         driver_poleps2c, /* bootleg */
         /* no custom I/O in the following, HD63701 (or compatible) microcontroller instead */
-        driver_pacland,	/* (c) 1984 */
-        driver_pacland2,	/* (c) 1984 */
-        driver_pacland3,	/* (c) 1984 */
-        driver_paclandm,	/* (c) 1984 Midway */
+        driver_pacland, /* (c) 1984 */
+        driver_pacland2, /* (c) 1984 */
+        driver_pacland3, /* (c) 1984 */
+        driver_paclandm, /* (c) 1984 Midway */
         /*TODO*///	driver_drgnbstr,	/* (c) 1984 */
         /*TODO*///	driver_skykid,	/* (c) 1985 */
         /*TODO*///	driver_skykidb,	/* (c) 1985 */
@@ -594,41 +597,40 @@ public class driver {
         /*TODO*///	driver_rthunder,	/* (c) 1986 new version */
         /*TODO*///	driver_rthundro,	/* (c) 1986 old version */
         /*TODO*///	driver_wndrmomo,	/* (c) 1987 */
-        
-        	/* Namco System 1 games */
-        	driver_shadowld,	/* (c) 1987 */
-        	driver_youkaidk,	/* (c) 1987 (Japan new version) */
-        	driver_yokaidko,	/* (c) 1987 (Japan old version) */
-        	driver_dspirit,	/* (c) 1987 new version */
-        	driver_dspirito,	/* (c) 1987 old version */
-        	driver_blazer,	/* (c) 1987 (Japan) */
-        	driver_quester,	/* (c) 1987 (Japan) */
-        	driver_pacmania,	/* (c) 1987 */
-        	driver_pacmanij,	/* (c) 1987 (Japan) */
-        	driver_galaga88,	/* (c) 1987 */
-        	driver_galag88b,	/* (c) 1987 */
-        	driver_galag88j,	/* (c) 1987 (Japan) */
-        	driver_ws,		/* (c) 1988 (Japan) */
-        	driver_berabohm,	/* (c) 1988 (Japan) */
-        	/* 1988 Alice in Wonderland (English version of Marchen maze) */
-        	driver_mmaze,		/* (c) 1988 (Japan) */
+
+        /* Namco System 1 games */
+        driver_shadowld, /* (c) 1987 */
+        driver_youkaidk, /* (c) 1987 (Japan new version) */
+        driver_yokaidko, /* (c) 1987 (Japan old version) */
+        driver_dspirit, /* (c) 1987 new version */
+        driver_dspirito, /* (c) 1987 old version */
+        driver_blazer, /* (c) 1987 (Japan) */
+        driver_quester, /* (c) 1987 (Japan) */
+        driver_pacmania, /* (c) 1987 */
+        driver_pacmanij, /* (c) 1987 (Japan) */
+        driver_galaga88, /* (c) 1987 */
+        driver_galag88b, /* (c) 1987 */
+        driver_galag88j, /* (c) 1987 (Japan) */
+        driver_ws, /* (c) 1988 (Japan) */
+        driver_berabohm, /* (c) 1988 (Japan) */
+        /* 1988 Alice in Wonderland (English version of Marchen maze) */
+        driver_mmaze, /* (c) 1988 (Japan) */
         /*TODO*///TESTdriver_bakutotu,	/* (c) 1988 */
-        	driver_wldcourt,	/* (c) 1988 (Japan) */
-        	driver_splatter,	/* (c) 1988 (Japan) */
-        	driver_faceoff,	/* (c) 1988 (Japan) */
-        	driver_rompers,	/* (c) 1989 (Japan) */
-        	driver_romperso,	/* (c) 1989 (Japan) */
-        	driver_blastoff,	/* (c) 1989 (Japan) */
-        	driver_ws89,		/* (c) 1989 (Japan) */
-        	driver_dangseed,	/* (c) 1989 (Japan) */
-        	driver_ws90,		/* (c) 1990 (Japan) */
-        	driver_pistoldm,	/* (c) 1990 (Japan) */
-        	driver_boxyboy,	/* (c) 1990 (US) */
-        	driver_soukobdx,	/* (c) 1990 (Japan) */
-        	driver_puzlclub,	/* (c) 1990 (Japan) */
-        	driver_tankfrce,	/* (c) 1991 (US) */
-        	driver_tankfrcj,	/* (c) 1991 (Japan) */
-        
+        driver_wldcourt, /* (c) 1988 (Japan) */
+        driver_splatter, /* (c) 1988 (Japan) */
+        driver_faceoff, /* (c) 1988 (Japan) */
+        driver_rompers, /* (c) 1989 (Japan) */
+        driver_romperso, /* (c) 1989 (Japan) */
+        driver_blastoff, /* (c) 1989 (Japan) */
+        driver_ws89, /* (c) 1989 (Japan) */
+        driver_dangseed, /* (c) 1989 (Japan) */
+        driver_ws90, /* (c) 1990 (Japan) */
+        driver_pistoldm, /* (c) 1990 (Japan) */
+        driver_boxyboy, /* (c) 1990 (US) */
+        driver_soukobdx, /* (c) 1990 (Japan) */
+        driver_puzlclub, /* (c) 1990 (Japan) */
+        driver_tankfrce, /* (c) 1991 (US) */
+        driver_tankfrcj, /* (c) 1991 (Japan) */
         /*TODO*///	/* Namco System 2 games */
         /*TODO*///TESTdriver_finallap,	/* 87.12 Final Lap */
         /*TODO*///TESTdriver_finalapd,	/* 87.12 Final Lap */
@@ -1011,25 +1013,25 @@ public class driver {
         /*TODO*///	driver_twotigra,	/* (c) 1984 */
         /*TODO*///	/* MCR2 + MCR3 sprites */
         /*TODO*///	driver_journey,	/* (c) 1983 */
-        	/* MCR3 */
-        	driver_tapper,	/* (c) 1983 */
-        	driver_tappera,	/* (c) 1983 */
-        	driver_sutapper,	/* (c) 1983 */
-        	driver_rbtapper,	/* (c) 1984 */
-        	driver_timber,	/* (c) 1984 */
-        	driver_dotron,	/* (c) 1983 */
-        	driver_dotrone,	/* (c) 1983 */
-        	driver_demoderb,	/* (c) 1984 */
-        	driver_demoderm,	/* (c) 1984 */
-        	driver_sarge,		/* (c) 1985 */
-        	driver_rampage,	/* (c) 1986 */
-        	driver_rampage2,	/* (c) 1986 */
-        	driver_powerdrv,	/* (c) 1986 */
-        	driver_stargrds,	/* (c) 1987 */
-        	driver_maxrpm,	/* (c) 1986 */
-        	driver_spyhunt,	/* (c) 1983 */
-        	driver_turbotag,	/* (c) 1985 */
-        	driver_crater,	/* (c) 1984 */
+        /* MCR3 */
+        driver_tapper, /* (c) 1983 */
+        driver_tappera, /* (c) 1983 */
+        driver_sutapper, /* (c) 1983 */
+        driver_rbtapper, /* (c) 1984 */
+        driver_timber, /* (c) 1984 */
+        driver_dotron, /* (c) 1983 */
+        driver_dotrone, /* (c) 1983 */
+        driver_demoderb, /* (c) 1984 */
+        driver_demoderm, /* (c) 1984 */
+        driver_sarge, /* (c) 1985 */
+        driver_rampage, /* (c) 1986 */
+        driver_rampage2, /* (c) 1986 */
+        driver_powerdrv, /* (c) 1986 */
+        driver_stargrds, /* (c) 1987 */
+        driver_maxrpm, /* (c) 1986 */
+        driver_spyhunt, /* (c) 1983 */
+        driver_turbotag, /* (c) 1985 */
+        driver_crater, /* (c) 1984 */
         /*TODO*///	/* MCR 68000 */
         /*TODO*///	driver_zwackery,	/* (c) 1984 */
         /*TODO*///	driver_xenophob,	/* (c) 1987 */
@@ -1052,38 +1054,37 @@ public class driver {
         /*TODO*///
         /*TODO*///	driver_redalert,	/* (c) 1981 + "GDI presents" */
         /*TODO*///	driver_olibochu,	/* M47 (c) 1981 + "GDI presents" */
-        	driver_mpatrol,	/* M52 (c) 1982 */
-        	driver_mpatrolw,	/* M52 (c) 1982 + Williams license */
-        	driver_troangel,	/* (c) 1983 */
-        	driver_yard,		/* (c) 1983 */
-        	driver_vsyard,	/* (c) 1983/1984 */
-        	driver_vsyard2,	/* (c) 1983/1984 */
+        driver_mpatrol, /* M52 (c) 1982 */
+        driver_mpatrolw, /* M52 (c) 1982 + Williams license */
+        driver_troangel, /* (c) 1983 */
+        driver_yard, /* (c) 1983 */
+        driver_vsyard, /* (c) 1983/1984 */
+        driver_vsyard2, /* (c) 1983/1984 */
         /*TODO*///	driver_travrusa,	/* (c) 1983 */
         /*TODO*///	driver_motorace,	/* (c) 1983 Williams license */
         /*TODO*///	/* M62 */
-        	driver_kungfum,	/* (c) 1984 */
-        	driver_kungfud,	/* (c) 1984 + Data East license */
-        	driver_spartanx,	/* (c) 1984 (Japan) */
-        	driver_kungfub,	/* bootleg */
-        	driver_kungfub2,	/* bootleg */
-        	driver_battroad,	/* (c) 1984 */
-        	driver_ldrun,		/* (c) 1984 licensed from Broderbund */
-        	driver_ldruna,	/* (c) 1984 licensed from Broderbund */
-        	driver_ldrun2,	/* (c) 1984 licensed from Broderbund */
-        	driver_ldrun3,	/* (c) 1985 licensed from Broderbund */
-        	driver_ldrun4,	/* (c) 1986 licensed from Broderbund */
-        	driver_lotlot,	/* (c) 1985 licensed from Tokuma Shoten */
-        	driver_kidniki,	/* (c) 1986 + Data East USA license */
-        	driver_yanchamr,	/* (c) 1986 (Japan) */
-        	driver_spelunkr,	/* (c) 1985 licensed from Broderbund */
-        	driver_spelnkrj,	/* (c) 1985 licensed from Broderbund */
-        	driver_spelunk2,	/* (c) 1986 licensed from Broderbund */
-        	driver_youjyudn,	/* (c) 1986 (Japan) */
-        
-        	driver_vigilant,	/* (c) 1988 (World) */
-        	driver_vigilntu,	/* (c) 1988 (US) */
-        	driver_vigilntj,	/* (c) 1988 (Japan) */
-        	driver_kikcubic,	/* (c) 1988 (Japan) */
+        driver_kungfum, /* (c) 1984 */
+        driver_kungfud, /* (c) 1984 + Data East license */
+        driver_spartanx, /* (c) 1984 (Japan) */
+        driver_kungfub, /* bootleg */
+        driver_kungfub2, /* bootleg */
+        driver_battroad, /* (c) 1984 */
+        driver_ldrun, /* (c) 1984 licensed from Broderbund */
+        driver_ldruna, /* (c) 1984 licensed from Broderbund */
+        driver_ldrun2, /* (c) 1984 licensed from Broderbund */
+        driver_ldrun3, /* (c) 1985 licensed from Broderbund */
+        driver_ldrun4, /* (c) 1986 licensed from Broderbund */
+        driver_lotlot, /* (c) 1985 licensed from Tokuma Shoten */
+        driver_kidniki, /* (c) 1986 + Data East USA license */
+        driver_yanchamr, /* (c) 1986 (Japan) */
+        driver_spelunkr, /* (c) 1985 licensed from Broderbund */
+        driver_spelnkrj, /* (c) 1985 licensed from Broderbund */
+        driver_spelunk2, /* (c) 1986 licensed from Broderbund */
+        driver_youjyudn, /* (c) 1986 (Japan) */
+        driver_vigilant, /* (c) 1988 (World) */
+        driver_vigilntu, /* (c) 1988 (US) */
+        driver_vigilntj, /* (c) 1988 (Japan) */
+        driver_kikcubic, /* (c) 1988 (Japan) */
         /*TODO*///	/* M72 (and derivatives) */
         /*TODO*///	driver_rtype,		/* (c) 1987 (Japan) */
         /*TODO*///	driver_rtypepj,	/* (c) 1987 (Japan) */
@@ -2092,38 +2093,38 @@ public class driver {
         /*TODO*///	driver_sftm110,	/* (c) 1995 Capcom/Incredible Technologies */
         /*TODO*///	driver_sftmj,		/* (c) 1995 Capcom/Incredible Technologies */
         /*TODO*///	driver_shufshot,	/* (c) Strata/Incredible Technologies */
-        
-        	/* Leland games */
-        	driver_cerberus,	/* (c) 1985 Cinematronics */
-        	driver_mayhem,	/* (c) 1985 Cinematronics */
-        	driver_powrplay,	/* (c) 1985 Cinematronics */
-        	driver_wseries,	/* (c) 1985 Cinematronics */
-        	driver_alleymas,	/* (c) 1986 Cinematronics */
-        	driver_dangerz,	/* (c) 1986 Cinematronics USA */
-        	driver_basebal2,	/* (c) 1987 Cinematronics */
-        	driver_dblplay,	/* (c) 1987 Tradewest / Leland */
-        	driver_strkzone,	/* (c) 1988 Leland */
-        	driver_redlin2p,	/* (c) 1987 Cinematronics + Tradewest license */
-        	driver_quarterb,	/* (c) 1987 Leland */
-        	driver_quartrba,	/* (c) 1987 Leland */
-        	driver_viper,		/* (c) 1988 Leland */
-        	driver_teamqb,	/* (c) 1988 Leland */
-        	driver_teamqb2,	/* (c) 1988 Leland */
-        	driver_aafb,		/* (c) 1989 Leland */
-        	driver_aafbd2p,	/* (c) 1989 Leland */
-        	driver_aafbc,		/* (c) 1989 Leland */
-        	driver_aafbb,		/* (c) 1989 Leland */
-        	driver_offroad,	/* (c) 1989 Leland */
-        	driver_offroadt,	/* (c) 1989 Leland */
-        	driver_pigout,	/* (c) 1990 Leland */
-        	driver_pigouta,	/* (c) 1990 Leland */
-        	/*TODO*///driver_ataxx,		/* (c) 1990 Leland */
-        	/*TODO*///driver_ataxxa,	/* (c) 1990 Leland */
-        	/*TODO*///driver_ataxxj,	/* (c) 1990 Leland */
-        	/*TODO*///driver_wsf,		/* (c) 1990 Leland */
-        	/*TODO*///driver_indyheat,	/* (c) 1991 Leland */
-        	/*TODO*///driver_brutforc,	/* (c) 1991 Leland */
-        
+
+        /* Leland games */
+        driver_cerberus, /* (c) 1985 Cinematronics */
+        driver_mayhem, /* (c) 1985 Cinematronics */
+        driver_powrplay, /* (c) 1985 Cinematronics */
+        driver_wseries, /* (c) 1985 Cinematronics */
+        driver_alleymas, /* (c) 1986 Cinematronics */
+        driver_dangerz, /* (c) 1986 Cinematronics USA */
+        driver_basebal2, /* (c) 1987 Cinematronics */
+        driver_dblplay, /* (c) 1987 Tradewest / Leland */
+        driver_strkzone, /* (c) 1988 Leland */
+        driver_redlin2p, /* (c) 1987 Cinematronics + Tradewest license */
+        driver_quarterb, /* (c) 1987 Leland */
+        driver_quartrba, /* (c) 1987 Leland */
+        driver_viper, /* (c) 1988 Leland */
+        driver_teamqb, /* (c) 1988 Leland */
+        driver_teamqb2, /* (c) 1988 Leland */
+        driver_aafb, /* (c) 1989 Leland */
+        driver_aafbd2p, /* (c) 1989 Leland */
+        driver_aafbc, /* (c) 1989 Leland */
+        driver_aafbb, /* (c) 1989 Leland */
+        driver_offroad, /* (c) 1989 Leland */
+        driver_offroadt, /* (c) 1989 Leland */
+        driver_pigout, /* (c) 1990 Leland */
+        driver_pigouta, /* (c) 1990 Leland */
+        /*TODO*///driver_ataxx,		/* (c) 1990 Leland */
+        /*TODO*///driver_ataxxa,	/* (c) 1990 Leland */
+        /*TODO*///driver_ataxxj,	/* (c) 1990 Leland */
+        /*TODO*///driver_wsf,		/* (c) 1990 Leland */
+        /*TODO*///driver_indyheat,	/* (c) 1991 Leland */
+        /*TODO*///driver_brutforc,	/* (c) 1991 Leland */
+
         /*TODO*///	/* Gremlin 8080 games */
         /*TODO*///	/* the numbers listed are the range of ROM part numbers */
         /*TODO*///	driver_blockade,	/* 1-4 [1977 Gremlin] */
@@ -2170,16 +2171,15 @@ public class driver {
         driver_elim4, /* (c) 1981 Gremlin */
         driver_startrek, /* (c) 1982 */
         /* Sega G-80 raster games */
-        driver_astrob,	/* (c) 1981 */
-        driver_astrob2,	/* (c) 1981 */
-        driver_astrob1,	/* (c) 1981 */
-        driver_005,		/* (c) 1981 */
-        driver_monsterb,	/* (c) 1982 */
-        driver_spaceod,	/* (c) 1981 */
-        driver_pignewt,	/* (c) 1983 */
-        driver_pignewta,	/* (c) 1983 */
-        driver_sindbadm,	/* 834-5244 (c) 1983 Sega */
-
+        driver_astrob, /* (c) 1981 */
+        driver_astrob2, /* (c) 1981 */
+        driver_astrob1, /* (c) 1981 */
+        driver_005, /* (c) 1981 */
+        driver_monsterb, /* (c) 1982 */
+        driver_spaceod, /* (c) 1981 */
+        driver_pignewt, /* (c) 1983 */
+        driver_pignewta, /* (c) 1983 */
+        driver_sindbadm, /* 834-5244 (c) 1983 Sega */
         /*TODO*///	/* Sega "Zaxxon hardware" games */
         /*TODO*///	driver_zaxxon,	/* (c) 1982 */
         /*TODO*///	driver_zaxxon2,	/* (c) 1982 */
@@ -2929,20 +2929,19 @@ public class driver {
         /*TODO*///	driver_fireone,	/* (c) 1979 Exidy */
         /*TODO*///	driver_victory,	/* (c) 1982 */
         /*TODO*///	driver_victorba,	/* (c) 1982 */
-        
-        	/* Exidy 440 games */
-        	driver_crossbow,	/* (c) 1983 */
-        	driver_cheyenne,	/* (c) 1984 */
-        	driver_combat,	/* (c) 1985 */
-        	driver_cracksht,	/* (c) 1985 */
-        	driver_claypign,	/* (c) 1986 */
-        	driver_chiller,	/* (c) 1986 */
-        	driver_topsecex,	/* (c) 1986 */
-        	driver_hitnmiss,	/* (c) 1987 */
-        	driver_hitnmis2,	/* (c) 1987 */
-        	driver_whodunit,	/* (c) 1988 */
-        	driver_showdown,	/* (c) 1988 */
-        
+
+        /* Exidy 440 games */
+        driver_crossbow, /* (c) 1983 */
+        driver_cheyenne, /* (c) 1984 */
+        driver_combat, /* (c) 1985 */
+        driver_cracksht, /* (c) 1985 */
+        driver_claypign, /* (c) 1986 */
+        driver_chiller, /* (c) 1986 */
+        driver_topsecex, /* (c) 1986 */
+        driver_hitnmiss, /* (c) 1987 */
+        driver_hitnmis2, /* (c) 1987 */
+        driver_whodunit, /* (c) 1988 */
+        driver_showdown, /* (c) 1988 */
         /*TODO*///	/* Atari b/w games */
         /*TODO*///	/* Tank 8 */  		/* ??????			1976/04 [6800] */
         /*TODO*///	driver_copsnrob,	/* 005625			1976/07 [6502] */
@@ -2966,7 +2965,7 @@ public class driver {
         /*TODO*///	/* Tourn. Table */	/* 030170			1978/03 [6507] */
         /*TODO*///	driver_avalnche,	/* 030574			1978/04 [6502] */
         /*TODO*///	driver_firetrk,	/* 030926			1978/06 [6808] */
-        	driver_skydiver,	/* 009787			1978/06 [6800] */
+        driver_skydiver, /* 009787			1978/06 [6800] */
         /*TODO*///	/* Smokey Joe */	/* 030926			1978/07 [6502] */
         /*TODO*///	driver_sbrkout,	/* 033442-033455	1978/09 [6502] */
         /*TODO*///	driver_atarifb,	/* 033xxx			1978/10 [6502] */
@@ -3058,9 +3057,9 @@ public class driver {
         /*TODO*///	driver_720b,		/* 136047			(c) 1986 */
         /*TODO*///	driver_apb,		/* 136051			(c) 1987 */
         /*TODO*///	driver_apb2,		/* 136051			(c) 1987 */
-        
-        	/* Atari polygon games */
-        	driver_irobot,	/* 136029			(c) 1983 */
+
+        /* Atari polygon games */
+        driver_irobot, /* 136029			(c) 1983 */
         /*TODO*///	driver_harddriv,	/* 136052			(c) 1988 */
         /*TODO*///TESTdriver_harddrvc,	/* 136068			(c) 1990 */
         /*TODO*///	driver_stunrun,	/* 136070			(c) 1989 */
@@ -3695,8 +3694,8 @@ public class driver {
         /*TODO*///	driver_kangaroo,	/* (c) 1982 Sun Electronics */
         /*TODO*///	driver_kangaroa,	/* 136008			(c) 1982 Atari */
         /*TODO*///	driver_kangarob,	/* (bootleg) */
-        	driver_arabian,	/* TVG13 (c) 1983 Sun Electronics */
-        	driver_arabiana,	/* 136019			(c) 1983 Atari */
+        driver_arabian, /* TVG13 (c) 1983 Sun Electronics */
+        driver_arabiana, /* 136019			(c) 1983 Atari */
         /*TODO*///	driver_markham,	/* TVG14 (c) 1983 Sun Electronics */
         /*TODO*///	driver_strnskil,	/* TVG15 (c) 1984 Sun Electronics */
         /*TODO*///	driver_guiness,	/* TVG15 (c) 1984 Sun Electronics */
@@ -3788,8 +3787,8 @@ public class driver {
         /*TODO*///	/* Tecfri games */
         /*TODO*///	driver_holeland,	/* (c) 1984 */
         /*TODO*///	driver_crzrally,	/* (c) 1985 */
-               
-        	driver_sauro,		/* (c) 1987 */
+
+        driver_sauro, /* (c) 1987 */
         /*TODO*///
         /*TODO*///	/* Metro games */
         /*TODO*///	driver_karatour,	/* (c) Mitchell */
@@ -3867,13 +3866,13 @@ public class driver {
         /*TODO*///	driver_omegrace,	/* (c) 1981 Midway */
         /*TODO*///	driver_dday,		/* (c) 1982 Olympia */
         /*TODO*///	driver_ddayc,		/* (c) 1982 Olympia + Centuri license */
-        /*TODO*///	driver_hexa,		/* D. R. Korea */
+
         /*TODO*///	driver_stactics,	/* [1981 Sega] */
         /*TODO*///	driver_exterm,	/* (c) 1989 Premier Technology - a Gottlieb game */
-        	driver_kingofb,	/* (c) 1985 Woodplace Inc. */
-        	driver_ringking,	/* (c) 1985 Data East USA */
-        	driver_ringkin2,	/* (c) 1985 Data East USA */
-        	driver_ringkin3,	/* (c) 1985 Data East USA */
+        driver_kingofb, /* (c) 1985 Woodplace Inc. */
+        driver_ringking, /* (c) 1985 Data East USA */
+        driver_ringkin2, /* (c) 1985 Data East USA */
+        driver_ringkin3, /* (c) 1985 Data East USA */
         /*TODO*///	driver_ambush,	/* (c) 1983 Nippon Amuse Co-Ltd */
         /*TODO*///	driver_starcrus,	/* [1977 Ramtek] */
         /*TODO*///	driver_homo,		/* bootleg */
@@ -3884,7 +3883,7 @@ public class driver {
         /*TODO*///	driver_gotya,		/* (c) 1981 Game-A-Tron */
         /*TODO*///	driver_mrjong,	/* (c) 1983 Kiwako */
         /*TODO*///	driver_crazyblk,	/* (c) 1983 Kiwako + ECI license */
-        	
+
         /*TODO*///	driver_mermaid,	/* (c) 1982 Rock-ola */
         /*TODO*///	driver_royalmah,	/* (c) 1982 Falcon */
         /*TODO*///	driver_amspdwy,	/* no copyright notice, but (c) 1987 Enerdyne Technologies, Inc. */
