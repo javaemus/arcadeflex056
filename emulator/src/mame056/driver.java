@@ -110,6 +110,7 @@ import static WIP.mame056.drivers.yard.*;
 import static WIP.mame056.drivers.troangel.*;
 import static WIP.mame056.drivers.naughtyb.*;
 import static WIP.mame056.drivers.vigilant.*;
+import static WIP.mame056.drivers.segar.*;
 
 public class driver {
 
@@ -2166,17 +2167,17 @@ public class driver {
         driver_elim2a, /* (c) 1981 Gremlin */
         driver_elim4, /* (c) 1981 Gremlin */
         driver_startrek, /* (c) 1982 */
-        /*TODO*///	/* Sega G-80 raster games */
-        /*TODO*///	driver_astrob,	/* (c) 1981 */
-        /*TODO*///	driver_astrob2,	/* (c) 1981 */
-        /*TODO*///	driver_astrob1,	/* (c) 1981 */
-        /*TODO*///	driver_005,		/* (c) 1981 */
-        /*TODO*///	driver_monsterb,	/* (c) 1982 */
-        /*TODO*///	driver_spaceod,	/* (c) 1981 */
-        /*TODO*///	driver_pignewt,	/* (c) 1983 */
-        /*TODO*///	driver_pignewta,	/* (c) 1983 */
-        /*TODO*///	driver_sindbadm,	/* 834-5244 (c) 1983 Sega */
-        /*TODO*///
+        /* Sega G-80 raster games */
+        driver_astrob,	/* (c) 1981 */
+        driver_astrob2,	/* (c) 1981 */
+        driver_astrob1,	/* (c) 1981 */
+        driver_005,		/* (c) 1981 */
+        driver_monsterb,	/* (c) 1982 */
+        driver_spaceod,	/* (c) 1981 */
+        driver_pignewt,	/* (c) 1983 */
+        driver_pignewta,	/* (c) 1983 */
+        driver_sindbadm,	/* 834-5244 (c) 1983 Sega */
+
         /*TODO*///	/* Sega "Zaxxon hardware" games */
         /*TODO*///	driver_zaxxon,	/* (c) 1982 */
         /*TODO*///	driver_zaxxon2,	/* (c) 1982 */

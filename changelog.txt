@@ -1,6 +1,7 @@
 12/05/2019
 ==========
 -Added working naughtyb and vigilant working drivers
+-Added segar WIP driver (NO SOUND)
 
 10/05/2019
 ==========
