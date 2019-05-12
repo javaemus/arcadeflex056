@@ -108,6 +108,8 @@ import static WIP.mame056.drivers.namcos1.*;
 import static WIP.mame056.drivers.mcr3.*;
 import static WIP.mame056.drivers.yard.*;
 import static WIP.mame056.drivers.troangel.*;
+import static WIP.mame056.drivers.naughtyb.*;
+import static WIP.mame056.drivers.vigilant.*;
 
 public class driver {
 
@@ -495,11 +497,11 @@ public class driver {
         /*TODO*///	driver_pleiadbl,	/* bootleg */
         /*TODO*///	driver_pleiadce,	/* (c) 1981 Centuri + Tehkan */
         /*TODO*///TESTdriver_survival,	/* (c) 1982 Rock-ola */
-        /*TODO*///	driver_naughtyb,	/* (c) 1982 Jaleco */
-        /*TODO*///	driver_naughtya,	/* bootleg */
-        /*TODO*///	driver_naughtyc,	/* (c) 1982 Jaleco + Cinematronics */
-        /*TODO*///	driver_popflame,	/* (c) 1982 Jaleco */
-        /*TODO*///	driver_popflama,	/* (c) 1982 Jaleco */
+        	driver_naughtyb,	/* (c) 1982 Jaleco */
+        	driver_naughtya,	/* bootleg */
+        	driver_naughtyc,	/* (c) 1982 Jaleco + Cinematronics */
+        	driver_popflame,	/* (c) 1982 Jaleco */
+        	driver_popflama,	/* (c) 1982 Jaleco */
         /*TODO*///TESTdriver_popflamb,
         /*TODO*///
         /*TODO*///	/* Namco games (plus some intruders on similar hardware) */
@@ -1075,10 +1077,10 @@ public class driver {
         	driver_spelunk2,	/* (c) 1986 licensed from Broderbund */
         	driver_youjyudn,	/* (c) 1986 (Japan) */
         
-        /*TODO*///	driver_vigilant,	/* (c) 1988 (World) */
-        /*TODO*///	driver_vigilntu,	/* (c) 1988 (US) */
-        /*TODO*///	driver_vigilntj,	/* (c) 1988 (Japan) */
-        /*TODO*///	driver_kikcubic,	/* (c) 1988 (Japan) */
+        	driver_vigilant,	/* (c) 1988 (World) */
+        	driver_vigilntu,	/* (c) 1988 (US) */
+        	driver_vigilntj,	/* (c) 1988 (Japan) */
+        	driver_kikcubic,	/* (c) 1988 (Japan) */
         /*TODO*///	/* M72 (and derivatives) */
         /*TODO*///	driver_rtype,		/* (c) 1987 (Japan) */
         /*TODO*///	driver_rtypepj,	/* (c) 1987 (Japan) */

@@ -1,3 +1,7 @@
+12/05/2019
+==========
+-Added working naughtyb and vigilant working drivers
+
 10/05/2019
 ==========
 -Added troangel driver (fully playable)

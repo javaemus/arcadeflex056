@@ -5178,10 +5178,11 @@ public class drawgfx {
 /*TODO*///		}
 /*TODO*///	}
 /*TODO*///})
-/*TODO*///
-/*TODO*///
-/*TODO*///#define PEN_IS_OPAQUE ((1<<col)&transmask) == 0
-/*TODO*///
+
+    public static boolean PEN_IS_OPAQUE(int col, int transmask){
+        return ((1<<col)&transmask) == 0;
+    }
+
 /*TODO*///DECLARE_SWAP_RAW_PRI(blockmove_8toN_transmask,(COMMON_ARGS,
 /*TODO*///		COLOR_ARG,int transmask),
 /*TODO*///{
@@ -6708,12 +6709,15 @@ public class drawgfx {
 /*TODO*///				}
 /*TODO*///				break;
 /*TODO*///
-/*TODO*///			case TRANSPARENCY_PENS:
-/*TODO*///				if (pribuf)
-/*TODO*///					BLOCKMOVEPRI(8toN_transmask,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
-/*TODO*///				else
-/*TODO*///					BLOCKMOVELU(8toN_transmask,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
-/*TODO*///				break;
+			case TRANSPARENCY_PENS:
+				if (pribuf != null){
+					/*TODO*///BLOCKMOVEPRI(8toN_transmask,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
+                                        System.out.println("BLOCKMOVEPRI(8toN_transmask not supported");
+                                } else {
+					System.out.println("BLOCKMOVELU(8toN_transmask not supported");
+                                        /*TODO*///BLOCKMOVELU(8toN_transmask,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
+                                }
+				break;
 /*TODO*///
 /*TODO*///			case TRANSPARENCY_PENS_RAW:
 /*TODO*///				if (pribuf)
