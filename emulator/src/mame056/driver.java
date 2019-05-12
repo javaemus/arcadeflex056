@@ -111,7 +111,7 @@ import static WIP.mame056.drivers.troangel.*;
 import static WIP.mame056.drivers.naughtyb.*;
 import static WIP.mame056.drivers.vigilant.*;
 import static WIP.mame056.drivers.segar.*;
-
+import static mame056.drivers.polyplay.*;
 public class driver {
 
     public static GameDriver drivers[] = {
@@ -271,6 +271,8 @@ public class driver {
         /*trackfld*/ driver_trackflc,
         /*trackfld*/ driver_hyprolym,
         /*trackfld*/ driver_hyprolyb,
+         /*speedbal*/driver_speedbal,
+        /*polyplay*/driver_polyplay,
         /**
          * GAME NOT WORKING FLAG
          */
@@ -3786,7 +3788,7 @@ public class driver {
         /*TODO*///	/* Tecfri games */
         /*TODO*///	driver_holeland,	/* (c) 1984 */
         /*TODO*///	driver_crzrally,	/* (c) 1985 */
-                driver_speedbal,	/* (c) 1987 */
+               
         	driver_sauro,		/* (c) 1987 */
         /*TODO*///
         /*TODO*///	/* Metro games */
@@ -3882,7 +3884,7 @@ public class driver {
         /*TODO*///	driver_gotya,		/* (c) 1981 Game-A-Tron */
         /*TODO*///	driver_mrjong,	/* (c) 1983 Kiwako */
         /*TODO*///	driver_crazyblk,	/* (c) 1983 Kiwako + ECI license */
-        /*TODO*///	driver_polyplay,
+        	
         /*TODO*///	driver_mermaid,	/* (c) 1982 Rock-ola */
         /*TODO*///	driver_royalmah,	/* (c) 1982 Falcon */
         /*TODO*///	driver_amspdwy,	/* no copyright notice, but (c) 1987 Enerdyne Technologies, Inc. */
