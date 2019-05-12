@@ -51,6 +51,8 @@ import static mame056.timerH.*;
 
 import static mame056.commonH.*;
 import static mame056.cpuexec.*;
+import static mame056.cpu.i8039.i8039.*;
+import static mame056.cpu.i8039.i8039H.*;
 import static mame056.inptportH.*;
 import static mame056.cpuexecH.*;
 import static mame056.cpuintrfH.*;
@@ -72,6 +74,7 @@ import static mame056.vidhrdw.generic.*;
 import static WIP.mame056.vidhrdw.segar.*;
 import static WIP.mame056.machine.segar.*;
 import static WIP.mame056.machine.segacrpt.*;
+import static WIP.mame056.sndhrdw.segar.*;
 import mame056.sound.dacH.DACinterface;
 import mame056.sound.samplesH.Samplesinterface;
 import static mame056.sound.tms36xxH.TMS3617;
@@ -191,15 +194,15 @@ public class segar
 	
 	public static IO_ReadPort readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),//new IO_ReadPort(0x3f, 0x3f, MRA_NOP ), /* Pig Newton - read from 1D87 */
-		/*TODO*///new IO_ReadPort( 0x0e, 0x0e, monsterb_audio_8255_r ),
+		new IO_ReadPort( 0x0e, 0x0e, monsterb_audio_8255_r ),
 		new IO_ReadPort( 0x81, 0x81, input_port_8_r ),     /* only used by Sindbad Mystery */
 		new IO_ReadPort( 0xf8, 0xfc, segar_ports_r ),
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	public static IO_WritePort astrob_writeport[]={
 		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),	
-                /*TODO*///new IO_WritePort( 0x38, 0x38, astrob_speech_port_w ),
-		/*TODO*///new IO_WritePort( 0x3e, 0x3f, astrob_audio_ports_w ),
+                new IO_WritePort( 0x38, 0x38, astrob_speech_port_w ),
+		new IO_WritePort( 0x3e, 0x3f, astrob_audio_ports_w ),
 		new IO_WritePort( 0xbf, 0xbf, segar_video_port_w ), /* bit0=cocktail flip, bit1=write to color RAM, bit2=always on? */
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
@@ -209,7 +212,7 @@ public class segar
 		new IO_WritePort( 0x0a, 0x0a, spaceod_backshift_w ),
 		new IO_WritePort( 0x0b, 0x0c, spaceod_nobackfill_w ), /* I'm not sure what these ports really do */
 		new IO_WritePort( 0x0d, 0x0d, spaceod_backfill_w ),
-		/*TODO*///new IO_WritePort( 0x0e, 0x0f, spaceod_audio_ports_w ),
+		new IO_WritePort( 0x0e, 0x0f, spaceod_audio_ports_w ),
 		new IO_WritePort( 0xbf, 0xbf, segar_video_port_w ), /* bit0=cocktail flip, bit1=write to color RAM, bit2=always on? */
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
@@ -219,7 +222,7 @@ public class segar
 	};
 	public static IO_WritePort monsterb_writeport[]={
 		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),	
-                /*TODO*///new IO_WritePort( 0x0c, 0x0f, monsterb_audio_8255_w ),
+                new IO_WritePort( 0x0c, 0x0f, monsterb_audio_8255_w ),
 		new IO_WritePort( 0xbc, 0xbc, monsterb_back_port_w ),
 		new IO_WritePort( 0xbf, 0xbf, segar_video_port_w ), /* bit0=cocktail flip, bit1=write to color RAM, bit2=always on? */
 		new IO_WritePort(MEMPORT_MARKER, 0)
@@ -287,19 +290,19 @@ public class segar
 	};
 	public static IO_ReadPort monsterb_7751_readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),	
-                /*TODO*///new IO_ReadPort( I8039_t1,  I8039_t1,  monsterb_sh_t1_r ),
-		/*TODO*///new IO_ReadPort( I8039_p2,  I8039_p2,  monsterb_sh_command_r ),
-		/*TODO*///new IO_ReadPort( I8039_bus, I8039_bus, monsterb_sh_rom_r ),
+                new IO_ReadPort( I8039_t1,  I8039_t1,  monsterb_sh_t1_r ),
+		new IO_ReadPort( I8039_p2,  I8039_p2,  monsterb_sh_command_r ),
+		new IO_ReadPort( I8039_bus, I8039_bus, monsterb_sh_rom_r ),
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	public static IO_WritePort monsterb_7751_writeport[]={
 		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),	
-                /*TODO*///new IO_WritePort( I8039_p1, I8039_p1, monsterb_sh_dac_w ),
-		/*TODO*///new IO_WritePort( I8039_p2, I8039_p2, monsterb_sh_busy_w ),
-		/*TODO*///new IO_WritePort( I8039_p4, I8039_p4, monsterb_sh_offset_a0_a3_w ),
-		/*TODO*///new IO_WritePort( I8039_p5, I8039_p5, monsterb_sh_offset_a4_a7_w ),
-		/*TODO*///new IO_WritePort( I8039_p6, I8039_p6, monsterb_sh_offset_a8_a11_w ),
-		/*TODO*///new IO_WritePort( I8039_p7, I8039_p7, monsterb_sh_rom_select_w ),
+                new IO_WritePort( I8039_p1, I8039_p1, monsterb_sh_dac_w ),
+		new IO_WritePort( I8039_p2, I8039_p2, monsterb_sh_busy_w ),
+		new IO_WritePort( I8039_p4, I8039_p4, monsterb_sh_offset_a0_a3_w ),
+		new IO_WritePort( I8039_p5, I8039_p5, monsterb_sh_offset_a4_a7_w ),
+		new IO_WritePort( I8039_p6, I8039_p6, monsterb_sh_offset_a8_a11_w ),
+		new IO_WritePort( I8039_p7, I8039_p7, monsterb_sh_rom_select_w ),
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	public static Memory_ReadAddress sindbadm_sound_readmem[]={
@@ -812,20 +815,20 @@ public class segar
 	
 	
 	
-	/*TODO*///static Samplesinterface astrob_samples_interface = new Samplesinterface
-	/*TODO*///(
-	/*TODO*///	12,    /* 12 channels */
-	/*TODO*///	25,    /* volume */
-	/*TODO*///	astrob_sample_names
-        /*TODO*///);
+	static Samplesinterface astrob_samples_interface = new Samplesinterface
+	(
+		12,    /* 12 channels */
+		25,    /* volume */
+		astrob_sample_names
+        );
 	
 	/* TODO: someday this will become a speech synthesis interface */
-	/*TODO*///static CustomSound_interface astrob_custom_interface = new CustomSound_interface
-	/*TODO*///(
-	/*TODO*///	astrob_speech_sh_start,
-	/*TODO*///	0,
-	/*TODO*///	astrob_speech_sh_update
-	/*TODO*///);
+	static CustomSound_interface astrob_custom_interface = new CustomSound_interface
+	(
+		astrob_speech_sh_start,
+		null,
+		astrob_speech_sh_update
+	);
 	
 	static MachineDriver machine_driver_astrob = new MachineDriver
 	(
@@ -862,25 +865,24 @@ public class segar
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_CUSTOM,
-		/*TODO*///		astrob_custom_interface
-		/*TODO*///	),
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_SAMPLES,
-		/*TODO*///		astrob_samples_interface
-		/*TODO*///	)
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_CUSTOM,
+				astrob_custom_interface
+			),
+			new MachineSound(
+				SOUND_SAMPLES,
+				astrob_samples_interface
+			)
+		}
 	);
 	
-	/*TODO*///static Samplesinterface spaceod_samples_interface =
-	/*TODO*///{
-	/*TODO*///	12,    /* 12 channels */
-	/*TODO*///	25,    /* volume */
-	/*TODO*///	spaceod_sample_names
-	/*TODO*///};
+	static Samplesinterface spaceod_samples_interface = new Samplesinterface
+	(
+		12,    /* 12 channels */
+		25,    /* volume */
+		spaceod_sample_names
+        );
 	
 	static MachineDriver machine_driver_spaceod = new MachineDriver
 	(
@@ -911,21 +913,21 @@ public class segar
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_SAMPLES,
-		/*TODO*///		spaceod_samples_interface
-		/*TODO*///	)
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_SAMPLES,
+				spaceod_samples_interface
+			)
+		}
+                
 	);
 	
-	/*TODO*///static Samplesinterface samples_interface_005 =
-	/*TODO*///{
-	/*TODO*///	12,    /* 12 channels */
-	/*TODO*///	25,    /* volume */
-	/*TODO*///	s005_sample_names
-	/*TODO*///};
+	static Samplesinterface samples_interface_005 = new Samplesinterface
+        (
+		12,    /* 12 channels */
+		25,    /* volume */
+		s005_sample_names
+        );
 	
 	static MachineDriver machine_driver_005 = new MachineDriver
 	(
@@ -956,21 +958,21 @@ public class segar
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_SAMPLES,
-		/*TODO*///		samples_interface_005
-		/*TODO*///	)
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_SAMPLES,
+				samples_interface_005
+			)
+		}
+                
 	);
 	
-	/*TODO*///static Samplesinterface monsterb_samples_interface =
-	/*TODO*///{
-	/*TODO*///	2,    /* 2 channels */
-	/*TODO*///	25,    /* volume */
-	/*TODO*///	monsterb_sample_names
-	/*TODO*///};
+	static Samplesinterface monsterb_samples_interface = new Samplesinterface
+        (
+		2,    /* 2 channels */
+		25,    /* volume */
+		monsterb_sample_names
+        );
 	
 	static DACinterface monsterb_dac_interface = new DACinterface
 	(
@@ -1027,10 +1029,10 @@ public class segar
 				SOUND_TMS36XX,
 				monsterb_tms3617_interface
 			),
-			/*TODO*///new MachineSound(
-			/*TODO*///	SOUND_SAMPLES,
-			/*TODO*///	monsterb_samples_interface
-			/*TODO*///),
+			new MachineSound(
+				SOUND_SAMPLES,
+				monsterb_samples_interface
+			),
 			new MachineSound(
 				SOUND_DAC,
 				monsterb_dac_interface
