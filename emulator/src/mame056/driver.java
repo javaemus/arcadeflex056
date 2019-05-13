@@ -2264,7 +2264,7 @@ public class driver {
         	driver_transfrm,	/* 834-5803 (c) 1986 */
         	driver_astrofl,	/* 834-5803 (c) 1986 */
         	driver_ridleofp,	/* (c) 1986 Sega / Nasco */
-        /*TODO*///TESTdriver_fantzn2,
+        driver_fantzn2,
         /*TODO*///TESTdriver_opaopa,
 
         /* other Sega 8-bit games */
@@ -3171,7 +3171,7 @@ public class driver {
         driver_aso, /*            (c) 1985 */
         driver_tnk3, /* A5001      (c) 1985 */
         driver_tnk3j, /* A5001      (c) 1985 */
-        driver_athena, /*       'UP' (c) 1986 */
+        driver_athena, /*    º   'UP' (c) 1986 */
         driver_fitegolf, /*       'GU' (c) 1988 */
         driver_ikari, /* A5004 'IW' (c) 1986 */
         driver_ikarijp, /* A5004 'IW' (c) 1986 (Japan) */
@@ -3191,8 +3191,8 @@ public class driver {
         driver_chopper, /* A7003 'KK' (c) 1988 */
         driver_legofair, /* A7003 'KK' (c) 1988 */
         driver_ftsoccer, /*            (c) 1988 */
-        /*TODO*///	driver_tdfever,	/* A6006 'TD' (c) 1987 */
-        /*TODO*///	driver_tdfeverj,	/* A6006 'TD' (c) 1987 */
+        driver_tdfever,	/* A6006 'TD' (c) 1987 */
+        driver_tdfeverj,	/* A6006 'TD' (c) 1987 */
         /*TODO*///	driver_ikari3,	/* A7007 'IK3'(c) 1989 */
         /*TODO*///	driver_pow,		/* A7008 'DG' (c) 1988 */
         /*TODO*///	driver_powj,		/* A7008 'DG' (c) 1988 */
