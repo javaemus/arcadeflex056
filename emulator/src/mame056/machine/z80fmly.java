@@ -156,7 +156,7 @@ public class z80fmly {
 			else                                   state |= ctc.int_state[ch];
 		}
 		/* change interrupt status */
-		/*TODO*///if (ctc.intr != null) (*ctc.intr)(state);
+		if (ctc.intr != null) (ctc.intr).handler(state);
 	}
 	
 	
