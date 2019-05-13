@@ -77,7 +77,7 @@
 package WIP.mame056.drivers;
 
 import static arcadeflex056.fucPtr.*;
-import common.ptr.UBytePtr;
+import static common.ptr.*;
 
 import static mame056.common.*;
 import static mame056.commonH.*;

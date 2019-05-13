@@ -299,8 +299,7 @@ public class mcr12
 		GfxElement gfx = Machine.gfx[1];
 		UBytePtr src = new UBytePtr(gfx.gfxdata, gfx.char_modulo * code);
 		int y, x;
-                int _dst=0,_src=0;
-	
+                
 		/* adjust for vflip */
 		if (vflip!=0)
 			src.inc( 31 * gfx.line_modulo );
@@ -308,20 +307,27 @@ public class mcr12
 		/* loop over lines in the sprite */
 		for (y = 0; y < 32; y++, sy++)
 		{
-			UBytePtr dst = new UBytePtr(spritebitmap, spritebitmap_width * sy + sx);
+			UBytePtr dst = new UBytePtr(spritebitmap, (spritebitmap_width * sy + sx));
+                        
+                        //UBytePtr dst = new UBytePtr(spritebitmap, (spritebitmap_width * spritebitmap_height));
 	
 			/* redraw the line */
 			if (hflip == 0)
 			{
 				for (x = 0; x < 32; x++){
-                                    dst.write(dst.read(_dst++)|src.read(_src++));					
+                                    dst.write(dst.read()|src.read());
+                                    dst.inc();
+                                    src.inc();
                                 }
 			}
 			else
 			{
 				src.inc( 32 );
-				for (x = 0; x < 32; x++)
-					dst.write(dst.read(_dst++)|src.read(_src--));
+				for (x = 0; x < 32; x++){
+					dst.write((dst.read()|src.read())&0xFFFF);
+                                        dst.inc();
+                                        src.dec();
+                                }
 				src.inc( 32 );
 			}
 	

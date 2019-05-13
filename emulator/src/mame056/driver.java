@@ -113,6 +113,7 @@ import static WIP.mame056.drivers.vigilant.*;
 import static WIP.mame056.drivers.segar.*;
 import static mame056.drivers.polyplay.*;
 import static mame056.drivers.hexa.*;
+import static WIP.mame056.drivers.mcr2.*;
 
 public class driver {
 
@@ -1001,18 +1002,18 @@ public class driver {
         driver_solarfox, /* (c) 1981 */
         driver_kick, /* (c) 1981 */
         driver_kicka, /* bootleg? */
-        /*TODO*///	/* MCR2 */
-        /*TODO*///	driver_shollow,	/* (c) 1981 */
-        /*TODO*///	driver_shollow2,	/* (c) 1981 */
-        /*TODO*///	driver_tron,		/* (c) 1982 */
-        /*TODO*///	driver_tron2,		/* (c) 1982 */
-        /*TODO*///	driver_kroozr,	/* (c) 1982 */
-        /*TODO*///	driver_domino,	/* (c) 1982 */
-        /*TODO*///	driver_wacko,		/* (c) 1982 */
-        /*TODO*///	driver_twotiger,	/* (c) 1984 */
-        /*TODO*///	driver_twotigra,	/* (c) 1984 */
-        /*TODO*///	/* MCR2 + MCR3 sprites */
-        /*TODO*///	driver_journey,	/* (c) 1983 */
+        /* MCR2 */
+        driver_shollow,	/* (c) 1981 */
+        driver_shollow2,	/* (c) 1981 */
+        driver_tron,		/* (c) 1982 */
+        driver_tron2,		/* (c) 1982 */
+        driver_kroozr,	/* (c) 1982 */
+        driver_domino,	/* (c) 1982 */
+        driver_wacko,		/* (c) 1982 */
+        driver_twotiger,	/* (c) 1984 */
+        driver_twotigra,	/* (c) 1984 */
+        /* MCR2 + MCR3 sprites */
+        driver_journey,	/* (c) 1983 */
         /* MCR3 */
         driver_tapper, /* (c) 1983 */
         driver_tappera, /* (c) 1983 */
