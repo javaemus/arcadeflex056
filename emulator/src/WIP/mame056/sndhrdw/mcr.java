@@ -289,8 +289,7 @@ public class mcr {
                 new Memory_WriteAddress( 0xe000, 0xe000, MWA_NOP ),
                 new Memory_WriteAddress(MEMPORT_MARKER, 0)
         };
-/*TODO*///	
-/*TODO*///	
+
 	
 	/*************************************
 	 *
@@ -338,32 +337,35 @@ public class mcr {
 	}
 	
 	
-/*TODO*///	/********* sound interfaces ***********/
-/*TODO*///	static DACinterface mcr_dac_interface = new DACinterface
-/*TODO*///	(
-/*TODO*///		1,
-/*TODO*///		new int[] { 100 }
-/*TODO*///	);
-/*TODO*///	
-/*TODO*///	static DACinterface mcr_dual_dac_interface = new DACinterface
-/*TODO*///	(
-/*TODO*///		2,
-/*TODO*///		new int[] { 75, 75 }
-/*TODO*///	);
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	/********* memory interfaces ***********/
-/*TODO*///	MEMORY_READ16_START( csdeluxe_readmem )
-/*TODO*///		{ 0x000000, 0x007fff, MRA16_ROM },
-/*TODO*///		{ 0x018000, 0x018007, pia_0_msb_r },
-/*TODO*///		{ 0x01c000, 0x01cfff, MRA16_RAM },
-/*TODO*///	MEMORY_END
-/*TODO*///	
-/*TODO*///	MEMORY_WRITE16_START( csdeluxe_writemem )
-/*TODO*///		{ 0x000000, 0x007fff, MWA16_ROM },
-/*TODO*///		{ 0x018000, 0x018007, pia_0_msb_w },
-/*TODO*///		{ 0x01c000, 0x01cfff, MWA16_RAM },
-/*TODO*///	MEMORY_END
+	/********* sound interfaces ***********/
+	static DACinterface mcr_dac_interface = new DACinterface
+	(
+		1,
+		new int[] { 100 }
+	);
+	
+	static DACinterface mcr_dual_dac_interface = new DACinterface
+	(
+		2,
+		new int[] { 75, 75 }
+	);
+	
+	
+	/********* memory interfaces ***********/
+        public static Memory_ReadAddress csdeluxe_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x000000, 0x007fff, MRA_ROM ), // MRA16_ROM
+                /*TODO*///new Memory_ReadAddress( 0x018000, 0x018007, pia_0_msb_r ),
+                new Memory_ReadAddress( 0x01c000, 0x01cfff, MRA_RAM ), // MRA16_RAM
+                new Memory_ReadAddress(MEMPORT_MARKER, 0)
+        };
+        
+        public static Memory_WriteAddress csdeluxe_writemem[]={new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x000000, 0x007fff, MWA_ROM ), // MWA16_ROM
+                /*TODO*///new Memory_WriteAddress( 0x018000, 0x018007, pia_0_msb_w ),
+                new Memory_WriteAddress( 0x01c000, 0x01cfff, MWA_RAM ), // MWA16_ROM
+                new Memory_WriteAddress(MEMPORT_MARKER, 0)
+        };
 	
 	
 	/********* PIA interfaces ***********/
@@ -428,14 +430,14 @@ public class mcr {
 	}
 	
 	
-/*TODO*///	/********* sound interfaces ***********/
-/*TODO*///	static DACinterface turbocs_plus_soundsgood_dac_interface = new DACinterface
-/*TODO*///	(
-/*TODO*///		2,
-/*TODO*///		new int[] { 80, 80 }
-/*TODO*///	);
-/*TODO*///	
-/*TODO*///	
+	/********* sound interfaces ***********/
+	static DACinterface turbocs_plus_soundsgood_dac_interface = new DACinterface
+	(
+		2,
+		new int[] { 80, 80 }
+	);
+	
+	
 /*TODO*///	/********* memory interfaces ***********/
 /*TODO*///	MEMORY_READ16_START( soundsgood_readmem )
 /*TODO*///		{ 0x000000, 0x03ffff, MRA16_ROM },
@@ -621,22 +623,27 @@ public class mcr {
 /*TODO*///		MIXER(60,MIXER_PAN_LEFT),
 /*TODO*///		0
 /*TODO*///	};
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	/********* memory interfaces ***********/
-/*TODO*///	MEMORY_READ_START( squawkntalk_readmem )
-/*TODO*///		{ 0x0000, 0x007f, MRA_RAM },
-/*TODO*///		{ 0x0080, 0x0083, pia_0_r },
-/*TODO*///		{ 0x0090, 0x0093, pia_1_r },
-/*TODO*///		{ 0xd000, 0xffff, MRA_ROM },
-/*TODO*///	MEMORY_END
-/*TODO*///	
-/*TODO*///	MEMORY_WRITE_START( squawkntalk_writemem )
-/*TODO*///		{ 0x0000, 0x007f, MWA_RAM },
-/*TODO*///		{ 0x0080, 0x0083, pia_0_w },
-/*TODO*///		{ 0x0090, 0x0093, pia_1_w },
-/*TODO*///		{ 0xd000, 0xffff, MWA_ROM },
-/*TODO*///	MEMORY_END
+	
+	
+	/********* memory interfaces ***********/
+        public static Memory_ReadAddress squawkntalk_readmem[]={
+            new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+            new Memory_ReadAddress( 0x0000, 0x007f, MRA_RAM ),
+            new Memory_ReadAddress( 0x0080, 0x0083, pia_0_r ),
+            new Memory_ReadAddress( 0x0090, 0x0093, pia_1_r ),
+            new Memory_ReadAddress( 0xd000, 0xffff, MRA_ROM ),
+            new Memory_ReadAddress(MEMPORT_MARKER, 0)
+
+        };
+    
+        public static Memory_WriteAddress squawkntalk_writemem []={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x007f, MWA_RAM ),
+                new Memory_WriteAddress( 0x0080, 0x0083, pia_0_w ),
+                new Memory_WriteAddress( 0x0090, 0x0093, pia_1_w ),
+                new Memory_WriteAddress( 0xd000, 0xffff, MWA_ROM ),
+                new Memory_WriteAddress(MEMPORT_MARKER, 0)
+        };
 	
 	
 	/********* PIA interfaces ***********/

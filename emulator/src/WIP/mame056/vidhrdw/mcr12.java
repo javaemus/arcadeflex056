@@ -34,13 +34,14 @@ import static mame056.vidhrdw.generic.*;
 import static arcadeflex036.osdepend.logerror;
 import static mame056.driverH.*;
 import static WIP.mame056.machine.mcr.*;
+import static WIP.mame056.vidhrdw.mcr3.*;
 
 public class mcr12
 {
 	
 	
 	static int last_cocktail_flip;
-	static UBytePtr spritebitmap=new UBytePtr();
+	static char[] spritebitmap;
 	static int spritebitmap_width;
 	static int spritebitmap_height;
 	
@@ -59,47 +60,45 @@ public class mcr12
 	public static VhStartPtr mcr12_vh_start = new VhStartPtr() { public int handler() 
 	{
 		GfxElement gfx = Machine.gfx[1];
-	
-		/* allocate a temporary bitmap for the sprite rendering */
-		spritebitmap_width = Machine.drv.screen_width + 2 * 32;
-		spritebitmap_height = Machine.drv.screen_height + 2 * 32;
-		spritebitmap = new UBytePtr(spritebitmap_width * spritebitmap_height);
-		if (spritebitmap == null)
-			return 1;
-		memset(spritebitmap, 0, spritebitmap_width * spritebitmap_height);
-	
-		/* if we're swapped in X/Y, the sprite data will be swapped */
-		/* but that's not what we want, so we swap it back here */
-		if ((gfx!=null) && ((Machine.orientation & ORIENTATION_SWAP_XY)!=0))
-		{
-			UBytePtr base = gfx.gfxdata;
-			int c, x, y;
-			for (c = 0; c < gfx.total_elements; c++)
-			{
-				for (y = 0; y < gfx.height; y++)
-					for (x = y; x < gfx.width; x++)
-					{
-						int temp = base.read(y * gfx.line_modulo + x);
-						base.write(y * gfx.line_modulo + x, base.read(x * gfx.line_modulo + y));
-						base.write(x * gfx.line_modulo + y, temp);
-					}
-				base.inc( gfx.char_modulo );
-			}
-		}
-	
-		/* compute tile counts */
-		xtiles = Machine.drv.screen_width / 16;
-		ytiles = Machine.drv.screen_height / 16;
-		last_cocktail_flip = 0;
-	
-		/* start up the generic system */
-		if (generic_vh_start.handler() != 0)
-		{
-			spritebitmap = null;
-			return 1;
-		}
-		return 0;
-	} };
+
+            /* allocate a temporary bitmap for the sprite rendering */
+            spritebitmap_width = Machine.drv.screen_width + 2 * 32;
+            spritebitmap_height = Machine.drv.screen_height + 2 * 32;
+            spritebitmap = new char[spritebitmap_width * spritebitmap_height];
+            if (spritebitmap == null) {
+                return 1;
+            }
+            memset(spritebitmap, 0, spritebitmap_width * spritebitmap_height);
+
+            /* if we're swapped in X/Y, the sprite data will be swapped */
+ /* but that's not what we want, so we swap it back here */
+            if (gfx != null && (Machine.orientation & ORIENTATION_SWAP_XY) != 0) {
+                UBytePtr base = new UBytePtr(gfx.gfxdata);
+                int c, x, y;
+                for (c = 0; c < gfx.total_elements; c++) {
+                    for (y = 0; y < gfx.height; y++) {
+                        for (x = y; x < gfx.width; x++) {
+                            int temp = base.read(y * gfx.line_modulo + x);
+                            base.write(y * gfx.line_modulo + x, base.read(x * gfx.line_modulo + y));
+                            base.write(x * gfx.line_modulo + y, temp);
+                        }
+                    }
+                    base.inc(gfx.char_modulo);
+                }
+            }
+
+            /* compute tile counts */
+            xtiles = Machine.drv.screen_width / 16;
+            ytiles = Machine.drv.screen_height / 16;
+            last_cocktail_flip = 0;
+
+            /* start up the generic system */
+            if (generic_vh_start.handler() != 0) {
+                spritebitmap = null;
+                return 1;
+            }
+            return 0;
+        } };
 	
 	
 	public static VhStopPtr mcr12_vh_stop = new VhStopPtr() { public void handler() 
@@ -297,44 +296,36 @@ public class mcr12
 	static void render_one_sprite(int code, int sx, int sy, int hflip, int vflip)
 	{
 		GfxElement gfx = Machine.gfx[1];
-		UBytePtr src = new UBytePtr(gfx.gfxdata, gfx.char_modulo * code);
-		int y, x;
-                
-		/* adjust for vflip */
-		if (vflip!=0)
-			src.inc( 31 * gfx.line_modulo );
-	
-		/* loop over lines in the sprite */
-		for (y = 0; y < 32; y++, sy++)
-		{
-			UBytePtr dst = new UBytePtr(spritebitmap, (spritebitmap_width * sy + sx));
-                        
-                        //UBytePtr dst = new UBytePtr(spritebitmap, (spritebitmap_width * spritebitmap_height));
-	
-			/* redraw the line */
-			if (hflip == 0)
-			{
-				for (x = 0; x < 32; x++){
-                                    dst.write(dst.read()|src.read());
-                                    dst.inc();
-                                    src.inc();
-                                }
-			}
-			else
-			{
-				src.inc( 32 );
-				for (x = 0; x < 32; x++){
-					dst.write((dst.read()|src.read())&0xFFFF);
-                                        dst.inc();
-                                        src.dec();
-                                }
-				src.inc( 32 );
-			}
-	
-			/* adjust for vflip */
-			if (vflip!=0)
-				src.dec( 2 * gfx.line_modulo );
-		}
+            UBytePtr src = new UBytePtr(gfx.gfxdata, gfx.char_modulo * code);
+            int y, x;
+
+            /* adjust for vflip */
+            if (vflip != 0) {
+                src.inc(31 * gfx.line_modulo);
+            }
+
+            /* loop over lines in the sprite */
+            for (y = 0; y < 32; y++, sy++) {
+                UBytePtr dst = new UBytePtr(spritebitmap, spritebitmap_width * sy + sx);
+
+                /* redraw the line */
+                if (hflip == 0) {
+                    for (x = 0; x < 32; x++) {
+                        dst.writeinc(dst.read() | src.readinc());
+                    }
+                } else {
+                    src.inc(32);
+                    for (x = 0; x < 32; x++) {
+                        dst.writeinc(dst.read() | src.readdec());
+                    }
+                    src.inc(32);
+                }
+
+                /* adjust for vflip */
+                if (vflip != 0) {
+                    src.dec(2 * gfx.line_modulo);
+                }
+            }
 	}
 	
 	
@@ -348,8 +339,7 @@ public class mcr12
 	public static void render_sprite_tile(mame_bitmap bitmap, int[] pens, int sx, int sy, int cont)
 	{
 		int x, y;
-                int _src=0;
-	
+                
 		/* draw any dirty scanlines from the VRAM directly */
 		for (y = 0; y < 16; y++, sy++)
 		{
@@ -361,7 +351,7 @@ public class mcr12
 				int pixel = src.read();
 				if ((pixel & 7)!=0)
 					plot_pixel.handler(bitmap, sx + x, sy, pens[pixel+cont]);
-				src.write(_src++, 0);
+				src.writeinc(0);
 			}
 		}
 	}
@@ -499,6 +489,6 @@ public class mcr12
 		copybitmap(bitmap, tmpbitmap, 0, 0, 0, 0, Machine.visible_area, TRANSPARENCY_NONE, 0);
 	
 		/* draw the sprites */
-		/*TODO*///mcr3_update_sprites(bitmap, 0x03, 0, 0, 0);
+		mcr3_update_sprites(bitmap, 0x03, 0, 0, 0);
 	} };
 }

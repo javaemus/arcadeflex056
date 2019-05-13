@@ -207,7 +207,7 @@ public class mcr3 {
 		dotron_change_light(data >> 6);
 	
 		/* low 5 bits go to control the Squawk & Talk */
-		/*TODO*///squawkntalk_data_w(offset, data);
+		squawkntalk_data_w.handler(offset, data);
 	} };
 	
 	
@@ -384,7 +384,7 @@ public class mcr3 {
 	
 	public static WriteHandlerPtr stargrds_soundsgood_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		/*TODO*///soundsgood_data_w(offset, (data << 1) | (data >> 7));
+		soundsgood_data_w.handler(offset, (data << 1) | (data >> 7));
 	} };
 	
 	
@@ -418,7 +418,7 @@ public class mcr3 {
 			spyhunt_lamp[data & 7] = (data >> 3) & 1;
 	
 		/* low 5 bits go to control the Chip Squeak Deluxe */
-		/*TODO*///csdeluxe_data_w(offset, data);
+		csdeluxe_data_w.handler(offset, data);
 	
 		/* remember the last data */
 		lastport4 = data;
@@ -994,7 +994,7 @@ public class mcr3 {
 		new MachineCPU[] {
 			MAIN_CPU,
 			SOUND_CPU_SSIO
-                        /*TODO*///,SOUND_CPU_SQUAWK_N_TALK
+                        ,SOUND_CPU_SQUAWK_N_TALK
 		},
 		30, DEFAULT_REAL_30HZ_VBLANK_DURATION,	/* frames per second, vblank duration */
 		1,
@@ -1016,7 +1016,7 @@ public class mcr3 {
 		SOUND_SUPPORTS_STEREO,0,0,0,
 		new MachineSound[] {
 			SOUND_SSIO
-                        /*TODO*///,SOUND_SQUAWK_N_TALK,
+                        //,SOUND_SQUAWK_N_TALK
 		},
 		mcr3_nvram_handler
 	);

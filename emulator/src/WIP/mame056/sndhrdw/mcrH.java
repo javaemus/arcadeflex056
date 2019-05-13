@@ -44,15 +44,7 @@ public class mcrH {
     public static void MCR_CONFIGURE_SOUND(int x){
 		mcr_sound_config = x;
     }
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	/************ SSIO CPU and sound definitions ***************/
-/*TODO*///	
-/*TODO*///	extern const struct Memory_ReadAddress ssio_readmem[];
-/*TODO*///	extern const struct Memory_WriteAddress ssio_writemem[];
-/*TODO*///	
-/*TODO*///	extern struct AY8910interface ssio_ay8910_interface;
-/*TODO*///	
+
     public static MachineCPU SOUND_CPU_SSIO = new MachineCPU
     (												
             CPU_Z80 | CPU_AUDIO_CPU,					
@@ -144,18 +136,18 @@ public class mcrH {
 /*TODO*///	extern const struct Memory_WriteAddress squawkntalk_writemem[];
 /*TODO*///	
 /*TODO*///	extern struct TMS5220interface squawkntalk_tms5220_interface;
-/*TODO*///	
-/*TODO*///	#define SOUND_CPU_SQUAWK_N_TALK						
-/*TODO*///		{												
-/*TODO*///			CPU_M6802 | CPU_AUDIO_CPU,					
-/*TODO*///			3580000/4,	/* .8 MHz */					
-/*TODO*///			squawkntalk_readmem,squawkntalk_writemem,0,0,
-/*TODO*///			ignore_interrupt,1							
-/*TODO*///		}
-/*TODO*///	
-/*TODO*///	#define SOUND_SQUAWK_N_TALK							
-/*TODO*///		{												
-/*TODO*///			SOUND_TMS5220,								
-/*TODO*///			&squawkntalk_tms5220_interface				
-/*TODO*///		}    
+	
+	public static MachineCPU SOUND_CPU_SQUAWK_N_TALK = new MachineCPU
+        (												
+                CPU_M6802 | CPU_AUDIO_CPU,					
+                3580000/4,	/* .8 MHz */					
+                squawkntalk_readmem,squawkntalk_writemem,0,0,
+                ignore_interrupt,1							
+        );
+	
+	/*TODO*///#define SOUND_SQUAWK_N_TALK							
+	/*TODO*///	{												
+	/*TODO*///		SOUND_TMS5220,								
+	/*TODO*///		&squawkntalk_tms5220_interface				
+	/*TODO*///	}    
 }
