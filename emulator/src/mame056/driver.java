@@ -114,6 +114,7 @@ import static WIP.mame056.drivers.segar.*;
 import static mame056.drivers.polyplay.*;
 import static mame056.drivers.hexa.*;
 import static WIP.mame056.drivers.mcr2.*;
+import static mame056.drivers.segasyse.*;
 
 public class driver {
 
@@ -2259,10 +2260,10 @@ public class driver {
         /*TODO*///*/
         /*TODO*///
         /*TODO*///	/* Sega System E games (Master System hardware) */
-        /*TODO*///	driver_hangonjr,	/* (c) 1985 */
-        /*TODO*///	driver_transfrm,	/* 834-5803 (c) 1986 */
-        /*TODO*///	driver_astrofl,	/* 834-5803 (c) 1986 */
-        /*TODO*///	driver_ridleofp,	/* (c) 1986 Sega / Nasco */
+        	driver_hangonjr,	/* (c) 1985 */
+        	driver_transfrm,	/* 834-5803 (c) 1986 */
+        	driver_astrofl,	/* 834-5803 (c) 1986 */
+        	driver_ridleofp,	/* (c) 1986 Sega / Nasco */
         /*TODO*///TESTdriver_fantzn2,
         /*TODO*///TESTdriver_opaopa,
 
