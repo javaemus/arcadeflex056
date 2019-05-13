@@ -31,6 +31,7 @@ import static mame056.common.*;
 
 // refactor
 import static arcadeflex036.osdepend.logerror;
+import static mame056.cpu.m6809.m6809H.M6809_FIRQ_LINE;
 import static mame056.cpu.m6809.m6809H.M6809_IRQ_LINE;
 
 public class irobot
@@ -68,7 +69,7 @@ public class irobot
 	//#endif
 	
 	
-	static UBytePtr comRAM=new UBytePtr(), mbRAM=new UBytePtr(), mbROM=new UBytePtr();
+	static UBytePtr comRAM=new UBytePtr(1024*128), mbRAM=new UBytePtr(1024*128), mbROM=new UBytePtr(1024*128);
 	static int irobot_control_num = 0;
 	static int irobot_statwr;
 	static int irobot_out0;
@@ -151,7 +152,7 @@ public class irobot
 			irvg_running=1;
 		}
 		if (((data & 0x10)!=0) && ((irobot_statwr & 0x10)==0)){
-			/*TODO*///irmb_run();
+			irmb_run();
                 }
 		irobot_statwr = data;
 	} };
@@ -224,7 +225,8 @@ public class irobot
 	
 	public static InitMachinePtr irobot_init_machine = new InitMachinePtr() { public void handler() 
 	{
-		UBytePtr MB = memory_region(REGION_CPU2);
+		UBytePtr MB = new UBytePtr(memory_region(REGION_CPU2));
+                MB.offset = 0;
 	
 		/* initialize the memory regions */
 		mbROM 		= new UBytePtr(MB, 0x00000);
@@ -344,8 +346,8 @@ public class irobot
 		public int func;
 		public int diradd;
 		public int latchmask;
-		public UShortPtr areg;
-		public UShortPtr breg;
+		public int areg;
+		public int breg;
 		public int cycles;
 		public int diren;
 		public int flags;
@@ -422,30 +424,30 @@ public class irobot
 			int nxtadd=0, func=0, ramsel=0, diradd=0, latchmask=0, dirmask=0, time=0;
                         mbops[i]=new irmb_ops();
 	
-			/*TODO*///mbops[i].areg = irmb_regs[MB[0x0000 + i] & 0x0F];
-			/*TODO*///mbops[i].breg = &irmb_regs[MB[0x0400 + i] & 0x0F];
-			/*TODO*///func = (MB[0x0800 + i] & 0x0F) << 5;
-			/*TODO*///func |= ((MB[0x0C00 +i] & 0x0F) << 1);
-			/*TODO*///func |= (MB[0x1000 + i] & 0x08) >> 3;
-			/*TODO*///time = MB[0x1000 + i] & 0x03;
-			/*TODO*///mbops[i].flags = (MB[0x1000 + i] & 0x04) >> 2;
-			/*TODO*///nxtadd = (MB[0x1400 + i] & 0x0C) >> 2;
-			/*TODO*///diradd = MB[0x1400 + i] & 0x03;
-			/*TODO*///nxtadd |= ((MB[0x1800 + i] & 0x0F) << 6);
-			/*TODO*///nxtadd |= ((MB[0x1C00 + i] & 0x0F) << 2);
-			/*TODO*///diradd |= (MB[0x2000 + i] & 0x0F) << 2;
-			/*TODO*///func |= (MB[0x2400 + i] & 0x0E) << 9;
-			/*TODO*///mbops[i].flags |= (MB[0x2400 + i] & 0x01) << 1;
-			/*TODO*///mbops[i].flags |= (MB[0x2800 + i] & 0x0F) << 2;
-			/*TODO*///mbops[i].flags |= ((MB[0x2C00 + i] & 0x01) << 6);
-			/*TODO*///mbops[i].flags |= (MB[0x2C00 + i] & 0x08) << 4;
-			/*TODO*///ramsel = (MB[0x2C00 + i] & 0x06) >> 1;
-			/*TODO*///diradd |= (MB[0x3000 + i] & 0x03) << 6;
+			mbops[i].areg = irmb_regs[MB.read(0x0000 + i) & 0x0F];
+			mbops[i].breg = irmb_regs[MB.read(0x0400 + i) & 0x0F];
+			func = (MB.read(0x0800 + i) & 0x0F) << 5;
+			func |= ((MB.read(0x0C00 +i) & 0x0F) << 1);
+			func |= (MB.read(0x1000 + i) & 0x08) >> 3;
+			time = MB.read(0x1000 + i) & 0x03;
+			mbops[i].flags = (MB.read(0x1000 + i) & 0x04) >> 2;
+			nxtadd = (MB.read(0x1400 + i) & 0x0C) >> 2;
+			diradd = MB.read(0x1400 + i) & 0x03;
+			nxtadd |= ((MB.read(0x1800 + i) & 0x0F) << 6);
+			nxtadd |= ((MB.read(0x1C00 + i) & 0x0F) << 2);
+			diradd |= (MB.read(0x2000 + i) & 0x0F) << 2;
+			func |= (MB.read(0x2400 + i) & 0x0E) << 9;
+			mbops[i].flags |= (MB.read(0x2400 + i) & 0x01) << 1;
+			mbops[i].flags |= (MB.read(0x2800 + i) & 0x0F) << 2;
+			mbops[i].flags |= ((MB.read(0x2C00 + i) & 0x01) << 6);
+			mbops[i].flags |= (MB.read(0x2C00 + i) & 0x08) << 4;
+			ramsel = (MB.read(0x2C00 + i) & 0x06) >> 1;
+			diradd |= (MB.read(0x3000 + i) & 0x03) << 6;
 	
-			/*TODO*///if (mbops[i].flags & FL_shift) func |= 0x200;
+			if ((mbops[i].flags & FL_shift)!=0) func |= 0x200;
 	
-			/*TODO*///mbops[i].func = func;
-			/*TODO*///mbops[i].nxtop = &mbops[nxtadd];
+			mbops[i].func = func;
+			mbops[i].nxtop = mbops[nxtadd];
 	
 			/* determine the number of 12MHz cycles for this operation */
 			if (time == 3)
@@ -494,15 +496,16 @@ public class irobot
 		load_oproms();
 	} };
 	
-/*TODO*///	static void irmb_done_callback (int param)
-/*TODO*///	{
-/*TODO*///	    logerror("mb done. ");
-/*TODO*///		/*TODO*///IR_CPU_STATE;
-/*TODO*///		irmb_running = 0;
-/*TODO*///		cpu_set_irq_line(0, M6809_FIRQ_LINE, ASSERT_LINE);
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	
+	static timer_callback irmb_done_callback = new timer_callback() {
+            public void handler(int i) {
+                logerror("mb done. ");
+/*TODO*///		IR_CPU_STATE;
+		irmb_running = 0;
+		cpu_set_irq_line(0, M6809_FIRQ_LINE, ASSERT_LINE);
+            }
+        };
+	
+	
 /*TODO*///	#define COMPUTE_CI \
 /*TODO*///		CI = 0;\
 /*TODO*///		if (curop->flags & FL_DPSEL)\
@@ -613,11 +616,11 @@ public class irobot
 /*TODO*///	#define JUMP5	curop = curop->nxtop;
 /*TODO*///	#define JUMP6	irmb_stack[SP] = curop + 1; SP = (SP + 1) & 15; curop = curop->nxtop;
 /*TODO*///	#define JUMP7	SP = (SP - 1) & 15; curop = irmb_stack[SP];
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	/* Run mathbox */
-/*TODO*///	public static void irmb_run()
-/*TODO*///	{
+	
+	
+	/* Run mathbox */
+	public static void irmb_run()
+	{
 /*TODO*///		const irmb_ops *prevop = &mbops[0];
 /*TODO*///		const irmb_ops *curop = &mbops[0];
 /*TODO*///	
@@ -629,7 +632,7 @@ public class irobot
 /*TODO*///		UINT32 zresult = 1;
 /*TODO*///		UINT32 CI = 0;
 /*TODO*///		UINT32 SP = 0;
-/*TODO*///		UINT32 icount = 0;
+		int icount = 0;
 /*TODO*///	
 /*TODO*///		profiler_mark(PROFILER_USER1);
 /*TODO*///	
@@ -890,27 +893,27 @@ public class irobot
 /*TODO*///	
 /*TODO*///	
 /*TODO*///	/*TODO*///#if IR_TIMING
-/*TODO*///		if (irmb_running == 0)
-/*TODO*///		{
-/*TODO*///			irmb_timer = timer_set (TIME_IN_HZ(12000000) * icount, 0, irmb_done_callback);
-/*TODO*///			logerror("mb start ");
-/*TODO*///			/*TODO*///IR_CPU_STATE;
-/*TODO*///		}
-/*TODO*///		else
-/*TODO*///		{
-/*TODO*///			logerror("mb start [busy!] ");
-/*TODO*///			/*TODO*///IR_CPU_STATE;
-/*TODO*///			timer_reset (irmb_timer, TIME_IN_NSEC(200) * icount);
-/*TODO*///		}
-/*TODO*///	/*TODO*///#else
-/*TODO*///		cpu_set_irq_line(0, M6809_FIRQ_LINE, ASSERT_LINE);
-/*TODO*///	/*TODO*///#endif
-/*TODO*///		irmb_running=1;
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	
+		if (irmb_running == 0)
+		{
+			irmb_timer = timer_set (TIME_IN_HZ(12000000) * icount, 0, irmb_done_callback);
+			logerror("mb start ");
+/*TODO*///			IR_CPU_STATE;
+		}
+		else
+		{
+			logerror("mb start [busy!] ");
+/*TODO*///			IR_CPU_STATE;
+			timer_reset (irmb_timer, TIME_IN_NSEC(200) * icount);
+		}
+/*TODO*///	#else
+		cpu_set_irq_line(0, M6809_FIRQ_LINE, ASSERT_LINE);
+/*TODO*///	#endif
+		irmb_running=1;
+	}
+	
+	
+	
+	
 /*TODO*///	#if DISASSEMBLE_MB_ROM
 /*TODO*///	void disassemble_instruction(irmb_ops *op)
 /*TODO*///	{
