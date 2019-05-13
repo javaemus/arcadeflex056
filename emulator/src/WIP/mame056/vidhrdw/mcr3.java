@@ -399,6 +399,7 @@ public class mcr3 {
 					(spyhunt_lamp[2]!=0 ? "VAN" : "   ")+
 					(spyhunt_lamp[3]!=0 ? "SMOKE" : "     ")+
 					(spyhunt_lamp[4]!=0 ? "GUNS" : "    "));
+                        System.out.println(buffer);
 			for (offs = 0; offs < 30; offs++)
 				drawgfx(bitmap, Machine.gfx[2], Integer.parseInt(buffer.substring(offs, offs+1)), 0, 0, 0,
 						30 * 16, (29 - offs) * 16, Machine.visible_area, TRANSPARENCY_NONE, 0);

@@ -1515,7 +1515,7 @@ public class mcr3 {
 	
 		spyhunt_sprite_color_mask = 0x00;
 		spyhunt_scroll_offset = -16;
-		spyhunt_draw_lamps = 1;
+		/*TODO*///spyhunt_draw_lamps = 1;
 	} };
 	
 	
