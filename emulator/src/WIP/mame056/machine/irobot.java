@@ -52,9 +52,9 @@ public class irobot
 	public static int IR_TIMING = 1;		/* try to emulate MB and VG running time */
 	public static int DISASSEMBLE_MB_ROM = 0;		/* generate a disassembly of the mathbox ROMs */
 	
-	/*TODO*///#define IR_CPU_STATE \
-	/*TODO*///	logerror(\
-	/*TODO*///			"pc: %4x, scanline: %d\n", cpu_getpreviouspc(), cpu_getscanline())
+	/*TODO*///#define IR_CPU_STATE 
+	/*TODO*///	logerror(
+	/*TODO*///			"pc: %4x, scanline: %dn", cpu_getpreviouspc(), cpu_getscanline())
 	
 	
 	public static int irvg_clear;
@@ -212,7 +212,7 @@ public class irobot
             public void handler(int scanline) {
                 if (scanline == 0) irvg_vblank=0;
 	    if (scanline == 224) irvg_vblank=1;
-	    logerror("SCANLINE CALLBACK %d\n",scanline);
+	    logerror("SCANLINE CALLBACK %dn",scanline);
 	    /* set the IRQ line state based on the 32V line state */
 	    cpu_set_irq_line(0, M6809_IRQ_LINE, (scanline & 32)!=0 ? ASSERT_LINE : CLEAR_LINE);
 	
@@ -373,40 +373,40 @@ public class irobot
 /*TODO*///	#endif
 /*TODO*///	
 /*TODO*///	
-/*TODO*///	UINT32 irmb_din(const irmb_ops *curop)
-/*TODO*///	{
-/*TODO*///		UINT32 d = 0;
-/*TODO*///	
-/*TODO*///		if (!(curop->flags & FL_MBMEMDEC) && (curop->flags & FL_MBRW))
-/*TODO*///		{
-/*TODO*///			UINT32 ad = curop->diradd | (irmb_latch & curop->latchmask);
-/*TODO*///	
-/*TODO*///			if (curop->diren || (irmb_latch & 0x6000) == 0)
-/*TODO*///				d = ((UINT16 *)mbRAM)[ad & 0xfff];				/* MB RAM read */
-/*TODO*///			else if (irmb_latch & 0x4000)
-/*TODO*///				d = ((UINT16 *)mbROM)[ad + 0x2000];				/* MB ROM read, CEMATH = 1 */
-/*TODO*///			else
-/*TODO*///				d = ((UINT16 *)mbROM)[ad & 0x1fff];				/* MB ROM read, CEMATH = 0 */
-/*TODO*///		}
-/*TODO*///		return d;
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	void irmb_dout(const irmb_ops *curop, UINT32 d)
-/*TODO*///	{
-/*TODO*///		/* Write to video com ram */
-/*TODO*///		if (curop->ramsel == 3)
-/*TODO*///			((UINT16 *)irobot_combase_mb)[irmb_latch & 0x7ff] = d;
-/*TODO*///	
-/*TODO*///	    /* Write to mathox ram */
-/*TODO*///		if (!(curop->flags & FL_MBMEMDEC))
-/*TODO*///		{
-/*TODO*///			UINT32 ad = curop->diradd | (irmb_latch & curop->latchmask);
-/*TODO*///	
-/*TODO*///			if (curop->diren || (irmb_latch & 0x6000) == 0)
-/*TODO*///				((UINT16 *)mbRAM)[ad & 0xfff] = d;				/* MB RAM write */
-/*TODO*///		}
-/*TODO*///	}
+	public static int irmb_din(irmb_ops curop)
+	{
+		int d = 0;
+	
+		if (((curop.flags & FL_MBMEMDEC)==0) && ((curop.flags & FL_MBRW)!=0))
+		{
+			int ad = curop.diradd | (irmb_latch & curop.latchmask);
+	
+			if ((curop.diren!=0) || (irmb_latch & 0x6000) == 0)
+				d = new UShortPtr(mbRAM).read(ad & 0xfff);				/* MB RAM read */
+			else if ((irmb_latch & 0x4000)!=0)
+				d = new UShortPtr(mbROM).read(ad + 0x2000);				/* MB ROM read, CEMATH = 1 */
+			else
+				d = new UShortPtr(mbROM).read(ad & 0x1fff);				/* MB ROM read, CEMATH = 0 */
+		}
+		return d;
+	}
+	
+	
+	public static void irmb_dout(irmb_ops curop, int d)
+	{
+		/* Write to video com ram */
+		if (curop.ramsel == 3)
+			new UShortPtr(irobot_combase_mb).write(irmb_latch & 0x7ff, (char) d);
+	
+	    /* Write to mathox ram */
+		if ((curop.flags & FL_MBMEMDEC)==0)
+		{
+			int ad = curop.diradd | (irmb_latch & curop.latchmask);
+	
+			if ((curop.diren!=0) || (irmb_latch & 0x6000) == 0)
+				new UShortPtr(mbRAM).write(ad & 0xfff, (char) d);				/* MB RAM write */
+		}
+	}
 	
 	
 	/* Convert microcode roms to a more usable form */
@@ -506,105 +506,107 @@ public class irobot
         };
 	
 	
-/*TODO*///	#define COMPUTE_CI \
-/*TODO*///		CI = 0;\
-/*TODO*///		if (curop->flags & FL_DPSEL)\
-/*TODO*///			CI = cflag;\
-/*TODO*///		else\
-/*TODO*///		{\
-/*TODO*///			if (curop->flags & FL_carry)\
-/*TODO*///				CI = 1;\
-/*TODO*///			if (!(prevop->flags & FL_DIV) && !nflag)\
-/*TODO*///				CI = 1;\
+/*TODO*///	#define COMPUTE_CI 
+/*TODO*///		CI = 0;
+/*TODO*///		if (curop->flags & FL_DPSEL)
+/*TODO*///			CI = cflag;
+/*TODO*///		else
+/*TODO*///		{
+/*TODO*///			if (curop->flags & FL_carry)
+/*TODO*///				CI = 1;
+/*TODO*///			if (!(prevop->flags & FL_DIV) && !nflag)
+/*TODO*///				CI = 1;
 /*TODO*///		}
+	
+	public static void ADD(int r, int s) {
+		/*TODO*///COMPUTE_CI;
+		result = r + s + CI;
+		cflag = (result >> 16) & 1;
+		vflag = (((r & 0x7fff) + (s & 0x7fff) + CI) >> 15) ^ cflag;
+        }                        
+
 /*TODO*///	
-/*TODO*///	#define ADD(r,s) \
-/*TODO*///		COMPUTE_CI;\
-/*TODO*///		result = r + s + CI;\
-/*TODO*///		cflag = (result >> 16) & 1;\
-/*TODO*///		vflag = (((r & 0x7fff) + (s & 0x7fff) + CI) >> 15) ^ cflag
-/*TODO*///	
-/*TODO*///	#define SUBR(r,s) \
-/*TODO*///		COMPUTE_CI;\
-/*TODO*///		result = (r ^ 0xFFFF) + s + CI;         /*S - R + CI - 1*/ \
-/*TODO*///		cflag = (result >> 16) & 1;\
+/*TODO*///	#define SUBR(r,s) 
+/*TODO*///		COMPUTE_CI;
+/*TODO*///		result = (r ^ 0xFFFF) + s + CI;         /*S - R + CI - 1*/ 
+/*TODO*///		cflag = (result >> 16) & 1;
 /*TODO*///		vflag = (((s & 0x7fff) + ((r ^ 0xffff) & 0x7fff) + CI) >> 15) ^ cflag
 /*TODO*///	
-/*TODO*///	#define SUB(r,s) \
-/*TODO*///		COMPUTE_CI;\
-/*TODO*///		result = r + (s ^ 0xFFFF) + CI;      /*R - S + CI - 1*/ \
-/*TODO*///		cflag = (result >> 16) & 1;\
+/*TODO*///	#define SUB(r,s) 
+/*TODO*///		COMPUTE_CI;
+/*TODO*///		result = r + (s ^ 0xFFFF) + CI;      /*R - S + CI - 1*/ 
+/*TODO*///		cflag = (result >> 16) & 1;
 /*TODO*///		vflag = (((r & 0x7fff) + ((s ^ 0xffff) & 0x7fff) + CI) >> 15) ^ cflag
 /*TODO*///	
-/*TODO*///	#define OR(r,s) \
-/*TODO*///		result = r | s;\
+/*TODO*///	#define OR(r,s) 
+/*TODO*///		result = r | s;
 /*TODO*///		vflag = cflag = 0
 /*TODO*///	
-/*TODO*///	#define AND(r,s) \
-/*TODO*///		result = r & s;\
+/*TODO*///	#define AND(r,s) 
+/*TODO*///		result = r & s;
 /*TODO*///		vflag = cflag = 0
 /*TODO*///	
-/*TODO*///	#define IAND(r,s) \
-/*TODO*///		result = (r ^ 0xFFFF) & s;\
+/*TODO*///	#define IAND(r,s) 
+/*TODO*///		result = (r ^ 0xFFFF) & s;
 /*TODO*///		vflag = cflag = 0
 /*TODO*///	
-/*TODO*///	#define XOR(r,s) \
-/*TODO*///		result = r ^ s;\
+/*TODO*///	#define XOR(r,s) 
+/*TODO*///		result = r ^ s;
 /*TODO*///		vflag = cflag = 0
 /*TODO*///	
-/*TODO*///	#define IXOR(r,s) \
-/*TODO*///		result = (r ^ s) ^ 0xFFFF;\
+/*TODO*///	#define IXOR(r,s) 
+/*TODO*///		result = (r ^ s) ^ 0xFFFF;
 /*TODO*///		vflag = cflag = 0
 /*TODO*///	
 /*TODO*///	
-/*TODO*///	#define DEST0 \
+/*TODO*///	#define DEST0 
 /*TODO*///		Q = Y = zresult
 /*TODO*///	
-/*TODO*///	#define DEST1 \
+/*TODO*///	#define DEST1 
 /*TODO*///		Y = zresult
 /*TODO*///	
-/*TODO*///	#define DEST2 \
-/*TODO*///		Y = *curop->areg;\
+/*TODO*///	#define DEST2 
+/*TODO*///		Y = *curop->areg;
 /*TODO*///		*curop->breg = zresult
 /*TODO*///	
-/*TODO*///	#define DEST3 \
-/*TODO*///		*curop->breg = zresult;\
+/*TODO*///	#define DEST3 
+/*TODO*///		*curop->breg = zresult;
 /*TODO*///		Y = zresult
 /*TODO*///	
-/*TODO*///	#define DEST4_NOSHIFT \
-/*TODO*///		*curop->breg = (zresult >> 1) | ((curop->flags & 0x20) << 10);\
-/*TODO*///		Q = (Q >> 1) | ((curop->flags & 0x20) << 10);\
+/*TODO*///	#define DEST4_NOSHIFT 
+/*TODO*///		*curop->breg = (zresult >> 1) | ((curop->flags & 0x20) << 10);
+/*TODO*///		Q = (Q >> 1) | ((curop->flags & 0x20) << 10);
 /*TODO*///		Y = zresult
 /*TODO*///	
-/*TODO*///	#define DEST4_SHIFT \
-/*TODO*///		*curop->breg = (zresult >> 1) | ((nflag ^ vflag) << 15);\
-/*TODO*///		Q = (Q >> 1) | ((zresult & 0x01) << 15);\
+/*TODO*///	#define DEST4_SHIFT 
+/*TODO*///		*curop->breg = (zresult >> 1) | ((nflag ^ vflag) << 15);
+/*TODO*///		Q = (Q >> 1) | ((zresult & 0x01) << 15);
 /*TODO*///		Y = zresult
 /*TODO*///	
-/*TODO*///	#define DEST5_NOSHIFT \
-/*TODO*///		*curop->breg = (zresult >> 1) | ((curop->flags & 0x20) << 10);\
+/*TODO*///	#define DEST5_NOSHIFT 
+/*TODO*///		*curop->breg = (zresult >> 1) | ((curop->flags & 0x20) << 10);
 /*TODO*///		Y = zresult
 /*TODO*///	
-/*TODO*///	#define DEST5_SHIFT \
-/*TODO*///		*curop->breg = (zresult >> 1) | ((nflag ^ vflag) << 15);\
+/*TODO*///	#define DEST5_SHIFT 
+/*TODO*///		*curop->breg = (zresult >> 1) | ((nflag ^ vflag) << 15);
 /*TODO*///		Y = zresult
 /*TODO*///	
-/*TODO*///	#define DEST6_NOSHIFT \
-/*TODO*///		*curop->breg = zresult << 1;\
-/*TODO*///		Q = ((Q << 1) & 0xffff) | (nflag ^ 1);\
+/*TODO*///	#define DEST6_NOSHIFT 
+/*TODO*///		*curop->breg = zresult << 1;
+/*TODO*///		Q = ((Q << 1) & 0xffff) | (nflag ^ 1);
 /*TODO*///		Y = zresult
 /*TODO*///	
-/*TODO*///	#define DEST6_SHIFT \
-/*TODO*///		*curop->breg = (zresult << 1) | ((Q & 0x8000) >> 15);\
-/*TODO*///		Q = (Q << 1) & 0xffff;\
+/*TODO*///	#define DEST6_SHIFT 
+/*TODO*///		*curop->breg = (zresult << 1) | ((Q & 0x8000) >> 15);
+/*TODO*///		Q = (Q << 1) & 0xffff;
 /*TODO*///		Y = zresult
 /*TODO*///	
-/*TODO*///	#define DEST7_NOSHIFT \
-/*TODO*///		*curop->breg = zresult << 1;\
+/*TODO*///	#define DEST7_NOSHIFT 
+/*TODO*///		*curop->breg = zresult << 1;
 /*TODO*///		Y = zresult
 /*TODO*///	
-/*TODO*///	#define DEST7_SHIFT \
-/*TODO*///		*curop->breg = (zresult << 1) | ((Q & 0x8000) >> 15);\
+/*TODO*///	#define DEST7_SHIFT 
+/*TODO*///		*curop->breg = (zresult << 1) | ((Q & 0x8000) >> 15);
 /*TODO*///		Y = zresult
 /*TODO*///	
 /*TODO*///	
@@ -619,121 +621,126 @@ public class irobot
 	
 	
 	/* Run mathbox */
+        static int Q = 0;
+	static int Y = 0;
+	static int nflag = 0;
+	static int vflag = 0;
+	static int cflag = 0;
+	static int zresult = 1;
+	static int CI = 0;
+	static int SP = 0;
+	static int icount = 0;
+        static int result;
+                
 	public static void irmb_run()
 	{
-/*TODO*///		const irmb_ops *prevop = &mbops[0];
-/*TODO*///		const irmb_ops *curop = &mbops[0];
-/*TODO*///	
-/*TODO*///		UINT32 Q = 0;
-/*TODO*///		UINT32 Y = 0;
-/*TODO*///		UINT32 nflag = 0;
-/*TODO*///		UINT32 vflag = 0;
-/*TODO*///		UINT32 cflag = 0;
-/*TODO*///		UINT32 zresult = 1;
-/*TODO*///		UINT32 CI = 0;
-/*TODO*///		UINT32 SP = 0;
-		int icount = 0;
-/*TODO*///	
+		irmb_ops prevop = mbops[0];
+                irmb_ops curop = mbops[0];
+
+
 /*TODO*///		profiler_mark(PROFILER_USER1);
-/*TODO*///	
-/*TODO*///		while ((prevop->flags & (FL_DPSEL | FL_carry)) != (FL_DPSEL | FL_carry))
-/*TODO*///		{
-/*TODO*///			UINT32 result;
-/*TODO*///			UINT32 fu;
-/*TODO*///			UINT32 tmp;
-/*TODO*///	
-/*TODO*///			icount += curop->cycles;
-/*TODO*///	
-/*TODO*///			/* Get function code */
-/*TODO*///			fu = curop->func;
-/*TODO*///	
-/*TODO*///			/* Modify function for MULT */
-/*TODO*///			if (!(prevop->flags & FL_MULT) || (Q & 1))
-/*TODO*///				fu = fu ^ 0x02;
-/*TODO*///			else
-/*TODO*///				fu = fu | 0x02;
-/*TODO*///	
-/*TODO*///			/* Modify function for DIV */
-/*TODO*///			if ((prevop->flags & FL_DIV) || nflag)
-/*TODO*///				fu = fu ^ 0x08;
-/*TODO*///			else
-/*TODO*///				fu = fu | 0x08;
-/*TODO*///	
-/*TODO*///			/* Do source and operation */
-/*TODO*///			switch (fu & 0x03f)
-/*TODO*///			{
-/*TODO*///				case 0x00:	ADD(*curop->areg, Q);								break;
-/*TODO*///				case 0x01:	ADD(*curop->areg, *curop->breg);					break;
-/*TODO*///				case 0x02:	ADD(0, Q);											break;
-/*TODO*///				case 0x03:	ADD(0, *curop->breg);								break;
-/*TODO*///				case 0x04:	ADD(0, *curop->areg);								break;
-/*TODO*///				case 0x05:	tmp = irmb_din(curop); ADD(tmp, *curop->areg);		break;
-/*TODO*///				case 0x06:	tmp = irmb_din(curop); ADD(tmp, Q);					break;
-/*TODO*///				case 0x07:	tmp = irmb_din(curop); ADD(tmp, 0);					break;
-/*TODO*///				case 0x08:	SUBR(*curop->areg, Q);								break;
-/*TODO*///				case 0x09:	SUBR(*curop->areg, *curop->breg);					break;
+                /*HACK*/
+                boolean step_over = true;
+                
+		while (((prevop.flags & (FL_DPSEL | FL_carry)) != (FL_DPSEL | FL_carry))
+                        && !step_over)
+		{
+			int result=0;
+			int fu;
+			int tmp;
+	
+			icount += curop.cycles;
+	
+			/* Get function code */
+			fu = curop.func;
+	
+			/* Modify function for MULT */
+			if (((prevop.flags & FL_MULT)==0) || ((Q & 1)!=0))
+				fu = fu ^ 0x02;
+			else
+				fu = fu | 0x02;
+	
+			/* Modify function for DIV */
+			if (((prevop.flags & FL_DIV)!=0) || nflag!=0)
+				fu = fu ^ 0x08;
+			else
+				fu = fu | 0x08;
+	
+			/* Do source and operation */
+			switch (fu & 0x03f)
+			{
+				case 0x00:	ADD(curop.areg, Q);								break;
+				case 0x01:	ADD(curop.areg, curop.breg);					break;
+				case 0x02:	ADD(0, Q);											break;
+				case 0x03:	ADD(0, curop.breg);								break;
+				case 0x04:	ADD(0, curop.areg);								break;
+				case 0x05:	tmp = irmb_din(curop); ADD(tmp, curop.areg);		break;
+				case 0x06:	tmp = irmb_din(curop); ADD(tmp, Q);					break;
+				case 0x07:	tmp = irmb_din(curop); ADD(tmp, 0);					break;
+/*TODO*///				case 0x08:	SUBR(*curop.areg, Q);								break;
+/*TODO*///				case 0x09:	SUBR(*curop.areg, *curop.breg);					break;
 /*TODO*///				case 0x0a:	SUBR(0, Q);											break;
-/*TODO*///				case 0x0b:	SUBR(0, *curop->breg);								break;
-/*TODO*///				case 0x0c:	SUBR(0, *curop->areg);								break;
-/*TODO*///				case 0x0d:	tmp = irmb_din(curop); SUBR(tmp, *curop->areg);		break;
+/*TODO*///				case 0x0b:	SUBR(0, *curop.breg);								break;
+/*TODO*///				case 0x0c:	SUBR(0, *curop.areg);								break;
+/*TODO*///				case 0x0d:	tmp = irmb_din(curop); SUBR(tmp, *curop.areg);		break;
 /*TODO*///				case 0x0e:	tmp = irmb_din(curop); SUBR(tmp, Q);				break;
 /*TODO*///				case 0x0f:	tmp = irmb_din(curop); SUBR(tmp, 0);				break;
-/*TODO*///				case 0x10:	SUB(*curop->areg, Q);								break;
-/*TODO*///				case 0x11:	SUB(*curop->areg, *curop->breg);					break;
+/*TODO*///				case 0x10:	SUB(*curop.areg, Q);								break;
+/*TODO*///				case 0x11:	SUB(*curop.areg, *curop.breg);					break;
 /*TODO*///				case 0x12:	SUB(0, Q);											break;
-/*TODO*///				case 0x13:	SUB(0, *curop->breg);								break;
-/*TODO*///				case 0x14:	SUB(0, *curop->areg);								break;
-/*TODO*///				case 0x15:	tmp = irmb_din(curop); SUB(tmp, *curop->areg);		break;
+/*TODO*///				case 0x13:	SUB(0, *curop.breg);								break;
+/*TODO*///				case 0x14:	SUB(0, *curop.areg);								break;
+/*TODO*///				case 0x15:	tmp = irmb_din(curop); SUB(tmp, *curop.areg);		break;
 /*TODO*///				case 0x16:	tmp = irmb_din(curop); SUB(tmp, Q);					break;
 /*TODO*///				case 0x17:	tmp = irmb_din(curop); SUB(tmp, 0);					break;
-/*TODO*///				case 0x18:	OR(*curop->areg, Q);								break;
-/*TODO*///				case 0x19:	OR(*curop->areg, *curop->breg);						break;
+/*TODO*///				case 0x18:	OR(*curop.areg, Q);								break;
+/*TODO*///				case 0x19:	OR(*curop.areg, *curop.breg);						break;
 /*TODO*///				case 0x1a:	OR(0, Q);											break;
-/*TODO*///				case 0x1b:	OR(0, *curop->breg);								break;
-/*TODO*///				case 0x1c:	OR(0, *curop->areg);								break;
-/*TODO*///				case 0x1d:	OR(irmb_din(curop), *curop->areg);					break;
+/*TODO*///				case 0x1b:	OR(0, *curop.breg);								break;
+/*TODO*///				case 0x1c:	OR(0, *curop.areg);								break;
+/*TODO*///				case 0x1d:	OR(irmb_din(curop), *curop.areg);					break;
 /*TODO*///				case 0x1e:	OR(irmb_din(curop), Q);								break;
 /*TODO*///				case 0x1f:	OR(irmb_din(curop), 0);								break;
-/*TODO*///				case 0x20:	AND(*curop->areg, Q);								break;
-/*TODO*///				case 0x21:	AND(*curop->areg, *curop->breg);					break;
+/*TODO*///				case 0x20:	AND(*curop.areg, Q);								break;
+/*TODO*///				case 0x21:	AND(*curop.areg, *curop.breg);					break;
 /*TODO*///				case 0x22:	AND(0, Q);											break;
-/*TODO*///				case 0x23:	AND(0, *curop->breg);								break;
-/*TODO*///				case 0x24:	AND(0, *curop->areg);								break;
-/*TODO*///				case 0x25:	AND(irmb_din(curop), *curop->areg);					break;
+/*TODO*///				case 0x23:	AND(0, *curop.breg);								break;
+/*TODO*///				case 0x24:	AND(0, *curop.areg);								break;
+/*TODO*///				case 0x25:	AND(irmb_din(curop), *curop.areg);					break;
 /*TODO*///				case 0x26:	AND(irmb_din(curop), Q);							break;
 /*TODO*///				case 0x27:	AND(irmb_din(curop), 0);							break;
-/*TODO*///				case 0x28:	IAND(*curop->areg, Q);								break;
-/*TODO*///				case 0x29:	IAND(*curop->areg, *curop->breg);					break;
+/*TODO*///				case 0x28:	IAND(*curop.areg, Q);								break;
+/*TODO*///				case 0x29:	IAND(*curop.areg, *curop.breg);					break;
 /*TODO*///				case 0x2a:	IAND(0, Q);											break;
-/*TODO*///				case 0x2b:	IAND(0, *curop->breg);								break;
-/*TODO*///				case 0x2c:	IAND(0, *curop->areg);								break;
-/*TODO*///				case 0x2d:	IAND(irmb_din(curop), *curop->areg);				break;
+/*TODO*///				case 0x2b:	IAND(0, *curop.breg);								break;
+/*TODO*///				case 0x2c:	IAND(0, *curop.areg);								break;
+/*TODO*///				case 0x2d:	IAND(irmb_din(curop), *curop.areg);				break;
 /*TODO*///				case 0x2e:	IAND(irmb_din(curop), Q);							break;
 /*TODO*///				case 0x2f:	IAND(irmb_din(curop), 0);							break;
-/*TODO*///				case 0x30:	XOR(*curop->areg, Q);								break;
-/*TODO*///				case 0x31:	XOR(*curop->areg, *curop->breg);					break;
+/*TODO*///				case 0x30:	XOR(*curop.areg, Q);								break;
+/*TODO*///				case 0x31:	XOR(*curop.areg, *curop.breg);					break;
 /*TODO*///				case 0x32:	XOR(0, Q);											break;
-/*TODO*///				case 0x33:	XOR(0, *curop->breg);								break;
-/*TODO*///				case 0x34:	XOR(0, *curop->areg);								break;
-/*TODO*///				case 0x35:	XOR(irmb_din(curop), *curop->areg);					break;
+/*TODO*///				case 0x33:	XOR(0, *curop.breg);								break;
+/*TODO*///				case 0x34:	XOR(0, *curop.areg);								break;
+/*TODO*///				case 0x35:	XOR(irmb_din(curop), *curop.areg);					break;
 /*TODO*///				case 0x36:	XOR(irmb_din(curop), Q);							break;
 /*TODO*///				case 0x37:	XOR(irmb_din(curop), 0);							break;
-/*TODO*///				case 0x38:	IXOR(*curop->areg, Q);								break;
-/*TODO*///				case 0x39:	IXOR(*curop->areg, *curop->breg);					break;
+/*TODO*///				case 0x38:	IXOR(*curop.areg, Q);								break;
+/*TODO*///				case 0x39:	IXOR(*curop.areg, *curop.breg);					break;
 /*TODO*///				case 0x3a:	IXOR(0, Q);											break;
-/*TODO*///				case 0x3b:	IXOR(0, *curop->breg);								break;
-/*TODO*///				case 0x3c:	IXOR(0, *curop->areg);								break;
-/*TODO*///				case 0x3d:	IXOR(irmb_din(curop), *curop->areg);				break;
+/*TODO*///				case 0x3b:	IXOR(0, *curop.breg);								break;
+/*TODO*///				case 0x3c:	IXOR(0, *curop.areg);								break;
+/*TODO*///				case 0x3d:	IXOR(irmb_din(curop), *curop.areg);				break;
 /*TODO*///				case 0x3e:	IXOR(irmb_din(curop), Q);							break;
 /*TODO*///	default:	case 0x3f:	IXOR(irmb_din(curop), 0);							break;
-/*TODO*///			}
-/*TODO*///	
-/*TODO*///			/* Evaluate flags */
-/*TODO*///			zresult = result & 0xFFFF;
-/*TODO*///			nflag = zresult >> 15;
-/*TODO*///	
-/*TODO*///			prevop = curop;
-/*TODO*///	
+			}
+	
+			/* Evaluate flags */
+			zresult = result & 0xFFFF;
+			nflag = zresult >> 15;
+	
+			prevop = curop;
+	
 /*TODO*///			/* Do destination and jump */
 /*TODO*///			switch (fu >> 6)
 /*TODO*///			{
@@ -873,23 +880,23 @@ public class irobot
 /*TODO*///				case 0x7e:	DEST6_SHIFT;	JUMP7;	break;
 /*TODO*///				case 0x7f:	DEST7_SHIFT;	JUMP7;	break;
 /*TODO*///			}
-/*TODO*///	
-/*TODO*///			/* Do write */
-/*TODO*///			if (!(prevop->flags & FL_MBRW))
-/*TODO*///				irmb_dout(prevop, Y);
-/*TODO*///	
-/*TODO*///			/* ADDEN */
-/*TODO*///			if (!(prevop->flags & FL_ADDEN))
-/*TODO*///			{
-/*TODO*///				if (prevop->flags & FL_MBRW)
-/*TODO*///					irmb_latch = irmb_din(prevop);
-/*TODO*///				else
-/*TODO*///					irmb_latch = Y;
-/*TODO*///			}
-/*TODO*///		}
+	
+			/* Do write */
+			if ((prevop.flags & FL_MBRW) == 0)
+				irmb_dout(prevop, Y);
+	
+			/* ADDEN */
+			if ((prevop.flags & FL_ADDEN) == 0)
+			{
+				if ((prevop.flags & FL_MBRW) != 0)
+					irmb_latch = irmb_din(prevop);
+				else
+					irmb_latch = Y;
+			}
+		}
 /*TODO*///		profiler_mark(PROFILER_END);
 /*TODO*///	
-/*TODO*///		logerror("%d instructions for Mathbox \n", icount);
+/*TODO*///		logerror("%d instructions for Mathbox n", icount);
 /*TODO*///	
 /*TODO*///	
 /*TODO*///	/*TODO*///#if IR_TIMING
@@ -920,7 +927,7 @@ public class irobot
 /*TODO*///		int lp;
 /*TODO*///	
 /*TODO*///		if (i==0)
-/*TODO*///			logerror(" Address  a b func stor: Q :Y, R, S RDCSAESM da m rs\n");
+/*TODO*///			logerror(" Address  a b func stor: Q :Y, R, S RDCSAESM da m rsn");
 /*TODO*///		logerror("%04X    : ",i);
 /*TODO*///		logerror("%X ",op->areg);
 /*TODO*///		logerror("%X ",op->breg);
@@ -1032,7 +1039,7 @@ public class irobot
 /*TODO*///				logerror("0");
 /*TODO*///	
 /*TODO*///		logerror(" %02X ",op->diradd);
-/*TODO*///		logerror("%X\n",op->ramsel);
+/*TODO*///		logerror("%Xn",op->ramsel);
 /*TODO*///		if (op->jtype)
 /*TODO*///		{
 /*TODO*///			logerror("              ");
@@ -1057,11 +1064,11 @@ public class irobot
 /*TODO*///					logerror("Cl ");
 /*TODO*///					break;
 /*TODO*///				case 7:
-/*TODO*///					logerror("Return\n\n");
+/*TODO*///					logerror("Returnnn");
 /*TODO*///					break;
 /*TODO*///			}
-/*TODO*///			if (op->jtype != 7) logerror("  %04X    \n",op->nxtadd);
-/*TODO*///			if (op->jtype == 5) logerror("\n");
+/*TODO*///			if (op->jtype != 7) logerror("  %04X    n",op->nxtadd);
+/*TODO*///			if (op->jtype == 5) logerror("n");
 /*TODO*///			}
 /*TODO*///		}
 /*TODO*///	}

@@ -153,7 +153,7 @@ public class irobot
 	    new Memory_ReadAddress( 0x2000, 0x3fff, irobot_sharedmem_r ),
 	    new Memory_ReadAddress( 0x4000, 0x5fff, MRA_BANK1 ),
 	    new Memory_ReadAddress( 0x6000, 0xffff, MRA_ROM ),
-		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+            new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
 	
 	public static Memory_WriteAddress writemem[]={
