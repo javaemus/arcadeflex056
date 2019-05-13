@@ -525,13 +525,14 @@ public class irobot
 		vflag = (((r & 0x7fff) + (s & 0x7fff) + CI) >> 15) ^ cflag;
         }                        
 
-/*TODO*///	
-/*TODO*///	#define SUBR(r,s) 
+
+        public static void SUBR(int r, int s){
 /*TODO*///		COMPUTE_CI;
-/*TODO*///		result = (r ^ 0xFFFF) + s + CI;         /*S - R + CI - 1*/ 
-/*TODO*///		cflag = (result >> 16) & 1;
-/*TODO*///		vflag = (((s & 0x7fff) + ((r ^ 0xffff) & 0x7fff) + CI) >> 15) ^ cflag
-/*TODO*///	
+		result = (r ^ 0xFFFF) + s + CI;         /*S - R + CI - 1*/ 
+		cflag = (result >> 16) & 1;
+		vflag = (((s & 0x7fff) + ((r ^ 0xffff) & 0x7fff) + CI) >> 15) ^ cflag;
+        }
+        
 /*TODO*///	#define SUB(r,s) 
 /*TODO*///		COMPUTE_CI;
 /*TODO*///		result = r + (s ^ 0xFFFF) + CI;      /*R - S + CI - 1*/ 
@@ -677,14 +678,14 @@ public class irobot
 				case 0x05:	tmp = irmb_din(curop); ADD(tmp, curop.areg);		break;
 				case 0x06:	tmp = irmb_din(curop); ADD(tmp, Q);					break;
 				case 0x07:	tmp = irmb_din(curop); ADD(tmp, 0);					break;
-/*TODO*///				case 0x08:	SUBR(*curop.areg, Q);								break;
-/*TODO*///				case 0x09:	SUBR(*curop.areg, *curop.breg);					break;
-/*TODO*///				case 0x0a:	SUBR(0, Q);											break;
-/*TODO*///				case 0x0b:	SUBR(0, *curop.breg);								break;
-/*TODO*///				case 0x0c:	SUBR(0, *curop.areg);								break;
-/*TODO*///				case 0x0d:	tmp = irmb_din(curop); SUBR(tmp, *curop.areg);		break;
-/*TODO*///				case 0x0e:	tmp = irmb_din(curop); SUBR(tmp, Q);				break;
-/*TODO*///				case 0x0f:	tmp = irmb_din(curop); SUBR(tmp, 0);				break;
+				case 0x08:	SUBR(curop.areg, Q);								break;
+				case 0x09:	SUBR(curop.areg, curop.breg);					break;
+				case 0x0a:	SUBR(0, Q);											break;
+				case 0x0b:	SUBR(0, curop.breg);								break;
+				case 0x0c:	SUBR(0, curop.areg);								break;
+				case 0x0d:	tmp = irmb_din(curop); SUBR(tmp, curop.areg);		break;
+				case 0x0e:	tmp = irmb_din(curop); SUBR(tmp, Q);				break;
+				case 0x0f:	tmp = irmb_din(curop); SUBR(tmp, 0);				break;
 /*TODO*///				case 0x10:	SUB(*curop.areg, Q);								break;
 /*TODO*///				case 0x11:	SUB(*curop.areg, *curop.breg);					break;
 /*TODO*///				case 0x12:	SUB(0, Q);											break;
