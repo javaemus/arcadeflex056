@@ -115,6 +115,7 @@ import static mame056.drivers.polyplay.*;
 import static mame056.drivers.hexa.*;
 import static WIP.mame056.drivers.mcr2.*;
 import static mame056.drivers.segasyse.*;
+import static WIP.mame056.drivers.wiping.*;
 
 public class driver {
 
@@ -384,8 +385,8 @@ public class driver {
         /*TODO*///	driver_radrad,	/* (c) 1982 Nichibutsu USA */
         /*TODO*///	driver_seicross,	/* (c) 1984 + Alice */
         /*TODO*///	driver_sectrzon,	/* (c) 1984 + Alice */
-        /*TODO*///	driver_wiping,	/* (c) 1982 */
-        /*TODO*///	driver_rugrats,	/* (c) 1983 */
+        driver_wiping,	/* (c) 1982 */
+        driver_rugrats,	/* (c) 1983 */
         /*TODO*///TESTdriver_firebatl,	/* (c) 1984 Taito */
         /*TODO*///	driver_clshroad,	/* (c) 1986 Woodplace Inc. */
         /*TODO*///TESTdriver_tubep,		/* (c) 1984 + Fujitek */
