@@ -279,10 +279,17 @@ public class driver {
         /*speedbal*/ driver_speedbal,
         /*polyplay*/ driver_polyplay,
         /*hexa*/ driver_hexa,
+        /*segasyse*/driver_hangonjr,	
+        /*segasyse*/driver_transfrm,	
+        /*segasyse*/driver_astrofl,
+        /*segasyse*/driver_ridleofp,	
+        
         /**
          * GAME NOT WORKING FLAG
          */
         /*epos*/ driver_theglob3,
+        /*segasyse*/driver_fantzn2,
+        /*segasyse*/driver_opaopa,
         /**
          * GAME WRONG COLORS
          */
@@ -2259,14 +2266,7 @@ public class driver {
         /*TODO*///Sanrin Sanchan
         /*TODO*///DokiDoki Penguin Land *not confirmed
         /*TODO*///*/
-        /*TODO*///
-        /*TODO*///	/* Sega System E games (Master System hardware) */
-        	driver_hangonjr,	/* (c) 1985 */
-        	driver_transfrm,	/* 834-5803 (c) 1986 */
-        	driver_astrofl,	/* 834-5803 (c) 1986 */
-        	driver_ridleofp,	/* (c) 1986 Sega / Nasco */
-        driver_fantzn2,
-        /*TODO*///TESTdriver_opaopa,
+      
 
         /* other Sega 8-bit games */
         driver_turbo, /* (c) 1981 Sega */
