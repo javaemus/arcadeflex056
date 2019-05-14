@@ -506,20 +506,21 @@ public class irobot
         };
 	
 	
-/*TODO*///	#define COMPUTE_CI 
-/*TODO*///		CI = 0;
-/*TODO*///		if (curop->flags & FL_DPSEL)
-/*TODO*///			CI = cflag;
-/*TODO*///		else
-/*TODO*///		{
-/*TODO*///			if (curop->flags & FL_carry)
-/*TODO*///				CI = 1;
-/*TODO*///			if (!(prevop->flags & FL_DIV) && !nflag)
-/*TODO*///				CI = 1;
-/*TODO*///		}
+        public static void COMPUTE_CI(){
+		CI = 0;
+		if ((curop.flags & FL_DPSEL) != 0)
+			CI = cflag;
+		else
+		{
+			if ((curop.flags & FL_carry) != 0)
+				CI = 1;
+			if (((prevop.flags & FL_DIV)==0) && nflag==0)
+				CI = 1;
+		}
+        }
 	
 	public static void ADD(int r, int s) {
-		/*TODO*///COMPUTE_CI;
+		COMPUTE_CI();
 		result = r + s + CI;
 		cflag = (result >> 16) & 1;
 		vflag = (((r & 0x7fff) + (s & 0x7fff) + CI) >> 15) ^ cflag;
@@ -527,98 +528,163 @@ public class irobot
 
 
         public static void SUBR(int r, int s){
-/*TODO*///		COMPUTE_CI;
+		COMPUTE_CI();
 		result = (r ^ 0xFFFF) + s + CI;         /*S - R + CI - 1*/ 
 		cflag = (result >> 16) & 1;
 		vflag = (((s & 0x7fff) + ((r ^ 0xffff) & 0x7fff) + CI) >> 15) ^ cflag;
         }
         
-/*TODO*///	#define SUB(r,s) 
-/*TODO*///		COMPUTE_CI;
-/*TODO*///		result = r + (s ^ 0xFFFF) + CI;      /*R - S + CI - 1*/ 
-/*TODO*///		cflag = (result >> 16) & 1;
-/*TODO*///		vflag = (((r & 0x7fff) + ((s ^ 0xffff) & 0x7fff) + CI) >> 15) ^ cflag
-/*TODO*///	
-/*TODO*///	#define OR(r,s) 
-/*TODO*///		result = r | s;
-/*TODO*///		vflag = cflag = 0
-/*TODO*///	
-/*TODO*///	#define AND(r,s) 
-/*TODO*///		result = r & s;
-/*TODO*///		vflag = cflag = 0
-/*TODO*///	
-/*TODO*///	#define IAND(r,s) 
-/*TODO*///		result = (r ^ 0xFFFF) & s;
-/*TODO*///		vflag = cflag = 0
-/*TODO*///	
-/*TODO*///	#define XOR(r,s) 
-/*TODO*///		result = r ^ s;
-/*TODO*///		vflag = cflag = 0
-/*TODO*///	
-/*TODO*///	#define IXOR(r,s) 
-/*TODO*///		result = (r ^ s) ^ 0xFFFF;
-/*TODO*///		vflag = cflag = 0
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	#define DEST0 
-/*TODO*///		Q = Y = zresult
-/*TODO*///	
-/*TODO*///	#define DEST1 
-/*TODO*///		Y = zresult
-/*TODO*///	
-/*TODO*///	#define DEST2 
-/*TODO*///		Y = *curop->areg;
-/*TODO*///		*curop->breg = zresult
-/*TODO*///	
-/*TODO*///	#define DEST3 
-/*TODO*///		*curop->breg = zresult;
-/*TODO*///		Y = zresult
-/*TODO*///	
-/*TODO*///	#define DEST4_NOSHIFT 
-/*TODO*///		*curop->breg = (zresult >> 1) | ((curop->flags & 0x20) << 10);
-/*TODO*///		Q = (Q >> 1) | ((curop->flags & 0x20) << 10);
-/*TODO*///		Y = zresult
-/*TODO*///	
-/*TODO*///	#define DEST4_SHIFT 
-/*TODO*///		*curop->breg = (zresult >> 1) | ((nflag ^ vflag) << 15);
-/*TODO*///		Q = (Q >> 1) | ((zresult & 0x01) << 15);
-/*TODO*///		Y = zresult
-/*TODO*///	
-/*TODO*///	#define DEST5_NOSHIFT 
-/*TODO*///		*curop->breg = (zresult >> 1) | ((curop->flags & 0x20) << 10);
-/*TODO*///		Y = zresult
-/*TODO*///	
-/*TODO*///	#define DEST5_SHIFT 
-/*TODO*///		*curop->breg = (zresult >> 1) | ((nflag ^ vflag) << 15);
-/*TODO*///		Y = zresult
-/*TODO*///	
-/*TODO*///	#define DEST6_NOSHIFT 
-/*TODO*///		*curop->breg = zresult << 1;
-/*TODO*///		Q = ((Q << 1) & 0xffff) | (nflag ^ 1);
-/*TODO*///		Y = zresult
-/*TODO*///	
-/*TODO*///	#define DEST6_SHIFT 
-/*TODO*///		*curop->breg = (zresult << 1) | ((Q & 0x8000) >> 15);
-/*TODO*///		Q = (Q << 1) & 0xffff;
-/*TODO*///		Y = zresult
-/*TODO*///	
-/*TODO*///	#define DEST7_NOSHIFT 
-/*TODO*///		*curop->breg = zresult << 1;
-/*TODO*///		Y = zresult
-/*TODO*///	
-/*TODO*///	#define DEST7_SHIFT 
-/*TODO*///		*curop->breg = (zresult << 1) | ((Q & 0x8000) >> 15);
-/*TODO*///		Y = zresult
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	#define JUMP0 	curop++;
-/*TODO*///	#define JUMP1	if (cflag) curop = curop->nxtop; else curop++;
-/*TODO*///	#define JUMP2	if (zresult == 0) curop = curop->nxtop; else curop++;
-/*TODO*///	#define JUMP3	if (nflag == 0) curop = curop->nxtop; else curop++;
-/*TODO*///	#define JUMP4	if (nflag) curop = curop->nxtop; else curop++;
-/*TODO*///	#define JUMP5	curop = curop->nxtop;
-/*TODO*///	#define JUMP6	irmb_stack[SP] = curop + 1; SP = (SP + 1) & 15; curop = curop->nxtop;
-/*TODO*///	#define JUMP7	SP = (SP - 1) & 15; curop = irmb_stack[SP];
+        public static void SUB(int r, int s){
+		COMPUTE_CI();
+		result = r + (s ^ 0xFFFF) + CI;      /*R - S + CI - 1*/ 
+		cflag = (result >> 16) & 1;
+		vflag = (((r & 0x7fff) + ((s ^ 0xffff) & 0x7fff) + CI) >> 15) ^ cflag;
+        }
+	
+        public static void OR(int r, int s){
+		result = r | s;
+		vflag = cflag = 0;
+        }
+	
+	public static void AND(int r, int s){
+		result = r & s;
+		vflag = cflag = 0;
+        }
+	
+	public static void IAND(int r, int s){
+		result = (r ^ 0xFFFF) & s;
+		vflag = cflag = 0;
+        }
+	
+	public static void XOR(int r, int s){
+		result = r ^ s;
+		vflag = cflag = 0;
+        }
+	
+	public static void IXOR(int r, int s){
+		result = (r ^ s) ^ 0xFFFF;
+		vflag = cflag = 0;
+        }
+	
+	
+	public static void DEST0(){
+		Q = Y = zresult;
+        }
+	
+	public static void DEST1(){
+		Y = zresult;
+        }
+	
+	public static void DEST2(){
+		Y = curop.areg;
+		curop.breg = zresult;
+        }
+	
+	public static void DEST3(){
+		curop.breg = zresult;
+		Y = zresult;
+        }
+	
+	public static void DEST4_NOSHIFT(){
+		curop.breg = (zresult >> 1) | ((curop.flags & 0x20) << 10);
+		Q = (Q >> 1) | ((curop.flags & 0x20) << 10);
+		Y = zresult;
+        }
+	
+	public static void DEST4_SHIFT(){
+		curop.breg = (zresult >> 1) | ((nflag ^ vflag) << 15);
+		Q = (Q >> 1) | ((zresult & 0x01) << 15);
+		Y = zresult;
+        }
+	
+	public static void DEST5_NOSHIFT(){
+		curop.breg = (zresult >> 1) | ((curop.flags & 0x20) << 10);
+		Y = zresult;
+        }
+	
+	public static void DEST5_SHIFT(){
+		curop.breg = (zresult >> 1) | ((nflag ^ vflag) << 15);
+		Y = zresult;
+        }
+	
+	public static void DEST6_NOSHIFT(){
+		curop.breg = zresult << 1;
+		Q = ((Q << 1) & 0xffff) | (nflag ^ 1);
+		Y = zresult;
+        }
+	
+	public static void DEST6_SHIFT(){
+		curop.breg = (zresult << 1) | ((Q & 0x8000) >> 15);
+		Q = (Q << 1) & 0xffff;
+		Y = zresult;
+        }
+	
+	public static void DEST7_NOSHIFT(){
+		curop.breg = zresult << 1;
+		Y = zresult;
+        }
+	
+	public static void DEST7_SHIFT(){
+		curop.breg = (zresult << 1) | ((Q & 0x8000) >> 15);
+		Y = zresult;
+        }
+	
+	
+	public static void JUMP0(){ 	
+            _curop++;
+            //curop=mbops[_curop];
+        }
+        
+	public static void JUMP1(){
+            if (cflag!=0) 
+                curop = curop.nxtop; 
+            else {
+                _curop++;
+                //curop=mbops[_curop];
+            }
+        }
+        
+	public static void JUMP2(){
+            if (zresult == 0) 
+                curop = curop.nxtop;
+            else {
+                _curop++;
+                //curop=mbops[_curop];
+            }
+        } 
+        
+	public static void JUMP3(){
+            if (nflag == 0) 
+                curop = curop.nxtop;
+            else {
+                _curop++;
+                //curop=mbops[_curop];
+            }
+        }
+        
+	public static void JUMP4(){
+            if (nflag != 0) 
+                curop = curop.nxtop;
+            else {
+                _curop++;
+                //curop=mbops[_curop];
+            }
+        }
+        
+	public static void JUMP5(){
+            curop = curop.nxtop;
+        }
+        
+	public static void JUMP6(){
+            /*TODO*///irmb_stack[SP] = curop + 1;
+            irmb_stack[SP] = curop=mbops[_curop + 1];
+            SP = (SP + 1) & 15; curop = curop.nxtop;
+        }
+        
+	public static void JUMP7(){
+            SP = (SP - 1) & 15;
+            curop = irmb_stack[SP];
+        }
 	
 	
 	/* Run mathbox */
@@ -632,11 +698,15 @@ public class irobot
 	static int SP = 0;
 	static int icount = 0;
         static int result;
+        
+        static irmb_ops curop;
+        static irmb_ops prevop;
+        static int _curop = 0;
                 
 	public static void irmb_run()
 	{
-		irmb_ops prevop = mbops[0];
-                irmb_ops curop = mbops[0];
+		prevop = mbops[0];
+                curop = mbops[0];
 
 
 /*TODO*///		profiler_mark(PROFILER_USER1);
@@ -686,54 +756,54 @@ public class irobot
 				case 0x0d:	tmp = irmb_din(curop); SUBR(tmp, curop.areg);		break;
 				case 0x0e:	tmp = irmb_din(curop); SUBR(tmp, Q);				break;
 				case 0x0f:	tmp = irmb_din(curop); SUBR(tmp, 0);				break;
-/*TODO*///				case 0x10:	SUB(*curop.areg, Q);								break;
-/*TODO*///				case 0x11:	SUB(*curop.areg, *curop.breg);					break;
-/*TODO*///				case 0x12:	SUB(0, Q);											break;
-/*TODO*///				case 0x13:	SUB(0, *curop.breg);								break;
-/*TODO*///				case 0x14:	SUB(0, *curop.areg);								break;
-/*TODO*///				case 0x15:	tmp = irmb_din(curop); SUB(tmp, *curop.areg);		break;
-/*TODO*///				case 0x16:	tmp = irmb_din(curop); SUB(tmp, Q);					break;
-/*TODO*///				case 0x17:	tmp = irmb_din(curop); SUB(tmp, 0);					break;
-/*TODO*///				case 0x18:	OR(*curop.areg, Q);								break;
-/*TODO*///				case 0x19:	OR(*curop.areg, *curop.breg);						break;
-/*TODO*///				case 0x1a:	OR(0, Q);											break;
-/*TODO*///				case 0x1b:	OR(0, *curop.breg);								break;
-/*TODO*///				case 0x1c:	OR(0, *curop.areg);								break;
-/*TODO*///				case 0x1d:	OR(irmb_din(curop), *curop.areg);					break;
-/*TODO*///				case 0x1e:	OR(irmb_din(curop), Q);								break;
-/*TODO*///				case 0x1f:	OR(irmb_din(curop), 0);								break;
-/*TODO*///				case 0x20:	AND(*curop.areg, Q);								break;
-/*TODO*///				case 0x21:	AND(*curop.areg, *curop.breg);					break;
-/*TODO*///				case 0x22:	AND(0, Q);											break;
-/*TODO*///				case 0x23:	AND(0, *curop.breg);								break;
-/*TODO*///				case 0x24:	AND(0, *curop.areg);								break;
-/*TODO*///				case 0x25:	AND(irmb_din(curop), *curop.areg);					break;
-/*TODO*///				case 0x26:	AND(irmb_din(curop), Q);							break;
-/*TODO*///				case 0x27:	AND(irmb_din(curop), 0);							break;
-/*TODO*///				case 0x28:	IAND(*curop.areg, Q);								break;
-/*TODO*///				case 0x29:	IAND(*curop.areg, *curop.breg);					break;
-/*TODO*///				case 0x2a:	IAND(0, Q);											break;
-/*TODO*///				case 0x2b:	IAND(0, *curop.breg);								break;
-/*TODO*///				case 0x2c:	IAND(0, *curop.areg);								break;
-/*TODO*///				case 0x2d:	IAND(irmb_din(curop), *curop.areg);				break;
-/*TODO*///				case 0x2e:	IAND(irmb_din(curop), Q);							break;
-/*TODO*///				case 0x2f:	IAND(irmb_din(curop), 0);							break;
-/*TODO*///				case 0x30:	XOR(*curop.areg, Q);								break;
-/*TODO*///				case 0x31:	XOR(*curop.areg, *curop.breg);					break;
-/*TODO*///				case 0x32:	XOR(0, Q);											break;
-/*TODO*///				case 0x33:	XOR(0, *curop.breg);								break;
-/*TODO*///				case 0x34:	XOR(0, *curop.areg);								break;
-/*TODO*///				case 0x35:	XOR(irmb_din(curop), *curop.areg);					break;
-/*TODO*///				case 0x36:	XOR(irmb_din(curop), Q);							break;
-/*TODO*///				case 0x37:	XOR(irmb_din(curop), 0);							break;
-/*TODO*///				case 0x38:	IXOR(*curop.areg, Q);								break;
-/*TODO*///				case 0x39:	IXOR(*curop.areg, *curop.breg);					break;
-/*TODO*///				case 0x3a:	IXOR(0, Q);											break;
-/*TODO*///				case 0x3b:	IXOR(0, *curop.breg);								break;
-/*TODO*///				case 0x3c:	IXOR(0, *curop.areg);								break;
-/*TODO*///				case 0x3d:	IXOR(irmb_din(curop), *curop.areg);				break;
-/*TODO*///				case 0x3e:	IXOR(irmb_din(curop), Q);							break;
-/*TODO*///	default:	case 0x3f:	IXOR(irmb_din(curop), 0);							break;
+				case 0x10:	SUB(curop.areg, Q);								break;
+				case 0x11:	SUB(curop.areg, curop.breg);					break;
+				case 0x12:	SUB(0, Q);											break;
+				case 0x13:	SUB(0, curop.breg);								break;
+				case 0x14:	SUB(0, curop.areg);								break;
+				case 0x15:	tmp = irmb_din(curop); SUB(tmp, curop.areg);		break;
+				case 0x16:	tmp = irmb_din(curop); SUB(tmp, Q);					break;
+				case 0x17:	tmp = irmb_din(curop); SUB(tmp, 0);					break;
+				case 0x18:	OR(curop.areg, Q);								break;
+				case 0x19:	OR(curop.areg, curop.breg);						break;
+				case 0x1a:	OR(0, Q);											break;
+				case 0x1b:	OR(0, curop.breg);								break;
+				case 0x1c:	OR(0, curop.areg);								break;
+				case 0x1d:	OR(irmb_din(curop), curop.areg);					break;
+				case 0x1e:	OR(irmb_din(curop), Q);								break;
+				case 0x1f:	OR(irmb_din(curop), 0);								break;
+				case 0x20:	AND(curop.areg, Q);								break;
+				case 0x21:	AND(curop.areg, curop.breg);					break;
+				case 0x22:	AND(0, Q);											break;
+				case 0x23:	AND(0, curop.breg);								break;
+				case 0x24:	AND(0, curop.areg);								break;
+				case 0x25:	AND(irmb_din(curop), curop.areg);					break;
+				case 0x26:	AND(irmb_din(curop), Q);							break;
+				case 0x27:	AND(irmb_din(curop), 0);							break;
+				case 0x28:	IAND(curop.areg, Q);								break;
+				case 0x29:	IAND(curop.areg, curop.breg);					break;
+				case 0x2a:	IAND(0, Q);											break;
+				case 0x2b:	IAND(0, curop.breg);								break;
+				case 0x2c:	IAND(0, curop.areg);								break;
+				case 0x2d:	IAND(irmb_din(curop), curop.areg);				break;
+				case 0x2e:	IAND(irmb_din(curop), Q);							break;
+				case 0x2f:	IAND(irmb_din(curop), 0);							break;
+				case 0x30:	XOR(curop.areg, Q);								break;
+				case 0x31:	XOR(curop.areg, curop.breg);					break;
+				case 0x32:	XOR(0, Q);											break;
+				case 0x33:	XOR(0, curop.breg);								break;
+				case 0x34:	XOR(0, curop.areg);								break;
+				case 0x35:	XOR(irmb_din(curop), curop.areg);					break;
+				case 0x36:	XOR(irmb_din(curop), Q);							break;
+				case 0x37:	XOR(irmb_din(curop), 0);							break;
+				case 0x38:	IXOR(curop.areg, Q);								break;
+				case 0x39:	IXOR(curop.areg, curop.breg);					break;
+				case 0x3a:	IXOR(0, Q);											break;
+				case 0x3b:	IXOR(0, curop.breg);								break;
+				case 0x3c:	IXOR(0, curop.areg);								break;
+				case 0x3d:	IXOR(irmb_din(curop), curop.areg);				break;
+				case 0x3e:	IXOR(irmb_din(curop), Q);							break;
+	default:	case 0x3f:	IXOR(irmb_din(curop), 0);							break;
 			}
 	
 			/* Evaluate flags */
@@ -742,145 +812,145 @@ public class irobot
 	
 			prevop = curop;
 	
-/*TODO*///			/* Do destination and jump */
-/*TODO*///			switch (fu >> 6)
-/*TODO*///			{
-/*TODO*///				case 0x00:
-/*TODO*///				case 0x08:	DEST0;			JUMP0;	break;
-/*TODO*///				case 0x01:
-/*TODO*///				case 0x09:	DEST1;			JUMP0;	break;
-/*TODO*///				case 0x02:
-/*TODO*///				case 0x0a:	DEST2;			JUMP0;	break;
-/*TODO*///				case 0x03:
-/*TODO*///				case 0x0b:	DEST3;			JUMP0;	break;
-/*TODO*///				case 0x04:	DEST4_NOSHIFT;	JUMP0;	break;
-/*TODO*///				case 0x05:	DEST5_NOSHIFT;	JUMP0;	break;
-/*TODO*///				case 0x06:	DEST6_NOSHIFT;	JUMP0;	break;
-/*TODO*///				case 0x07:	DEST7_NOSHIFT;	JUMP0;	break;
-/*TODO*///				case 0x0c:	DEST4_SHIFT;	JUMP0;	break;
-/*TODO*///				case 0x0d:	DEST5_SHIFT;	JUMP0;	break;
-/*TODO*///				case 0x0e:	DEST6_SHIFT;	JUMP0;	break;
-/*TODO*///				case 0x0f:	DEST7_SHIFT;	JUMP0;	break;
-/*TODO*///	
-/*TODO*///				case 0x10:
-/*TODO*///				case 0x18:	DEST0;			JUMP1;	break;
-/*TODO*///				case 0x11:
-/*TODO*///				case 0x19:	DEST1;			JUMP1;	break;
-/*TODO*///				case 0x12:
-/*TODO*///				case 0x1a:	DEST2;			JUMP1;	break;
-/*TODO*///				case 0x13:
-/*TODO*///				case 0x1b:	DEST3;			JUMP1;	break;
-/*TODO*///				case 0x14:	DEST4_NOSHIFT;	JUMP1;	break;
-/*TODO*///				case 0x15:	DEST5_NOSHIFT;	JUMP1;	break;
-/*TODO*///				case 0x16:	DEST6_NOSHIFT;	JUMP1;	break;
-/*TODO*///				case 0x17:	DEST7_NOSHIFT;	JUMP1;	break;
-/*TODO*///				case 0x1c:	DEST4_SHIFT;	JUMP1;	break;
-/*TODO*///				case 0x1d:	DEST5_SHIFT;	JUMP1;	break;
-/*TODO*///				case 0x1e:	DEST6_SHIFT;	JUMP1;	break;
-/*TODO*///				case 0x1f:	DEST7_SHIFT;	JUMP1;	break;
-/*TODO*///	
-/*TODO*///				case 0x20:
-/*TODO*///				case 0x28:	DEST0;			JUMP2;	break;
-/*TODO*///				case 0x21:
-/*TODO*///				case 0x29:	DEST1;			JUMP2;	break;
-/*TODO*///				case 0x22:
-/*TODO*///				case 0x2a:	DEST2;			JUMP2;	break;
-/*TODO*///				case 0x23:
-/*TODO*///				case 0x2b:	DEST3;			JUMP2;	break;
-/*TODO*///				case 0x24:	DEST4_NOSHIFT;	JUMP2;	break;
-/*TODO*///				case 0x25:	DEST5_NOSHIFT;	JUMP2;	break;
-/*TODO*///				case 0x26:	DEST6_NOSHIFT;	JUMP2;	break;
-/*TODO*///				case 0x27:	DEST7_NOSHIFT;	JUMP2;	break;
-/*TODO*///				case 0x2c:	DEST4_SHIFT;	JUMP2;	break;
-/*TODO*///				case 0x2d:	DEST5_SHIFT;	JUMP2;	break;
-/*TODO*///				case 0x2e:	DEST6_SHIFT;	JUMP2;	break;
-/*TODO*///				case 0x2f:	DEST7_SHIFT;	JUMP2;	break;
-/*TODO*///	
-/*TODO*///				case 0x30:
-/*TODO*///				case 0x38:	DEST0;			JUMP3;	break;
-/*TODO*///				case 0x31:
-/*TODO*///				case 0x39:	DEST1;			JUMP3;	break;
-/*TODO*///				case 0x32:
-/*TODO*///				case 0x3a:	DEST2;			JUMP3;	break;
-/*TODO*///				case 0x33:
-/*TODO*///				case 0x3b:	DEST3;			JUMP3;	break;
-/*TODO*///				case 0x34:	DEST4_NOSHIFT;	JUMP3;	break;
-/*TODO*///				case 0x35:	DEST5_NOSHIFT;	JUMP3;	break;
-/*TODO*///				case 0x36:	DEST6_NOSHIFT;	JUMP3;	break;
-/*TODO*///				case 0x37:	DEST7_NOSHIFT;	JUMP3;	break;
-/*TODO*///				case 0x3c:	DEST4_SHIFT;	JUMP3;	break;
-/*TODO*///				case 0x3d:	DEST5_SHIFT;	JUMP3;	break;
-/*TODO*///				case 0x3e:	DEST6_SHIFT;	JUMP3;	break;
-/*TODO*///				case 0x3f:	DEST7_SHIFT;	JUMP3;	break;
-/*TODO*///	
-/*TODO*///				case 0x40:
-/*TODO*///				case 0x48:	DEST0;			JUMP4;	break;
-/*TODO*///				case 0x41:
-/*TODO*///				case 0x49:	DEST1;			JUMP4;	break;
-/*TODO*///				case 0x42:
-/*TODO*///				case 0x4a:	DEST2;			JUMP4;	break;
-/*TODO*///				case 0x43:
-/*TODO*///				case 0x4b:	DEST3;			JUMP4;	break;
-/*TODO*///				case 0x44:	DEST4_NOSHIFT;	JUMP4;	break;
-/*TODO*///				case 0x45:	DEST5_NOSHIFT;	JUMP4;	break;
-/*TODO*///				case 0x46:	DEST6_NOSHIFT;	JUMP4;	break;
-/*TODO*///				case 0x47:	DEST7_NOSHIFT;	JUMP4;	break;
-/*TODO*///				case 0x4c:	DEST4_SHIFT;	JUMP4;	break;
-/*TODO*///				case 0x4d:	DEST5_SHIFT;	JUMP4;	break;
-/*TODO*///				case 0x4e:	DEST6_SHIFT;	JUMP4;	break;
-/*TODO*///				case 0x4f:	DEST7_SHIFT;	JUMP4;	break;
-/*TODO*///	
-/*TODO*///				case 0x50:
-/*TODO*///				case 0x58:	DEST0;			JUMP5;	break;
-/*TODO*///				case 0x51:
-/*TODO*///				case 0x59:	DEST1;			JUMP5;	break;
-/*TODO*///				case 0x52:
-/*TODO*///				case 0x5a:	DEST2;			JUMP5;	break;
-/*TODO*///				case 0x53:
-/*TODO*///				case 0x5b:	DEST3;			JUMP5;	break;
-/*TODO*///				case 0x54:	DEST4_NOSHIFT;	JUMP5;	break;
-/*TODO*///				case 0x55:	DEST5_NOSHIFT;	JUMP5;	break;
-/*TODO*///				case 0x56:	DEST6_NOSHIFT;	JUMP5;	break;
-/*TODO*///				case 0x57:	DEST7_NOSHIFT;	JUMP5;	break;
-/*TODO*///				case 0x5c:	DEST4_SHIFT;	JUMP5;	break;
-/*TODO*///				case 0x5d:	DEST5_SHIFT;	JUMP5;	break;
-/*TODO*///				case 0x5e:	DEST6_SHIFT;	JUMP5;	break;
-/*TODO*///				case 0x5f:	DEST7_SHIFT;	JUMP5;	break;
-/*TODO*///	
-/*TODO*///				case 0x60:
-/*TODO*///				case 0x68:	DEST0;			JUMP6;	break;
-/*TODO*///				case 0x61:
-/*TODO*///				case 0x69:	DEST1;			JUMP6;	break;
-/*TODO*///				case 0x62:
-/*TODO*///				case 0x6a:	DEST2;			JUMP6;	break;
-/*TODO*///				case 0x63:
-/*TODO*///				case 0x6b:	DEST3;			JUMP6;	break;
-/*TODO*///				case 0x64:	DEST4_NOSHIFT;	JUMP6;	break;
-/*TODO*///				case 0x65:	DEST5_NOSHIFT;	JUMP6;	break;
-/*TODO*///				case 0x66:	DEST6_NOSHIFT;	JUMP6;	break;
-/*TODO*///				case 0x67:	DEST7_NOSHIFT;	JUMP6;	break;
-/*TODO*///				case 0x6c:	DEST4_SHIFT;	JUMP6;	break;
-/*TODO*///				case 0x6d:	DEST5_SHIFT;	JUMP6;	break;
-/*TODO*///				case 0x6e:	DEST6_SHIFT;	JUMP6;	break;
-/*TODO*///				case 0x6f:	DEST7_SHIFT;	JUMP6;	break;
-/*TODO*///	
-/*TODO*///				case 0x70:
-/*TODO*///				case 0x78:	DEST0;			JUMP7;	break;
-/*TODO*///				case 0x71:
-/*TODO*///				case 0x79:	DEST1;			JUMP7;	break;
-/*TODO*///				case 0x72:
-/*TODO*///				case 0x7a:	DEST2;			JUMP7;	break;
-/*TODO*///				case 0x73:
-/*TODO*///				case 0x7b:	DEST3;			JUMP7;	break;
-/*TODO*///				case 0x74:	DEST4_NOSHIFT;	JUMP7;	break;
-/*TODO*///				case 0x75:	DEST5_NOSHIFT;	JUMP7;	break;
-/*TODO*///				case 0x76:	DEST6_NOSHIFT;	JUMP7;	break;
-/*TODO*///				case 0x77:	DEST7_NOSHIFT;	JUMP7;	break;
-/*TODO*///				case 0x7c:	DEST4_SHIFT;	JUMP7;	break;
-/*TODO*///				case 0x7d:	DEST5_SHIFT;	JUMP7;	break;
-/*TODO*///				case 0x7e:	DEST6_SHIFT;	JUMP7;	break;
-/*TODO*///				case 0x7f:	DEST7_SHIFT;	JUMP7;	break;
-/*TODO*///			}
+			/* Do destination and jump */
+			switch (fu >> 6)
+			{
+				case 0x00:
+				case 0x08:	DEST0();			JUMP0();	break;
+				case 0x01:
+				case 0x09:	DEST1();			JUMP0();	break;
+				case 0x02:
+				case 0x0a:	DEST2();			JUMP0();	break;
+				case 0x03:
+				case 0x0b:	DEST3();			JUMP0();	break;
+				case 0x04:	DEST4_NOSHIFT();	JUMP0();	break;
+				case 0x05:	DEST5_NOSHIFT();	JUMP0();	break;
+				case 0x06:	DEST6_NOSHIFT();	JUMP0();	break;
+				case 0x07:	DEST7_NOSHIFT();	JUMP0();	break;
+				case 0x0c:	DEST4_SHIFT();	JUMP0();	break;
+				case 0x0d:	DEST5_SHIFT();	JUMP0();	break;
+				case 0x0e:	DEST6_SHIFT();	JUMP0();	break;
+				case 0x0f:	DEST7_SHIFT();	JUMP0();	break;
+	
+				case 0x10:
+				case 0x18:	DEST0();			JUMP1();	break;
+				case 0x11:
+				case 0x19:	DEST1();			JUMP1();	break;
+				case 0x12:
+				case 0x1a:	DEST2();			JUMP1();	break;
+				case 0x13:
+				case 0x1b:	DEST3();			JUMP1();	break;
+				case 0x14:	DEST4_NOSHIFT();	JUMP1();	break;
+				case 0x15:	DEST5_NOSHIFT();	JUMP1();	break;
+				case 0x16:	DEST6_NOSHIFT();	JUMP1();	break;
+				case 0x17:	DEST7_NOSHIFT();	JUMP1();	break;
+				case 0x1c:	DEST4_SHIFT();	JUMP1();	break;
+				case 0x1d:	DEST5_SHIFT();	JUMP1();	break;
+				case 0x1e:	DEST6_SHIFT();	JUMP1();	break;
+				case 0x1f:	DEST7_SHIFT();	JUMP1();	break;
+	
+				case 0x20:
+				case 0x28:	DEST0();			JUMP2();	break;
+				case 0x21:
+				case 0x29:	DEST1();			JUMP2();	break;
+				case 0x22:
+				case 0x2a:	DEST2();			JUMP2();	break;
+				case 0x23:
+				case 0x2b:	DEST3();			JUMP2();	break;
+				case 0x24:	DEST4_NOSHIFT();	JUMP2();	break;
+				case 0x25:	DEST5_NOSHIFT();	JUMP2();	break;
+				case 0x26:	DEST6_NOSHIFT();	JUMP2();	break;
+				case 0x27:	DEST7_NOSHIFT();	JUMP2();	break;
+				case 0x2c:	DEST4_SHIFT();	JUMP2();	break;
+				case 0x2d:	DEST5_SHIFT();	JUMP2();	break;
+				case 0x2e:	DEST6_SHIFT();	JUMP2();	break;
+				case 0x2f:	DEST7_SHIFT();	JUMP2();	break;
+	
+				case 0x30:
+				case 0x38:	DEST0();			JUMP3();	break;
+				case 0x31:
+				case 0x39:	DEST1();			JUMP3();	break;
+				case 0x32:
+				case 0x3a:	DEST2();			JUMP3();	break;
+				case 0x33:
+				case 0x3b:	DEST3();			JUMP3();	break;
+				case 0x34:	DEST4_NOSHIFT();	JUMP3();	break;
+				case 0x35:	DEST5_NOSHIFT();	JUMP3();	break;
+				case 0x36:	DEST6_NOSHIFT();	JUMP3();	break;
+				case 0x37:	DEST7_NOSHIFT();	JUMP3();	break;
+				case 0x3c:	DEST4_SHIFT();	JUMP3();	break;
+				case 0x3d:	DEST5_SHIFT();	JUMP3();	break;
+				case 0x3e:	DEST6_SHIFT();	JUMP3();	break;
+				case 0x3f:	DEST7_SHIFT();	JUMP3();	break;
+	
+				case 0x40:
+				case 0x48:	DEST0();			JUMP4();	break;
+				case 0x41:
+				case 0x49:	DEST1();			JUMP4();	break;
+				case 0x42:
+				case 0x4a:	DEST2();			JUMP4();	break;
+				case 0x43:
+				case 0x4b:	DEST3();			JUMP4();	break;
+				case 0x44:	DEST4_NOSHIFT();	JUMP4();	break;
+				case 0x45:	DEST5_NOSHIFT();	JUMP4();	break;
+				case 0x46:	DEST6_NOSHIFT();	JUMP4();	break;
+				case 0x47:	DEST7_NOSHIFT();	JUMP4();	break;
+				case 0x4c:	DEST4_SHIFT();	JUMP4();	break;
+				case 0x4d:	DEST5_SHIFT();	JUMP4();	break;
+				case 0x4e:	DEST6_SHIFT();	JUMP4();	break;
+				case 0x4f:	DEST7_SHIFT();	JUMP4();	break;
+	
+				case 0x50:
+				case 0x58:	DEST0();			JUMP5();	break;
+				case 0x51:
+				case 0x59:	DEST1();			JUMP5();	break;
+				case 0x52:
+				case 0x5a:	DEST2();			JUMP5();	break;
+				case 0x53:
+				case 0x5b:	DEST3();			JUMP5();	break;
+				case 0x54:	DEST4_NOSHIFT();	JUMP5();	break;
+				case 0x55:	DEST5_NOSHIFT();	JUMP5();	break;
+				case 0x56:	DEST6_NOSHIFT();	JUMP5();	break;
+				case 0x57:	DEST7_NOSHIFT();	JUMP5();	break;
+				case 0x5c:	DEST4_SHIFT();	JUMP5();	break;
+				case 0x5d:	DEST5_SHIFT();	JUMP5();	break;
+				case 0x5e:	DEST6_SHIFT();	JUMP5();	break;
+				case 0x5f:	DEST7_SHIFT();	JUMP5();	break;
+	
+				case 0x60:
+				case 0x68:	DEST0();			JUMP6();	break;
+				case 0x61:
+				case 0x69:	DEST1();			JUMP6();	break;
+				case 0x62:
+				case 0x6a:	DEST2();			JUMP6();	break;
+				case 0x63:
+				case 0x6b:	DEST3();			JUMP6();	break;
+				case 0x64:	DEST4_NOSHIFT();	JUMP6();	break;
+				case 0x65:	DEST5_NOSHIFT();	JUMP6();	break;
+				case 0x66:	DEST6_NOSHIFT();	JUMP6();	break;
+				case 0x67:	DEST7_NOSHIFT();	JUMP6();	break;
+				case 0x6c:	DEST4_SHIFT();	JUMP6();	break;
+				case 0x6d:	DEST5_SHIFT();	JUMP6();	break;
+				case 0x6e:	DEST6_SHIFT();	JUMP6();	break;
+				case 0x6f:	DEST7_SHIFT();	JUMP6();	break;
+	
+				case 0x70:
+				case 0x78:	DEST0();			JUMP7();	break;
+				case 0x71:
+				case 0x79:	DEST1();			JUMP7();	break;
+				case 0x72:
+				case 0x7a:	DEST2();			JUMP7();	break;
+				case 0x73:
+				case 0x7b:	DEST3();			JUMP7();	break;
+				case 0x74:	DEST4_NOSHIFT();	JUMP7();	break;
+				case 0x75:	DEST5_NOSHIFT();	JUMP7();	break;
+				case 0x76:	DEST6_NOSHIFT();	JUMP7();	break;
+				case 0x77:	DEST7_NOSHIFT();	JUMP7();	break;
+				case 0x7c:	DEST4_SHIFT();	JUMP7();	break;
+				case 0x7d:	DEST5_SHIFT();	JUMP7();	break;
+				case 0x7e:	DEST6_SHIFT();	JUMP7();	break;
+				case 0x7f:	DEST7_SHIFT();	JUMP7();	break;
+			}
 	
 			/* Do write */
 			if ((prevop.flags & FL_MBRW) == 0)
