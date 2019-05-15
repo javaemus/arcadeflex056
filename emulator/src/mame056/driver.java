@@ -116,6 +116,10 @@ import static mame056.drivers.hexa.*;
 import static WIP.mame056.drivers.mcr2.*;
 import static mame056.drivers.segasyse.*;
 import static WIP.mame056.drivers.wiping.*;
+import static WIP.mame056.drivers.qix.*;
+import static WIP.mame056.drivers.redclash.*;
+import static WIP.mame056.drivers.cheekyms.*;
+import static WIP.mame056.drivers.olibochu.*;
 
 public class driver {
 
@@ -733,14 +737,14 @@ public class driver {
         driver_panic, /* (c) 1980 */
         driver_panica, /* (c) 1980 */
         driver_panicger, /* (c) 1980 */
-        /*TODO*///	driver_zerohour,	/* 8011 (c) Universal */
-        /*TODO*///	driver_redclash,	/* (c) 1981 Tehkan */
-        /*TODO*///	driver_redclask,	/* (c) Kaneko (bootleg?) */
+        driver_zerohour,	/* 8011 (c) Universal */
+        driver_redclash,	/* (c) 1981 Tehkan */
+        driver_redclask,	/* (c) Kaneko (bootleg?) */
         driver_magspot2, /* 8013 (c) [1980] */
         driver_devzone, /* 8022 (c) [1980] */
         driver_nomnlnd, /* (c) [1980?] */
         driver_nomnlndg, /* (c) [1980?] + Gottlieb */
-        /*TODO*///	driver_cheekyms,	/* (c) [1980?] */
+        driver_cheekyms,	/* (c) [1980?] */
         driver_ladybug, /* (c) 1981 */
         driver_ladybugb, /* bootleg */
         driver_snapjack, /* (c) */
@@ -1063,7 +1067,7 @@ public class driver {
         /*TODO*///TESTdriver_greenber,
         /*TODO*///
         /*TODO*///	driver_redalert,	/* (c) 1981 + "GDI presents" */
-        /*TODO*///	driver_olibochu,	/* M47 (c) 1981 + "GDI presents" */
+        driver_olibochu,	/* M47 (c) 1981 + "GDI presents" */
         driver_mpatrol, /* M52 (c) 1982 */
         driver_mpatrolw, /* M52 (c) 1982 + Williams license */
         driver_troangel, /* (c) 1983 */
@@ -1178,22 +1182,22 @@ public class driver {
         /*TODO*///	driver_qbertqub,	/* GV-119 (c) 1983 Mylstar */
         /*TODO*///	driver_screwloo,	/* GV-123 (c) 1983 Mylstar - never released */
         /*TODO*///	driver_curvebal,	/* GV-134 (c) 1984 Mylstar */
-        /*TODO*///
-        /*TODO*///	/* Taito "Qix hardware" games */
-        /*TODO*///	driver_qix,		/* LK  (c) 1981 Taito America Corporation */
-        /*TODO*///	driver_qixa,		/* LK  (c) 1981 Taito America Corporation */
-        /*TODO*///	driver_qixb,		/* LK  (c) 1981 Taito America Corporation */
-        /*TODO*///	driver_qix2,		/* ??  (c) 1981 Taito America Corporation */
-        /*TODO*///	driver_sdungeon,	/* SD  (c) 1981 Taito America Corporation */
-        /*TODO*///	driver_elecyoyo,	/* YY  (c) 1982 Taito America Corporation */
-        /*TODO*///	driver_elecyoy2,	/* YY  (c) 1982 Taito America Corporation */
-        /*TODO*///	driver_kram,		/* KS  (c) 1982 Taito America Corporation */
-        /*TODO*///	driver_kram2,		/* KS  (c) 1982 Taito America Corporation */
-        /*TODO*///	driver_zookeep,	/* ZA  (c) 1982 Taito America Corporation */
-        /*TODO*///	driver_zookeep2,	/* ZA  (c) 1982 Taito America Corporation */
-        /*TODO*///	driver_zookeep3,	/* ZA  (c) 1982 Taito America Corporation */
-        /*TODO*///	driver_slither,	/* (c) 1982 Century II */
-        /*TODO*///	driver_slithera,	/* (c) 1982 Century II */
+        
+        /* Taito "Qix hardware" games */
+        driver_qix,		/* LK  (c) 1981 Taito America Corporation */
+        driver_qixa,		/* LK  (c) 1981 Taito America Corporation */
+        driver_qixb,		/* LK  (c) 1981 Taito America Corporation */
+        driver_qix2,		/* ??  (c) 1981 Taito America Corporation */
+        driver_sdungeon,	/* SD  (c) 1981 Taito America Corporation */
+        driver_elecyoyo,	/* YY  (c) 1982 Taito America Corporation */
+        driver_elecyoy2,	/* YY  (c) 1982 Taito America Corporation */
+        driver_kram,		/* KS  (c) 1982 Taito America Corporation */
+        driver_kram2,		/* KS  (c) 1982 Taito America Corporation */
+        driver_zookeep,	/* ZA  (c) 1982 Taito America Corporation */
+        driver_zookeep2,	/* ZA  (c) 1982 Taito America Corporation */
+        driver_zookeep3,	/* ZA  (c) 1982 Taito America Corporation */
+        driver_slither,	/* (c) 1982 Century II */
+        driver_slithera,	/* (c) 1982 Century II */
 
         /* Taito SJ System games */
         driver_spaceskr, /* EB  (c) 1981 Taito Corporation */
