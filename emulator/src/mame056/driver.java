@@ -120,6 +120,7 @@ import static WIP.mame056.drivers.qix.*;
 import static WIP.mame056.drivers.redclash.*;
 import static WIP.mame056.drivers.cheekyms.*;
 import static WIP.mame056.drivers.olibochu.*;
+import static WIP.mame056.drivers.gladiatr.*;
 
 public class driver {
 
@@ -1250,8 +1251,8 @@ public class driver {
         /*TODO*///	driver_flstory,	/* A45 (c) 1985 Taito Corporation */
         /*TODO*///	driver_flstoryj,	/* A45 (c) 1985 Taito Corporation (Japan) */
         /*TODO*///TESTdriver_onna34ro,	/* A52 */
-        /*TODO*///	driver_gladiatr,	/* ??? (c) 1986 Taito America Corporation (US) */
-        /*TODO*///	driver_ogonsiro,	/* ??? (c) 1986 Taito Corporation (Japan) */
+        driver_gladiatr,	/* ??? (c) 1986 Taito America Corporation (US) */
+        driver_ogonsiro,	/* ??? (c) 1986 Taito Corporation (Japan) */
         /*TODO*///	driver_lsasquad,	/* A64 (c) 1986 Taito Corporation / Taito America (dip switch) */
         /*TODO*///	driver_storming,	/* A64 (c) 1986 Taito Corporation */
         /*TODO*///	driver_tokio,		/* A71 1986 */
