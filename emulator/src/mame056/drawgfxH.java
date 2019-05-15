@@ -34,9 +34,38 @@ public class drawgfxH {
         return ((offset) & 0x007fffff);
     }
 
-    /*TODO*///
-/*TODO*///#define STEP4(START,STEP)  (START),(START)+1*(STEP),(START)+2*(STEP),(START)+3*(STEP)
-/*TODO*///#define STEP8(START,STEP)  STEP4(START,STEP),STEP4((START)+4*(STEP),STEP)
+    
+    public static int STEP4(int offset, int START, int STEP){
+        switch(offset){
+            case 0:
+                return START;
+            case 1:
+                return (START)+1*(STEP);
+            case 2:
+                return (START)+2*(STEP);
+            case 3: 
+                return (START)+3*(STEP);
+        }
+        return 0;
+    };
+    
+    public static int STEP8(int offset, int START, int STEP){
+        switch (offset){
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+                return STEP4(offset, START,STEP);
+                
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+                return STEP4(offset, (START)+4*(STEP),STEP);                
+        }
+        
+        return 0;
+    };
 /*TODO*///#define STEP16(START,STEP) STEP8(START,STEP),STEP8((START)+8*(STEP),STEP)
 /*TODO*///
 /*TODO*///

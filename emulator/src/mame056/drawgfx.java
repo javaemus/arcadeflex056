@@ -6991,9 +6991,10 @@ public class drawgfx {
                 break;
 
             case TRANSPARENCY_BLEND:
-                throw new UnsupportedOperationException("Unsupported");
+                //throw new UnsupportedOperationException("Unsupported");
+                System.out.println("Unsupported BLOCKMOVE(NtoN_blend_remap");
             /*TODO*///				BLOCKMOVE(NtoN_blend_remap,flipx,(sd,sw,sh,sm,dd,dm,Machine->pens,transparent_color));
-/*TODO*///				break;
+				break;
 /*TODO*///
             case TRANSPARENCY_BLEND_RAW:
                 throw new UnsupportedOperationException("Unsupported");
