@@ -104,6 +104,8 @@ E0     - Comunication port to 6809
  */ 
 package WIP.mame056.drivers;
 
+import static WIP.mame056.machine.tait8741H.*;
+import static WIP.mame056.machine.tait8741.*;
 import static common.libc.cstring.*;
 import static arcadeflex056.fucPtr.*;
 import static arcadeflex056.fileio.*;
@@ -203,17 +205,17 @@ public class gladiatr
 		return 0;
 	} };
 	
-	/*TODO*///static struct TAITO8741interface gsword_8741interface=
-	/*TODO*///{
-	/*TODO*///	4,         /* 4 chips */
-	/*TODO*///	{TAITO8741_MASTER,TAITO8741_SLAVE,TAITO8741_PORT,TAITO8741_PORT},/* program mode */
-	/*TODO*///	{1,0,0,0},	/* serial port connection */
-	/*TODO*///	{gladiator_dsw1_r,gladiator_dsw2_r,gladiator_button3_r,gladiator_controll_r}	/* port handler */
-	/*TODO*///};
+	static TAITO8741interface gsword_8741interface=new TAITO8741interface
+        (
+		4,         /* 4 chips */
+		new int[]{TAITO8741_MASTER,TAITO8741_SLAVE,TAITO8741_PORT,TAITO8741_PORT},/* program mode */
+		new int[]{1,0,0,0},	/* serial port connection */
+		new ReadHandlerPtr[]{gladiator_dsw1_r,gladiator_dsw2_r,gladiator_button3_r,gladiator_controll_r}	/* port handler */
+        );
 	
 	public static InitMachinePtr gladiator_machine_init = new InitMachinePtr() { public void handler()
 	{
-		/*TODO*///TAITO8741_start(&gsword_8741interface);
+		TAITO8741_start(gsword_8741interface);
 		/* 6809 bank memory set */
 		{
 			UBytePtr RAM = new UBytePtr(memory_region(REGION_CPU3));
@@ -346,14 +348,14 @@ public class gladiatr
 	
 	public static IO_ReadPort readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),	new IO_ReadPort( 0x02, 0x02, gladiatr_bankswitch_r ),
-		/*TODO*///new IO_ReadPort( 0x9e, 0x9f, TAITO8741_0_r ),
+		new IO_ReadPort( 0x9e, 0x9f, TAITO8741_0_r ),
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	public static IO_WritePort writeport[]={
 		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),	new IO_WritePort( 0x01, 0x01, gladiatr_spritebank_w),
 		new IO_WritePort( 0x02, 0x02, gladiatr_bankswitch_w),
 		new IO_WritePort( 0x04, 0x04, gladiatr_irq_patch_w), /* !!! patch to 2nd CPU IRQ !!! */
-		/*TODO*///new IO_WritePort( 0x9e, 0x9f, TAITO8741_0_w ),
+		new IO_WritePort( 0x9e, 0x9f, TAITO8741_0_w ),
 		new IO_WritePort( 0xbf, 0xbf, IOWP_NOP ),
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
@@ -361,18 +363,18 @@ public class gladiatr
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),	
                 new IO_ReadPort( 0x00, 0x00, YM2203_status_port_0_r ),
 		new IO_ReadPort( 0x01, 0x01, YM2203_read_port_0_r ),
-		/*TODO*///new IO_ReadPort( 0x20, 0x21, TAITO8741_1_r ),
+		new IO_ReadPort( 0x20, 0x21, TAITO8741_1_r ),
 		new IO_ReadPort( 0x40, 0x40, IORP_NOP ),
-		/*TODO*///new IO_ReadPort( 0x60, 0x61, TAITO8741_2_r ),
-		/*TODO*///new IO_ReadPort( 0x80, 0x81, TAITO8741_3_r ),
+		new IO_ReadPort( 0x60, 0x61, TAITO8741_2_r ),
+		new IO_ReadPort( 0x80, 0x81, TAITO8741_3_r ),
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	public static IO_WritePort writeport_cpu2[]={
 		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),	new IO_WritePort( 0x00, 0x00, YM2203_control_port_0_w ),
 		new IO_WritePort( 0x01, 0x01, YM2203_write_port_0_w ),
-		/*TODO*///new IO_WritePort( 0x20, 0x21, TAITO8741_1_w ),
-		/*TODO*///new IO_WritePort( 0x60, 0x61, TAITO8741_2_w ),
-		/*TODO*///new IO_WritePort( 0x80, 0x81, TAITO8741_3_w ),
+		new IO_WritePort( 0x20, 0x21, TAITO8741_1_w ),
+		new IO_WritePort( 0x60, 0x61, TAITO8741_2_w ),
+		new IO_WritePort( 0x80, 0x81, TAITO8741_3_w ),
 	/*	new IO_WritePort( 0x40, 0x40, glad_sh_irq_clr ), */
 		new IO_WritePort( 0xe0, 0xe0, glad_cpu_sound_command_w ),
 		new IO_WritePort(MEMPORT_MARKER, 0)
