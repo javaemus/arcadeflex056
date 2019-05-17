@@ -124,6 +124,7 @@ import static WIP.mame056.drivers.gladiatr.*;
 import static WIP.mame056.drivers.rollrace.*;
 import static WIP.mame056.drivers.wiz.*;
 import static WIP.mame056.drivers.kangaroo.*;
+import static WIP.mame056.drivers.nyny.*;
 
 public class driver {
 
@@ -3861,11 +3862,11 @@ public class driver {
         /*TODO*///	driver_sprtmtch,	/* (c) 1989 Log+Dynax + Fabtek license */
         /*TODO*///TESTdriver_ddenlovr,
         /*TODO*///TESTdriver_rongrong,
-        /*TODO*///
-        /*TODO*///	/* Sigma games */
-        /*TODO*///	driver_nyny,		/* (c) 1980 Sigma Ent. Inc. */
-        /*TODO*///	driver_nynyg,		/* (c) 1980 Sigma Ent. Inc. + Gottlieb */
-        /*TODO*///	driver_arcadia,	/* (c) 1982 Sigma Ent. Inc. */
+        
+        /* Sigma games */
+        driver_nyny,		/* (c) 1980 Sigma Ent. Inc. */
+        driver_nynyg,		/* (c) 1980 Sigma Ent. Inc. + Gottlieb */
+        driver_arcadia,	/* (c) 1982 Sigma Ent. Inc. */
         /*TODO*///	driver_spiders,	/* (c) 1981 Sigma Ent. Inc. */
         /*TODO*///	driver_spiders2,	/* (c) 1981 Sigma Ent. Inc. */
         /*TODO*///
