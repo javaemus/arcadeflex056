@@ -125,6 +125,7 @@ import static WIP.mame056.drivers.rollrace.*;
 import static WIP.mame056.drivers.wiz.*;
 import static WIP.mame056.drivers.kangaroo.*;
 import static WIP.mame056.drivers.nyny.*;
+import static WIP.mame056.drivers.strnskil.*;
 
 public class driver {
 
@@ -3709,9 +3710,9 @@ public class driver {
         driver_arabian, /* TVG13 (c) 1983 Sun Electronics */
         driver_arabiana, /* 136019			(c) 1983 Atari */
         /*TODO*///	driver_markham,	/* TVG14 (c) 1983 Sun Electronics */
-        /*TODO*///	driver_strnskil,	/* TVG15 (c) 1984 Sun Electronics */
-        /*TODO*///	driver_guiness,	/* TVG15 (c) 1984 Sun Electronics */
-        /*TODO*///	driver_pettanp,	/* TVG16 (c) 1984 Sun Electronics (Japan) */
+        driver_strnskil,	/* TVG15 (c) 1984 Sun Electronics */
+        driver_guiness,	/* TVG15 (c) 1984 Sun Electronics */
+        driver_pettanp,	/* TVG16 (c) 1984 Sun Electronics (Japan) */
         /*TODO*///	driver_ikki,		/* TVG17 (c) 1985 Sun Electronics (Japan) */
         /*TODO*///	driver_shanghai,	/* (c) 1988 Sunsoft (Sun Electronics) */
         /*TODO*///	driver_shangha2,	/* (c) 1989 Sunsoft (Sun Electronics) */
