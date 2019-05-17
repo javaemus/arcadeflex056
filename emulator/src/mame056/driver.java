@@ -126,6 +126,7 @@ import static WIP.mame056.drivers.wiz.*;
 import static WIP.mame056.drivers.kangaroo.*;
 import static WIP.mame056.drivers.nyny.*;
 import static WIP.mame056.drivers.strnskil.*;
+import static WIP.mame056.drivers.timelimt.*;
 
 public class driver {
 
@@ -3437,7 +3438,7 @@ public class driver {
         /*TODO*///	driver_funnymou,	/* (c) 1982 Chuo Co. Ltd */
         /*TODO*///	driver_suprmous,	/* (c) 1982 Taito */
         /*TODO*///	driver_machomou,	/* (c) 1982 Techstar */
-        /*TODO*///	driver_timelimt,	/* (c) 1983 Chuo Co. Ltd */
+        driver_timelimt,	/* (c) 1983 Chuo Co. Ltd */
         
         
         /* Seibu Denshi / Seibu Kaihatsu games */

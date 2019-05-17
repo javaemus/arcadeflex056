@@ -216,14 +216,14 @@ public class sndintrf {
 /*TODO*///{
 /*TODO*///	latch4 = cleared_value;
 /*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*///void soundlatch_setclearedvalue(int value)
-/*TODO*///{
-/*TODO*///	cleared_value = value;
-/*TODO*///}
-/*TODO*///
-/*TODO*///
+
+
+    public static void soundlatch_setclearedvalue(int value)
+    {
+            cleared_value = value;
+    }
+
+
 /*TODO*///
 /*TODO*///
 /*TODO*///
