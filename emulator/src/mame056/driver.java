@@ -127,6 +127,7 @@ import static WIP.mame056.drivers.kangaroo.*;
 import static WIP.mame056.drivers.nyny.*;
 import static WIP.mame056.drivers.strnskil.*;
 import static WIP.mame056.drivers.timelimt.*;
+import static WIP.mame056.drivers.thepit.*;
 
 public class driver {
 
@@ -3427,17 +3428,17 @@ public class driver {
         /*TODO*///	/* this one uses 68000+Z80 instead of the Cinematronics CPU */
         /*TODO*///	driver_cchasm,
         /*TODO*///	driver_cchasm1,	/* (c) 1983 Cinematronics / GCE */
-        /*TODO*///
-        /*TODO*///	/* "The Pit hardware" games */
-        /*TODO*///	driver_roundup,	/* (c) 1981 Amenip/Centuri */
-        /*TODO*///	driver_fitter,	/* (c) 1981 Taito */
-        /*TODO*///	driver_thepit,	/* (c) 1982 Centuri */
-        /*TODO*///	driver_intrepid,	/* (c) 1983 Nova Games Ltd. */
-        /*TODO*///	driver_intrepi2,	/* (c) 1983 Nova Games Ltd. */
-        /*TODO*///	driver_portman,	/* (c) 1982 Nova Games Ltd. */
-        /*TODO*///	driver_funnymou,	/* (c) 1982 Chuo Co. Ltd */
-        /*TODO*///	driver_suprmous,	/* (c) 1982 Taito */
-        /*TODO*///	driver_machomou,	/* (c) 1982 Techstar */
+        
+        /* "The Pit hardware" games */
+        driver_roundup,	/* (c) 1981 Amenip/Centuri */
+        driver_fitter,	/* (c) 1981 Taito */
+        driver_thepit,	/* (c) 1982 Centuri */
+        driver_intrepid,	/* (c) 1983 Nova Games Ltd. */
+        driver_intrepi2,	/* (c) 1983 Nova Games Ltd. */
+        driver_portman,	/* (c) 1982 Nova Games Ltd. */
+        driver_funnymou,	/* (c) 1982 Chuo Co. Ltd */
+        driver_suprmous,	/* (c) 1982 Taito */
+        driver_machomou,	/* (c) 1982 Techstar */
         driver_timelimt,	/* (c) 1983 Chuo Co. Ltd */
         
         
