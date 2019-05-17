@@ -122,6 +122,7 @@ import static WIP.mame056.drivers.cheekyms.*;
 import static WIP.mame056.drivers.olibochu.*;
 import static WIP.mame056.drivers.gladiatr.*;
 import static WIP.mame056.drivers.rollrace.*;
+import static WIP.mame056.drivers.wiz.*;
 
 public class driver {
 
@@ -3434,15 +3435,15 @@ public class driver {
         /*TODO*///	driver_suprmous,	/* (c) 1982 Taito */
         /*TODO*///	driver_machomou,	/* (c) 1982 Techstar */
         /*TODO*///	driver_timelimt,	/* (c) 1983 Chuo Co. Ltd */
-        /*TODO*///
-        /*TODO*///
-        /*TODO*///	/* Seibu Denshi / Seibu Kaihatsu games */
-        /*TODO*///	driver_stinger,	/* (c) 1983 Seibu Denshi */
-        /*TODO*///	driver_stinger2,	/* (c) 1983 Seibu Denshi */
-        /*TODO*///	driver_scion,		/* (c) 1984 Seibu Denshi */
-        /*TODO*///	driver_scionc,	/* (c) 1984 Seibu Denshi + Cinematronics license */
-        /*TODO*///	driver_wiz,		/* (c) 1985 Seibu Kaihatsu */
-        /*TODO*///	driver_wizt,		/* (c) 1985 Taito Corporation */
+        
+        
+        /* Seibu Denshi / Seibu Kaihatsu games */
+        driver_stinger,	/* (c) 1983 Seibu Denshi */
+        driver_stinger2,	/* (c) 1983 Seibu Denshi */
+        driver_scion,		/* (c) 1984 Seibu Denshi */
+        driver_scionc,	/* (c) 1984 Seibu Denshi + Cinematronics license */
+        driver_wiz,		/* (c) 1985 Seibu Kaihatsu */
+        driver_wizt,		/* (c) 1985 Taito Corporation */
         /*TODO*///	driver_kncljoe,	/* (c) 1985 Taito Corporation */
         /*TODO*///	driver_kncljoea,	/* (c) 1985 Taito Corporation */
         /*TODO*///	driver_empcity,	/* (c) 1986 Seibu Kaihatsu (bootleg?) */

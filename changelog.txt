@@ -1,6 +1,7 @@
 17/05/2019
 ==========
 -Added rollrace working driver
+-Added wiz working driver
 
 12/05/2019
 ==========
