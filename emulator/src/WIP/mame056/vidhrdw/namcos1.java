@@ -480,7 +480,7 @@ public class namcos1
 	
 		for (i = 0;i < TILECOLORS;i++)
 		{
-			palette_shadow_table.write(Machine.pens[i+SPRITECOLORS], (char) Machine.pens[i+SPRITECOLORS+TILECOLORS]);
+			palette_shadow_table[Machine.pens[i+SPRITECOLORS]] = (char)Machine.pens[i+SPRITECOLORS+TILECOLORS];
 		}
 	
 		return 0;

@@ -36,7 +36,7 @@ public class palette {
 /*TODO*///
 /*TODO*///
 /*TODO*///
-    public static UShortPtr palette_shadow_table = new UShortPtr(1024 * 128);
+    public static char[] palette_shadow_table;
 /*TODO*///
     public static int palette_start() {
 /*TODO*///        	int i;
@@ -84,7 +84,7 @@ public class palette {
 
         if (colormode == PALETTIZED_16BIT)
 	{
-		palette_shadow_table = new UShortPtr(total_colors*2);
+		palette_shadow_table = new char[total_colors*2];
 		if (palette_shadow_table == null)
 		{
 			palette_stop();
@@ -92,9 +92,9 @@ public class palette {
 		}
 		for (int i = 0;i < total_colors;i++)
 		{
-			palette_shadow_table.write(i, (char) i);
+			palette_shadow_table[i] = (char)i;
 			if (((Machine.drv.video_attributes & VIDEO_HAS_SHADOWS)!=0) && (i < Machine.drv.total_colors))
-				palette_shadow_table.write(i, (char) (palette_shadow_table.read(i)+ Machine.drv.total_colors));
+				palette_shadow_table[i] += Machine.drv.total_colors;
 		}
 	}
 	else
