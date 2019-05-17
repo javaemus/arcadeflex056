@@ -121,6 +121,7 @@ import static WIP.mame056.drivers.redclash.*;
 import static WIP.mame056.drivers.cheekyms.*;
 import static WIP.mame056.drivers.olibochu.*;
 import static WIP.mame056.drivers.gladiatr.*;
+import static WIP.mame056.drivers.rollrace.*;
 
 public class driver {
 
@@ -1235,8 +1236,8 @@ public class driver {
         driver_retofinv, /* A37 (c) 1985 Taito Corporation */
         driver_retofin1, /* bootleg */
         driver_retofin2, /* bootleg */
-        /*TODO*///	driver_fightrol,	/* (c) 1983 Taito */
-        /*TODO*///	driver_rollrace,	/* (c) 1983 Williams */
+        driver_fightrol,	/* (c) 1983 Taito */
+        driver_rollrace,	/* (c) 1983 Williams */
         /*TODO*///	driver_vsgongf,	/* (c) 1984 Kaneko */
         /*TODO*///	driver_tsamurai,	/* A35 (c) 1985 Taito */
         /*TODO*///	driver_tsamura2,	/* A35 (c) 1985 Taito */
