@@ -2,6 +2,7 @@
 ==========
 -Added rollrace working driver
 -Added wiz working driver
+-Added kangaroo working driver
 
 12/05/2019
 ==========

@@ -123,6 +123,7 @@ import static WIP.mame056.drivers.olibochu.*;
 import static WIP.mame056.drivers.gladiatr.*;
 import static WIP.mame056.drivers.rollrace.*;
 import static WIP.mame056.drivers.wiz.*;
+import static WIP.mame056.drivers.kangaroo.*;
 
 public class driver {
 
@@ -3700,10 +3701,10 @@ public class driver {
         /*TODO*///	driver_route16,	/* (c) 1981 Tehkan/Sun + Centuri license */
         /*TODO*///	driver_route16b,	/* bootleg */
         /*TODO*///	driver_ttmahjng,	/* Taito */
-        /*TODO*///	driver_fnkyfish,	/* (c) 1981 Sun Electronics */
-        /*TODO*///	driver_kangaroo,	/* (c) 1982 Sun Electronics */
-        /*TODO*///	driver_kangaroa,	/* 136008			(c) 1982 Atari */
-        /*TODO*///	driver_kangarob,	/* (bootleg) */
+        driver_fnkyfish,	/* (c) 1981 Sun Electronics */
+        driver_kangaroo,	/* (c) 1982 Sun Electronics */
+        driver_kangaroa,	/* 136008			(c) 1982 Atari */
+        driver_kangarob,	/* (bootleg) */
         driver_arabian, /* TVG13 (c) 1983 Sun Electronics */
         driver_arabiana, /* 136019			(c) 1983 Atari */
         /*TODO*///	driver_markham,	/* TVG14 (c) 1983 Sun Electronics */
