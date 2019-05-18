@@ -10,9 +10,9 @@ import static mame056.memoryH.*;
 import static arcadeflex036.osdepend.*;
 
 public class m6800 extends cpu_interface {
-    
+
     public int[] m6800_ICount = {50000};
-    
+
     public m6800() {
         cpu_num = CPU_M6800;
         num_irqs = 1;
@@ -28,40 +28,40 @@ public class m6800 extends cpu_interface {
         align_unit = 1;
         max_inst_len = 4;
     }
-    
+
     @Override
     public int[] get_cycle_table(int which) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public void set_cycle_table(int which, int[] new_table) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public void init() {
         m6800.insn = m6800_insn;
         m6800.cycles = cycles_6800;
         /*TODO*///state_register("m6800");
     }
-    
+
     @Override
     public String cpu_dasm(String buffer, int pc) {
         return null;
     }
-    
+
     @Override
     public int mem_address_bits_of_cpu() {
         return 16;
     }
-    
+
     @Override
     public int get_reg(int regnum) {
-        switch( regnum )
-	{
-		case REG_PC: return m6800.pc;
-/*TODO*///		case M6800_PC: return m6800.pc.w.l;
+        switch (regnum) {
+            case REG_PC:
+                return m6800.pc;
+            /*TODO*///		case M6800_PC: return m6800.pc.w.l;
 /*TODO*///		case REG_SP: return S;
 /*TODO*///		case M6800_S: return m6800.s.w.l;
 /*TODO*///		case M6800_CC: return m6800.cc;
@@ -71,75 +71,75 @@ public class m6800 extends cpu_interface {
 /*TODO*///		case M6800_NMI_STATE: return m6800.nmi_state;
 /*TODO*///		case M6800_IRQ_STATE: return m6800.irq_state[M6800_IRQ_LINE];
 /*TODO*///		case REG_PREVIOUSPC: return m6800.ppc.w.l;
-		default:
-                    throw new UnsupportedOperationException("Unsupported");
-/*TODO*///			if( regnum <= REG_SP_CONTENTS )
+            default:
+                throw new UnsupportedOperationException("Unsupported");
+            /*TODO*///			if( regnum <= REG_SP_CONTENTS )
 /*TODO*///			{
 /*TODO*///				unsigned offset = S + 2 * (REG_SP_CONTENTS - regnum);
 /*TODO*///				if( offset < 0xffff )
 /*TODO*///					return ( RM( offset ) << 8 ) | RM( offset+1 );
 /*TODO*///			}
-	}
-/*TODO*///	return 0;
+        }
+        /*TODO*///	return 0;
     }
-    
+
     @Override
     public void set_reg(int regnum, int val) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     public static class PAIR {
         //L = low 8 bits
         //H = high 8 bits
         //D = whole 16 bits
 
         public int H, L, D;
-        
+
         public void SetH(int val) {
             H = val;
             D = (H << 8) | L;
         }
-        
+
         public void SetL(int val) {
             L = val;
             D = (H << 8) | L;
         }
-        
+
         public void SetD(int val) {
             D = val;
             H = D >> 8 & 0xFF;
             L = D & 0xFF;
         }
-        
+
         public void AddH(int val) {
             H = (H + val) & 0xFF;
             D = (H << 8) | L;
         }
-        
+
         public void AddL(int val) {
             L = (L + val) & 0xFF;
             D = (H << 8) | L;
         }
-        
+
         public void AddD(int val) {
             D = (D + val) & 0xFFFF;
             H = D >> 8 & 0xFF;
             L = D & 0xFF;
         }
     };
-    
+
     public static class PAIRD {
         //L = low 16 bits
         //H = high 16 bits
         //D = whole 32 bits
 
         public long H, L, D;
-        
+
         public void SetH(long val) {
             H = val;
             D = (H << 16) | L;
         }
-        
+
         public void SetL(long val) {
             L = val;
             D = (H << 16) | L;
@@ -156,23 +156,23 @@ public class m6800 extends cpu_interface {
             L = ((val << 8) & 0xFF) | (L & 0xFF);
             D = (H << 16) | L;
         }
-        
+
         public void SetD(long val) {
             D = val;
             H = D >> 16 & 0xFFFF;
             L = D & 0xFFFF;
         }
-        
+
         public void AddH(long val) {
             H = (H + val) & 0xFFFF;
             D = (H << 16) | L;
         }
-        
+
         public void AddL(long val) {
             L = (L + val) & 0xFFFF;
             D = (H << 16) | L;
         }
-        
+
         public void AddD(long val) {
             D = (D + val) & 0xFFFFFFFFL;
             H = D >> 16 & 0xFFFF;
@@ -181,73 +181,72 @@ public class m6800 extends cpu_interface {
     };
 
     /* 6800 Registers */
-    
     public static class m6800_Regs {
 
         //	int 	subtype;		/* CPU subtype */
         public /*PAIR*/ int ppc;
         /* Previous program counter */
-        
+
         public /*PAIR*/ int pc;
         /* Program counter */
-        
+
         public int /*PAIR*/ s;
         /* Stack pointer */
-        
+
         public int/*PAIR*/ x;
         /* Index register */
-        
+
         public int a;
         public int b;//public PAIR d;				/* Accumulators */
 
         public int /*UINT8*/ cc;
         /* Condition codes */
-        
+
         public int /*UINT8*/ wai_state;
         /* WAI opcode state ,(or sleep opcode state) */
-        
+
         public int /*UINT8*/ nmi_state;
         /* NMI line state */
-        
+
         public int[] /*UINT8*/ irq_state = new int[2];
         /* IRQ line state [IRQ1,TIN] */
-        
+
         public int /*UINT8*/ ic_eddge;
         /* InputCapture eddge , b.0=fall,b.1=raise */
-        
+
         public irqcallbacksPtr irq_callback;
         public int extra_cycles;
         /* cycles used for interrupts */
-        
+
         public opcode[] insn;
         /* instruction table */
  /*const UINT8*/ public int[] cycles;
         /* clock cycle of instruction table */
  /* internal registers */
-        
+
         public int /*UINT8*/ port1_ddr;
         public int /*UINT8*/ port2_ddr;
         public int /*UINT8*/ port1_data;
         public int /*UINT8*/ port2_data;
         public int /*UINT8*/ tcsr;
         /* Timer Control and Status Register */
-        
+
         public int /*UINT8*/ pending_tcsr;
         /* pending IRQ flag for clear IRQflag process */
-        
+
         public int /*UINT8*/ irq2;
         /* IRQ2 flags */
-        
+
         public int /*UINT8*/ ram_ctrl;
         public PAIRD counter = new PAIRD();
         /* free running counter */
-        
+
         public PAIRD output_compare = new PAIRD();
         /* output compare       */
-        
+
         public int /*UINT16*/ input_capture;
         /* input capture        */
-        
+
         public PAIRD timer_over = new PAIRD();
     }
     public static m6800_Regs m6800 = new m6800_Regs();
@@ -277,39 +276,38 @@ public class m6800 extends cpu_interface {
 
     /* CC masks                       HI NZVC
      7654 3210	*/
-    
     public void CLR_HNZVC() {
         m6800.cc &= 0xd0;
     }
-    
+
     public void CLR_NZV() {
         m6800.cc &= 0xf1;
     }
-    
+
     public void CLR_HNZC() {
         m6800.cc &= 0xd2;
     }
-    
+
     public void CLR_NZVC() {
         m6800.cc &= 0xf0;
     }
-    
+
     public void CLR_Z() {
         m6800.cc &= 0xfb;
     }
-    
+
     public void CLR_NZC() {
         m6800.cc &= 0xf2;
     }
-    
+
     public void CLR_ZC() {
         m6800.cc &= 0xfa;
     }
-    
+
     public void CLR_C() {
         m6800.cc &= 0xfe;
     }
-    
+
     int flags8i[]
             = /* increment */ {
                 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -348,11 +346,11 @@ public class m6800 extends cpu_interface {
                 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08,
                 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08
             };
-    
+
     public void SET_FLAGS8I(int a) {
         m6800.cc |= flags8i[(a) & 0xff];
     }
-    
+
     public void SET_FLAGS8D(int a) {
         m6800.cc |= flags8d[(a) & 0xff];
     }
@@ -362,19 +360,19 @@ public class m6800 extends cpu_interface {
         SET_N8(a);
         SET_Z(a);
     }
-    
+
     public void SET_NZ16(int a) {
         SET_N16(a);
         SET_Z(a);
     }
-    
+
     public void SET_FLAGS8(int a, int b, int r) {
         SET_N8(r);
         SET_Z8(r);
         SET_V8(a, b, r);
         SET_C8(r);
     }
-    
+
     public void SET_FLAGS16(int a, int b, int r) {
         SET_N16(r);
         SET_Z16(r);
@@ -383,103 +381,102 @@ public class m6800 extends cpu_interface {
     }
 
     /* macros for CC -- CC bits affected should be reset before calling */
-    
     public void SET_Z(int a) {
         if (a == 0) {
             SEZ();
         }
     }
-    
+
     public void SET_Z8(int a) {
         SET_Z(a & 0xFF);
     }
-    
+
     public void SET_Z16(int a) {
         SET_Z(a & 0xFFFF);
     }
-    
+
     public void SET_N8(int a) {
         m6800.cc |= ((a & 0x80) >> 4);
     }
-    
+
     public void SET_N16(int a) {
         m6800.cc |= ((a & 0x8000) >> 12);
     }
-    
+
     public void SET_H(int a, int b, int r) {
         m6800.cc |= (((a ^ b ^ r) & 0x10) << 1);
     }
-    
+
     public void SET_C8(int a) {
         m6800.cc |= ((a & 0x100) >> 8);
     }
-    
+
     public void SET_C16(int a) {
         m6800.cc |= ((a & 0x10000) >> 16);
     }
-    
+
     public void SET_V8(int a, int b, int r) {
         m6800.cc |= (((a ^ b ^ r ^ (r >> 1)) & 0x80) >> 6);
     }
-    
+
     public void SET_V16(int a, int b, int r) {
         m6800.cc |= (((a ^ b ^ r ^ (r >> 1)) & 0x8000) >> 14);
     }
-    
+
     public static int RM(int addr) {
         return (cpu_readmem16(addr) & 0xFF);
     }
-    
+
     public static void WM(int addr, int value) {
         cpu_writemem16(addr, value);
     }
-    
+
     public char ROP(int addr) {
         return cpu_readop(addr);
     }
-    
+
     public char ROP_ARG(int addr) {
         return cpu_readop_arg(addr);
     }
-    
+
     static int RM16(int addr) {
         int i = RM(addr + 1 & 0xFFFF);
         i |= RM(addr) << 8;
         return i;
     }
-    
+
     static void WM16(int addr, int reg) {
         WM(addr + 1 & 0xFFFF, reg & 0xFF);
         WM(addr, reg >> 8);
     }
-    
+
     public char M_RDOP(int addr) {
         return cpu_readop(addr);
     }
-    
+
     public char M_RDOP_ARG(int addr) {
         return cpu_readop_arg(addr);
     }
-    
+
     public int IMMBYTE() {
         int reg = M_RDOP_ARG(m6800.pc);
         m6800.pc = (m6800.pc + 1) & 0xFFFF;
         return reg & 0xFF;//insure it returns a 8bit value
     }
-    
+
     public int IMMWORD() {
         int reg = (M_RDOP_ARG(m6800.pc) << 8) | M_RDOP_ARG((m6800.pc + 1) & 0xffff);
         m6800.pc = m6800.pc + 2 & 0xFFFF;
         return reg;
     }
-    
+
     public static void PUSHBYTE(int w)//WM(SD,b); --S
     {
         WM(m6800.s, w);
         m6800.s = m6800.s - 1 & 0xFFFF;
-        
+
     }
-    
+
     public static void PUSHWORD(int w)//WM(SD,w.b.l); --S; WM(SD,w.b.h); --S
     {
         WM(m6800.s, w & 0xFF);
@@ -491,122 +488,121 @@ public class m6800 extends cpu_interface {
     public static int PULLBYTE()//S++; b = RM(SD)
     {
         m6800.s = m6800.s + 1 & 0xFFFF;
-        int b = RM(m6800.s);        
+        int b = RM(m6800.s);
         return b;
     }
 
     public static int PULLWORD()//S++; w.d = RM(SD)<<8; S++; w.d |= RM(SD)
     {
-        m6800.s = m6800.s + 1 & 0xFFFF;        
+        m6800.s = m6800.s + 1 & 0xFFFF;
         int w = RM(m6800.s) << 8;
-        m6800.s = m6800.s + 1 & 0xFFFF;        
+        m6800.s = m6800.s + 1 & 0xFFFF;
         w |= RM(m6800.s);
-        
+
         return w;
     }
-    
+
     public static void CHANGE_PC() {
         change_pc16(m6800.pc & 0xFFFF);//ensure it's 16bit just in case
     }
 
     /* macros to set status flags */
-    
     public void SEC() {
         m6800.cc |= 0x01l;
     }
-    
+
     public void CLC() {
         m6800.cc &= 0xfe;
     }
-    
+
     public void SEZ() {
         m6800.cc |= 0x04;
     }
-    
+
     public void CLZ() {
         m6800.cc &= 0xfb;
     }
-    
+
     public void SEN() {
         m6800.cc |= 0x08;
     }
-    
+
     public void CLN() {
         m6800.cc &= 0xf7;
     }
-    
+
     public void SEV() {
         m6800.cc |= 0x02;
     }
-    
+
     public void CLV() {
         m6800.cc &= 0xfd;
     }
-    
+
     public void SEH() {
         m6800.cc |= 0x20;
     }
-    
+
     public void CLH() {
         m6800.cc &= 0xdf;
     }
-    
+
     public static void SEI() {
         m6800.cc |= 0x10;
     }
-    
+
     public void CLI() {
         m6800.cc &= ~0x10;
     }
-    
+
     public void DIRECT() {
         ea = IMMBYTE();
     }
-    
+
     public void EXTENDED() {
         ea = IMMWORD();
     }
-    
+
     public void INDEXED() {
         ea = m6800.x + (M_RDOP_ARG(m6800.pc) & 0xFF);
         m6800.pc = (m6800.pc + 1) & 0xFFFF;
     }
-    
+
     public int DIRBYTE() {
         DIRECT();
         return RM(ea);
     }
-    
+
     public int DIRWORD() {
         DIRECT();
         return RM16(ea);
     }
-    
+
     public int EXTBYTE() {
         EXTENDED();
         return RM(ea);
     }
-    
+
     public int EXTWORD() {
         EXTENDED();
         return RM16(ea);
     }
-    
+
     public int IDXBYTE() {
         INDEXED();
         return RM(ea);
     }
-    
+
     public int IDXWORD() {
         INDEXED();
         return RM16(ea);
     }
-    
+
     int getDreg()//compose dreg
     {
         return m6800.a << 8 | m6800.b;
     }
-    
+
     void setDreg(int reg) //write to dreg
     {
         m6800.a = reg >> 8 & 0xFF;
@@ -633,29 +629,28 @@ public class m6800 extends cpu_interface {
     public static final int TCSR_TOF = 0x20;
     public static final int TCSR_OCF = 0x40;
     public static final int TCSR_ICF = 0x80;
-    
+
     public static void MODIFIED_tcsr() {
         m6800.irq2 = (m6800.tcsr & (m6800.tcsr << 3)) & (TCSR_ICF | TCSR_OCF | TCSR_TOF);
     }
-    
+
     public static void SET_TIMRE_EVENT() {
         timer_next = (m6800.output_compare.D < m6800.timer_over.D) ? m6800.output_compare.D : m6800.timer_over.D;
     }
 
-    public static void MODIFIED_counters() {        
-        m6800.output_compare.SetH((m6800.output_compare.L >= m6800.counter.L) ? m6800.counter.H : m6800.counter.H + 1);        
-        SET_TIMRE_EVENT();        
+    public static void MODIFIED_counters() {
+        m6800.output_compare.SetH((m6800.output_compare.L >= m6800.counter.L) ? m6800.counter.H : m6800.counter.H + 1);
+        SET_TIMRE_EVENT();
     }
 
     /* cleanup high-word of counters */
-    
     public void CLEANUP_conters() {
         m6800.output_compare.SetH(m6800.output_compare.H - m6800.counter.H);//OCH -= CTH;
         m6800.timer_over.SetL(m6800.timer_over.H - m6800.counter.H);//TOH -= CTH;
         m6800.counter.SetH(0);//CTH = 0;								
         SET_TIMRE_EVENT();
     }
-    
+
     public void INCREMENT_COUNTER(int amount) {
         m6800_ICount[0] -= amount;
         m6800.timer_over.SetD(m6800.timer_over.D + amount);//CTD += amount;					
@@ -663,10 +658,10 @@ public class m6800 extends cpu_interface {
             check_timer_event();
         }
     }
-    
+
     public void EAT_CYCLES() {
         int cycles_to_eat;
-        
+
         cycles_to_eat = (int) (timer_next - m6800.counter.D);
         if (cycles_to_eat > m6800_ICount[0]) {
             cycles_to_eat = m6800_ICount[0];
@@ -677,7 +672,6 @@ public class m6800 extends cpu_interface {
     }
 
     /* check OCI or TOI */
-    
     public void check_timer_event() {
         /* OCI */
         if (m6800.timer_over.D >= m6800.output_compare.D) {
@@ -705,29 +699,27 @@ public class m6800 extends cpu_interface {
     }
 
     /* take interrupt */
-    
     public static void TAKE_ICI() {
         ENTER_INTERRUPT("M6800#%d take ICI\n", 0xfff6);
     }
-    
+
     public static void TAKE_OCI() {
         ENTER_INTERRUPT("M6800#%d take OCI\n", 0xfff4);
     }
-    
+
     public static void TAKE_TOI() {
         ENTER_INTERRUPT("M6800#%d take TOI\n", 0xfff2);
     }
-    
+
     public static void TAKE_SCI() {
         ENTER_INTERRUPT("M6800#%d take SCI\n", 0xfff0);
     }
-    
+
     public static void TAKE_TRAP() {
         ENTER_INTERRUPT("M6800#%d take TRAP\n", 0xffee);
     }
 
     /* IRQ enter */
-    
     public static void ENTER_INTERRUPT(String message, int irq_vector) {
         //LOG((errorlog, message, cpu_getactivecpu()));
         if ((m6800.wai_state & (M6800_WAI | M6800_SLP)) != 0) {
@@ -749,7 +741,6 @@ public class m6800 extends cpu_interface {
     }
 
     /* operate one instruction for */
-    
     public void ONE_MORE_INSN() {
         int ireg;
         m6800.ppc = m6800.pc;
@@ -761,12 +752,11 @@ public class m6800 extends cpu_interface {
     }
 
     /* check the IRQ lines for pending interrupts */
-    
     public void CHECK_IRQ_LINES() {
         if ((m6800.cc & 0x10) == 0) {
             if (m6800.irq_state[M6800_IRQ_LINE] != CLEAR_LINE) {
                 /* stanadrd IRQ */
-                
+
                 ENTER_INTERRUPT("M6800#%d take IRQ1\n", 0xfff8);
                 if (m6800.irq_callback != null) {
                     m6800.irq_callback.handler(M6800_IRQ_LINE);
@@ -778,7 +768,6 @@ public class m6800 extends cpu_interface {
     }
 
     /* check IRQ2 (internal irq) */
-    
     public static void CHECK_IRQ2() {
         if ((m6800.irq2 & (TCSR_ICF | TCSR_OCF | TCSR_TOF)) != 0) {
             if ((m6800.irq2 & TCSR_ICF) != 0) {
@@ -793,21 +782,21 @@ public class m6800 extends cpu_interface {
             }
         }
     }
-    
+
     @Override
     public void reset(Object param) {
         SEI();
         /* IRQ disabled */
-        
+
         m6800.pc = RM16(0xfffe);
         CHANGE_PC();
-        
+
         m6800.wai_state = 0;
         m6800.nmi_state = 0;
         m6800.irq_state[M6800_IRQ_LINE] = 0;
         m6800.irq_state[M6800_TIN_LINE] = 0;
         m6800.ic_eddge = 0;
-        
+
         m6800.port1_ddr = 0x00;
         m6800.port2_ddr = 0x00;
         /* TODO: on reset port 2 should be read to determine the operating mode (bits 0-2) */
@@ -819,37 +808,37 @@ public class m6800 extends cpu_interface {
         m6800.timer_over.SetD(0xffff);
         m6800.ram_ctrl |= 0x40;
     }
-    
+
     @Override
     public void exit() {
-        
+
     }
-    
+
     @Override
     public int execute(int cycles) {
         /*UINT8*/
         int ireg;
         m6800_ICount[0] = cycles;
-        
+
         CLEANUP_conters();
         INCREMENT_COUNTER(m6800.extra_cycles);
         m6800.extra_cycles = 0;
-        
+
         if ((m6800.wai_state & M6800_WAI) != 0) {
             EAT_CYCLES();
             //goto getout;
             INCREMENT_COUNTER(m6800.extra_cycles);
             m6800.extra_cycles = 0;
-            
+
             return cycles - m6800_ICount[0];
         }
-        
+
         do {
             m6800.ppc = m6800.pc;//pPPC = pPC;
             //CALL_MAME_DEBUG;
             ireg = M_RDOP(m6800.pc);
             m6800.pc = (m6800.pc + 1) & 0xFFFF;
-            
+
             switch (ireg) {
                 case 0x00:
                     illegal.handler();
@@ -1626,25 +1615,55 @@ public class m6800 extends cpu_interface {
 //getout:
         INCREMENT_COUNTER(m6800.extra_cycles);
         m6800.extra_cycles = 0;
-        
+
         return cycles - m6800_ICount[0];
     }
-    
+
     @Override
     public Object init_context() {
         Object reg = new m6800_Regs();
         return reg;
     }
-    
+
     @Override
     public Object get_context() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        m6800_Regs regs = new m6800_Regs();
+        regs.ppc = m6800.ppc;
+        regs.pc = m6800.pc;
+        regs.s = m6800.s;
+        regs.x = m6800.x;
+        regs.a = m6800.a;
+        regs.b = m6800.b;
+        regs.cc = m6800.cc;
+        regs.wai_state = m6800.wai_state;
+        regs.nmi_state = m6800.nmi_state;
+        regs.irq_state[0] = m6800.irq_state[0];
+        regs.irq_state[1] = m6800.irq_state[1];
+        regs.ic_eddge = m6800.ic_eddge;
+        regs.irq_callback = m6800.irq_callback;
+        regs.extra_cycles = m6800.extra_cycles;
+        regs.insn = m6800.insn;
+        regs.cycles = m6800.cycles;
+
+        regs.port1_ddr = m6800.port1_ddr;
+        regs.port2_ddr = m6800.port1_ddr;
+        regs.port1_data = m6800.port1_data;
+        regs.port2_data = m6800.port2_data;
+        regs.tcsr = m6800.tcsr;
+        regs.pending_tcsr = m6800.pending_tcsr;
+        regs.irq2 = m6800.irq2;
+        regs.ram_ctrl = m6800.ram_ctrl;
+        regs.counter.SetD(m6800.counter.D);
+        regs.output_compare.SetD(m6800.output_compare.D);
+        regs.input_capture = m6800.input_capture;
+        regs.timer_over.SetD(m6800.timer_over.D);
+        return regs;
     }
-    
+
     @Override
     public void set_context(Object reg) {
         m6800_Regs Regs = (m6800_Regs) reg;
-        
+
         m6800.ppc = Regs.ppc;
         m6800.pc = Regs.pc;
         m6800.s = Regs.s;
@@ -1661,7 +1680,7 @@ public class m6800 extends cpu_interface {
         m6800.extra_cycles = Regs.extra_cycles;
         m6800.insn = Regs.insn;
         m6800.cycles = Regs.cycles;
-        
+
         m6800.port1_ddr = Regs.port1_ddr;
         m6800.port2_ddr = Regs.port1_ddr;
         m6800.port1_data = Regs.port1_data;
@@ -1674,67 +1693,68 @@ public class m6800 extends cpu_interface {
         m6800.output_compare.SetD(Regs.output_compare.D);
         m6800.input_capture = Regs.input_capture;
         m6800.timer_over.SetD(Regs.timer_over.D);
-        
+
         CHANGE_PC();
         CHECK_IRQ_LINES();
         /* HJB 990417 */
     }
-    
+
     @Override
     public void set_irq_line(int irqline, int state) {
-        if (irqline == IRQ_LINE_NMI)
-	{
-		if (m6800.nmi_state == state) return;
-		//LOG(("M6800#%d set_nmi_line %d \n", cpu_getactivecpu(), state));
-		m6800.nmi_state = state;
-		if (state == CLEAR_LINE) return;
-
-		/* NMI */
-		ENTER_INTERRUPT("M6800#%d take NMI\n",0xfffc);
-	}
-	else
-	{
-        int eddge;
-        
-        if (m6800.irq_state[irqline] == state) {
-            return;
-        }
-        //LOG((errorlog, "M6800#%d set_irq_line %d,%d\n", cpu_getactivecpu(), irqline, state));
-        m6800.irq_state[irqline] = state;
-        
-        switch (irqline) {
-            case M6800_IRQ_LINE:
-                if (state == CLEAR_LINE) {
-                    return;
-                }
-                break;
-            case M6800_TIN_LINE:
-                eddge = (state == CLEAR_LINE) ? 2 : 0;
-                if (((m6800.tcsr & TCSR_IEDG) ^ (state == CLEAR_LINE ? TCSR_IEDG : 0)) == 0) {
-                    return;
-                }
-                /* active eddge in */
-                m6800.tcsr |= TCSR_ICF;
-                m6800.pending_tcsr |= TCSR_ICF;
-                m6800.input_capture = (int) m6800.counter.L;
-                MODIFIED_tcsr();
-                if ((m6800.cc & 0x10) == 0) {
-                    CHECK_IRQ2();
-                }
-                break;
-            default:
+        if (irqline == IRQ_LINE_NMI) {
+            if (m6800.nmi_state == state) {
                 return;
-        }
-        CHECK_IRQ_LINES();
-        /* HJB 990417 */
+            }
+            //LOG(("M6800#%d set_nmi_line %d \n", cpu_getactivecpu(), state));
+            m6800.nmi_state = state;
+            if (state == CLEAR_LINE) {
+                return;
+            }
+
+            /* NMI */
+            ENTER_INTERRUPT("M6800#%d take NMI\n", 0xfffc);
+        } else {
+            int eddge;
+
+            if (m6800.irq_state[irqline] == state) {
+                return;
+            }
+            //LOG((errorlog, "M6800#%d set_irq_line %d,%d\n", cpu_getactivecpu(), irqline, state));
+            m6800.irq_state[irqline] = state;
+
+            switch (irqline) {
+                case M6800_IRQ_LINE:
+                    if (state == CLEAR_LINE) {
+                        return;
+                    }
+                    break;
+                case M6800_TIN_LINE:
+                    eddge = (state == CLEAR_LINE) ? 2 : 0;
+                    if (((m6800.tcsr & TCSR_IEDG) ^ (state == CLEAR_LINE ? TCSR_IEDG : 0)) == 0) {
+                        return;
+                    }
+                    /* active eddge in */
+                    m6800.tcsr |= TCSR_ICF;
+                    m6800.pending_tcsr |= TCSR_ICF;
+                    m6800.input_capture = (int) m6800.counter.L;
+                    MODIFIED_tcsr();
+                    if ((m6800.cc & 0x10) == 0) {
+                        CHECK_IRQ2();
+                    }
+                    break;
+                default:
+                    return;
+            }
+            CHECK_IRQ_LINES();
+            /* HJB 990417 */
         }
     }
-    
+
     @Override
     public void set_irq_callback(irqcallbacksPtr callback) {
         m6800.irq_callback = callback;
     }
-    
+
     @Override
     public String cpu_info(Object context, int regnum) {
         switch (regnum) {
@@ -1751,27 +1771,27 @@ public class m6800 extends cpu_interface {
         }
         throw new UnsupportedOperationException("Unsupported");
     }
-    
+
     @Override
     public int memory_read(int offset) {
         return cpu_readmem16(offset);
     }
-    
+
     @Override
     public void memory_write(int offset, int data) {
         cpu_writemem16(offset, data);
     }
-    
+
     @Override
     public void set_op_base(int pc) {
         cpu_setOPbase16.handler(pc);
     }
-    
+
     @Override
     public int internal_read(int offset) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     @Override
     public void internal_write(int offset, int data) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -1780,7 +1800,7 @@ public class m6800 extends cpu_interface {
     public opcode illegal = new opcode() {
         public void handler() {
             logerror("M6808: illegal opcode: address %04X, op %02X\n", m6800.pc, (int) M_RDOP_ARG(m6800.pc) & 0xFF);
-            
+
         }
     };
 
@@ -1788,7 +1808,7 @@ public class m6800 extends cpu_interface {
     public opcode trap = new opcode() {
         public void handler() {
             logerror("M6808: illegal opcode: address %04X, op %02X\n", m6800.pc, (int) M_RDOP_ARG(m6800.pc) & 0xFF);
-            
+
             TAKE_TRAP();
         }
     };
@@ -1838,7 +1858,7 @@ public class m6800 extends cpu_interface {
             ONE_MORE_INSN();
             CHECK_IRQ_LINES();
             /* HJB 990417 */
-            
+
         }
     };
 
@@ -1902,7 +1922,7 @@ public class m6800 extends cpu_interface {
             ONE_MORE_INSN();
             CHECK_IRQ_LINES();
             /* HJB 990417 */
-            
+
         }
     };
 
@@ -1913,7 +1933,7 @@ public class m6800 extends cpu_interface {
             ONE_MORE_INSN();
             CHECK_IRQ_LINES();
             /* HJB 990417 */
-            
+
         }
     };
 
@@ -2006,7 +2026,7 @@ public class m6800 extends cpu_interface {
             t = cf + m6800.a;
             CLR_NZV();
             /* keep carry from previous operation */
-            
+
             SET_NZ8(/*(UINT8)*/t & 0xFF);
             SET_C8(t);
             m6800.a = t & 0xFF;
@@ -2034,7 +2054,7 @@ public class m6800 extends cpu_interface {
             SET_FLAGS8(m6800.a, m6800.b, t);
             SET_H(m6800.a, m6800.a, t);
             m6800.a = t & 0xFF;
-            
+
         }
     };
     /* $20 BRA relative ----- */
@@ -2055,7 +2075,7 @@ public class m6800 extends cpu_interface {
     public opcode brn = new opcode() {
         public void handler() {
             int t = IMMBYTE();
-            
+
         }
     };
 
@@ -2070,7 +2090,7 @@ public class m6800 extends cpu_interface {
     public opcode bls = new opcode() {
         public void handler() {
             BRANCH((m6800.cc & (0x05)) != 0);
-            
+
         }
     };
 
@@ -2148,7 +2168,7 @@ public class m6800 extends cpu_interface {
     public opcode bgt = new opcode() {
         public void handler() {
             BRANCH(!((NXORV() != 0) || ((m6800.cc & 0x04) != 0)));
-            
+
         }
     };
 
@@ -2156,7 +2176,7 @@ public class m6800 extends cpu_interface {
     public opcode ble = new opcode() {
         public void handler() {
             BRANCH(((NXORV() != 0) || ((m6800.cc & 0x04) != 0)));
-            
+
         }
     };
 
@@ -2178,7 +2198,7 @@ public class m6800 extends cpu_interface {
     public opcode pula = new opcode() {
         public void handler() {
             m6800.a = PULLBYTE();//PULLBYTE(m6808.d.b.h);
-            
+
         }
     };
 
@@ -2251,7 +2271,7 @@ public class m6800 extends cpu_interface {
             CHANGE_PC();
             CHECK_IRQ_LINES();
             /* HJB 990417 */
-            
+
         }
     };
 
@@ -2367,7 +2387,7 @@ public class m6800 extends cpu_interface {
             m6800.a >>= 1;
             m6800.a |= ((m6800.a & 0x40) << 1);
             SET_NZ8(m6800.a);
-            
+
         }
     };
 
@@ -2387,8 +2407,8 @@ public class m6800 extends cpu_interface {
             int t, r;
             t = m6800.a & 0xFFFF;
             r = ((m6800.cc & 0x01));
-            r |= t << 1;            
-            CLR_NZVC();            
+            r |= t << 1;
+            CLR_NZVC();
             SET_FLAGS8(t, t, r);
             m6800.a = r & 0xFF;
         }
@@ -2486,7 +2506,7 @@ public class m6800 extends cpu_interface {
             m6800.cc |= (m6800.b & 0x01);
             m6800.b >>= 1;
             m6800.b |= ((m6800.b & 0x40) << 1);
-            SET_NZ8(m6800.b);            
+            SET_NZ8(m6800.b);
         }
     };
 
@@ -2497,7 +2517,7 @@ public class m6800 extends cpu_interface {
             CLR_NZVC();
             SET_FLAGS8(m6800.b, m6800.b, r);
             m6800.b = r & 0xFF;
-            
+
         }
     };
 
@@ -2511,14 +2531,14 @@ public class m6800 extends cpu_interface {
             CLR_NZVC();
             SET_FLAGS8(t, t, r);
             m6800.b = r & 0xFF;
-            
+
         }
     };
 
     /* $5a DECB inherent -***- */
     public opcode decb = new opcode() {
         public void handler() {
-            m6800.b = (m6800.b - 1) & 0xFF;            
+            m6800.b = (m6800.b - 1) & 0xFF;
             CLR_NZV();
             SET_FLAGS8D(m6800.b);
         }
@@ -2696,7 +2716,7 @@ public class m6800 extends cpu_interface {
             CLR_NZV();
             SET_FLAGS8D(t);
             WM(ea, t);
-            
+
         }
     };
 
@@ -2718,7 +2738,7 @@ public class m6800 extends cpu_interface {
         public void handler() {
             int t = IDXBYTE();
             t = (t + 1) & 0xFF;
-            CLR_NZV();            
+            CLR_NZV();
             SET_FLAGS8I(t);
             WM(ea, t);
         }
@@ -2793,10 +2813,10 @@ public class m6800 extends cpu_interface {
     /* $73 COM extended -**01 */
     public opcode com_ex = new opcode() {
         public void handler() {
-            int t = EXTBYTE();            
+            int t = EXTBYTE();
             t = (t ^ 0xFFFFFFFF) & 0xFF;
-            CLR_NZV();            
-            SET_NZ8(t);            
+            CLR_NZV();
+            SET_NZ8(t);
             SEC();
             WM(ea, t);
         }
@@ -2805,10 +2825,10 @@ public class m6800 extends cpu_interface {
     /* $74 LSR extended -0*-* */
     public opcode lsr_ex = new opcode() {
         public void handler() {
-            int t = EXTBYTE();            
-            CLR_NZC();            
+            int t = EXTBYTE();
+            CLR_NZC();
             m6800.cc |= (t & 0x01);
-            t = (t >> 1) & 0XFF;            
+            t = (t >> 1) & 0XFF;
             SET_Z8(t);
             WM(ea, t);
         }
@@ -2840,7 +2860,7 @@ public class m6800 extends cpu_interface {
             r |= t >>> 1;
             SET_NZ8(r);
             WM(ea, r);
-            
+
         }
     };
 
@@ -2861,36 +2881,33 @@ public class m6800 extends cpu_interface {
     /* $78 ASL extended ?**** */
     public opcode asl_ex = new opcode() {
         public void handler() {
-            /*TODO*///UINT16 t, r;
-            /*TODO*///EXTBYTE(t);
-            /*TODO*///r = t << 1;
-            /*TODO*///CLR_NZVC;
-            /*TODO*///SET_FLAGS8(t, t, r);
-            /*TODO*///WM(EAD, r);
-            throw new UnsupportedOperationException("Unsupported");
+            int t, r;
+            t = EXTBYTE();
+            r = t << 1 & 0xFFFF;
+            CLR_NZVC();
+            SET_FLAGS8(t, t, r);
+            WM(ea, r);
         }
     };
 
     /* $79 ROL extended -**** */
     public opcode rol_ex = new opcode() {
         public void handler() {
-            /*TODO*///UINT16 t, r;
-            /*TODO*///EXTBYTE(t);
-            /*TODO*///r = CC & 0x01;
-            /*TODO*///r |= t << 1;
-            /*TODO*///CLR_NZVC;
-            /*TODO*///SET_FLAGS8(t, t, r);
-            /*TODO*///WM(EAD, r);
-            throw new UnsupportedOperationException("Unsupported");
+            int t, r;
+            t = EXTBYTE();
+            r = ((m6800.cc & 0x01) | (t << 1)) & 0xFFFF;
+            CLR_NZVC();
+            SET_FLAGS8(t, t, r);
+            WM(ea, r);
         }
     };
 
     /* $7a DEC extended -***- */
     public opcode dec_ex = new opcode() {
         public void handler() {
-            int t = EXTBYTE();            
+            int t = EXTBYTE();
             t = (t - 1) & 0xFF;
-            CLR_NZV();            
+            CLR_NZV();
             SET_FLAGS8D(t);
             WM(ea, t);
         }
@@ -2912,9 +2929,9 @@ public class m6800 extends cpu_interface {
     /* $7c INC extended -***- */
     public opcode inc_ex = new opcode() {
         public void handler() {
-            int t = EXTBYTE();            
+            int t = EXTBYTE();
             t = t + 1 & 0xFF;
-            CLR_NZV();            
+            CLR_NZV();
             SET_FLAGS8I(t);
             WM(ea, t);
         }
@@ -2937,7 +2954,7 @@ public class m6800 extends cpu_interface {
             m6800.pc = ea & 0xFFFF;
             CHANGE_PC();
             /* TS 971002 */
-            
+
         }
     };
 
@@ -2983,7 +3000,7 @@ public class m6800 extends cpu_interface {
             CLR_NZVC();
             SET_FLAGS8(m6800.a, t, r);
             m6800.a = r & 0xFF;
-            
+
         }
     };
 
@@ -3028,7 +3045,7 @@ public class m6800 extends cpu_interface {
             m6800.a = IMMBYTE();
             CLR_NZV();
             SET_NZ8(m6800.a);
-            
+
         }
     };
 
@@ -3113,7 +3130,7 @@ public class m6800 extends cpu_interface {
             r = d - b;
             CLR_NZVC();
             SET_FLAGS16(d, b, r);
-            
+
         }
     };
 
@@ -3123,7 +3140,7 @@ public class m6800 extends cpu_interface {
         public void handler() {
             int t = IMMBYTE();
             PUSHWORD(m6800.pc);
-            m6800.pc = m6800.pc + (byte) t & 0xFFFF;            
+            m6800.pc = m6800.pc + (byte) t & 0xFFFF;
             CHANGE_PC();
         }
     };
@@ -3134,7 +3151,7 @@ public class m6800 extends cpu_interface {
             m6800.s = IMMWORD();
             CLR_NZV();
             SET_NZ16(m6800.s);
-            
+
         }
     };
 
@@ -3159,7 +3176,7 @@ public class m6800 extends cpu_interface {
             CLR_NZVC();
             SET_FLAGS8(m6800.a, t, r);
             m6800.a = r & 0xFF;
-            
+
         }
     };
 
@@ -3287,22 +3304,20 @@ public class m6800 extends cpu_interface {
             SET_FLAGS8(m6800.a, t, r);
             SET_H(m6800.a, t, r);
             m6800.a = r & 0xFF;
-            
+
         }
     };
 
     /* $9c CMPX direct -***- */
     public opcode cmpx_di = new opcode() {
         public void handler() {
-            /*TODO*///UINT32 r, d;
-            /*TODO*///PAIR b;
-            /*TODO*///DIRWORD(b);
-            /*TODO*///d = X;
-            /*TODO*///r = d - b.d;
-            /*TODO*///CLR_NZV;
-            /*TODO*///SET_NZ16(r);
-            /*TODO*///SET_V16(d, b.d, r);
-            throw new UnsupportedOperationException("Unsupported");
+            int r, d;
+            int b = DIRWORD();
+            d = m6800.x;
+            r = d - b;
+            CLR_NZVC();
+            SET_NZ16(r);
+            SET_FLAGS16(d, b, r);
         }
     };
 
@@ -3333,21 +3348,19 @@ public class m6800 extends cpu_interface {
     /* $9e LDS direct -**0- */
     public opcode lds_di = new opcode() {
         public void handler() {
-            /*TODO*///DIRWORD(m6808.s);
-            /*TODO*///CLR_NZV;
-            /*TODO*///SET_NZ16(S);
-            throw new UnsupportedOperationException("Unsupported");
+            m6800.s = DIRWORD();
+            CLR_NZV();
+            SET_NZ16(m6800.s);
         }
     };
 
     /* $9f STS direct -**0- */
     public opcode sts_di = new opcode() {
         public void handler() {
-            /*TODO*///CLR_NZV;
-            /*TODO*///SET_NZ16(S);
-            /*TODO*///DIRECT;
-            /*TODO*///WM16(EAD,  & m6808.s);
-            throw new UnsupportedOperationException("Unsupported");
+            CLR_NZV();
+            SET_NZ16(m6800.s);
+            DIRECT();
+            WM16(ea, m6800.s);
         }
     };
 
@@ -3412,19 +3425,18 @@ public class m6800 extends cpu_interface {
             m6800.a &= t;
             CLR_NZV();
             SET_NZ8(m6800.a);
-            
+
         }
     };
 
     /* $a5 BITA indexed -**0- */
     public opcode bita_ix = new opcode() {
         public void handler() {
-            /*TODO*///UINT8 t, r;
-            /*TODO*///IDXBYTE(t);
-            /*TODO*///r = A & t;
-            /*TODO*///CLR_NZV;
-            /*TODO*///SET_NZ8(r);
-            throw new UnsupportedOperationException("Unsupported");
+            int r, t;
+            t = IDXBYTE();
+            r = m6800.a & t;
+            CLR_NZV();
+            SET_NZ8(r);
         }
     };
 
@@ -3548,11 +3560,10 @@ public class m6800 extends cpu_interface {
     /* $af STS indexed -**0- */
     public opcode sts_ix = new opcode() {
         public void handler() {
-            /*TODO*///CLR_NZV;
-            /*TODO*///SET_NZ16(S);
-            /*TODO*///INDEXED;
-            /*TODO*///WM16(EAD,  & m6808.s);
-            throw new UnsupportedOperationException("Unsupported");
+            CLR_NZV();
+            SET_NZ16(m6800.s);
+            INDEXED();
+            WM16(ea, m6800.s);
         }
     };
 
@@ -3639,7 +3650,7 @@ public class m6800 extends cpu_interface {
             m6800.a = EXTBYTE();
             CLR_NZV();
             SET_NZ8(m6800.a);
-            
+
         }
     };
 
@@ -3650,7 +3661,7 @@ public class m6800 extends cpu_interface {
             SET_NZ8(m6800.a);
             EXTENDED();
             WM(ea, m6800.a);
-            
+
         }
     };
 
@@ -3687,7 +3698,7 @@ public class m6800 extends cpu_interface {
             m6800.a |= t;
             CLR_NZV();
             SET_NZ8(m6800.a);
-            
+
         }
     };
 
@@ -3715,7 +3726,7 @@ public class m6800 extends cpu_interface {
             CLR_NZV();
             SET_NZ16(r);
             SET_V16(d, b, r);
-            
+
         }
     };
 
@@ -3749,7 +3760,7 @@ public class m6800 extends cpu_interface {
             m6800.s = EXTWORD();
             CLR_NZV();
             SET_NZ16(m6800.s);
-            
+
         }
     };
 
@@ -3841,7 +3852,7 @@ public class m6800 extends cpu_interface {
             m6800.b = IMMBYTE();
             CLR_NZV();
             SET_NZ8(m6800.b);
-            
+
         }
     };
 
@@ -3931,7 +3942,7 @@ public class m6800 extends cpu_interface {
             m6800.x = IMMWORD();
             CLR_NZV();
             SET_NZ16(m6800.x);
-            
+
         }
     };
 
@@ -3993,7 +4004,7 @@ public class m6800 extends cpu_interface {
             r = d + b;
             CLR_NZVC();
             SET_FLAGS16(d, b, r);
-            setDreg(r);            
+            setDreg(r);
         }
     };
 
@@ -4103,7 +4114,7 @@ public class m6800 extends cpu_interface {
             DIRECT();
             CLR_NZV();
             int temp = getDreg();
-            SET_NZ16(temp);            
+            SET_NZ16(temp);
             WM16(ea, temp);
         }
     };
@@ -4149,7 +4160,7 @@ public class m6800 extends cpu_interface {
             r = (m6800.b - t) & 0xFFFF;
             CLR_NZVC();
             SET_FLAGS8(m6800.b, t, r);
-            
+
         }
     };
 
@@ -4177,7 +4188,7 @@ public class m6800 extends cpu_interface {
             CLR_NZVC();
             SET_FLAGS16(d, b, r);
             setDreg(r);
-            
+
         }
     };
 
@@ -4228,7 +4239,7 @@ public class m6800 extends cpu_interface {
             m6800.b ^= t;
             CLR_NZV();
             SET_NZ8(m6800.b);
-            
+
         }
     };
 
@@ -4274,7 +4285,7 @@ public class m6800 extends cpu_interface {
         public void handler() {
             int temp = IDXWORD();
             setDreg(temp);
-            CLR_NZV();            
+            CLR_NZV();
             SET_NZ16(temp);
         }
     };
@@ -4373,7 +4384,7 @@ public class m6800 extends cpu_interface {
             int t, r;
             t = EXTBYTE();
             r = m6800.b & t;
-            CLR_NZV();            
+            CLR_NZV();
             SET_NZ8(r);
         }
     };
@@ -4383,7 +4394,7 @@ public class m6800 extends cpu_interface {
         public void handler() {
             m6800.b = EXTBYTE();
             CLR_NZV();
-            SET_NZ8(m6800.b);            
+            SET_NZ8(m6800.b);
         }
     };
 
@@ -4428,7 +4439,7 @@ public class m6800 extends cpu_interface {
             m6800.b |= t;
             CLR_NZV();
             SET_NZ8(m6800.b);
-            
+
         }
     };
 
@@ -4533,9 +4544,9 @@ public class m6800 extends cpu_interface {
         subb_ex, cmpb_ex, sbcb_ex, illegal, andb_ex, bitb_ex, ldb_ex, stb_ex,
         eorb_ex, adcb_ex, orb_ex, addb_ex, illegal, illegal, ldx_ex, stx_ex
     };
-    
+
     public static abstract interface opcode {
-        
+
         public abstract void handler();
     }
 }
