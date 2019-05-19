@@ -129,6 +129,7 @@ import static WIP.mame056.drivers.strnskil.*;
 import static WIP.mame056.drivers.timelimt.*;
 import static WIP.mame056.drivers.thepit.*;
 import static WIP.mame056.drivers.itech8.*;
+import static WIP.mame056.drivers.beezer.*;
 
 public class driver {
 
@@ -3775,9 +3776,9 @@ public class driver {
         /*TODO*///	/* Tong Electronic games */
         /*TODO*///	driver_leprechn,	/* (c) 1982 */
         /*TODO*///	driver_potogold,	/* (c) 1982 */
-        /*TODO*///	driver_beezer,	/* (c) 1982 */
-        /*TODO*///	driver_beezer1,	/* (c) 1982 */
-        /*TODO*///
+        driver_beezer,	/* (c) 1982 */
+        driver_beezer1,	/* (c) 1982 */
+        
         /*TODO*///	/* Comad games */
         /*TODO*///	driver_pushman,	/* (c) 1990 Comad + American Sammy license */
         /*TODO*///	driver_zerozone,	/* (c) 1993 Comad */
