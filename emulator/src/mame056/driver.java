@@ -124,7 +124,7 @@ import static WIP.mame056.drivers.gladiatr.*;
 import static WIP.mame056.drivers.rollrace.*;
 import static WIP.mame056.drivers.wiz.*;
 import static WIP.mame056.drivers.kangaroo.*;
-import static WIP.mame056.drivers.nyny.*;
+import static mame056.drivers.nyny.*;
 import static WIP.mame056.drivers.strnskil.*;
 import static WIP.mame056.drivers.timelimt.*;
 import static WIP.mame056.drivers.thepit.*;

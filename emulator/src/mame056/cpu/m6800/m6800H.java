@@ -60,13 +60,13 @@ public class m6800H {
 /*TODO*///#define M6802_S 					M6800_S
 /*TODO*///#define M6802_X 					M6800_X
 /*TODO*///#define M6802_CC					M6800_CC
-/*TODO*///#define M6802_WAI_STATE 			M6800_WAI_STATE
-/*TODO*///#define M6802_NMI_STATE 			M6800_NMI_STATE
-/*TODO*///#define M6802_IRQ_STATE 			M6800_IRQ_STATE
-/*TODO*///
-/*TODO*///#define M6802_WAI					M6800_WAI
-/*TODO*///#define M6802_IRQ_LINE				M6800_IRQ_LINE
-/*TODO*///
+/*TODO*///    public static final int M6802_WAI_STATE = M6800_WAI_STATE;
+/*TODO*///    public static final int M6802_NMI_STATE = M6800_NMI_STATE;
+/*TODO*///    public static final int M6802_IRQ_STATE = M6800_IRQ_STATE;
+
+    public static final int M6802_WAI = M6800_WAI;
+    public static final int M6802_IRQ_LINE = M6800_IRQ_LINE;
+    /*TODO*///
 /*TODO*///#define m6802_ICount				m6800_ICount
 /*TODO*///
 /*TODO*///#endif
@@ -116,7 +116,7 @@ public class m6800H {
 /*TODO*///
 /*TODO*///#define M6808_WAI                   M6800_WAI
     public static final int M6808_IRQ_LINE = M6800_IRQ_LINE;
-/*TODO*///
+    /*TODO*///
 /*TODO*///#define m6808_ICount                m6800_ICount
 /*TODO*///
 /*TODO*///#endif
