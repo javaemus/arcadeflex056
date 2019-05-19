@@ -32,6 +32,7 @@ import static mame056.sound.dacH.*;
 import static mame056.sound.sn76496.*;
 import static mame056.sound.sn76496H.*;
 import static WIP.mame056.vidhrdw.qix.*;
+import static mame056.cpu.m6800.m6800H.*;
 
 public class qix
 {
@@ -189,7 +190,7 @@ public class qix
 	static irqfuncPtr qix_pia_sint = new irqfuncPtr() {
             public void handler(int state) {
                 /* SINT is connected to the sound CPU's IRQ line */
-		/*TODO*///cpu_set_irq_line(2, M6802_IRQ_LINE, state!=0 ? ASSERT_LINE : CLEAR_LINE);
+		cpu_set_irq_line(2, M6802_IRQ_LINE, state!=0 ? ASSERT_LINE : CLEAR_LINE);
             }
         };
 	

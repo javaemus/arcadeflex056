@@ -1094,12 +1094,12 @@ public class common {
 
         /* if the region is inverted, do that now */
         if (ROMREGION_ISINVERTED(regiondata, rom_ptr)) {
-            throw new UnsupportedOperationException("Unimplemented");
+            //throw new UnsupportedOperationException("Unimplemented");
             /*TODO*///		debugload("+ Inverting region\n");
-/*TODO*///		for (i = 0, base = romdata->regionbase; i < romdata->regionlength; i++)
-/*TODO*///			*base++ ^= 0xff;
+		for (i = 0, base = new UBytePtr(romdata.regionbase); i < romdata.regionlength; i++)
+			base.writeinc( base.read() ^ 0xff );
         }
-        /*TODO*///
+        
         /* swap the endianness if we need to */
         if (datawidth > 1 && !littleendian) {
             //throw new UnsupportedOperationException("Unimplemented");

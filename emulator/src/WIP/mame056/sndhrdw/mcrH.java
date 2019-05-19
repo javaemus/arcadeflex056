@@ -145,9 +145,9 @@ public class mcrH {
                 ignore_interrupt,1							
         );
 	
-	/*TODO*///#define SOUND_SQUAWK_N_TALK							
-	/*TODO*///	{												
+	/*TODO*///public static MachineSound SOUND_SQUAWK_N_TALK = new MachineSound
+        /*TODO*///(												
 	/*TODO*///		SOUND_TMS5220,								
-	/*TODO*///		&squawkntalk_tms5220_interface				
-	/*TODO*///	}    
+	/*TODO*///		squawkntalk_tms5220_interface				
+        /*TODO*///);    
 }

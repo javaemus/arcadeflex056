@@ -1016,7 +1016,7 @@ public class mcr3 {
 		SOUND_SUPPORTS_STEREO,0,0,0,
 		new MachineSound[] {
 			SOUND_SSIO
-                        //,SOUND_SQUAWK_N_TALK
+                        /*TODO*///,SOUND_SQUAWK_N_TALK
 		},
 		mcr3_nvram_handler
 	);
@@ -1493,7 +1493,7 @@ public class mcr3 {
 		MCR_CONFIGURE_SOUND(MCR_SOUNDS_GOOD);
 		install_port_read_handler(0, 0x02, 0x02, powerdrv_port_2_r);
 		install_port_write_handler(0, 0x05, 0x05, powerdrv_port_5_w);
-		/*TODO*///install_port_write_handler(0, 0x06, 0x06, soundsgood_data_w);
+		install_port_write_handler(0, 0x06, 0x06, soundsgood_data_w);
 		install_port_write_handler(0, 0x07, 0x07, powerdrv_port_7_w);
 	} };
 	
@@ -1515,7 +1515,7 @@ public class mcr3 {
 	
 		spyhunt_sprite_color_mask = 0x00;
 		spyhunt_scroll_offset = -16;
-		/*TODO*///spyhunt_draw_lamps = 1;
+		spyhunt_draw_lamps = 1;
 	} };
 	
 	
