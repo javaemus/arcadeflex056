@@ -1319,15 +1319,15 @@ public class itech8
 		/* basic machine hardware */
 		new MachineCPU[] {
 			new MachineCPU(
-				CPU_M6809,														
+				CPU_M6809,
 				CLOCK_8MHz/4,															
-				tmslo_readmem,tmslo_writemem,0,0,							
+				tmslo_readmem,tmslo_writemem,null,null,
 				generate_nmi,1														
                         ),																		
 			new MachineCPU(																		
 				CPU_M6809,															
 				CLOCK_8MHz/4,														
-				sound2203_readmem,sound2203_writemem,0,0,				
+				sound2203_readmem,sound2203_writemem,null,null,
 				ignore_interrupt,1													
                         )																		
 		},																			
@@ -1358,7 +1358,55 @@ public class itech8
 		nvram_handler																
         );
         
-	//ITECH_DRIVER(tmshi2203, M6809,  CLOCK_8MHz/4,  tmshi,    2203,   high,     0,    255);
+	//#define ITECH_DRIVER(NAME, CPUTYPE, CPUCLOCK, MAINMEM, YMTYPE, OKISPEED, XMIN, XMAX)	
+	/*           NAME,      CPU,    CPUCLOCK,      MAINMEM,  YMTYPE, OKISPEED, XMIN, XMAX) */
+        //ITECH_DRIVER(tmshi2203, M6809,  CLOCK_8MHz/4,  tmshi,    2203,   high,     0,    255);
+        
+	static MachineDriver machine_driver_tmshi2203 = new MachineDriver
+	(
+		/* basic machine hardware */
+		new MachineCPU[] {
+			new MachineCPU(
+				CPU_M6809,														
+				CLOCK_8MHz/4,															
+				tmshi_readmem,tmshi_writemem,null,null,							
+				generate_nmi,1														
+                        ),																		
+			new MachineCPU(
+				CPU_M6809,															
+				CLOCK_8MHz/4,														
+				sound2203_readmem,sound2203_writemem,null,null,				
+				ignore_interrupt,1													
+                        )
+		},																			
+		60,(int)(((263. - 240.) / 263.) * 1000000. / 60.),							
+		1,																			
+		init_machine,																
+																					
+		/* video hardware */														
+		512, 263, new rectangle( 0, 255, 0, 239 ),
+		null,																			
+		256, 0,																		
+		null,																			
+																					
+		VIDEO_TYPE_RASTER | VIDEO_UPDATE_BEFORE_VBLANK,								
+		null,
+		itech8_vh_start,															
+		itech8_vh_stop,																
+		itech8_vh_screenrefresh,													
+																					
+		/* sound hardware */														
+		0,0,0,0,																	
+		new MachineSound[] {
+			new MachineSound( 
+                                SOUND_YM2203, 
+                                ym2203_interface )							
+		/*TODO*///	{ SOUND_OKIM6295, &oki6295_interface_high },						
+		},                
+                
+		nvram_handler
+        );
+        
 	//ITECH_DRIVER(gtg2,      M6809,  CLOCK_8MHz/4,  gtg2,     3812,   high,     0,    255);
 	//ITECH_DRIVER(peggle,    M6809,  CLOCK_8MHz/4,  tmslo,    3812,   high,     18,   367);
 	//ITECH_DRIVER(arlingtn,  M6809,  CLOCK_8MHz/4,  tmshi,    3812,   low,      16,   389);
@@ -1755,9 +1803,9 @@ public class itech8
 	 *
 	 *************************************/
 	
-	/*TODO*///public static GameDriver driver_wfortune	   = new GameDriver("1989"	,"wfortune"	,"itech8.java"	,rom_wfortune,null	,machine_driver_tmshi2203	,input_ports_wfortune	,null	,ROT0	,	"GameTek", "Wheel Of Fortune" );
-	/*TODO*///public static GameDriver driver_wfortuna	   = new GameDriver("1989"	,"wfortuna"	,"itech8.java"	,rom_wfortuna,driver_wfortune	,machine_driver_tmshi2203	,input_ports_wfortune	,null	,ROT0	,	"GameTek", "Wheel Of Fortune (alternate)" );
-	/*TODO*///public static GameDriver driver_stratab	   = new GameDriver("1990"	,"stratab"	,"itech8.java"	,rom_stratab,null	,machine_driver_tmshi2203	,input_ports_stratab	,null	,ROT270	,	"Strata/Incredible Technologies", "Strata Bowling" );
+	public static GameDriver driver_wfortune	   = new GameDriver("1989"	,"wfortune"	,"itech8.java"	,rom_wfortune,null	,machine_driver_tmshi2203	,input_ports_wfortune	,null	,ROT0	,	"GameTek", "Wheel Of Fortune" );
+	public static GameDriver driver_wfortuna	   = new GameDriver("1989"	,"wfortuna"	,"itech8.java"	,rom_wfortuna,driver_wfortune	,machine_driver_tmshi2203	,input_ports_wfortune	,null	,ROT0	,	"GameTek", "Wheel Of Fortune (alternate)" );
+	public static GameDriver driver_stratab	   = new GameDriver("1990"	,"stratab"	,"itech8.java"	,rom_stratab,null	,machine_driver_tmshi2203	,input_ports_stratab	,null	,ROT270	,	"Strata/Incredible Technologies", "Strata Bowling" );
 	/*TODO*///public static GameDriver driver_sstrike	   = new GameDriver("1990"	,"sstrike"	,"itech8.java"	,rom_sstrike,null	,machine_driver_sstrike	,input_ports_sstrike	,init_sstrike	,ROT270	,	"Strata/Incredible Technologies", "Super Strike Bowling", GAME_NOT_WORKING );
 	/*TODO*///public static GameDriver driver_gtg	   = new GameDriver("1990"	,"gtg"	,"itech8.java"	,rom_gtg,null	,machine_driver_tmshi2203	,input_ports_gtg	,null	,ROT0	,	"Strata/Incredible Technologies", "Golden Tee Golf" );
 	/*TODO*///public static GameDriver driver_slikshot	   = new GameDriver("1990"	,"slikshot"	,"itech8.java"	,rom_slikshot,null	,machine_driver_slikshot	,input_ports_slikshot	,init_slikshot	,ROT90	,	"Grand Products/Incredible Technologies", "Slick Shot (V2.2)" );

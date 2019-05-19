@@ -78,7 +78,7 @@ public class tms34061
 	 *
 	 *************************************/
 	
-	static tms34061_data tms34061;
+	static tms34061_data tms34061=new tms34061_data();
 	
 	
 	

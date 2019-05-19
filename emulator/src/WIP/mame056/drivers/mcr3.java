@@ -994,7 +994,7 @@ public class mcr3 {
 		new MachineCPU[] {
 			MAIN_CPU,
 			SOUND_CPU_SSIO
-                        ,SOUND_CPU_SQUAWK_N_TALK
+                        /*TODO*///,SOUND_CPU_SQUAWK_N_TALK
 		},
 		30, DEFAULT_REAL_30HZ_VBLANK_DURATION,	/* frames per second, vblank duration */
 		1,

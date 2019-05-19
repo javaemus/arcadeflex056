@@ -74,7 +74,7 @@ public class itech8
 	
 	static int slikshot;
 	
-	static tms34061_display tms_state;
+	static tms34061_display tms_state = new tms34061_display();
 	static UBytePtr grom_base = new UBytePtr();
 	static int grom_size;
 	

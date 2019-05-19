@@ -128,6 +128,7 @@ import static mame056.drivers.nyny.*;
 import static WIP.mame056.drivers.strnskil.*;
 import static WIP.mame056.drivers.timelimt.*;
 import static WIP.mame056.drivers.thepit.*;
+import static WIP.mame056.drivers.itech8.*;
 
 public class driver {
 
@@ -2084,9 +2085,9 @@ public class driver {
         /*TODO*///	driver_capbowl2,	/* (c) 1988 Incredible Technologies */
         /*TODO*///	driver_clbowl,	/* (c) 1989 Incredible Technologies */
         /*TODO*///	driver_bowlrama,	/* (c) 1991 P & P Marketing */
-        /*TODO*///	driver_wfortune,	/* (c) 1989 GameTek */
-        /*TODO*///	driver_wfortuna,	/* (c) 1989 GameTek */
-        /*TODO*///	driver_stratab,	/* (c) 1990 Strata/Incredible Technologies */
+        driver_wfortune,	/* (c) 1989 GameTek */
+        driver_wfortuna,	/* (c) 1989 GameTek */
+        driver_stratab,	/* (c) 1990 Strata/Incredible Technologies */
         /*TODO*///	driver_gtg,		/* (c) 1990 Strata/Incredible Technologies */
         /*TODO*///	driver_hstennis,	/* (c) 1990 Strata/Incredible Technologies */
         /*TODO*///	driver_slikshot,	/* (c) 1990 Grand Products/Incredible Technologies */
