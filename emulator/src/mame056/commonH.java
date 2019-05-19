@@ -441,8 +441,10 @@ public class commonH {
         ROM_LOAD(ROMENTRY_FILL, offset, length, value);
     }
     
-/*TODO*///#define ROM_COPY(rgn,srcoffset,offset,length)		ROMX_LOAD(ROMENTRY_COPY, offset, length, srcoffset, (rgn) << 24)
-/*TODO*///
+    public static void ROM_COPY(int rgn, int srcoffset, int offset, int length){
+        ROMX_LOAD(ROMENTRY_COPY, offset, length, srcoffset, (rgn) << 24);
+    }
+
 /*TODO*////* ----- nibble loading macros ----- */
 /*TODO*///#define ROM_LOAD_NIB_HIGH(name,offset,length,crc)	ROMX_LOAD(name, offset, length, crc, ROM_NIBBLE | ROM_SHIFT_NIBBLE_HI)
 /*TODO*///#define ROM_LOAD_NIB_LOW(name,offset,length,crc)	ROMX_LOAD(name, offset, length, crc, ROM_NIBBLE | ROM_SHIFT_NIBBLE_LO)

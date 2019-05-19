@@ -2088,22 +2088,22 @@ public class driver {
         driver_wfortune,	/* (c) 1989 GameTek */
         driver_wfortuna,	/* (c) 1989 GameTek */
         driver_stratab,	/* (c) 1990 Strata/Incredible Technologies */
-        /*TODO*///	driver_gtg,		/* (c) 1990 Strata/Incredible Technologies */
-        /*TODO*///	driver_hstennis,	/* (c) 1990 Strata/Incredible Technologies */
-        /*TODO*///	driver_slikshot,	/* (c) 1990 Grand Products/Incredible Technologies */
-        /*TODO*///	driver_sliksh17,	/* (c) 1990 Grand Products/Incredible Technologies */
-        /*TODO*///	driver_arlingtn,	/* (c) 1991 Strata/Incredible Technologies */
-        /*TODO*///	driver_peggle,	/* (c) 1991 Strata/Incredible Technologies */
-        /*TODO*///	driver_pegglet,	/* (c) 1991 Strata/Incredible Technologies */
-        /*TODO*///	driver_rimrockn,	/* (c) 1991 Strata/Incredible Technologies */
-        /*TODO*///	driver_rimrck20,	/* (c) 1991 Strata/Incredible Technologies */
-        /*TODO*///	driver_rimrck16,	/* (c) 1991 Strata/Incredible Technologies */
-        /*TODO*///	driver_rimrck12,	/* (c) 1991 Strata/Incredible Technologies */
-        /*TODO*///	driver_ninclown,	/* (c) 1991 Strata/Incredible Technologies */
-        /*TODO*///	driver_gtg2,		/* (c) 1992 Strata/Incredible Technologies */
-        /*TODO*///	driver_gtg2t,		/* (c) 1989 Strata/Incredible Technologies */
-        /*TODO*///	driver_gtg2j,		/* (c) 1991 Strata/Incredible Technologies */
-        /*TODO*///	driver_neckneck,	/* (c) 1992 Bundra Games/Incredible Technologies */
+        driver_gtg,		/* (c) 1990 Strata/Incredible Technologies */
+        driver_hstennis,	/* (c) 1990 Strata/Incredible Technologies */
+        driver_slikshot,	/* (c) 1990 Grand Products/Incredible Technologies */
+        driver_sliksh17,	/* (c) 1990 Grand Products/Incredible Technologies */
+        driver_arlingtn,	/* (c) 1991 Strata/Incredible Technologies */
+        driver_peggle,	/* (c) 1991 Strata/Incredible Technologies */
+        driver_pegglet,	/* (c) 1991 Strata/Incredible Technologies */
+        driver_rimrockn,	/* (c) 1991 Strata/Incredible Technologies */
+        driver_rimrck20,	/* (c) 1991 Strata/Incredible Technologies */
+        driver_rimrck16,	/* (c) 1991 Strata/Incredible Technologies */
+        driver_rimrck12,	/* (c) 1991 Strata/Incredible Technologies */
+        driver_ninclown,	/* (c) 1991 Strata/Incredible Technologies */
+        driver_gtg2,		/* (c) 1992 Strata/Incredible Technologies */
+        driver_gtg2t,		/* (c) 1989 Strata/Incredible Technologies */
+        driver_gtg2j,		/* (c) 1991 Strata/Incredible Technologies */
+        driver_neckneck,	/* (c) 1992 Bundra Games/Incredible Technologies */
         /*TODO*///	driver_timekill,	/* (c) 1992 Strata/Incredible Technologies */
         /*TODO*///	driver_timek131,	/* (c) 1992 Strata/Incredible Technologies */
         /*TODO*///	driver_hardyard,	/* (c) 1993 Strata/Incredible Technologies */

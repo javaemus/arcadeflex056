@@ -206,7 +206,8 @@ import static WIP.mame056.vidhrdw.tms34061H.*;
 
 // refactor
 import static arcadeflex036.osdepend.logerror;
-
+import static WIP.mame056.machine.ticket.*;
+import static WIP.mame056.machine.ticketH.*;
 
 public class itech8
 {
@@ -233,7 +234,7 @@ public class itech8
 	static int pia_porta_data;
 	static int pia_portb_data;
 	
-	static int[] via6522 = new int[1024];
+	static UBytePtr via6522 = new UBytePtr(1024);
 	static int[] via6522_timer_count=new int[2];
 	static timer_entry[] via6522_timer= new timer_entry[2];
 	static int via6522_int_state;
@@ -241,6 +242,31 @@ public class itech8
 	static UBytePtr main_ram = new UBytePtr();
 	static int[] main_ram_size = new int[1];
 	
+	/*************************************
+	 *
+	 *	6821 PIA handling
+	 *
+	 *************************************/
+	
+	public static WriteHandlerPtr pia_porta_out = new WriteHandlerPtr() {public void handler(int offset, int data)
+	{
+		logerror("PIA port A write = %02xn", data);
+		pia_porta_data = data;
+	} };
+	
+	
+	public static WriteHandlerPtr pia_portb_out = new WriteHandlerPtr() {public void handler(int offset, int data)
+	{
+		logerror("PIA port B write = %02xn", data);
+	
+		/* bit 0 provides feedback to the main CPU */
+		/* bit 4 controls the ticket dispenser */
+		/* bit 5 controls the coin counter */
+		/* bit 6 controls the diagnostic sound LED */
+		pia_portb_data = data;
+		ticket_dispenser_w.handler(0, (data & 0x10) << 3);
+		coin_counter_w.handler(0, (data & 0x20) >> 5);
+	} };
 	
 	
 	/*************************************
@@ -250,12 +276,12 @@ public class itech8
 	 *************************************/
 	
 	
-	/*TODO*///static pia6821_interface pia_interface = new pia6821_interface
-        /*TODO*///(
-	/*TODO*///	null, ticket_dispenser_r, null, null, null, null,			/* PIA inputs: A, B, CA1, CB1, CA2, CB2 */
-	/*TODO*///	pia_porta_out, pia_portb_out, null, null,		/* PIA outputs: A, B, CA2, CB2 */
-	/*TODO*///	null, null									/* PIA IRQs: A, B */
-        /*TODO*///);
+	static pia6821_interface pia_interface = new pia6821_interface
+        (
+		null, ticket_dispenser_r, null, null, null, null,			/* PIA inputs: A, B, CA1, CB1, CA2, CB2 */
+		pia_porta_out, pia_portb_out, null, null,		/* PIA outputs: A, B, CA2, CB2 */
+		null, null									/* PIA IRQs: A, B */
+        );
 	
 	
 	
@@ -344,7 +370,7 @@ public class itech8
 	
 		/* reset the PIA (if used) */
 		pia_unconfig();
-		/*TODO*///pia_config(0, PIA_STANDARD_ORDERING, pia_interface);
+		pia_config(0, PIA_STANDARD_ORDERING, pia_interface);
 		pia_reset();
 	
 		/* reset the VIA chip (if used) */
@@ -353,7 +379,7 @@ public class itech8
 		via6522_int_state = 0;
 	
 		/* reset the ticket dispenser */
-		/*TODO*///ticket_dispenser_init(200, TICKET_MOTOR_ACTIVE_HIGH, TICKET_STATUS_ACTIVE_LOW);
+		ticket_dispenser_init(200, TICKET_MOTOR_ACTIVE_HIGH, TICKET_STATUS_ACTIVE_LOW);
 	} };
 	
 	
@@ -398,31 +424,6 @@ public class itech8
 	
 	
 	
-	/*************************************
-	 *
-	 *	6821 PIA handling
-	 *
-	 *************************************/
-	
-	public static WriteHandlerPtr pia_porta_out = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		logerror("PIA port A write = %02xn", data);
-		pia_porta_data = data;
-	} };
-	
-	
-	public static WriteHandlerPtr pia_portb_out = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		logerror("PIA port B write = %02xn", data);
-	
-		/* bit 0 provides feedback to the main CPU */
-		/* bit 4 controls the ticket dispenser */
-		/* bit 5 controls the coin counter */
-		/* bit 6 controls the diagnostic sound LED */
-		pia_portb_data = data;
-		/*TODO*///ticket_dispenser_w(0, (data & 0x10) << 3);
-		coin_counter_w.handler(0, (data & 0x20) >> 5);
-	} };
 	
 	
 	public static WriteHandlerPtr ym2203_portb_out = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -434,7 +435,7 @@ public class itech8
 		/* bit 6 controls the diagnostic sound LED */
 		/* bit 7 controls the ticket dispenser */
 		pia_portb_data = data;
-		/*TODO*///ticket_dispenser_w(0, data & 0x80);
+		ticket_dispenser_w.handler(0, data & 0x80);
 		coin_counter_w.handler(0, (data & 0x20) >> 5);
 	} };
 	
@@ -487,7 +488,7 @@ public class itech8
 	public static void update_via_int()
 	{
 		/* if interrupts are enabled and one is pending, set the line */
-		if (((via6522[14] & 0x80)!=0) && ((via6522_int_state & via6522[14])!=0))
+		if (((via6522.read(14) & 0x80)!=0) && ((via6522_int_state & via6522.read(14))!=0))
 			cpu_set_irq_line(1, M6809_FIRQ_LINE, ASSERT_LINE);
 		else
 			cpu_set_irq_line(1, M6809_FIRQ_LINE, CLEAR_LINE);
@@ -504,7 +505,7 @@ public class itech8
 	public static WriteHandlerPtr via6522_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* update the data */
-		via6522[offset] = data;
+		via6522.write(offset, data);
 	
 		/* switch off the offset */
 		switch (offset)
@@ -514,7 +515,7 @@ public class itech8
 				break;
 	
 			case 5:		/* write into high order timer 1 */
-				via6522_timer_count[0] = (via6522[5] << 8) | via6522[4];
+				via6522_timer_count[0] = (via6522.read(5) << 8) | via6522.read(4);
 				if (via6522_timer[0] != null)
 					timer_remove(via6522_timer[0]);
 				via6522_timer[0] = timer_pulse(TIME_IN_HZ(CLOCK_8MHz/4) * (double)via6522_timer_count[0], 0, via6522_timer_callback);
@@ -549,7 +550,7 @@ public class itech8
 	
 			case 13:	/* interrupt flag register */
 				result = via6522_int_state & 0x7f;
-				if ((via6522_int_state & via6522[14])!=0) result |= 0x80;
+				if ((via6522_int_state & via6522.read(14))!=0) result |= 0x80;
 				break;
 		}
 	
@@ -1349,18 +1350,15 @@ public class itech8
 																					
 		/* sound hardware */														
 		0,0,0,0,																	
-		/*TODO*///{																			
-		/*TODO*///	{ SOUND_YM2203, &ym2203_interface },							
+		new MachineSound[] {
+			new MachineSound( SOUND_YM2203, ym2203_interface )
 		/*TODO*///	{ SOUND_OKIM6295, &oki6295_interface_high },						
-		/*TODO*///},
-                null,
+		},
                 
 		nvram_handler																
         );
         
-	//#define ITECH_DRIVER(NAME, CPUTYPE, CPUCLOCK, MAINMEM, YMTYPE, OKISPEED, XMIN, XMAX)	
-	/*           NAME,      CPU,    CPUCLOCK,      MAINMEM,  YMTYPE, OKISPEED, XMIN, XMAX) */
-        //ITECH_DRIVER(tmshi2203, M6809,  CLOCK_8MHz/4,  tmshi,    2203,   high,     0,    255);
+	//ITECH_DRIVER(tmshi2203, M6809,  CLOCK_8MHz/4,  tmshi,    2203,   high,     0,    255);
         
 	static MachineDriver machine_driver_tmshi2203 = new MachineDriver
 	(
@@ -1398,7 +1396,7 @@ public class itech8
 		/* sound hardware */														
 		0,0,0,0,																	
 		new MachineSound[] {
-			new MachineSound( 
+			new MachineSound(
                                 SOUND_YM2203, 
                                 ym2203_interface )							
 		/*TODO*///	{ SOUND_OKIM6295, &oki6295_interface_high },						
@@ -1407,113 +1405,411 @@ public class itech8
 		nvram_handler
         );
         
-	//ITECH_DRIVER(gtg2,      M6809,  CLOCK_8MHz/4,  gtg2,     3812,   high,     0,    255);
+        //ITECH_DRIVER(gtg2,      M6809,  CLOCK_8MHz/4,  gtg2,     3812,   high,     0,    255);
+        static MachineDriver machine_driver_gtg2 = new MachineDriver
+	(
+		/* basic machine hardware */
+		new MachineCPU[] {
+			new MachineCPU(
+				CPU_M6809,														
+				CLOCK_8MHz/4,															
+				gtg2_readmem,gtg2_writemem,null,null,
+				generate_nmi,1														
+                        ),																		
+			new MachineCPU(
+				CPU_M6809,															
+				CLOCK_8MHz/4,														
+				sound3812_readmem,sound3812_writemem,0,0,				
+				ignore_interrupt,1													
+                        )																		
+		},																			
+		60,(int)(((263. - 240.) / 263.) * 1000000. / 60.),							
+		1,																			
+		init_machine,																
+																					
+		/* video hardware */														
+		512, 263, new rectangle( 0, 255, 0, 239 ),
+		null,																			
+		256, 0,																		
+		null,																			
+																					
+		VIDEO_TYPE_RASTER | VIDEO_UPDATE_BEFORE_VBLANK,								
+		null,																			
+		itech8_vh_start,															
+		itech8_vh_stop,																
+		itech8_vh_screenrefresh,													
+																					
+		/* sound hardware */														
+		0,0,0,0,																	
+		new MachineSound[] {
+			new MachineSound( SOUND_YM3812, ym3812_interface )
+			/*TODO*///{ SOUND_OKIM6295, &oki6295_interface_high },						
+		},																			
+		nvram_handler																
+        );
+        
 	//ITECH_DRIVER(peggle,    M6809,  CLOCK_8MHz/4,  tmslo,    3812,   high,     18,   367);
-	//ITECH_DRIVER(arlingtn,  M6809,  CLOCK_8MHz/4,  tmshi,    3812,   low,      16,   389);
-	//ITECH_DRIVER(neckneck,  M6809,  CLOCK_8MHz/4,  tmslo,    3812,   high,     8,    375);
-	//ITECH_DRIVER(hstennis,  M6809,  CLOCK_8MHz/4,  tmshi,    3812,   high,     0,    375);
-	//ITECH_DRIVER(rimrockn,  M6809,  CLOCK_12MHz/4, tmshi,    3812,   high,     24,   375);
-	//ITECH_DRIVER(ninclown,  M68000, CLOCK_12MHz,   ninclown, 3812,   high,     64,   423);
+        static MachineDriver machine_driver_peggle = new MachineDriver
+	(
+		/* basic machine hardware */
+		new MachineCPU[] {
+			new MachineCPU(
+				CPU_M6809,														
+				CLOCK_8MHz/4,															
+				tmslo_readmem,tmslo_writemem,null,null,
+				generate_nmi,1														
+                        ),																		
+			new MachineCPU(
+				CPU_M6809,															
+				CLOCK_8MHz/4,														
+				sound3812_readmem,sound3812_writemem,null,null,
+				ignore_interrupt,1													
+                        )
+		},																			
+		60,(int)(((263. - 240.) / 263.) * 1000000. / 60.),							
+		1,																			
+		init_machine,																
+																					
+		/* video hardware */														
+		512, 263, new rectangle( 18, 367, 0, 239 ),
+		null,																			
+		256, 0,																		
+		null,																			
+																					
+		VIDEO_TYPE_RASTER | VIDEO_UPDATE_BEFORE_VBLANK,								
+		null,																			
+		itech8_vh_start,															
+		itech8_vh_stop,																
+		itech8_vh_screenrefresh,													
+																					
+		/* sound hardware */														
+		0,0,0,0,																	
+		new MachineSound[] {
+			new MachineSound( SOUND_YM3812, ym3812_interface )
+		/*TODO*///	{ SOUND_OKIM6295, &oki6295_interface_high },						
+		},																			
+		nvram_handler																
+        );
+        
+	//#define ITECH_DRIVER(NAME, CPUTYPE, CPUCLOCK, MAINMEM, YMTYPE, OKISPEED, XMIN, XMAX)	
+	/*           NAME,      CPU,    CPUCLOCK,      MAINMEM,  YMTYPE, OKISPEED, XMIN, XMAX) */
+        //ITECH_DRIVER(arlingtn,  M6809,  CLOCK_8MHz/4,  tmshi,    3812,   low,      16,   389);
+	static MachineDriver machine_driver_arlingtn = new MachineDriver
+	(
+		/* basic machine hardware */
+		new MachineCPU[] {
+			new MachineCPU(
+				CPU_M6809,														
+				CLOCK_8MHz/4,															
+				tmshi_readmem,tmshi_writemem,null,null,							
+				generate_nmi,1														
+                        ),																		
+			new MachineCPU(
+				CPU_M6809,															
+				CLOCK_8MHz/4,														
+				sound3812_readmem,sound3812_writemem,null,null,				
+				ignore_interrupt,1													
+                        )																		
+		},																			
+		60,(int)(((263. - 240.) / 263.) * 1000000. / 60.),							
+		1,																			
+		init_machine,																
+																					
+		/* video hardware */														
+		512, 263, new rectangle( 16, 389, 0, 239 ),
+		null,																			
+		256, 0,																		
+		null,																			
+																					
+		VIDEO_TYPE_RASTER | VIDEO_UPDATE_BEFORE_VBLANK,								
+		null,																			
+		itech8_vh_start,															
+		itech8_vh_stop,																
+		itech8_vh_screenrefresh,													
+																					
+		/* sound hardware */														
+		0,0,0,0,																	
+		new MachineSound[] {
+			new MachineSound( SOUND_YM3812, ym3812_interface )
+                /*TODO*///	,new MachineSound( SOUND_OKIM6295, &oki6295_interface_low )
+		},																			
+		nvram_handler																
+        );
+        
+        //#define ITECH_DRIVER(NAME, CPUTYPE, CPUCLOCK, MAINMEM, YMTYPE, OKISPEED, XMIN, XMAX)	
+	/*           NAME,      CPU,    CPUCLOCK,      MAINMEM,  YMTYPE, OKISPEED, XMIN, XMAX) */
+        //ITECH_DRIVER(neckneck,  M6809,  CLOCK_8MHz/4,  tmslo,    3812,   high,     8,    375);
+	static MachineDriver machine_driver_neckneck = new MachineDriver
+	(
+		/* basic machine hardware */
+		new MachineCPU[] {
+			new MachineCPU(
+				CPU_M6809,														
+				CLOCK_8MHz/4,															
+				tmslo_readmem,tmslo_writemem,null,null,							
+				generate_nmi,1														
+			),
+			new MachineCPU(
+				CPU_M6809,															
+				CLOCK_8MHz/4,														
+				sound3812_readmem,sound3812_writemem,null,null,
+				ignore_interrupt,1													
+			)
+		},																			
+		60,(int)(((263. - 240.) / 263.) * 1000000. / 60.),							
+		1,																			
+		init_machine,																
+																					
+		/* video hardware */														
+		512, 263, new rectangle( 8, 375, 0, 239 ),
+		null,																			
+		256, 0,																		
+		null,																			
+																					
+		VIDEO_TYPE_RASTER | VIDEO_UPDATE_BEFORE_VBLANK,								
+		null,																			
+		itech8_vh_start,															
+		itech8_vh_stop,																
+		itech8_vh_screenrefresh,													
+																					
+		/* sound hardware */														
+		0,0,0,0,																	
+		new MachineSound[] {
+			new MachineSound( SOUND_YM3812, ym3812_interface )
+			/*TODO*///,new MachineSound( SOUND_OKIM6295, oki6295_interface_high )
+		},																			
+		nvram_handler																
+        );
+        //#define ITECH_DRIVER(NAME, CPUTYPE, CPUCLOCK, MAINMEM, YMTYPE, OKISPEED, XMIN, XMAX)	
+	/*           NAME,      CPU,    CPUCLOCK,      MAINMEM,  YMTYPE, OKISPEED, XMIN, XMAX) */
+        //ITECH_DRIVER(hstennis,  M6809,  CLOCK_8MHz/4,  tmshi,    3812,   high,     0,    375);
+	static MachineDriver machine_driver_hstennis = new MachineDriver
+	(
+		/* basic machine hardware */
+		new MachineCPU[] {
+			new MachineCPU(
+				CPU_M6809,														
+				CLOCK_8MHz/4,															
+				tmshi_readmem,tmshi_writemem,null,null,							
+				generate_nmi,1														
+			),
+			new MachineCPU(
+				CPU_M6809,															
+				CLOCK_8MHz/4,														
+				sound3812_readmem,sound3812_writemem,null,null,
+				ignore_interrupt,1													
+			)
+		},																			
+		60,(int)(((263. - 240.) / 263.) * 1000000. / 60.),							
+		1,																			
+		init_machine,																
+																					
+		/* video hardware */														
+		512, 263, new rectangle( 0, 375, 0, 239 ),					
+		null,																			
+		256, 0,																		
+		null,																			
+																					
+		VIDEO_TYPE_RASTER | VIDEO_UPDATE_BEFORE_VBLANK,								
+		null,																			
+		itech8_vh_start,															
+		itech8_vh_stop,																
+		itech8_vh_screenrefresh,													
+																					
+		/* sound hardware */														
+		0,0,0,0,																	
+		new MachineSound[] {
+			new MachineSound( SOUND_YM3812, ym3812_interface )
+			/*TODO*///,new MachineSound( SOUND_OKIM6295, oki6295_interface_high )
+		},																			
+		nvram_handler																
+	);
+        //#define ITECH_DRIVER(NAME, CPUTYPE, CPUCLOCK, MAINMEM, YMTYPE, OKISPEED, XMIN, XMAX)	
+	/*           NAME,      CPU,    CPUCLOCK,      MAINMEM,  YMTYPE, OKISPEED, XMIN, XMAX) */
+        //ITECH_DRIVER(rimrockn,  M6809,  CLOCK_12MHz/4, tmshi,    3812,   high,     24,   375);
+        static MachineDriver machine_driver_rimrockn = new MachineDriver
+	(
+		/* basic machine hardware */
+		new MachineCPU[] {
+			new MachineCPU(
+				CPU_M6809,														
+				CLOCK_12MHz/4,															
+				tmshi_readmem,tmshi_writemem,null,null,							
+				generate_nmi,1														
+			),
+			new MachineCPU(
+				CPU_M6809,															
+				CLOCK_8MHz/4,														
+				sound3812_readmem,sound3812_writemem,null,null,
+				ignore_interrupt,1													
+			)
+		},																			
+		60,(int)(((263. - 240.) / 263.) * 1000000. / 60.),							
+		1,																			
+		init_machine,																
+																					
+		/* video hardware */														
+		512, 263, new rectangle( 24, 375, 0, 239 ),
+		null,																			
+		256, 0,																		
+		null,																			
+																					
+		VIDEO_TYPE_RASTER | VIDEO_UPDATE_BEFORE_VBLANK,								
+		null,																			
+		itech8_vh_start,															
+		itech8_vh_stop,																
+		itech8_vh_screenrefresh,													
+																					
+		/* sound hardware */														
+		0,0,0,0,																	
+		new MachineSound[] {
+			new MachineSound( SOUND_YM3812, ym3812_interface )
+			/*TODO*///,new MachineSound( SOUND_OKIM6295, oki6295_interface_high )
+		},																			
+		nvram_handler																
+	);
+        //#define ITECH_DRIVER(NAME, CPUTYPE, CPUCLOCK, MAINMEM, YMTYPE, OKISPEED, XMIN, XMAX)	
+	/*           NAME,      CPU,    CPUCLOCK,      MAINMEM,  YMTYPE, OKISPEED, XMIN, XMAX) */
+        //ITECH_DRIVER(ninclown,  M68000, CLOCK_12MHz,   ninclown, 3812,   high,     64,   423);
+	static MachineDriver machine_driver_ninclown = new MachineDriver
+	(
+		/* basic machine hardware */
+		new MachineCPU[] {
+			new MachineCPU(
+				CPU_M68000,														
+				CLOCK_12MHz,															
+				ninclown_readmem,ninclown_writemem,null,null,							
+				generate_nmi,1														
+			),
+			new MachineCPU(
+				CPU_M6809,															
+				CLOCK_8MHz/4,														
+				sound3812_readmem,sound3812_writemem,null,null,
+				ignore_interrupt,1													
+			)
+		},																			
+		60,(int)(((263. - 240.) / 263.) * 1000000. / 60.),							
+		1,																			
+		init_machine,																
+																					
+		/* video hardware */														
+		512, 263, new rectangle( 64, 423, 0, 239 ),
+		null,																			
+		256, 0,																		
+		null,																			
+																					
+		VIDEO_TYPE_RASTER | VIDEO_UPDATE_BEFORE_VBLANK,								
+		null,																			
+		itech8_vh_start,															
+		itech8_vh_stop,																
+		itech8_vh_screenrefresh,													
+																					
+		/* sound hardware */														
+		0,0,0,0,																	
+		new MachineSound[] {
+			new MachineSound( SOUND_YM3812, ym3812_interface )
+			/*TODO*///,new MachineSound( SOUND_OKIM6295, oki6295_interface_high )
+		},																			
+		nvram_handler																
+	);
+	
+	static MachineDriver machine_driver_slikshot = new MachineDriver
+	(
+		/* basic machine hardware */
+		new MachineCPU[] {
+			new MachineCPU(
+				CPU_M6809,
+				CLOCK_8MHz/4,
+				tmshi_readmem,tmshi_writemem,null,null,
+				generate_nmi,1
+                        ),
+			new MachineCPU(
+				CPU_M6809,
+				CLOCK_8MHz/4,
+				sound2203_readmem,sound2203_writemem,null,null,
+				ignore_interrupt,1
+                        ),
+			new MachineCPU(
+				CPU_Z80,
+				CLOCK_8MHz/2,
+				slikz80_readmem,slikz80_writemem,slikz80_readport,slikz80_writeport,
+				ignore_interrupt,1
+                        )
+		},
+		60,(int)(((263. - 240.) / 263.) * 1000000. / 60.),
+		1,
+		init_machine,
+	
+		/* video hardware */
+		512, 263, new rectangle( 0, 255, 0, 239 ),
+		null,
+		256+1, 0,
+		null,
+	
+		VIDEO_TYPE_RASTER | VIDEO_UPDATE_BEFORE_VBLANK,
+		null,
+		slikshot_vh_start,
+		itech8_vh_stop,
+		itech8_vh_screenrefresh,
+	
+		/* sound hardware */
+		0,0,0,0,
+		new MachineSound[] {
+			new MachineSound( SOUND_YM2203, ym2203_interface )
+		/*TODO*///	{ SOUND_OKIM6295, &oki6295_interface_high },
+		},
+		nvram_handler
+        );
 	
 	
-	/*TODO*///static struct MachineDriver machine_driver_slikshot =
-/*TODO*///	{
-/*TODO*///		/* basic machine hardware */
-/*TODO*///		{
-/*TODO*///			{
-/*TODO*///				CPU_M6809,
-/*TODO*///				CLOCK_8MHz/4,
-/*TODO*///				tmshi_readmem,tmshi_writemem,0,0,
-/*TODO*///				generate_nmi,1
-/*TODO*///			},
-/*TODO*///			{
-/*TODO*///				CPU_M6809,
-/*TODO*///				CLOCK_8MHz/4,
-/*TODO*///				sound2203_readmem,sound2203_writemem,0,0,
-/*TODO*///				ignore_interrupt,1
-/*TODO*///			},
-/*TODO*///			{
-/*TODO*///				CPU_Z80,
-/*TODO*///				CLOCK_8MHz/2,
-/*TODO*///				slikz80_readmem,slikz80_writemem,slikz80_readport,slikz80_writeport,
-/*TODO*///				ignore_interrupt,1
-/*TODO*///			}
-/*TODO*///		},
-/*TODO*///		60,(int)(((263. - 240.) / 263.) * 1000000. / 60.),
-/*TODO*///		1,
-/*TODO*///		init_machine,
-/*TODO*///	
-/*TODO*///		/* video hardware */
-/*TODO*///		512, 263, { 0, 255, 0, 239 },
-/*TODO*///		0,
-/*TODO*///		256+1, 0,
-/*TODO*///		0,
-/*TODO*///	
-/*TODO*///		VIDEO_TYPE_RASTER | VIDEO_UPDATE_BEFORE_VBLANK,
-/*TODO*///		0,
-/*TODO*///		slikshot_vh_start,
-/*TODO*///		itech8_vh_stop,
-/*TODO*///		itech8_vh_screenrefresh,
-/*TODO*///	
-/*TODO*///		/* sound hardware */
-/*TODO*///		0,0,0,0,
-/*TODO*///		{
-/*TODO*///			{ SOUND_YM2203, &ym2203_interface },
-/*TODO*///			{ SOUND_OKIM6295, &oki6295_interface_high },
-/*TODO*///		},
-/*TODO*///		nvram_handler
-/*TODO*///	};
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	static struct MachineDriver machine_driver_sstrike =
-/*TODO*///	{
-/*TODO*///		/* basic machine hardware */
-/*TODO*///		{
-/*TODO*///			{
-/*TODO*///				CPU_M6809,
-/*TODO*///				CLOCK_8MHz/4,
-/*TODO*///				tmslo_readmem,tmslo_writemem,0,0,
-/*TODO*///				generate_nmi,1
-/*TODO*///			},
-/*TODO*///			{
-/*TODO*///				CPU_M6809,
-/*TODO*///				CLOCK_8MHz/4,
-/*TODO*///				sound2203_readmem,sound2203_writemem,0,0,
-/*TODO*///				ignore_interrupt,1
-/*TODO*///			},
-/*TODO*///			{
-/*TODO*///				CPU_Z80,
-/*TODO*///				CLOCK_8MHz/2,
-/*TODO*///				slikz80_readmem,slikz80_writemem,slikz80_readport,slikz80_writeport,
-/*TODO*///				ignore_interrupt,1
-/*TODO*///			}
-/*TODO*///		},
-/*TODO*///		60,(int)(((263. - 240.) / 263.) * 1000000. / 60.),
-/*TODO*///		1,
-/*TODO*///		init_machine,
-/*TODO*///	
-/*TODO*///		/* video hardware */
-/*TODO*///		512, 263, { 0, 255, 0, 239 },
-/*TODO*///		0,
-/*TODO*///		256+1, 0,
-/*TODO*///		0,
-/*TODO*///	
-/*TODO*///		VIDEO_TYPE_RASTER | VIDEO_UPDATE_BEFORE_VBLANK,
-/*TODO*///		0,
-/*TODO*///		slikshot_vh_start,
-/*TODO*///		itech8_vh_stop,
-/*TODO*///		itech8_vh_screenrefresh,
-/*TODO*///	
-/*TODO*///		/* sound hardware */
-/*TODO*///		0,0,0,0,
-/*TODO*///		{
-/*TODO*///			{ SOUND_YM2203, &ym2203_interface },
-/*TODO*///			{ SOUND_OKIM6295, &oki6295_interface_high },
-/*TODO*///		},
-/*TODO*///		nvram_handler
-/*TODO*///	};
-/*TODO*///	
+	static MachineDriver machine_driver_sstrike = new MachineDriver
+	(
+		/* basic machine hardware */
+		new MachineCPU[] {
+			new MachineCPU(
+				CPU_M6809,
+				CLOCK_8MHz/4,
+				tmslo_readmem,tmslo_writemem,null,null,
+				generate_nmi,1
+                        ),
+			new MachineCPU(
+				CPU_M6809,
+				CLOCK_8MHz/4,
+				sound2203_readmem,sound2203_writemem,null,null,
+				ignore_interrupt,1
+                        ),
+			new MachineCPU(
+				CPU_Z80,
+				CLOCK_8MHz/2,
+				slikz80_readmem,slikz80_writemem,slikz80_readport,slikz80_writeport,
+				ignore_interrupt,1
+			)
+		},
+		60,(int)(((263. - 240.) / 263.) * 1000000. / 60.),
+		1,
+		init_machine,
+	
+		/* video hardware */
+		512, 263, new rectangle( 0, 255, 0, 239 ),
+		null,
+		256+1, 0,
+		null,
+	
+		VIDEO_TYPE_RASTER | VIDEO_UPDATE_BEFORE_VBLANK,
+		null,
+		slikshot_vh_start,
+		itech8_vh_stop,
+		itech8_vh_screenrefresh,
+	
+		/* sound hardware */
+		0,0,0,0,
+		new MachineSound[] {
+			new MachineSound( SOUND_YM2203, ym2203_interface )
+		/*TODO*///	{ SOUND_OKIM6295, &oki6295_interface_high },
+		},
+		nvram_handler
+        );
+	
 	
 	
 	/*************************************
@@ -1525,7 +1821,7 @@ public class itech8
 	static RomLoadPtr rom_stratab = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 );	
                 ROM_LOAD( "sbprogv3.bin", 0x08000, 0x8000, 0xa5ae728f );	
-                /*TODO*///ROM_COPY( REGION_CPU1,    0x8000, 0x14000, 0x8000 );
+                ROM_COPY( REGION_CPU1,    0x8000, 0x14000, 0x8000 );
 		ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD( "sbsnds.bin", 0x08000, 0x8000, 0xb36c8f0a );
 		ROM_REGION( 0xc0000, REGION_GFX1, 0 );	ROM_LOAD( "grom0.bin", 0x00000, 0x20000, 0xa915b0bd );	ROM_LOAD( "grom1.bin", 0x20000, 0x20000, 0x340c661f );	ROM_LOAD( "grom2.bin", 0x40000, 0x20000, 0x5df9f1cf );
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 );	ROM_LOAD( "srom0.bin", 0x00000, 0x20000, 0x6ff390b9 );ROM_END(); }}; 
@@ -1535,7 +1831,7 @@ public class itech8
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 );	
                 ROM_LOAD( "wofpgm", 0x04000, 0x4000, 0xbd984654 );	
                 ROM_CONTINUE(       0x10000, 0xc000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x14000, 0x8000, 0x8000 );
+                ROM_COPY( REGION_CPU1, 0x14000, 0x8000, 0x8000 );
 		ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD( "wofsnd", 0x08000, 0x8000, 0x0a6aa5dc );
 		ROM_REGION( 0xc0000, REGION_GFX1, 0 );	ROM_LOAD( "wofgrom0", 0x00000, 0x10000, 0x9a157b2c );	ROM_LOAD( "wofgrom1", 0x10000, 0x10000, 0x5064739b );	ROM_LOAD( "wofgrom2", 0x20000, 0x10000, 0x3d393b2b );	ROM_LOAD( "wofgrom3", 0x30000, 0x10000, 0x117a2ce9 );
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 );	ROM_LOAD( "wofsbom0", 0x00000, 0x20000, 0x5c28c3fe );ROM_END(); }}; 
@@ -1545,7 +1841,7 @@ public class itech8
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 );	
                 ROM_LOAD( "wofpgmr1.bin", 0x04000, 0x4000, 0xc3d3eb21 );	
                 ROM_CONTINUE(             0x10000, 0xc000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x14000, 0x8000, 0x8000 );
+                ROM_COPY( REGION_CPU1, 0x14000, 0x8000, 0x8000 );
 		ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD( "wofsnd", 0x08000, 0x8000, 0x0a6aa5dc );
 		ROM_REGION( 0xc0000, REGION_GFX1, 0 );	ROM_LOAD( "wofgrom0", 0x00000, 0x10000, 0x9a157b2c );	ROM_LOAD( "wofgrom1", 0x10000, 0x10000, 0x5064739b );	ROM_LOAD( "wofgrom2", 0x20000, 0x10000, 0x3d393b2b );	ROM_LOAD( "wofgrom3", 0x30000, 0x10000, 0x117a2ce9 );
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 );	ROM_LOAD( "wofsbom0", 0x00000, 0x20000, 0x5c28c3fe );ROM_END(); }}; 
@@ -1555,7 +1851,7 @@ public class itech8
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 );	
                 ROM_LOAD( "u5.bin", 0x04000, 0x4000, 0x61984272 );	
                 ROM_CONTINUE(       0x10000, 0xc000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x14000, 0x8000, 0x8000 );
+                ROM_COPY( REGION_CPU1, 0x14000, 0x8000, 0x8000 );
 		ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD( "u27.bin", 0x08000, 0x8000, 0x358d2440 );
 		ROM_REGION( 0xc0000, REGION_GFX1, 0 );	ROM_LOAD( "grom0.bin", 0x00000, 0x20000, 0xa29c688a );	ROM_LOAD( "grom1.bin", 0x20000, 0x20000, 0xb52a23f6 );	ROM_LOAD( "grom2.bin", 0x40000, 0x20000, 0x9b8e3a61 );	ROM_LOAD( "grom3.bin", 0x60000, 0x20000, 0xb6e9fb15 );	ROM_LOAD( "grom4.bin", 0x80000, 0x20000, 0xfaa16729 );	ROM_LOAD( "grom5.bin", 0xa0000, 0x20000, 0x5b393314 );
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 );	ROM_LOAD( "srom0.bin", 0x00000, 0x20000, 0x1cccbfdf );ROM_END(); }}; 
@@ -1565,7 +1861,7 @@ public class itech8
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 );	
                 ROM_LOAD( "pgm20.u5",  0x04000, 0x4000, 0x370a00eb );	
                 ROM_CONTINUE(          0x10000, 0xc000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x14000, 0x8000, 0x8000 );
+                ROM_COPY( REGION_CPU1, 0x14000, 0x8000, 0x8000 );
 		ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD( "u27.bin", 0x08000, 0x8000, 0xa96ce0f7 );
 		ROM_REGION( 0x10000, REGION_CPU3, 0 );	ROM_LOAD( "u53.bin", 0x00000, 0x0800, 0x04b85918 );	ROM_CONTINUE(        0x00000, 0x0800 );	ROM_CONTINUE(        0x00000, 0x0800 );	ROM_CONTINUE(        0x00000, 0x0800 );
 		ROM_REGION( 0xc0000, REGION_GFX1, 0 );	ROM_LOAD( "grom0.bin", 0x00000, 0x20000, 0xe60c2804 );	ROM_LOAD( "grom1.bin", 0x20000, 0x20000, 0xd764d542 );
@@ -1576,7 +1872,7 @@ public class itech8
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 );	
                 ROM_LOAD( "u5.bin", 0x04000, 0x4000, 0x09d70554 );	
                 ROM_CONTINUE(       0x10000, 0xc000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x14000, 0x8000, 0x8000 );
+                ROM_COPY( REGION_CPU1, 0x14000, 0x8000, 0x8000 );
 		ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD( "u27.bin", 0x08000, 0x8000, 0xa96ce0f7 );
 		ROM_REGION( 0x10000, REGION_CPU3, 0 );	ROM_LOAD( "u53.bin", 0x00000, 0x0800, 0x04b85918 );	ROM_CONTINUE(        0x00000, 0x0800 );	ROM_CONTINUE(        0x00000, 0x0800 );	ROM_CONTINUE(        0x00000, 0x0800 );
 		ROM_REGION( 0xc0000, REGION_GFX1, 0 );	ROM_LOAD( "grom0.bin", 0x00000, 0x20000, 0xe60c2804 );	ROM_LOAD( "grom1.bin", 0x20000, 0x20000, 0xd764d542 );
@@ -1586,7 +1882,7 @@ public class itech8
 	static RomLoadPtr rom_sstrike = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 );	
                 ROM_LOAD( "sstrku5.bin", 0x08000, 0x8000, 0xaf00cddf );	
-                /*TODO*///ROM_COPY( REGION_CPU1,    0x8000, 0x14000, 0x8000 );
+                ROM_COPY( REGION_CPU1,    0x8000, 0x14000, 0x8000 );
 		ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD( "sstrku27.bin", 0x08000, 0x8000, 0xefab7252 );
 		ROM_REGION( 0x10000, REGION_CPU3, 0 );	ROM_LOAD( "spstku53.bin", 0x00000, 0x0800, 0x04b85918 );	ROM_CONTINUE(        0x00000, 0x0800 );	ROM_CONTINUE(        0x00000, 0x0800 );	ROM_CONTINUE(        0x00000, 0x0800 );
 		ROM_REGION( 0xc0000, REGION_GFX1, 0 );	ROM_LOAD( "sstgrom0.bin", 0x00000, 0x20000, 0x9cfb9849 );	ROM_LOAD( "sstgrom1.bin", 0x20000, 0x20000, 0xd9ea14e1 );	ROM_LOAD( "sstgrom2.bin", 0x40000, 0x20000, 0xdcd97bf7 );
@@ -1598,7 +1894,7 @@ public class itech8
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 );	
                 ROM_LOAD( "u5.2",   0x10000, 0x4000, 0x4a61580f );	
                 ROM_CONTINUE(       0x04000, 0xc000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x8000, 0x14000, 0x8000 );
+                ROM_COPY( REGION_CPU1, 0x8000, 0x14000, 0x8000 );
 		ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD( "u27.2", 0x08000, 0x8000, 0x55734876 );
 		ROM_REGION( 0xc0000, REGION_GFX1, 0 );	ROM_LOAD( "grom0.bin", 0x00000, 0x20000, 0xa29c688a );	ROM_LOAD( "grom1.bin", 0x20000, 0x20000, 0xa4182776 );	ROM_LOAD( "grom2.bin", 0x40000, 0x20000, 0x0580bb99 );	ROM_LOAD( "grom3.bin", 0x60000, 0x20000, 0x89edb624 );	ROM_LOAD( "grom4.bin", 0x80000, 0x20000, 0xf6557950 );	ROM_LOAD( "grom5.bin", 0xa0000, 0x20000, 0xa680ce6a );
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 );	ROM_LOAD( "vr-srom0", 0x00000, 0x20000, 0x4dd4db42 );ROM_END(); }}; 
@@ -1609,7 +1905,7 @@ public class itech8
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 );	
                 ROM_LOAD( "u5",     0x10000, 0x4000, 0xc7b3a9f3 );	
                 ROM_CONTINUE(       0x04000, 0xc000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x8000, 0x14000, 0x8000 );
+                ROM_COPY( REGION_CPU1, 0x8000, 0x14000, 0x8000 );
 		ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD( "u27.bin", 0x08000, 0x8000, 0xdd2a5905 );
 		ROM_REGION( 0xc0000, REGION_GFX1, 0 );	ROM_LOAD( "grom0.bin", 0x00000, 0x20000, 0xa29c688a );	ROM_LOAD( "grom1.bin", 0x20000, 0x20000, 0xa4182776 );	ROM_LOAD( "grom2.bin", 0x40000, 0x20000, 0x0580bb99 );	ROM_LOAD( "grom3.bin", 0x60000, 0x20000, 0x89edb624 );	ROM_LOAD( "grom4.bin", 0x80000, 0x20000, 0xf6557950 );	ROM_LOAD( "grom5.bin", 0xa0000, 0x20000, 0xa680ce6a );
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 );	ROM_LOAD( "vr-srom0", 0x00000, 0x20000, 0x4dd4db42 );ROM_END(); }}; 
@@ -1619,7 +1915,7 @@ public class itech8
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 );	
                 ROM_LOAD( "u5.bin", 0x04000, 0x4000, 0x9c95ceaa );	
                 ROM_CONTINUE(       0x10000, 0xc000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x14000, 0x8000, 0x8000 );
+                ROM_COPY( REGION_CPU1, 0x14000, 0x8000, 0x8000 );
 		ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD( "u27.bin", 0x08000, 0x8000, 0xdd2a5905 );
 		ROM_REGION( 0xc0000, REGION_GFX1, 0 );	ROM_LOAD( "grom0.bin", 0x00000, 0x20000, 0xa29c688a );	ROM_LOAD( "grom1.bin", 0x20000, 0x20000, 0xa4182776 );	ROM_LOAD( "grom2.bin", 0x40000, 0x20000, 0x0580bb99 );	ROM_LOAD( "grom3.bin", 0x60000, 0x20000, 0x89edb624 );	ROM_LOAD( "grom4.bin", 0x80000, 0x20000, 0xf6557950 );	ROM_LOAD( "grom5.bin", 0xa0000, 0x20000, 0xa680ce6a );
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 );	ROM_LOAD( "srom0.bin", 0x00000, 0x20000, 0x1cccbfdf );ROM_END(); }}; 
@@ -1630,7 +1926,7 @@ public class itech8
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 );	
                 ROM_LOAD( "ahrd121.bin", 0x10000, 0x4000, 0x00aae02e );	
                 ROM_CONTINUE(            0x04000, 0xc000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x8000, 0x14000, 0x8000 );
+                ROM_COPY( REGION_CPU1, 0x8000, 0x14000, 0x8000 );
 		ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD( "ahrsnd11.bin", 0x08000, 0x8000, 0xdec57dca );
 		ROM_REGION( 0xc0000, REGION_GFX1, 0 );	ROM_LOAD( "grom0.bin", 0x00000, 0x20000, 0x5ef57fe5 );	ROM_LOAD( "grom1.bin", 0x20000, 0x20000, 0x6aca95c0 );	ROM_LOAD( "grom2.bin", 0x40000, 0x10000, 0x6d6fde1b );
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 );	ROM_LOAD( "srom0.bin", 0x00000, 0x40000, 0x56087f81 );ROM_END(); }}; 
@@ -1641,7 +1937,7 @@ public class itech8
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 );	
                 ROM_LOAD( "nn_prg12.u5", 0x04000, 0x4000, 0x8e51734a );	
                 ROM_CONTINUE(            0x10000, 0xc000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x14000, 0x8000, 0x8000 );
+                ROM_COPY( REGION_CPU1, 0x14000, 0x8000, 0x8000 );
 		ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD( "nn_snd10.u27", 0x08000, 0x8000, 0x74771b2f );
 		ROM_REGION( 0xc0000, REGION_GFX1, 0 );	ROM_LOAD( "nn_grom0.bin", 0x00000, 0x20000, 0x064d1464 );	ROM_LOAD( "nn_grom1.bin", 0x20000, 0x20000, 0x622d9a0b );	ROM_LOAD( "nn_grom2.bin", 0x40000, 0x20000, 0xe7eb4020 );	ROM_LOAD( "nn_grom3.bin", 0x60000, 0x20000, 0x765c8593 );
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 );	ROM_LOAD( "nn_srom0.bin", 0x00000, 0x40000, 0x33687201 );ROM_END(); }}; 
@@ -1651,7 +1947,7 @@ public class itech8
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 );	
                 ROM_LOAD( "j-stick.u5", 0x04000, 0x4000, 0x140d5a9c );	
                 ROM_CONTINUE(           0x10000, 0xc000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x14000, 0x8000, 0x8000 );
+                ROM_COPY( REGION_CPU1, 0x14000, 0x8000, 0x8000 );
 		ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD( "sound.u27", 0x08000, 0x8000, 0xb99beb70 );
 		ROM_REGION( 0xc0000, REGION_GFX1, 0 );	ROM_LOAD( "grom0.bin", 0x00000, 0x20000, 0x5c02348d );	ROM_LOAD( "grom1.bin", 0x20000, 0x20000, 0x85a7a3a2 );	ROM_LOAD( "grom2.bin", 0x40000, 0x20000, 0xbfe11f18 );
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 );	ROM_LOAD( "srom0", 0x00000, 0x20000, 0x001846ea );ROM_END(); }}; 
@@ -1661,7 +1957,7 @@ public class itech8
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 );	
                 ROM_LOAD( "trakball.u5", 0x04000, 0x4000, 0xd2694868 );	
                 ROM_CONTINUE(            0x10000, 0xc000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x14000, 0x8000, 0x8000 );
+                ROM_COPY( REGION_CPU1, 0x14000, 0x8000, 0x8000 );
 		ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD( "sound.u27", 0x08000, 0x8000, 0xb99beb70 );
 		ROM_REGION( 0xc0000, REGION_GFX1, 0 );	ROM_LOAD( "grom0.bin", 0x00000, 0x20000, 0x5c02348d );	ROM_LOAD( "grom1.bin", 0x20000, 0x20000, 0x85a7a3a2 );	ROM_LOAD( "grom2.bin", 0x40000, 0x20000, 0xbfe11f18 );
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 );	ROM_LOAD( "srom0", 0x00000, 0x20000, 0x001846ea );ROM_END(); }}; 
@@ -1671,7 +1967,7 @@ public class itech8
 		ROM_REGION( 0x1c000, REGION_CPU1, 0 );	
                 ROM_LOAD( "ten_v1_1.bin", 0x04000, 0x4000, 0xfaffab5c );	
                 ROM_CONTINUE(             0x10000, 0xc000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x14000, 0x8000, 0x8000 );
+                ROM_COPY( REGION_CPU1, 0x14000, 0x8000, 0x8000 );
 		ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD( "tensd_v1.bin", 0x08000, 0x8000, 0xf034a694 );
 		ROM_REGION( 0xc0000, REGION_GFX1, 0 );	ROM_LOAD( "grom0.bin", 0x00000, 0x20000, 0x1e69ebae );	ROM_LOAD( "grom1.bin", 0x20000, 0x20000, 0x4e6a22d5 );	ROM_LOAD( "grom2.bin", 0x40000, 0x20000, 0xc0b643a9 );	ROM_LOAD( "grom3.bin", 0x60000, 0x20000, 0x54afb456 );	ROM_LOAD( "grom4.bin", 0x80000, 0x20000, 0xee09d645 );
 		ROM_REGION( 0x20000, REGION_SOUND1, 0 );	ROM_LOAD( "srom0.bin", 0x00000, 0x20000, 0xd9ce58c3 );ROM_END(); }}; 
@@ -1684,9 +1980,9 @@ public class itech8
                 ROM_CONTINUE(          0x1c000, 0x4000 );	
                 ROM_CONTINUE(          0x28000, 0xc000 );	
                 ROM_CONTINUE(          0x2c000, 0x8000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x2c000, 0x08000, 0x8000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x2c000, 0x14000, 0x8000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x2c000, 0x20000, 0x8000 );
+                ROM_COPY( REGION_CPU1, 0x2c000, 0x08000, 0x8000 );	
+                ROM_COPY( REGION_CPU1, 0x2c000, 0x14000, 0x8000 );	
+                ROM_COPY( REGION_CPU1, 0x2c000, 0x20000, 0x8000 );
 		ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD( "u27", 0x08000, 0x8000, 0x59f87f0e );
 		ROM_REGION( 0x100000, REGION_GFX1, 0 );	ROM_LOAD( "grom00",       0x00000, 0x40000, 0x3eacbad9 );	ROM_LOAD( "grom01",       0x40000, 0x40000, 0x864cc269 );	ROM_LOAD( "grom02-2.st2", 0x80000, 0x40000, 0x47904233 );	ROM_LOAD( "grom03-2.st2", 0xc0000, 0x40000, 0xf005f118 );
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 );	ROM_LOAD( "srom0", 0x00000, 0x40000, 0x7ad42be0 );ROM_END(); }}; 
@@ -1699,9 +1995,9 @@ public class itech8
                 ROM_CONTINUE(          0x1c000, 0x4000 );	
                 ROM_CONTINUE(          0x28000, 0xc000 );	
                 ROM_CONTINUE(          0x2c000, 0x8000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x2c000, 0x08000, 0x8000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x2c000, 0x14000, 0x8000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x2c000, 0x20000, 0x8000 );
+                ROM_COPY( REGION_CPU1, 0x2c000, 0x08000, 0x8000 );	
+                ROM_COPY( REGION_CPU1, 0x2c000, 0x14000, 0x8000 );	
+                ROM_COPY( REGION_CPU1, 0x2c000, 0x20000, 0x8000 );
 		ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD( "u27", 0x08000, 0x8000, 0x59f87f0e );
 		ROM_REGION( 0x100000, REGION_GFX1, 0 );	ROM_LOAD( "grom00",       0x00000, 0x40000, 0x3eacbad9 );	ROM_LOAD( "grom01",       0x40000, 0x40000, 0x864cc269 );	ROM_LOAD( "grom02-2.st2", 0x80000, 0x40000, 0x47904233 );	ROM_LOAD( "grom03-2.st2", 0xc0000, 0x40000, 0xf005f118 );
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 );	ROM_LOAD( "srom0", 0x00000, 0x40000, 0x7ad42be0 );ROM_END(); }}; 
@@ -1714,9 +2010,9 @@ public class itech8
                 ROM_CONTINUE(          0x1c000, 0x4000 );	
                 ROM_CONTINUE(          0x28000, 0xc000 );	
                 ROM_CONTINUE(          0x2c000, 0x8000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x2c000, 0x08000, 0x8000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x2c000, 0x14000, 0x8000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x2c000, 0x20000, 0x8000 );
+                ROM_COPY( REGION_CPU1, 0x2c000, 0x08000, 0x8000 );	
+                ROM_COPY( REGION_CPU1, 0x2c000, 0x14000, 0x8000 );	
+                ROM_COPY( REGION_CPU1, 0x2c000, 0x20000, 0x8000 );
 		ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD( "u27", 0x08000, 0x8000, 0x59f87f0e );
 		ROM_REGION( 0x100000, REGION_GFX1, 0 );	ROM_LOAD( "grom00", 0x00000, 0x40000, 0x3eacbad9 );	ROM_LOAD( "grom01", 0x40000, 0x40000, 0x864cc269 );	ROM_LOAD( "grom02", 0x80000, 0x40000, 0x34e567d5 );	ROM_LOAD( "grom03", 0xc0000, 0x40000, 0xfd18045d );
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 );	ROM_LOAD( "srom0", 0x00000, 0x40000, 0x7ad42be0 );ROM_END(); }}; 
@@ -1729,9 +2025,9 @@ public class itech8
                 ROM_CONTINUE(          0x1c000, 0x4000 );	
                 ROM_CONTINUE(          0x28000, 0xc000 );	
                 ROM_CONTINUE(          0x2c000, 0x8000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x2c000, 0x08000, 0x8000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x2c000, 0x14000, 0x8000 );	
-                /*TODO*///ROM_COPY( REGION_CPU1, 0x2c000, 0x20000, 0x8000 );
+                ROM_COPY( REGION_CPU1, 0x2c000, 0x08000, 0x8000 );	
+                ROM_COPY( REGION_CPU1, 0x2c000, 0x14000, 0x8000 );	
+                ROM_COPY( REGION_CPU1, 0x2c000, 0x20000, 0x8000 );
 		ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD( "rrbsndv1.u27", 0x08000, 0x8000, 0x8eda5f53 );
 		ROM_REGION( 0x100000, REGION_GFX1, 0 );	ROM_LOAD( "grom00", 0x00000, 0x40000, 0x3eacbad9 );	ROM_LOAD( "grom01", 0x40000, 0x40000, 0x864cc269 );	ROM_LOAD( "grom02", 0x80000, 0x40000, 0x34e567d5 );	ROM_LOAD( "grom03", 0xc0000, 0x40000, 0xfd18045d );
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 );	ROM_LOAD( "srom0", 0x00000, 0x40000, 0x7ad42be0 );ROM_END(); }}; 
@@ -1741,7 +2037,7 @@ public class itech8
 		ROM_REGION( 0x80000, REGION_CPU1, 0 );	
                 ROM_LOAD16_BYTE( "prog1", 0x00000, 0x20000, 0xfabfdcd2 );	
                 ROM_LOAD16_BYTE( "prog0", 0x00001, 0x20000, 0xeca63db5 );	
-                /*TODO*///ROM_COPY(    REGION_CPU1, 0x08000, 0x40000, 0x38000 );
+                ROM_COPY(    REGION_CPU1, 0x08000, 0x40000, 0x38000 );
 		ROM_REGION( 0x10000, REGION_CPU2, 0 );	ROM_LOAD( "nc-snd", 0x08000, 0x8000, 0xf9d5b4e1 );
 		ROM_REGION( 0x180000, REGION_GFX1, 0 );	ROM_LOAD( "nc-grom0", 0x000000, 0x40000, 0x532f7bff );	ROM_LOAD( "nc-grom1", 0x040000, 0x40000, 0x45640d4a );	ROM_LOAD( "nc-grom2", 0x080000, 0x40000, 0xc8281d06 );	ROM_LOAD( "nc-grom3", 0x0c0000, 0x40000, 0x2a6d33ac );	ROM_LOAD( "nc-grom4", 0x100000, 0x40000, 0x910876ba );	ROM_LOAD( "nc-grom5", 0x140000, 0x40000, 0x2533279b );
 		ROM_REGION( 0x40000, REGION_SOUND1, 0 );	ROM_LOAD( "srom0.bin", 0x00000, 0x40000, 0xf6b501e1 );ROM_END(); }}; 
@@ -1758,7 +2054,7 @@ public class itech8
 	{
 		/* some games with a YM3812 use a VIA(6522) for timing and communication */
 		install_mem_read_handler (1, 0x5000, 0x500f, via6522_r);
-		/*TODO*///via6522 = install_mem_write_handler(1, 0x5000, 0x500f, via6522_w);
+		via6522 = install_mem_write_handler(1, 0x5000, 0x500f, via6522_w);
 	} };
 	
 	
@@ -1792,7 +2088,7 @@ public class itech8
 		install_mem_write_handler(0, 0x01c0, 0x01df, itech8_blitter_w);
 	
 		/* VIA-based sound timing */
-		/*TODO*///init_viasound();
+		init_viasound.handler();
 	} };
 	
 	
@@ -1806,21 +2102,21 @@ public class itech8
 	public static GameDriver driver_wfortune	   = new GameDriver("1989"	,"wfortune"	,"itech8.java"	,rom_wfortune,null	,machine_driver_tmshi2203	,input_ports_wfortune	,null	,ROT0	,	"GameTek", "Wheel Of Fortune" );
 	public static GameDriver driver_wfortuna	   = new GameDriver("1989"	,"wfortuna"	,"itech8.java"	,rom_wfortuna,driver_wfortune	,machine_driver_tmshi2203	,input_ports_wfortune	,null	,ROT0	,	"GameTek", "Wheel Of Fortune (alternate)" );
 	public static GameDriver driver_stratab	   = new GameDriver("1990"	,"stratab"	,"itech8.java"	,rom_stratab,null	,machine_driver_tmshi2203	,input_ports_stratab	,null	,ROT270	,	"Strata/Incredible Technologies", "Strata Bowling" );
-	/*TODO*///public static GameDriver driver_sstrike	   = new GameDriver("1990"	,"sstrike"	,"itech8.java"	,rom_sstrike,null	,machine_driver_sstrike	,input_ports_sstrike	,init_sstrike	,ROT270	,	"Strata/Incredible Technologies", "Super Strike Bowling", GAME_NOT_WORKING );
-	/*TODO*///public static GameDriver driver_gtg	   = new GameDriver("1990"	,"gtg"	,"itech8.java"	,rom_gtg,null	,machine_driver_tmshi2203	,input_ports_gtg	,null	,ROT0	,	"Strata/Incredible Technologies", "Golden Tee Golf" );
-	/*TODO*///public static GameDriver driver_slikshot	   = new GameDriver("1990"	,"slikshot"	,"itech8.java"	,rom_slikshot,null	,machine_driver_slikshot	,input_ports_slikshot	,init_slikshot	,ROT90	,	"Grand Products/Incredible Technologies", "Slick Shot (V2.2)" );
-	/*TODO*///public static GameDriver driver_sliksh17	   = new GameDriver("1990"	,"sliksh17"	,"itech8.java"	,rom_sliksh17,driver_slikshot	,machine_driver_slikshot	,input_ports_slikshot	,init_slikshot	,ROT90	,	"Grand Products/Incredible Technologies", "Slick Shot (V1.7)" );
-	/*TODO*///public static GameDriver driver_hstennis	   = new GameDriver("1990"	,"hstennis"	,"itech8.java"	,rom_hstennis,null	,machine_driver_hstennis	,input_ports_hstennis	,null	,ROT90	,	"Strata/Incredible Technologies", "Hot Shots Tennis" );
-	/*TODO*///public static GameDriver driver_arlingtn	   = new GameDriver("1991"	,"arlingtn"	,"itech8.java"	,rom_arlingtn,null	,machine_driver_arlingtn	,input_ports_arlingtn	,null	,ROT0	,	"Strata/Incredible Technologies", "Arlington Horse Racing" );
-	/*TODO*///public static GameDriver driver_peggle	   = new GameDriver("1991"	,"peggle"	,"itech8.java"	,rom_peggle,null	,machine_driver_peggle	,input_ports_peggle	,null	,ROT90	,	"Strata/Incredible Technologies", "Peggle (Joystick)" );
-	/*TODO*///public static GameDriver driver_pegglet	   = new GameDriver("1991"	,"pegglet"	,"itech8.java"	,rom_pegglet,driver_peggle	,machine_driver_peggle	,input_ports_pegglet	,null	,ROT90	,	"Strata/Incredible Technologies", "Peggle (Trackball)" );
-	/*TODO*///public static GameDriver driver_rimrockn	   = new GameDriver("1991"	,"rimrockn"	,"itech8.java"	,rom_rimrockn,null	,machine_driver_rimrockn	,input_ports_rimrockn	,init_rimrockn	,ROT0	,	"Strata/Incredible Technologies", "Rim Rockin' Basketball (V2.2)" );
-	/*TODO*///public static GameDriver driver_rimrck20	   = new GameDriver("1991"	,"rimrck20"	,"itech8.java"	,rom_rimrck20,driver_rimrockn	,machine_driver_rimrockn	,input_ports_rimrockn	,init_rimrockn	,ROT0	,	"Strata/Incredible Technologies", "Rim Rockin' Basketball (V2.0)" );
-	/*TODO*///public static GameDriver driver_rimrck16	   = new GameDriver("1991"	,"rimrck16"	,"itech8.java"	,rom_rimrck16,driver_rimrockn	,machine_driver_rimrockn	,input_ports_rimrockn	,init_rimrockn	,ROT0	,	"Strata/Incredible Technologies", "Rim Rockin' Basketball (V1.6)" );
-	/*TODO*///public static GameDriver driver_rimrck12	   = new GameDriver("1991"	,"rimrck12"	,"itech8.java"	,rom_rimrck12,driver_rimrockn	,machine_driver_rimrockn	,input_ports_rimrockn	,init_rimrockn	,ROT0	,	"Strata/Incredible Technologies", "Rim Rockin' Basketball (V1.2)" );
-	/*TODO*///public static GameDriver driver_ninclown	   = new GameDriver("1991"	,"ninclown"	,"itech8.java"	,rom_ninclown,null	,machine_driver_ninclown	,input_ports_ninclown	,init_viasound	,ROT0	,	"Strata/Incredible Technologies", "Ninja Clowns" );
-	/*TODO*///public static GameDriver driver_gtg2	   = new GameDriver("1992"	,"gtg2"	,"itech8.java"	,rom_gtg2,null	,machine_driver_gtg2	,input_ports_gtg2	,init_viasound	,ROT0	,	"Strata/Incredible Technologies", "Golden Tee Golf II (Trackball, V2.2)" );
-	/*TODO*///public static GameDriver driver_gtg2t	   = new GameDriver("1989"	,"gtg2t"	,"itech8.java"	,rom_gtg2t,driver_gtg2	,machine_driver_tmshi2203	,input_ports_gtg2t	,null	,ROT0	,	"Strata/Incredible Technologies", "Golden Tee Golf II (Trackball, V1.1)" );
-	/*TODO*///public static GameDriver driver_gtg2j	   = new GameDriver("1991"	,"gtg2j"	,"itech8.java"	,rom_gtg2j,driver_gtg2	,machine_driver_tmslo2203	,input_ports_gtg	,null	,ROT0	,	"Strata/Incredible Technologies", "Golden Tee Golf II (Joystick, V1.0)" );
-	/*TODO*///public static GameDriver driver_neckneck	   = new GameDriver("1992"	,"neckneck"	,"itech8.java"	,rom_neckneck,null	,machine_driver_neckneck	,input_ports_neckneck	,null	,ROT0	,	"Bundra Games/Incredible Technologies", "Neck-n-Neck" );
+	public static GameDriver driver_sstrike	   = new GameDriver("1990"	,"sstrike"	,"itech8.java"	,rom_sstrike,null	,machine_driver_sstrike	,input_ports_sstrike	,init_sstrike	,ROT270	,	"Strata/Incredible Technologies", "Super Strike Bowling", GAME_NOT_WORKING );
+	public static GameDriver driver_gtg	   = new GameDriver("1990"	,"gtg"	,"itech8.java"	,rom_gtg,null	,machine_driver_tmshi2203	,input_ports_gtg	,null	,ROT0	,	"Strata/Incredible Technologies", "Golden Tee Golf" );
+	public static GameDriver driver_slikshot	   = new GameDriver("1990"	,"slikshot"	,"itech8.java"	,rom_slikshot,null	,machine_driver_slikshot	,input_ports_slikshot	,init_slikshot	,ROT90	,	"Grand Products/Incredible Technologies", "Slick Shot (V2.2)" );
+	public static GameDriver driver_sliksh17	   = new GameDriver("1990"	,"sliksh17"	,"itech8.java"	,rom_sliksh17,driver_slikshot	,machine_driver_slikshot	,input_ports_slikshot	,init_slikshot	,ROT90	,	"Grand Products/Incredible Technologies", "Slick Shot (V1.7)" );
+	public static GameDriver driver_hstennis	   = new GameDriver("1990"	,"hstennis"	,"itech8.java"	,rom_hstennis,null	,machine_driver_hstennis	,input_ports_hstennis	,null	,ROT90	,	"Strata/Incredible Technologies", "Hot Shots Tennis" );
+	public static GameDriver driver_arlingtn	   = new GameDriver("1991"	,"arlingtn"	,"itech8.java"	,rom_arlingtn,null	,machine_driver_arlingtn	,input_ports_arlingtn	,null	,ROT0	,	"Strata/Incredible Technologies", "Arlington Horse Racing" );
+	public static GameDriver driver_peggle	   = new GameDriver("1991"	,"peggle"	,"itech8.java"	,rom_peggle,null	,machine_driver_peggle	,input_ports_peggle	,null	,ROT90	,	"Strata/Incredible Technologies", "Peggle (Joystick)" );
+	public static GameDriver driver_pegglet	   = new GameDriver("1991"	,"pegglet"	,"itech8.java"	,rom_pegglet,driver_peggle	,machine_driver_peggle	,input_ports_pegglet	,null	,ROT90	,	"Strata/Incredible Technologies", "Peggle (Trackball)" );
+	public static GameDriver driver_rimrockn	   = new GameDriver("1991"	,"rimrockn"	,"itech8.java"	,rom_rimrockn,null	,machine_driver_rimrockn	,input_ports_rimrockn	,init_rimrockn	,ROT0	,	"Strata/Incredible Technologies", "Rim Rockin' Basketball (V2.2)" );
+	public static GameDriver driver_rimrck20	   = new GameDriver("1991"	,"rimrck20"	,"itech8.java"	,rom_rimrck20,driver_rimrockn	,machine_driver_rimrockn	,input_ports_rimrockn	,init_rimrockn	,ROT0	,	"Strata/Incredible Technologies", "Rim Rockin' Basketball (V2.0)" );
+	public static GameDriver driver_rimrck16	   = new GameDriver("1991"	,"rimrck16"	,"itech8.java"	,rom_rimrck16,driver_rimrockn	,machine_driver_rimrockn	,input_ports_rimrockn	,init_rimrockn	,ROT0	,	"Strata/Incredible Technologies", "Rim Rockin' Basketball (V1.6)" );
+	public static GameDriver driver_rimrck12	   = new GameDriver("1991"	,"rimrck12"	,"itech8.java"	,rom_rimrck12,driver_rimrockn	,machine_driver_rimrockn	,input_ports_rimrockn	,init_rimrockn	,ROT0	,	"Strata/Incredible Technologies", "Rim Rockin' Basketball (V1.2)" );
+	public static GameDriver driver_ninclown	   = new GameDriver("1991"	,"ninclown"	,"itech8.java"	,rom_ninclown,null	,machine_driver_ninclown	,input_ports_ninclown	,init_viasound	,ROT0	,	"Strata/Incredible Technologies", "Ninja Clowns" );
+	public static GameDriver driver_gtg2	   = new GameDriver("1992"	,"gtg2"	,"itech8.java"	,rom_gtg2,null	,machine_driver_gtg2	,input_ports_gtg2	,init_viasound	,ROT0	,	"Strata/Incredible Technologies", "Golden Tee Golf II (Trackball, V2.2)" );
+	public static GameDriver driver_gtg2t	   = new GameDriver("1989"	,"gtg2t"	,"itech8.java"	,rom_gtg2t,driver_gtg2	,machine_driver_tmshi2203	,input_ports_gtg2t	,null	,ROT0	,	"Strata/Incredible Technologies", "Golden Tee Golf II (Trackball, V1.1)" );
+	public static GameDriver driver_gtg2j	   = new GameDriver("1991"	,"gtg2j"	,"itech8.java"	,rom_gtg2j,driver_gtg2	,machine_driver_tmslo2203	,input_ports_gtg	,null	,ROT0	,	"Strata/Incredible Technologies", "Golden Tee Golf II (Joystick, V1.0)" );
+	public static GameDriver driver_neckneck	   = new GameDriver("1992"	,"neckneck"	,"itech8.java"	,rom_neckneck,null	,machine_driver_neckneck	,input_ports_neckneck	,null	,ROT0	,	"Bundra Games/Incredible Technologies", "Neck-n-Neck" );
 }
