@@ -130,24 +130,28 @@ public class sndintrf {
 /*TODO*///{
 /*TODO*///	latch2 = cleared_value;
 /*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*///static int latch3,read_debug3;
-/*TODO*///
-/*TODO*///static void soundlatch3_callback(int param)
-/*TODO*///{
-/*TODO*///	if (read_debug3 == 0 && latch3 != param)
-/*TODO*///		logerror("Warning: sound latch 3 written before being read. Previous: %02x, new: %02x\n",latch3,param);
-/*TODO*///	latch3 = param;
-/*TODO*///	read_debug3 = 0;
-/*TODO*///}
-/*TODO*///
-/*TODO*///WRITE_HANDLER( soundlatch3_w )
-/*TODO*///{
-/*TODO*///	/* make all the CPUs synchronize, and only AFTER that write the new command to the latch */
-/*TODO*///	timer_set(TIME_NOW,data,soundlatch3_callback);
-/*TODO*///}
-/*TODO*///
+
+
+    static int latch3,read_debug3;
+
+    public static timer_callback soundlatch3_callback = new timer_callback() {
+        public void handler(int param) {
+            if (read_debug3 == 0 && latch3 != param)
+                    logerror("Warning: sound latch 3 written before being read. Previous: %02x, new: %02x\n",latch3,param);
+            latch3 = param;
+            read_debug3 = 0;
+        }
+    };
+    
+
+    public static WriteHandlerPtr soundlatch3_w = new WriteHandlerPtr() {
+        public void handler(int offset, int data) {
+            /* make all the CPUs synchronize, and only AFTER that write the new command to the latch */
+            timer_set(TIME_NOW,data,soundlatch3_callback);
+        }
+    };
+
+
 /*TODO*///WRITE16_HANDLER( soundlatch3_word_w )
 /*TODO*///{
 /*TODO*///	static data16_t word;
@@ -156,11 +160,15 @@ public class sndintrf {
 /*TODO*///	/* make all the CPUs synchronize, and only AFTER that write the new command to the latch */
 /*TODO*///	timer_set(TIME_NOW,word,soundlatch3_callback);
 /*TODO*///}
-/*TODO*///
-/*TODO*///READ_HANDLER( soundlatch3_r )
+
+    public static ReadHandlerPtr soundlatch3_r = new ReadHandlerPtr() {
+        public int handler(int offset) {
+            read_debug3 = 1;
+            return latch3;
+        }
+    };
 /*TODO*///{
-/*TODO*///	read_debug3 = 1;
-/*TODO*///	return latch3;
+/*TODO*///	
 /*TODO*///}
 /*TODO*///
 /*TODO*///READ16_HANDLER( soundlatch3_word_r )

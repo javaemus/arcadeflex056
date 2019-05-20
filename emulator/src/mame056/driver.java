@@ -130,6 +130,7 @@ import static WIP.mame056.drivers.timelimt.*;
 import static WIP.mame056.drivers.thepit.*;
 import static WIP.mame056.drivers.itech8.*;
 import static WIP.mame056.drivers.beezer.*;
+import static WIP.mame056.drivers.dkong.*;
 
 public class driver {
 
@@ -776,19 +777,19 @@ public class driver {
         driver_dowild, /* (c) 1984 */
         driver_jjack, /* (c) 1984 */
         driver_kickridr, /* (c) 1984 */
-        /*TODO*///	/* Nintendo games */
-        /*TODO*///	driver_radarscp,	/* (c) 1980 Nintendo */
-        /*TODO*///	driver_dkong,		/* (c) 1981 Nintendo of America */
-        /*TODO*///	driver_dkongjp,	/* (c) 1981 Nintendo */
-        /*TODO*///	driver_dkongjo,	/* (c) 1981 Nintendo */
-        /*TODO*///	driver_dkongjo1,	/* (c) 1981 Nintendo */
-        /*TODO*///	driver_dkongjr,	/* (c) 1982 Nintendo of America */
-        /*TODO*///	driver_dkongjrj,	/* (c) 1982 Nintendo */
-        /*TODO*///	driver_dkngjnrj,	/* (c) 1982 Nintendo */
-        /*TODO*///	driver_dkongjrb,	/* bootleg */
-        /*TODO*///	driver_dkngjnrb,	/* (c) 1982 Nintendo of America */
-        /*TODO*///	driver_dkong3,	/* (c) 1983 Nintendo of America */
-        /*TODO*///	driver_dkong3j,	/* (c) 1983 Nintendo */
+        /* Nintendo games */
+        driver_radarscp,	/* (c) 1980 Nintendo */
+        driver_dkong,		/* (c) 1981 Nintendo of America */
+        driver_dkongjp,	/* (c) 1981 Nintendo */
+        driver_dkongjo,	/* (c) 1981 Nintendo */
+        driver_dkongjo1,	/* (c) 1981 Nintendo */
+        driver_dkongjr,	/* (c) 1982 Nintendo of America */
+        driver_dkongjrj,	/* (c) 1982 Nintendo */
+        driver_dkngjnrj,	/* (c) 1982 Nintendo */
+        driver_dkongjrb,	/* bootleg */
+        driver_dkngjnrb,	/* (c) 1982 Nintendo of America */
+        driver_dkong3,	/* (c) 1983 Nintendo of America */
+        driver_dkong3j,	/* (c) 1983 Nintendo */
         driver_mario, /* (c) 1983 Nintendo of America */
         driver_mariojp, /* (c) 1983 Nintendo */
         driver_masao, /* bootleg */
