@@ -131,6 +131,7 @@ import static WIP.mame056.drivers.thepit.*;
 import static WIP.mame056.drivers.itech8.*;
 import static WIP.mame056.drivers.beezer.*;
 import static WIP.mame056.drivers.dkong.*;
+import static WIP.mame056.drivers.bublbobl.*;
 
 public class driver {
 
@@ -1265,13 +1266,13 @@ public class driver {
         driver_ogonsiro,	/* ??? (c) 1986 Taito Corporation (Japan) */
         /*TODO*///	driver_lsasquad,	/* A64 (c) 1986 Taito Corporation / Taito America (dip switch) */
         /*TODO*///	driver_storming,	/* A64 (c) 1986 Taito Corporation */
-        /*TODO*///	driver_tokio,		/* A71 1986 */
-        /*TODO*///	driver_tokiob,	/* bootleg */
-        /*TODO*///	driver_bublbobl,	/* A78 (c) 1986 Taito Corporation */
-        /*TODO*///	driver_bublbobr,	/* A78 (c) 1986 Taito America Corporation + Romstar license */
-        /*TODO*///	driver_bubbobr1,	/* A78 (c) 1986 Taito America Corporation + Romstar license */
-        /*TODO*///	driver_boblbobl,	/* bootleg */
-        /*TODO*///	driver_sboblbob,	/* bootleg */
+        driver_tokio,		/* A71 1986 */
+        driver_tokiob,	/* bootleg */
+        driver_bublbobl,	/* A78 (c) 1986 Taito Corporation */
+        driver_bublbobr,	/* A78 (c) 1986 Taito America Corporation + Romstar license */
+        driver_bubbobr1,	/* A78 (c) 1986 Taito America Corporation + Romstar license */
+        driver_boblbobl,	/* bootleg */
+        driver_sboblbob,	/* bootleg */
         /*TODO*///	driver_kikikai,	/* A85 (c) 1986 Taito Corporation */
         /*TODO*///	driver_kicknrun,	/* A87 (c) 1986 Taito Corporation */
         /*TODO*///	driver_mexico86,	/* bootleg (Micro Research) */
