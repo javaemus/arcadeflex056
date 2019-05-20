@@ -999,12 +999,12 @@ public class dkong
 				3072000,	/* 3.072 MHz (?) */
 				readmem,dkongjr_writemem,null,null,
 				nmi_interrupt,1
-			),
-			new MachineCPU(
-				CPU_I8035 | CPU_AUDIO_CPU,
-				6000000/15,	/* 6MHz crystal */
-				readmem_sound,writemem_sound,readport_sound,writeport_sound,
-				ignore_interrupt,1
+			/*TODO*///),
+			/*TODO*///new MachineCPU(
+			/*TODO*///	CPU_I8035 | CPU_AUDIO_CPU,
+			/*TODO*///	6000000/15,	/* 6MHz crystal */
+			/*TODO*///	readmem_sound,writemem_sound,readport_sound,writeport_sound,
+			/*TODO*///	ignore_interrupt,1
 			)
 		},
 		60, DEFAULT_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */
