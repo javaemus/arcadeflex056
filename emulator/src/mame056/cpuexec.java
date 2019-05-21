@@ -865,24 +865,24 @@ public class cpuexec {
     }
 
 
-/*TODO*///
-/*TODO*////*************************************
-/*TODO*/// *
-/*TODO*/// *	Returns a crude approximation
-/*TODO*/// *	of the horizontal position of the
-/*TODO*/// *	bream
-/*TODO*/// *
-/*TODO*/// *************************************/
-/*TODO*///
-/*TODO*///int cpu_gethorzbeampos(void)
-/*TODO*///{
-/*TODO*///	double elapsed_time = timer_timeelapsed(refresh_timer);
-/*TODO*///	int scanline = (int)(elapsed_time * scanline_period_inv);
-/*TODO*///	double time_since_scanline = elapsed_time - (double)scanline * scanline_period;
-/*TODO*///	return (int)(time_since_scanline * scanline_period_inv * (double)Machine->drv->screen_width);
-/*TODO*///}
-/*TODO*///
-/*TODO*///
+
+    /*************************************
+     *
+     *	Returns a crude approximation
+     *	of the horizontal position of the
+     *	bream
+     *
+     *************************************/
+
+    public static int cpu_gethorzbeampos()
+    {
+            double elapsed_time = timer_timeelapsed(refresh_timer);
+            int scanline = (int)(elapsed_time * scanline_period_inv);
+            double time_since_scanline = elapsed_time - (double)scanline * scanline_period;
+            return (int)(time_since_scanline * scanline_period_inv * (double)Machine.drv.screen_width);
+    }
+
+
     /**
      * ***********************************
      *
