@@ -138,6 +138,7 @@ import static mame056.drivers.zaxxon.*;
 import static WIP.mame056.drivers.starfire.*;
 import static WIP.mame056.drivers.xxmissio.*;
 import static WIP.mame056.drivers.bking2.*;
+import static WIP.mame056.drivers.mrflea.*;
 
 public class driver {
 
@@ -3807,7 +3808,7 @@ public class driver {
         /*TODO*///	driver_thief,		/* (c) 1981 */
         /*TODO*///	driver_natodef,	/* (c) 1982 */
         /*TODO*///	driver_natodefa,	/* (c) 1982 */
-        /*TODO*///	driver_mrflea,	/* (c) 1982 */
+        driver_mrflea,	/* (c) 1982 */
         /*TODO*///
         /*TODO*///	/* Tecfri games */
         /*TODO*///	driver_holeland,	/* (c) 1984 */

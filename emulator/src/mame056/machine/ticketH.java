@@ -4,7 +4,7 @@
 
 ***************************************************************************/
 
-package WIP.mame056.machine;
+package mame056.machine;
 
 public class ticketH {
 

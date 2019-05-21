@@ -206,8 +206,8 @@ import static WIP.mame056.vidhrdw.tms34061H.*;
 
 // refactor
 import static arcadeflex036.osdepend.logerror;
-import static WIP.mame056.machine.ticket.*;
-import static WIP.mame056.machine.ticketH.*;
+import static mame056.machine.ticket.*;
+import static mame056.machine.ticketH.*;
 
 public class itech8
 {

@@ -15,9 +15,9 @@
  * ported to v0.56
  * using automatic conversion tool v0.01
  */ 
-package WIP.mame056.machine;
+package mame056.machine;
 
-import static WIP.mame056.machine.ticketH.*;
+import static mame056.machine.ticketH.*;
 import static mame056.timer.*;
 import static mame056.timerH.*;
 import static mame056.common.*;
