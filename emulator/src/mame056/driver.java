@@ -133,6 +133,7 @@ import static WIP.mame056.drivers.beezer.*;
 import static WIP.mame056.drivers.dkong.*;
 import static WIP.mame056.drivers.bublbobl.*;
 import static WIP.mame056.drivers.kncljoe.*;
+import static WIP.mame056.drivers.raiders5.*;
 
 public class driver {
 
@@ -3319,8 +3320,8 @@ public class driver {
         /*TODO*///	/* UPL games */
         /*TODO*///	/* Mouser              UPL-83001 */
         /*TODO*///	driver_ninjakun,	/* UPL-84003 (c) 1984 Taito Corporation */
-        /*TODO*///	driver_raiders5,	/* UPL-85004 (c) 1985 */
-        /*TODO*///	driver_raidrs5t,
+        driver_raiders5,	/* UPL-85004 (c) 1985 */
+        driver_raidrs5t,
         /*TODO*///	driver_xxmissio,	/* UPL-86001 [1986] */
         /*TODO*///	driver_ninjakd2,	/* UPL-????? (c) 1987 */
         /*TODO*///	driver_ninjak2a,	/* UPL-????? (c) 1987 */
