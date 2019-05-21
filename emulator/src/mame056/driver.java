@@ -136,6 +136,7 @@ import static WIP.mame056.drivers.kncljoe.*;
 import static WIP.mame056.drivers.raiders5.*;
 import static mame056.drivers.zaxxon.*;
 import static WIP.mame056.drivers.starfire.*;
+import static WIP.mame056.drivers.xxmissio.*;
 
 public class driver {
 
@@ -3324,7 +3325,7 @@ public class driver {
         /*TODO*///	driver_ninjakun,	/* UPL-84003 (c) 1984 Taito Corporation */
         driver_raiders5,	/* UPL-85004 (c) 1985 */
         driver_raidrs5t,
-        /*TODO*///	driver_xxmissio,	/* UPL-86001 [1986] */
+        driver_xxmissio,	/* UPL-86001 [1986] */
         /*TODO*///	driver_ninjakd2,	/* UPL-????? (c) 1987 */
         /*TODO*///	driver_ninjak2a,	/* UPL-????? (c) 1987 */
         /*TODO*///	driver_ninjak2b,	/* UPL-????? (c) 1987 */
