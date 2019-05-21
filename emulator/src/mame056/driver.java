@@ -132,6 +132,7 @@ import static WIP.mame056.drivers.itech8.*;
 import static WIP.mame056.drivers.beezer.*;
 import static WIP.mame056.drivers.dkong.*;
 import static WIP.mame056.drivers.bublbobl.*;
+import static WIP.mame056.drivers.kncljoe.*;
 
 public class driver {
 
@@ -3453,8 +3454,8 @@ public class driver {
         driver_scionc,	/* (c) 1984 Seibu Denshi + Cinematronics license */
         driver_wiz,		/* (c) 1985 Seibu Kaihatsu */
         driver_wizt,		/* (c) 1985 Taito Corporation */
-        /*TODO*///	driver_kncljoe,	/* (c) 1985 Taito Corporation */
-        /*TODO*///	driver_kncljoea,	/* (c) 1985 Taito Corporation */
+        driver_kncljoe,	/* (c) 1985 Taito Corporation */
+        driver_kncljoea,	/* (c) 1985 Taito Corporation */
         /*TODO*///	driver_empcity,	/* (c) 1986 Seibu Kaihatsu (bootleg?) */
         /*TODO*///	driver_empcityj,	/* (c) 1986 Taito Corporation (Japan) */
         /*TODO*///	driver_stfight,	/* (c) 1986 Seibu Kaihatsu (Germany) (bootleg?) */

@@ -19,12 +19,14 @@ import static mame056.drawgfx.*;
 import static mame056.mame.*;
 import static mame056.commonH.*;
 import static mame056.drawgfxH.*;
+import static mame056.tilemapH.*;
+import static mame056.tilemapC.*;
 
 import static mame056.vidhrdw.generic.*;
 
 public class kncljoe {
 
-    /*TODO*///	static struct tilemap *bg_tilemap;
+    static struct_tilemap bg_tilemap;
     static int tile_bank, sprite_bank;
     static int flipscreen;
 
@@ -107,17 +109,19 @@ public class kncljoe {
      *
      **************************************************************************
      */
-    /*TODO*///	static void get_bg_tile_info(int tile_index)
-/*TODO*///	{
-/*TODO*///		int attr = videoram[2*tile_index+1];
-/*TODO*///		int code = videoram[2*tile_index] + ((attr & 0xc0) << 2) + (tile_bank << 10);
-/*TODO*///	
-/*TODO*///		SET_TILE_INFO(
-/*TODO*///				0,
-/*TODO*///				code,
-/*TODO*///				attr & 0xf,
-/*TODO*///				TILE_FLIPXY((attr & 0x30) >> 4))
-/*TODO*///	}
+    	public static GetTileInfoPtr get_bg_tile_info = new GetTileInfoPtr() {
+            public void handler(int tile_index) {
+                int attr = videoram.read(2*tile_index+1);
+		int code = videoram.read(2*tile_index) + ((attr & 0xc0) << 2) + (tile_bank << 10);
+	
+		SET_TILE_INFO(
+				0,
+				code,
+				attr & 0xf,
+				TILE_FLIPXY((attr & 0x30) >> 4));
+            }
+        };
+	
     /**
      * *************************************************************************
      *
@@ -127,12 +131,12 @@ public class kncljoe {
      */
     public static VhStartPtr kncljoe_vh_start = new VhStartPtr() {
         public int handler() {
-            /*TODO*///		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,32);
-/*TODO*///	
-/*TODO*///		if (bg_tilemap == 0)
-/*TODO*///			return 1;
+                bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,32);
+	
+		if (bg_tilemap == null)
+			return 1;
 
-            /*TODO*///		tilemap_set_scroll_rows(bg_tilemap,4);
+            		tilemap_set_scroll_rows(bg_tilemap,4);
             return 0;
         }
     };
@@ -148,7 +152,7 @@ public class kncljoe {
         public void handler(int offset, int data) {
             if (videoram.read(offset) != data) {
                 videoram.write(offset, data);
-                /*TODO*///			tilemap_mark_tile_dirty(bg_tilemap,offset/2);
+                tilemap_mark_tile_dirty(bg_tilemap,offset/2);
             }
         }
     };
@@ -167,7 +171,7 @@ public class kncljoe {
              */
 
             flipscreen = data & 0x01;
-            /*TODO*///		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? TILEMAP_FLIPX : TILEMAP_FLIPY);
+            tilemap_set_flip(ALL_TILEMAPS,flipscreen!=0 ? TILEMAP_FLIPX : TILEMAP_FLIPY);
 
             coin_counter_w.handler(0, data & 0x02);
             coin_counter_w.handler(1, data & 0x20);
@@ -183,10 +187,10 @@ public class kncljoe {
 
     public static WriteHandlerPtr kncljoe_scroll_w = new WriteHandlerPtr() {
         public void handler(int offset, int data) {
-            /*TODO*///		tilemap_set_scrollx(bg_tilemap,0,data);
-/*TODO*///		tilemap_set_scrollx(bg_tilemap,1,data);
-/*TODO*///		tilemap_set_scrollx(bg_tilemap,2,data);
-/*TODO*///		tilemap_set_scrollx(bg_tilemap,3,0);
+            	tilemap_set_scrollx(bg_tilemap,0,data);
+		tilemap_set_scrollx(bg_tilemap,1,data);
+		tilemap_set_scrollx(bg_tilemap,2,data);
+		tilemap_set_scrollx(bg_tilemap,3,0);
         }
     };
 
@@ -242,7 +246,7 @@ public class kncljoe {
 
     public static VhUpdatePtr kncljoe_vh_screenrefresh = new VhUpdatePtr() {
         public void handler(mame_bitmap bitmap, int full_refresh) {
-            /*TODO*///            tilemap_draw(bitmap, bg_tilemap, 0, 0);
+            tilemap_draw(bitmap, bg_tilemap, 0, 0);
             draw_sprites(bitmap);
         }
     };
