@@ -134,6 +134,8 @@ import static WIP.mame056.drivers.dkong.*;
 import static WIP.mame056.drivers.bublbobl.*;
 import static WIP.mame056.drivers.kncljoe.*;
 import static WIP.mame056.drivers.raiders5.*;
+import static mame056.drivers.zaxxon.*;
+import static WIP.mame056.drivers.starfire.*;
 
 public class driver {
 
@@ -2208,14 +2210,14 @@ public class driver {
         driver_pignewt, /* (c) 1983 */
         driver_pignewta, /* (c) 1983 */
         driver_sindbadm, /* 834-5244 (c) 1983 Sega */
-        /*TODO*///	/* Sega "Zaxxon hardware" games */
-        /*TODO*///	driver_zaxxon,	/* (c) 1982 */
-        /*TODO*///	driver_zaxxon2,	/* (c) 1982 */
-        /*TODO*///	driver_zaxxonb,	/* bootleg */
-        /*TODO*///	driver_szaxxon,	/* (c) 1982 */
-        /*TODO*///	driver_futspy,	/* (c) 1984 */
-        /*TODO*///	driver_razmataz,	/* modified 834-0213, 834-0214 (c) 1983 */
-        /*TODO*///	driver_ixion,		/* (c) 1983 */
+        /* Sega "Zaxxon hardware" games */
+        driver_zaxxon,	/* (c) 1982 */
+        driver_zaxxon2,	/* (c) 1982 */
+        driver_zaxxonb,	/* bootleg */
+        driver_szaxxon,	/* (c) 1982 */
+        driver_futspy,	/* (c) 1984 */
+        driver_razmataz,	/* modified 834-0213, 834-0214 (c) 1983 */
+        driver_ixion,		/* (c) 1983 */
         /*TODO*///	driver_congo,		/* 605-5167 (c) 1983 */
         /*TODO*///	driver_tiptop,	/* 605-5167 (c) 1983 */
         /*TODO*///
@@ -2945,9 +2947,9 @@ public class driver {
         /*TODO*///	driver_robotbwl,	/* no copyright notice */
         /*TODO*///	driver_crash,		/* Exidy [1979?] */
         /*TODO*///	driver_ripcord,	/* Exidy [1977?] */
-        /*TODO*///	driver_starfire,	/* Exidy [1979?] */
-        /*TODO*///	driver_starfira,	/* Exidy [1979?] */
-        /*TODO*///	driver_fireone,	/* (c) 1979 Exidy */
+        driver_starfire,	/* Exidy [1979?] */
+        driver_starfira,	/* Exidy [1979?] */
+        driver_fireone,	/* (c) 1979 Exidy */
         /*TODO*///	driver_victory,	/* (c) 1982 */
         /*TODO*///	driver_victorba,	/* (c) 1982 */
 
