@@ -88,8 +88,7 @@ public class popeye
 	
 	
 	public static Memory_ReadAddress readmem[]={
-		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),	new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
 		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
 		new Memory_ReadAddress( 0x8800, 0x8bff, MRA_RAM ),
 		new Memory_ReadAddress( 0x8c00, 0x8e7f, MRA_RAM ),
@@ -97,10 +96,8 @@ public class popeye
 		new Memory_ReadAddress( 0xe000, 0xe001, protection_r ),
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
-	
 	public static Memory_WriteAddress writemem[]={
-		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),	new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
 		new Memory_WriteAddress( 0x8800, 0x8bff, MWA_RAM ),
 		new Memory_WriteAddress( 0x8c00, 0x8c01, MWA_RAM, popeye_background_pos ),
@@ -112,20 +109,16 @@ public class popeye
 		new Memory_WriteAddress( 0xe000, 0xe001, protection_w ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
-	
 	public static Memory_ReadAddress popeyebl_readmem[]={
-		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),	new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
 		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
 		new Memory_ReadAddress( 0x8c00, 0x8e7f, MRA_RAM ),
 		new Memory_ReadAddress( 0x8e80, 0x8fff, MRA_RAM ),
 		new Memory_ReadAddress( 0xe000, 0xe01f, MRA_ROM ),
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
-	
 	public static Memory_WriteAddress popeyebl_writemem[]={
-		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),	new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
 		new Memory_WriteAddress( 0x8c00, 0x8c01, MWA_RAM, popeye_background_pos ),
 		new Memory_WriteAddress( 0x8c03, 0x8c03, MWA_RAM, popeye_palettebank ),
@@ -137,101 +130,52 @@ public class popeye
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	
 	public static IO_ReadPort readport[]={
-		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
-		new IO_ReadPort( 0x00, 0x00, input_port_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),	new IO_ReadPort( 0x00, 0x00, input_port_0_r ),
 		new IO_ReadPort( 0x01, 0x01, input_port_1_r ),
 		new IO_ReadPort( 0x02, 0x02, input_port_2_r ),
 		new IO_ReadPort( 0x03, 0x03, AY8910_read_port_0_r ),
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
-	
 	public static IO_WritePort writeport[]={
-		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
-		new IO_WritePort( 0x00, 0x00, AY8910_control_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),	new IO_WritePort( 0x00, 0x00, AY8910_control_port_0_w ),
 		new IO_WritePort( 0x01, 0x01, AY8910_write_port_0_w ),
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
 	
-	
 	static InputPortPtr input_ports_popeye = new InputPortPtr(){ public void handler() { 
-		PORT_START(); 	/* IN0 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY );
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY );
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY );
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY );
-		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON1 );
-		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
+	PORT_START(); 	/* IN0 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY );	PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY );	PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY );	PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY );	PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON1 );	PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
 	
 		PORT_START(); 	/* IN1 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY | IPF_COCKTAIL );
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY | IPF_COCKTAIL );
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL );
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY | IPF_COCKTAIL );
-		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_COCKTAIL );
-		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY | IPF_COCKTAIL );	PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY | IPF_COCKTAIL );	PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL );	PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY | IPF_COCKTAIL );	PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_COCKTAIL );	PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
 	
 		PORT_START(); 	/* IN2 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_START1 );
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_START2 );
-		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
-		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_COIN2 );
-		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_SERVICE1 );
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_COIN1 );
-	
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_START1 );	PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_START2 );	PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
+		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_COIN2 );	PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_SERVICE1 );	PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_START(); 	/* DSW0 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coinage") );
-		PORT_DIPSETTING(    0x03, "A 3/1 B 1/2" );
-		PORT_DIPSETTING(    0x0e, DEF_STR( "2C_1C") );
-		PORT_DIPSETTING(    0x01, "A 2/1 B 2/5" );
-		PORT_DIPSETTING(    0x04, "A 2/1 B 1/3" );
-		PORT_DIPSETTING(    0x07, "A 1/1 B 2/1" );
-		PORT_DIPSETTING(    0x0f, DEF_STR( "1C_1C") );
-		PORT_DIPSETTING(    0x0c, "A 1/1 B 1/2" );
-		PORT_DIPSETTING(    0x0d, DEF_STR( "1C_2C") );
-		PORT_DIPSETTING(    0x06, "A 1/2 B 1/4" );
-		PORT_DIPSETTING(    0x0b, "A 1/2 B 1/5" );
-		PORT_DIPSETTING(    0x02, "A 2/5 B 1/1" );
-		PORT_DIPSETTING(    0x0a, "A 1/3 B 1/1" );
-		PORT_DIPSETTING(    0x09, "A 1/4 B 1/1" );
-		PORT_DIPSETTING(    0x05, "A 1/5 B 1/1" );
-		PORT_DIPSETTING(    0x08, "A 1/6 B 1/1" );
-		PORT_DIPSETTING(    0x00, DEF_STR( "Free_Play") );
+		PORT_DIPSETTING(    0x03, "A 3/1 B 1/2" );	PORT_DIPSETTING(    0x0e, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0x01, "A 2/1 B 2/5" );	PORT_DIPSETTING(    0x04, "A 2/1 B 1/3" );	PORT_DIPSETTING(    0x07, "A 1/1 B 2/1" );	PORT_DIPSETTING(    0x0f, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(    0x0c, "A 1/1 B 1/2" );	PORT_DIPSETTING(    0x0d, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(    0x06, "A 1/2 B 1/4" );	PORT_DIPSETTING(    0x0b, "A 1/2 B 1/5" );	PORT_DIPSETTING(    0x02, "A 2/5 B 1/1" );	PORT_DIPSETTING(    0x0a, "A 1/3 B 1/1" );	PORT_DIPSETTING(    0x09, "A 1/4 B 1/1" );	PORT_DIPSETTING(    0x05, "A 1/5 B 1/1" );	PORT_DIPSETTING(    0x08, "A 1/6 B 1/1" );	PORT_DIPSETTING(    0x00, DEF_STR( "Free_Play") );
 		PORT_DIPNAME( 0x10, 0x10, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x10, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
-		PORT_DIPNAME( 0x60, 0x40, "Copyright" );
-		PORT_DIPSETTING(    0x40, "Nintendo" );
-		PORT_DIPSETTING(    0x20, "Nintendo Co.,Ltd" );
-		PORT_DIPSETTING(    0x60, "Nintendo of America" );
-	//	PORT_DIPSETTING(    0x00, "Nintendo of America" );
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_SPECIAL );/* scans DSW1 one bit at a time */
+		PORT_DIPNAME( 0x60, 0x40, "Copyright" );	PORT_DIPSETTING(    0x40, "Nintendo" );	PORT_DIPSETTING(    0x20, "Nintendo Co.,Ltd" );	PORT_DIPSETTING(    0x60, "Nintendo of America" );//	PORT_DIPSETTING(    0x00, "Nintendo of America" );	PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_SPECIAL );/* scans DSW1 one bit at a time */
 	
 		PORT_START(); 	/* DSW1 (FAKE - appears as bit 7 of DSW0, see code below) */
 		PORT_DIPNAME( 0x03, 0x01, DEF_STR( "Lives") );
-		PORT_DIPSETTING(    0x03, "1" );
-		PORT_DIPSETTING(    0x02, "2" );
-		PORT_DIPSETTING(    0x01, "3" );
-		PORT_DIPSETTING(    0x00, "4" );
-		PORT_DIPNAME( 0x0c, 0x0c, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x0c, "Easy" );
-		PORT_DIPSETTING(    0x08, "Medium" );
-		PORT_DIPSETTING(    0x04, "Hard" );
-		PORT_DIPSETTING(    0x00, "Hardest" );
-		PORT_DIPNAME( 0x30, 0x30, DEF_STR( "Bonus_Life") );
-		PORT_DIPSETTING(    0x30, "40000" );
-		PORT_DIPSETTING(    0x20, "60000" );
-		PORT_DIPSETTING(    0x10, "80000" );
-		PORT_DIPSETTING(    0x00, "None" );
-		PORT_DIPNAME( 0x40, 0x00, DEF_STR( "Demo_Sounds") );
+		PORT_DIPSETTING(    0x03, "1" );	PORT_DIPSETTING(    0x02, "2" );	PORT_DIPSETTING(    0x01, "3" );	PORT_DIPSETTING(    0x00, "4" );	PORT_DIPNAME( 0x0c, 0x0c, DEF_STR( "Difficulty") );
+		PORT_DIPSETTING(    0x0c, "Easy" );	PORT_DIPSETTING(    0x08, "Medium" );	PORT_DIPSETTING(    0x04, "Hard" );	PORT_DIPSETTING(    0x00, "Hardest" );	PORT_DIPNAME( 0x30, 0x30, DEF_STR( "Bonus_Life") );
+		PORT_DIPSETTING(    0x30, "40000" );	PORT_DIPSETTING(    0x20, "60000" );	PORT_DIPSETTING(    0x10, "80000" );	PORT_DIPSETTING(    0x00, "None" );	PORT_DIPNAME( 0x40, 0x00, DEF_STR( "Demo_Sounds") );
 		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0x80, 0x00, DEF_STR( "Cabinet") );
@@ -241,81 +185,37 @@ public class popeye
 	
 	
 	static InputPortPtr input_ports_popeyef = new InputPortPtr(){ public void handler() { 
-		PORT_START(); 	/* IN0 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY );
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY );
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY );
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY );
-		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON1 );
-		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
+	PORT_START(); 	/* IN0 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY );	PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY );	PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY );	PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY );	PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON1 );	PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
 	
 		PORT_START(); 	/* IN1 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY | IPF_COCKTAIL );
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY | IPF_COCKTAIL );
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL );
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY | IPF_COCKTAIL );
-		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_COCKTAIL );
-		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY | IPF_COCKTAIL );	PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY | IPF_COCKTAIL );	PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL );	PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY | IPF_COCKTAIL );	PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_COCKTAIL );	PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
 	
 		PORT_START(); 	/* IN2 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_START1 );
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_START2 );
-		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
-		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_COIN2 );
-		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_SERVICE1 );
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_COIN1 );
-	
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_START1 );	PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_START2 );	PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
+		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_COIN2 );	PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_SERVICE1 );	PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_START(); 	/* DSW0 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coinage") );
-		PORT_DIPSETTING(    0x03, "A 3/1 B 1/2" );
-		PORT_DIPSETTING(    0x0e, DEF_STR( "2C_1C") );
-		PORT_DIPSETTING(    0x01, "A 2/1 B 2/5" );
-		PORT_DIPSETTING(    0x04, "A 2/1 B 1/3" );
-		PORT_DIPSETTING(    0x07, "A 1/1 B 2/1" );
-		PORT_DIPSETTING(    0x0f, DEF_STR( "1C_1C") );
-		PORT_DIPSETTING(    0x0c, "A 1/1 B 1/2" );
-		PORT_DIPSETTING(    0x0d, DEF_STR( "1C_2C") );
-		PORT_DIPSETTING(    0x06, "A 1/2 B 1/4" );
-		PORT_DIPSETTING(    0x0b, "A 1/2 B 1/5" );
-		PORT_DIPSETTING(    0x02, "A 2/5 B 1/1" );
-		PORT_DIPSETTING(    0x0a, "A 1/3 B 1/1" );
-		PORT_DIPSETTING(    0x09, "A 1/4 B 1/1" );
-		PORT_DIPSETTING(    0x05, "A 1/5 B 1/1" );
-		PORT_DIPSETTING(    0x08, "A 1/6 B 1/1" );
-		PORT_DIPSETTING(    0x00, DEF_STR( "Free_Play") );
+		PORT_DIPSETTING(    0x03, "A 3/1 B 1/2" );	PORT_DIPSETTING(    0x0e, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0x01, "A 2/1 B 2/5" );	PORT_DIPSETTING(    0x04, "A 2/1 B 1/3" );	PORT_DIPSETTING(    0x07, "A 1/1 B 2/1" );	PORT_DIPSETTING(    0x0f, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(    0x0c, "A 1/1 B 1/2" );	PORT_DIPSETTING(    0x0d, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(    0x06, "A 1/2 B 1/4" );	PORT_DIPSETTING(    0x0b, "A 1/2 B 1/5" );	PORT_DIPSETTING(    0x02, "A 2/5 B 1/1" );	PORT_DIPSETTING(    0x0a, "A 1/3 B 1/1" );	PORT_DIPSETTING(    0x09, "A 1/4 B 1/1" );	PORT_DIPSETTING(    0x05, "A 1/5 B 1/1" );	PORT_DIPSETTING(    0x08, "A 1/6 B 1/1" );	PORT_DIPSETTING(    0x00, DEF_STR( "Free_Play") );
 		PORT_DIPNAME( 0x10, 0x10, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x10, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
-		PORT_DIPNAME( 0x60, 0x40, "Copyright" );
-		PORT_DIPSETTING(    0x40, "Nintendo" );
-		PORT_DIPSETTING(    0x20, "Nintendo Co.,Ltd" );
-		PORT_DIPSETTING(    0x60, "Nintendo of America" );
-	//	PORT_DIPSETTING(    0x00, "Nintendo of America" );
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_SPECIAL );/* scans DSW1 one bit at a time */
+		PORT_DIPNAME( 0x60, 0x40, "Copyright" );	PORT_DIPSETTING(    0x40, "Nintendo" );	PORT_DIPSETTING(    0x20, "Nintendo Co.,Ltd" );	PORT_DIPSETTING(    0x60, "Nintendo of America" );//	PORT_DIPSETTING(    0x00, "Nintendo of America" );	PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_SPECIAL );/* scans DSW1 one bit at a time */
 	
 		PORT_START(); 	/* DSW1 (FAKE - appears as bit 7 of DSW0, see code below) */
 		PORT_DIPNAME( 0x03, 0x01, DEF_STR( "Lives") );
-		PORT_DIPSETTING(    0x03, "1" );
-		PORT_DIPSETTING(    0x02, "2" );
-		PORT_DIPSETTING(    0x01, "3" );
-		PORT_DIPSETTING(    0x00, "4" );
-		PORT_DIPNAME( 0x0c, 0x0c, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x0c, "Easy" );
-		PORT_DIPSETTING(    0x08, "Medium" );
-		PORT_DIPSETTING(    0x04, "Hard" );
-		PORT_DIPSETTING(    0x00, "Hardest" );
-		PORT_DIPNAME( 0x30, 0x30, DEF_STR( "Bonus_Life") );
-		PORT_DIPSETTING(    0x30, "20000" );
-		PORT_DIPSETTING(    0x20, "30000" );
-		PORT_DIPSETTING(    0x10, "50000" );
-		PORT_DIPSETTING(    0x00, "None" );
-		PORT_DIPNAME( 0x40, 0x00, DEF_STR( "Demo_Sounds") );
+		PORT_DIPSETTING(    0x03, "1" );	PORT_DIPSETTING(    0x02, "2" );	PORT_DIPSETTING(    0x01, "3" );	PORT_DIPSETTING(    0x00, "4" );	PORT_DIPNAME( 0x0c, 0x0c, DEF_STR( "Difficulty") );
+		PORT_DIPSETTING(    0x0c, "Easy" );	PORT_DIPSETTING(    0x08, "Medium" );	PORT_DIPSETTING(    0x04, "Hard" );	PORT_DIPSETTING(    0x00, "Hardest" );	PORT_DIPNAME( 0x30, 0x30, DEF_STR( "Bonus_Life") );
+		PORT_DIPSETTING(    0x30, "20000" );	PORT_DIPSETTING(    0x20, "30000" );	PORT_DIPSETTING(    0x10, "50000" );	PORT_DIPSETTING(    0x00, "None" );	PORT_DIPNAME( 0x40, 0x00, DEF_STR( "Demo_Sounds") );
 		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0x80, 0x00, DEF_STR( "Cabinet") );
@@ -476,23 +376,11 @@ public class popeye
 	
 	static RomLoadPtr rom_popeye = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 );/* 64k for code */
-		ROM_LOAD( "c-7a",         0x0000, 0x2000, 0x9af7c821 );
-		ROM_LOAD( "c-7b",         0x2000, 0x2000, 0xc3704958 );
-		ROM_LOAD( "c-7c",         0x4000, 0x2000, 0x5882ebf9 );
-		ROM_LOAD( "c-7e",         0x6000, 0x2000, 0xef8649ca );
-	
-		ROM_REGION( 0x0800, REGION_GFX1, ROMREGION_DISPOSE );
-		ROM_LOAD( "v-5n",         0x0000, 0x0800, 0xcca61ddd );/* first half is empty */
+		ROM_LOAD( "c-7a",         0x0000, 0x2000, 0x9af7c821 );	ROM_LOAD( "c-7b",         0x2000, 0x2000, 0xc3704958 );	ROM_LOAD( "c-7c",         0x4000, 0x2000, 0x5882ebf9 );	ROM_LOAD( "c-7e",         0x6000, 0x2000, 0xef8649ca );
+		ROM_REGION( 0x0800, REGION_GFX1, ROMREGION_DISPOSE );	ROM_LOAD( "v-5n",         0x0000, 0x0800, 0xcca61ddd );/* first half is empty */
 		ROM_CONTINUE(             0x0000, 0x0800 );
-	
-		ROM_REGION( 0x8000, REGION_GFX2, ROMREGION_DISPOSE );
-		ROM_LOAD( "v-1e",         0x0000, 0x2000, 0x0f2cd853 );
-		ROM_LOAD( "v-1f",         0x2000, 0x2000, 0x888f3474 );
-		ROM_LOAD( "v-1j",         0x4000, 0x2000, 0x7e864668 );
-		ROM_LOAD( "v-1k",         0x6000, 0x2000, 0x49e1d170 );
-	
-		ROM_REGION( 0x0340, REGION_PROMS, 0 );
-		ROM_LOAD( "prom-cpu.4a",  0x0000, 0x0020, 0x375e1602 );/* background palette */
+		ROM_REGION( 0x8000, REGION_GFX2, ROMREGION_DISPOSE );	ROM_LOAD( "v-1e",         0x0000, 0x2000, 0x0f2cd853 );	ROM_LOAD( "v-1f",         0x2000, 0x2000, 0x888f3474 );	ROM_LOAD( "v-1j",         0x4000, 0x2000, 0x7e864668 );	ROM_LOAD( "v-1k",         0x6000, 0x2000, 0x49e1d170 );
+		ROM_REGION( 0x0340, REGION_PROMS, 0 );	ROM_LOAD( "prom-cpu.4a",  0x0000, 0x0020, 0x375e1602 );/* background palette */
 		ROM_LOAD( "prom-cpu.3a",  0x0020, 0x0020, 0xe950bea1 );/* char palette */
 		ROM_LOAD( "prom-cpu.5b",  0x0040, 0x0100, 0xc5826883 );/* sprite palette - low 4 bits */
 		ROM_LOAD( "prom-cpu.5a",  0x0140, 0x0100, 0xc576afba );/* sprite palette - high 4 bits */
@@ -501,23 +389,11 @@ public class popeye
 	
 	static RomLoadPtr rom_popeyeu = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 );/* 64k for code */
-		ROM_LOAD( "7a",           0x0000, 0x2000, 0x0bd04389 );
-		ROM_LOAD( "7b",           0x2000, 0x2000, 0xefdf02c3 );
-		ROM_LOAD( "7c",           0x4000, 0x2000, 0x8eee859e );
-		ROM_LOAD( "7e",           0x6000, 0x2000, 0xb64aa314 );
-	
-		ROM_REGION( 0x0800, REGION_GFX1, ROMREGION_DISPOSE );
-		ROM_LOAD( "v-5n",         0x0000, 0x0800, 0xcca61ddd );/* first half is empty */
+		ROM_LOAD( "7a",           0x0000, 0x2000, 0x0bd04389 );	ROM_LOAD( "7b",           0x2000, 0x2000, 0xefdf02c3 );	ROM_LOAD( "7c",           0x4000, 0x2000, 0x8eee859e );	ROM_LOAD( "7e",           0x6000, 0x2000, 0xb64aa314 );
+		ROM_REGION( 0x0800, REGION_GFX1, ROMREGION_DISPOSE );	ROM_LOAD( "v-5n",         0x0000, 0x0800, 0xcca61ddd );/* first half is empty */
 		ROM_CONTINUE(             0x0000, 0x0800 );
-	
-		ROM_REGION( 0x8000, REGION_GFX2, ROMREGION_DISPOSE );
-		ROM_LOAD( "v-1e",         0x0000, 0x2000, 0x0f2cd853 );
-		ROM_LOAD( "v-1f",         0x2000, 0x2000, 0x888f3474 );
-		ROM_LOAD( "v-1j",         0x4000, 0x2000, 0x7e864668 );
-		ROM_LOAD( "v-1k",         0x6000, 0x2000, 0x49e1d170 );
-	
-		ROM_REGION( 0x0340, REGION_PROMS, 0 );
-		ROM_LOAD( "prom-cpu.4a",  0x0000, 0x0020, 0x375e1602 );/* background palette */
+		ROM_REGION( 0x8000, REGION_GFX2, ROMREGION_DISPOSE );	ROM_LOAD( "v-1e",         0x0000, 0x2000, 0x0f2cd853 );	ROM_LOAD( "v-1f",         0x2000, 0x2000, 0x888f3474 );	ROM_LOAD( "v-1j",         0x4000, 0x2000, 0x7e864668 );	ROM_LOAD( "v-1k",         0x6000, 0x2000, 0x49e1d170 );
+		ROM_REGION( 0x0340, REGION_PROMS, 0 );	ROM_LOAD( "prom-cpu.4a",  0x0000, 0x0020, 0x375e1602 );/* background palette */
 		ROM_LOAD( "prom-cpu.3a",  0x0020, 0x0020, 0xe950bea1 );/* char palette */
 		ROM_LOAD( "prom-cpu.5b",  0x0040, 0x0100, 0xc5826883 );/* sprite palette - low 4 bits */
 		ROM_LOAD( "prom-cpu.5a",  0x0140, 0x0100, 0xc576afba );/* sprite palette - high 4 bits */
@@ -526,23 +402,11 @@ public class popeye
 	
 	static RomLoadPtr rom_popeyef = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 );/* 64k for code */
-		ROM_LOAD( "tpp2-c_f.7a",  0x0000, 0x2000, 0x5fc5264d );
-		ROM_LOAD( "tpp2-c_f.7b",  0x2000, 0x2000, 0x51de48e8 );
-		ROM_LOAD( "tpp2-c_f.7c",  0x4000, 0x2000, 0x62df9647 );
-		ROM_LOAD( "tpp2-c_f.7e",  0x6000, 0x2000, 0xf31e7916 );
-	
-		ROM_REGION( 0x0800, REGION_GFX1, ROMREGION_DISPOSE );
-		ROM_LOAD( "v-5n",         0x0000, 0x0800, 0xcca61ddd );/* first half is empty */
+		ROM_LOAD( "tpp2-c_f.7a",  0x0000, 0x2000, 0x5fc5264d );	ROM_LOAD( "tpp2-c_f.7b",  0x2000, 0x2000, 0x51de48e8 );	ROM_LOAD( "tpp2-c_f.7c",  0x4000, 0x2000, 0x62df9647 );	ROM_LOAD( "tpp2-c_f.7e",  0x6000, 0x2000, 0xf31e7916 );
+		ROM_REGION( 0x0800, REGION_GFX1, ROMREGION_DISPOSE );	ROM_LOAD( "v-5n",         0x0000, 0x0800, 0xcca61ddd );/* first half is empty */
 		ROM_CONTINUE(             0x0000, 0x0800 );
-	
-		ROM_REGION( 0x8000, REGION_GFX2, ROMREGION_DISPOSE );
-		ROM_LOAD( "v-1e",         0x0000, 0x2000, 0x0f2cd853 );
-		ROM_LOAD( "v-1f",         0x2000, 0x2000, 0x888f3474 );
-		ROM_LOAD( "v-1j",         0x4000, 0x2000, 0x7e864668 );
-		ROM_LOAD( "v-1k",         0x6000, 0x2000, 0x49e1d170 );
-	
-		ROM_REGION( 0x0340, REGION_PROMS, 0 );
-		ROM_LOAD( "prom-cpu.4a",  0x0000, 0x0020, 0x375e1602 );/* background palette */
+		ROM_REGION( 0x8000, REGION_GFX2, ROMREGION_DISPOSE );	ROM_LOAD( "v-1e",         0x0000, 0x2000, 0x0f2cd853 );	ROM_LOAD( "v-1f",         0x2000, 0x2000, 0x888f3474 );	ROM_LOAD( "v-1j",         0x4000, 0x2000, 0x7e864668 );	ROM_LOAD( "v-1k",         0x6000, 0x2000, 0x49e1d170 );
+		ROM_REGION( 0x0340, REGION_PROMS, 0 );	ROM_LOAD( "prom-cpu.4a",  0x0000, 0x0020, 0x375e1602 );/* background palette */
 		ROM_LOAD( "prom-cpu.3a",  0x0020, 0x0020, 0xe950bea1 );/* char palette */
 		ROM_LOAD( "prom-cpu.5b",  0x0040, 0x0100, 0xc5826883 );/* sprite palette - low 4 bits */
 		ROM_LOAD( "prom-cpu.5a",  0x0140, 0x0100, 0xc576afba );/* sprite palette - high 4 bits */
@@ -551,24 +415,12 @@ public class popeye
 	
 	static RomLoadPtr rom_popeyebl = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 );/* 64k for code */
-		ROM_LOAD( "po1",          0x0000, 0x2000, 0xb14a07ca );
-		ROM_LOAD( "po2",          0x2000, 0x2000, 0x995475ff );
-		ROM_LOAD( "po3",          0x4000, 0x2000, 0x99d6a04a );
-		ROM_LOAD( "po4",          0x6000, 0x2000, 0x548a6514 );
-		ROM_LOAD( "po_d1-e1.bin", 0xe000, 0x0020, 0x8de22998 );/* protection PROM */
+		ROM_LOAD( "po1",          0x0000, 0x2000, 0xb14a07ca );	ROM_LOAD( "po2",          0x2000, 0x2000, 0x995475ff );	ROM_LOAD( "po3",          0x4000, 0x2000, 0x99d6a04a );	ROM_LOAD( "po4",          0x6000, 0x2000, 0x548a6514 );	ROM_LOAD( "po_d1-e1.bin", 0xe000, 0x0020, 0x8de22998 );/* protection PROM */
 	
-		ROM_REGION( 0x0800, REGION_GFX1, ROMREGION_DISPOSE );
-		ROM_LOAD( "v-5n",         0x0000, 0x0800, 0xcca61ddd );/* first half is empty */
+		ROM_REGION( 0x0800, REGION_GFX1, ROMREGION_DISPOSE );	ROM_LOAD( "v-5n",         0x0000, 0x0800, 0xcca61ddd );/* first half is empty */
 		ROM_CONTINUE(             0x0000, 0x0800 );
-	
-		ROM_REGION( 0x8000, REGION_GFX2, ROMREGION_DISPOSE );
-		ROM_LOAD( "v-1e",         0x0000, 0x2000, 0x0f2cd853 );
-		ROM_LOAD( "v-1f",         0x2000, 0x2000, 0x888f3474 );
-		ROM_LOAD( "v-1j",         0x4000, 0x2000, 0x7e864668 );
-		ROM_LOAD( "v-1k",         0x6000, 0x2000, 0x49e1d170 );
-	
-		ROM_REGION( 0x0240, REGION_PROMS, 0 );
-		ROM_LOAD( "popeye.pr1",   0x0000, 0x0020, 0xd138e8a4 );/* background palette */
+		ROM_REGION( 0x8000, REGION_GFX2, ROMREGION_DISPOSE );	ROM_LOAD( "v-1e",         0x0000, 0x2000, 0x0f2cd853 );	ROM_LOAD( "v-1f",         0x2000, 0x2000, 0x888f3474 );	ROM_LOAD( "v-1j",         0x4000, 0x2000, 0x7e864668 );	ROM_LOAD( "v-1k",         0x6000, 0x2000, 0x49e1d170 );
+		ROM_REGION( 0x0240, REGION_PROMS, 0 );	ROM_LOAD( "popeye.pr1",   0x0000, 0x0020, 0xd138e8a4 );/* background palette */
 		ROM_LOAD( "popeye.pr2",   0x0020, 0x0020, 0x0f364007 );/* char palette */
 		ROM_LOAD( "popeye.pr3",   0x0040, 0x0100, 0xca4d7b6a );/* sprite palette - low 4 bits */
 		ROM_LOAD( "popeye.pr4",   0x0140, 0x0100, 0xcab9bc53 );/* sprite palette - high 4 bits */
@@ -597,6 +449,6 @@ public class popeye
 	public static GameDriver driver_popeye	   = new GameDriver("1982"	,"popeye"	,"popeye.java"	,rom_popeye,null	,machine_driver_popeye	,input_ports_popeye	,init_popeye	,ROT0	,	"Nintendo", "Popeye (revision D)", GAME_NO_COCKTAIL );
 	public static GameDriver driver_popeyeu	   = new GameDriver("1982"	,"popeyeu"	,"popeye.java"	,rom_popeyeu,driver_popeye	,machine_driver_popeye	,input_ports_popeye	,init_popeye	,ROT0	,	"Nintendo", "Popeye (revision D not protected)", GAME_NO_COCKTAIL );
 	public static GameDriver driver_popeyef	   = new GameDriver("1982"	,"popeyef"	,"popeye.java"	,rom_popeyef,driver_popeye	,machine_driver_popeye	,input_ports_popeyef	,init_popeye	,ROT0	,	"Nintendo", "Popeye (revision F)", GAME_NO_COCKTAIL );
-	public static GameDriver driver_popeyebl   = new GameDriver("1982"	,"popeyebl"	,"popeye.java"	,rom_popeyebl,driver_popeye	,machine_driver_popeyebl	,input_ports_popeye	,null	,ROT0	,	"bootleg",  "Popeye (bootleg)", GAME_NO_COCKTAIL );
+	public static GameDriver driver_popeyebl	   = new GameDriver("1982"	,"popeyebl"	,"popeye.java"	,rom_popeyebl,driver_popeye	,machine_driver_popeyebl	,input_ports_popeye	,null	,ROT0	,	"bootleg",  "Popeye (bootleg)", GAME_NO_COCKTAIL );
 	
 }

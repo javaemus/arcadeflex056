@@ -32,17 +32,14 @@ import static arcadeflex036.osdepend.logerror;
 
 public class popeye
 {
-	
-	
-	
-	public static UBytePtr popeye_background_pos = new UBytePtr();
-	public static UBytePtr popeye_palettebank=new UBytePtr();
-	public static UBytePtr popeye_textram=new UBytePtr();
+        public static UBytePtr popeye_background_pos = new UBytePtr();
+	public static UBytePtr popeye_palettebank = new UBytePtr();
+	public static UBytePtr popeye_textram = new UBytePtr();
 	
 	static mame_bitmap tmpbitmap2;
 	static int invertmask;
 	
-	public static int BGRAM_SIZE = 0x2000;
+	static int BGRAM_SIZE = 0x2000;
 	
 	
 	/***************************************************************************
@@ -79,13 +76,10 @@ public class popeye
 	  The bootleg is the same, but the outputs are not inverted.
 	
 	***************************************************************************/
-        static int _palette = 0;
-        static int _colortable = 0;
-        
-	public static void convert_color_prom(char[] palette, char[] colortable, UBytePtr color_prom)
-	{
-		int i;
-                
+	static VhConvertColorPromPtr convert_color_prom = new VhConvertColorPromPtr() {
+            public void handler(char[] palette, char[] colortable, UBytePtr color_prom) {
+                int i;
+                int _palette = 0;
 	
 		/* palette entries 0-15 are directly used by the background and changed at runtime */
 		_palette += 3*16;
@@ -145,34 +139,36 @@ public class popeye
 	
 	
 		/* palette entries 0-15 are directly used by the background */
-	
+                int _colortable = 0;
 		for (i = 0;i < 16;i++)	/* characters */
 		{
 			colortable[_colortable++] = 0;	/* since chars are transparent, the PROM only */
-							/* stores the non transparent color */
+									/* stores the non transparent color */
 			colortable[_colortable++] = (char) (i + 16);
 		}
 		for (i = 0;i < 256;i++)	/* sprites */
 		{
 			colortable[_colortable++] = (char) (i + 16+16);
 		}
-	}
+            }
+        };
 	
 	public static VhConvertColorPromPtr popeye_vh_convert_color_prom = new VhConvertColorPromPtr() {
             public void handler(char[] palette, char[] colortable, UBytePtr color_prom) {
                 invertmask = 0xff;
 	
-		convert_color_prom(palette,colortable,color_prom);
+		convert_color_prom.handler(palette,colortable,color_prom);
             }
         };
-		
+	
 	public static VhConvertColorPromPtr popeyebl_vh_convert_color_prom = new VhConvertColorPromPtr() {
             public void handler(char[] palette, char[] colortable, UBytePtr color_prom) {
                 invertmask = 0x00;
 	
-		convert_color_prom(palette,colortable,color_prom);
+		convert_color_prom.handler(palette,colortable,color_prom);
             }
         };
+	
 	
 	/***************************************************************************
 	
@@ -214,7 +210,7 @@ public class popeye
 	public static WriteHandlerPtr popeyebl_bitmap_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		offset = ((offset & 0xfc0) << 1) | (offset & 0x03f);
-		if ((data & 0x80) != 0)
+		if ((data & 0x80)!=0)
 			offset |= 0x40;
 	
 		popeye_bitmap_w.handler(offset,data);
@@ -232,8 +228,7 @@ public class popeye
 	static void set_background_palette(int bank)
 	{
 		int i;
-		UBytePtr color_prom = new UBytePtr( memory_region(REGION_PROMS), 16 * bank);
-                
+		UBytePtr color_prom = new UBytePtr(memory_region(REGION_PROMS), 16 * bank);
 	
 		for (i = 0;i < 16;i++)
 		{
@@ -304,7 +299,7 @@ public class popeye
 	
 		set_background_palette((popeye_palettebank.read() & 0x08) >> 3);
 	
-		if (popeye_background_pos.read(0) != 0)	/* no background */
+		if (popeye_background_pos.read(0) == 0)	/* no background */
 		{
 			fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 		}
