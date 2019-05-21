@@ -137,6 +137,7 @@ import static WIP.mame056.drivers.raiders5.*;
 import static mame056.drivers.zaxxon.*;
 import static WIP.mame056.drivers.starfire.*;
 import static WIP.mame056.drivers.xxmissio.*;
+import static WIP.mame056.drivers.bking2.*;
 
 public class driver {
 
@@ -1241,7 +1242,7 @@ public class driver {
         /*TODO*///	driver_crbaloon,	/* CL  (c) 1980 Taito Corporation */
         /*TODO*///	driver_crbalon2,	/* CL  (c) 1980 Taito Corporation */
         /*TODO*///	driver_grchamp,	/* GM  (c) 1981 Taito Corporation */
-        /*TODO*///	driver_bking2,	/* AD6 (c) 1983 Taito Corporation */
+        driver_bking2,	/* AD6 (c) 1983 Taito Corporation */
         /*TODO*///TESTdriver_josvolly,	/* ??? (c) 1983 Taito Corporation */
         /*TODO*///	driver_gsword,	/* ??? (c) 1984 Taito Corporation */
         /*TODO*///	driver_lkage,		/* A54 (c) 1984 Taito Corporation */
