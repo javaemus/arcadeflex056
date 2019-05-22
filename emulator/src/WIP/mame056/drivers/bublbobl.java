@@ -569,7 +569,7 @@ public class bublbobl
 			new MachineCPU(
 				CPU_M68705,
 				4000000/2,	/* xtal is 4MHz, I think it's divided by 2 internally */
-				m68705_readmem,m68705_writemem,0,null,
+				m68705_readmem,m68705_writemem,null,null,
 				bublbobl_m68705_interrupt,2	/* ??? should come from the same */
 						/* clock which latches the INT pin on the second Z80 */
 			)

@@ -99,7 +99,7 @@ public class bublbobl
 					x = sx + xc * 8;
 					y = (sy + yc * 8) & 0xff;
 	
-					if (flip_screen() == 0)
+					if (flip_screen() != 0)
 					{
 						x = 248 - x;
 						y = 248 - y;

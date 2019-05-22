@@ -319,7 +319,7 @@ public class qix
 		/* draw the bitmap */
 		for (y = 0; y < 256; y++)
 		{
-			IntArray pens = new IntArray(Machine.pens[(palette_cache.read(y) & 3) * 256]);
+			IntArray pens = new IntArray(Machine.pens, (palette_cache.read(y) & 3) * 256);
 			draw_scanline8(bitmap, 0, y, 256, new UBytePtr(videoram_cache, y * 256), pens, -1);
 		}
 	} };

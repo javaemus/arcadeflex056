@@ -143,6 +143,7 @@ import static WIP.mame056.drivers.ninjakd2.*;
 import static WIP.mame056.drivers.crbaloon.*;
 import static mame056.drivers.arkanoid.*;
 import static WIP.mame056.drivers.lsasquad.*;
+import static WIP.mame056.drivers.victory.*;
 
 public class driver {
 
@@ -2955,8 +2956,8 @@ public class driver {
         driver_starfire, /* Exidy [1979?] */
         driver_starfira, /* Exidy [1979?] */
         driver_fireone, /* (c) 1979 Exidy */
-        /*TODO*///	driver_victory,	/* (c) 1982 */
-        /*TODO*///	driver_victorba,	/* (c) 1982 */
+        driver_victory,	/* (c) 1982 */
+        driver_victorba,	/* (c) 1982 */
 
         /* Exidy 440 games */
         driver_crossbow, /* (c) 1983 */
