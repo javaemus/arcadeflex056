@@ -140,6 +140,7 @@ import static WIP.mame056.drivers.xxmissio.*;
 import static WIP.mame056.drivers.bking2.*;
 import static WIP.mame056.drivers.mrflea.*;
 import static WIP.mame056.drivers.ninjakd2.*;
+import static WIP.mame056.drivers.crbaloon.*;
 
 public class driver {
 
@@ -1239,10 +1240,10 @@ public class driver {
         driver_hwrace, /* AC4 (c) 1983 Taito Corporation */
         driver_sfposeid, /* A14 (c) 1984 Taito Corporation */
         /*TODO*///TESTdriver_kikstart,	/* A20 */
-        /*TODO*///
-        /*TODO*///	/* other Taito games */
-        /*TODO*///	driver_crbaloon,	/* CL  (c) 1980 Taito Corporation */
-        /*TODO*///	driver_crbalon2,	/* CL  (c) 1980 Taito Corporation */
+        
+        /* other Taito games */
+        driver_crbaloon,	/* CL  (c) 1980 Taito Corporation */
+        driver_crbalon2,	/* CL  (c) 1980 Taito Corporation */
         /*TODO*///	driver_grchamp,	/* GM  (c) 1981 Taito Corporation */
         driver_bking2,	/* AD6 (c) 1983 Taito Corporation */
         /*TODO*///TESTdriver_josvolly,	/* ??? (c) 1983 Taito Corporation */
