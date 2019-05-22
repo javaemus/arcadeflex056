@@ -309,12 +309,23 @@ public class driver {
         /*segasyse*/ driver_transfrm,
         /*segasyse*/ driver_astrofl,
         /*segasyse*/ driver_ridleofp,
+        /*arkanoid*/driver_arkanoid, 
+        /*arkanoid*/driver_arknoidu, 
+        /*arkanoid*/driver_arknoidj,
+        /*arkanoid*/driver_arkatayt,
+        /*arkanoid*/driver_arkbloc2,
+        /*arkanoid*/driver_arkangc, 
+        /*arkanoid*/driver_arkatour, 
+        
         /**
          * GAME NOT WORKING FLAG
          */
         /*epos*/ driver_theglob3,
         /*segasyse*/ driver_fantzn2,
         /*segasyse*/ driver_opaopa,
+        /*arkanoid*/driver_arkbl2, 
+        /*arkanoid*/driver_arkbl3, 
+        /*arkanoid*/driver_arkblock, 
         /**
          * GAME WRONG COLORS
          */
@@ -1303,20 +1314,6 @@ public class driver {
         /*TODO*///	driver_rainbowa,	/* B22 (c) 1987 Taito Corporation */
         /*TODO*///	driver_rainbowe,	/* ??? (c) 1988 Taito Corporation */
         /*TODO*///	driver_jumping,	/* bootleg */
-        driver_arkanoid, /* A75 (c) 1986 Taito Corporation Japan (World) */
-        driver_arknoidu, /* A75 (c) 1986 Taito America Corporation + Romstar license (US) */
-        driver_arknoidj, /* A75 (c) 1986 Taito Corporation (Japan) */
-        
-        driver_arkatayt, /* bootleg */
-        
-        driver_arkbloc2,
-        driver_arkangc, 
-        driver_arkatour, 
-        
-        driver_arkbl2, 
-        driver_arkbl3, 
-        driver_arkblock, 
-        
         /*TODO*///	driver_superqix,	/* B03 1987 */
         /*TODO*///	driver_sqixbl,	/* bootleg? but (c) 1987 */
         /*TODO*///	driver_exzisus,	/* B23 (c) 1987 Taito Corporation (Japan) */
