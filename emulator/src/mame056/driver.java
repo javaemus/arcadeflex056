@@ -142,6 +142,7 @@ import static WIP.mame056.drivers.mrflea.*;
 import static WIP.mame056.drivers.ninjakd2.*;
 import static WIP.mame056.drivers.crbaloon.*;
 import static mame056.drivers.arkanoid.*;
+import static WIP.mame056.drivers.lsasquad.*;
 
 public class driver {
 
@@ -1283,8 +1284,8 @@ public class driver {
         /*TODO*///TESTdriver_onna34ro,	/* A52 */
         driver_gladiatr, /* ??? (c) 1986 Taito America Corporation (US) */
         driver_ogonsiro, /* ??? (c) 1986 Taito Corporation (Japan) */
-        /*TODO*///	driver_lsasquad,	/* A64 (c) 1986 Taito Corporation / Taito America (dip switch) */
-        /*TODO*///	driver_storming,	/* A64 (c) 1986 Taito Corporation */
+        	driver_lsasquad,	/* A64 (c) 1986 Taito Corporation / Taito America (dip switch) */
+        	driver_storming,	/* A64 (c) 1986 Taito Corporation */
         driver_tokio, /* A71 1986 */
         driver_tokiob, /* bootleg */
         driver_bublbobl, /* A78 (c) 1986 Taito Corporation */
