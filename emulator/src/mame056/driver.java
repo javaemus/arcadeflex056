@@ -139,7 +139,7 @@ import static WIP.mame056.drivers.starfire.*;
 import static WIP.mame056.drivers.xxmissio.*;
 import static WIP.mame056.drivers.bking2.*;
 import static WIP.mame056.drivers.mrflea.*;
-
+import static WIP.mame056.drivers.ninjakd2.*;
 
 public class driver {
 
@@ -3329,10 +3329,10 @@ public class driver {
         driver_raiders5,	/* UPL-85004 (c) 1985 */
         driver_raidrs5t,
         driver_xxmissio,	/* UPL-86001 [1986] */
-        /*TODO*///	driver_ninjakd2,	/* UPL-????? (c) 1987 */
-        /*TODO*///	driver_ninjak2a,	/* UPL-????? (c) 1987 */
-        /*TODO*///	driver_ninjak2b,	/* UPL-????? (c) 1987 */
-        /*TODO*///	driver_rdaction,	/* UPL-87003?(c) 1987 + World Games license */
+        driver_ninjakd2,	/* UPL-????? (c) 1987 */
+        driver_ninjak2a,	/* UPL-????? (c) 1987 */
+        driver_ninjak2b,	/* UPL-????? (c) 1987 */
+        driver_rdaction,	/* UPL-87003?(c) 1987 + World Games license */
         /*TODO*///	driver_mnight,	/* UPL-????? (c) 1987 distributed by Kawakus */
         /*TODO*///	driver_arkarea,	/* UPL-87007 (c) [1988?] */
         /*TODO*///	driver_robokid,	/* UPL-88013 (c) 1988 */

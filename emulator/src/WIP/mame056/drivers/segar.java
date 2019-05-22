@@ -852,7 +852,7 @@ public class segar
 		null,
 	
 		/* video hardware */
-		32*8, 32*8, new rectangle( 0*8, 32*8-1, 0*8, 28*8-1 ),
+		28*8, 28*8, new rectangle( 0*8, 28*8-1, 0*8, 28*8-1 ),
 		gfxdecodeinfo,
 		16*4+1,16*4+1,      // 16 2-bit colors + 1 transparent black
 		segar_init_colors,
@@ -900,7 +900,7 @@ public class segar
 		null,
 	
 		/* video hardware */
-		32*8, 32*8, new rectangle( 0*8, 32*8-1, 0*8, 28*8-1 ),
+		28*8, 32*8, new rectangle( 0*8, 28*8-1, 0*8, 28*8-1 ),
 		spaceod_gfxdecodeinfo,
 		16*4*2+1,16*4*2+1,          // 16 2-bit colors for foreground, 1 6-bit color for background
 		segar_init_colors,
@@ -998,12 +998,12 @@ public class segar
 				3867120,    /* 3.86712 MHz ??? */
 				readmem,writemem,readport,monsterb_writeport,
 				segar_interrupt,1
-			),
-			new MachineCPU(
-				CPU_N7751 | CPU_AUDIO_CPU,
-				6000000/15,    /* 6MHz crystal */
-				monsterb_7751_readmem,monsterb_7751_writemem,monsterb_7751_readport,monsterb_7751_writeport,
-				ignore_interrupt,1
+			/*TODO*///),
+			/*TODO*///new MachineCPU(
+			/*TODO*///	CPU_N7751 | CPU_AUDIO_CPU,
+			/*TODO*///	6000000/15,    /* 6MHz crystal */
+			/*TODO*///	monsterb_7751_readmem,monsterb_7751_writemem,monsterb_7751_readport,monsterb_7751_writeport,
+			/*TODO*///	ignore_interrupt,1
 			)
 		},
 		60, DEFAULT_60HZ_VBLANK_DURATION,       /* frames per second, vblank duration */
@@ -1025,10 +1025,10 @@ public class segar
 		/* sound hardware */
 		0,0,0,0,
 		new MachineSound[] {
-			new MachineSound(
-				SOUND_TMS36XX,
-				monsterb_tms3617_interface
-			),
+			/*TODO*///new MachineSound(
+			/*TODO*///	SOUND_TMS36XX,
+			/*TODO*///	monsterb_tms3617_interface
+			/*TODO*///),
 			new MachineSound(
 				SOUND_SAMPLES,
 				monsterb_samples_interface
@@ -1102,7 +1102,7 @@ public class segar
 		null,
 	
 		/* video hardware */
-		32*8, 32*8, new rectangle( 0*8, 32*8-1, 0*8, 28*8-1 ),
+		28*8, 28*8, new rectangle( 0*8, 28*8-1, 0*8, 28*8-1 ),
 		monsterb_gfxdecodeinfo,
 		16*4*2+1,16*4*2+1,          // 16 2-bit colors for foreground and background
 		segar_init_colors,
