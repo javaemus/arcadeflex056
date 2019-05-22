@@ -374,7 +374,7 @@ public class crbaloon
 		crbaloon_machine_init,
 	
 		/* video hardware */
-		32*8, 32*8, new rectangle( 0*8, 32*8-1, 0*8, 28*8-1 ),
+		32*8, 32*8, new rectangle( 0*8, 32*8, 0*8, 32*8 ),
 		gfxdecodeinfo,
 		16, 16*2,
 		crbaloon_vh_convert_color_prom,

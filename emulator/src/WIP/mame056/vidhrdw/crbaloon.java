@@ -85,6 +85,14 @@ public class crbaloon
 			COLOR(colortable,0,i,15);		/* black background */
 			COLOR(colortable,0,i + 1,i / 2);	/* colored foreground */
 		}
+                
+                palette[0]=0x00;
+                palette[1]=0x00;
+                palette[2]=0x00;
+                
+                palette[3]=0xFF;
+                palette[4]=0xFF;
+                palette[5]=0xFF;
             }
         };
 	
