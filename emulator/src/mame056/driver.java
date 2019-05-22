@@ -144,6 +144,7 @@ import static WIP.mame056.drivers.crbaloon.*;
 import static mame056.drivers.arkanoid.*;
 import static WIP.mame056.drivers.lsasquad.*;
 import static WIP.mame056.drivers.victory.*;
+import static mame056.drivers.buggychl.*;
 
 public class driver {
 
@@ -311,23 +312,24 @@ public class driver {
         /*segasyse*/ driver_transfrm,
         /*segasyse*/ driver_astrofl,
         /*segasyse*/ driver_ridleofp,
-        /*arkanoid*/driver_arkanoid, 
-        /*arkanoid*/driver_arknoidu, 
-        /*arkanoid*/driver_arknoidj,
-        /*arkanoid*/driver_arkatayt,
-        /*arkanoid*/driver_arkbloc2,
-        /*arkanoid*/driver_arkangc, 
-        /*arkanoid*/driver_arkatour, 
-        
+        /*arkanoid*/ driver_arkanoid,
+        /*arkanoid*/ driver_arknoidu,
+        /*arkanoid*/ driver_arknoidj,
+        /*arkanoid*/ driver_arkatayt,
+        /*arkanoid*/ driver_arkbloc2,
+        /*arkanoid*/ driver_arkangc,
+        /*arkanoid*/ driver_arkatour,
+        /*buggychl*/ driver_buggychl,
+        /*buggychl*/ driver_buggycht,
         /**
          * GAME NOT WORKING FLAG
          */
         /*epos*/ driver_theglob3,
         /*segasyse*/ driver_fantzn2,
         /*segasyse*/ driver_opaopa,
-        /*arkanoid*/driver_arkbl2, 
-        /*arkanoid*/driver_arkbl3, 
-        /*arkanoid*/driver_arkblock, 
+        /*arkanoid*/ driver_arkbl2,
+        /*arkanoid*/ driver_arkbl3,
+        /*arkanoid*/ driver_arkblock,
         /**
          * GAME WRONG COLORS
          */
@@ -1278,15 +1280,14 @@ public class driver {
         /*TODO*///	driver_m660j,     /* ??? (c) 1986 Taito Corporation (Japan) */
         /*TODO*///	driver_m660b,     /* bootleg */
         /*TODO*///	driver_alphaxz,   /* ??? (c) 1986 Ed/Wood Place */
-        /*TODO*///	driver_buggychl,	/* A22 (c) 1984 Taito Corporation */
-        /*TODO*///	driver_buggycht,	/* A22 (c) 1984 Taito Corporation + Tefri license */
+
         /*TODO*///	driver_flstory,	/* A45 (c) 1985 Taito Corporation */
         /*TODO*///	driver_flstoryj,	/* A45 (c) 1985 Taito Corporation (Japan) */
         /*TODO*///TESTdriver_onna34ro,	/* A52 */
         driver_gladiatr, /* ??? (c) 1986 Taito America Corporation (US) */
         driver_ogonsiro, /* ??? (c) 1986 Taito Corporation (Japan) */
-        	driver_lsasquad,	/* A64 (c) 1986 Taito Corporation / Taito America (dip switch) */
-        	driver_storming,	/* A64 (c) 1986 Taito Corporation */
+        driver_lsasquad, /* A64 (c) 1986 Taito Corporation / Taito America (dip switch) */
+        driver_storming, /* A64 (c) 1986 Taito Corporation */
         driver_tokio, /* A71 1986 */
         driver_tokiob, /* bootleg */
         driver_bublbobl, /* A78 (c) 1986 Taito Corporation */
@@ -2956,9 +2957,8 @@ public class driver {
         driver_starfire, /* Exidy [1979?] */
         driver_starfira, /* Exidy [1979?] */
         driver_fireone, /* (c) 1979 Exidy */
-        driver_victory,	/* (c) 1982 */
-        driver_victorba,	/* (c) 1982 */
-
+        driver_victory, /* (c) 1982 */
+        driver_victorba, /* (c) 1982 */
         /* Exidy 440 games */
         driver_crossbow, /* (c) 1983 */
         driver_cheyenne, /* (c) 1984 */
