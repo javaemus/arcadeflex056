@@ -199,6 +199,9 @@ import static WIP.mame056.sndhrdw.dkong.*;
 import static mame056.cpu.i8039.i8039H.*;
 import static mame056.drivers.scramble.*;
 
+import static mame056.sound.nes_apuH.*;
+import static mame056.sound.nes_apu.*;
+
 public class dkong
 {
 	
@@ -529,26 +532,26 @@ public class dkong
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),	new Memory_ReadAddress( 0x0000, 0x01ff, MRA_RAM ),
 		new Memory_ReadAddress( 0x4016, 0x4016, soundlatch_r ),
 		new Memory_ReadAddress( 0x4017, 0x4017, soundlatch2_r ),
-		/*TODO*///new Memory_ReadAddress( 0x4000, 0x4017, NESPSG_0_r ),
+		new Memory_ReadAddress( 0x4000, 0x4017, NESPSG_0_r ),
 		new Memory_ReadAddress( 0xe000, 0xffff, MRA_ROM ),
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
 	public static Memory_WriteAddress dkong3_sound1_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),	new Memory_WriteAddress( 0x0000, 0x01ff, MWA_RAM ),
-		/*TODO*///new Memory_WriteAddress( 0x4000, 0x4017, NESPSG_0_w ),
+		new Memory_WriteAddress( 0x4000, 0x4017, NESPSG_0_w ),
 		new Memory_WriteAddress( 0xe000, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	public static Memory_ReadAddress dkong3_sound2_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),	new Memory_ReadAddress( 0x0000, 0x01ff, MRA_RAM ),
 		new Memory_ReadAddress( 0x4016, 0x4016, soundlatch3_r ),
-		/*TODO*///new Memory_ReadAddress( 0x4000, 0x4017, NESPSG_1_r ),
+		new Memory_ReadAddress( 0x4000, 0x4017, NESPSG_1_r ),
 		new Memory_ReadAddress( 0xe000, 0xffff, MRA_ROM ),
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
 	public static Memory_WriteAddress dkong3_sound2_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),	new Memory_WriteAddress( 0x0000, 0x01ff, MWA_RAM ),
-		/*TODO*///new Memory_WriteAddress( 0x4000, 0x4017, NESPSG_1_w ),
+		new Memory_WriteAddress( 0x4000, 0x4017, NESPSG_1_w ),
 		new Memory_WriteAddress( 0xe000, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -814,12 +817,12 @@ public class dkong
 				3072000,	/* 3.072 MHz (?) */
 				readmem,radarscp_writemem,null,null,
 				nmi_interrupt,1
-			),
-			new MachineCPU(
-				CPU_I8035 | CPU_AUDIO_CPU,
-				6000000/15,	/* 6MHz crystal */
-				readmem_sound,writemem_sound,readport_sound,writeport_sound,
-				ignore_interrupt,1
+			/*TODO*///),
+			/*TODO*///new MachineCPU(
+			/*TODO*///	CPU_I8035 | CPU_AUDIO_CPU,
+			/*TODO*///	6000000/15,	/* 6MHz crystal */
+			/*TODO*///	readmem_sound,writemem_sound,readport_sound,writeport_sound,
+			/*TODO*///	ignore_interrupt,1
 			)
 		},
 		60, DEFAULT_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */
@@ -913,12 +916,12 @@ public class dkong
 				3072000,
 				hunchbkd_readmem,hunchbkd_writemem,hunchbkd_readport,hunchbkd_writeport,
 				hunchbkd_interrupt,1
-			),
-	        new MachineCPU(
-				CPU_I8035 | CPU_AUDIO_CPU,
-				6000000/15,	/* 6MHz crystal */
-				readmem_sound,writemem_sound,readport_hunchbkd_sound,writeport_sound,
-				ignore_interrupt,1
+		/*TODO*///	),
+	        /*TODO*///new MachineCPU(
+		/*TODO*///		CPU_I8035 | CPU_AUDIO_CPU,
+		/*TODO*///		6000000/15,	/* 6MHz crystal */
+		/*TODO*///		readmem_sound,writemem_sound,readport_hunchbkd_sound,writeport_sound,
+		/*TODO*///		ignore_interrupt,1
 			)
 	    },
 		60, DEFAULT_REAL_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */
@@ -1039,12 +1042,12 @@ public class dkong
 	
 	
 	
-	/*TODO*///static struct NESinterface nes_interface =
-	/*TODO*///{
-	/*TODO*///	2,
-	/*TODO*///	{ REGION_CPU2, REGION_CPU3 },
-	/*TODO*///	{ 50, 50 },
-	/*TODO*///};
+	static NESinterface nes_interface = new NESinterface
+	(
+		2,
+		new int[]{ REGION_CPU2, REGION_CPU3 },
+		new int[]{ 50, 50 }
+        );
 	
 	
 	static MachineDriver machine_driver_dkong3 = new MachineDriver
@@ -1088,14 +1091,13 @@ public class dkong
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_NES,
-		/*TODO*///		nes_interface
-		/*TODO*///	)
-		/*TODO*///}
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_NES,
+				nes_interface
+			)
+		}
                 
-                null
 	);
 	
 	

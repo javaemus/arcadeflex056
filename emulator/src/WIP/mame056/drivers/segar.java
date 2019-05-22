@@ -839,12 +839,12 @@ public class segar
 				3867120,    /* 3.86712 MHz ??? */
 				readmem,writemem,readport,astrob_writeport,
 				segar_interrupt,1
-			),
-			new MachineCPU(
-				CPU_I8035 | CPU_AUDIO_CPU,
-				3120000/15,    /* 3.12MHz crystal ??? */
-				speech_readmem,speech_writemem,null,null,
-				ignore_interrupt,1
+			/*TODO*///),
+			/*TODO*///new MachineCPU(
+			/*TODO*///	CPU_I8035 | CPU_AUDIO_CPU,
+			/*TODO*///	3120000/15,    /* 3.12MHz crystal ??? */
+			/*TODO*///	speech_readmem,speech_writemem,null,null,
+			/*TODO*///	ignore_interrupt,1
 			)
 		},
 		60, DEFAULT_60HZ_VBLANK_DURATION,       /* frames per second, vblank duration */
@@ -945,7 +945,7 @@ public class segar
 		null,
 	
 		/* video hardware */
-		32*8, 32*8, new rectangle( 0*8, 32*8-1, 0*8, 28*8-1 ),
+		3*8, 32*8, new rectangle( 0*8, 32*8-1, 0*8, 28*8-1 ),
 		gfxdecodeinfo,
 		16*4+1,16*4+1,      // 16 2-bit colors for foreground and background
 		segar_init_colors,
