@@ -945,7 +945,7 @@ public class segar
 		null,
 	
 		/* video hardware */
-		3*8, 32*8, new rectangle( 0*8, 32*8-1, 0*8, 28*8-1 ),
+		32*8, 32*8, new rectangle( 0*8, 32*8-1, 0*8, 28*8-1 ),
 		gfxdecodeinfo,
 		16*4+1,16*4+1,      // 16 2-bit colors for foreground and background
 		segar_init_colors,
