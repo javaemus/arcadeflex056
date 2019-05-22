@@ -1605,10 +1605,12 @@ public class leland
 	
 		/* sound hardware */
 		0,0,0,0,
-		new MachineSound[] {
-			new MachineSound( SOUND_AY8910, ay8910_interface ),
-			new MachineSound( SOUND_CUSTOM, redline_custom_interface )
-		},
+		/*TODO*///new MachineSound[] {
+		/*TODO*///	new MachineSound( SOUND_AY8910, ay8910_interface ),
+		/*TODO*///	new MachineSound( SOUND_CUSTOM, redline_custom_interface )
+		/*TODO*///},
+                null,
+                
 		nvram_handler
 	);
 	
@@ -1657,10 +1659,12 @@ public class leland
 	
 		/* sound hardware */
 		0,0,0,0,
-		new MachineSound[] {
-			new MachineSound( SOUND_AY8910, ay8910_interface ),
-			new MachineSound( SOUND_CUSTOM, i186_custom_interface )
-		},
+		/*TODO*///new MachineSound[] {
+		/*TODO*///	new MachineSound( SOUND_AY8910, ay8910_interface ),
+		/*TODO*///	new MachineSound( SOUND_CUSTOM, i186_custom_interface )
+		/*TODO*///},
+                null,
+                
 		nvram_handler
 	);
 	
@@ -1709,10 +1713,12 @@ public class leland
 	
 		/* sound hardware */
 		0,0,0,0,
-		new MachineSound[] {
-			new MachineSound( SOUND_AY8910, ay8910_interface ),
-			new MachineSound( SOUND_CUSTOM, i186_custom_interface )
-		},
+		/*TODO*///new MachineSound[] {
+		/*TODO*///	new MachineSound( SOUND_AY8910, ay8910_interface ),
+		/*TODO*///	new MachineSound( SOUND_CUSTOM, i186_custom_interface )
+		/*TODO*///},
+                null,
+                
 		nvram_handler
 	);
 	
@@ -2017,14 +2023,14 @@ public class leland
 		int startaddr = 0x10000;
 		int banks = (memory_region_length(REGION_CPU1 + cpunum) - startaddr) / 0x8000;
 		UBytePtr ram = memory_region(REGION_CPU1 + cpunum);
-		int[] temp=new int[0x2000];
+		UBytePtr temp=new UBytePtr(0x2000);
 		int i;
 	
 		for (i = 0; i < banks; i++)
 		{
-			/*TODO*///memmove(temp, new UBytePtr(ram,startaddr + 0x0000), 0x2000);
-			/*TODO*///memmove(&ram[startaddr + 0x0000], &ram[startaddr + 0x2000], 0x6000);
-			/*TODO*///memmove(&ram[startaddr + 0x6000], temp, 0x2000);
+			memmove(temp, new UBytePtr(ram,startaddr + 0x0000), 0x2000);
+			memmove(new UBytePtr(ram, startaddr + 0x0000), new UBytePtr(ram, startaddr + 0x2000), 0x6000);
+			memmove(new UBytePtr(ram, startaddr + 0x6000), temp, 0x2000);
 			startaddr += 0x8000;
 		}
 	}

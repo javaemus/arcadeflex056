@@ -90,6 +90,11 @@ public class fileio {
         public int type;
         public /*unsigned*/ int crc;
     }
+    
+    public static void memmove(UBytePtr dest, UBytePtr src, int numBytes){
+        for (int i=0 ; i<numBytes ; i++)
+            dest.write(src.read(i));
+    }
 
     /*TODO*////*
 /*TODO*/// * File stat cache LRU (Last Recently Used)
