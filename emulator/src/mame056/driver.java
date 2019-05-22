@@ -141,6 +141,7 @@ import static WIP.mame056.drivers.bking2.*;
 import static WIP.mame056.drivers.mrflea.*;
 import static WIP.mame056.drivers.ninjakd2.*;
 import static WIP.mame056.drivers.crbaloon.*;
+import static mame056.drivers.arkanoid.*;
 
 public class driver {
 
@@ -304,17 +305,16 @@ public class driver {
         /*speedbal*/ driver_speedbal,
         /*polyplay*/ driver_polyplay,
         /*hexa*/ driver_hexa,
-        /*segasyse*/driver_hangonjr,	
-        /*segasyse*/driver_transfrm,	
-        /*segasyse*/driver_astrofl,
-        /*segasyse*/driver_ridleofp,	
-        
+        /*segasyse*/ driver_hangonjr,
+        /*segasyse*/ driver_transfrm,
+        /*segasyse*/ driver_astrofl,
+        /*segasyse*/ driver_ridleofp,
         /**
          * GAME NOT WORKING FLAG
          */
         /*epos*/ driver_theglob3,
-        /*segasyse*/driver_fantzn2,
-        /*segasyse*/driver_opaopa,
+        /*segasyse*/ driver_fantzn2,
+        /*segasyse*/ driver_opaopa,
         /**
          * GAME WRONG COLORS
          */
@@ -417,8 +417,8 @@ public class driver {
         /*TODO*///	driver_radrad,	/* (c) 1982 Nichibutsu USA */
         /*TODO*///	driver_seicross,	/* (c) 1984 + Alice */
         /*TODO*///	driver_sectrzon,	/* (c) 1984 + Alice */
-        driver_wiping,	/* (c) 1982 */
-        driver_rugrats,	/* (c) 1983 */
+        driver_wiping, /* (c) 1982 */
+        driver_rugrats, /* (c) 1983 */
         /*TODO*///TESTdriver_firebatl,	/* (c) 1984 Taito */
         /*TODO*///	driver_clshroad,	/* (c) 1986 Woodplace Inc. */
         /*TODO*///TESTdriver_tubep,		/* (c) 1984 + Fujitek */
@@ -758,14 +758,14 @@ public class driver {
         driver_panic, /* (c) 1980 */
         driver_panica, /* (c) 1980 */
         driver_panicger, /* (c) 1980 */
-        driver_zerohour,	/* 8011 (c) Universal */
-        driver_redclash,	/* (c) 1981 Tehkan */
-        driver_redclask,	/* (c) Kaneko (bootleg?) */
+        driver_zerohour, /* 8011 (c) Universal */
+        driver_redclash, /* (c) 1981 Tehkan */
+        driver_redclask, /* (c) Kaneko (bootleg?) */
         driver_magspot2, /* 8013 (c) [1980] */
         driver_devzone, /* 8022 (c) [1980] */
         driver_nomnlnd, /* (c) [1980?] */
         driver_nomnlndg, /* (c) [1980?] + Gottlieb */
-        driver_cheekyms,	/* (c) [1980?] */
+        driver_cheekyms, /* (c) [1980?] */
         driver_ladybug, /* (c) 1981 */
         driver_ladybugb, /* bootleg */
         driver_snapjack, /* (c) */
@@ -788,18 +788,18 @@ public class driver {
         driver_jjack, /* (c) 1984 */
         driver_kickridr, /* (c) 1984 */
         /* Nintendo games */
-        driver_radarscp,	/* (c) 1980 Nintendo */
-        driver_dkong,		/* (c) 1981 Nintendo of America */
-        driver_dkongjp,	/* (c) 1981 Nintendo */
-        driver_dkongjo,	/* (c) 1981 Nintendo */
-        driver_dkongjo1,	/* (c) 1981 Nintendo */
-        driver_dkongjr,	/* (c) 1982 Nintendo of America */
-        driver_dkongjrj,	/* (c) 1982 Nintendo */
-        driver_dkngjnrj,	/* (c) 1982 Nintendo */
-        driver_dkongjrb,	/* bootleg */
-        driver_dkngjnrb,	/* (c) 1982 Nintendo of America */
-        driver_dkong3,	/* (c) 1983 Nintendo of America */
-        driver_dkong3j,	/* (c) 1983 Nintendo */
+        driver_radarscp, /* (c) 1980 Nintendo */
+        driver_dkong, /* (c) 1981 Nintendo of America */
+        driver_dkongjp, /* (c) 1981 Nintendo */
+        driver_dkongjo, /* (c) 1981 Nintendo */
+        driver_dkongjo1, /* (c) 1981 Nintendo */
+        driver_dkongjr, /* (c) 1982 Nintendo of America */
+        driver_dkongjrj, /* (c) 1982 Nintendo */
+        driver_dkngjnrj, /* (c) 1982 Nintendo */
+        driver_dkongjrb, /* bootleg */
+        driver_dkngjnrb, /* (c) 1982 Nintendo of America */
+        driver_dkong3, /* (c) 1983 Nintendo of America */
+        driver_dkong3j, /* (c) 1983 Nintendo */
         driver_mario, /* (c) 1983 Nintendo of America */
         driver_mariojp, /* (c) 1983 Nintendo */
         driver_masao, /* bootleg */
@@ -1037,17 +1037,17 @@ public class driver {
         driver_kick, /* (c) 1981 */
         driver_kicka, /* bootleg? */
         /* MCR2 */
-        driver_shollow,	/* (c) 1981 */
-        driver_shollow2,	/* (c) 1981 */
-        driver_tron,		/* (c) 1982 */
-        driver_tron2,		/* (c) 1982 */
-        driver_kroozr,	/* (c) 1982 */
-        driver_domino,	/* (c) 1982 */
-        driver_wacko,		/* (c) 1982 */
-        driver_twotiger,	/* (c) 1984 */
-        driver_twotigra,	/* (c) 1984 */
+        driver_shollow, /* (c) 1981 */
+        driver_shollow2, /* (c) 1981 */
+        driver_tron, /* (c) 1982 */
+        driver_tron2, /* (c) 1982 */
+        driver_kroozr, /* (c) 1982 */
+        driver_domino, /* (c) 1982 */
+        driver_wacko, /* (c) 1982 */
+        driver_twotiger, /* (c) 1984 */
+        driver_twotigra, /* (c) 1984 */
         /* MCR2 + MCR3 sprites */
-        driver_journey,	/* (c) 1983 */
+        driver_journey, /* (c) 1983 */
         /* MCR3 */
         driver_tapper, /* (c) 1983 */
         driver_tappera, /* (c) 1983 */
@@ -1088,7 +1088,7 @@ public class driver {
         /*TODO*///TESTdriver_greenber,
         /*TODO*///
         /*TODO*///	driver_redalert,	/* (c) 1981 + "GDI presents" */
-        driver_olibochu,	/* M47 (c) 1981 + "GDI presents" */
+        driver_olibochu, /* M47 (c) 1981 + "GDI presents" */
         driver_mpatrol, /* M52 (c) 1982 */
         driver_mpatrolw, /* M52 (c) 1982 + Williams license */
         driver_troangel, /* (c) 1983 */
@@ -1203,23 +1203,22 @@ public class driver {
         /*TODO*///	driver_qbertqub,	/* GV-119 (c) 1983 Mylstar */
         /*TODO*///	driver_screwloo,	/* GV-123 (c) 1983 Mylstar - never released */
         /*TODO*///	driver_curvebal,	/* GV-134 (c) 1984 Mylstar */
-        
-        /* Taito "Qix hardware" games */
-        driver_qix,		/* LK  (c) 1981 Taito America Corporation */
-        driver_qixa,		/* LK  (c) 1981 Taito America Corporation */
-        driver_qixb,		/* LK  (c) 1981 Taito America Corporation */
-        driver_qix2,		/* ??  (c) 1981 Taito America Corporation */
-        driver_sdungeon,	/* SD  (c) 1981 Taito America Corporation */
-        driver_elecyoyo,	/* YY  (c) 1982 Taito America Corporation */
-        driver_elecyoy2,	/* YY  (c) 1982 Taito America Corporation */
-        driver_kram,		/* KS  (c) 1982 Taito America Corporation */
-        driver_kram2,		/* KS  (c) 1982 Taito America Corporation */
-        driver_zookeep,	/* ZA  (c) 1982 Taito America Corporation */
-        driver_zookeep2,	/* ZA  (c) 1982 Taito America Corporation */
-        driver_zookeep3,	/* ZA  (c) 1982 Taito America Corporation */
-        driver_slither,	/* (c) 1982 Century II */
-        driver_slithera,	/* (c) 1982 Century II */
 
+        /* Taito "Qix hardware" games */
+        driver_qix, /* LK  (c) 1981 Taito America Corporation */
+        driver_qixa, /* LK  (c) 1981 Taito America Corporation */
+        driver_qixb, /* LK  (c) 1981 Taito America Corporation */
+        driver_qix2, /* ??  (c) 1981 Taito America Corporation */
+        driver_sdungeon, /* SD  (c) 1981 Taito America Corporation */
+        driver_elecyoyo, /* YY  (c) 1982 Taito America Corporation */
+        driver_elecyoy2, /* YY  (c) 1982 Taito America Corporation */
+        driver_kram, /* KS  (c) 1982 Taito America Corporation */
+        driver_kram2, /* KS  (c) 1982 Taito America Corporation */
+        driver_zookeep, /* ZA  (c) 1982 Taito America Corporation */
+        driver_zookeep2, /* ZA  (c) 1982 Taito America Corporation */
+        driver_zookeep3, /* ZA  (c) 1982 Taito America Corporation */
+        driver_slither, /* (c) 1982 Century II */
+        driver_slithera, /* (c) 1982 Century II */
         /* Taito SJ System games */
         driver_spaceskr, /* EB  (c) 1981 Taito Corporation */
         driver_junglek, /* KN  (c) 1982 Taito Corporation */
@@ -1240,12 +1239,12 @@ public class driver {
         driver_hwrace, /* AC4 (c) 1983 Taito Corporation */
         driver_sfposeid, /* A14 (c) 1984 Taito Corporation */
         /*TODO*///TESTdriver_kikstart,	/* A20 */
-        
+
         /* other Taito games */
-        driver_crbaloon,	/* CL  (c) 1980 Taito Corporation */
-        driver_crbalon2,	/* CL  (c) 1980 Taito Corporation */
+        driver_crbaloon, /* CL  (c) 1980 Taito Corporation */
+        driver_crbalon2, /* CL  (c) 1980 Taito Corporation */
         /*TODO*///	driver_grchamp,	/* GM  (c) 1981 Taito Corporation */
-        driver_bking2,	/* AD6 (c) 1983 Taito Corporation */
+        driver_bking2, /* AD6 (c) 1983 Taito Corporation */
         /*TODO*///TESTdriver_josvolly,	/* ??? (c) 1983 Taito Corporation */
         /*TODO*///	driver_gsword,	/* ??? (c) 1984 Taito Corporation */
         /*TODO*///	driver_lkage,		/* A54 (c) 1984 Taito Corporation */
@@ -1255,8 +1254,8 @@ public class driver {
         driver_retofinv, /* A37 (c) 1985 Taito Corporation */
         driver_retofin1, /* bootleg */
         driver_retofin2, /* bootleg */
-        driver_fightrol,	/* (c) 1983 Taito */
-        driver_rollrace,	/* (c) 1983 Williams */
+        driver_fightrol, /* (c) 1983 Taito */
+        driver_rollrace, /* (c) 1983 Williams */
         /*TODO*///	driver_vsgongf,	/* (c) 1984 Kaneko */
         /*TODO*///	driver_tsamurai,	/* A35 (c) 1985 Taito */
         /*TODO*///	driver_tsamura2,	/* A35 (c) 1985 Taito */
@@ -1271,17 +1270,17 @@ public class driver {
         /*TODO*///	driver_flstory,	/* A45 (c) 1985 Taito Corporation */
         /*TODO*///	driver_flstoryj,	/* A45 (c) 1985 Taito Corporation (Japan) */
         /*TODO*///TESTdriver_onna34ro,	/* A52 */
-        driver_gladiatr,	/* ??? (c) 1986 Taito America Corporation (US) */
-        driver_ogonsiro,	/* ??? (c) 1986 Taito Corporation (Japan) */
+        driver_gladiatr, /* ??? (c) 1986 Taito America Corporation (US) */
+        driver_ogonsiro, /* ??? (c) 1986 Taito Corporation (Japan) */
         /*TODO*///	driver_lsasquad,	/* A64 (c) 1986 Taito Corporation / Taito America (dip switch) */
         /*TODO*///	driver_storming,	/* A64 (c) 1986 Taito Corporation */
-        driver_tokio,		/* A71 1986 */
-        driver_tokiob,	/* bootleg */
-        driver_bublbobl,	/* A78 (c) 1986 Taito Corporation */
-        driver_bublbobr,	/* A78 (c) 1986 Taito America Corporation + Romstar license */
-        driver_bubbobr1,	/* A78 (c) 1986 Taito America Corporation + Romstar license */
-        driver_boblbobl,	/* bootleg */
-        driver_sboblbob,	/* bootleg */
+        driver_tokio, /* A71 1986 */
+        driver_tokiob, /* bootleg */
+        driver_bublbobl, /* A78 (c) 1986 Taito Corporation */
+        driver_bublbobr, /* A78 (c) 1986 Taito America Corporation + Romstar license */
+        driver_bubbobr1, /* A78 (c) 1986 Taito America Corporation + Romstar license */
+        driver_boblbobl, /* bootleg */
+        driver_sboblbob, /* bootleg */
         /*TODO*///	driver_kikikai,	/* A85 (c) 1986 Taito Corporation */
         /*TODO*///	driver_kicknrun,	/* A87 (c) 1986 Taito Corporation */
         /*TODO*///	driver_mexico86,	/* bootleg (Micro Research) */
@@ -1304,16 +1303,20 @@ public class driver {
         /*TODO*///	driver_rainbowa,	/* B22 (c) 1987 Taito Corporation */
         /*TODO*///	driver_rainbowe,	/* ??? (c) 1988 Taito Corporation */
         /*TODO*///	driver_jumping,	/* bootleg */
-        /*TODO*///	driver_arkanoid,	/* A75 (c) 1986 Taito Corporation Japan (World) */
-        /*TODO*///	driver_arknoidu,	/* A75 (c) 1986 Taito America Corporation + Romstar license (US) */
-        /*TODO*///	driver_arknoidj,	/* A75 (c) 1986 Taito Corporation (Japan) */
-        /*TODO*///	driver_arkbl2,	/* bootleg */
-        /*TODO*///TESTdriver_arkbl3,	/* bootleg */
-        /*TODO*///	driver_arkatayt,	/* bootleg */
-        /*TODO*///TESTdriver_arkblock,	/* bootleg */
-        /*TODO*///	driver_arkbloc2,	/* bootleg */
-        /*TODO*///	driver_arkangc,	/* bootleg */
-        /*TODO*///	driver_arkatour,	/* ??? (c) 1987 Taito America Corporation + Romstar license (US) */
+        driver_arkanoid, /* A75 (c) 1986 Taito Corporation Japan (World) */
+        driver_arknoidu, /* A75 (c) 1986 Taito America Corporation + Romstar license (US) */
+        driver_arknoidj, /* A75 (c) 1986 Taito Corporation (Japan) */
+        
+        driver_arkatayt, /* bootleg */
+        
+        driver_arkbloc2,
+        driver_arkangc, 
+        driver_arkatour, 
+        
+        driver_arkbl2, 
+        driver_arkbl3, 
+        driver_arkblock, 
+        
         /*TODO*///	driver_superqix,	/* B03 1987 */
         /*TODO*///	driver_sqixbl,	/* bootleg? but (c) 1987 */
         /*TODO*///	driver_exzisus,	/* B23 (c) 1987 Taito Corporation (Japan) */
@@ -2097,25 +2100,25 @@ public class driver {
         /*TODO*///	driver_capbowl2,	/* (c) 1988 Incredible Technologies */
         /*TODO*///	driver_clbowl,	/* (c) 1989 Incredible Technologies */
         /*TODO*///	driver_bowlrama,	/* (c) 1991 P & P Marketing */
-        driver_wfortune,	/* (c) 1989 GameTek */
-        driver_wfortuna,	/* (c) 1989 GameTek */
-        driver_stratab,	/* (c) 1990 Strata/Incredible Technologies */
-        driver_gtg,		/* (c) 1990 Strata/Incredible Technologies */
-        driver_hstennis,	/* (c) 1990 Strata/Incredible Technologies */
-        driver_slikshot,	/* (c) 1990 Grand Products/Incredible Technologies */
-        driver_sliksh17,	/* (c) 1990 Grand Products/Incredible Technologies */
-        driver_arlingtn,	/* (c) 1991 Strata/Incredible Technologies */
-        driver_peggle,	/* (c) 1991 Strata/Incredible Technologies */
-        driver_pegglet,	/* (c) 1991 Strata/Incredible Technologies */
-        driver_rimrockn,	/* (c) 1991 Strata/Incredible Technologies */
-        driver_rimrck20,	/* (c) 1991 Strata/Incredible Technologies */
-        driver_rimrck16,	/* (c) 1991 Strata/Incredible Technologies */
-        driver_rimrck12,	/* (c) 1991 Strata/Incredible Technologies */
-        driver_ninclown,	/* (c) 1991 Strata/Incredible Technologies */
-        driver_gtg2,		/* (c) 1992 Strata/Incredible Technologies */
-        driver_gtg2t,		/* (c) 1989 Strata/Incredible Technologies */
-        driver_gtg2j,		/* (c) 1991 Strata/Incredible Technologies */
-        driver_neckneck,	/* (c) 1992 Bundra Games/Incredible Technologies */
+        driver_wfortune, /* (c) 1989 GameTek */
+        driver_wfortuna, /* (c) 1989 GameTek */
+        driver_stratab, /* (c) 1990 Strata/Incredible Technologies */
+        driver_gtg, /* (c) 1990 Strata/Incredible Technologies */
+        driver_hstennis, /* (c) 1990 Strata/Incredible Technologies */
+        driver_slikshot, /* (c) 1990 Grand Products/Incredible Technologies */
+        driver_sliksh17, /* (c) 1990 Grand Products/Incredible Technologies */
+        driver_arlingtn, /* (c) 1991 Strata/Incredible Technologies */
+        driver_peggle, /* (c) 1991 Strata/Incredible Technologies */
+        driver_pegglet, /* (c) 1991 Strata/Incredible Technologies */
+        driver_rimrockn, /* (c) 1991 Strata/Incredible Technologies */
+        driver_rimrck20, /* (c) 1991 Strata/Incredible Technologies */
+        driver_rimrck16, /* (c) 1991 Strata/Incredible Technologies */
+        driver_rimrck12, /* (c) 1991 Strata/Incredible Technologies */
+        driver_ninclown, /* (c) 1991 Strata/Incredible Technologies */
+        driver_gtg2, /* (c) 1992 Strata/Incredible Technologies */
+        driver_gtg2t, /* (c) 1989 Strata/Incredible Technologies */
+        driver_gtg2j, /* (c) 1991 Strata/Incredible Technologies */
+        driver_neckneck, /* (c) 1992 Bundra Games/Incredible Technologies */
         /*TODO*///	driver_timekill,	/* (c) 1992 Strata/Incredible Technologies */
         /*TODO*///	driver_timek131,	/* (c) 1992 Strata/Incredible Technologies */
         /*TODO*///	driver_hardyard,	/* (c) 1993 Strata/Incredible Technologies */
@@ -2216,13 +2219,13 @@ public class driver {
         driver_pignewta, /* (c) 1983 */
         driver_sindbadm, /* 834-5244 (c) 1983 Sega */
         /* Sega "Zaxxon hardware" games */
-        driver_zaxxon,	/* (c) 1982 */
-        driver_zaxxon2,	/* (c) 1982 */
-        driver_zaxxonb,	/* bootleg */
-        driver_szaxxon,	/* (c) 1982 */
-        driver_futspy,	/* (c) 1984 */
-        driver_razmataz,	/* modified 834-0213, 834-0214 (c) 1983 */
-        driver_ixion,		/* (c) 1983 */
+        driver_zaxxon, /* (c) 1982 */
+        driver_zaxxon2, /* (c) 1982 */
+        driver_zaxxonb, /* bootleg */
+        driver_szaxxon, /* (c) 1982 */
+        driver_futspy, /* (c) 1984 */
+        driver_razmataz, /* modified 834-0213, 834-0214 (c) 1983 */
+        driver_ixion, /* (c) 1983 */
         /*TODO*///	driver_congo,		/* 605-5167 (c) 1983 */
         /*TODO*///	driver_tiptop,	/* 605-5167 (c) 1983 */
         /*TODO*///
@@ -2291,7 +2294,6 @@ public class driver {
         /*TODO*///Sanrin Sanchan
         /*TODO*///DokiDoki Penguin Land *not confirmed
         /*TODO*///*/
-      
 
         /* other Sega 8-bit games */
         driver_turbo, /* (c) 1981 Sega */
@@ -2952,9 +2954,9 @@ public class driver {
         /*TODO*///	driver_robotbwl,	/* no copyright notice */
         /*TODO*///	driver_crash,		/* Exidy [1979?] */
         /*TODO*///	driver_ripcord,	/* Exidy [1977?] */
-        driver_starfire,	/* Exidy [1979?] */
-        driver_starfira,	/* Exidy [1979?] */
-        driver_fireone,	/* (c) 1979 Exidy */
+        driver_starfire, /* Exidy [1979?] */
+        driver_starfira, /* Exidy [1979?] */
+        driver_fireone, /* (c) 1979 Exidy */
         /*TODO*///	driver_victory,	/* (c) 1982 */
         /*TODO*///	driver_victorba,	/* (c) 1982 */
 
@@ -3217,8 +3219,8 @@ public class driver {
         driver_chopper, /* A7003 'KK' (c) 1988 */
         driver_legofair, /* A7003 'KK' (c) 1988 */
         driver_ftsoccer, /*            (c) 1988 */
-        driver_tdfever,	/* A6006 'TD' (c) 1987 */
-        driver_tdfeverj,	/* A6006 'TD' (c) 1987 */
+        driver_tdfever, /* A6006 'TD' (c) 1987 */
+        driver_tdfeverj, /* A6006 'TD' (c) 1987 */
         /*TODO*///	driver_ikari3,	/* A7007 'IK3'(c) 1989 */
         /*TODO*///	driver_pow,		/* A7008 'DG' (c) 1988 */
         /*TODO*///	driver_powj,		/* A7008 'DG' (c) 1988 */
@@ -3327,13 +3329,13 @@ public class driver {
         /*TODO*///	/* UPL games */
         /*TODO*///	/* Mouser              UPL-83001 */
         /*TODO*///	driver_ninjakun,	/* UPL-84003 (c) 1984 Taito Corporation */
-        driver_raiders5,	/* UPL-85004 (c) 1985 */
+        driver_raiders5, /* UPL-85004 (c) 1985 */
         driver_raidrs5t,
-        driver_xxmissio,	/* UPL-86001 [1986] */
-        driver_ninjakd2,	/* UPL-????? (c) 1987 */
-        driver_ninjak2a,	/* UPL-????? (c) 1987 */
-        driver_ninjak2b,	/* UPL-????? (c) 1987 */
-        driver_rdaction,	/* UPL-87003?(c) 1987 + World Games license */
+        driver_xxmissio, /* UPL-86001 [1986] */
+        driver_ninjakd2, /* UPL-????? (c) 1987 */
+        driver_ninjak2a, /* UPL-????? (c) 1987 */
+        driver_ninjak2b, /* UPL-????? (c) 1987 */
+        driver_rdaction, /* UPL-87003?(c) 1987 + World Games license */
         /*TODO*///	driver_mnight,	/* UPL-????? (c) 1987 distributed by Kawakus */
         /*TODO*///	driver_arkarea,	/* UPL-87007 (c) [1988?] */
         /*TODO*///	driver_robokid,	/* UPL-88013 (c) 1988 */
@@ -3441,29 +3443,27 @@ public class driver {
         /*TODO*///	/* this one uses 68000+Z80 instead of the Cinematronics CPU */
         /*TODO*///	driver_cchasm,
         /*TODO*///	driver_cchasm1,	/* (c) 1983 Cinematronics / GCE */
-        
+
         /* "The Pit hardware" games */
-        driver_roundup,	/* (c) 1981 Amenip/Centuri */
-        driver_fitter,	/* (c) 1981 Taito */
-        driver_thepit,	/* (c) 1982 Centuri */
-        driver_intrepid,	/* (c) 1983 Nova Games Ltd. */
-        driver_intrepi2,	/* (c) 1983 Nova Games Ltd. */
-        driver_portman,	/* (c) 1982 Nova Games Ltd. */
-        driver_funnymou,	/* (c) 1982 Chuo Co. Ltd */
-        driver_suprmous,	/* (c) 1982 Taito */
-        driver_machomou,	/* (c) 1982 Techstar */
-        driver_timelimt,	/* (c) 1983 Chuo Co. Ltd */
-        
-        
+        driver_roundup, /* (c) 1981 Amenip/Centuri */
+        driver_fitter, /* (c) 1981 Taito */
+        driver_thepit, /* (c) 1982 Centuri */
+        driver_intrepid, /* (c) 1983 Nova Games Ltd. */
+        driver_intrepi2, /* (c) 1983 Nova Games Ltd. */
+        driver_portman, /* (c) 1982 Nova Games Ltd. */
+        driver_funnymou, /* (c) 1982 Chuo Co. Ltd */
+        driver_suprmous, /* (c) 1982 Taito */
+        driver_machomou, /* (c) 1982 Techstar */
+        driver_timelimt, /* (c) 1983 Chuo Co. Ltd */
         /* Seibu Denshi / Seibu Kaihatsu games */
-        driver_stinger,	/* (c) 1983 Seibu Denshi */
-        driver_stinger2,	/* (c) 1983 Seibu Denshi */
-        driver_scion,		/* (c) 1984 Seibu Denshi */
-        driver_scionc,	/* (c) 1984 Seibu Denshi + Cinematronics license */
-        driver_wiz,		/* (c) 1985 Seibu Kaihatsu */
-        driver_wizt,		/* (c) 1985 Taito Corporation */
-        driver_kncljoe,	/* (c) 1985 Taito Corporation */
-        driver_kncljoea,	/* (c) 1985 Taito Corporation */
+        driver_stinger, /* (c) 1983 Seibu Denshi */
+        driver_stinger2, /* (c) 1983 Seibu Denshi */
+        driver_scion, /* (c) 1984 Seibu Denshi */
+        driver_scionc, /* (c) 1984 Seibu Denshi + Cinematronics license */
+        driver_wiz, /* (c) 1985 Seibu Kaihatsu */
+        driver_wizt, /* (c) 1985 Taito Corporation */
+        driver_kncljoe, /* (c) 1985 Taito Corporation */
+        driver_kncljoea, /* (c) 1985 Taito Corporation */
         /*TODO*///	driver_empcity,	/* (c) 1986 Seibu Kaihatsu (bootleg?) */
         /*TODO*///	driver_empcityj,	/* (c) 1986 Taito Corporation (Japan) */
         /*TODO*///	driver_stfight,	/* (c) 1986 Seibu Kaihatsu (Germany) (bootleg?) */
@@ -3718,16 +3718,16 @@ public class driver {
         /*TODO*///	driver_route16,	/* (c) 1981 Tehkan/Sun + Centuri license */
         /*TODO*///	driver_route16b,	/* bootleg */
         /*TODO*///	driver_ttmahjng,	/* Taito */
-        driver_fnkyfish,	/* (c) 1981 Sun Electronics */
-        driver_kangaroo,	/* (c) 1982 Sun Electronics */
-        driver_kangaroa,	/* 136008			(c) 1982 Atari */
-        driver_kangarob,	/* (bootleg) */
+        driver_fnkyfish, /* (c) 1981 Sun Electronics */
+        driver_kangaroo, /* (c) 1982 Sun Electronics */
+        driver_kangaroa, /* 136008			(c) 1982 Atari */
+        driver_kangarob, /* (bootleg) */
         driver_arabian, /* TVG13 (c) 1983 Sun Electronics */
         driver_arabiana, /* 136019			(c) 1983 Atari */
         /*TODO*///	driver_markham,	/* TVG14 (c) 1983 Sun Electronics */
-        driver_strnskil,	/* TVG15 (c) 1984 Sun Electronics */
-        driver_guiness,	/* TVG15 (c) 1984 Sun Electronics */
-        driver_pettanp,	/* TVG16 (c) 1984 Sun Electronics (Japan) */
+        driver_strnskil, /* TVG15 (c) 1984 Sun Electronics */
+        driver_guiness, /* TVG15 (c) 1984 Sun Electronics */
+        driver_pettanp, /* TVG16 (c) 1984 Sun Electronics (Japan) */
         /*TODO*///	driver_ikki,		/* TVG17 (c) 1985 Sun Electronics (Japan) */
         /*TODO*///	driver_shanghai,	/* (c) 1988 Sunsoft (Sun Electronics) */
         /*TODO*///	driver_shangha2,	/* (c) 1989 Sunsoft (Sun Electronics) */
@@ -3787,9 +3787,8 @@ public class driver {
         /*TODO*///	/* Tong Electronic games */
         /*TODO*///	driver_leprechn,	/* (c) 1982 */
         /*TODO*///	driver_potogold,	/* (c) 1982 */
-        driver_beezer,	/* (c) 1982 */
-        driver_beezer1,	/* (c) 1982 */
-        
+        driver_beezer, /* (c) 1982 */
+        driver_beezer1, /* (c) 1982 */
         /*TODO*///	/* Comad games */
         /*TODO*///	driver_pushman,	/* (c) 1990 Comad + American Sammy license */
         /*TODO*///	driver_zerozone,	/* (c) 1993 Comad */
@@ -3810,7 +3809,7 @@ public class driver {
         /*TODO*///	driver_thief,		/* (c) 1981 */
         /*TODO*///	driver_natodef,	/* (c) 1982 */
         /*TODO*///	driver_natodefa,	/* (c) 1982 */
-        driver_mrflea,	/* (c) 1982 */
+        driver_mrflea, /* (c) 1982 */
         /*TODO*///
         /*TODO*///	/* Tecfri games */
         /*TODO*///	driver_holeland,	/* (c) 1984 */
@@ -3878,11 +3877,11 @@ public class driver {
         /*TODO*///	driver_sprtmtch,	/* (c) 1989 Log+Dynax + Fabtek license */
         /*TODO*///TESTdriver_ddenlovr,
         /*TODO*///TESTdriver_rongrong,
-        
+
         /* Sigma games */
-        driver_nyny,		/* (c) 1980 Sigma Ent. Inc. */
-        driver_nynyg,		/* (c) 1980 Sigma Ent. Inc. + Gottlieb */
-        driver_arcadia,	/* (c) 1982 Sigma Ent. Inc. */
+        driver_nyny, /* (c) 1980 Sigma Ent. Inc. */
+        driver_nynyg, /* (c) 1980 Sigma Ent. Inc. + Gottlieb */
+        driver_arcadia, /* (c) 1982 Sigma Ent. Inc. */
         /*TODO*///	driver_spiders,	/* (c) 1981 Sigma Ent. Inc. */
         /*TODO*///	driver_spiders2,	/* (c) 1981 Sigma Ent. Inc. */
         /*TODO*///
