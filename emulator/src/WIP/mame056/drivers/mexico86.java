@@ -318,7 +318,7 @@ public class mexico86
 		null,																				
 																						
 		/* video hardware */															
-		32*8, 32*8, new rectangle( 0*8, 32*8-1, 2*8, 30*8-1 ),										
+		32*8, 32*8, new rectangle( 1*8, 31*8-1, 2*8, 30*8-1 ),										
 		gfxdecodeinfo,																	
 		256, 0,																			
 		palette_RRRR_GGGG_BBBB_convert_prom,											
