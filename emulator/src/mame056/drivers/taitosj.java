@@ -1749,12 +1749,12 @@ public class taitosj
 				/*   that is a period of 27306666.6666 ns */
 				null,0,
 				interrupt,27306667
-			/*TODO*///),
-			/*TODO*///new MachineCPU(
-			/*TODO*///	CPU_M68705,
-			/*TODO*///	3000000/2,      /* xtal is 3MHz, I think it's divided by 2 internally */
-			/*TODO*///	m68705_readmem,m68705_writemem,0,null,
-			/*TODO*///	ignore_interrupt,0      /* IRQs are caused by the main CPU */
+			),
+			new MachineCPU(
+				CPU_M68705,
+				3000000/2,      /* xtal is 3MHz, I think it's divided by 2 internally */
+				m68705_readmem,m68705_writemem,null,null,
+				ignore_interrupt,0      /* IRQs are caused by the main CPU */
 			)
 		},
 		60, DEFAULT_REAL_60HZ_VBLANK_DURATION,  /* frames per second, vblank duration */
