@@ -146,6 +146,7 @@ import static WIP.mame056.drivers.lsasquad.*;
 import static WIP.mame056.drivers.victory.*;
 import static mame056.drivers.buggychl.*;
 import static WIP.mame056.drivers.mexico86.*;
+import static WIP.mame056.drivers.flstory.*;
 
 public class driver {
 
@@ -1282,8 +1283,8 @@ public class driver {
         /*TODO*///	driver_m660b,     /* bootleg */
         /*TODO*///	driver_alphaxz,   /* ??? (c) 1986 Ed/Wood Place */
 
-        /*TODO*///	driver_flstory,	/* A45 (c) 1985 Taito Corporation */
-        /*TODO*///	driver_flstoryj,	/* A45 (c) 1985 Taito Corporation (Japan) */
+        driver_flstory,	/* A45 (c) 1985 Taito Corporation */
+        driver_flstoryj,	/* A45 (c) 1985 Taito Corporation (Japan) */
         /*TODO*///TESTdriver_onna34ro,	/* A52 */
         driver_gladiatr, /* ??? (c) 1986 Taito America Corporation (US) */
         driver_ogonsiro, /* ??? (c) 1986 Taito Corporation (Japan) */
