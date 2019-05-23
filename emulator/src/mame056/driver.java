@@ -145,6 +145,7 @@ import static mame056.drivers.arkanoid.*;
 import static WIP.mame056.drivers.lsasquad.*;
 import static WIP.mame056.drivers.victory.*;
 import static mame056.drivers.buggychl.*;
+import static WIP.mame056.drivers.mexico86.*;
 
 public class driver {
 
@@ -1295,9 +1296,9 @@ public class driver {
         driver_bubbobr1, /* A78 (c) 1986 Taito America Corporation + Romstar license */
         driver_boblbobl, /* bootleg */
         driver_sboblbob, /* bootleg */
-        /*TODO*///	driver_kikikai,	/* A85 (c) 1986 Taito Corporation */
-        /*TODO*///	driver_kicknrun,	/* A87 (c) 1986 Taito Corporation */
-        /*TODO*///	driver_mexico86,	/* bootleg (Micro Research) */
+        driver_kikikai,	/* A85 (c) 1986 Taito Corporation */
+        driver_kicknrun,	/* A87 (c) 1986 Taito Corporation */
+        driver_mexico86,	/* bootleg (Micro Research) */
         /*TODO*///	driver_darius,	/* A96 (c) 1986 Taito Corporation Japan (World) */
         /*TODO*///	driver_dariusj,	/* A96 (c) 1986 Taito Corporation (Japan) */
         /*TODO*///	driver_dariuso,	/* A96 (c) 1986 Taito Corporation (Japan) */
