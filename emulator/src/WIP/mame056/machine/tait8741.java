@@ -55,6 +55,10 @@ public class tait8741
     static TAITO8741interface intf;
     //static I8741 *taito8741;
     static I8741[] taito8741 = new I8741[MAX_TAITO8741];
+    static {
+        for (int i=0 ; i<MAX_TAITO8741; i++)
+            taito8741[i] = new I8741();
+    }
 
     /* for host data , write */
     static void taito8741_hostdata_w(I8741 st, int data) {

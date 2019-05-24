@@ -148,6 +148,7 @@ import static mame056.drivers.buggychl.*;
 import static WIP.mame056.drivers.mexico86.*;
 import static WIP.mame056.drivers.flstory.*;
 import static WIP.mame056.drivers.williams.*;
+import static WIP.mame056.drivers.gsword.*;
 
 public class driver {
 
@@ -1264,7 +1265,7 @@ public class driver {
         /*TODO*///	driver_grchamp,	/* GM  (c) 1981 Taito Corporation */
         driver_bking2, /* AD6 (c) 1983 Taito Corporation */
         /*TODO*///TESTdriver_josvolly,	/* ??? (c) 1983 Taito Corporation */
-        /*TODO*///	driver_gsword,	/* ??? (c) 1984 Taito Corporation */
+        driver_gsword,	/* ??? (c) 1984 Taito Corporation */
         /*TODO*///	driver_lkage,		/* A54 (c) 1984 Taito Corporation */
         /*TODO*///	driver_lkageb,	/* bootleg */
         /*TODO*///	driver_lkageb2,	/* bootleg */

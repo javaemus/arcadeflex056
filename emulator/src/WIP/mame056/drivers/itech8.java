@@ -1369,12 +1369,12 @@ public class itech8
 				CLOCK_8MHz/4,															
 				tmshi_readmem,tmshi_writemem,null,null,							
 				generate_nmi,1														
-                        ),																		
-			new MachineCPU(
-				CPU_M6809,															
-				CLOCK_8MHz/4,														
-				sound2203_readmem,sound2203_writemem,null,null,				
-				ignore_interrupt,1													
+                        /*TODO*///),																		
+			/*TODO*///new MachineCPU(
+			/*TODO*///	CPU_M6809,															
+			/*TODO*///	CLOCK_8MHz/4,														
+			/*TODO*///	sound2203_readmem,sound2203_writemem,null,null,				
+			/*TODO*///	ignore_interrupt,1													
                         )
 		},																			
 		60,(int)(((263. - 240.) / 263.) * 1000000. / 60.),							
