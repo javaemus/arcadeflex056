@@ -62,6 +62,9 @@ public class gladiatr
 		/* it to white. */
 		palette_set_color(512,0x00,0x00,0x00);
 		palette_set_color(513,0xff,0xff,0xff);
+                
+                palette_set_color(510,0x00,0x00,0x00);
+                palette_set_color(511,0xFF,0xFF,0xFF);
 	}
 	
 	public static WriteHandlerPtr gladiatr_paletteram_rg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
