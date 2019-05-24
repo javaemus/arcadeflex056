@@ -92,7 +92,11 @@ public class williams
 	static williams_blit_func_Ptr williams_blit_opaque;
 	static williams_blit_func_Ptr williams_blit_transparent;
 	static williams_blit_func_Ptr williams_blit_opaque_solid;
-	static williams_blit_func_Ptr williams_blit_transparent_solid;
+	static williams_blit_func_Ptr williams_blit_transparent_solid = new williams_blit_func_Ptr() {
+            public void handler(int sstart, int dstart, int w, int h, int data) {
+                BLIT_TRANSPARENT_SOLID(sstart, data, dstart);
+            }
+        };
 	static williams_blit_func_Ptr sinistar_blit_opaque;
 	static williams_blit_func_Ptr sinistar_blit_transparent;
 	static williams_blit_func_Ptr sinistar_blit_opaque_solid;
@@ -724,7 +728,7 @@ public class williams
 		if (h == 0) h = 1;
 		if (w == 255) w = 256;
 		if (h == 255) h = 256;
-	
+                
 		/* call the appropriate blitter */
 		(blitter_table[(data >> 3) & 3]).handler(sstart, dstart, w, h, data);
 	
@@ -879,6 +883,9 @@ public class williams
 	/*TODO*///#define REMAP 							NOREMAP_FUNC
 	
 	/*TODO*///#define BLITTER_OP 						BLIT_TRANSPARENT
+        public static void BLITTER_OP(int sstart, int dsstart, int w, int h, int data){
+            williams_blit_transparent.handler(sstart, dsstart, w, h, data);
+        }
 	/*TODO*///#define BLITTER_NAME					williams_blit_transparent
 	/*TODO*///#undef BLITTER_NAME
 	/*TODO*///#undef BLITTER_OP
@@ -1004,6 +1011,7 @@ public class williams
 	
 	static void BLITTER_NAME(int sstart, int dstart, int w, int h, int data)
 	{
+            System.out.println("BLITTER_NAME");
 		int source, sxadv, syadv;
 		int dest, dxadv, dyadv;
 		int i, j, solid;

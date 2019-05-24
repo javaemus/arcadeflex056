@@ -1031,12 +1031,12 @@ public class williams
 				1000000,
 				williams_readmem,williams_writemem,null,null,
 				ignore_interrupt,1
-			),
-			new MachineCPU(
-				CPU_M6808 | CPU_AUDIO_CPU,
-				3579000/4,
-				sound_readmem,sound_writemem,null,null,
-				ignore_interrupt,1
+			/*TODO*///),
+			/*TODO*///new MachineCPU(
+			/*TODO*///	CPU_M6808 | CPU_AUDIO_CPU,
+			/*TODO*///	3579000/4,
+			/*TODO*///	sound_readmem,sound_writemem,null,null,
+			/*TODO*///	ignore_interrupt,1
 			)
 		},
 		60, DEFAULT_60HZ_VBLANK_DURATION,
@@ -1078,12 +1078,12 @@ public class williams
 				1000000,
 				williams_readmem,williams_writemem,null,null,
 				ignore_interrupt,1
-			),
-			new MachineCPU(
-				CPU_M6808 | CPU_AUDIO_CPU,
-				3579000/4,
-				sound_readmem,sound_writemem,null,null,
-				ignore_interrupt,1
+			/*TODO*///),
+			/*TODO*///new MachineCPU(
+			/*TODO*///	CPU_M6808 | CPU_AUDIO_CPU,
+			/*TODO*///	3579000/4,
+			/*TODO*///	sound_readmem,sound_writemem,null,null,
+			/*TODO*///	ignore_interrupt,1
 			)
 		},
 		60, DEFAULT_60HZ_VBLANK_DURATION,
@@ -1129,12 +1129,12 @@ public class williams
 				1000000,
 				blaster_readmem,blaster_writemem,null,null,
 				ignore_interrupt,1
-			),
-			new MachineCPU(
-				CPU_M6808 | CPU_AUDIO_CPU,
-				3579000/4,
-				sound_readmem,sound_writemem,null,null,
-				ignore_interrupt,1
+			/*TODO*///),
+			/*TODO*///new MachineCPU(
+			/*TODO*///	CPU_M6808 | CPU_AUDIO_CPU,
+			/*TODO*///	3579000/4,
+			/*TODO*///	sound_readmem,sound_writemem,null,null,
+			/*TODO*///	ignore_interrupt,1
 			)
 		},
 		60, DEFAULT_60HZ_VBLANK_DURATION,
@@ -1176,12 +1176,12 @@ public class williams
 				1000000,
 				williams2_readmem,williams2_writemem,null,null,
 				ignore_interrupt,1
-			),
-			new MachineCPU(
-				CPU_M6808 | CPU_AUDIO_CPU,
-				3579000/4,
-				williams2_sound_readmem,williams2_sound_writemem,null,null,
-				ignore_interrupt,1
+			/*TODO*///),
+			/*TODO*///new MachineCPU(
+			/*TODO*///	CPU_M6808 | CPU_AUDIO_CPU,
+			/*TODO*///	3579000/4,
+			/*TODO*///	williams2_sound_readmem,williams2_sound_writemem,null,null,
+			/*TODO*///	ignore_interrupt,1
 			)
 		},
 		60, DEFAULT_60HZ_VBLANK_DURATION,
@@ -1223,12 +1223,12 @@ public class williams
 				1000000,
 				williams2_readmem,williams2_writemem,null,null,
 				ignore_interrupt,1
-			),
-			new MachineCPU(
-				CPU_M6808 | CPU_AUDIO_CPU,
-				3579000/4,
-				williams2_sound_readmem,williams2_sound_writemem,null,null,
-				ignore_interrupt,1
+			/*TODO*///),
+			/*TODO*///new MachineCPU(
+			/*TODO*///	CPU_M6808 | CPU_AUDIO_CPU,
+			/*TODO*///	3579000/4,
+			/*TODO*///	williams2_sound_readmem,williams2_sound_writemem,null,null,
+			/*TODO*///	ignore_interrupt,1
 			/*TODO*///),
 			/*TODO*///SOUND_CPU_WILLIAMS_CVSD
                         )
