@@ -117,13 +117,13 @@ public class beezer
 				1000000,        /* 1 MHz */
 				readmem,writemem,null,null,
 				beezer_interrupt,128
-			),
-			new MachineCPU(
-				CPU_M6809,
-				1000000,        /* 1 MHz */
-				readmem_sound,writemem_sound,null,null,
-				null,0
-		)
+			/*TODO*///),
+			/*TODO*///new MachineCPU(
+			/*TODO*///	CPU_M6809,
+			/*TODO*///	1000000,        /* 1 MHz */
+			/*TODO*///	readmem_sound,writemem_sound,null,null,
+			/*TODO*///	null,0
+                        )
 		},
 		60, DEFAULT_REAL_60HZ_VBLANK_DURATION,
 		1,	/* 1 CPU slice per frame */
@@ -143,12 +143,14 @@ public class beezer
 	
 		/* sound hardware */
 		0,0,0,0,
-		new MachineSound[] {
-			new MachineSound(
-				SOUND_DAC,
-				dac_interface
-			)
-		}
+		/*TODO*///new MachineSound[] {
+		/*TODO*///	new MachineSound(
+		/*TODO*///		SOUND_DAC,
+		/*TODO*///		dac_interface
+		/*TODO*///	)
+		/*TODO*///}
+                
+                null
 	);
 	
 	/***************************************************************************
