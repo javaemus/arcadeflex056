@@ -147,6 +147,7 @@ import static WIP.mame056.drivers.victory.*;
 import static mame056.drivers.buggychl.*;
 import static WIP.mame056.drivers.mexico86.*;
 import static WIP.mame056.drivers.flstory.*;
+import static WIP.mame056.drivers.williams.*;
 
 public class driver {
 
@@ -1706,38 +1707,38 @@ public class driver {
         /*TODO*///	driver_airwolf,	/* (c) 1987 Kyugo */
         /*TODO*///	driver_skywolf,	/* bootleg */
         /*TODO*///	driver_skywolf2,	/* bootleg */
-        /*TODO*///
-        /*TODO*///	/* Williams games */
-        /*TODO*///	driver_defender,	/* (c) 1980 */
-        /*TODO*///	driver_defendg,	/* (c) 1980 */
-        /*TODO*///	driver_defendw,	/* (c) 1980 */
+        
+        /* Williams games */
+        driver_defender,	/* (c) 1980 */
+        driver_defendg,	/* (c) 1980 */
+        driver_defendw,	/* (c) 1980 */
         /*TODO*///TESTdriver_defndjeu,	/* bootleg */
-        /*TODO*///	driver_defcmnd,	/* bootleg */
-        /*TODO*///	driver_defence,	/* bootleg */
-        /*TODO*///	driver_mayday,
-        /*TODO*///	driver_maydaya,
-        /*TODO*///	driver_colony7,	/* (c) 1981 Taito */
-        /*TODO*///	driver_colony7a,	/* (c) 1981 Taito */
-        /*TODO*///	driver_stargate,	/* (c) 1981 */
-        /*TODO*///	driver_robotron,	/* (c) 1982 */
-        /*TODO*///	driver_robotryo,	/* (c) 1982 */
-        /*TODO*///	driver_joust,		/* (c) 1982 */
-        /*TODO*///	driver_joustr,	/* (c) 1982 */
-        /*TODO*///	driver_joustwr,	/* (c) 1982 */
-        /*TODO*///	driver_bubbles,	/* (c) 1982 */
-        /*TODO*///	driver_bubblesr,	/* (c) 1982 */
-        /*TODO*///	driver_bubblesp,	/* (c) 1982 */
-        /*TODO*///	driver_splat,		/* (c) 1982 */
-        /*TODO*///	driver_sinistar,	/* (c) 1982 */
-        /*TODO*///	driver_sinista1,	/* (c) 1982 */
-        /*TODO*///	driver_sinista2,	/* (c) 1982 */
-        /*TODO*///	driver_blaster,	/* (c) 1983 */
-        /*TODO*///	driver_mysticm,	/* (c) 1983 */
-        /*TODO*///	driver_tshoot,	/* (c) 1984 */
-        /*TODO*///	driver_inferno,	/* (c) 1984 */
-        /*TODO*///	driver_joust2,	/* (c) 1986 */
-        /*TODO*///	driver_lottofun,	/* (c) 1987 H.A.R. Management */
-        /*TODO*///
+        driver_defcmnd,	/* bootleg */
+        driver_defence,	/* bootleg */
+        driver_mayday,
+        driver_maydaya,
+        driver_colony7,	/* (c) 1981 Taito */
+        driver_colony7a,	/* (c) 1981 Taito */
+        driver_stargate,	/* (c) 1981 */
+        driver_robotron,	/* (c) 1982 */
+        driver_robotryo,	/* (c) 1982 */
+        driver_joust,		/* (c) 1982 */
+        driver_joustr,	/* (c) 1982 */
+        driver_joustwr,	/* (c) 1982 */
+        driver_bubbles,	/* (c) 1982 */
+        driver_bubblesr,	/* (c) 1982 */
+        driver_bubblesp,	/* (c) 1982 */
+        driver_splat,		/* (c) 1982 */
+        driver_sinistar,	/* (c) 1982 */
+        driver_sinista1,	/* (c) 1982 */
+        driver_sinista2,	/* (c) 1982 */
+        driver_blaster,	/* (c) 1983 */
+        driver_mysticm,	/* (c) 1983 */
+        driver_tshoot,	/* (c) 1984 */
+        driver_inferno,	/* (c) 1984 */
+        driver_joust2,	/* (c) 1986 */
+        driver_lottofun,	/* (c) 1987 H.A.R. Management */
+
         /*TODO*///	/* Capcom games */
         /*TODO*///	/* The following is a COMPLETE list of the Capcom games up to 1997, as shown on */
         /*TODO*///	/* their web site. The list is sorted by production date.                       */
