@@ -555,10 +555,10 @@ public class gladiatr
 		gladiator_machine_init,
 	
 		/* video hardware */
-		32*8, 32*8, new rectangle( 0, 255, 0+16, 255 ),
+		32*8, 32*8, new rectangle( 0, 255, 0+16, 255-16 ),
 	
 		gfxdecodeinfo,
-		512+2, 0,
+		512, 0,
 		null,
 	
 		VIDEO_TYPE_RASTER,

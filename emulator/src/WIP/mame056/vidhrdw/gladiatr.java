@@ -60,11 +60,9 @@ public class gladiatr
 		/* the text layer might use the other 512 entries in the palette RAM */
 		/* (which are all set to 0x07ff = white). I don't know, so I just set */
 		/* it to white. */
-		palette_set_color(512,0x00,0x00,0x00);
-		palette_set_color(513,0xff,0xff,0xff);
-                
-                palette_set_color(510,0x00,0x00,0x00);
-                palette_set_color(511,0xFF,0xFF,0xFF);
+		
+                palette_set_color(0,0xff,0xff,0xff);
+                palette_set_color(1,0x07ff,0x00,0x00);
 	}
 	
 	public static WriteHandlerPtr gladiatr_paletteram_rg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
