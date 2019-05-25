@@ -29,7 +29,7 @@ public class pacland {
     static mame_bitmap tmpbitmap2, tmpbitmap3;
     static int scroll0, scroll1;
     static int palette_bank;
-    static UBytePtr pacland_color_prom;
+    static UBytePtr pacland_color_prom = new UBytePtr();
 
     static rectangle spritevisiblearea = new rectangle(
             3 * 8, 39 * 8 - 1,

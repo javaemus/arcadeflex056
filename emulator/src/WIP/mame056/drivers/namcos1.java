@@ -625,7 +625,7 @@ public class namcos1
 		8,			/* number of voices */
 		50, 		/* playback volume */
 		-1, 		/* memory region */
-		1			/* stereo */
+		0			/* stereo */
         );
 	
 	/*

@@ -189,125 +189,126 @@ public class namco extends snd_interface {
         }
     };
 
-    /*TODO*///
-    /*TODO*///
-    /*TODO*////* generate sound to the mix buffer in stereo */
+    
+    
+    /* generate sound to the mix buffer in stereo */
     public static StreamInitMultiPtr namco_update_stereo = new StreamInitMultiPtr() {
         public void handler(int ch, ShortPtr[] buffer, int length) {
-            /*TODO*///	sound_channel *voice;
-    /*TODO*///	short *lmix, *rmix;
-    /*TODO*///	int i;
-    /*TODO*///
-    /*TODO*///	/* if no sound, we're done */
-    /*TODO*///	if (sound_enable == 0)
-    /*TODO*///	{
-    /*TODO*///		memset(buffer[0], 0, length * sizeof(INT16));
-    /*TODO*///		memset(buffer[1], 0, length * sizeof(INT16));
-    /*TODO*///		return;
-    /*TODO*///	}
-    /*TODO*///
-    /*TODO*///	/* zap the contents of the mixer buffer */
-    /*TODO*///	memset(mixer_buffer, 0, length * sizeof(INT16));
-    /*TODO*///	memset(mixer_buffer_2, 0, length * sizeof(INT16));
-    /*TODO*///
-    /*TODO*///	/* loop over each voice and add its contribution */
-    /*TODO*///	for (voice = channel_list; voice < last_channel; voice++)
-    /*TODO*///	{
-    /*TODO*///		int f = voice->frequency;
-    /*TODO*///		int lv = voice->volume[0];
-    /*TODO*///		int rv = voice->volume[1];
-    /*TODO*///
-    /*TODO*///		lmix = mixer_buffer;
-    /*TODO*///		rmix = mixer_buffer_2;
-    /*TODO*///
-    /*TODO*///		if (voice->noise_sw)
-    /*TODO*///		{
-    /*TODO*///			/* only update if we have non-zero volume and frequency */
-    /*TODO*///			if ((lv || rv) && (f & 0xff))
-    /*TODO*///			{
-    /*TODO*///				float fbase = (float)sample_rate / (float)namco_clock;
-    /*TODO*///				int delta = (float)((f & 0xff) << 4) * fbase;
-    /*TODO*///				int c = voice->noise_counter;
-    /*TODO*///
-    /*TODO*///				/* add our contribution */
-    /*TODO*///				for (i = 0; i < length; i++)
-    /*TODO*///				{
-    /*TODO*///					int noise_data;
-    /*TODO*///					int cnt;
-    /*TODO*///
-    /*TODO*///					if (voice->noise_state)	noise_data = 0x07;
-    /*TODO*///					else noise_data = -0x07;
-    /*TODO*///					*lmix++ += noise_data * (lv >> 1);
-    /*TODO*///					*rmix++ += noise_data * (rv >> 1);
-    /*TODO*///
-    /*TODO*///					c += delta;
-    /*TODO*///					cnt = (c >> 12);
-    /*TODO*///					c &= (1 << 12) - 1;
-    /*TODO*///					for( ;cnt > 0; cnt--)
-    /*TODO*///					{
-    /*TODO*///						if ((voice->noise_seed + 1) & 2) voice->noise_state ^= 1;
-    /*TODO*///						if (voice->noise_seed & 1) voice->noise_seed ^= 0x28000;
-    /*TODO*///						voice->noise_seed >>= 1;
-    /*TODO*///					}
-    /*TODO*///				}
-    /*TODO*///
-    /*TODO*///				/* update the counter for this voice */
-    /*TODO*///				voice->noise_counter = c;
-    /*TODO*///			}
-    /*TODO*///		}
-    /*TODO*///		else
-    /*TODO*///		{
-    /*TODO*///			/* only update if we have non-zero volume and frequency */
-    /*TODO*///			if ((lv || rv) && f)
-    /*TODO*///			{
-    /*TODO*///				const unsigned char *w = voice->wave;
-    /*TODO*///				int c = voice->counter;
-    /*TODO*///
-    /*TODO*///				/* add our contribution */
-    /*TODO*///				for (i = 0; i < length; i++)
-    /*TODO*///				{
-    /*TODO*///					int offs;
-    /*TODO*///
-    /*TODO*///					c += f;
-    /*TODO*///					offs = (c >> 15) & 0x1f;
-    /*TODO*///					if (samples_per_byte == 1)	/* use only low 4 bits */
-    /*TODO*///					{
-    /*TODO*///						*lmix++ += ((w[offs] & 0x0f) - 8) * lv;
-    /*TODO*///						*rmix++ += ((w[offs] & 0x0f) - 8) * rv;
-    /*TODO*///					}
-    /*TODO*///					else	/* use full byte, first the high 4 bits, then the low 4 bits */
-    /*TODO*///					{
-    /*TODO*///						if (offs & 1)
-    /*TODO*///						{
-    /*TODO*///							*lmix++ += ((w[offs>>1] & 0x0f) - 8) * lv;
-    /*TODO*///							*rmix++ += ((w[offs>>1] & 0x0f) - 8) * rv;
-    /*TODO*///						}
-    /*TODO*///						else
-    /*TODO*///						{
-    /*TODO*///							*lmix++ += (((w[offs>>1]>>4) & 0x0f) - 8) * lv;
-    /*TODO*///							*rmix++ += (((w[offs>>1]>>4) & 0x0f) - 8) * rv;
-    /*TODO*///						}
-    /*TODO*///					}
-    /*TODO*///				}
-    /*TODO*///
-    /*TODO*///				/* update the counter for this voice */
-    /*TODO*///				voice->counter = c;
-    /*TODO*///			}
-    /*TODO*///		}
-    /*TODO*///	}
-    /*TODO*///
-    /*TODO*///	/* mix it down */
-    /*TODO*///	lmix = mixer_buffer;
-    /*TODO*///	rmix = mixer_buffer_2;
-    /*TODO*///	{
-    /*TODO*///		INT16 *dest1 = buffer[0];
-    /*TODO*///		INT16 *dest2 = buffer[1];
-    /*TODO*///		for (i = 0; i < length; i++)
-    /*TODO*///		{
-    /*TODO*///			*dest1++ = mixer_lookup[*lmix++];
-    /*TODO*///			*dest2++ = mixer_lookup[*rmix++];
-    /*TODO*///		}
-    /*TODO*///	}
+            sound_channel voice;
+            ShortPtr lmix, rmix;
+    	int i;
+        int _voice = 0;
+    
+    	/* if no sound, we're done */
+    	if (sound_enable == 0)
+    	{
+    		memset(buffer[0], 0, length);
+    		memset(buffer[1], 0, length);
+    		return;
+    	}
+    
+    	/* zap the contents of the mixer buffer */
+    	memset(mixer_buffer, 0, length);
+    	memset(mixer_buffer_2, 0, length);
+    
+    	/* loop over each voice and add its contribution */
+    	for (voice = channel_list[_voice]; _voice < last_channel; _voice++)
+    	{
+    		int f = voice.frequency;
+    		int lv = voice.volume[0];
+    		int rv = voice.volume[1];
+    
+    		lmix = new ShortPtr(mixer_buffer);
+    		rmix = new ShortPtr(mixer_buffer_2);
+    
+    		if (voice.noise_sw != 0)
+    		{
+    			/* only update if we have non-zero volume and frequency */
+    			if ((lv!=0 || rv!=0) && (f & 0xff)!=0)
+    			{
+    				float fbase = (float)sample_rate / (float)namco_clock;
+    				int delta = (int) (((f & 0xff) << 4) * fbase);
+    				int c = voice.noise_counter;
+    
+    				/* add our contribution */
+    				for (i = 0; i < length; i++)
+    				{
+    					int noise_data;
+    					int cnt;
+    
+    					if (voice.noise_state!=0)	noise_data = 0x07;
+    					else noise_data = -0x07;
+    					lmix.writeinc((short) (lmix.read() + noise_data * (lv >> 1)));
+    					rmix.writeinc((short) (rmix.read() + noise_data * (rv >> 1)));
+    
+    					c += delta;
+    					cnt = (c >> 12);
+    					c &= (1 << 12) - 1;
+    					for( ;cnt > 0; cnt--)
+    					{
+    						if (((voice.noise_seed + 1) & 2)!=0) voice.noise_state ^= 1;
+    						if ((voice.noise_seed & 1)!=0) voice.noise_seed ^= 0x28000;
+    						voice.noise_seed >>= 1;
+    					}
+    				}
+    
+    				/* update the counter for this voice */
+    				voice.noise_counter = c;
+    			}
+    		}
+    		else
+    		{
+    			/* only update if we have non-zero volume and frequency */
+    			if ((lv!=0 || rv!=0) && f!=0)
+    			{
+    				UBytePtr w = new UBytePtr(voice.wave);
+    				int c = voice.counter;
+    
+    				/* add our contribution */
+    				for (i = 0; i < length; i++)
+    				{
+    					int offs;
+    
+    					c += f;
+    					offs = (c >> 15) & 0x1f;
+    					if (samples_per_byte == 1)	/* use only low 4 bits */
+    					{
+    						lmix.writeinc((short) (lmix.read() + ((w.read(offs) & 0x0f) - 8) * lv));
+    						rmix.writeinc((short) (rmix.read() + ((w.read(offs) & 0x0f) - 8) * rv));
+    					}
+    					else	/* use full byte, first the high 4 bits, then the low 4 bits */
+    					{
+    						if ((offs & 1) != 0)
+    						{
+    							lmix.writeinc((short) (lmix.read() + ((w.read(offs>>1) & 0x0f) - 8) * lv));
+    							rmix.writeinc((short) (rmix.read() + ((w.read(offs>>1) & 0x0f) - 8) * rv));
+    						}
+    						else
+    						{
+    							lmix.writeinc((short) (lmix.read() + (((w.read(offs>>1)>>4) & 0x0f) - 8) * lv));
+    							rmix.writeinc((short) (rmix.read() + (((w.read(offs>>1)>>4) & 0x0f) - 8) * rv));
+    						}
+    					}
+    				}
+    
+    				/* update the counter for this voice */
+    				voice.counter = c;
+    			}
+    		}
+    	}
+    
+    	/* mix it down */
+    	lmix = mixer_buffer;
+    	rmix = mixer_buffer_2;
+    	{
+    		ShortPtr dest1 = buffer[0];
+    		ShortPtr dest2 = buffer[1];
+    		for (i = 0; i < length; i++)
+    		{
+    			dest1.writeinc( mixer_lookup[lmix.readinc()]);
+    			dest2.writeinc( mixer_lookup[rmix.readinc()]);
+    		}
+    	}
         }
     };
   
@@ -320,6 +321,7 @@ public class namco extends snd_interface {
         namco_clock = intf.samplerate;
         sample_rate = Machine.sample_rate;
         /* get stream channels */
+        System.out.println("NAMCO Sound "+intf.stereo);
         if (intf.stereo != 0) {            
             		int[] vol=new int[2];
             

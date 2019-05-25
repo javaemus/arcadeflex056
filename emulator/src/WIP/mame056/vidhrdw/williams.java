@@ -36,6 +36,7 @@ import static mame056.vidhrdw.generic.*;
 
 // refactor
 import static arcadeflex036.osdepend.logerror;
+import static arcadeflex056.video.osd_mark_dirty;
 import common.subArrays.IntArray;
 
 public class williams
@@ -89,12 +90,24 @@ public class williams
         }
 	
 	/* blitter functions */
-	static williams_blit_func_Ptr williams_blit_opaque;
-	static williams_blit_func_Ptr williams_blit_transparent;
-	static williams_blit_func_Ptr williams_blit_opaque_solid;
+	static williams_blit_func_Ptr williams_blit_opaque = new williams_blit_func_Ptr() {
+            public void handler(int sstart, int dstart, int w, int h, int data) {
+                BLIT_OPAQUE(dstart, data, mem_amask);
+            }
+        };
+	static williams_blit_func_Ptr williams_blit_transparent = new williams_blit_func_Ptr() {
+            public void handler(int sstart, int dstart, int w, int h, int data) {
+                BLIT_TRANSPARENT(dstart, data, mem_amask);
+            }
+        };
+	static williams_blit_func_Ptr williams_blit_opaque_solid = new williams_blit_func_Ptr() {
+            public void handler(int sstart, int dstart, int w, int h, int data) {
+                BLIT_OPAQUE_SOLID(dstart, data, mem_amask);
+            }
+        };
 	static williams_blit_func_Ptr williams_blit_transparent_solid = new williams_blit_func_Ptr() {
             public void handler(int sstart, int dstart, int w, int h, int data) {
-                BLIT_TRANSPARENT_SOLID(sstart, data, dstart);
+                BLIT_TRANSPARENT_SOLID(sstart, data, mem_amask);
             }
         };
 	static williams_blit_func_Ptr sinistar_blit_opaque;
@@ -177,7 +190,7 @@ public class williams
 			}
 	
 			/* mark the pixels dirty */
-			/*TODO*///mark_dirty(clip.min_x, y, clip.max_x, y);
+			osd_mark_dirty(clip.min_x, y, clip.max_x, y);
 	
 			/* draw all pairs */
 			for (x = 0; x < pairs; x++, source.inc(256))

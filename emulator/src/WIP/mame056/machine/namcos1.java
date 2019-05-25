@@ -844,7 +844,7 @@ public class namcos1
 		int i;
 	
 		/* S1 RAM pointer set */
-		s1ram = memory_region(REGION_USER2);
+		s1ram = new UBytePtr(memory_region(REGION_USER2));
 	
 		/* clear all banks to unknown area */
 		for(i=0;i<NAMCOS1_MAX_BANK;i++)
