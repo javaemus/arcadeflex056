@@ -189,6 +189,7 @@ public class phozon
 		}
 	
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
+                
 	
 		/* Draw the sprites. */
 		for (offs = 0;offs < spriteram_size[0];offs += 2){
