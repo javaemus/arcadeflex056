@@ -36,6 +36,7 @@ import static mame056.vidhrdw.generic.*;
 import static arcadeflex036.osdepend.logerror;
 
 import static WIP.mame056.machine.phozon.*;
+import static java.lang.Math.abs;
 
 public class phozon
 {
@@ -99,6 +100,14 @@ public class phozon
 		/* sprites */
 		for (i = 0; i < TOTAL_COLORS(2); i++)
 			COLOR(colortable,2,i, ((color_prom.readinc()) & 0x0f) + 0x10);
+                
+                palette[0]=0x00;
+                palette[1]=0x00;
+                palette[2]=0x00;
+                
+                palette[3]=0xFF;
+                palette[4]=0xFF;
+                palette[5]=0xFF;
             }
         };
 	
@@ -120,6 +129,8 @@ public class phozon
 	public static void phozon_draw_sprite(mame_bitmap dest, int code, int color,
 		int flipx,int flipy,int sx,int sy)
 	{
+            
+                code = abs(code);
 		drawgfx(dest,Machine.gfx[2],code,color,flipx,flipy,sx,sy,Machine.visible_area,
 			TRANSPARENCY_PEN,0);
 	}
