@@ -149,6 +149,7 @@ import static WIP.mame056.drivers.mexico86.*;
 import static WIP.mame056.drivers.flstory.*;
 import static WIP.mame056.drivers.williams.*;
 import static WIP.mame056.drivers.gsword.*;
+import static WIP.mame056.drivers.phozon.*;
 
 public class driver {
 
@@ -608,7 +609,7 @@ public class driver {
         driver_pacnpal, /* (c) 1983 */
         driver_pacnpal2, /* (c) 1983 */
         driver_pacnchmp, /* (c) 1983 */
-        /*TODO*///	driver_phozon,	/* (c) 1983 */
+        driver_phozon,	/* (c) 1983 */
         driver_mappy, /* (c) 1983 */
         driver_mappyjp, /* (c) 1983 */
         driver_digdug2, /* (c) 1985 */
