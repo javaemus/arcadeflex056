@@ -4,6 +4,9 @@
 package mame056;
 
 import static common.ptr.*;
+import static common.subArrays.*;
+import static mame056.drawgfxH.*;
+import static mame056.mame.*;
 import static mame056.tilemapC.*;
 
 public class tilemapH {
@@ -54,32 +57,36 @@ public class tilemapH {
 /*TODO*///
     public static class struct_tile_info {
 
-        /*TODO*///	/*
-/*TODO*///		you must set tile_info.pen_data, tile_info.pal_data and tile_info.pen_usage
-/*TODO*///		in the callback.  You can use the SET_TILE_INFO() macro below to do this.
-/*TODO*///		tile_info.flags and tile_info.priority will be automatically preset to 0,
-/*TODO*///		games that don't need them don't need to explicitly set them to 0
-/*TODO*///	*/
-/*TODO*///	const UINT8 *pen_data;
-/*TODO*///	const pen_t *pal_data;
+        /*
+		you must set tile_info.pen_data, tile_info.pal_data and tile_info.pen_usage
+		in the callback.  You can use the SET_TILE_INFO() macro below to do this.
+		tile_info.flags and tile_info.priority will be automatically preset to 0,
+		games that don't need them don't need to explicitly set them to 0
+         */
+        public UBytePtr pen_data;
+        public IntArray pal_data;
         public int/*UINT32*/ flags;
-        /*TODO*///	int skip;
-/*TODO*///	UINT32 tile_number;		/* needed for tilemap_mark_gfxdata_dirty */
-/*TODO*///	UINT32 pen_usage;		/* TBR */
+        public int skip;
+        public int/*UINT32*/ tile_number;/* needed for tilemap_mark_gfxdata_dirty */
+        public int/*UINT32*/ pen_usage;/* TBR */
         public int/*UINT32*/ priority;/* tile priority */
         public UBytePtr mask_data;/* for TILEMAP_BITMASK */
     }
 
     public static void SET_TILE_INFO(int GFX, int CODE, int COLOR, int FLAGS) {
-        /*TODO*///	const struct GfxElement *gfx = Machine->gfx[(GFX)]; \
-/*TODO*///	int _code = (CODE) % gfx->total_elements; \
-/*TODO*///	tile_info.tile_number = _code; \
-/*TODO*///	tile_info.pen_data = gfx->gfxdata + _code*gfx->char_modulo; \
-/*TODO*///	tile_info.pal_data = &gfx->colortable[gfx->color_granularity * (COLOR)]; \
-/*TODO*///	tile_info.pen_usage = gfx->pen_usage?gfx->pen_usage[_code]:0; \
-/*TODO*///	tile_info.flags = FLAGS; \
-/*TODO*///	if (gfx->flags & GFX_PACKED) tile_info.flags |= TILE_4BPP; \
-/*TODO*///	if (gfx->flags & GFX_SWAPXY) tile_info.flags |= TILE_SWAPXY; \
+        GfxElement gfx = Machine.gfx[(GFX)];
+        int _code = (CODE) % gfx.total_elements;
+        tile_info.tile_number = _code;
+        tile_info.pen_data = new UBytePtr(gfx.gfxdata, _code * gfx.char_modulo);
+        tile_info.pal_data = new IntArray(gfx.colortable, gfx.color_granularity * (COLOR));
+        tile_info.pen_usage = gfx.pen_usage != null ? gfx.pen_usage[_code] : 0;
+        tile_info.flags = FLAGS;
+        if ((gfx.flags & GFX_PACKED) != 0) {
+            tile_info.flags |= TILE_4BPP;
+        }
+        if ((gfx.flags & GFX_SWAPXY) != 0) {
+            tile_info.flags |= TILE_SWAPXY;
+        }
     }
 
     /*TODO*///
@@ -87,11 +94,12 @@ public class tilemapH {
 /*TODO*////* TILE_IGNORE_TRANSPARENCY is used if you need an opaque tile in a transparent layer. */
 /*TODO*///#define TILE_FLIPX					0x01
 /*TODO*///#define TILE_FLIPY					0x02
-/*TODO*///#define TILE_SWAPXY					0x04
-/*TODO*///#define TILE_IGNORE_TRANSPARENCY	0x08
-/*TODO*///#define TILE_4BPP					0x10
-/*TODO*////*		TILE_SPLIT					0x60 */
-/*TODO*///
+    public static final int TILE_SWAPXY = 0x04;
+    /*TODO*///#define TILE_IGNORE_TRANSPARENCY	0x08
+    public static final int TILE_4BPP = 0x10;
+    public static final int TILE_SPLIT = 0x60;
+
+    /*TODO*///
 /*TODO*////* TILE_SPLIT is for use with TILEMAP_SPLIT layers.  It selects transparency type. */
 /*TODO*///#define TILE_SPLIT_OFFSET			5
 /*TODO*///#define TILE_SPLIT(T)				((T)<<TILE_SPLIT_OFFSET)

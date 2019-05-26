@@ -3,6 +3,7 @@
  */
 package mame056;
 
+import common.ptr.UBytePtr;
 import static mame056.common.*;
 import static mame056.commonH.*;
 import static mame056.driverH.*;
@@ -37,26 +38,25 @@ public class tilemapC {
 /*TODO*///	/* callback to interpret video RAM for the tilemap */
 /*TODO*///	void (*tile_get_info)( int memory_offset );
 /*TODO*///
-/*TODO*///	UINT32 max_memory_offset;
-/*TODO*///	UINT32 num_tiles;
-/*TODO*///	UINT32 num_pens;
-/*TODO*///
-/*TODO*///	UINT32 num_logical_rows, num_logical_cols;
-/*TODO*///	UINT32 num_cached_rows, num_cached_cols;
-/*TODO*///
-/*TODO*///	UINT32 logical_tile_width, logical_tile_height;
-/*TODO*///	UINT32 cached_tile_width, cached_tile_height;
-/*TODO*///
-/*TODO*///	UINT32 cached_width, cached_height;
-/*TODO*///
-/*TODO*///	int dx, dx_if_flipped;
-/*TODO*///	int dy, dy_if_flipped;
-/*TODO*///	int scrollx_delta, scrolly_delta;
-/*TODO*///
-/*TODO*///	int enable;
+        public int/*UINT32*/ max_memory_offset;
+        public int/*UINT32*/ num_tiles;
+        public int/*UINT32*/ num_pens;
+
+        public int/*UINT32*/ num_logical_rows, num_logical_cols;
+        public int/*UINT32*/ num_cached_rows, num_cached_cols;
+
+        public int/*UINT32*/ logical_tile_width, logical_tile_height;
+        public int/*UINT32*/ cached_tile_width, cached_tile_height;
+        public int/*UINT32*/ cached_width, cached_height;
+
+        public int dx, dx_if_flipped;
+        public int dy, dy_if_flipped;
+        public int scrollx_delta, scrolly_delta;
+
+        public int enable;
         public int attributes;
-        /*TODO*///
-/*TODO*///	int type;
+
+        public int type;
         public int transparent_pen;
         /*TODO*///	UINT32 fgmask[4], bgmask[4]; /* for TILEMAP_SPLIT */
 /*TODO*///
@@ -76,9 +76,9 @@ public class tilemapC {
         /*TODO*///	int clip_left,clip_right,clip_top,clip_bottom;
 /*TODO*///	struct rectangle logical_clip;
 /*TODO*///
-/*TODO*///	UINT16 tile_depth, tile_granularity;
-/*TODO*///	UINT8 *tile_dirty_map;
-/*TODO*///
+        public char tile_depth, tile_granularity;
+        public UBytePtr tile_dirty_map;
+        /*TODO*///
 /*TODO*///	/* cached color data */
 /*TODO*///	struct mame_bitmap *pixmap;
 /*TODO*///	UINT32 pixmap_pitch_line;
@@ -219,19 +219,16 @@ public class tilemapC {
 /*TODO*///	}
 /*TODO*///}
 /*TODO*///
-/*TODO*///void tilemap_set_depth( struct tilemap *tilemap, int tile_depth, int tile_granularity )
-/*TODO*///{
-/*TODO*///	if( tilemap->tile_dirty_map )
-/*TODO*///	{
-/*TODO*///		free( tilemap->tile_dirty_map);
-/*TODO*///	}
-/*TODO*///	tilemap->tile_dirty_map = malloc( Machine->drv->total_colors >> tile_granularity );
-/*TODO*///	if( tilemap->tile_dirty_map )
-/*TODO*///	{
-/*TODO*///		tilemap->tile_depth = tile_depth;
-/*TODO*///		tilemap->tile_granularity = tile_granularity;
-/*TODO*///	}
-/*TODO*///}
+    public static void tilemap_set_depth(struct_tilemap tilemap, int tile_depth, int tile_granularity) {
+        if (tilemap.tile_dirty_map != null) {
+            tilemap.tile_dirty_map = null;
+        }
+        tilemap.tile_dirty_map = new UBytePtr(Machine.drv.total_colors >> tile_granularity);
+        if (tilemap.tile_dirty_map != null) {
+            tilemap.tile_depth = (char) tile_depth;
+            tilemap.tile_granularity = (char) tile_granularity;
+        }
+    }
     /**
      * ********************************************************************************
      */
@@ -566,7 +563,7 @@ public class tilemapC {
 /*TODO*///		break;
 /*TODO*///	}
 /*TODO*///}
-/*TODO*///
+
 /*TODO*////***********************************************************************************/
 /*TODO*///
 /*TODO*///static void tilemap_reset(void)
@@ -607,45 +604,50 @@ public class tilemapC {
             int tile_height,
             int num_cols,
             int num_rows) {
-        System.out.println("dummy tilemap_create");
-        /*TODO*///	struct tilemap *tilemap;
-/*TODO*///	UINT32 row;
-/*TODO*///	int num_tiles;
-/*TODO*///
+        int/*UINT32*/ row;
+        int num_tiles;
+
         struct_tilemap tilemap = new struct_tilemap();
         if (tilemap != null) {
-            /*TODO*///		num_tiles = num_cols*num_rows;
-/*TODO*///		tilemap->num_logical_cols = num_cols;
-/*TODO*///		tilemap->num_logical_rows = num_rows;
-/*TODO*///		if( Machine->orientation & ORIENTATION_SWAP_XY )
-/*TODO*///		{
-/*TODO*///			SWAP( num_cols, num_rows )
-/*TODO*///			SWAP( tile_width, tile_height )
-/*TODO*///		}
-/*TODO*///		tilemap->num_cached_cols = num_cols;
-/*TODO*///		tilemap->num_cached_rows = num_rows;
-/*TODO*///		tilemap->num_tiles = num_tiles;
-/*TODO*///		tilemap->num_pens = tile_width*tile_height;
-/*TODO*///		tilemap->logical_tile_width = tile_width;
-/*TODO*///		tilemap->logical_tile_height = tile_height;
-/*TODO*///		tilemap->cached_tile_width = tile_width;
-/*TODO*///		tilemap->cached_tile_height = tile_height;
-/*TODO*///		tilemap->cached_width = tile_width*num_cols;
-/*TODO*///		tilemap->cached_height = tile_height*num_rows;
-/*TODO*///		tilemap->tile_get_info = tile_get_info;
-/*TODO*///		tilemap->get_memory_offset = get_memory_offset;
+            System.out.println("dummy tilemap_create type =" + type + " tile_width= " + tile_width + " tile_height =" + tile_height + " num_cols= " + num_cols + " num_rows= " + num_rows);
+            num_tiles = num_cols * num_rows;
+            tilemap.num_logical_cols = num_cols;
+            tilemap.num_logical_rows = num_rows;
+            if ((Machine.orientation & ORIENTATION_SWAP_XY) != 0) {
+                //SWAP( num_cols,num_rows )
+                int temp2 = num_cols;
+                num_cols = num_rows;
+                num_rows = temp2;
+                //SWAP( tile_width, tile_height )
+                int temp = tile_width;
+                tile_width = tile_height;
+                tile_height = temp;
+
+            }
+            tilemap.num_cached_cols = num_cols;
+            tilemap.num_cached_rows = num_rows;
+            tilemap.num_tiles = num_tiles;
+            tilemap.num_pens = tile_width * tile_height;
+            tilemap.logical_tile_width = tile_width;
+            tilemap.logical_tile_height = tile_height;
+            tilemap.cached_tile_width = tile_width;
+            tilemap.cached_tile_height = tile_height;
+            tilemap.cached_width = tile_width * num_cols;
+            tilemap.cached_height = tile_height * num_rows;
+            /*TODO*///            tilemap.tile_get_info = tile_get_info;
+            /*TODO*///		tilemap->get_memory_offset = get_memory_offset;
             tilemap.orientation = Machine.orientation;
-            /*TODO*///
-/*TODO*///		/* various defaults */
-/*TODO*///		tilemap->enable = 1;
-/*TODO*///		tilemap->type = type;
+
+            /* various defaults */
+            tilemap.enable = 1;
+            tilemap.type = type;
             tilemap.logical_scroll_rows = tilemap.cached_scroll_rows = 1;
             tilemap.logical_scroll_cols = tilemap.cached_scroll_cols = 1;
             tilemap.transparent_pen = -1;
-            /*TODO*///		tilemap->tile_depth = 0;
-/*TODO*///		tilemap->tile_granularity = 0;
-/*TODO*///		tilemap->tile_dirty_map = 0;
-/*TODO*///
+            tilemap.tile_depth = 0;
+            tilemap.tile_granularity = 0;
+            tilemap.tile_dirty_map = null;
+            /*TODO*///
 /*TODO*///		tilemap->logical_rowscroll	= calloc(tilemap->cached_height,sizeof(int));
 /*TODO*///		tilemap->cached_rowscroll	= calloc(tilemap->cached_height,sizeof(int));
 /*TODO*///		tilemap->logical_colscroll	= calloc(tilemap->cached_width, sizeof(int));
