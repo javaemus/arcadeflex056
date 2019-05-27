@@ -22,6 +22,7 @@ import mame056.cpu.m6800.hd63701;
 import mame056.cpu.m6805.m6805;
 import mame056.cpu.m6805.m68705;
 import mame056.cpu.m6805.HD63705;
+import mame056.cpu.m6800.m6808;
 
 public class cpuintrf {
 
@@ -216,7 +217,7 @@ public class cpuintrf {
                 new dummy_cpu(),/*TODO*///	CPU0(M6801,    m6801,	 1,  0,1.00,M6801_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
                 new m6802(),//CPU0(M6802,    m6802,	 1,  0,1.00,M6802_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
                 new m6803(),//CPU0(M6803,    m6803,	 1,  0,1.00,M6803_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
-                new dummy_cpu(),/*TODO*///	CPU0(M6808,    m6808,	 1,  0,1.00,M6808_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
+                new m6808(),//CPU0(M6808,    m6808,	 1,  0,1.00,M6808_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
                 new hd63701(),//CPU0(HD63701,  hd63701,  1,  0,1.00,HD63701_IRQ_LINE,8, 16,	  0,16,BE,1, 4	),
                 new dummy_cpu(),/*TODO*///	CPU0(NSC8105,  nsc8105,  1,  0,1.00,NSC8105_IRQ_LINE,8, 16,	  0,16,BE,1, 4	),
                 new m6805(),//CPU0(M6805,    m6805,	 1,  0,1.00,M6805_IRQ_LINE,  8, 16,	  0,11,BE,1, 3	),
