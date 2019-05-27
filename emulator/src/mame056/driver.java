@@ -154,6 +154,7 @@ import static WIP.mame056.drivers.kyugo.*;
 import static WIP.mame056.drivers.superqix.*;
 import static WIP.mame056.drivers.exzisus.*;
 import static WIP.mame056.drivers.capbowl.*;
+import static WIP.mame056.drivers.congo.*;
 
 public class driver {
 
@@ -2235,10 +2236,10 @@ public class driver {
         driver_futspy, /* (c) 1984 */
         driver_razmataz, /* modified 834-0213, 834-0214 (c) 1983 */
         driver_ixion, /* (c) 1983 */
-        /*TODO*///	driver_congo,		/* 605-5167 (c) 1983 */
-        /*TODO*///	driver_tiptop,	/* 605-5167 (c) 1983 */
-        /*TODO*///
-        /*TODO*///	/* Sega System 1 / System 2 games */
+        driver_congo,		/* 605-5167 (c) 1983 */
+        driver_tiptop,	/* 605-5167 (c) 1983 */
+
+        /* Sega System 1 / System 2 games */
         driver_starjack, /* 834-5191 (c) 1983 (S1) */
         driver_starjacs, /* (c) 1983 Stern (S1) */
         driver_regulus, /* 834-5328 (c) 1983 (S1) */

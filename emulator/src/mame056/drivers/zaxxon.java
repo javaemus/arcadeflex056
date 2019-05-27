@@ -594,7 +594,7 @@ public class zaxxon
 	
 	
 	
-	static GfxLayout zaxxon_charlayout1 = new GfxLayout
+	public static GfxLayout zaxxon_charlayout1 = new GfxLayout
 	(
 		8,8,	/* 8*8 characters */
 		256,	/* 256 characters */
@@ -605,7 +605,7 @@ public class zaxxon
 		8*8 /* every char takes 8 consecutive bytes */
 	);
 	
-	static GfxLayout zaxxon_charlayout2 = new GfxLayout
+	public static GfxLayout zaxxon_charlayout2 = new GfxLayout
 	(
 		8,8,	/* 8*8 characters */
 		1024,	/* 1024 characters */
