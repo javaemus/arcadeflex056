@@ -150,6 +150,7 @@ import static WIP.mame056.drivers.flstory.*;
 import static WIP.mame056.drivers.williams.*;
 import static WIP.mame056.drivers.gsword.*;
 import static WIP.mame056.drivers.phozon.*;
+import static WIP.mame056.drivers.kyugo.*;
 
 public class driver {
 
@@ -1695,21 +1696,21 @@ public class driver {
         /*TODO*///	driver_esprade,	/* (c) 1998 Atlus/Cave */
         /*TODO*///	driver_uopoko,	/* (c) 1998 Cave + Jaleco license */
         /*TODO*///	driver_guwange,	/* (c) 1999 Atlus/Cave */
-        /*TODO*///
-        /*TODO*///	/* Kyugo games */
-        /*TODO*///	/* Kyugo only made four games: Repulse, Flash Gal, SRD Mission and Air Wolf. */
-        /*TODO*///	/* Gyrodine was made by Crux. Crux was antecedent of Toa Plan, and spin-off from Orca. */
-        /*TODO*///	driver_gyrodine,	/* (c) 1984 Taito Corporation */
-        /*TODO*///	driver_sonofphx,	/* (c) 1985 Associated Overseas MFR */
-        /*TODO*///	driver_repulse,	/* (c) 1985 Sega */
-        /*TODO*///	driver_99lstwar,	/* (c) 1985 Proma */
-        /*TODO*///	driver_99lstwra,	/* (c) 1985 Proma */
-        /*TODO*///	driver_flashgal,	/* (c) 1985 Sega */
-        /*TODO*///	driver_srdmissn,	/* (c) 1986 Taito Corporation */
-        /*TODO*///	driver_airwolf,	/* (c) 1987 Kyugo */
-        /*TODO*///	driver_skywolf,	/* bootleg */
-        /*TODO*///	driver_skywolf2,	/* bootleg */
         
+        /* Kyugo games */
+        /* Kyugo only made four games: Repulse, Flash Gal, SRD Mission and Air Wolf. */
+        /* Gyrodine was made by Crux. Crux was antecedent of Toa Plan, and spin-off from Orca. */
+        driver_gyrodine,	/* (c) 1984 Taito Corporation */
+        driver_sonofphx,	/* (c) 1985 Associated Overseas MFR */
+        driver_repulse,	/* (c) 1985 Sega */
+        driver_99lstwar,	/* (c) 1985 Proma */
+        driver_99lstwra,	/* (c) 1985 Proma */
+        driver_flashgal,	/* (c) 1985 Sega */
+        driver_srdmissn,	/* (c) 1986 Taito Corporation */
+        driver_airwolf,	/* (c) 1987 Kyugo */
+        driver_skywolf,	/* bootleg */
+        driver_skywolf2,	/* bootleg */
+
         /* Williams games */
         driver_defender,	/* (c) 1980 */
         driver_defendg,	/* (c) 1980 */
