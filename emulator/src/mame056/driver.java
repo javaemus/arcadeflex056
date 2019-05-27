@@ -156,6 +156,7 @@ import static WIP.mame056.drivers.exzisus.*;
 import static WIP.mame056.drivers.capbowl.*;
 import static WIP.mame056.drivers.congo.*;
 import static WIP.mame056.drivers.dotrikun.*;
+import static WIP.mame056.drivers.solomon.*;
 
 public class driver {
 
@@ -2694,7 +2695,7 @@ public class driver {
         driver_tehkanwc, /* (c) 1985 Tehkan */
         driver_gridiron, /* (c) 1985 Tehkan */
         driver_teedoff, /* 6102 - (c) 1986 Tecmo */
-        /*TODO*///	driver_solomon,	/* (c) 1986 Tecmo */
+        driver_solomon,	/* (c) 1986 Tecmo */
         /*TODO*///	driver_rygar,		/* 6002 - (c) 1986 Tecmo */
         /*TODO*///	driver_rygar2,	/* 6002 - (c) 1986 Tecmo */
         /*TODO*///	driver_rygarj,	/* 6002 - (c) 1986 Tecmo */
