@@ -1025,10 +1025,10 @@ public class segar
 		/* sound hardware */
 		0,0,0,0,
 		new MachineSound[] {
-			/*TODO*///new MachineSound(
-			/*TODO*///	SOUND_TMS36XX,
-			/*TODO*///	monsterb_tms3617_interface
-			/*TODO*///),
+			new MachineSound(
+				SOUND_TMS36XX,
+				monsterb_tms3617_interface
+			),
 			new MachineSound(
 				SOUND_SAMPLES,
 				monsterb_samples_interface
