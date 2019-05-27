@@ -29,7 +29,7 @@ public class bublbobl
 	
 	public static UBytePtr bublbobl_objectram = new UBytePtr();
 	public static int[] bublbobl_objectram_size = new int[1];
-	public static int bublbobl_video_enable;
+	public static int bublbobl_video_enable = 1;
 	
 	
 	/***************************************************************************

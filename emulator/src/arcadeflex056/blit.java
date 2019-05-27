@@ -236,13 +236,13 @@ public class blit {
                             // HACK -> &0xFF for using with 8 bit drivers using 16 bits (e.g. turbo driver)
                             //System.out.println(back_buffer.length);
                             //System.out.println(palette.length);
-                            if ((back_buffer[sbi + x + (y * w)]&0xFFFF) > palette.length) {
+                            if ((back_buffer[sbi + x + (y * w)]) > palette.length) {
                                 
                                 screen._pixels[x + (y * w)] = palette[(back_buffer[sbi + x + (y * w)]&0xFF)];
                             
                             } else {
                                 
-                                screen._pixels[x + (y * w)] = palette[(back_buffer[sbi + x + (y * w)]&0xFFFF)];
+                                screen._pixels[x + (y * w)] = palette[(back_buffer[sbi + x + (y * w)])];
                                 
                             }
                         }

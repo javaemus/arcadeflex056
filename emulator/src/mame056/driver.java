@@ -151,6 +151,7 @@ import static WIP.mame056.drivers.williams.*;
 import static WIP.mame056.drivers.gsword.*;
 import static WIP.mame056.drivers.phozon.*;
 import static WIP.mame056.drivers.kyugo.*;
+import static WIP.mame056.drivers.superqix.*;
 
 public class driver {
 
@@ -1323,8 +1324,8 @@ public class driver {
         /*TODO*///	driver_rainbowa,	/* B22 (c) 1987 Taito Corporation */
         /*TODO*///	driver_rainbowe,	/* ??? (c) 1988 Taito Corporation */
         /*TODO*///	driver_jumping,	/* bootleg */
-        /*TODO*///	driver_superqix,	/* B03 1987 */
-        /*TODO*///	driver_sqixbl,	/* bootleg? but (c) 1987 */
+        driver_superqix,	/* B03 1987 */
+        driver_sqixbl,	/* bootleg? but (c) 1987 */
         /*TODO*///	driver_exzisus,	/* B23 (c) 1987 Taito Corporation (Japan) */
         /*TODO*///	driver_volfied,	/* C04 (c) 1989 Taito Corporation (Japan) */
         /*TODO*///	driver_bonzeadv,	/* B41 (c) 1988 Taito Corporation Japan (World) */
