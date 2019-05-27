@@ -373,6 +373,7 @@ public class timer {
      * remove a timer from the system
      */
     public static void timer_remove(Object which) {
+        try{
         timer_entry timer = (timer_entry) which;
 
         /* remove it from the list */
@@ -385,6 +386,9 @@ public class timer {
         /*TODO*///	#if VERBOSE
 /*TODO*///		verbose_print("T=%.6g: Removed %08X\n", getabsolutetime() + global_offset, timer);
 /*TODO*///	#endif
+        } catch (Exception e){
+            
+        }
     }
 
     /**

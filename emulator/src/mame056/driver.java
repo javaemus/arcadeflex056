@@ -153,6 +153,7 @@ import static WIP.mame056.drivers.phozon.*;
 import static WIP.mame056.drivers.kyugo.*;
 import static WIP.mame056.drivers.superqix.*;
 import static WIP.mame056.drivers.exzisus.*;
+import static WIP.mame056.drivers.capbowl.*;
 
 public class driver {
 
@@ -2101,13 +2102,13 @@ public class driver {
         /*TODO*///	driver_blocka,	/* 10/09/1991 (c) 1991 Capcom (World) */
         /*TODO*///	driver_blockj,	/* 10/09/1991 (c) 1991 Capcom (Japan) */
         /*TODO*///	driver_blockbl,	/* bootleg */
-        /*TODO*///
-        /*TODO*///	/* Incredible Technologies games */
-        /*TODO*///	/* http://www.itsgames.com */
-        /*TODO*///	driver_capbowl,	/* (c) 1988 Incredible Technologies */
-        /*TODO*///	driver_capbowl2,	/* (c) 1988 Incredible Technologies */
-        /*TODO*///	driver_clbowl,	/* (c) 1989 Incredible Technologies */
-        /*TODO*///	driver_bowlrama,	/* (c) 1991 P & P Marketing */
+        
+        /* Incredible Technologies games */
+        /* http://www.itsgames.com */
+        driver_capbowl,	/* (c) 1988 Incredible Technologies */
+        driver_capbowl2,	/* (c) 1988 Incredible Technologies */
+        driver_clbowl,	/* (c) 1989 Incredible Technologies */
+        driver_bowlrama,	/* (c) 1991 P & P Marketing */
         driver_wfortune, /* (c) 1989 GameTek */
         driver_wfortuna, /* (c) 1989 GameTek */
         driver_stratab, /* (c) 1990 Strata/Incredible Technologies */
