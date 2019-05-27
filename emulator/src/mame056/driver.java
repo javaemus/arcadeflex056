@@ -155,6 +155,7 @@ import static WIP.mame056.drivers.superqix.*;
 import static WIP.mame056.drivers.exzisus.*;
 import static WIP.mame056.drivers.capbowl.*;
 import static WIP.mame056.drivers.congo.*;
+import static WIP.mame056.drivers.dotrikun.*;
 
 public class driver {
 
@@ -2312,8 +2313,8 @@ public class driver {
         /*TODO*///TESTdriver_kopunch,	/* 834-0103 (c) 1981 Sega */
         /*TODO*///	driver_suprloco,	/* (c) 1982 Sega */
         /*TODO*///	driver_appoooh,	/* (c) 1984 Sega */
-        /*TODO*///	driver_dotrikun,	/* cabinet test board */
-        /*TODO*///	driver_dotriku2,	/* cabinet test board */
+        driver_dotrikun,	/* cabinet test board */
+        driver_dotriku2,	/* cabinet test board */
         /*TODO*///
         /*TODO*///	/* Sega System 16 games */
         /*TODO*///	// Not working
