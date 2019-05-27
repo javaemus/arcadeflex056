@@ -35,6 +35,7 @@ import mame056.sound._2151intf;
 import mame056.sound.cem3394;
 import mame056.sound._5110intf;
 import mame056.sound.adpcm;
+import mame056.sound.nes_apu;
 
 public class sndintrf {
 
@@ -542,7 +543,7 @@ public class sndintrf {
                 /*TODO*///		NESPSG_sh_update,
                 /*TODO*///		0
                 /*TODO*///	},
-                new Dummy_snd(),
+                new nes_apu(),
                 /*TODO*///#endif
                 /*TODO*///#if (HAS_ASTROCADE)
                 /*TODO*///    {
