@@ -2655,15 +2655,16 @@ public class m6800 extends cpu_interface {
     /* $66 ROR indexed -**-* */
     public opcode ror_ix = new opcode() {
         public void handler() {
-            /*TODO*///UINT8 t, r;
-            /*TODO*///IDXBYTE(t);
-            /*TODO*///r = (CC & 0x01) << 7;
-            /*TODO*///CLR_NZC;
-            /*TODO*///CC |= (t & 0x01);
-            /*TODO*///r |= t >> 1;
-            /*TODO*///SET_NZ8(r);
-            /*TODO*///WM(EAD, r);
-            throw new UnsupportedOperationException("Unsupported");
+            /*UINT8*/
+            int t, r;
+            t = IDXBYTE();
+            r = (m6800.cc & 0x01) << 7;
+            CLR_NZC();
+            m6800.cc |= (t & 0x01);
+            r |= t >> 1;
+            SET_NZ8(r);
+            WM(ea, r);
+            
         }
     };
 
@@ -2684,13 +2685,14 @@ public class m6800 extends cpu_interface {
     /* $68 ASL indexed ?**** */
     public opcode asl_ix = new opcode() {
         public void handler() {
-            /*TODO*///UINT16 t, r;
-            /*TODO*///IDXBYTE(t);
-            /*TODO*///r = t << 1;
-            /*TODO*///CLR_NZVC;
-            /*TODO*///SET_FLAGS8(t, t, r);
-            /*TODO*/// WM(EAD, r);
-            throw new UnsupportedOperationException("Unsupported");
+            /*UINT8*/
+            int t, r;
+            t = IDXBYTE();
+            r = t << 1;
+            CLR_NZVC();
+            SET_FLAGS8(t, t, r);
+            WM(ea, r);
+            
         }
     };
 
@@ -3053,11 +3055,10 @@ public class m6800 extends cpu_interface {
  /* $87 STA immediate -**0- */
     public opcode sta_im = new opcode() {
         public void handler() {
-            /*TODO*///CLR_NZV;
-            /*TODO*///SET_NZ8(A);
-            /*TODO*///IMM8;
-            /*TODO*///WM(EAD, A);
-            throw new UnsupportedOperationException("Unsupported");
+            CLR_NZV();
+            SET_NZ8(m6800.a);
+            IMMBYTE();
+            WM(ea, m6800.a);
         }
     };
 
@@ -3194,13 +3195,14 @@ public class m6800 extends cpu_interface {
     /* $92 SBCA direct ?**** */
     public opcode sbca_di = new opcode() {
         public void handler() {
-            /*TODO*///UINT16 t, r;
-            /*TODO*///DIRBYTE(t);
-            /*TODO*///r = A - t - (CC & 0x01);
-            /*TODO*///CLR_NZVC;
-            /*TODO*///SET_FLAGS8(A, t, r);
-            /*TODO*///A = r;
-            throw new UnsupportedOperationException("Unsupported");
+            /*UINT16*/
+            int t, r;
+            t = DIRBYTE();
+            r = m6800.a - t - (m6800.cc & 0x01);
+            CLR_NZVC();
+            SET_FLAGS8(m6800.a, t, r);
+            m6800.a = r;
+            
         }
     };
 
@@ -3391,13 +3393,14 @@ public class m6800 extends cpu_interface {
     /* $a2 SBCA indexed ?**** */
     public opcode sbca_ix = new opcode() {
         public void handler() {
-            /*TODO*///UINT16 t, r;
-            /*TODO*///IDXBYTE(t);
-            /*TODO*///r = A - t - (CC & 0x01);
-            /*TODO*///CLR_NZVC;
-            /*TODO*///SET_FLAGS8(A, t, r);
-            /*TODO*///A = r;
-            throw new UnsupportedOperationException("Unsupported");
+            /*UINT16*/
+            int t, r;
+            t = IDXBYTE();
+            r = m6800.a - t - (m6800.cc & 0x01);
+            CLR_NZVC();
+            SET_FLAGS8(m6800.a, t, r);
+            m6800.a = r;
+            
         }
     };
 
@@ -3474,14 +3477,15 @@ public class m6800 extends cpu_interface {
     /* $a9 ADCA indexed ***** */
     public opcode adca_ix = new opcode() {
         public void handler() {
-            /*TODO*///UINT16 t, r;
-            /*TODO*///IDXBYTE(t);
-            /*TODO*///r = A + t + (CC & 0x01);
-            /*TODO*///CLR_HNZVC;
-            /*TODO*///SET_FLAGS8(A, t, r);
-            /*TODO*///SET_H(A, t, r);
-            /*TODO*///A = r;
-            throw new UnsupportedOperationException("Unsupported");
+            /*UINT16*/
+            int t, r;
+            t = IDXBYTE();
+            r = m6800.a + t + (m6800.cc & 0x01);
+            CLR_HNZVC();
+            SET_FLAGS8(m6800.a, t, r);
+            SET_H(m6800.a, t, r);
+            m6800.a = r;
+            
         }
     };
 
@@ -3583,12 +3587,13 @@ public class m6800 extends cpu_interface {
     /* $b1 CMPA extended ?**** */
     public opcode cmpa_ex = new opcode() {
         public void handler() {
-            /*TODO*///UINT16 t, r;
-            /*TODO*///EXTBYTE(t);
-            /*TODO*///r = A - t;
-            /*TODO*///CLR_NZVC;
-            /*TODO*///SET_FLAGS8(A, t, r);
-            throw new UnsupportedOperationException("Unsupported");
+            /* UINT16 */
+            int t, r;
+            t = EXTBYTE();
+            r = m6800.a - t;
+            CLR_NZVC();
+            SET_FLAGS8(m6800.a, t, r);
+            
         }
     };
 
@@ -4021,12 +4026,13 @@ public class m6800 extends cpu_interface {
     /* $d5 BITB direct -**0- */
     public opcode bitb_di = new opcode() {
         public void handler() {
-            /*TODO*///UINT8 t, r;
-            /*TODO*///DIRBYTE(t);
-            /*TODO*///r = B & t;
-            /*TODO*///CLR_NZV;
-            /*TODO*///SET_NZ8(r);
-            throw new UnsupportedOperationException("Unsupported");
+            /*UINT8*/
+            int t, r;
+            t = DIRBYTE();
+            r = m6800.b & t;
+            CLR_NZV();
+            SET_NZ8(r);
+            
         }
     };
 
@@ -4141,13 +4147,14 @@ public class m6800 extends cpu_interface {
     /* $e0 SUBB indexed ?**** */
     public opcode subb_ix = new opcode() {
         public void handler() {
-            /*TODO*///UINT16 t, r;
-            /*TODO*///IDXBYTE(t);
-            /*TODO*///r = B - t;
-            /*TODO*///CLR_NZVC;
-            /*TODO*///SET_FLAGS8(B, t, r);
-            /*TODO*///B = r;
-            throw new UnsupportedOperationException("Unsupported");
+            /*UINT16*/
+            int t, r;
+            t = IDXBYTE();
+            r = m6800.b - t;
+            CLR_NZVC();
+            SET_FLAGS8(m6800.b, t, r);
+            m6800.b = r;
+            
         }
     };
 

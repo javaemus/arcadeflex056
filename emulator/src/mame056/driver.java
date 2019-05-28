@@ -157,6 +157,7 @@ import static WIP.mame056.drivers.capbowl.*;
 import static WIP.mame056.drivers.congo.*;
 import static WIP.mame056.drivers.dotrikun.*;
 import static WIP.mame056.drivers.solomon.*;
+import static WIP.mame056.drivers.firetrk.*;
 
 public class driver {
 
@@ -3005,7 +3006,7 @@ public class driver {
         /*TODO*///	/* Sky Raider */	/* 009709			1978/03 [6502] */
         /*TODO*///	/* Tourn. Table */	/* 030170			1978/03 [6507] */
         /*TODO*///	driver_avalnche,	/* 030574			1978/04 [6502] */
-        /*TODO*///	driver_firetrk,	/* 030926			1978/06 [6808] */
+        driver_firetrk,	/* 030926			1978/06 [6808] */
         driver_skydiver, /* 009787			1978/06 [6800] */
         /*TODO*///	/* Smokey Joe */	/* 030926			1978/07 [6502] */
         /*TODO*///	driver_sbrkout,	/* 033442-033455	1978/09 [6502] */
