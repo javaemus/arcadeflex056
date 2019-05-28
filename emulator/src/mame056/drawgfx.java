@@ -3616,7 +3616,7 @@ public class drawgfx {
     };
     public static plot_pixel_procPtr pp_16_nd_fx = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            new UShortPtr(b.line[y]).write(b.width - 1 - x, (char)p);
+            new UShortPtr(b.line[y]).write(b.width - 1 - x, (char) p);
         }
     };
     public static plot_pixel_procPtr pp_16_nd_fy = new plot_pixel_procPtr() {
@@ -5178,12 +5178,11 @@ public class drawgfx {
 /*TODO*///		}
 /*TODO*///	}
 /*TODO*///})
-
-    public static boolean PEN_IS_OPAQUE(int col, int transmask){
-        return ((1<<col)&transmask) == 0;
+    public static boolean PEN_IS_OPAQUE(int col, int transmask) {
+        return ((1 << col) & transmask) == 0;
     }
 
-/*TODO*///DECLARE_SWAP_RAW_PRI(blockmove_8toN_transmask,(COMMON_ARGS,
+    /*TODO*///DECLARE_SWAP_RAW_PRI(blockmove_8toN_transmask,(COMMON_ARGS,
 /*TODO*///		COLOR_ARG,int transmask),
 /*TODO*///{
 /*TODO*///	ADJUST_8
@@ -6663,13 +6662,17 @@ public class drawgfx {
 /*TODO*///						BLOCKMOVERAW(4toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color));
                 } else {
                     //System.out.println("Unsupported drawgfx TRANSPARENCY_NONE_RAW");
-                                        if (pribuf != null){
-                                            /*TODO*///BLOCKMOVERAWPRI(8toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask));
-                                            throw new UnsupportedOperationException("unsupported");    
-                                        } else {
-                                            //BLOCKMOVERAW(8toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color));
-                                            blockmove_8toN_opaque16(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata);
-                                        }
+                    if (pribuf != null) {
+                        /*TODO*///BLOCKMOVERAWPRI(8toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask));
+                        throw new UnsupportedOperationException("unsupported");
+                    } else {
+                        if ((gfx.flags & GFX_SWAPXY) != 0) {
+                            throw new UnsupportedOperationException("unsupported");//blockmove_##function##_swapxy##16 args ;
+                        } else {
+                            //BLOCKMOVERAW(8toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color));
+                            blockmove_8toN_opaque16(sd, sw, sh, sm, ls, ts, flipx, flipy, dd, dw, dh, dm, paldata);
+                        }
+                    }
                 }
                 break;
 
@@ -6712,16 +6715,16 @@ public class drawgfx {
 /*TODO*///				}
 /*TODO*///				break;
 /*TODO*///
-			case TRANSPARENCY_PENS:
-				if (pribuf != null){
-					/*TODO*///BLOCKMOVEPRI(8toN_transmask,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
-                                        System.out.println("BLOCKMOVEPRI(8toN_transmask1 not supported");
-                                } else {
-					System.out.println("BLOCKMOVELU(8toN_transmask2 not supported");
-                                        /*TODO*///BLOCKMOVELU(8toN_transmask,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
-                                }
-				break;
-/*TODO*///
+            case TRANSPARENCY_PENS:
+                if (pribuf != null) {
+                    /*TODO*///BLOCKMOVEPRI(8toN_transmask,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
+                    System.out.println("BLOCKMOVEPRI(8toN_transmask1 not supported");
+                } else {
+                    System.out.println("BLOCKMOVELU(8toN_transmask2 not supported");
+                    /*TODO*///BLOCKMOVELU(8toN_transmask,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
+                }
+                break;
+            /*TODO*///
 /*TODO*///			case TRANSPARENCY_PENS_RAW:
 /*TODO*///				if (pribuf)
 /*TODO*///					BLOCKMOVERAWPRI(8toN_transmask,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask,transparent_color));
@@ -6994,12 +6997,12 @@ public class drawgfx {
                 break;
 
             case TRANSPARENCY_BLEND:
-                //throw new UnsupportedOperationException("Unsupported");
-                //System.out.println("Unsupported BLOCKMOVE(NtoN_blend_remap");
-                //				BLOCKMOVE(NtoN_blend_remap,flipx,(sd,sw,sh,sm,dd,dm,Machine->pens,transparent_color));
-                blockmove_NtoN_blend_remap16(sd,sw,sh,sm,dd,dm,Machine.pens,transparent_color);
-				break;
-/*TODO*///
+                if (flipx != 0) {
+                    throw new UnsupportedOperationException("Unsupported");//BLOCKMOVE(NtoN_blend_remap,flipx,(sd,sw,sh,sm,dd,dm,Machine->pens,transparent_color));
+                } else {
+                    blockmove_NtoN_blend_remap16(sd, sw, sh, sm, dd, dm, Machine.pens, transparent_color);
+                }
+                break;
             case TRANSPARENCY_BLEND_RAW:
                 throw new UnsupportedOperationException("Unsupported");
             /*TODO*///				BLOCKMOVE(NtoN_blend_noremap,flipx,(sd,sw,sh,sm,dd,dm,transparent_color));
@@ -8367,40 +8370,36 @@ public class drawgfx {
         }
     }
 
-    public static void blockmove_NtoN_blend_remap16(UShortPtr srcdata, int srcwidth, int srcheight, int srcmodulo, 
+    public static void blockmove_NtoN_blend_remap16(UShortPtr srcdata, int srcwidth, int srcheight, int srcmodulo,
             UShortPtr dstdata, int dstmodulo, int[] paldata, int srcshift) {
-            
-                UShortPtr end;
 
-		srcmodulo -= srcwidth;
-		dstmodulo -= srcwidth;
-	
-		while (srcheight != 0)
-		{
-			end = new UShortPtr(dstdata, srcwidth);
-			while (dstdata.offset <= end.offset - 8)
-			{
-				dstdata.write(0, (char) paldata[dstdata.read(0) | (srcdata.read(0) << srcshift)]);
-				dstdata.write(1, (char) paldata[dstdata.read(1) | (srcdata.read(1) << srcshift)]);
-				dstdata.write(2, (char) paldata[dstdata.read(2) | (srcdata.read(2) << srcshift)]);
-				dstdata.write(3, (char) paldata[dstdata.read(3) | (srcdata.read(3) << srcshift)]);
-				dstdata.write(4, (char) paldata[dstdata.read(4) | (srcdata.read(4) << srcshift)]);
-				dstdata.write(5, (char) paldata[dstdata.read(5) | (srcdata.read(5) << srcshift)]);
-				dstdata.write(6, (char) paldata[dstdata.read(6) | (srcdata.read(6) << srcshift)]);
-				dstdata.write(7, (char) paldata[dstdata.read(7) | (srcdata.read(7) << srcshift)]);
-				dstdata.inc(8);
-				srcdata.inc(8);
-			}
-			while (dstdata.offset < end.offset)
-			{
-				dstdata.write((char) paldata[dstdata.read(dstdata.offset) | ((srcdata.read(srcdata.offset)) << srcshift)]);
-				dstdata.inc();
-                                srcdata.inc();
-			}
-	
-			srcdata.inc(srcmodulo);
-			dstdata.inc(dstmodulo);
-			srcheight--;
-		}
+        srcmodulo -= srcwidth;
+        dstmodulo -= srcwidth;
+
+        while (srcheight != 0) {
+            int end = dstdata.offset / 2 + srcwidth;
+            while (dstdata.offset / 2 <= end - 8) {
+                dstdata.write(0, (char) paldata[dstdata.read(0) | (srcdata.read(0) << srcshift)]);
+                dstdata.write(1, (char) paldata[dstdata.read(1) | (srcdata.read(1) << srcshift)]);
+                dstdata.write(2, (char) paldata[dstdata.read(2) | (srcdata.read(2) << srcshift)]);
+                dstdata.write(3, (char) paldata[dstdata.read(3) | (srcdata.read(3) << srcshift)]);
+                dstdata.write(4, (char) paldata[dstdata.read(4) | (srcdata.read(4) << srcshift)]);
+                dstdata.write(5, (char) paldata[dstdata.read(5) | (srcdata.read(5) << srcshift)]);
+                dstdata.write(6, (char) paldata[dstdata.read(6) | (srcdata.read(6) << srcshift)]);
+                dstdata.write(7, (char) paldata[dstdata.read(7) | (srcdata.read(7) << srcshift)]);
+                dstdata.inc(8);
+                srcdata.inc(8);
+            }
+            while (dstdata.offset / 2 < end) {
+                //*dstdata = paldata[*dstdata | (*(srcdata++) << srcshift)];
+                dstdata.write((char) paldata[dstdata.read(0) | ((srcdata.read(0)) << srcshift)]);
+                srcdata.inc();
+                dstdata.inc();
+            }
+
+            srcdata.inc(srcmodulo);
+            dstdata.inc(dstmodulo);
+            srcheight--;
+        }
     }
 }

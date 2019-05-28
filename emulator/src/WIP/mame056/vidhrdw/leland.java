@@ -277,14 +277,13 @@ public class leland
 				UBytePtr scandata=new UBytePtr(VIDEO_WIDTH * 8);
 				UBytePtr dst = new UBytePtr(scandata);
 				UBytePtr src = new UBytePtr(leland_video_ram, i * 256);
-                                int _src = 0;
-                                int _dst = 0;
+                                
 	
 				for (j = 0; j < VIDEO_WIDTH * 8 / 2; j++)
 				{
-					int pix = _src++;
-					dst.write(_dst++, pix >> 4);
-					dst.write(_dst++, pix & 15);
+					int pix = src.readinc();
+					dst.writeinc(pix >> 4);
+					dst.writeinc(pix & 15);
 				}
 				draw_scanline8(fgbitmap, 0, i, VIDEO_WIDTH * 8, scandata, null, -1);
 			}
@@ -619,7 +618,7 @@ public class leland
 			rectangle clip;
 	
 			/* make a clipper */
-			clip = Machine.visible_area;
+			clip = new rectangle(Machine.visible_area);
 			if (chunk != 0)
 				clip.min_y = scroll_pos[chunk].scanline;
 			if (chunk != scroll_index)
@@ -683,7 +682,7 @@ public class leland
 			rectangle clip;
 	
 			/* make a clipper */
-			clip = Machine.visible_area;
+			clip = new rectangle(Machine.visible_area);
 			if (chunk != 0)
 				clip.min_y = scroll_pos[chunk].scanline;
 			if (chunk != scroll_index)
