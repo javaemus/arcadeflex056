@@ -142,6 +142,7 @@ public class capbowl
 	
 	public static VhUpdatePtr capbowl_vh_screenrefresh = new VhUpdatePtr() { public void handler(mame_bitmap bitmap,int full_refresh) 
 	{
+            
 		int halfwidth = (Machine.visible_area.max_x - Machine.visible_area.min_x + 1) / 2;
 		tms34061_display state=new tms34061_display();
 		int x, y;
@@ -172,11 +173,12 @@ public class capbowl
 					palette_set_color(y * 16 + x, (r << 4) | r, (g << 4) | g, (b << 4) | b);
 				}
 			}
-	
+                //System.out.println("Antes");
 		/* now regenerate the bitmap */
 		for (y = Machine.visible_area.min_y; y <= Machine.visible_area.max_y; y++)
 			if (full_refresh!=0 || state.dirty.read(y)!=0)
 			{
+                            //System.out.println("Pinto!");
 				UBytePtr src = new UBytePtr(state.vram, 256 * y + 32);
 				UBytePtr scanline = new UBytePtr(400);
 				UBytePtr dst = new UBytePtr(scanline);

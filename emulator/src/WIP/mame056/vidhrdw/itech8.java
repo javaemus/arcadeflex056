@@ -344,7 +344,7 @@ public class itech8
 	public static void DRAW_RAW_MACRO(int TRANSPARENT, draw_byte_Ptr OPERATION)
         {																							
             UBytePtr src = new UBytePtr(grom_base, ((itech8_grom_bank.read() << 16) | (BLITTER_ADDRHI << 8) | BLITTER_ADDRLO) % grom_size);
-            int addr = tms_state.regs.read(TMS34061_XYADDRESS) | ((tms_state.regs.read(TMS34061_XYOFFSET) & 0x300) << 8);
+            int addr = tms_state.regs[TMS34061_XYADDRESS] | ((tms_state.regs[TMS34061_XYOFFSET] & 0x300) << 8);
             int ydir = (BLITTER_FLAGS & BLITFLAG_YFLIP)!=0 ? -1 : 1;									
             int xdir = (BLITTER_FLAGS & BLITFLAG_XFLIP)!=0 ? -1 : 1;									
             int color = tms34061_latch_r.handler(0);														
@@ -453,7 +453,7 @@ public class itech8
 	public static void DRAW_RLE_MACRO(int TRANSPARENT, draw_byte_Ptr OPERATION)
 	{																							
 		UBytePtr src = new UBytePtr(grom_base, ((itech8_grom_bank.read() << 16) | (BLITTER_ADDRHI << 8) | BLITTER_ADDRLO) % grom_size);
-		int addr = tms_state.regs.read(TMS34061_XYADDRESS) | ((tms_state.regs.read(TMS34061_XYOFFSET) & 0x300) << 8);
+		int addr = tms_state.regs[TMS34061_XYADDRESS] | ((tms_state.regs[TMS34061_XYOFFSET] & 0x300) << 8);
 		int ydir = (BLITTER_FLAGS & BLITFLAG_YFLIP)!=0 ? -1 : 1;									
 		int xdir = (BLITTER_FLAGS & BLITFLAG_XFLIP)!=0 ? -1 : 1;									
 		int count = 0, val = -1, innercount;													

@@ -56,7 +56,7 @@ public class tms34061
 	
 	public static class tms34061_data
 	{
-		public UBytePtr			regs = new UBytePtr(TMS34061_REGCOUNT);
+		public int[]			regs = new int[TMS34061_REGCOUNT];
 		public int			xmask;
 		public int			yshift;
 		public int			vrammask;
@@ -137,24 +137,24 @@ public class tms34061
 		tms34061.shiftreg = tms34061.vram;
 	
 		/* initialize registers to their default values from the manual */
-		tms34061.regs.write(TMS34061_HORENDSYNC, 0x0010);
-		tms34061.regs.write(TMS34061_HORENDBLNK, 0x0020);
-		tms34061.regs.write(TMS34061_HORSTARTBLNK, 0x01f0);
-		tms34061.regs.write(TMS34061_HORTOTAL, 0x0200);
-		tms34061.regs.write(TMS34061_VERENDSYNC, 0x0004);
-		tms34061.regs.write(TMS34061_VERENDBLNK, 0x0010);
-		tms34061.regs.write(TMS34061_VERSTARTBLNK, 0x00f0);
-		tms34061.regs.write(TMS34061_VERTOTAL, 0x0100);
-		tms34061.regs.write(TMS34061_DISPUPDATE, 0x0000);
-		tms34061.regs.write(TMS34061_DISPSTART, 0x0000);
-		tms34061.regs.write(TMS34061_VERINT, 0x0000);
-		tms34061.regs.write(TMS34061_CONTROL1, 0x7000);
-		tms34061.regs.write(TMS34061_CONTROL2, 0x0600);
-		tms34061.regs.write(TMS34061_STATUS, 0x0000);
-		tms34061.regs.write(TMS34061_XYOFFSET, 0x0010);
-		tms34061.regs.write(TMS34061_XYADDRESS, 0x0000);
-		tms34061.regs.write(TMS34061_DISPADDRESS, 0x0000);
-		tms34061.regs.write(TMS34061_VERCOUNTER, 0x0000);
+		tms34061.regs[TMS34061_HORENDSYNC] = 0x0010;
+		tms34061.regs[TMS34061_HORENDBLNK] = 0x0020;
+		tms34061.regs[TMS34061_HORSTARTBLNK] = 0x01f0;
+		tms34061.regs[TMS34061_HORTOTAL] = 0x0200;
+		tms34061.regs[TMS34061_VERENDSYNC] = 0x0004;
+		tms34061.regs[TMS34061_VERENDBLNK] = 0x0010;
+		tms34061.regs[TMS34061_VERSTARTBLNK] = 0x00f0;
+		tms34061.regs[TMS34061_VERTOTAL] = 0x0100;
+		tms34061.regs[TMS34061_DISPUPDATE] = 0x0000;
+		tms34061.regs[TMS34061_DISPSTART] = 0x0000;
+		tms34061.regs[TMS34061_VERINT] = 0x0000;
+		tms34061.regs[TMS34061_CONTROL1] = 0x7000;
+		tms34061.regs[TMS34061_CONTROL2] = 0x0600;
+		tms34061.regs[TMS34061_STATUS] = 0x0000;
+		tms34061.regs[TMS34061_XYOFFSET] = 0x0010;
+		tms34061.regs[TMS34061_XYADDRESS] = 0x0000;
+		tms34061.regs[TMS34061_DISPADDRESS] = 0x0000;
+		tms34061.regs[TMS34061_VERCOUNTER] = 0x0000;
 	
 		/* start vertical interrupt timer */
 		tms34061.timer = null;
@@ -194,7 +194,7 @@ public class tms34061
 		if (tms34061.intf.interrupt != null)
 		{
 			/* if the status bit is set, and ints are enabled, turn it on */
-			if ((tms34061.regs.read(TMS34061_STATUS) & 0x0001)!=0 && (tms34061.regs.read(TMS34061_CONTROL1) & 0x0400)!=0)
+			if ((tms34061.regs[TMS34061_STATUS] & 0x0001)!=0 && (tms34061.regs[TMS34061_CONTROL1] & 0x0400)!=0)
 				(tms34061.intf.interrupt).handler(ASSERT_LINE);
 			else
 				(tms34061.intf.interrupt).handler(CLEAR_LINE);
@@ -205,10 +205,10 @@ public class tms34061
 	static timer_callback tms34061_interrupt = new timer_callback() {
             public void handler(int param) {
                 /* set timer for next frame */
-		tms34061.timer = timer_set(cpu_getscanlinetime(tms34061.regs.read(TMS34061_VERINT)), 0, tms34061_interrupt);
+		tms34061.timer = timer_set(cpu_getscanlinetime(tms34061.regs[TMS34061_VERINT]), 0, tms34061_interrupt);
 	
 		/* set the interrupt bit in the status reg */
-		tms34061.regs.write(TMS34061_STATUS, tms34061.regs.read(TMS34061_STATUS) | 1);
+		tms34061.regs[TMS34061_STATUS] = tms34061.regs[TMS34061_STATUS] | 1;
 	
 		/* update the interrupt state */
 		update_interrupts();
@@ -224,13 +224,13 @@ public class tms34061
 	public static WriteHandlerPtr register_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int regnum = offset >> 2;
-		int oldval = tms34061.regs.read(regnum);
+		int oldval = tms34061.regs[regnum];
 	
 		/* store the hi/lo half */
 		if ((offset & 0x02) != 0)
-			tms34061.regs.write(regnum, (tms34061.regs.read(regnum) & 0x00ff) | (data << 8));
+			tms34061.regs[regnum] = (tms34061.regs[regnum] & 0x00ff) | (data << 8);
 		else
-			tms34061.regs.write(regnum, (tms34061.regs.read(regnum) & 0xff00) | data);
+			tms34061.regs[regnum] = (tms34061.regs[regnum] & 0xff00) | data;
 	
 		/* update the state of things */
 		switch (regnum)
@@ -239,12 +239,12 @@ public class tms34061
 			case TMS34061_VERINT:
 				if (tms34061.timer != null)
 					timer_remove(tms34061.timer);
-				tms34061.timer = timer_set(cpu_getscanlinetime(tms34061.regs.read(TMS34061_VERINT)), 0, tms34061_interrupt);
+				tms34061.timer = timer_set(cpu_getscanlinetime(tms34061.regs[TMS34061_VERINT]), 0, tms34061_interrupt);
 				break;
 	
 			/* XY offset: set the X and Y masks */
 			case TMS34061_XYOFFSET:
-				switch (tms34061.regs.read(TMS34061_XYOFFSET) & 0x00ff)
+				switch (tms34061.regs[TMS34061_XYOFFSET] & 0x00ff)
 				{
 					case 0x01:	tms34061.yshift = 2;	break;
 					case 0x02:	tms34061.yshift = 3;	break;
@@ -254,7 +254,7 @@ public class tms34061
 					case 0x20:	tms34061.yshift = 7;	break;
 					case 0x40:	tms34061.yshift = 8;	break;
 					case 0x80:	tms34061.yshift = 9;	break;
-					default:	logerror("Invalid value for XYOFFSET = %04x\n", tms34061.regs.read(TMS34061_XYOFFSET));	break;
+					default:	logerror("Invalid value for XYOFFSET = %04x\n", tms34061.regs[TMS34061_XYOFFSET]);	break;
 				}
 				tms34061.xmask = (1 << tms34061.yshift) - 1;
 				break;
@@ -266,7 +266,7 @@ public class tms34061
 	
 			/* CONTROL2: they could have blanked the display */
 			case TMS34061_CONTROL2:
-				if (((oldval ^ tms34061.regs.read(TMS34061_CONTROL2)) & 0x2000) != 0)
+				if (((oldval ^ tms34061.regs[TMS34061_CONTROL2]) & 0x2000) != 0)
 					memset(tms34061.dirty, 1, 1 << (20 - tms34061.dirtyshift));
 				break;
 	
@@ -277,7 +277,7 @@ public class tms34061
 			/* report all others */
 			default:
 				logerror("Unsupported tms34061 write. Reg #%02X=%04X - PC: %04X\n",
-						regnum, tms34061.regs.read(regnum), cpu_getpreviouspc());
+						regnum, tms34061.regs[regnum], cpu_getpreviouspc());
 				break;
 		}
 	} };
@@ -297,16 +297,16 @@ public class tms34061
 	
 		/* extract the correct portion of the register */
 		if ((offset & 0x02) != 0)
-			result = tms34061.regs.read(regnum) >> 8;
+			result = tms34061.regs[regnum] >> 8;
 		else
-			result = tms34061.regs.read(regnum);
+			result = tms34061.regs[regnum];
 	
 		/* special cases: */
 		switch (regnum)
 		{
 			/* status register: a read here clears it */
 			case TMS34061_STATUS:
-				tms34061.regs.write(TMS34061_STATUS, 0);
+				tms34061.regs[TMS34061_STATUS] = 0;
 				update_interrupts();
 				break;
 	
@@ -344,75 +344,75 @@ public class tms34061
 				break;
 	
 			case 0x02:	/* X + 1 */
-				tms34061.regs.write(TMS34061_XYADDRESS, tms34061.regs.read(TMS34061_XYADDRESS)+1);
+				tms34061.regs[TMS34061_XYADDRESS] = tms34061.regs[TMS34061_XYADDRESS]+1;
 				break;
 	
 			case 0x04:	/* X - 1 */
-				tms34061.regs.write(TMS34061_XYADDRESS, tms34061.regs.read(TMS34061_XYADDRESS)-1);
+				tms34061.regs[TMS34061_XYADDRESS] = tms34061.regs[TMS34061_XYADDRESS]-1;
 				break;
 	
 			case 0x06:	/* X = 0 */
-				tms34061.regs.write(TMS34061_XYADDRESS, tms34061.regs.read(TMS34061_XYADDRESS)& ~tms34061.xmask);
+				tms34061.regs[TMS34061_XYADDRESS] = tms34061.regs[TMS34061_XYADDRESS]& ~tms34061.xmask;
 				break;
 	
 			case 0x08:	/* Y + 1 */
-				tms34061.regs.write(TMS34061_XYADDRESS, tms34061.regs.read(TMS34061_XYADDRESS)+ (1 << tms34061.yshift));
+				tms34061.regs[TMS34061_XYADDRESS] = tms34061.regs[TMS34061_XYADDRESS]+ (1 << tms34061.yshift);
 				break;
 	
 			case 0x0a:	/* X + 1, Y + 1 */
-				tms34061.regs.write(TMS34061_XYADDRESS, (tms34061.regs.read(TMS34061_XYADDRESS) & ~tms34061.xmask) |
-						((tms34061.regs.read(TMS34061_XYADDRESS) + 1) & tms34061.xmask));
-				tms34061.regs.write(TMS34061_XYADDRESS, tms34061.regs.read(TMS34061_XYADDRESS) + (1 << tms34061.yshift));
+				tms34061.regs[TMS34061_XYADDRESS] = (tms34061.regs[TMS34061_XYADDRESS] & ~tms34061.xmask) |
+						((tms34061.regs[TMS34061_XYADDRESS] + 1) & tms34061.xmask);
+				tms34061.regs[TMS34061_XYADDRESS] = tms34061.regs[TMS34061_XYADDRESS] + (1 << tms34061.yshift);
 				break;
 	
 			case 0x0c:	/* X - 1, Y + 1 */
-				tms34061.regs.write(TMS34061_XYADDRESS, (tms34061.regs.read(TMS34061_XYADDRESS) & ~tms34061.xmask) |
-						((tms34061.regs.read(TMS34061_XYADDRESS) - 1) & tms34061.xmask));
-				tms34061.regs.write(TMS34061_XYADDRESS, tms34061.regs.read(TMS34061_XYADDRESS) + (1 << tms34061.yshift));
+				tms34061.regs[TMS34061_XYADDRESS] = (tms34061.regs[TMS34061_XYADDRESS] & ~tms34061.xmask) |
+						((tms34061.regs[TMS34061_XYADDRESS] - 1) & tms34061.xmask);
+				tms34061.regs[TMS34061_XYADDRESS] = tms34061.regs[TMS34061_XYADDRESS] + (1 << tms34061.yshift);
 				break;
 	
 			case 0x0e:	/* X = 0, Y + 1 */
-				tms34061.regs.write(TMS34061_XYADDRESS, tms34061.regs.read(TMS34061_XYADDRESS) & ~tms34061.xmask);
-				tms34061.regs.write(TMS34061_XYADDRESS, tms34061.regs.read(TMS34061_XYADDRESS) + (1 << tms34061.yshift));
+				tms34061.regs[TMS34061_XYADDRESS] = tms34061.regs[TMS34061_XYADDRESS] & ~tms34061.xmask;
+				tms34061.regs[TMS34061_XYADDRESS] = tms34061.regs[TMS34061_XYADDRESS] + (1 << tms34061.yshift);
 				break;
 	
 			case 0x10:	/* Y - 1 */
-				tms34061.regs.write(TMS34061_XYADDRESS, tms34061.regs.read(TMS34061_XYADDRESS)- (1 << tms34061.yshift));
+				tms34061.regs[TMS34061_XYADDRESS] = tms34061.regs[TMS34061_XYADDRESS]- (1 << tms34061.yshift);
 				break;
 	
 			case 0x12:	/* X + 1, Y - 1 */
-				tms34061.regs.write(TMS34061_XYADDRESS, (tms34061.regs.read(TMS34061_XYADDRESS) & ~tms34061.xmask) |
-						((tms34061.regs.read(TMS34061_XYADDRESS) + 1) & tms34061.xmask));
-				tms34061.regs.write(TMS34061_XYADDRESS, tms34061.regs.read(TMS34061_XYADDRESS) - (1 << tms34061.yshift));
+				tms34061.regs[TMS34061_XYADDRESS] = (tms34061.regs[TMS34061_XYADDRESS] & ~tms34061.xmask) |
+						((tms34061.regs[TMS34061_XYADDRESS] + 1) & tms34061.xmask);
+				tms34061.regs[TMS34061_XYADDRESS] = tms34061.regs[TMS34061_XYADDRESS] - (1 << tms34061.yshift);
 				break;
 	
 			case 0x14:	/* X - 1, Y - 1 */
-				tms34061.regs.write(TMS34061_XYADDRESS, (tms34061.regs.read(TMS34061_XYADDRESS) & ~tms34061.xmask) |
-						((tms34061.regs.read(TMS34061_XYADDRESS) - 1) & tms34061.xmask));
-				tms34061.regs.write(TMS34061_XYADDRESS, tms34061.regs.read(TMS34061_XYADDRESS) - (1 << tms34061.yshift));
+				tms34061.regs[TMS34061_XYADDRESS] = (tms34061.regs[TMS34061_XYADDRESS] & ~tms34061.xmask) |
+						((tms34061.regs[TMS34061_XYADDRESS] - 1) & tms34061.xmask);
+				tms34061.regs[TMS34061_XYADDRESS] = tms34061.regs[TMS34061_XYADDRESS] - (1 << tms34061.yshift);
 				break;
 	
 			case 0x16:	/* X = 0, Y - 1 */
-				tms34061.regs.write(TMS34061_XYADDRESS, tms34061.regs.read(TMS34061_XYADDRESS) & ~tms34061.xmask);
-				tms34061.regs.write(TMS34061_XYADDRESS, tms34061.regs.read(TMS34061_XYADDRESS) - (1 << tms34061.yshift));
+				tms34061.regs[TMS34061_XYADDRESS] = tms34061.regs[TMS34061_XYADDRESS] & ~tms34061.xmask;
+				tms34061.regs[TMS34061_XYADDRESS] = tms34061.regs[TMS34061_XYADDRESS] - (1 << tms34061.yshift);
 				break;
 	
 			case 0x18:	/* Y = 0 */
-				tms34061.regs.write(TMS34061_XYADDRESS, tms34061.regs.read(TMS34061_XYADDRESS)& tms34061.xmask);
+				tms34061.regs[TMS34061_XYADDRESS] = tms34061.regs[TMS34061_XYADDRESS]& tms34061.xmask;
 				break;
 	
 			case 0x1a:	/* X + 1, Y = 0 */
-				tms34061.regs.write(TMS34061_XYADDRESS, tms34061.regs.read(TMS34061_XYADDRESS)+1);
-				tms34061.regs.write(TMS34061_XYADDRESS, tms34061.regs.read(TMS34061_XYADDRESS) & tms34061.xmask);
+				tms34061.regs[TMS34061_XYADDRESS] = tms34061.regs[TMS34061_XYADDRESS]+1;
+				tms34061.regs[TMS34061_XYADDRESS] = tms34061.regs[TMS34061_XYADDRESS] & tms34061.xmask;
 				break;
 	
 			case 0x1c:	/* X - 1, Y = 0 */
-				tms34061.regs.write(TMS34061_XYADDRESS, tms34061.regs.read(TMS34061_XYADDRESS)-1);
-				tms34061.regs.write(TMS34061_XYADDRESS, tms34061.regs.read(TMS34061_XYADDRESS) & tms34061.xmask);
+				tms34061.regs[TMS34061_XYADDRESS] = tms34061.regs[TMS34061_XYADDRESS]-1;
+				tms34061.regs[TMS34061_XYADDRESS] = tms34061.regs[TMS34061_XYADDRESS] & tms34061.xmask;
 				break;
 	
 			case 0x1e:	/* X = 0, Y = 0 */
-				tms34061.regs.write(TMS34061_XYADDRESS, 0);
+				tms34061.regs[TMS34061_XYADDRESS] = 0;
 				break;
 		}
 	}
@@ -421,12 +421,12 @@ public class tms34061
 	public static WriteHandlerPtr xypixel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* determine the offset, then adjust it */
-		int pixeloffs = tms34061.regs.read(TMS34061_XYADDRESS);
+		int pixeloffs = tms34061.regs[TMS34061_XYADDRESS];
 		if (offset != 0)
 			adjust_xyaddress(offset);
 	
 		/* adjust for the upper bits */
-		pixeloffs |= (tms34061.regs.read(TMS34061_XYOFFSET) & 0x0f00) << 8;
+		pixeloffs |= (tms34061.regs[TMS34061_XYOFFSET] & 0x0f00) << 8;
 	
 		/* mask to the VRAM size */
 		pixeloffs &= tms34061.vrammask;
@@ -444,12 +444,12 @@ public class tms34061
 	public static ReadHandlerPtr xypixel_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* determine the offset, then adjust it */
-		int pixeloffs = tms34061.regs.read(TMS34061_XYADDRESS);
+		int pixeloffs = tms34061.regs[TMS34061_XYADDRESS];
 		if (offset != 0)
 			adjust_xyaddress(offset);
 	
 		/* adjust for the upper bits */
-		pixeloffs |= (tms34061.regs.read(TMS34061_XYOFFSET) & 0x0f00) << 8;
+		pixeloffs |= (tms34061.regs[TMS34061_XYOFFSET] & 0x0f00) << 8;
 	
 		/* mask to the VRAM size */
 		pixeloffs &= tms34061.vrammask;
@@ -498,8 +498,8 @@ public class tms34061
 			/* function 4 performs a shift reg transfer to VRAM */
 			case 4:
 				offs = col << tms34061.intf.rowshift;
-				if ((tms34061.regs.read(TMS34061_CONTROL2) & 0x0040) != 0)
-					offs |= (tms34061.regs.read(TMS34061_CONTROL2) & 3) << 16;
+				if ((tms34061.regs[TMS34061_CONTROL2] & 0x0040) != 0)
+					offs |= (tms34061.regs[TMS34061_CONTROL2] & 3) << 16;
 				offs &= tms34061.vrammask;
 	
 				memcpy(new UBytePtr(tms34061.vram, offs), tms34061.shiftreg, 1 << tms34061.intf.rowshift);
@@ -510,8 +510,8 @@ public class tms34061
 			/* function 5 performs a shift reg transfer from VRAM */
 			case 5:
 				offs = col << tms34061.intf.rowshift;
-				if ((tms34061.regs.read(TMS34061_CONTROL2) & 0x0040) != 0)
-					offs |= (tms34061.regs.read(TMS34061_CONTROL2) & 3) << 16;
+				if ((tms34061.regs[TMS34061_CONTROL2] & 0x0040) != 0)
+					offs |= (tms34061.regs[TMS34061_CONTROL2] & 3) << 16;
 				offs &= tms34061.vrammask;
 	
 				tms34061.shiftreg = new UBytePtr(tms34061.vram, offs);
@@ -554,8 +554,8 @@ public class tms34061
 			/* function 4 performs a shift reg transfer to VRAM */
 			case 4:
 				offs = col << tms34061.intf.rowshift;
-				if ((tms34061.regs.read(TMS34061_CONTROL2) & 0x0040) != 0)
-					offs |= (tms34061.regs.read(TMS34061_CONTROL2) & 3) << 16;
+				if ((tms34061.regs[TMS34061_CONTROL2] & 0x0040) != 0)
+					offs |= (tms34061.regs[TMS34061_CONTROL2] & 3) << 16;
 				offs &= tms34061.vrammask;
 	
 				memcpy(new UBytePtr(tms34061.vram, offs), tms34061.shiftreg, 1 << tms34061.intf.rowshift);
@@ -566,8 +566,8 @@ public class tms34061
 			/* function 5 performs a shift reg transfer from VRAM */
 			case 5:
 				offs = col << tms34061.intf.rowshift;
-				if ((tms34061.regs.read(TMS34061_CONTROL2) & 0x0040) != 0)
-					offs |= (tms34061.regs.read(TMS34061_CONTROL2) & 3) << 16;
+				if ((tms34061.regs[TMS34061_CONTROL2] & 0x0040) != 0)
+					offs |= (tms34061.regs[TMS34061_CONTROL2] & 3) << 16;
 				offs &= tms34061.vrammask;
 	
 				tms34061.shiftreg = new UBytePtr(tms34061.vram, offs);
@@ -605,18 +605,18 @@ public class tms34061
 	
 	public static void tms34061_get_display_state(tms34061_display state)
 	{
-		state.blanked = (~tms34061.regs.read(TMS34061_CONTROL2) >> 13) & 1;
+		state.blanked = (~tms34061.regs[TMS34061_CONTROL2] >> 13) & 1;
 		state.vram = tms34061.vram;
 		state.latchram = tms34061.latchram;
 		state.dirty = tms34061.dirty;
 		state.regs = tms34061.regs;
 	
 		/* compute the display start */
-		state.dispstart = tms34061.regs.read(TMS34061_DISPSTART);
+		state.dispstart = tms34061.regs[TMS34061_DISPSTART];
 	
 		/* if B6 of control reg 2 is set, upper bits of display start come from B0-B1 */
-		if ((tms34061.regs.read(TMS34061_CONTROL2) & 0x0040) != 0)
-			state.dispstart |= (tms34061.regs.read(TMS34061_CONTROL2) & 3) << 16;
+		if ((tms34061.regs[TMS34061_CONTROL2] & 0x0040) != 0)
+			state.dispstart |= (tms34061.regs[TMS34061_CONTROL2] & 3) << 16;
 	
 		/* mask to actual VRAM size */
 		state.dispstart &= tms34061.vrammask;
