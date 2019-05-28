@@ -159,6 +159,7 @@ import static WIP.mame056.drivers.dotrikun.*;
 import static WIP.mame056.drivers.solomon.*;
 import static WIP.mame056.drivers.firetrk.*;
 import static WIP.mame056.drivers.ataxx.*;
+import static WIP.mame056.drivers.exedexes.*;
 
 public class driver {
 
@@ -1763,8 +1764,8 @@ public class driver {
         /*TODO*///	driver_1942,		/* 12/1984 (c) 1984 */
         /*TODO*///	driver_1942a,		/* 12/1984 (c) 1984 */
         /*TODO*///	driver_1942b,		/* 12/1984 (c) 1984 */
-        /*TODO*///	driver_exedexes,	/*  2/1985 (c) 1985 */
-        /*TODO*///	driver_savgbees,	/*  2/1985 (c) 1985 + Memetron license */
+        driver_exedexes,	/*  2/1985 (c) 1985 */
+        driver_savgbees,	/*  2/1985 (c) 1985 + Memetron license */
         driver_commando, /*  5/1985 (c) 1985 (World) */
         driver_commandu, /*  5/1985 (c) 1985 + Data East license (US) */
         driver_commandj, /*  5/1985 (c) 1985 (Japan) */
