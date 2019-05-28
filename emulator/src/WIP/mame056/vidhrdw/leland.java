@@ -105,7 +105,7 @@ public class leland
 	{
 		
 		/* allocate memory */
-	    leland_video_ram = new UBytePtr(VRAM_SIZE);
+	    leland_video_ram = new UBytePtr(VRAM_SIZE*2);
 	    fgbitmap = bitmap_alloc(VIDEO_WIDTH * 8, VIDEO_HEIGHT * 8);
 	
 		/* error cases */
@@ -116,7 +116,7 @@ public class leland
 		}
 	
 		/* reset videoram */
-	    memset(leland_video_ram, 0, VRAM_SIZE);
+	    memset(leland_video_ram, 0, VRAM_SIZE*2);
 	
 		/* reset scrolling */
 		scroll_index = 0;

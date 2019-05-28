@@ -211,10 +211,10 @@ public class leland
 	public static void leland_dac_update(int dacnum, int sample)
 	{
 		UBytePtr buffer = new UBytePtr(dac_buffer[dacnum]);
-                System.out.println(dac_buffer[dacnum]);
+                //System.out.println(dac_buffer[dacnum]);
 		int bufin = dac_bufin[dacnum];
-                System.out.println(dac_bufin[dacnum]);
-                System.out.println(sample);
+                //System.out.println(dac_bufin[dacnum]);
+                //System.out.println(sample);
 	
 		/* skip if nothing */
 		if (buffer == null)
