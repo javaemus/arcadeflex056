@@ -73,7 +73,7 @@ public class leland
 	/* video RAM */
 	static mame_bitmap fgbitmap;
 	static UBytePtr leland_video_ram = new UBytePtr();
-	static UBytePtr ataxx_qram = new UBytePtr();
+	public static UBytePtr ataxx_qram = new UBytePtr();
 	public static int leland_last_scanline_int;
 	
 	/* video RAM bitmap drawing */

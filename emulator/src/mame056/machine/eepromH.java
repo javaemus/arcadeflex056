@@ -23,5 +23,16 @@ public class eepromH {
                 this.cmd_write = cmd_write;
                 this.cmd_erase = cmd_erase;
             }
+
+        public EEPROM_interface(int address_bits, int data_bits, String cmd_read, String cmd_write, String cmd_erase, String cmd_lock, String cmd_unlock, int enable_multi_read) {
+            this.address_bits = address_bits;
+            this.data_bits = data_bits;
+            this.cmd_read = cmd_read;
+            this.cmd_write = cmd_write;
+            this.cmd_erase = cmd_erase;
+            this.cmd_lock = cmd_lock;
+            this.cmd_unlock = cmd_unlock;
+            this.enable_multi_read = enable_multi_read;
+        }
     };
 }

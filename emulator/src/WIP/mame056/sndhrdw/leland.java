@@ -671,8 +671,8 @@ public class leland
 		cpu_setbank(7, ram_base);
 	
 		/* reset the I86 registers */
-		//memset(&i186, 0, sizeof(i186));
-                i186 = null;
+		//memset(i186, 0, sizeof(i186));
+                //i186 = null;
 		leland_i186_reset();
 	
 		/* reset our internal stuff */
@@ -1797,8 +1797,8 @@ public class leland
 			i186.intr.request |= 0x20;
 	
 		/* handle reset here */
-		if (((diff & 0x80)  != 0) && ((data & 0x80)  != 0))
-			leland_i186_reset();
+		/*TODO*///if (((diff & 0x80)  != 0) && ((data & 0x80)  != 0))
+		/*TODO*///	leland_i186_reset();
 	
 		update_interrupt_state();
 	} };

@@ -158,6 +158,7 @@ import static WIP.mame056.drivers.congo.*;
 import static WIP.mame056.drivers.dotrikun.*;
 import static WIP.mame056.drivers.solomon.*;
 import static WIP.mame056.drivers.firetrk.*;
+import static WIP.mame056.drivers.ataxx.*;
 
 public class driver {
 
@@ -2169,12 +2170,12 @@ public class driver {
         driver_offroadt, /* (c) 1989 Leland */
         driver_pigout, /* (c) 1990 Leland */
         driver_pigouta, /* (c) 1990 Leland */
-        /*TODO*///driver_ataxx,		/* (c) 1990 Leland */
-        /*TODO*///driver_ataxxa,	/* (c) 1990 Leland */
-        /*TODO*///driver_ataxxj,	/* (c) 1990 Leland */
-        /*TODO*///driver_wsf,		/* (c) 1990 Leland */
-        /*TODO*///driver_indyheat,	/* (c) 1991 Leland */
-        /*TODO*///driver_brutforc,	/* (c) 1991 Leland */
+        driver_ataxx,		/* (c) 1990 Leland */
+        driver_ataxxa,	/* (c) 1990 Leland */
+        driver_ataxxj,	/* (c) 1990 Leland */
+        driver_wsf,		/* (c) 1990 Leland */
+        driver_indyheat,	/* (c) 1991 Leland */
+        driver_brutforc,	/* (c) 1991 Leland */
 
         /*TODO*///	/* Gremlin 8080 games */
         /*TODO*///	/* the numbers listed are the range of ROM part numbers */
