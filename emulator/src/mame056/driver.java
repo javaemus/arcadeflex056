@@ -160,6 +160,7 @@ import static WIP.mame056.drivers.solomon.*;
 import static WIP.mame056.drivers.firetrk.*;
 import static WIP.mame056.drivers.ataxx.*;
 import static WIP.mame056.drivers.exedexes.*;
+import static WIP.mame056.drivers.exerion.*;
 
 public class driver {
 
@@ -3512,11 +3513,11 @@ public class driver {
         /*TODO*///	driver_weststry,	/* bootleg */
         /*TODO*///	driver_skysmash,	/* (c) 1990 Nihon System Inc. */
         /*TODO*///TESTdriver_legionna,	/* (c) 1992 Tad + Fabtek license (US) */
-        /*TODO*///
-        /*TODO*///	/* Jaleco games */
-        /*TODO*///	driver_exerion,	/* (c) 1983 Jaleco */
-        /*TODO*///	driver_exeriont,	/* (c) 1983 Jaleco + Taito America license */
-        /*TODO*///	driver_exerionb,	/* bootleg */
+
+        /* Jaleco games */
+        driver_exerion,	/* (c) 1983 Jaleco */
+        driver_exeriont,	/* (c) 1983 Jaleco + Taito America license */
+        driver_exerionb,	/* bootleg */
         /*TODO*///TESTdriver_formatz,	/* (c) 1984 Jaleco */
         /*TODO*///TESTdriver_aeroboto,	/* (c) 1984 Williams */
         /*TODO*///	driver_citycon,	/* (c) 1985 Jaleco */
