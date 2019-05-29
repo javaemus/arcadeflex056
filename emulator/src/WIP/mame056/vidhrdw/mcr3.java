@@ -55,7 +55,7 @@ public class mcr3 {
 	public static int spyhunt_scrollx, spyhunt_scrolly;
 	public static int spyhunt_scroll_offset;
 	public static int spyhunt_draw_lamps;
-	public static int[] spyhunt_lamp=new int[8];
+	public static int[] spyhunt_lamp=new int[30];
 	
 	public static UBytePtr spyhunt_alpharam = new UBytePtr();
 	public static int[] spyhunt_alpharam_size = new int[1];
@@ -393,15 +393,15 @@ public class mcr3 {
 		{
 			String buffer="";
 	
-			sprintf(buffer, "%s  %s  %s  %s  %s"+
-					(spyhunt_lamp[0]!=0 ? "OIL" : "   ")+
-					(spyhunt_lamp[1]!=0 ? "MISSILE" : "       ")+
-					(spyhunt_lamp[2]!=0 ? "VAN" : "   ")+
-					(spyhunt_lamp[3]!=0 ? "SMOKE" : "     ")+
+			buffer = sprintf("%s  %s  %s  %s  %s",
+					(spyhunt_lamp[0]!=0 ? "OIL" : "   "),
+					(spyhunt_lamp[1]!=0 ? "MISSILE" : "       "),
+					(spyhunt_lamp[2]!=0 ? "VAN" : "   "),
+					(spyhunt_lamp[3]!=0 ? "SMOKE" : "     "),
 					(spyhunt_lamp[4]!=0 ? "GUNS" : "    "));
-                        System.out.println(buffer);
+                        //System.out.println(buffer);
 			for (offs = 0; offs < 30; offs++)
-				drawgfx(bitmap, Machine.gfx[2], Integer.parseInt(buffer.substring(offs, offs+1)), 0, 0, 0,
+				drawgfx(bitmap, Machine.gfx[2], (buffer.charAt(offs)), 0, 0, 0,
 						30 * 16, (29 - offs) * 16, Machine.visible_area, TRANSPARENCY_NONE, 0);
 		}
 	} };
