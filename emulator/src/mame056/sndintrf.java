@@ -36,6 +36,7 @@ import mame056.sound.cem3394;
 import mame056.sound._5110intf;
 import mame056.sound.adpcm;
 import mame056.sound.nes_apu;
+import mame056.sound.oki6295;
 
 public class sndintrf {
 
@@ -587,7 +588,7 @@ public class sndintrf {
                 /*TODO*///		OKIM6295_sh_update,
                 /*TODO*///		0
                 /*TODO*///	},
-                new Dummy_snd(),
+                new oki6295(),
                 new MSM5205(),
                 /*TODO*///#endif
                 /*TODO*///#if (HAS_UPD7759)

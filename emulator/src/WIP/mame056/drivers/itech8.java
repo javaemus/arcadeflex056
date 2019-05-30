@@ -209,6 +209,8 @@ import static WIP.mame056.vidhrdw.tms34061H.*;
 import static arcadeflex036.osdepend.logerror;
 import static mame056.machine.ticket.*;
 import static mame056.machine.ticketH.*;
+import static mame056.sound.oki6295H.*;
+import static mame056.sound.oki6295.*;
 
 public class itech8
 {
@@ -822,7 +824,7 @@ public class itech8
 		new Memory_ReadAddress( 0x2000, 0x2000, YM2203_status_port_0_r ),
 		new Memory_ReadAddress( 0x2002, 0x2002, YM2203_status_port_0_r ),
 		new Memory_ReadAddress( 0x3000, 0x37ff, MRA_RAM ),
-		/*TODO*///new Memory_ReadAddress( 0x4000, 0x4000, OKIM6295_status_0_r ),
+		new Memory_ReadAddress( 0x4000, 0x4000, OKIM6295_status_0_r ),
 		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
@@ -835,7 +837,7 @@ public class itech8
 		new Memory_WriteAddress( 0x2002, 0x2002, YM2203_control_port_0_w ),
 		new Memory_WriteAddress( 0x2003, 0x2003, YM2203_write_port_0_w ),
 		new Memory_WriteAddress( 0x3000, 0x37ff, MWA_RAM ),
-		/*TODO*///new Memory_WriteAddress( 0x4000, 0x4000, OKIM6295_data_0_w ),
+		new Memory_WriteAddress( 0x4000, 0x4000, OKIM6295_data_0_w ),
 		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -845,7 +847,7 @@ public class itech8
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),	new Memory_ReadAddress( 0x1000, 0x1000, sound_data_r ),
 		new Memory_ReadAddress( 0x2000, 0x2000, YM3812_status_port_0_r ),
 		new Memory_ReadAddress( 0x3000, 0x37ff, MRA_RAM ),
-		/*TODO*///new Memory_ReadAddress( 0x4000, 0x4000, OKIM6295_status_0_r ),
+		new Memory_ReadAddress( 0x4000, 0x4000, OKIM6295_status_0_r ),
 		new Memory_ReadAddress( 0x5000, 0x5003, pia_0_r ),
 		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
@@ -856,7 +858,7 @@ public class itech8
 		new Memory_WriteAddress( 0x2000, 0x2000, YM3812_control_port_0_w ),
 		new Memory_WriteAddress( 0x2001, 0x2001, YM3812_write_port_0_w ),
 		new Memory_WriteAddress( 0x3000, 0x37ff, MWA_RAM ),
-		/*TODO*///new Memory_WriteAddress( 0x4000, 0x4000, OKIM6295_data_0_w ),
+		new Memory_WriteAddress( 0x4000, 0x4000, OKIM6295_data_0_w ),
 		new Memory_WriteAddress( 0x5000, 0x5003, pia_0_w ),
 		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
@@ -1287,22 +1289,22 @@ public class itech8
 	);
 	
 	
-	/*TODO*///static struct OKIM6295interface oki6295_interface_low =
-	/*TODO*///{
-	/*TODO*///	1,
-	/*TODO*///	{ CLOCK_8MHz/8/165 },
-	/*TODO*///	{ REGION_SOUND1 },
-	/*TODO*///	{ 75 }
-	/*TODO*///};
+	static OKIM6295interface oki6295_interface_low = new OKIM6295interface
+        (
+		1,
+		new int[]{ CLOCK_8MHz/8/165 },
+		new int[]{ REGION_SOUND1 },
+		new int[]{ 75 }
+        );
 	
 	
-	/*TODO*///static struct OKIM6295interface oki6295_interface_high =
-	/*TODO*///{
-	/*TODO*///	1,
-	/*TODO*///	{ CLOCK_8MHz/8/128 },
-	/*TODO*///	{ REGION_SOUND1 },
-	/*TODO*///	{ 75 }
-	/*TODO*///};
+	static OKIM6295interface oki6295_interface_high = new OKIM6295interface
+        (
+		1,
+		new int[]{ CLOCK_8MHz/8/128 },
+		new int[]{ REGION_SOUND1 },
+		new int[]{ 75 }
+        );
 	
 	
 	
@@ -1352,8 +1354,8 @@ public class itech8
 		/* sound hardware */														
 		0,0,0,0,																	
 		new MachineSound[] {
-			new MachineSound( SOUND_YM2203, ym2203_interface )
-		/*TODO*///	{ SOUND_OKIM6295, &oki6295_interface_high },						
+			new MachineSound( SOUND_YM2203, ym2203_interface ),
+                        new MachineSound( SOUND_OKIM6295, oki6295_interface_high )
 		},
                 
 		nvram_handler																
@@ -1399,8 +1401,8 @@ public class itech8
 		new MachineSound[] {
 			new MachineSound(
                                 SOUND_YM2203, 
-                                ym2203_interface )							
-			/*TODO*///{ SOUND_OKIM6295, &oki6295_interface_high },						
+                                ym2203_interface ),							
+			new MachineSound( SOUND_OKIM6295, oki6295_interface_high )
 		},
                                 
 		nvram_handler
@@ -1443,8 +1445,8 @@ public class itech8
 		/* sound hardware */														
 		0,0,0,0,																	
 		new MachineSound[] {
-			new MachineSound( SOUND_YM3812, ym3812_interface )
-			/*TODO*///{ SOUND_OKIM6295, &oki6295_interface_high },						
+			new MachineSound( SOUND_YM3812, ym3812_interface ),
+			new MachineSound( SOUND_OKIM6295, oki6295_interface_high )
 		},																			
 		nvram_handler																
         );
@@ -1486,8 +1488,8 @@ public class itech8
 		/* sound hardware */														
 		0,0,0,0,																	
 		new MachineSound[] {
-			new MachineSound( SOUND_YM3812, ym3812_interface )
-		/*TODO*///	{ SOUND_OKIM6295, &oki6295_interface_high },						
+			new MachineSound( SOUND_YM3812, ym3812_interface ),
+                        new MachineSound( SOUND_OKIM6295, oki6295_interface_high )
 		},																			
 		nvram_handler																
         );
@@ -1532,7 +1534,7 @@ public class itech8
 		0,0,0,0,																	
 		new MachineSound[] {
 			new MachineSound( SOUND_YM3812, ym3812_interface )
-                /*TODO*///	,new MachineSound( SOUND_OKIM6295, &oki6295_interface_low )
+                        ,new MachineSound( SOUND_OKIM6295, oki6295_interface_low )
 		},																			
 		nvram_handler																
         );
@@ -1577,7 +1579,7 @@ public class itech8
 		0,0,0,0,																	
 		new MachineSound[] {
 			new MachineSound( SOUND_YM3812, ym3812_interface )
-			/*TODO*///,new MachineSound( SOUND_OKIM6295, oki6295_interface_high )
+			,new MachineSound( SOUND_OKIM6295, oki6295_interface_high )
 		},																			
 		nvram_handler																
         );
@@ -1621,7 +1623,7 @@ public class itech8
 		0,0,0,0,																	
 		new MachineSound[] {
 			new MachineSound( SOUND_YM3812, ym3812_interface )
-			/*TODO*///,new MachineSound( SOUND_OKIM6295, oki6295_interface_high )
+			,new MachineSound( SOUND_OKIM6295, oki6295_interface_high )
 		},																			
 		nvram_handler																
 	);
@@ -1665,7 +1667,7 @@ public class itech8
 		0,0,0,0,																	
 		new MachineSound[] {
 			new MachineSound( SOUND_YM3812, ym3812_interface )
-			/*TODO*///,new MachineSound( SOUND_OKIM6295, oki6295_interface_high )
+			,new MachineSound( SOUND_OKIM6295, oki6295_interface_high )
 		},																			
 		nvram_handler																
 	);
@@ -1709,7 +1711,7 @@ public class itech8
 		0,0,0,0,																	
 		new MachineSound[] {
 			new MachineSound( SOUND_YM3812, ym3812_interface )
-			/*TODO*///,new MachineSound( SOUND_OKIM6295, oki6295_interface_high )
+			,new MachineSound( SOUND_OKIM6295, oki6295_interface_high )
 		},																			
 		nvram_handler																
 	);
@@ -1756,8 +1758,8 @@ public class itech8
 		/* sound hardware */
 		0,0,0,0,
 		new MachineSound[] {
-			new MachineSound( SOUND_YM2203, ym2203_interface )
-		/*TODO*///	{ SOUND_OKIM6295, &oki6295_interface_high },
+			new MachineSound( SOUND_YM2203, ym2203_interface ),
+                        new MachineSound( SOUND_OKIM6295, oki6295_interface_high )
 		},
 		nvram_handler
         );
@@ -1805,8 +1807,8 @@ public class itech8
 		/* sound hardware */
 		0,0,0,0,
 		new MachineSound[] {
-			new MachineSound( SOUND_YM2203, ym2203_interface )
-		/*TODO*///	{ SOUND_OKIM6295, &oki6295_interface_high },
+			new MachineSound( SOUND_YM2203, ym2203_interface ),
+                        new MachineSound( SOUND_OKIM6295, oki6295_interface_high )
 		},
 		nvram_handler
         );

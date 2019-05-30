@@ -25,7 +25,7 @@ public class eeprom
 	public static EEPROM_interface intf;
 	
 	static int serial_count;
-	static int[] serial_buffer = new int[SERIAL_BUFFER_LENGTH];
+	static char[] serial_buffer = new char[SERIAL_BUFFER_LENGTH];
 	static char[] eeprom_data = new char[MEMORY_SIZE];
 	static int eeprom_data_bits;
 	static int eeprom_read_address;
@@ -50,7 +50,7 @@ public class eeprom
 	
 		Note: (cmd) may be NULL. Return 0 (no match) in this case.
 	*/
-	static int EEPROM_command_match(int[] buf, String cmd, int len)
+	static int EEPROM_command_match(char[] buf, String cmd, int len)
 	{
 		if ( cmd == null )	return 0;
 		if ( len == 0 )	return 0;

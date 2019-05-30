@@ -57,8 +57,8 @@ public class adpcm extends snd_interface {
     }
 
     /* array of ADPCM voices */
-    static int/*UINT8*/ num_voices;
-    static ADPCMVoice[] adpcm = ADPCMVoice.create(MAX_ADPCM);
+    public static int/*UINT8*/ num_voices;
+    public static ADPCMVoice[] adpcm = ADPCMVoice.create(MAX_ADPCM);
     /* step size index shift table */
     static int[] index_shift = {-1, -1, -1, -1, 2, 4, 6, 8};
     /* lookup table for the precomputed difference */
@@ -496,4 +496,6 @@ public class adpcm extends snd_interface {
         stream_update(voice.stream, 0);
         return voice.playing;
     }
+    
+    
 }
