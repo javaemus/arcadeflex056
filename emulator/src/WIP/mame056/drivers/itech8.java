@@ -165,6 +165,7 @@
  */ 
 package WIP.mame056.drivers;
 
+import static WIP.mame056.machine.slikshot.*;
 import static arcadeflex056.fucPtr.*;
 import static common.libc.cstdlib.rand;
 import static arcadeflex056.fileio.*;
@@ -620,7 +621,7 @@ public class itech8
                 /*TODO*///if (ACCESSING_MSB)
 		 	itech8_blitter_w.handler(offset * 2 + 0, data >> 8);
 		/*TODO*///if (ACCESSING_LSB)
-			itech8_blitter_w.handler(offset * 2 + 1, data);
+		/*TODO*///	itech8_blitter_w.handler(offset * 2 + 1, data);
             }
         };
 	
@@ -880,14 +881,14 @@ public class itech8
 	
 	public static IO_ReadPort slikz80_readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),	
-                /*TODO*///new IO_ReadPort( 0x00, 0x00, slikz80_port_r ),
+                new IO_ReadPort( 0x00, 0x00, slikz80_port_r ),
                 new IO_ReadPort(MEMPORT_MARKER, 0)
         };
 	
 	
 	public static IO_WritePort slikz80_writeport[]={
 		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),	
-                /*TODO*///new IO_WritePort( 0x00, 0x00, slikz80_port_w ),
+                new IO_WritePort( 0x00, 0x00, slikz80_port_w ),
                 new IO_WritePort(MEMPORT_MARKER, 0)
         };
 	
@@ -2060,17 +2061,17 @@ public class itech8
 	
 	public static InitDriverPtr init_slikshot = new InitDriverPtr() { public void handler()
 	{
-		/*TODO*///install_mem_read_handler (0, 0x0180, 0x0180, slikshot_z80_r);
-		/*TODO*///install_mem_read_handler (0, 0x01cf, 0x01cf, slikshot_z80_control_r);
-		/*TODO*///install_mem_write_handler(0, 0x01cf, 0x01cf, slikshot_z80_control_w);
+		install_mem_read_handler (0, 0x0180, 0x0180, slikshot_z80_r);
+		install_mem_read_handler (0, 0x01cf, 0x01cf, slikshot_z80_control_r);
+		install_mem_write_handler(0, 0x01cf, 0x01cf, slikshot_z80_control_w);
 	} };
 	
 	
 	public static InitDriverPtr init_sstrike = new InitDriverPtr() { public void handler()
 	{
-		/*TODO*///install_mem_read_handler (0, 0x1180, 0x1180, slikshot_z80_r);
-		/*TODO*///install_mem_read_handler (0, 0x11cf, 0x11cf, slikshot_z80_control_r);
-		/*TODO*///install_mem_write_handler(0, 0x11cf, 0x11cf, slikshot_z80_control_w);
+		install_mem_read_handler (0, 0x1180, 0x1180, slikshot_z80_r);
+		install_mem_read_handler (0, 0x11cf, 0x11cf, slikshot_z80_control_r);
+		install_mem_write_handler(0, 0x11cf, 0x11cf, slikshot_z80_control_w);
 	} };
 	
 	

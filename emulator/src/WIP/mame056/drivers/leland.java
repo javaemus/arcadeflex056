@@ -130,7 +130,7 @@ public class leland
 	static int battery_ram_enable;
 	static UBytePtr battery_ram = new UBytePtr();
 	
-	static UBytePtr eeprom_data = new UBytePtr(64*2);
+	static char[] eeprom_data = new char[64*2];
         
 	static EEPROM_interface eeprom_interface = new EEPROM_interface
 	(
@@ -589,7 +589,7 @@ public class leland
                 int _data = 0;
 	
 		/* initialize everything to the default value */
-		memset(eeprom_data, default_val, (eeprom_data.memory.length));
+		memset(eeprom_data, default_val, (eeprom_data.length));
 	
 		/* fill in the preset data */
 		while (data[_data] != 0xffff)
@@ -597,8 +597,8 @@ public class leland
 			int offset = data[_data++];
                         int value = data[_data++];
                         
-			eeprom_data.write(offset * 2 + 0, value >> 8);
-			eeprom_data.write(offset * 2 + 1, value & 0xff);
+			eeprom_data[offset * 2 + 0] = (char) (value >> 8);
+			eeprom_data[offset * 2 + 1] = (char) (value & 0xff);
 		}
 	
 		/* pick a serial number -- examples of real serial numbers:
@@ -625,9 +625,9 @@ public class leland
 						digit = ((serial << (i * 4)) >> 28) & 15;
 					digit = ('0' + digit) * 2;
 	
-					eeprom_data.write(serial_offset * 2 +  0 + (i ^ 1), (digit / 3) ^ xorval);
-					eeprom_data.write(serial_offset * 2 + 10 + (i ^ 1), (digit / 3) ^ xorval);
-					eeprom_data.write(serial_offset * 2 + 20 + (i ^ 1), (digit - (2 * (digit / 3))) ^ xorval);
+					eeprom_data[serial_offset * 2 +  0 + (i ^ 1)] = (char) ((digit / 3) ^ xorval);
+					eeprom_data[serial_offset * 2 + 10 + (i ^ 1)] = (char) ((digit / 3) ^ xorval);
+					eeprom_data[serial_offset * 2 + 20 + (i ^ 1)] = (char) ((digit - (2 * (digit / 3))) ^ xorval);
 				}
 				break;
 			}
@@ -650,10 +650,10 @@ public class leland
 				e ^= 0x2a;
 	
 				/* store the bytes */
-				eeprom_data.write(serial_offset * 2 + 0, h ^ xorval);
-				eeprom_data.write(serial_offset * 2 + 1, l ^ xorval);
-				eeprom_data.write(serial_offset * 2 + 2, d ^ xorval);
-				eeprom_data.write(serial_offset * 2 + 3, e ^ xorval);
+				eeprom_data[serial_offset * 2 + 0] = (char) (h ^ xorval);
+				eeprom_data[serial_offset * 2 + 1] = (char) (l ^ xorval);
+				eeprom_data[serial_offset * 2 + 2] = (char) (d ^ xorval);
+				eeprom_data[serial_offset * 2 + 3] = (char) (e ^ xorval);
 				break;
 			}
 		}

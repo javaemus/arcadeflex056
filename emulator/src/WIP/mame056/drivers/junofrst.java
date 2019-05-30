@@ -122,7 +122,7 @@ public class junofrst
 	public static WriteHandlerPtr junofrst_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
             int bankaddress;
-            UBytePtr RAM = memory_region(REGION_CPU1);
+            UBytePtr RAM = new UBytePtr(memory_region(REGION_CPU1));
 
             bankaddress = 0x10000 + (data & 0x0f) * 0x1000;
             cpu_setbank(1, new UBytePtr(RAM, bankaddress));

@@ -6641,7 +6641,8 @@ public class drawgfx {
 /*TODO*///						BLOCKMOVELU(4toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata));
                 } else {
                     if (pribuf != null) {
-                        throw new UnsupportedOperationException("unsupported");
+                        System.out.println("BLOCKMOVEPRI(8toN_opaque");
+                        //throw new UnsupportedOperationException("unsupported");
                         /*TODO*///						BLOCKMOVEPRI(8toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask));
                     } else {
                         if ((gfx.flags & GFX_SWAPXY) != 0) {

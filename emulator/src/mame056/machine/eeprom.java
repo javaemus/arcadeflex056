@@ -26,7 +26,7 @@ public class eeprom
 	
 	static int serial_count;
 	static int[] serial_buffer = new int[SERIAL_BUFFER_LENGTH];
-	static UBytePtr eeprom_data = new UBytePtr(MEMORY_SIZE);
+	static char[] eeprom_data = new char[MEMORY_SIZE];
 	static int eeprom_data_bits;
 	static int eeprom_read_address;
 	static int eeprom_clock_count;
@@ -187,9 +187,9 @@ public class eeprom
 				if (serial_buffer[i] == '1') address |= 1;
 			}
 			if (intf.data_bits == 16)
-				eeprom_data_bits = (eeprom_data.read(2*address+0) << 8) + eeprom_data.read(2*address+1);
+				eeprom_data_bits = (eeprom_data[2*address+0] << 8) + eeprom_data[2*address+1];
 			else
-				eeprom_data_bits = eeprom_data.read(address);
+				eeprom_data_bits = eeprom_data[address];
 			eeprom_read_address = address;
 			eeprom_clock_count = 0;
 			sending = 1;
@@ -212,11 +212,11 @@ public class eeprom
 			{
 				if (intf.data_bits == 16)
 				{
-					eeprom_data.write(2*address+0, 0x00);
-					eeprom_data.write(2*address+1, 0x00);
+					eeprom_data[2*address+0] = 0x00;
+					eeprom_data[2*address+1] = 0x00;
 				}
 				else
-					eeprom_data.write(address, 0x00);
+					eeprom_data[address] = 0x00;
 			}
 			else
                             logerror("Error: EEPROM is locked\n");
@@ -244,11 +244,11 @@ public class eeprom
 			{
 				if (intf.data_bits == 16)
 				{
-					eeprom_data.write(2*address+0, data >> 8);
-					eeprom_data.write(2*address+1, data & 0xff);
+					eeprom_data[2*address+0] = (char) (data >> 8);
+					eeprom_data[2*address+1] = (char) (data & 0xff);
 				}
 				else
-					eeprom_data.write(address, data);
+					eeprom_data[address] = (char) data;
 			}
 			else
                             logerror("Error: EEPROM is locked\n");
@@ -338,9 +338,9 @@ public class eeprom
 					{
 						eeprom_read_address = (eeprom_read_address + 1) & ((1 << intf.address_bits) - 1);
 						if (intf.data_bits == 16)
-							eeprom_data_bits = (eeprom_data.read(2*eeprom_read_address+0) << 8) + eeprom_data.read(2*eeprom_read_address+1);
+							eeprom_data_bits = (eeprom_data[2*eeprom_read_address+0] << 8) + eeprom_data[2*eeprom_read_address+1];
 						else
-							eeprom_data_bits = eeprom_data.read(eeprom_read_address);
+							eeprom_data_bits = eeprom_data[eeprom_read_address];
 						eeprom_clock_count = 0;
                                                 logerror("EEPROM read %04x from address %02x\n",eeprom_data_bits,eeprom_read_address);
 					}
@@ -366,7 +366,7 @@ public class eeprom
 		osd_fwrite(f,eeprom_data,(1 << intf.address_bits) * intf.data_bits / 8);
 	}
 	
-	public static void EEPROM_set_data(UBytePtr data, int length)
+	public static void EEPROM_set_data(char[] data, int length)
 	{
 		memcpy(eeprom_data, data, length);
 	}

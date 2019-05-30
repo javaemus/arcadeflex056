@@ -125,7 +125,7 @@ public class ataxx
 	public static int extra_tram_size = 0x800;
 	static UBytePtr extra_tram = new UBytePtr();
 	
-	static UBytePtr eeprom_data= new UBytePtr(128*2);
+	static char[] eeprom_data= new char[128*2];
 	static EEPROM_interface eeprom_interface = new EEPROM_interface
         (
 		7,
@@ -351,7 +351,7 @@ public class ataxx
 		int serial;
                 int _num = 0;
 		/* initialize everything to the default value */
-		memset(eeprom_data, default_val, eeprom_data.memory.length);
+		memset(eeprom_data, default_val, eeprom_data.length);
 	
 		/* fill in the preset data */
 		do 
@@ -362,8 +362,8 @@ public class ataxx
                         
                             data.inc();
                             int value = data.read();
-                            eeprom_data.write(offset * 2 + 0, value >> 8);
-                            eeprom_data.write(offset * 2 + 1, value & 0xff);
+                            eeprom_data[offset * 2 + 0] = (char) (value >> 8);
+                            eeprom_data[offset * 2 + 1] = (char) (value & 0xff);
                         data.inc();
                         
 		}while (data.read() != 0xff);
@@ -392,20 +392,20 @@ public class ataxx
 			e ^= 0x2a;
 	
 			/* store the bytes */
-			eeprom_data.write(serial_offset * 2 + 0, h);
-			eeprom_data.write(serial_offset * 2 + 1, l);
-			eeprom_data.write(serial_offset * 2 + 2, d);
-			eeprom_data.write(serial_offset * 2 + 3, e);
+			eeprom_data[serial_offset * 2 + 0] = (char) h;
+			eeprom_data[serial_offset * 2 + 1] = (char) l;
+			eeprom_data[serial_offset * 2 + 2] = (char) d;
+			eeprom_data[serial_offset * 2 + 3] = (char) e;
 		}
 	
 		/* compute the checksum */
 		{
 			int i, sum = 0;
 			for (i = 0; i < 0x7f * 2; i++)
-				sum += eeprom_data.read(i);
+				sum += eeprom_data[i];
 			sum ^= 0xffff;
-			eeprom_data.write(0x7f * 2 + 0, (sum >> 8) & 0xff);
-			eeprom_data.write(0x7f * 2 + 1, sum & 0xff);
+			eeprom_data[0x7f * 2 + 0] = (char) ((sum >> 8) & 0xff);
+			eeprom_data[0x7f * 2 + 1] = (char) (sum & 0xff);
 	
 			EEPROM_init(eeprom_interface);
 		}

@@ -157,7 +157,7 @@ public class tutankhm
 			The clear works properly.
 	*/
         
-        static UBytePtr blitterdata = new UBytePtr(4);
+        static UBytePtr blitterdata = new UBytePtr(1024);
         
         public static void JUNOBLITPIXEL(UBytePtr JunoBLTRom, int x, long srcaddress, long destaddress){
 		if (JunoBLTRom.read((int) (srcaddress+x)) !=0)
@@ -188,17 +188,17 @@ public class tutankhm
 			int i;
 			/*unsigned*/ int srcaddress;
 			/*unsigned*/ int destaddress;
-			/*unsigned*/ char srcflag;
-			/*unsigned*/ char destflag;
-			UBytePtr JunoBLTRom = memory_region(REGION_GFX1);
+			/*unsigned*/ int srcflag;
+			/*unsigned*/ int destflag;
+			UBytePtr JunoBLTRom = new UBytePtr(memory_region(REGION_GFX1));
 	
 			srcaddress = (blitterdata.read(0x2)<<8) | (blitterdata.read(0x3));
-			srcflag = (char)(srcaddress & 1);
+			srcflag = (srcaddress & 1);
 			srcaddress >>= 1;
 			srcaddress &= 0x7FFE;
 			destaddress = (blitterdata.read(0x0)<<8)  | (blitterdata.read(0x1));
 	
-			destflag = (char)(destaddress & 1);
+			destflag = (destaddress & 1);
 	
 			destaddress >>= 1;
 			destaddress &= 0x7fff;

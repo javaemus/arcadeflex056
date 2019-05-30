@@ -42,6 +42,7 @@ import static mame056.timerH.*;
 import static arcadeflex036.osdepend.logerror;
 
 import static WIP.mame056.drivers.itech8.itech8_update_interrupts;
+import static WIP.mame056.machine.slikshot.*;
 
 public class itech8
 {
@@ -971,7 +972,7 @@ public class itech8
 		}
 	
 		/* extra rendering for slikshot */
-		/*TODO*///if (slikshot != 0)
-		/*TODO*///	slikshot_extra_draw(bitmap);
+		if (slikshot != 0)
+			slikshot_extra_draw(bitmap);
 	} };
 }
