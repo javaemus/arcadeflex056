@@ -343,7 +343,7 @@ public class leland
 	public static InitMachinePtr init_machine = new InitMachinePtr() { public void handler()
 	{
 		/* set the odd data bank */
-		battery_ram = memory_region(REGION_USER2);
+		battery_ram = new UBytePtr(memory_region(REGION_USER2));
 	
 		/* start scanline interrupts going */
 		master_int_timer = timer_set(cpu_getscanlinetime(8), 8, interrupt_callback);
@@ -373,12 +373,12 @@ public class leland
 	
 		/* initialize the master banks */
 		master_length = memory_region_length(REGION_CPU1);
-		master_base = memory_region(REGION_CPU1);
+		master_base = new UBytePtr(memory_region(REGION_CPU1));
 		(update_master_bank).handler();
 	
 		/* initialize the slave banks */
 		slave_length = memory_region_length(REGION_CPU2);
-		slave_base = memory_region(REGION_CPU2);
+		slave_base = new UBytePtr(memory_region(REGION_CPU2));
 		if (slave_length > 0x10000)
 			cpu_setbank(3, new UBytePtr(slave_base,0x10000));
 	
@@ -687,12 +687,12 @@ public class leland
                 if (read_or_write != 0)
 		{
 			EEPROM_save(file);
-			osd_fwrite(file, memory_region(REGION_USER2), battery_ram_size);
+			osd_fwrite(file, new UBytePtr(memory_region(REGION_USER2)), battery_ram_size);
 		}
 		else if (file != null)
 		{
 			EEPROM_load(file);
-			osd_fread(file, memory_region(REGION_USER2), battery_ram_size);
+			osd_fread(file, new UBytePtr(memory_region(REGION_USER2)), battery_ram_size);
 		}
 		else
 		{
@@ -2022,7 +2022,7 @@ public class leland
 	{
 		int startaddr = 0x10000;
 		int banks = (memory_region_length(REGION_CPU1 + cpunum) - startaddr) / 0x8000;
-		UBytePtr ram = memory_region(REGION_CPU1 + cpunum);
+		UBytePtr ram = new UBytePtr(memory_region(REGION_CPU1 + cpunum));
 		UBytePtr temp=new UBytePtr(0x2000);
 		int i;
 	
