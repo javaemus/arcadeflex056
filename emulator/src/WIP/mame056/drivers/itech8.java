@@ -1385,7 +1385,7 @@ public class itech8
 		init_machine,																
 																					
 		/* video hardware */														
-		512, 263, new rectangle( 0, 255, 0, 239 ),
+		256, 240, new rectangle( 0, 255, 0, 239 ),
 		null,																			
 		256, 0,																		
 		null,																			

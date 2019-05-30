@@ -45,8 +45,7 @@ import static mame056.sound.ay8910H.*;
 import static mame056.sound.ay8910.*;
 import static mame056.sndintrf.*;
 import static mame056.sndintrfH.*;
-import static mame056.machine._6812pia.*;
-import static mame056.machine._6812piaH.*;
+
 import static mame056.sound._2203intf.*;
 import static mame056.sound._2203intfH.*;
 import static mame056.sound._3812intf.*;

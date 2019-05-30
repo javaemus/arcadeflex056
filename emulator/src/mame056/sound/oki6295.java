@@ -68,6 +68,7 @@ public class oki6295 extends snd_interface {
 
     @Override
     public int start(MachineSound msound) {
+        
         OKIM6295interface intf = (OKIM6295interface) msound.sound_interface;
         String stream_name;
         int i;
@@ -94,7 +95,7 @@ public class oki6295 extends snd_interface {
                         return 1;
 
                 /* initialize the rest of the structure */
-                adpcm[i].region_base = memory_region(intf.region[chip]);
+                adpcm[i].region_base = new UBytePtr(memory_region(intf.region[chip]));
                 adpcm[i].volume = 255;
                 adpcm[i].signal = -2;
                 if (Machine.sample_rate != 0)
