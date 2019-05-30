@@ -85,18 +85,42 @@ public class itech8
 	 *
 	 *************************************/
 	
-	public static int BLITTER_ADDRHI			= blitter_data[0];
-	public static int BLITTER_ADDRLO			= blitter_data[1];
-	public static int BLITTER_FLAGS                         = blitter_data[2];
-	public static int BLITTER_STATUS			= blitter_data[3];
-	public static int BLITTER_WIDTH                         = blitter_data[4];
-	public static int BLITTER_HEIGHT			= blitter_data[5];
-	public static int BLITTER_MASK                          = blitter_data[6];
-	public static int BLITTER_OUTPUT			= blitter_data[7];
-	public static int BLITTER_XSTART			= blitter_data[8];
-	public static int BLITTER_YCOUNT			= blitter_data[9];
-	public static int BLITTER_XSTOP                         = blitter_data[10];
-	public static int BLITTER_YSKIP                         = blitter_data[11];
+	public static int BLITTER_ADDRHI(){
+            return blitter_data[0];
+        }
+	public static int BLITTER_ADDRLO(){
+            return blitter_data[1];
+        }
+	public static int BLITTER_FLAGS(){
+            return blitter_data[2];
+        }
+	public static int BLITTER_STATUS(){
+            return blitter_data[3];
+        }
+	public static int BLITTER_WIDTH(){
+            return blitter_data[4];
+        }
+	public static int BLITTER_HEIGHT(){
+            return blitter_data[5];
+        }
+	public static int BLITTER_MASK(){
+            return blitter_data[6];
+        }
+	public static int BLITTER_OUTPUT(){
+            return blitter_data[7];
+        }
+	public static int BLITTER_XSTART(){
+            return blitter_data[8];
+        }
+	public static int BLITTER_YCOUNT(){
+            return blitter_data[9];
+        }
+	public static int BLITTER_XSTOP(){
+            return blitter_data[10];
+        }
+	public static int BLITTER_YSKIP(){
+            return blitter_data[11];
+        }
 	
 	public static int BLITFLAG_SHIFT			= 0x01;
 	public static int BLITFLAG_XFLIP			= 0x02;
@@ -153,7 +177,7 @@ public class itech8
 		slikshot = 0;
 	
 		/* fetch the GROM base */
-		grom_base = memory_region(REGION_GFX1);
+		grom_base = new UBytePtr(memory_region(REGION_GFX1));
 		grom_size = memory_region_length(REGION_GFX1);
 	
 		return 0;
@@ -230,7 +254,7 @@ public class itech8
 	
 	public static draw_byte_Ptr draw_byte_trans4 = new draw_byte_Ptr() {
             public void handler(int addr, int val, int mask, int latch) {
-		if (val == 0)
+                if (val == 0)
 			return;
 	
 		if ((val & 0xf0) != 0)
@@ -256,7 +280,7 @@ public class itech8
 	
 	public static draw_byte_Ptr draw_byte_trans8 = new draw_byte_Ptr() {
             public void handler(int addr, int val, int mask, int latch) {
-		if (val!=0) draw_byte.handler(addr, val, mask, latch);
+                if (val!=0) draw_byte.handler(addr, val, mask, latch);
 	}};
 	
 	
@@ -269,7 +293,7 @@ public class itech8
 	
 	public static draw_byte_Ptr draw_byte_shift = new draw_byte_Ptr() {
             public void handler(int addr, int val, int mask, int latch) {
-		tms_state.vram.write(addr, (tms_state.vram.read(addr) & 0xf0) | ((val & mask) >> 4));
+                tms_state.vram.write(addr, (tms_state.vram.read(addr) & 0xf0) | ((val & mask) >> 4));
 		tms_state.latchram.write(addr, (tms_state.latchram.read(addr) & 0xf0) | (latch >> 4));
 		tms_state.vram.write(addr + 1, (tms_state.vram.read(addr + 1) & 0x0f) | ((val & mask) << 4));
 		tms_state.latchram.write(addr + 1, (tms_state.latchram.read(addr + 1) & 0x0f) | (latch << 4));
@@ -278,7 +302,7 @@ public class itech8
 	
 	public static draw_byte_Ptr draw_byte_shift_trans4 = new draw_byte_Ptr() {
             public void handler(int addr, int val, int mask, int latch) {
-		if (val == 0)
+                if (val == 0)
 			return;
 	
 		if ((val & 0xf0) != 0)
@@ -296,7 +320,7 @@ public class itech8
 	
 	public static draw_byte_Ptr draw_byte_shift_trans8 = new draw_byte_Ptr() {
             public void handler(int addr, int val, int mask, int latch) {
-		if (val!=0) draw_byte_shift.handler(addr, val, mask, latch);
+                if (val!=0) draw_byte_shift.handler(addr, val, mask, latch);
 	}};
 	
 	
@@ -309,28 +333,28 @@ public class itech8
 	
 	public static draw_byte_Ptr draw_byte_xflip = new draw_byte_Ptr() {
             public void handler(int addr, int val, int mask, int latch) {
-		val = (val >> 4) | (val << 4);
+                val = (val >> 4) | (val << 4);
 		draw_byte.handler(addr, val, mask, latch);
 	}};
 	
 	
 	public static draw_byte_Ptr draw_byte_trans4_xflip = new draw_byte_Ptr() {
             public void handler(int addr, int val, int mask, int latch) {
-		val = (val >> 4) | (val << 4);
+                val = (val >> 4) | (val << 4);
 		draw_byte_trans4.handler(addr, val, mask, latch);
 	}};
 	
 	
 	public static draw_byte_Ptr draw_byte_shift_xflip = new draw_byte_Ptr() {
             public void handler(int addr, int val, int mask, int latch) {
-		val = (val >> 4) | (val << 4);
+                val = (val >> 4) | (val << 4);
 		draw_byte_shift.handler(addr, val, mask, latch);
 	}};
 	
 	
 	public static draw_byte_Ptr draw_byte_shift_trans4_xflip = new draw_byte_Ptr() {
             public void handler(int addr, int val, int mask, int latch) {
-		val = (val >> 4) | (val << 4);
+                val = (val >> 4) | (val << 4);
 		draw_byte_shift_trans4.handler(addr, val, mask, latch);
 	}};
 	
@@ -342,34 +366,34 @@ public class itech8
 	 *
 	 *************************************/
 	public static void DRAW_RAW_MACRO(int TRANSPARENT, draw_byte_Ptr OPERATION)
-        {																							
-            UBytePtr src = new UBytePtr(grom_base, ((itech8_grom_bank.read() << 16) | (BLITTER_ADDRHI << 8) | BLITTER_ADDRLO) % grom_size);
+        {			
+            UBytePtr src = new UBytePtr(grom_base, ((itech8_grom_bank.read() << 16) | (BLITTER_ADDRHI() << 8) | BLITTER_ADDRLO()) % grom_size);
             int addr = tms_state.regs[TMS34061_XYADDRESS] | ((tms_state.regs[TMS34061_XYOFFSET] & 0x300) << 8);
-            int ydir = (BLITTER_FLAGS & BLITFLAG_YFLIP)!=0 ? -1 : 1;									
-            int xdir = (BLITTER_FLAGS & BLITFLAG_XFLIP)!=0 ? -1 : 1;									
+            int ydir = (BLITTER_FLAGS() & BLITFLAG_YFLIP)!=0 ? -1 : 1;									
+            int xdir = (BLITTER_FLAGS() & BLITFLAG_XFLIP)!=0 ? -1 : 1;									
             int color = tms34061_latch_r.handler(0);														
-            int width = BLITTER_WIDTH;																
-            int height = BLITTER_HEIGHT;															
-            int mask = BLITTER_MASK;																
+            int width = BLITTER_WIDTH();																
+            int height = BLITTER_HEIGHT();															
+            int mask = BLITTER_MASK();																
             int[] skip=new int[3];
             int x, y;																				
 
             /* compute horiz skip counts */															
-            skip[0] = BLITTER_XSTART;																
-            skip[1] = (width <= BLITTER_XSTOP) ? 0 : width - 1 - BLITTER_XSTOP;						
+            skip[0] = BLITTER_XSTART();																
+            skip[1] = (width <= BLITTER_XSTOP()) ? 0 : width - 1 - BLITTER_XSTOP();
             if (xdir == -1) { int temp = skip[0]; skip[0] = skip[1]; skip[1] = temp; }				
             width -= skip[0] + skip[1];																
 
             /* compute vertical skip counts */														
             if (ydir == 1)																			
             {																						
-                    skip[2] = (height <= BLITTER_YCOUNT) ? 0 : height - BLITTER_YCOUNT;					
-                    if (BLITTER_YSKIP > 1) height -= BLITTER_YSKIP - 1;									
+                    skip[2] = (height <= BLITTER_YCOUNT()) ? 0 : height - BLITTER_YCOUNT();					
+                    if (BLITTER_YSKIP() > 1) height -= BLITTER_YSKIP() - 1;									
             }																						
             else																					
             {																						
-                    skip[2] = (height <= BLITTER_YSKIP) ? 0 : height - BLITTER_YSKIP;					
-                    if (BLITTER_YCOUNT > 1) height -= BLITTER_YCOUNT - 1;								
+                    skip[2] = (height <= BLITTER_YSKIP()) ? 0 : height - BLITTER_YSKIP();
+                    if (BLITTER_YCOUNT() > 1) height -= BLITTER_YCOUNT() - 1;								
             }																						
 
             /* skip top */																			
@@ -451,16 +475,16 @@ public class itech8
 	 *************************************/
 	
 	public static void DRAW_RLE_MACRO(int TRANSPARENT, draw_byte_Ptr OPERATION)
-	{																							
-		UBytePtr src = new UBytePtr(grom_base, ((itech8_grom_bank.read() << 16) | (BLITTER_ADDRHI << 8) | BLITTER_ADDRLO) % grom_size);
+	{
+                UBytePtr src = new UBytePtr(grom_base, ((itech8_grom_bank.read() << 16) | (BLITTER_ADDRHI() << 8) | BLITTER_ADDRLO()) % grom_size);
 		int addr = tms_state.regs[TMS34061_XYADDRESS] | ((tms_state.regs[TMS34061_XYOFFSET] & 0x300) << 8);
-		int ydir = (BLITTER_FLAGS & BLITFLAG_YFLIP)!=0 ? -1 : 1;									
-		int xdir = (BLITTER_FLAGS & BLITFLAG_XFLIP)!=0 ? -1 : 1;									
+		int ydir = (BLITTER_FLAGS() & BLITFLAG_YFLIP)!=0 ? -1 : 1;									
+		int xdir = (BLITTER_FLAGS() & BLITFLAG_XFLIP)!=0 ? -1 : 1;									
 		int count = 0, val = -1, innercount;													
 		int color = tms34061_latch_r.handler(0);
-		int width = BLITTER_WIDTH;																
-		int height = BLITTER_HEIGHT;															
-		int mask = BLITTER_MASK;																
+		int width = BLITTER_WIDTH();																
+		int height = BLITTER_HEIGHT();															
+		int mask = BLITTER_MASK();																
 		int[] skip=new int[3];																			
 		int xleft, y;																			
 																								
@@ -468,21 +492,21 @@ public class itech8
 		src.inc(2);																				
 																								
 		/* compute horiz skip counts */															
-		skip[0] = BLITTER_XSTART;																
-		skip[1] = (width <= BLITTER_XSTOP) ? 0 : width - 1 - BLITTER_XSTOP;						
+		skip[0] = BLITTER_XSTART();																
+		skip[1] = (width <= BLITTER_XSTOP()) ? 0 : width - 1 - BLITTER_XSTOP();
 		if (xdir == -1) { int temp = skip[0]; skip[0] = skip[1]; skip[1] = temp; }				
 		width -= skip[0] + skip[1];																
 																								
 		/* compute vertical skip counts */														
 		if (ydir == 1)																			
 		{																						
-			skip[2] = (height <= BLITTER_YCOUNT) ? 0 : height - BLITTER_YCOUNT;					
-			if (BLITTER_YSKIP > 1) height -= BLITTER_YSKIP - 1;									
+			skip[2] = (height <= BLITTER_YCOUNT()) ? 0 : height - BLITTER_YCOUNT();
+			if (BLITTER_YSKIP() > 1) height -= BLITTER_YSKIP() - 1;									
 		}																						
 		else																					
 		{																						
-			skip[2] = (height <= BLITTER_YSKIP) ? 0 : height - BLITTER_YSKIP;					
-			if (BLITTER_YCOUNT > 1) height -= BLITTER_YCOUNT - 1;								
+			skip[2] = (height <= BLITTER_YSKIP()) ? 0 : height - BLITTER_YSKIP();
+			if (BLITTER_YCOUNT() > 1) height -= BLITTER_YCOUNT() - 1;
 		}																						
 																								
 		/* skip top */																			
@@ -732,22 +756,22 @@ public class itech8
 		if (FULL_LOGGING != 0)
 			logerror("Blit: scan=%d  src=%06x @ (%05x) for %dx%d ... flags=%02xn",
 					cpu_getscanline(),
-					(itech8_grom_bank.read() << 16) | (BLITTER_ADDRHI << 8) | BLITTER_ADDRLO,
-					0, BLITTER_WIDTH, BLITTER_HEIGHT, BLITTER_FLAGS);
+					(itech8_grom_bank.read() << 16) | (BLITTER_ADDRHI() << 8) | BLITTER_ADDRLO(),
+					0, BLITTER_WIDTH(), BLITTER_HEIGHT(), BLITTER_FLAGS());
 	
 		/* draw appropriately */
-		if ((BLITTER_OUTPUT & 0x40) != 0)
+		if ((BLITTER_OUTPUT() & 0x40) != 0)
 		{
-			if ((BLITTER_FLAGS & BLITFLAG_XFLIP) != 0)
-				(blit_table4_xflip[BLITTER_FLAGS & 0x1f]).handler();
+			if ((BLITTER_FLAGS() & BLITFLAG_XFLIP) != 0)
+				(blit_table4_xflip[BLITTER_FLAGS() & 0x1f]).handler();
 			else
-				(blit_table4[BLITTER_FLAGS & 0x1f]).handler();
+				(blit_table4[BLITTER_FLAGS() & 0x1f]).handler();
 		}
 		else
-			(blit_table8[BLITTER_FLAGS & 0x1f]).handler();
+			(blit_table8[BLITTER_FLAGS() & 0x1f]).handler();
 	
 		/* return the number of bytes processed */
-		return BLITTER_WIDTH * BLITTER_HEIGHT;
+		return BLITTER_WIDTH() * BLITTER_HEIGHT();
 	}
 	
 	
@@ -887,6 +911,8 @@ public class itech8
 	public static VhUpdatePtr itech8_vh_screenrefresh = new VhUpdatePtr() { public void handler(mame_bitmap bitmap,int full_refresh) 
 	{
 		int y, ty;
+                
+                //tms_state = new tms34061_display();
 	
 		/* first get the current display state */
 		tms34061_get_display_state(tms_state);
@@ -906,7 +932,7 @@ public class itech8
 		/* two pages are available, at 0x00000 and 0x20000 */
 		/* pages are selected via the display page register */
 		/* width can be up to 512 pixels */
-		if ((BLITTER_OUTPUT & 0x40) != 0)
+		if ((BLITTER_OUTPUT() & 0x40) != 0)
 		{
 			int halfwidth = (Machine.visible_area.max_x + 2) / 2;
 			UBytePtr base = new UBytePtr(tms_state.vram, (~itech8_display_page.read() & 0x80) << 10);
@@ -915,7 +941,7 @@ public class itech8
 			/* now regenerate the bitmap */
 			for (ty = 0, y = Machine.visible_area.min_y; y <= Machine.visible_area.max_y; y++, ty++)
 			{
-				UBytePtr scanline = new UBytePtr(512);
+				UBytePtr scanline=new UBytePtr(512);
 				int x;
 	
 				for (x = 0; x < halfwidth; x++)
@@ -923,6 +949,7 @@ public class itech8
 					scanline.write(x * 2 + 0, (latch.read(256 * ty + x) & 0xf0) | (base.read(256 * ty + x) >> 4));
 					scanline.write(x * 2 + 1, (latch.read(256 * ty + x) << 4) | (base.read(256 * ty + x) & 0x0f));
 				}
+                                scanline.offset=0;
 				draw_scanline8(bitmap, 0, y, 2 * halfwidth, scanline, new IntArray(Machine.pens), -1);
 			}
 		}

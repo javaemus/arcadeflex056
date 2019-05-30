@@ -225,10 +225,11 @@ public class memoryH {
     public static final int MRA_BANK18 = STATIC_BANK18;
     public static final int MRA_BANK19 = STATIC_BANK19;
     public static final int MRA_BANK20 = STATIC_BANK20;
-/*TODO*///#define MRA_BANK21				((mem_read_handler)STATIC_BANK21)
-/*TODO*///#define MRA_BANK22				((mem_read_handler)STATIC_BANK22)
-/*TODO*///#define MRA_BANK23				((mem_read_handler)STATIC_BANK23)
-/*TODO*///#define MRA_BANK24				((mem_read_handler)STATIC_BANK24)
+public static final int MRA_BANK21 = STATIC_BANK21;
+public static final int MRA_BANK22 = STATIC_BANK22;
+public static final int MRA_BANK23 = STATIC_BANK23;
+public static final int MRA_BANK24 = STATIC_BANK24;
+
     public static final int MRA_NOP = STATIC_NOP;
     public static final int MRA_RAM = STATIC_RAM;
     public static final int MRA_ROM = STATIC_ROM;

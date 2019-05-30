@@ -590,22 +590,21 @@ public class itech8
 	public static WriteHandlerPtr sound_data16_w = new WriteHandlerPtr() {
             public void handler(int offset, int data) {
                 /*TODO*///if (ACCESSING_MSB != 0)
-			sound_data_w.handler(0, data >> 8);
+		 	sound_data_w.handler(0, data >> 8);
             }
         };
 	
 	public static WriteHandlerPtr grom_bank16_w = new WriteHandlerPtr() {
             public void handler(int offset, int data) {
                 /*TODO*///if (ACCESSING_MSB)
-			//*itech8_grom_bank = data >> 8;
-                        itech8_grom_bank.write( data >> 8 );
+		itech8_grom_bank.write( data >> 8 );
             }
         };
 	
 	public static WriteHandlerPtr display_page16_w = new WriteHandlerPtr() {
             public void handler(int offset, int data) {
                 /*TODO*///if (ACCESSING_MSB)
-			itech8_display_page.write( ~data >> 8);
+		 	itech8_display_page.write( ~data >> 8);
             }
         };
 	
@@ -619,23 +618,23 @@ public class itech8
 	public static WriteHandlerPtr blitter16_w = new WriteHandlerPtr() {
             public void handler(int offset, int data) {
                 /*TODO*///if (ACCESSING_MSB)
-			itech8_blitter_w.handler(offset * 2 + 0, data >> 8);
+		 	itech8_blitter_w.handler(offset * 2 + 0, data >> 8);
 		/*TODO*///if (ACCESSING_LSB)
-		/*TODO*///	itech8_blitter_w(offset * 2 + 1, data);
+			itech8_blitter_w.handler(offset * 2 + 1, data);
             }
         };
 	
 	public static WriteHandlerPtr palette_addr16_w = new WriteHandlerPtr() {
             public void handler(int offset, int data) {
                 /*TODO*///if (ACCESSING_MSB)
-			itech8_palette_address_w.handler(0, data >> 8);
+		 	itech8_palette_address_w.handler(0, data >> 8);
             }
         };
 	
 	public static WriteHandlerPtr palette_data16_w = new WriteHandlerPtr() {
             public void handler(int offset, int data) {
                 /*TODO*///if (ACCESSING_MSB)
-			itech8_palette_data_w.handler(0, data >> 8);
+		 	itech8_palette_data_w.handler(0, data >> 8);
             }
         };
 	
@@ -644,7 +643,7 @@ public class itech8
                 /*TODO*///if (ACCESSING_MSB)
 			itech8_tms34061_w.handler(offset * 2 + 0, data >> 8);
 		/*TODO*///else if (ACCESSING_LSB)
-		/*TODO*///	itech8_tms34061_w(offset * 2 + 1, data);
+		 /*TODO*///	itech8_tms34061_w.handler(offset * 2 + 1, data);
             }
         };
 	
@@ -828,7 +827,8 @@ public class itech8
 	};
 	
 	public static Memory_WriteAddress sound2203_writemem[]={
-		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),	new Memory_WriteAddress( 0x0000, 0x0000, MWA_NOP ),
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),	
+                new Memory_WriteAddress( 0x0000, 0x0000, MWA_NOP ),
 		new Memory_WriteAddress( 0x2000, 0x2000, YM2203_control_port_0_w ),
 		new Memory_WriteAddress( 0x2001, 0x2001, YM2203_write_port_0_w ),
 		new Memory_WriteAddress( 0x2002, 0x2002, YM2203_control_port_0_w ),
@@ -1374,7 +1374,7 @@ public class itech8
 				CPU_M6809,															
 				CLOCK_8MHz/4,														
 				sound2203_readmem,sound2203_writemem,null,null,				
-				ignore_interrupt,1													
+				ignore_interrupt,1
                         )
 		},																			
 		60,(int)(((263. - 240.) / 263.) * 1000000. / 60.),							
@@ -1399,9 +1399,9 @@ public class itech8
 			new MachineSound(
                                 SOUND_YM2203, 
                                 ym2203_interface )							
-		/*TODO*///	{ SOUND_OKIM6295, &oki6295_interface_high },						
-		},                
-                
+			/*TODO*///{ SOUND_OKIM6295, &oki6295_interface_high },						
+		},
+                                
 		nvram_handler
         );
         

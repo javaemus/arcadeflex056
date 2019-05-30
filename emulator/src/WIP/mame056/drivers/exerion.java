@@ -417,7 +417,7 @@ public class exerion
 	
 		/* make a temporary copy of the character data */
 		src = temp;
-		dst = memory_region(REGION_GFX1);
+		dst = new UBytePtr(memory_region(REGION_GFX1));
 		length = memory_region_length(REGION_GFX1);
 		memcpy(src, dst, length);
 	
@@ -435,7 +435,7 @@ public class exerion
 	
 		/* make a temporary copy of the sprite data */
 		src = temp;
-		dst = memory_region(REGION_GFX2);
+		dst = new UBytePtr(memory_region(REGION_GFX2));
 		length = memory_region_length(REGION_GFX2);
 		memcpy(src, dst, length);
 	

@@ -57,8 +57,8 @@ public class tms34061H {
     {
             public int			blanked;					/* true if blanked */
             public UBytePtr             vram = new UBytePtr();						/* base of VRAM */
-            public UBytePtr             latchram;					/* base of latch RAM */
-            public UBytePtr             dirty;						/* pointer to array of dirty rows */
+            public UBytePtr             latchram=new UBytePtr();					/* base of latch RAM */
+            public UBytePtr             dirty=new UBytePtr();						/* pointer to array of dirty rows */
             public int[]                regs;						/* pointer to array of registers */
             public int			dispstart;					/* display start */
     };
