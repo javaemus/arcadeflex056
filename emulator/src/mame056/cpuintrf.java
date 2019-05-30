@@ -23,6 +23,7 @@ import mame056.cpu.m6805.m6805;
 import mame056.cpu.m6805.m68705;
 import mame056.cpu.m6805.HD63705;
 import mame056.cpu.m6800.m6808;
+import mame056.cpu.s2650.s2650;
 
 public class cpuintrf {
 
@@ -225,27 +226,13 @@ public class cpuintrf {
                 new HD63705(),//CPU0(HD63705,  hd63705,  8,  0,1.00,HD63705_INT_IRQ1,8, 16,	  0,16,BE,1, 3	),
                 new dummy_cpu(),/*TODO*///	CPU0(HD6309,   hd6309,	 2,  0,1.00,HD6309_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
                 new m6809(),//CPU0(M6809,    m6809,	 2,  0,1.00,M6809_IRQ_LINE,  8, 16,	  0,16,BE,1, 4	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_KONAMI)
-            /*TODO*///	CPU0(KONAMI,   konami,	 2,  0,1.00,KONAMI_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_M68000)
-            /*TODO*///	CPU0(M68000,   m68000,	 8, -1,1.00,-1,			   16,24bew,  0,24,BE,2,10	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_M68010)
-            /*TODO*///	CPU0(M68010,   m68010,	 8, -1,1.00,-1,			   16,24bew,  0,24,BE,2,10	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_M68EC020)
-            /*TODO*///	CPU0(M68EC020, m68ec020, 8, -1,1.00,-1,			   32,24bedw, 0,24,BE,4,10	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_M68020)
-            /*TODO*///	CPU0(M68020,   m68020,	 8, -1,1.00,-1, 		   32,32bedw, 0,32,BE,4,10	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_T11)
-            /*TODO*///	CPU0(T11,	   t11, 	 4,  0,1.00,-1,			   16,16lew,  0,16,LE,2, 6	),
-            /*TODO*///#endif
-            /*TODO*///#if (HAS_S2650)
-            /*TODO*///	CPU0(S2650,    s2650,	 2,  0,1.00,-1,			    8, 16,	  0,15,LE,1, 3	),
+            new dummy_cpu(),//CPU0(KONAMI,   konami,	 2,  0,1.00,KONAMI_IRQ_LINE, 8, 16,	  0,16,BE,1, 4	),
+            new dummy_cpu(),//CPU0(M68000,   m68000,	 8, -1,1.00,-1,			   16,24bew,  0,24,BE,2,10	),
+            new dummy_cpu(),//CPU0(M68010,   m68010,	 8, -1,1.00,-1,			   16,24bew,  0,24,BE,2,10	),
+            new dummy_cpu(),//CPU0(M68EC020, m68ec020, 8, -1,1.00,-1,			   32,24bedw, 0,24,BE,4,10	),
+            new dummy_cpu(),//CPU0(M68020,   m68020,	 8, -1,1.00,-1, 		   32,32bedw, 0,32,BE,4,10	),
+            new dummy_cpu(),//CPU0(T11,	   t11, 	 4,  0,1.00,-1,			   16,16lew,  0,16,LE,2, 6	),
+            new s2650(),//CPU0(S2650,    s2650,	 2,  0,1.00,-1,			    8, 16,	  0,15,LE,1, 3	),
             /*TODO*///#endif
             /*TODO*///#if (HAS_TMS34010)
             /*TODO*///	CPU0(TMS34010, tms34010, 2,  0,1.00,0,             16,29lew,  3,29,LE,2,10	),
