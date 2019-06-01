@@ -66,7 +66,7 @@ public class itech8
 	public static UBytePtr itech8_display_page = new UBytePtr();
 	
 	
-	static int palette_addr;
+	static int palette_addr=0;
 	static int palette_index;
 	static int[] palette_data=new int[3];
 	
@@ -165,23 +165,23 @@ public class itech8
 	
 	public static VhStartPtr itech8_vh_start = new VhStartPtr() { public int handler() 
 	{
-		/* initialize TMS34061 emulation */
-	    if (tms34061_start(tms34061intf) != 0)
-			return 1;
-	
-		/* get the TMS34061 display state */
-		tms34061_get_display_state(tms_state);
-	
-		/* reset statics */
-		palette_addr = 0;
-		palette_index = 0;
-		slikshot = 0;
-	
-		/* fetch the GROM base */
-		grom_base = new UBytePtr(memory_region(REGION_GFX1));
-		grom_size = memory_region_length(REGION_GFX1);
-	
-		return 0;
+            /* initialize TMS34061 emulation */
+            if (tms34061_start(tms34061intf) != 0)
+                        return 1;
+
+                /* get the TMS34061 display state */
+                tms34061_get_display_state(tms_state);
+
+                /* reset statics */
+                palette_addr = 0;
+                palette_index = 0;
+                slikshot = 0;
+
+                /* fetch the GROM base */
+                grom_base = new UBytePtr(memory_region(REGION_GFX1));
+                grom_size = memory_region_length(REGION_GFX1);
+
+                return 0;
 	} };
 	
 	public static VhStartPtr slikshot_vh_start = new VhStartPtr() { public int handler() 
@@ -217,6 +217,7 @@ public class itech8
 		/* latch the address */
 		palette_addr = data;
 		palette_index = 0;
+                
 	} };
 	
 	
@@ -224,11 +225,12 @@ public class itech8
 	{
 		/* wait for 3 bytes to come in, then update the color */
 		palette_data[palette_index++] = data;
+                //System.out.println("offet: "+offset+" data: "+data);
 		if (palette_index == 3)
 		{
 			palette_set_color(palette_addr++, palette_data[0] << 2, palette_data[1] << 2, palette_data[2] << 2);
-			palette_index = 0;
-		}
+                        	palette_index = 0;
+                }
 	} };
 	
 	
@@ -935,24 +937,26 @@ public class itech8
 		/* width can be up to 512 pixels */
 		if ((BLITTER_OUTPUT() & 0x40) != 0)
 		{
-			int halfwidth = (Machine.visible_area.max_x + 2) / 2;
-			UBytePtr base = new UBytePtr(tms_state.vram, (~itech8_display_page.read() & 0x80) << 10);
-			UBytePtr latch = new UBytePtr(tms_state.latchram, (~itech8_display_page.read() & 0x80) << 10);
-	
-			/* now regenerate the bitmap */
-			for (ty = 0, y = Machine.visible_area.min_y; y <= Machine.visible_area.max_y; y++, ty++)
-			{
-				UBytePtr scanline=new UBytePtr(512);
-				int x;
-	
-				for (x = 0; x < halfwidth; x++)
-				{
-					scanline.write(x * 2 + 0, (latch.read(256 * ty + x) & 0xf0) | (base.read(256 * ty + x) >> 4));
-					scanline.write(x * 2 + 1, (latch.read(256 * ty + x) << 4) | (base.read(256 * ty + x) & 0x0f));
-				}
-                                scanline.offset=0;
-				draw_scanline8(bitmap, 0, y, 2 * halfwidth, scanline, new IntArray(Machine.pens), -1);
-			}
+                    int halfwidth = (Machine.visible_area.max_x + 2) / 2;
+                    UBytePtr base = new UBytePtr(tms_state.vram, (~itech8_display_page.read() & 0x80) << 10);
+                    UBytePtr latch = new UBytePtr(tms_state.latchram, (~itech8_display_page.read() & 0x80) << 10);
+
+                    //base.inc(256*3);
+                    //latch.inc(256*3);
+
+                    /* now regenerate the bitmap */
+                    for (ty = 0, y = Machine.visible_area.min_y; y <= Machine.visible_area.max_y; y++, ty++)
+                    {
+                            char[] scanline=new char[512];
+                            int x;
+
+                            for (x = 0; x < halfwidth; x++)
+                            {
+                                    scanline[x * 2 + 0] = (char) ((latch.read(256 * ty + x) & 0xf0) | (base.read(256 * ty + x) >> 4));
+                                    scanline[x * 2 + 1] = (char) ((latch.read(256 * ty + x) << 4) | (base.read(256 * ty + x) & 0x0f));
+                            }
+                            draw_scanline8(bitmap, Machine.visible_area.min_x, y, Machine.visible_area.max_x - Machine.visible_area.min_x + 1, new UBytePtr(scanline, Machine.visible_area.min_x), new IntArray(Machine.pens), -1);
+                    }
 		}
 	
 		/* blit mode one: 8bpp in the TMS34061 RAM */
@@ -961,13 +965,14 @@ public class itech8
 		/* width can be up to 256 pixels */
 		else
 		{
+                    //System.out.println("2");
 			UBytePtr base = new UBytePtr(tms_state.vram, tms_state.dispstart & ~0x30000);
-	
+                        base.inc(256);
 			/* now regenerate the bitmap */
 			for (ty = 0, y = Machine.visible_area.min_y; y <= Machine.visible_area.max_y; y++, ty++)
 			{
-				draw_scanline8(bitmap, 0, y, 256, new UBytePtr(base, 0x20000 + 256 * ty), new IntArray(Machine.pens), -1);
-				draw_scanline8(bitmap, 0, y, 256, new UBytePtr(base, 0x00000 + 256 * ty), new IntArray(Machine.pens), 0);
+				draw_scanline8(bitmap, Machine.visible_area.min_x, y, 256, new UBytePtr(base, 0x20000 + 256 * ty), new IntArray(Machine.pens), -1);
+				draw_scanline8(bitmap, Machine.visible_area.min_x, y, 256, new UBytePtr(base, 0x00000 + 256 * ty), new IntArray(Machine.pens), 0);
 			}
 		}
 	

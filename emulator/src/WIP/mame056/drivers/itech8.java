@@ -637,7 +637,7 @@ public class itech8
 	public static WriteHandlerPtr palette_data16_w = new WriteHandlerPtr() {
             public void handler(int offset, int data) {
                 /*TODO*///if (ACCESSING_MSB)
-		 	itech8_palette_data_w.handler(0, data >> 8);
+		 	itech8_palette_data_w.handler(offset, data >> 8);
             }
         };
 	
@@ -1340,7 +1340,7 @@ public class itech8
 		init_machine,																
 																					
 		/* video hardware */														
-		512, 263, new rectangle( 0, 255, 0, 239 ),
+		256, 240, new rectangle( 0, 255, 0, 239 ),
 		null,																			
 		256, 0,																		
 		null,																			
@@ -1431,7 +1431,7 @@ public class itech8
 		init_machine,																
 																					
 		/* video hardware */														
-		512, 263, new rectangle( 0, 255, 0, 239 ),
+		256, 240, new rectangle( 0, 255, 0, 239 ),
 		null,																			
 		256, 0,																		
 		null,																			
@@ -1474,7 +1474,7 @@ public class itech8
 		init_machine,																
 																					
 		/* video hardware */														
-		512, 263, new rectangle( 18, 367, 0, 239 ),
+		368, 240, new rectangle( 18, 367, 0, 239 ),
 		null,																			
 		256, 0,																		
 		null,																			
@@ -1519,7 +1519,7 @@ public class itech8
 		init_machine,																
 																					
 		/* video hardware */														
-		512, 263, new rectangle( 16, 389, 0, 239 ),
+		390, 240, new rectangle( 16, 389, 0, 239 ),
 		null,																			
 		256, 0,																		
 		null,																			
@@ -1564,7 +1564,7 @@ public class itech8
 		init_machine,																
 																					
 		/* video hardware */														
-		512, 263, new rectangle( 8, 375, 0, 239 ),
+		376, 240, new rectangle( 8, 375, 0, 239 ),
 		null,																			
 		256, 0,																		
 		null,																			
@@ -1608,7 +1608,7 @@ public class itech8
 		init_machine,																
 																					
 		/* video hardware */														
-		512, 263, new rectangle( 0, 375, 0, 239 ),					
+		376, 240, new rectangle( 0, 375, 0, 239 ),					
 		null,																			
 		256, 0,																		
 		null,																			
@@ -1652,7 +1652,7 @@ public class itech8
 		init_machine,																
 																					
 		/* video hardware */														
-		512, 263, new rectangle( 24, 375, 0, 239 ),
+		376, 240, new rectangle( 24, 375, 0, 239 ),
 		null,																			
 		256, 0,																		
 		null,																			
@@ -1696,7 +1696,7 @@ public class itech8
 		init_machine,																
 																					
 		/* video hardware */														
-		512, 263, new rectangle( 64, 423, 0, 239 ),
+		424, 240, new rectangle( 64, 423, 0, 239 ),
 		null,																			
 		256, 0,																		
 		null,																			
@@ -1744,7 +1744,7 @@ public class itech8
 		init_machine,
 	
 		/* video hardware */
-		512, 263, new rectangle( 0, 255, 0, 239 ),
+		256, 240, new rectangle( 0, 255, 0, 239 ),
 		null,
 		256+1, 0,
 		null,
@@ -1793,7 +1793,7 @@ public class itech8
 		init_machine,
 	
 		/* video hardware */
-		512, 263, new rectangle( 0, 255, 0, 239 ),
+		256, 240, new rectangle( 0, 255, 0, 239 ),
 		null,
 		256+1, 0,
 		null,
