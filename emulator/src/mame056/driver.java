@@ -165,6 +165,7 @@ import static WIP.mame056.drivers.dooyong.*;
 import static WIP.mame056.drivers.psychic5.*;
 import static WIP.mame056.drivers.battlane.*;
 import static WIP.mame056.drivers.mnight.*;
+import static WIP.mame056.drivers.funkybee.*;
 
 public class driver {
 
@@ -3621,8 +3622,8 @@ public class driver {
         driver_bcruzm12, /* (c) 1983 Sigma Ent. Inc. */
         driver_hopprobo, /* (c) 1983 Sega */
         driver_wanted, /* (c) 1984 Sigma Ent. Inc. */
-        /*TODO*///driver_funkybee,	/* (c) 1982 Orca */
-        /*TODO*///driver_skylancr,	/* (c) 1983 Orca + Esco Trading Co license */
+        driver_funkybee,	/* (c) 1982 Orca */
+        driver_skylancr,	/* (c) 1983 Orca + Esco Trading Co license */
         /*TODO*///driver_zodiack,	/* (c) 1983 Orca + Esco Trading Co license */
         /*TODO*///driver_dogfight,	/* (c) 1983 Thunderbolt */
         /*TODO*///driver_moguchan,	/* (c) 1982 Orca + Eastern Commerce Inc. license (doesn't appear on screen) */
