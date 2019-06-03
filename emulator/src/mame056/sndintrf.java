@@ -59,16 +59,19 @@ public class sndintrf {
             timer_set(TIME_NOW, data, soundlatch_callback);
         }
     };
+    
+    static int _word;
 
-    /*TODO*///WRITE16_HANDLER( soundlatch_word_w )
-/*TODO*///{
-/*TODO*///	static data16_t word;
-/*TODO*///	COMBINE_DATA(&word);
-/*TODO*///
-/*TODO*///	/* make all the CPUs synchronize, and only AFTER that write the new command to the latch */
-/*TODO*///	timer_set(TIME_NOW,word,soundlatch_callback);
-/*TODO*///}
-/*TODO*///
+    public static WriteHandlerPtr soundlatch_word_w = new WriteHandlerPtr() {
+        public void handler(int offset, int data) {
+            
+/*TODO*///	COMBINE_DATA(&_word);
+
+            /* make all the CPUs synchronize, and only AFTER that write the new command to the latch */
+            timer_set(TIME_NOW,_word,soundlatch_callback);
+        }
+    };
+
     public static ReadHandlerPtr soundlatch_r = new ReadHandlerPtr() {
         public int handler(int offset) {
             read_debug = 1;

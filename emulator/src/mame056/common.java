@@ -1296,29 +1296,29 @@ public class common {
             fill_rom_data - fill a region of ROM space
     -------------------------------------------------*/
 
- /*TODO*///static int fill_rom_data(struct rom_load_data *romdata, const struct RomModule *romp)
-/*TODO*///{
-/*TODO*///	UINT32 numbytes = ROM_GETLENGTH(romp);
-/*TODO*///	UINT8 *base = romdata->regionbase + ROM_GETOFFSET(romp);
-/*TODO*///
-/*TODO*///	/* make sure we fill within the region space */
-/*TODO*///	if (ROM_GETOFFSET(romp) + numbytes > romdata->regionlength)
-/*TODO*///	{
-/*TODO*///		printf("Error in RomModule definition: FILL out of memory region space\n");
-/*TODO*///		return 0;
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	/* make sure the length was valid */
-/*TODO*///	if (numbytes == 0)
-/*TODO*///	{
-/*TODO*///		printf("Error in RomModule definition: FILL has an invalid length\n");
-/*TODO*///		return 0;
-/*TODO*///	}
-/*TODO*///
-/*TODO*///	/* fill the data */
-/*TODO*///	memset(base, ROM_GETCRC(romp) & 0xff, numbytes);
-/*TODO*///	return 1;
-/*TODO*///}
+    public static int fill_rom_data(rom_load_data romdata, RomModule[] romp, int rom_ptr)
+    {
+	int numbytes = ROM_GETLENGTH(romp, rom_ptr);
+	UBytePtr base = new UBytePtr(romdata.regionbase, ROM_GETOFFSET(romp, rom_ptr));
+
+	/* make sure we fill within the region space */
+	if (ROM_GETOFFSET(romp, rom_ptr) + numbytes > romdata.regionlength)
+	{
+		printf("Error in RomModule definition: FILL out of memory region space\n");
+		return 0;
+	}
+
+	/* make sure the length was valid */
+	if (numbytes == 0)
+	{
+		printf("Error in RomModule definition: FILL has an invalid length\n");
+		return 0;
+	}
+
+	/* fill the data */
+	memset(base, ROM_GETCRC(romp, rom_ptr) & 0xff, numbytes);
+	return 1;
+    }
 
 
     /*-------------------------------------------------
@@ -1400,8 +1400,9 @@ public class common {
 
             /* handle fills */
             if (ROMENTRY_ISFILL(romp, rom_ptr)) {
-                throw new UnsupportedOperationException("Unimplemented");
-                /*TODO*///			if (!fill_rom_data(romdata, romp++))
+                //throw new UnsupportedOperationException("Unimplemented");
+                if (fill_rom_data(romdata, romp, rom_ptr++)==0)
+                    throw new UnsupportedOperationException("fatal error");
 /*TODO*///				goto fatalerror;
             } /* handle copies */ else if (ROMENTRY_ISCOPY(romp, rom_ptr)) {
                 //throw new UnsupportedOperationException("Unimplemented");

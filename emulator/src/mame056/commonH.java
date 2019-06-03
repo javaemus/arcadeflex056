@@ -301,9 +301,13 @@ public class commonH {
     public static final int ROM_OPTIONAL = 0x00000800;
 
     public static final int ROM_GROUPMASK = 0x0000f000;/* load data in groups of this size + 1 */
- /*TODO*///#define		ROM_GROUPSIZE(n)		((((n) - 1) & 15) << 12)
+    public static int ROM_GROUPSIZE(int n){
+        return ((((n) - 1) & 15) << 12);
+    }
 /*TODO*///#define		ROM_GROUPBYTE			ROM_GROUPSIZE(1)
-/*TODO*///#define		ROM_GROUPWORD			ROM_GROUPSIZE(2)
+    public static int		ROM_GROUPWORD() {
+        return ROM_GROUPSIZE(2);
+    }
 /*TODO*///#define		ROM_GROUPDWORD			ROM_GROUPSIZE(4)
 
     public static final int ROM_SKIPMASK = 0x000f0000;/* skip this many bytes after each group */
@@ -454,8 +458,10 @@ public class commonH {
             ROMX_LOAD(name, offset, length, crc, ROM_SKIP(1));
     }
 /*TODO*///#define ROM_LOAD16_WORD(name,offset,length,crc)		ROM_LOAD(name, offset, length, crc)
-/*TODO*///#define ROM_LOAD16_WORD_SWAP(name,offset,length,crc)ROMX_LOAD(name, offset, length, crc, ROM_GROUPWORD | ROM_REVERSE)
-/*TODO*///
+    public static void ROM_LOAD16_WORD_SWAP(String name, int offset, int length, int crc){
+        ROMX_LOAD(name, offset, length, crc, ROM_GROUPWORD() | ROM_REVERSE);
+    }
+
 /*TODO*////* ----- new-style 32-bit loading macros ----- */
 /*TODO*///#define ROM_LOAD32_BYTE(name,offset,length,crc)		ROMX_LOAD(name, offset, length, crc, ROM_SKIP(3))
 /*TODO*///#define ROM_LOAD32_WORD(name,offset,length,crc)		ROMX_LOAD(name, offset, length, crc, ROM_GROUPWORD | ROM_SKIP(2))

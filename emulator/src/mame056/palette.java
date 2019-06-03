@@ -901,13 +901,14 @@ public class palette {
         }
     };
 
-    /*TODO*///WRITE16_HANDLER( paletteram16_xRRRRRGGGGGBBBBB_word_w )
-/*TODO*///{
-/*TODO*///	COMBINE_DATA(&paletteram16[offset]);
-/*TODO*///	changecolor_xRRRRRGGGGGBBBBB(offset,paletteram16[offset]);
-/*TODO*///}
-/*TODO*///
-/*TODO*///
+    public static WriteHandlerPtr paletteram16_xRRRRRGGGGGBBBBB_word_w = new WriteHandlerPtr() {
+        public void handler(int offset, int data) {
+            /*TODO*///	COMBINE_DATA(&paletteram16[offset]);
+            changecolor_xRRRRRGGGGGBBBBB(offset,paletteram.read(offset));
+        }
+    };
+
+    
 /*TODO*///INLINE void changecolor_xGGGGGRRRRRBBBBB(int color,int data)
 /*TODO*///{
 /*TODO*///	int r,g,b;

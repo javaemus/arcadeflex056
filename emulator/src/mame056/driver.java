@@ -161,6 +161,7 @@ import static WIP.mame056.drivers.firetrk.*;
 import static WIP.mame056.drivers.ataxx.*;
 import static WIP.mame056.drivers.exedexes.*;
 import static WIP.mame056.drivers.exerion.*;
+import static WIP.mame056.drivers.dooyong.*;
 
 public class driver {
 
@@ -3787,18 +3788,18 @@ public class driver {
         /*TODO*///	driver_gundealt,	/* (c) 1990 Tecmo */
         /*TODO*///	driver_yamyam,	/* (c) 1990 Dooyong */
         /*TODO*///	driver_wiseguy,	/* (c) 1990 Dooyong */
-        /*TODO*///	driver_lastday,	/* (c) 1990 Dooyong */
-        /*TODO*///	driver_lastdaya,	/* (c) 1990 Dooyong */
-        /*TODO*///	driver_gulfstrm,	/* (c) 1991 Dooyong */
-        /*TODO*///	driver_gulfstr2,	/* (c) 1991 Dooyong + distributed by Media Shoji */
-        /*TODO*///	driver_pollux,	/* (c) 1991 Dooyong */
-        /*TODO*///	driver_bluehawk,	/* (c) 1993 Dooyong */
-        /*TODO*///	driver_bluehawn,	/* (c) 1993 NTC */
-        /*TODO*///	driver_sadari,	/* (c) 1993 NTC */
-        /*TODO*///	driver_gundl94,	/* (c) 1994 Dooyong */
-        /*TODO*///	driver_primella,	/* (c) 1994 NTC */
-        /*TODO*///	driver_rshark,	/* (c) 1995 Dooyong */
-        /*TODO*///
+        driver_lastday,	/* (c) 1990 Dooyong */
+        driver_lastdaya,	/* (c) 1990 Dooyong */
+        driver_gulfstrm,	/* (c) 1991 Dooyong */
+        driver_gulfstr2,	/* (c) 1991 Dooyong + distributed by Media Shoji */
+        driver_pollux,	/* (c) 1991 Dooyong */
+        driver_bluehawk,	/* (c) 1993 Dooyong */
+        driver_bluehawn,	/* (c) 1993 NTC */
+        driver_sadari,	/* (c) 1993 NTC */
+        driver_gundl94,	/* (c) 1994 Dooyong */
+        driver_primella,	/* (c) 1994 NTC */
+        driver_rshark,	/* (c) 1995 Dooyong */
+        
         /*TODO*///	/* Tong Electronic games */
         /*TODO*///	driver_leprechn,	/* (c) 1982 */
         /*TODO*///	driver_potogold,	/* (c) 1982 */
