@@ -56,7 +56,7 @@ import static mame056.vidhrdw.generic.*;
 import static arcadeflex056.fileio.*;
 import static mame056.cpu.m6809.m6809H.*;
 import static mame056.palette.*;
-import mame056.sound._3812intfH;
+import static mame056.sound._3812intfH.*;
 
 public class battlane
 {

@@ -164,6 +164,7 @@ import static WIP.mame056.drivers.exerion.*;
 import static WIP.mame056.drivers.dooyong.*;
 import static WIP.mame056.drivers.psychic5.*;
 import static WIP.mame056.drivers.battlane.*;
+import static WIP.mame056.drivers.mnight.*;
 
 public class driver {
 
@@ -3354,8 +3355,8 @@ public class driver {
         driver_ninjak2a, /* UPL-????? (c) 1987 */
         driver_ninjak2b, /* UPL-????? (c) 1987 */
         driver_rdaction, /* UPL-87003?(c) 1987 + World Games license */
-        /*TODO*///	driver_mnight,	/* UPL-????? (c) 1987 distributed by Kawakus */
-        /*TODO*///	driver_arkarea,	/* UPL-87007 (c) [1988?] */
+        driver_mnight,	/* UPL-????? (c) 1987 distributed by Kawakus */
+        driver_arkarea,	/* UPL-87007 (c) [1988?] */
         /*TODO*///	driver_robokid,	/* UPL-88013 (c) 1988 */
         /*TODO*///	driver_robokidj,	/* UPL-88013 (c) 1988 */
         /*TODO*///	driver_omegaf,	/* UPL-89016 (c) 1989 */
