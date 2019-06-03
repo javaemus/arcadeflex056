@@ -163,6 +163,7 @@ import static WIP.mame056.drivers.exedexes.*;
 import static WIP.mame056.drivers.exerion.*;
 import static WIP.mame056.drivers.dooyong.*;
 import static WIP.mame056.drivers.psychic5.*;
+import static WIP.mame056.drivers.battlane.*;
 
 public class driver {
 
@@ -3300,9 +3301,9 @@ public class driver {
         /*TODO*///	driver_xsleena,	/* TA-0019 (c) 1986 */
         /*TODO*///	driver_xsleenab,	/* bootleg */
         /*TODO*///	driver_solarwar,	/* TA-0019 (c) 1986 Taito + Memetron license */
-        /*TODO*///	driver_battlane,	/* -0215, -0216 (Data East part number) (c) 1986 + Taito license */
-        /*TODO*///	driver_battlan2,	/* -0215, -0216 (Data East part number) (c) 1986 + Taito license */
-        /*TODO*///	driver_battlan3,	/* -0215, -0216 (Data East part number) (c) 1986 + Taito license */
+        driver_battlane,	/* -0215, -0216 (Data East part number) (c) 1986 + Taito license */
+        driver_battlan2,	/* -0215, -0216 (Data East part number) (c) 1986 + Taito license */
+        driver_battlan3,	/* -0215, -0216 (Data East part number) (c) 1986 + Taito license */
         /*TODO*///	driver_ddragon,	/* TA-0021 (c) 1987 */
         /*TODO*///	driver_ddragonu,	/* TA-0021 (c) 1987 Taito America */
         /*TODO*///	driver_ddragonb,	/* bootleg */
