@@ -43,7 +43,8 @@ public class namcos1
         public static int namcos1_reset = 0;
 
         static int berabohm_input_counter;
-	
+
+   	
 	/*******************************************************************************
 	*																			   *
 	*	BANK area handling															*
@@ -652,18 +653,18 @@ public class namcos1
 			handler_r = namcos1_bank_element[chip].bank_handler_r;
 			if( handler_r != null ){
 				/* I/O handler */
-				/*TODO*///memory_set_bankhandler_r( bank+1,offs,handler_r);
+				memory_set_bankhandler_r( bank+1,offs,handler_r);
                         } else {	/* memory direct */
-				/*TODO*///memory_set_bankhandler_r( bank+1,0,org_bank_handler_r[bank] );
+				memory_set_bankhandler_r( bank+1,0,org_bank_handler_r[bank] );
                         }
 	
 			/* write hardware */
 			handler_w = namcos1_bank_element[chip].bank_handler_w;
 			if( handler_w != null){
 				/* I/O handler */
-				/*TODO*///memory_set_bankhandler_w( bank+1,offs,handler_w);
+				memory_set_bankhandler_w( bank+1,offs,handler_w);
                         } else {	/* memory direct */
-				/*TODO*///memory_set_bankhandler_w( bank+1,0,org_bank_handler_w[bank] );
+				memory_set_bankhandler_w( bank+1,0,org_bank_handler_w[bank] );
                         }
 	
 			/* unmapped bank warning */
@@ -892,8 +893,8 @@ public class namcos1
 		for( bank =0 ; bank < 2*8 ; bank++ )
 		{
 			/* set bank pointer & handler for cpu interface */
-			/*TODO*///memory_set_bankhandler_r( bank+1,0,unknown_r);
-			/*TODO*///memory_set_bankhandler_w( bank+1,0,unknown_w);
+			memory_set_bankhandler_r( bank+1,0,unknown_r);
+			memory_set_bankhandler_w( bank+1,0,unknown_w);
 		}
 	
 		/* Prepare code for Cpu 0 */

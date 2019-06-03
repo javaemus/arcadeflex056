@@ -483,15 +483,15 @@ public class williams
 		/* if the bank maps into normal RAM, it represents I/O space */
 		if (bank_offset < 0x10000)
 		{
-			/*TODO*///memory_set_bankhandler_r(2, 0, defender_io_r);
-			/*TODO*///memory_set_bankhandler_w(2, 0, defender_io_w);
+			memory_set_bankhandler_r(2, 0, defender_io_r);
+			memory_set_bankhandler_w(2, 0, defender_io_w);
 		}
 	
 		/* otherwise, it's ROM space */
 		else
 		{
-			/*TODO*///memory_set_bankhandler_r(2, 0, MRA_BANK2);
-			/*TODO*///memory_set_bankhandler_w(2, 0, MWA_ROM);
+			memory_set_bankhandler_r(2, 0, MRA_BANK2);
+			memory_set_bankhandler_w(2, 0, MWA_ROM);
 		}
 	} };
 	

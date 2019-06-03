@@ -312,51 +312,78 @@ public class memory {
         opbasefunc = cpudata[activecpu].opbase;
     }
 
-    /*TODO*///
-/*TODO*///
-/*TODO*////*-------------------------------------------------
-/*TODO*///	memory_set_bankhandler_r - set readmemory
-/*TODO*///	handler for bank memory (8-bit only!)
-/*TODO*///-------------------------------------------------*/
-/*TODO*///
-/*TODO*///void memory_set_bankhandler_r(int bank, offs_t offset, mem_read_handler handler)
-/*TODO*///{
-/*TODO*///	/* determine the new offset */
-/*TODO*///	if (HANDLER_IS_RAM(handler) || HANDLER_IS_ROM(handler))
-/*TODO*///		rmemhandler8[bank].offset = 0 - offset, handler = (mem_read_handler)STATIC_RAM;
-/*TODO*///	else if (HANDLER_IS_BANK(handler))
-/*TODO*///		rmemhandler8[bank].offset = bankdata[HANDLER_TO_BANK(handler)].readoffset - offset;
-/*TODO*///	else
-/*TODO*///		rmemhandler8[bank].offset = bankdata[bank].readoffset - offset;
-/*TODO*///
-/*TODO*///	/* set the new handler */
-/*TODO*///	if (HANDLER_IS_STATIC(handler))
-/*TODO*///		handler = rmemhandler8s[(FPTR)handler];
-/*TODO*///	rmemhandler8[bank].handler = (void *)handler;
-/*TODO*///}
-/*TODO*///
-/*TODO*///
-/*TODO*////*-------------------------------------------------
-/*TODO*///	memory_set_bankhandler_w - set writememory
-/*TODO*///	handler for bank memory (8-bit only!)
-/*TODO*///-------------------------------------------------*/
-/*TODO*///
-/*TODO*///void memory_set_bankhandler_w(int bank, offs_t offset, mem_write_handler handler)
-/*TODO*///{
-/*TODO*///	/* determine the new offset */
-/*TODO*///	if (HANDLER_IS_RAM(handler) || HANDLER_IS_ROM(handler) || HANDLER_IS_RAMROM(handler))
-/*TODO*///		wmemhandler8[bank].offset = 0 - offset;
-/*TODO*///	else if (HANDLER_IS_BANK(handler))
-/*TODO*///		wmemhandler8[bank].offset = bankdata[HANDLER_TO_BANK(handler)].writeoffset - offset;
-/*TODO*///	else
-/*TODO*///		wmemhandler8[bank].offset = bankdata[bank].writeoffset - offset;
-/*TODO*///
-/*TODO*///	/* set the new handler */
-/*TODO*///	if (HANDLER_IS_STATIC(handler))
-/*TODO*///		handler = wmemhandler8s[(FPTR)handler];
-/*TODO*///	wmemhandler8[bank].handler = (void *)handler;
-/*TODO*///}
-/*TODO*///
+    
+
+    /*-------------------------------------------------
+            memory_set_bankhandler_r - set readmemory
+            handler for bank memory (8-bit only!)
+    -------------------------------------------------*/
+    public static void memory_set_bankhandler_r(int bank, int offset, int handler){
+        ReadHandlerPtr _handler=new ReadHandlerPtr() {
+            public int handler(int offset) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        };
+        
+        memory_set_bankhandler_r(bank, offset, handler, _handler);
+    }
+    
+    public static void memory_set_bankhandler_r(int bank, int offset, ReadHandlerPtr _handler){
+        memory_set_bankhandler_r(bank, offset, -15000, _handler);
+    }
+    
+    public static void memory_set_bankhandler_r(int bank, int offset, int handler, ReadHandlerPtr _handler)
+    {
+            /* determine the new offset */
+            if (HANDLER_IS_RAM(handler) || HANDLER_IS_ROM(handler)){
+                    rmemhandler8[bank].offset = 0 - offset;
+                    handler = STATIC_RAM;
+            } else if (HANDLER_IS_BANK(handler)) {
+                    rmemhandler8[bank].offset = bankdata[HANDLER_TO_BANK(handler)].readoffset - offset;
+            } else {
+                    rmemhandler8[bank].offset = bankdata[bank].readoffset - offset;
+            }
+
+            /* set the new handler */
+            if (HANDLER_IS_STATIC(handler))
+                    _handler = (ReadHandlerPtr) rmemhandler8[handler];
+            rmemhandler8[bank].handler = _handler;
+    }
+
+
+    /*-------------------------------------------------
+            memory_set_bankhandler_w - set writememory
+            handler for bank memory (8-bit only!)
+    -------------------------------------------------*/
+    public static void memory_set_bankhandler_w(int bank, int offset, WriteHandlerPtr _handler){
+        memory_set_bankhandler_w(bank, offset, -15000, _handler);
+    }
+    
+    public static void memory_set_bankhandler_w(int bank, int offset, int handler){
+        WriteHandlerPtr _handler = new WriteHandlerPtr() {
+            public void handler(int offset, int data) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        };
+        memory_set_bankhandler_w(bank, offset, handler, _handler);
+    }
+            
+    public static void memory_set_bankhandler_w(int bank, int offset, int handler, WriteHandlerPtr _handler)
+    {
+            /* determine the new offset */
+            if (HANDLER_IS_RAM(handler) || HANDLER_IS_ROM(handler) || HANDLER_IS_RAMROM(handler))
+                    wmemhandler8[bank].offset = 0 - offset;
+            else if (HANDLER_IS_BANK(handler))
+                    wmemhandler8[bank].offset = bankdata[HANDLER_TO_BANK(handler)].writeoffset - offset;
+            else
+                    wmemhandler8[bank].offset = bankdata[bank].writeoffset - offset;
+
+            /* set the new handler */
+            if (HANDLER_IS_STATIC(handler))
+                    _handler = (WriteHandlerPtr) wmemhandler8[handler];
+            wmemhandler8[bank].handler = _handler;
+    }
+
 
     /*-------------------------------------------------
             memory_set_opbase_handler - change op-code
