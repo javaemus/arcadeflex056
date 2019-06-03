@@ -162,6 +162,7 @@ import static WIP.mame056.drivers.ataxx.*;
 import static WIP.mame056.drivers.exedexes.*;
 import static WIP.mame056.drivers.exerion.*;
 import static WIP.mame056.drivers.dooyong.*;
+import static WIP.mame056.drivers.psychic5.*;
 
 public class driver {
 
@@ -3530,7 +3531,7 @@ public class driver {
         /*TODO*///	driver_argus,		/* (c) 1986 Jaleco */
         /*TODO*///	driver_valtric,	/* (c) 1986 Jaleco */
         /*TODO*///	driver_butasan,	/* (c) 1987 Jaleco */
-        /*TODO*///	driver_psychic5,	/* (c) 1987 Jaleco */
+        driver_psychic5,	/* (c) 1987 Jaleco */
         /*TODO*///	driver_ginganin,	/* (c) 1987 Jaleco */
         /*TODO*///	driver_skyfox,	/* (c) 1987 Jaleco + Nichibutsu USA license */
         /*TODO*///	driver_exerizrb,	/* bootleg */
