@@ -169,6 +169,7 @@ import static WIP.mame056.drivers.funkybee.*;
 import static WIP.mame056.drivers.zodiack.*;
 import static WIP.mame056.drivers.playch10.*;
 import static WIP.mame056.drivers.punchout.*;
+import static WIP.mame056.drivers.ambush.*;
 
 public class driver {
 
@@ -3923,7 +3924,7 @@ public class driver {
         driver_ringking, /* (c) 1985 Data East USA */
         driver_ringkin2, /* (c) 1985 Data East USA */
         driver_ringkin3, /* (c) 1985 Data East USA */
-        /*TODO*///	driver_ambush,	/* (c) 1983 Nippon Amuse Co-Ltd */
+        driver_ambush,	/* (c) 1983 Nippon Amuse Co-Ltd */
         /*TODO*///	driver_starcrus,	/* [1977 Ramtek] */
         /*TODO*///	driver_homo,		/* bootleg */
         /*TODO*///TESTdriver_dlair,
