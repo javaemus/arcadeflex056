@@ -168,6 +168,7 @@ import static WIP.mame056.drivers.mnight.*;
 import static WIP.mame056.drivers.funkybee.*;
 import static WIP.mame056.drivers.zodiack.*;
 import static WIP.mame056.drivers.playch10.*;
+import static WIP.mame056.drivers.punchout.*;
 
 public class driver {
 
@@ -848,10 +849,10 @@ public class driver {
         driver_popeyeu, /* (c) 1982 */
         driver_popeyef, /* (c) 1982 */
         driver_popeyebl, /* bootleg */
-        /*TODO*///	driver_punchout,	/* (c) 1984 */
-        /*TODO*///	driver_spnchout,	/* (c) 1984 */
-        /*TODO*///	driver_spnchotj,	/* (c) 1984 (Japan) */
-        /*TODO*///	driver_armwrest,	/* (c) 1985 */
+        driver_punchout,	/* (c) 1984 */
+        driver_spnchout,	/* (c) 1984 */
+        driver_spnchotj,	/* (c) 1984 (Japan) */
+        driver_armwrest,	/* (c) 1985 */
         
         /* Nintendo Playchoice 10 games */
         driver_pc_tenis,	/* (c) 1983 Nintendo */
