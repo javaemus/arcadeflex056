@@ -4,6 +4,8 @@
 package mame056.cpu.m6502;
 
 import static mame056.memory.*;
+import static mame056.cpu.m6502.m6502.*;
+import static mame056.memoryH.*;
 
 public class ops02H {
 
@@ -58,13 +60,18 @@ public class ops02H {
 /*TODO*///#endif
 /*TODO*///
 /*TODO*///#define CHANGE_PC change_pc16(PCD)
-/*TODO*///
-/*TODO*////***************************************************************
-/*TODO*/// *	RDOP	read an opcode
-/*TODO*/// ***************************************************************/
-/*TODO*///#define RDOP() cpu_readop(PCW++)
-/*TODO*///
-/*TODO*////***************************************************************
+    /**
+     * *************************************************************
+     * RDOP	read an opcode
+     * *************************************************************
+     */
+    public static int RDOP() {
+        int r = cpu_readop(m6502.pc);
+        m6502.pc = (m6502.pc + 1) & 0xFFFF;
+        return r;
+    }
+
+    /*TODO*////***************************************************************
 /*TODO*/// *	RDOPARG read an opcode argument
 /*TODO*/// ***************************************************************/
 /*TODO*///#define RDOPARG() cpu_readop_arg(PCW++)

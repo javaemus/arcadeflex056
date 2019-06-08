@@ -5,6 +5,7 @@ package mame056.cpu.m6502;
 
 import static mame056.cpu.m6502.m6502H.*;
 import static mame056.cpu.m6502.ops02H.*;
+import static mame056.cpu.m6502.t6502.*;
 import static mame056.cpuintrfH.*;
 import static mame056.memory.*;
 import static mame056.memoryH.*;
@@ -87,9 +88,61 @@ public class m6502 extends cpu_interface {
         //nothing
     }
 
+    public static void m6502_take_irq() {
+        throw new UnsupportedOperationException("Not supported yet.");
+        /*TODO*///	if( !(P & F_I) )
+/*TODO*///	{
+/*TODO*///		EAD = M6502_IRQ_VEC;
+/*TODO*///		m6502_ICount -= 7;
+/*TODO*///		PUSH(PCH);
+/*TODO*///		PUSH(PCL);
+/*TODO*///		PUSH(P & ~F_B);
+/*TODO*///		P |= F_I;		/* set I flag */
+/*TODO*///		PCL = RDMEM(EAD);
+/*TODO*///		PCH = RDMEM(EAD+1);
+/*TODO*///		LOG(("M6502#%d takes IRQ ($%04x)\n", cpu_getactivecpu(), PCD));
+/*TODO*///		/* call back the cpuintrf to let it clear the line */
+/*TODO*///		if (m6502.irq_callback) (*m6502.irq_callback)(0);
+/*TODO*///		change_pc16(PCD);
+/*TODO*///	}
+/*TODO*///	m6502.pending_irq = 0;
+    }
+
     @Override
     public int execute(int cycles) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        m6502_ICount[0] = cycles;
+
+        change_pc16(m6502.pc);
+
+        do {
+            int/*UINT8*/ op;
+            m6502.ppc = m6502.pc & 0xFFFF;
+
+            /* if an irq is pending, take it now */
+            if (m6502.u8_pending_irq != 0) {
+                m6502_take_irq();
+            }
+
+            op = RDOP();
+            insn6502[op].handler();
+
+            /* check if the I flag was just reset (interrupts enabled) */
+            if (m6502.u8_after_cli != 0) {
+                //LOG(("M6502#%d after_cli was >0", cpu_getactivecpu()));
+                m6502.u8_after_cli = 0;
+                if (m6502.u8_irq_state != CLEAR_LINE) {
+                    //LOG((": irq line is asserted: set pending IRQ\n"));
+                    m6502.u8_pending_irq = 1;
+                } else {
+                    //LOG((": irq line is clear\n"));
+                }
+            } else if (m6502.u8_pending_irq != 0) {
+                m6502_take_irq();
+            }
+
+        } while (m6502_ICount[0] > 0);
+
+        return cycles - m6502_ICount[0];
     }
 
     @Override
@@ -137,6 +190,32 @@ public class m6502 extends cpu_interface {
 
     @Override
     public int get_reg(int regnum) {
+        switch (regnum) {
+            case REG_PC:
+                return m6502.pc;
+            /*TODO*///		case M6502_PC: return m6502.pc.w.l;
+/*TODO*///		case REG_SP: return S;
+/*TODO*///		case M6502_S: return m6502.sp.b.l;
+/*TODO*///		case M6502_P: return m6502.p;
+/*TODO*///		case M6502_A: return m6502.a;
+/*TODO*///		case M6502_X: return m6502.x;
+/*TODO*///		case M6502_Y: return m6502.y;
+/*TODO*///		case M6502_EA: return m6502.ea.w.l;
+/*TODO*///		case M6502_ZP: return m6502.zp.w.l;
+/*TODO*///		case M6502_NMI_STATE: return m6502.nmi_state;
+/*TODO*///		case M6502_IRQ_STATE: return m6502.irq_state;
+/*TODO*///		case M6502_SO_STATE: return m6502.so_state;
+/*TODO*///		case M6502_SUBTYPE: return m6502.subtype;
+/*TODO*///		case REG_PREVIOUSPC: return m6502.ppc.w.l;
+/*TODO*///		default:
+/*TODO*///			if( regnum <= REG_SP_CONTENTS )
+/*TODO*///			{
+/*TODO*///				unsigned offset = S + 2 * (REG_SP_CONTENTS - regnum);
+/*TODO*///				if( offset < 0x1ff )
+/*TODO*///					return RDMEM( offset ) | ( RDMEM( offset + 1 ) << 8 );
+/*TODO*///			}
+        }
+        /*TODO*///	return 0;
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
