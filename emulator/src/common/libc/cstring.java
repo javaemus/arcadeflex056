@@ -90,6 +90,11 @@ public class cstring {
             buf.write(i, (short) value);
         }
     }
+    public static void memset(UShortPtr buf, int value, int size) {
+        for (int i = 0; i < size; i++) {
+            buf.write(i, (char) value);
+        }
+    }
 
     /**
      * memcpy

@@ -170,6 +170,7 @@ import static WIP.mame056.drivers.zodiack.*;
 import static WIP.mame056.drivers.playch10.*;
 import static WIP.mame056.drivers.punchout.*;
 import static WIP.mame056.drivers.ambush.*;
+import static WIP.mame056.drivers.mole.*;
 
 public class driver {
 
@@ -3929,7 +3930,7 @@ public class driver {
         /*TODO*///	driver_homo,		/* bootleg */
         /*TODO*///TESTdriver_dlair,
         /*TODO*///	driver_aztarac,	/* (c) 1983 Centuri (vector game) */
-        /*TODO*///	driver_mole,		/* (c) 1982 Yachiyo Electronics, Ltd. */
+        	driver_mole,		/* (c) 1982 Yachiyo Electronics, Ltd. */
         /*TODO*///	driver_thehand,	/* (c) 1981 T.I.C. */
         /*TODO*///	driver_gotya,		/* (c) 1981 Game-A-Tron */
         /*TODO*///	driver_mrjong,	/* (c) 1983 Kiwako */
