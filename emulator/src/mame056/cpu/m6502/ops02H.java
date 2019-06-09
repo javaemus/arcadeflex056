@@ -3,8 +3,10 @@
  */
 package mame056.cpu.m6502;
 
+import static arcadeflex036.osdepend.logerror;
 import static mame056.memory.*;
 import static mame056.cpu.m6502.m6502.*;
+import static mame056.cpuintrfH.*;
 import static mame056.memoryH.*;
 
 public class ops02H {
@@ -30,13 +32,23 @@ public class ops02H {
 /*TODO*///
 /*TODO*///#define NZ	m6502.nz
 /*TODO*///
-/*TODO*///#define SET_NZ(n)				\
-/*TODO*///	if ((n) == 0) P = (P & ~F_N) | F_Z; else P = (P & ~(F_N | F_Z)) | ((n) & F_N)
-/*TODO*///
-/*TODO*///#define SET_Z(n)				\
-/*TODO*///	if ((n) == 0) P |= F_Z; else P &= ~F_Z
-/*TODO*///
-/*TODO*///#define EAL m6502.ea.b.l
+    public static void SET_NZ(int n) {
+        if (n == 0) {
+            m6502.u8_p = ((m6502.u8_p & ~F_N) | F_Z) & 0xFF;
+        } else {
+            m6502.u8_p = ((m6502.u8_p & ~(F_N | F_Z)) | ((n) & F_N)) & 0xFF;
+        }
+    }
+
+    public static void SET_Z(int n) {
+        if ((n) == 0) {
+            m6502.u8_p = (m6502.u8_p | F_Z) & 0xFF;
+        } else {
+            m6502.u8_p = (m6502.u8_p & ~F_Z) & 0xFF;
+        }
+    }
+
+    /*TODO*///#define EAL m6502.ea.b.l
 /*TODO*///#define EAH m6502.ea.b.h
 /*TODO*///#define EAW m6502.ea.w.l
 /*TODO*///#define EAD m6502.ea.d
@@ -66,16 +78,22 @@ public class ops02H {
      * *************************************************************
      */
     public static int RDOP() {
-        int r = cpu_readop(m6502.pc);
-        m6502.pc = (m6502.pc + 1) & 0xFFFF;
-        return r;
+        int r = cpu_readop(m6502.pc.D);
+        m6502.pc.AddD(1);
+        return r & 0xFF;
     }
 
-    /*TODO*////***************************************************************
-/*TODO*/// *	RDOPARG read an opcode argument
-/*TODO*/// ***************************************************************/
-/*TODO*///#define RDOPARG() cpu_readop_arg(PCW++)
-/*TODO*///
+    /**
+     * *************************************************************
+     * RDOPARG read an opcode argument
+     * *************************************************************
+     */
+    public static int RDOPARG() {
+        int tmp = cpu_readop_arg(m6502.pc.D);
+        m6502.pc.AddD(1);
+        return tmp & 0xFF;
+    }
+
     /**
      * *************************************************************
      * RDMEM	read memory
@@ -94,641 +112,836 @@ public class ops02H {
         cpu_writemem16(addr, data & 0xFF);
     }
 
-    /*TODO*///
-/*TODO*////***************************************************************
-/*TODO*/// *	BRA  branch relative
-/*TODO*/// *	extra cycle if page boundary is crossed
-/*TODO*/// ***************************************************************/
-/*TODO*///#define BRA(cond)												\
-/*TODO*///	if (cond)													\
-/*TODO*///	{															\
-/*TODO*///		tmp = RDOPARG();										\
-/*TODO*///		EAW = PCW + (signed char)tmp;							\
-/*TODO*///		m6502_ICount -= (PCH == EAH) ? 3 : 4;					\
-/*TODO*///		PCD = EAD;												\
-/*TODO*///		CHANGE_PC;												\
-/*TODO*///	}															\
-/*TODO*///	else														\
-/*TODO*///	{															\
-/*TODO*///		PCW++;													\
-/*TODO*///		m6502_ICount -= 2;										\
-/*TODO*///	}
-/*TODO*///
-/*TODO*////***************************************************************
-/*TODO*/// *
-/*TODO*/// * Helper macros to build the effective address
-/*TODO*/// *
-/*TODO*/// ***************************************************************/
-/*TODO*///
-/*TODO*////***************************************************************
-/*TODO*/// *	EA = zero page address
-/*TODO*/// ***************************************************************/
-/*TODO*///#define EA_ZPG													\
-/*TODO*///	ZPL = RDOPARG();											\
-/*TODO*///	EAD = ZPD
-/*TODO*///
-/*TODO*////***************************************************************
-/*TODO*/// *	EA = zero page address + X
-/*TODO*/// ***************************************************************/
-/*TODO*///#define EA_ZPX													\
-/*TODO*///	ZPL = RDOPARG() + X;										\
-/*TODO*///	EAD = ZPD
-/*TODO*///
-/*TODO*////***************************************************************
-/*TODO*/// *	EA = zero page address + Y
-/*TODO*/// ***************************************************************/
-/*TODO*///#define EA_ZPY													\
-/*TODO*///	ZPL = RDOPARG() + Y;										\
-/*TODO*///	EAD = ZPD
-/*TODO*///
-/*TODO*////***************************************************************
-/*TODO*/// *	EA = absolute address
-/*TODO*/// ***************************************************************/
-/*TODO*///#define EA_ABS													\
-/*TODO*///	EAL = RDOPARG();											\
-/*TODO*///	EAH = RDOPARG()
-/*TODO*///
-/*TODO*////***************************************************************
-/*TODO*/// *	EA = absolute address + X
-/*TODO*/// ***************************************************************/
-/*TODO*///#define EA_ABX													\
-/*TODO*///	EA_ABS; 													\
-/*TODO*///	EAW += X
-/*TODO*///
-/*TODO*////***************************************************************
-/*TODO*/// *	EA = absolute address + Y
-/*TODO*/// ***************************************************************/
-/*TODO*///#define EA_ABY													\
-/*TODO*///	EA_ABS; 													\
-/*TODO*///	EAW += Y
-/*TODO*///
-/*TODO*////***************************************************************
-/*TODO*/// *	EA = zero page + X indirect (pre indexed)
-/*TODO*/// ***************************************************************/
-/*TODO*///#define EA_IDX													\
-/*TODO*///	ZPL = RDOPARG() + X;										\
-/*TODO*///	EAL = RDMEM(ZPD);											\
-/*TODO*///	ZPL++;														\
-/*TODO*///	EAH = RDMEM(ZPD)
-/*TODO*///
-/*TODO*////***************************************************************
-/*TODO*/// *	EA = zero page indirect + Y (post indexed)
-/*TODO*/// *	subtract 1 cycle if page boundary is crossed
-/*TODO*/// ***************************************************************/
-/*TODO*///#define EA_IDY													\
-/*TODO*///	ZPL = RDOPARG();											\
-/*TODO*///	EAL = RDMEM(ZPD);											\
-/*TODO*///	ZPL++;														\
-/*TODO*///	EAH = RDMEM(ZPD);											\
-/*TODO*///	if (EAL + Y > 0xff) 										\
-/*TODO*///		m6502_ICount--; 										\
-/*TODO*///	EAW += Y
-/*TODO*///
-/*TODO*////***************************************************************
-/*TODO*/// *	EA = indirect (only used by JMP)
-/*TODO*/// ***************************************************************/
-/*TODO*///#define EA_IND													\
-/*TODO*///	EA_ABS; 													\
-/*TODO*///	tmp = RDMEM(EAD);											\
-/*TODO*///	EAL++;	/* booby trap: stay in same page! ;-) */			\
-/*TODO*///	EAH = RDMEM(EAD);											\
-/*TODO*///	EAL = tmp
-/*TODO*///
-/*TODO*////* read a value into tmp */
-/*TODO*///#define RD_IMM	tmp = RDOPARG()
-/*TODO*///#define RD_ACC	tmp = A
-/*TODO*///#define RD_ZPG	EA_ZPG; tmp = RDMEM(EAD)
-/*TODO*///#define RD_ZPX	EA_ZPX; tmp = RDMEM(EAD)
-/*TODO*///#define RD_ZPY	EA_ZPY; tmp = RDMEM(EAD)
-/*TODO*///#define RD_ABS	EA_ABS; tmp = RDMEM(EAD)
-/*TODO*///#define RD_ABX	EA_ABX; tmp = RDMEM(EAD)
-/*TODO*///#define RD_ABY	EA_ABY; tmp = RDMEM(EAD)
-/*TODO*///#define RD_ZPI	EA_ZPI; tmp = RDMEM(EAD)
-/*TODO*///#define RD_IDX	EA_IDX; tmp = RDMEM(EAD)
-/*TODO*///#define RD_IDY	EA_IDY; tmp = RDMEM(EAD)
-/*TODO*///
-/*TODO*////* write a value from tmp */
-/*TODO*///#define WR_ZPG	EA_ZPG; WRMEM(EAD, tmp)
-/*TODO*///#define WR_ZPX	EA_ZPX; WRMEM(EAD, tmp)
-/*TODO*///#define WR_ZPY	EA_ZPY; WRMEM(EAD, tmp)
-/*TODO*///#define WR_ABS	EA_ABS; WRMEM(EAD, tmp)
-/*TODO*///#define WR_ABX	EA_ABX; WRMEM(EAD, tmp)
-/*TODO*///#define WR_ABY	EA_ABY; WRMEM(EAD, tmp)
-/*TODO*///#define WR_ZPI	EA_ZPI; WRMEM(EAD, tmp)
-/*TODO*///#define WR_IDX	EA_IDX; WRMEM(EAD, tmp)
-/*TODO*///#define WR_IDY	EA_IDY; WRMEM(EAD, tmp)
-/*TODO*///
-/*TODO*////* write back a value from tmp to the last EA */
-/*TODO*///#define WB_ACC	A = (UINT8)tmp;
-/*TODO*///#define WB_EA	WRMEM(EAD, tmp)
-/*TODO*///
-/*TODO*////***************************************************************
-/*TODO*/// ***************************************************************
-/*TODO*/// *			Macros to emulate the plain 6502 opcodes
-/*TODO*/// ***************************************************************
-/*TODO*/// ***************************************************************/
-/*TODO*///
-/*TODO*////***************************************************************
-/*TODO*/// * push a register onto the stack
-/*TODO*/// ***************************************************************/
-/*TODO*///#define PUSH(Rg) WRMEM(SPD, Rg); S--
-/*TODO*///
-/*TODO*////***************************************************************
-/*TODO*/// * pull a register from the stack
-/*TODO*/// ***************************************************************/
-/*TODO*///#define PULL(Rg) S++; Rg = RDMEM(SPD)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	ADC Add with carry
-/*TODO*/// ***************************************************************/
-/*TODO*///#define ADC 													\
-/*TODO*///	if (P & F_D)												\
-/*TODO*///	{															\
-/*TODO*///	int c = (P & F_C);											\
-/*TODO*///	int lo = (A & 0x0f) + (tmp & 0x0f) + c; 					\
-/*TODO*///	int hi = (A & 0xf0) + (tmp & 0xf0); 						\
-/*TODO*///		P &= ~(F_V | F_C|F_N|F_Z);								\
-/*TODO*///		if (!((lo+hi)&0xff)) P|=F_Z;							\
-/*TODO*///		if (lo > 0x09)											\
-/*TODO*///		{														\
-/*TODO*///			hi += 0x10; 										\
-/*TODO*///			lo += 0x06; 										\
-/*TODO*///		}														\
-/*TODO*///		if (hi&0x80) P|=F_N;									\
-/*TODO*///		if (~(A^tmp) & (A^hi) & F_N)							\
-/*TODO*///			P |= F_V;											\
-/*TODO*///		if (hi > 0x90)											\
-/*TODO*///			hi += 0x60; 										\
-/*TODO*///		if (hi & 0xff00)										\
-/*TODO*///			P |= F_C;											\
-/*TODO*///		A = (lo & 0x0f) + (hi & 0xf0);							\
-/*TODO*///	}															\
-/*TODO*///	else														\
-/*TODO*///	{															\
-/*TODO*///		int c = (P & F_C);										\
-/*TODO*///		int sum = A + tmp + c;									\
-/*TODO*///		P &= ~(F_V | F_C);										\
-/*TODO*///		if (~(A^tmp) & (A^sum) & F_N)							\
-/*TODO*///			P |= F_V;											\
-/*TODO*///		if (sum & 0xff00)										\
-/*TODO*///			P |= F_C;											\
-/*TODO*///		A = (UINT8) sum;										\
-/*TODO*///		SET_NZ(A); \
-/*TODO*///	}
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	AND Logical and
-/*TODO*/// ***************************************************************/
-/*TODO*///#define AND 													\
-/*TODO*///	A = (UINT8)(A & tmp);										\
-/*TODO*///	SET_NZ(A)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	ASL Arithmetic shift left
-/*TODO*/// ***************************************************************/
-/*TODO*///#define ASL 													\
-/*TODO*///	P = (P & ~F_C) | ((tmp >> 7) & F_C);						\
-/*TODO*///	tmp = (UINT8)(tmp << 1);									\
-/*TODO*///	SET_NZ(tmp)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	BCC Branch if carry clear
-/*TODO*/// ***************************************************************/
-/*TODO*///#define BCC BRA(!(P & F_C))
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	BCS Branch if carry set
-/*TODO*/// ***************************************************************/
-/*TODO*///#define BCS BRA(P & F_C)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	BEQ Branch if equal
-/*TODO*/// ***************************************************************/
-/*TODO*///#define BEQ BRA(P & F_Z)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	BIT Bit test
-/*TODO*/// ***************************************************************/
-/*TODO*///#define BIT 													\
-/*TODO*///	P &= ~(F_N|F_V|F_Z);										\
-/*TODO*///	P |= tmp & (F_N|F_V);										\
-/*TODO*///	if ((tmp & A) == 0) 										\
-/*TODO*///		P |= F_Z
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	BMI Branch if minus
-/*TODO*/// ***************************************************************/
-/*TODO*///#define BMI BRA(P & F_N)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	BNE Branch if not equal
-/*TODO*/// ***************************************************************/
-/*TODO*///#define BNE BRA(!(P & F_Z))
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	BPL Branch if plus
-/*TODO*/// ***************************************************************/
-/*TODO*///#define BPL BRA(!(P & F_N))
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	BRK Break
-/*TODO*/// *	increment PC, push PC hi, PC lo, flags (with B bit set),
-/*TODO*/// *	set I flag, jump via IRQ vector
-/*TODO*/// ***************************************************************/
-/*TODO*///#define BRK 													\
-/*TODO*///	PCW++;														\
-/*TODO*///	PUSH(PCH);													\
-/*TODO*///	PUSH(PCL);													\
-/*TODO*///	PUSH(P | F_B);												\
-/*TODO*///	P = (P | F_I);												\
-/*TODO*///	PCL = RDMEM(M6502_IRQ_VEC); 								\
-/*TODO*///	PCH = RDMEM(M6502_IRQ_VEC+1);								\
-/*TODO*///	CHANGE_PC
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// * BVC	Branch if overflow clear
-/*TODO*/// ***************************************************************/
-/*TODO*///#define BVC BRA(!(P & F_V))
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// * BVS	Branch if overflow set
-/*TODO*/// ***************************************************************/
-/*TODO*///#define BVS BRA(P & F_V)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// * CLC	Clear carry flag
-/*TODO*/// ***************************************************************/
-/*TODO*///#define CLC 													\
-/*TODO*///	P &= ~F_C
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// * CLD	Clear decimal flag
-/*TODO*/// ***************************************************************/
-/*TODO*///#define CLD 													\
-/*TODO*///	P &= ~F_D
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// * CLI	Clear interrupt flag
-/*TODO*/// ***************************************************************/
-/*TODO*///#define CLI 													\
-/*TODO*///	if ((m6502.irq_state != CLEAR_LINE) && (P & F_I)) { 		\
-/*TODO*///		m6502.after_cli = 1;									\
-/*TODO*///	}															\
-/*TODO*///	P &= ~F_I
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// * CLV	Clear overflow flag
-/*TODO*/// ***************************************************************/
-/*TODO*///#define CLV 													\
-/*TODO*///	P &= ~F_V
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	CMP Compare accumulator
-/*TODO*/// ***************************************************************/
-/*TODO*///#define CMP 													\
-/*TODO*///	P &= ~F_C;													\
-/*TODO*///	if (A >= tmp)												\
-/*TODO*///		P |= F_C;												\
-/*TODO*///	SET_NZ((UINT8)(A - tmp))
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	CPX Compare index X
-/*TODO*/// ***************************************************************/
-/*TODO*///#define CPX 													\
-/*TODO*///	P &= ~F_C;													\
-/*TODO*///	if (X >= tmp)												\
-/*TODO*///		P |= F_C;												\
-/*TODO*///	SET_NZ((UINT8)(X - tmp))
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	CPY Compare index Y
-/*TODO*/// ***************************************************************/
-/*TODO*///#define CPY 													\
-/*TODO*///	P &= ~F_C;													\
-/*TODO*///	if (Y >= tmp)												\
-/*TODO*///		P |= F_C;												\
-/*TODO*///	SET_NZ((UINT8)(Y - tmp))
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	DEC Decrement memory
-/*TODO*/// ***************************************************************/
-/*TODO*///#define DEC 													\
-/*TODO*///	tmp = (UINT8)(tmp-1); 										\
-/*TODO*///	SET_NZ(tmp)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	DEX Decrement index X
-/*TODO*/// ***************************************************************/
-/*TODO*///#define DEX 													\
-/*TODO*///	X = (UINT8)(X-1); 											\
-/*TODO*///	SET_NZ(X)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	DEY Decrement index Y
-/*TODO*/// ***************************************************************/
-/*TODO*///#define DEY 													\
-/*TODO*///	Y = (UINT8)(Y-1); 											\
-/*TODO*///	SET_NZ(Y)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	EOR Logical exclusive or
-/*TODO*/// ***************************************************************/
-/*TODO*///#define EOR 													\
-/*TODO*///	A = (UINT8)(A ^ tmp);										\
-/*TODO*///	SET_NZ(A)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	ILL Illegal opcode
-/*TODO*/// ***************************************************************/
-/*TODO*///#define ILL 													\
-/*TODO*///	logerror("M6502 illegal opcode %04x: %02x\n",(PCW-1)&0xffff, cpu_readop((PCW-1)&0xffff))
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	INC Increment memory
-/*TODO*/// ***************************************************************/
-/*TODO*///#define INC 													\
-/*TODO*///	tmp = (UINT8)(tmp+1); 										\
-/*TODO*///	SET_NZ(tmp)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	INX Increment index X
-/*TODO*/// ***************************************************************/
-/*TODO*///#define INX 													\
-/*TODO*///	X = (UINT8)(X+1); 											\
-/*TODO*///	SET_NZ(X)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	INY Increment index Y
-/*TODO*/// ***************************************************************/
-/*TODO*///#define INY 													\
-/*TODO*///	Y = (UINT8)(Y+1); 											\
-/*TODO*///	SET_NZ(Y)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	JMP Jump to address
-/*TODO*/// *	set PC to the effective address
-/*TODO*/// ***************************************************************/
-/*TODO*///#define JMP 													\
-/*TODO*///	if( EAD == PPC && !m6502.pending_irq && !m6502.after_cli )	\
-/*TODO*///		if( m6502_ICount > 0 ) m6502_ICount = 0;				\
-/*TODO*///	PCD = EAD;													\
-/*TODO*///	CHANGE_PC
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	JSR Jump to subroutine
-/*TODO*/// *	decrement PC (sic!) push PC hi, push PC lo and set
-/*TODO*/// *	PC to the effective address
-/*TODO*/// ***************************************************************/
-/*TODO*///#define JSR 													\
-/*TODO*///	EAL = RDOPARG();											\
-/*TODO*///	PUSH(PCH);													\
-/*TODO*///	PUSH(PCL);													\
-/*TODO*///	EAH = RDOPARG();											\
-/*TODO*///	PCD = EAD;													\
-/*TODO*///	CHANGE_PC
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	LDA Load accumulator
-/*TODO*/// ***************************************************************/
-/*TODO*///#define LDA 													\
-/*TODO*///	A = (UINT8)tmp; 											\
-/*TODO*///	SET_NZ(A)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	LDX Load index X
-/*TODO*/// ***************************************************************/
-/*TODO*///#define LDX 													\
-/*TODO*///	X = (UINT8)tmp; 											\
-/*TODO*///	SET_NZ(X)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	LDY Load index Y
-/*TODO*/// ***************************************************************/
-/*TODO*///#define LDY 													\
-/*TODO*///	Y = (UINT8)tmp; 											\
-/*TODO*///	SET_NZ(Y)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	LSR Logic shift right
-/*TODO*/// *	0 -> [7][6][5][4][3][2][1][0] -> C
-/*TODO*/// ***************************************************************/
-/*TODO*///#define LSR 													\
-/*TODO*///	P = (P & ~F_C) | (tmp & F_C);								\
-/*TODO*///	tmp = (UINT8)tmp >> 1;										\
-/*TODO*///	SET_NZ(tmp)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	NOP No operation
-/*TODO*/// ***************************************************************/
-/*TODO*///#define NOP
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	ORA Logical inclusive or
-/*TODO*/// ***************************************************************/
-/*TODO*///#define ORA 													\
-/*TODO*///	A = (UINT8)(A | tmp);										\
-/*TODO*///	SET_NZ(A)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	PHA Push accumulator
-/*TODO*/// ***************************************************************/
-/*TODO*///#define PHA 													\
-/*TODO*///	PUSH(A)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	PHP Push processor status (flags)
-/*TODO*/// ***************************************************************/
-/*TODO*///#define PHP 													\
-/*TODO*///	PUSH(P)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	PLA Pull accumulator
-/*TODO*/// ***************************************************************/
-/*TODO*///#define PLA 													\
-/*TODO*///	PULL(A);													\
-/*TODO*///	SET_NZ(A)
-/*TODO*///
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	PLP Pull processor status (flags)
-/*TODO*/// ***************************************************************/
-/*TODO*///#define PLP 													\
-/*TODO*///	if ( P & F_I ) {											\
-/*TODO*///		PULL(P);												\
-/*TODO*///		if ((m6502.irq_state != CLEAR_LINE) && !(P & F_I)) {	\
-/*TODO*///			LOG(("M6502#%d PLP sets after_cli\n",cpu_getactivecpu())); \
-/*TODO*///			m6502.after_cli = 1;								\
-/*TODO*///		}														\
-/*TODO*///	} else {													\
-/*TODO*///		PULL(P);												\
-/*TODO*///	}															\
-/*TODO*///	P |= (F_T|F_B);
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// * ROL	Rotate left
-/*TODO*/// *	new C <- [7][6][5][4][3][2][1][0] <- C
-/*TODO*/// ***************************************************************/
-/*TODO*///#define ROL 													\
-/*TODO*///	tmp = (tmp << 1) | (P & F_C);								\
-/*TODO*///	P = (P & ~F_C) | ((tmp >> 8) & F_C);						\
-/*TODO*///	tmp = (UINT8)tmp;											\
-/*TODO*///	SET_NZ(tmp)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// * ROR	Rotate right
-/*TODO*/// *	C -> [7][6][5][4][3][2][1][0] -> new C
-/*TODO*/// ***************************************************************/
-/*TODO*///#define ROR 													\
-/*TODO*///	tmp |= (P & F_C) << 8;										\
-/*TODO*///	P = (P & ~F_C) | (tmp & F_C);								\
-/*TODO*///	tmp = (UINT8)(tmp >> 1);									\
-/*TODO*///	SET_NZ(tmp)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// * RTI	Return from interrupt
-/*TODO*/// * pull flags, pull PC lo, pull PC hi and increment PC
-/*TODO*/// *	PCW++;
-/*TODO*/// ***************************************************************/
-/*TODO*///#define RTI 													\
-/*TODO*///	PULL(P);													\
-/*TODO*///	PULL(PCL);													\
-/*TODO*///	PULL(PCH);													\
-/*TODO*///	P |= F_T | F_B; 											\
-/*TODO*///	if( (m6502.irq_state != CLEAR_LINE) && !(P & F_I) ) 		\
-/*TODO*///	{															\
-/*TODO*///		LOG(("M6502#%d RTI sets after_cli\n",cpu_getactivecpu())); \
-/*TODO*///		m6502.after_cli = 1;									\
-/*TODO*///	}															\
-/*TODO*///	CHANGE_PC
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	RTS Return from subroutine
-/*TODO*/// *	pull PC lo, PC hi and increment PC
-/*TODO*/// ***************************************************************/
-/*TODO*///#define RTS 													\
-/*TODO*///	PULL(PCL);													\
-/*TODO*///	PULL(PCH);													\
-/*TODO*///	PCW++;														\
-/*TODO*///	CHANGE_PC
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	SBC Subtract with carry
-/*TODO*/// ***************************************************************/
-/*TODO*///#define SBC 													\
-/*TODO*///	if (P & F_D)												\
-/*TODO*///	{															\
-/*TODO*///		int c = (P & F_C) ^ F_C;								\
-/*TODO*///		int sum = A - tmp - c;									\
-/*TODO*///		int lo = (A & 0x0f) - (tmp & 0x0f) - c; 				\
-/*TODO*///		int hi = (A & 0xf0) - (tmp & 0xf0); 					\
-/*TODO*///		if (lo & 0x10)											\
-/*TODO*///		{														\
-/*TODO*///			lo -= 6;											\
-/*TODO*///			hi--;												\
-/*TODO*///		}														\
-/*TODO*///		P &= ~(F_V | F_C|F_Z|F_N);								\
-/*TODO*///		if( (A^tmp) & (A^sum) & F_N )							\
-/*TODO*///			P |= F_V;											\
-/*TODO*///		if( hi & 0x0100 )										\
-/*TODO*///			hi -= 0x60; 										\
-/*TODO*///		if( (sum & 0xff00) == 0 )								\
-/*TODO*///			P |= F_C;											\
-/*TODO*///		if( !((A-tmp-c) & 0xff) )								\
-/*TODO*///			P |= F_Z;											\
-/*TODO*///		if( (A-tmp-c) & 0x80 )									\
-/*TODO*///			P |= F_N;											\
-/*TODO*///		A = (lo & 0x0f) | (hi & 0xf0);							\
-/*TODO*///	}															\
-/*TODO*///	else														\
-/*TODO*///	{															\
-/*TODO*///		int c = (P & F_C) ^ F_C;								\
-/*TODO*///		int sum = A - tmp - c;									\
-/*TODO*///		P &= ~(F_V | F_C);										\
-/*TODO*///		if( (A^tmp) & (A^sum) & F_N )							\
-/*TODO*///			P |= F_V;											\
-/*TODO*///		if( (sum & 0xff00) == 0 )								\
-/*TODO*///			P |= F_C;											\
-/*TODO*///		A = (UINT8) sum;										\
-/*TODO*///		SET_NZ(A);												\
-/*TODO*///	}
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	SEC Set carry flag
-/*TODO*/// ***************************************************************/
-/*TODO*///#define SEC 													\
-/*TODO*///	P |= F_C
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	SED Set decimal flag
-/*TODO*/// ***************************************************************/
-/*TODO*///#define SED 													\
-/*TODO*///	P |= F_D
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// *	SEI Set interrupt flag
-/*TODO*/// ***************************************************************/
-/*TODO*///#define SEI 													\
-/*TODO*///	P |= F_I
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// * STA	Store accumulator
-/*TODO*/// ***************************************************************/
-/*TODO*///#define STA 													\
-/*TODO*///	tmp = A
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// * STX	Store index X
-/*TODO*/// ***************************************************************/
-/*TODO*///#define STX 													\
-/*TODO*///	tmp = X
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// * STY	Store index Y
-/*TODO*/// ***************************************************************/
-/*TODO*///#define STY 													\
-/*TODO*///	tmp = Y
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// * TAX	Transfer accumulator to index X
-/*TODO*/// ***************************************************************/
-/*TODO*///#define TAX 													\
-/*TODO*///	X = A;														\
-/*TODO*///	SET_NZ(X)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// * TAY	Transfer accumulator to index Y
-/*TODO*/// ***************************************************************/
-/*TODO*///#define TAY 													\
-/*TODO*///	Y = A;														\
-/*TODO*///	SET_NZ(Y)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// * TSX	Transfer stack LSB to index X
-/*TODO*/// ***************************************************************/
-/*TODO*///#define TSX 													\
-/*TODO*///	X = S;														\
-/*TODO*///	SET_NZ(X)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// * TXA	Transfer index X to accumulator
-/*TODO*/// ***************************************************************/
-/*TODO*///#define TXA 													\
-/*TODO*///	A = X;														\
-/*TODO*///	SET_NZ(A)
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// * TXS	Transfer index X to stack LSB
-/*TODO*/// * no flags changed (sic!)
-/*TODO*/// ***************************************************************/
-/*TODO*///#define TXS 													\
-/*TODO*///	S = X
-/*TODO*///
-/*TODO*////* 6502 ********************************************************
-/*TODO*/// * TYA	Transfer index Y to accumulator
-/*TODO*/// ***************************************************************/
-/*TODO*///#define TYA 													\
-/*TODO*///	A = Y;														\
-/*TODO*///	SET_NZ(A)
-/*TODO*///
-/*TODO*///    
+    /**
+     * *************************************************************
+     * BRA branch relative extra cycle if page boundary is crossed
+     * *************************************************************
+     */
+    public static void BRA(boolean cond) {
+        if (cond) {
+            int tmp = RDOPARG();
+            m6502.ea.SetD(m6502.pc.D + (byte) tmp);
+            m6502_ICount[0] -= (m6502.pc.H == m6502.ea.H) ? 3 : 4;
+            m6502.pc.SetD(m6502.ea.D);
+            change_pc16(m6502.pc.D);
+        } else {
+            m6502.pc.AddD(1);//PCW++;
+            m6502_ICount[0] -= 2;
+        }
+    }
+
+    /**
+     * *************************************************************
+     *
+     * Helper macros to build the effective address
+     *
+     **************************************************************
+     */
+    /**
+     * *************************************************************
+     * EA = zero page address
+     * *************************************************************
+     */
+    public static void EA_ZPG() {
+        m6502.zp.SetL(RDOPARG());
+        m6502.ea.SetD(m6502.zp.D);
+    }
+
+    /**
+     * *************************************************************
+     * EA = zero page address + X
+     * *************************************************************
+     */
+    public static void EA_ZPX() {
+        m6502.zp.SetL(RDOPARG() + m6502.u8_x);
+        m6502.ea.SetD(m6502.zp.D);
+    }
+
+    /**
+     * *************************************************************
+     * EA = zero page address + Y
+     * *************************************************************
+     */
+    public static void EA_ZPY() {
+        m6502.zp.SetL(RDOPARG() + m6502.u8_y);
+        m6502.ea.SetD(m6502.zp.D);
+    }
+
+    /**
+     * *************************************************************
+     * EA = absolute address
+     * *************************************************************
+     */
+    public static void EA_ABS() {
+        m6502.ea.SetL(RDOPARG());
+        m6502.ea.SetH(RDOPARG());
+    }
+
+    /**
+     * *************************************************************
+     * EA = absolute address + X
+     * *************************************************************
+     */
+    public static void EA_ABX() {
+        EA_ABS();
+        m6502.ea.SetD(m6502.ea.D + m6502.u8_x);
+    }
+
+    /**
+     * *************************************************************
+     * EA = absolute address + Y
+     * *************************************************************
+     */
+    public static void EA_ABY() {
+        EA_ABS();
+        m6502.ea.SetD(m6502.ea.D + m6502.u8_y);
+    }
+
+    /**
+     * *************************************************************
+     * EA = zero page + X indirect (pre indexed)
+     * *************************************************************
+     */
+    public static void EA_IDX() {
+        m6502.zp.SetL(RDOPARG() + m6502.u8_x);
+        m6502.ea.SetL(RDMEM(m6502.zp.D));
+        m6502.zp.AddL(1);
+        m6502.ea.SetH(RDMEM(m6502.zp.D));
+    }
+
+    /**
+     * *************************************************************
+     * EA = zero page indirect + Y (post indexed) subtract 1 cycle if page
+     * boundary is crossed
+     * *************************************************************
+     */
+    public static void EA_IDY() {
+        m6502.zp.SetL(RDOPARG());
+        m6502.ea.SetL(RDMEM(m6502.zp.D));
+        m6502.zp.AddL(1);
+        m6502.ea.SetH(RDMEM(m6502.zp.D));
+        if (m6502.ea.L + m6502.u8_y > 0xff) {
+            m6502_ICount[0]--;
+        }
+        m6502.ea.SetD(m6502.ea.D + m6502.u8_y);
+
+    }
+
+    /**
+     * *************************************************************
+     * EA = indirect (only used by JMP)
+     * *************************************************************
+     */
+    public static void EA_IND() {
+        EA_ABS();
+        int tmp = RDMEM(m6502.ea.D);
+        m6502.ea.AddL(1);
+        m6502.ea.SetH(RDMEM(m6502.ea.D));
+        m6502.ea.SetL(tmp);
+    }
+
+    /* read a value into tmp */
+    public static int RD_IMM() {
+        return RDOPARG();
+    }
+
+    public static int RD_ACC() {
+        return m6502.u8_a & 0xFF;
+    }
+
+    public static int RD_ZPG() {
+        EA_ZPG();
+        return RDMEM(m6502.ea.D);
+    }
+
+    public static int RD_ZPX() {
+        EA_ZPX();
+        return RDMEM(m6502.ea.D);
+    }
+
+    public static int RD_ZPY() {
+        EA_ZPY();
+        return RDMEM(m6502.ea.D);
+    }
+
+    public static int RD_ABS() {
+        EA_ABS();
+        return RDMEM(m6502.ea.D);
+    }
+
+    public static int RD_ABX() {
+        EA_ABX();
+        return RDMEM(m6502.ea.D);
+    }
+
+    public static int RD_ABY() {
+        EA_ABY();
+        return RDMEM(m6502.ea.D);
+    }
+
+    public static int RD_IDX() {
+        EA_IDX();
+        return RDMEM(m6502.ea.D);
+    }
+
+    public static int RD_IDY() {
+        EA_IDY();
+        return RDMEM(m6502.ea.D);
+    }
+
+    /* write a value from tmp */
+    public static void WR_ZPG(int tmp) {
+        EA_ZPG();
+        WRMEM(m6502.ea.D, tmp);
+    }
+
+    public static void WR_ZPX(int tmp) {
+        EA_ZPX();
+        WRMEM(m6502.ea.D, tmp);
+    }
+
+    public static void WR_ZPY(int tmp) {
+        EA_ZPY();
+        WRMEM(m6502.ea.D, tmp);
+    }
+
+    public static void WR_ABS(int tmp) {
+        EA_ABS();
+        WRMEM(m6502.ea.D, tmp);
+    }
+
+    public static void WR_ABX(int tmp) {
+        EA_ABX();
+        WRMEM(m6502.ea.D, tmp);
+    }
+
+    public static void WR_ABY(int tmp) {
+        EA_ABY();
+        WRMEM(m6502.ea.D, tmp);
+    }
+
+    public static void WR_IDX(int tmp) {
+        EA_IDX();
+        WRMEM(m6502.ea.D, tmp);
+    }
+
+    public static void WR_IDY(int tmp) {
+        EA_IDY();
+        WRMEM(m6502.ea.D, tmp);
+    }
+
+    /* write back a value from tmp to the last EA */
+    public static void WB_ACC(int tmp) {
+        m6502.u8_a = tmp & 0xFF;
+    }
+
+    public static void WB_EA(int tmp) {
+        WRMEM(m6502.ea.D, tmp);
+    }
+
+    /**
+     * *************************************************************
+     ***************************************************************
+     * Macros to emulate the plain 6502 opcodes
+     * **************************************************************
+     * *************************************************************
+     */
+    /**
+     * *************************************************************
+     * push a register onto the stack
+     * *************************************************************
+     */
+    public static void PUSH(int Rg) {
+        WRMEM(m6502.sp.D, Rg);
+        m6502.sp.AddL(-1);
+    }
+
+    /**
+     * *************************************************************
+     * pull a register from the stack
+     * *************************************************************
+     */
+    public static int PULL() {
+        m6502.sp.AddL(1);
+        return RDMEM(m6502.sp.D);
+    }
+
+    /* 6502 ********************************************************
+    *	ADC Add with carry
+    ***************************************************************/
+    public static void ADC(int tmp) {
+        if ((m6502.u8_p & F_D) != 0) {
+            int c = m6502.u8_p & F_C;
+            int lo = (m6502.u8_a & 0xF) + (tmp & 0xF) + c;
+            int hi = (m6502.u8_a & 0xF0) + (tmp & 0xF0);
+            m6502.u8_p &= ((F_V | F_C | F_N | F_Z) ^ 0xFFFFFFFF);
+            if ((lo + hi & 0xFF) == 0) {
+                m6502.u8_p |= F_Z;
+            }
+            if (lo > 9) {
+                hi += 16;
+                lo += 6;
+            }
+            if ((hi & 0x80) != 0) {
+                m6502.u8_p |= F_N;
+            }
+            if (((m6502.u8_a ^ tmp ^ 0xFFFFFFFF) & (m6502.u8_a ^ hi) & F_N) != 0) {
+                m6502.u8_p |= F_V;
+            }
+            if (hi > 144) {
+                hi += 96;
+            }
+            if ((hi & 0xFF00) != 0) {
+                m6502.u8_p |= F_C;
+            }
+            m6502.u8_a = ((lo & 0xF) + (hi & 0xF0));
+        } else {
+            int c = m6502.u8_p & F_C;
+            int sum = m6502.u8_a + tmp + c;
+            m6502.u8_p &= ((F_V | F_C) ^ 0xFFFFFFFF);
+            if (((m6502.u8_p ^ tmp ^ 0xFFFFFFFF) & (m6502.u8_p ^ sum) & F_N) != 0) {
+                m6502.u8_p |= F_V;
+            }
+            if ((sum & 0xFF00) != 0) {
+                m6502.u8_p |= F_C;
+            }
+            m6502.u8_a = (sum & 0xFF);
+            SET_NZ(m6502.u8_a);
+        }
+    }
+
+    /* 6502 ********************************************************
+ *	AND Logical and
+ ***************************************************************/
+    public static void AND(int tmp) {
+        m6502.u8_a = (m6502.u8_a & tmp) & 0xFF;
+        SET_NZ(m6502.u8_a);
+    }
+
+    /* 6502 ********************************************************
+ *	ASL Arithmetic shift left
+ ***************************************************************/
+    public static int ASL(int tmp) {
+        m6502.u8_p = (m6502.u8_p & (F_C ^ 0xFFFFFFFF) | tmp >> 7 & F_C);
+        tmp = tmp << 1 & 0xFF;
+        SET_NZ(tmp);
+        return tmp;
+    }
+
+    /* 6502 ********************************************************
+     *	BCC Branch if carry clear
+     ***************************************************************/
+    public static void BCC() {
+        BRA((m6502.u8_p & F_C) == 0);
+    }
+
+    /* 6502 ********************************************************
+     *	BCS Branch if carry set
+     ***************************************************************/
+    public static void BCS() {
+        BRA((m6502.u8_p & F_C) != 0);
+    }
+
+    /* 6502 ********************************************************
+     *	BEQ Branch if equal
+     ***************************************************************/
+    public static void BEQ() {
+        BRA((m6502.u8_p & F_Z) != 0);
+    }
+
+    /* 6502 ********************************************************
+    *	BIT Bit test
+    ***************************************************************/
+    public static void BIT(int tmp) {
+        m6502.u8_p &= ((F_N | F_V | F_Z) ^ 0xFFFFFFFF);
+        m6502.u8_p |= tmp & (F_N | F_V);
+        if ((tmp & m6502.u8_a) == 0) {
+            m6502.u8_p |= F_Z;
+        }
+    }
+
+    /* 6502 ********************************************************
+    *	BMI Branch if minus
+    ***************************************************************/
+    public static void BMI() {
+        BRA((m6502.u8_p & F_N) != 0);
+    }
+
+    /* 6502 ********************************************************
+    *	BNE Branch if not equal
+    ***************************************************************/
+    public static void BNE() {
+        BRA((m6502.u8_p & F_Z) == 0);
+    }
+
+    /* 6502 ********************************************************
+    *	BPL Branch if plus
+    ***************************************************************/
+    public static void BPL() {
+        BRA((m6502.u8_p & F_N) == 0);
+    }
+
+    /* 6502 ********************************************************
+    *	BRK Break
+    *	increment PC, push PC hi, PC lo, flags (with B bit set),
+    *	set I flag, jump via IRQ vector
+    ***************************************************************/
+    public static void BRK() {
+        m6502.pc.AddD(1);
+        PUSH(m6502.pc.H);
+        PUSH(m6502.pc.L);
+        PUSH(m6502.u8_p | F_B);
+        m6502.u8_p = (m6502.u8_p | F_I) & 0xFF;
+        m6502.pc.SetL(RDMEM(M6502_IRQ_VEC));
+        m6502.pc.SetH(RDMEM(M6502_IRQ_VEC + 1));
+        change_pc16(m6502.pc.D);
+    }
+
+    /* 6502 ********************************************************
+    * BVC	Branch if overflow clear
+    ***************************************************************/
+    public static void BVC() {
+        BRA((m6502.u8_p & F_V) == 0);
+    }
+
+    /* 6502 ********************************************************
+    * BVS	Branch if overflow set
+    ***************************************************************/
+    public static void BVS() {
+        BRA((m6502.u8_p & F_V) != 0);
+    }
+
+    /* 6502 ********************************************************
+    * CLC	Clear carry flag
+    ***************************************************************/
+    public static void CLC() {
+        m6502.u8_p &= (F_C ^ 0xFFFFFFFF);
+    }
+
+    /* 6502 ********************************************************
+    * CLD	Clear decimal flag
+    ***************************************************************/
+    public static void CLD() {
+        m6502.u8_p &= (F_D ^ 0xFFFFFFFF);
+    }
+
+    /* 6502 ********************************************************
+    * CLI	Clear interrupt flag
+    ***************************************************************/
+    public static void CLI() {
+        if ((m6502.u8_irq_state != CLEAR_LINE) && (m6502.u8_p & F_I) != 0) {
+            logerror("M6502#%d CLI sets after_cli\n", cpu_getactivecpu());
+            m6502.u8_after_cli = 1;
+        }
+        m6502.u8_p = (m6502.u8_p & ~F_I) & 0xFF;
+    }
+
+    /* 6502 ********************************************************
+    * CLV	Clear overflow flag
+    ***************************************************************/
+    public static void CLV() {
+        m6502.u8_p &= (F_V ^ 0xFFFFFFFF);
+    }
+
+    /* 6502 ********************************************************
+    *	CMP Compare accumulator
+    ***************************************************************/
+    public static void CMP(int tmp) {
+        m6502.u8_p &= (F_C ^ 0xFFFFFFFF);
+        if (m6502.u8_a >= tmp) {
+            m6502.u8_p |= F_C;
+        }
+        SET_NZ((m6502.u8_a - tmp) & 0xFF);
+    }
+
+    /* 6502 ********************************************************
+    *	CPX Compare index X
+    ***************************************************************/
+    public static void CPX(int tmp) {
+        m6502.u8_p &= (F_C ^ 0xFFFFFFFF);
+        if (m6502.u8_x >= tmp) {
+            m6502.u8_p |= F_C;
+        }
+        SET_NZ((m6502.u8_x - tmp) & 0xFF);
+    }
+
+    /* 6502 ********************************************************
+    *	CPY Compare index Y
+    ***************************************************************/
+    public static void CPY(int tmp) {
+        m6502.u8_p &= (F_C ^ 0xFFFFFFFF);
+        if (m6502.u8_y >= tmp) {
+            m6502.u8_p |= F_C;
+        }
+        SET_NZ((m6502.u8_y - tmp) & 0xFF);
+    }
+
+    /* 6502 ********************************************************
+    *	DEC Decrement memory
+    ***************************************************************/
+    public static int DEC(int tmp) {
+        tmp = (tmp - 1) & 0xFF;
+        SET_NZ(tmp);
+        return tmp;
+    }
+
+    /* 6502 ********************************************************
+    *	DEX Decrement index X
+    ***************************************************************/
+    public static void DEX() {
+        m6502.u8_x = (m6502.u8_x - 1) & 0xFF;
+        SET_NZ(m6502.u8_x);
+    }
+
+    /* 6502 ********************************************************
+    *	DEY Decrement index Y
+    ***************************************************************/
+    public static void DEY() {
+        m6502.u8_y = (m6502.u8_y - 1) & 0xFF;
+        SET_NZ(m6502.u8_y);
+    }
+
+    /* 6502 ********************************************************
+    *	EOR Logical exclusive or
+    ***************************************************************/
+    public static void EOR(int tmp) {
+        m6502.u8_a = (m6502.u8_a ^ tmp) & 0xFF;
+        SET_NZ(m6502.u8_a);
+    }
+
+    /* 6502 ********************************************************
+    *	ILL Illegal opcode
+    ***************************************************************/
+    public static void ILL() {
+        logerror("M6502 illegal opcode %04x: %02x\n", (m6502.pc.D - 1) & 0xffff, cpu_readop((m6502.pc.D - 1) & 0xffff));
+    }
+
+    /* 6502 ********************************************************
+    *	INC Increment memory
+    ***************************************************************/
+    public static int INC(int tmp) {
+        tmp = (tmp + 1) & 0xFF;
+        SET_NZ(tmp);
+        return tmp;
+    }
+
+    /* 6502 ********************************************************
+    *	INX Increment index X
+    ***************************************************************/
+    public static void INX() {
+        m6502.u8_x = (m6502.u8_x + 1) & 0xFF;
+        SET_NZ(m6502.u8_x);
+    }
+
+    /* 6502 ********************************************************
+    *	INY Increment index Y
+    ***************************************************************/
+    public static void INY() {
+        m6502.u8_y = (m6502.u8_y + 1) & 0xFF;
+        SET_NZ(m6502.u8_y);
+    }
+
+    /* 6502 ********************************************************
+    *	JMP Jump to address
+    *	set PC to the effective address
+    ***************************************************************/
+    public static void JMP() {
+        if (m6502.ea == m6502.ppc && m6502.u8_pending_irq == 0 && m6502.u8_after_cli == 0) {
+            if (m6502_ICount[0] > 0) {
+                m6502_ICount[0] = 0;
+            }
+        }
+        m6502.pc.SetD(m6502.ea.D);
+        change_pc16(m6502.pc.D);
+    }
+
+
+    /* 6502 ********************************************************
+    *	JSR Jump to subroutine
+    *	decrement PC (sic!) push PC hi, push PC lo and set
+    *	PC to the effective address
+    ***************************************************************/
+    public static void JSR() {
+        m6502.ea.SetL(RDOPARG());
+        PUSH(m6502.pc.H);
+        PUSH(m6502.pc.L);
+        m6502.ea.SetH(RDOPARG());
+        m6502.pc.SetD(m6502.ea.D);
+        change_pc16(m6502.pc.D);
+    }
+
+    /* 6502 ********************************************************
+    *	LDA Load accumulator
+    ***************************************************************/
+    public static void LDA(int tmp) {
+        m6502.u8_a = tmp & 0xFF;
+        SET_NZ(m6502.u8_a);
+    }
+
+    /* 6502 ********************************************************
+    *	LDX Load index X
+    ***************************************************************/
+    public static void LDX(int tmp) {
+        m6502.u8_x = tmp & 0xFF;
+        SET_NZ(m6502.u8_x);
+    }
+
+    /* 6502 ********************************************************
+    *	LDY Load index Y
+    ***************************************************************/
+    public static void LDY(int tmp) {
+        m6502.u8_y = tmp & 0xFF;
+        SET_NZ(m6502.u8_y);
+    }
+
+    /* 6502 ********************************************************
+     *	LSR Logic shift right
+     *	0 -> [7][6][5][4][3][2][1][0] -> C
+     ***************************************************************/
+    public static int LSR(int tmp) {
+        m6502.u8_p = (m6502.u8_p & (F_C ^ 0xFFFFFFFF) | tmp & F_C);
+        tmp = tmp >> 1 & 0xFF;
+        SET_NZ(tmp);
+        return tmp;
+    }
+
+    /* 6502 ********************************************************
+     *	NOP No operation
+     ***************************************************************/
+    public static void NOP() {
+    }
+
+    /* 6502 ********************************************************
+     *	ORA Logical inclusive or
+     ***************************************************************/
+    public static void ORA(int tmp) {
+        m6502.u8_a = (m6502.u8_a | tmp) & 0xFF;
+        SET_NZ(m6502.u8_a);
+    }
+
+    /* 6502 ********************************************************
+     *	PHA Push accumulator
+     ***************************************************************/
+    public static void PHA() {
+        PUSH(m6502.u8_a);
+    }
+
+    /* 6502 ********************************************************
+     *	PHP Push processor status (flags)
+     ***************************************************************/
+    public static void PHP() {
+        PUSH(m6502.u8_p);
+    }
+
+    /* 6502 ********************************************************
+     *	PLA Pull accumulator
+     ***************************************************************/
+    public static void PLA() {
+        m6502.u8_a = PULL();
+        SET_NZ(m6502.u8_a);
+    }
+
+    /* 6502 ********************************************************
+    *	PLP Pull processor status (flags)
+    ***************************************************************/
+    public static void PLP() {
+        if ((m6502.u8_p & F_I) != 0) {
+            m6502.u8_p = PULL();
+            if ((m6502.u8_irq_state != CLEAR_LINE) && (m6502.u8_p & F_I) == 0) {
+                logerror("M6502#%d PLP sets after_cli\n", cpu_getactivecpu());
+                m6502.u8_after_cli = 1;
+            }
+        } else {
+            m6502.u8_p = PULL();
+        }
+        m6502.u8_p = (m6502.u8_p | (F_T | F_B)) & 0xFF;
+    }
+
+    /* 6502 ********************************************************
+    * ROL	Rotate left
+    *	new C <- [7][6][5][4][3][2][1][0] <- C
+    ***************************************************************/
+    public static int ROL(int tmp) {
+        tmp = tmp << 1 | m6502.u8_p & F_C;
+        m6502.u8_p = (m6502.u8_p & (F_C ^ 0xFFFFFFFF) | tmp >> 8 & F_C);
+        tmp &= 0xFF;
+        SET_NZ(tmp);
+        return tmp;
+    }
+
+    /* 6502 ********************************************************
+    * ROR	Rotate right
+    *	C -> [7][6][5][4][3][2][1][0] -> new C
+    ***************************************************************/
+    public static int ROR(int tmp) {
+        tmp |= (m6502.u8_p & F_C) << 8;
+        m6502.u8_p = (m6502.u8_p & (F_C ^ 0xFFFFFFFF) | tmp & F_C);
+        tmp = tmp >> 1 & 0xFF;
+        SET_NZ(tmp);
+        return tmp;
+    }
+
+    /* 6502 ********************************************************
+    * RTI	Return from interrupt
+    * pull flags, pull PC lo, pull PC hi and increment PC
+    *	PCW++;
+    ***************************************************************/
+    public static void RTI() {
+        m6502.u8_p = PULL();
+        m6502.pc.SetL(PULL());
+        m6502.pc.SetH(PULL());
+        m6502.u8_p = (m6502.u8_p | (F_T | F_B)) & 0xFF;
+        if ((m6502.u8_irq_state != CLEAR_LINE) && (m6502.u8_p & F_I) == 0) {
+            logerror("M6502#%d RTI sets after_cli\n", cpu_getactivecpu());
+            m6502.u8_after_cli = 1;
+        }
+        change_pc16(m6502.pc.D);
+    }
+
+    /* 6502 ********************************************************
+    *	RTS Return from subroutine
+    *	pull PC lo, PC hi and increment PC
+    ***************************************************************/
+    public static void RTS() {
+        m6502.pc.SetL(PULL());
+        m6502.pc.SetH(PULL());
+        m6502.pc.AddD(1);
+        change_pc16(m6502.pc.D);
+    }
+
+    /* 6502 ********************************************************
+    *	SBC Subtract with carry
+    ***************************************************************/
+    public static void SBC(int tmp) {
+        if ((m6502.u8_p & F_D) != 0) {
+            int c = m6502.u8_p & F_C ^ F_C;
+            int sum = m6502.u8_a - tmp - c;
+            int lo = (m6502.u8_a & 0xF) - (tmp & 0xF) - c;
+            int hi = (m6502.u8_a & 0xF0) - (tmp & 0xF0);
+            if ((lo & 0x10) != 0) {
+                lo -= 6;
+                hi--;
+            }
+            m6502.u8_p &= ((F_V | F_C | F_Z | F_N) ^ 0xFFFFFFFF);
+            if (((m6502.u8_a ^ tmp) & (m6502.u8_a ^ sum) & F_N) != 0) {
+                m6502.u8_p |= F_V;
+            }
+            if ((hi & 0x100) != 0) {
+                hi -= 96;
+            }
+            if ((sum & 0xFF00) == 0) {
+                m6502.u8_p |= F_C;
+            }
+            if ((m6502.u8_a - tmp - c & 0xFF) == 0) {
+                m6502.u8_p |= F_Z;
+            }
+            if ((m6502.u8_a - tmp - c & 0x80) != 0) {
+                m6502.u8_p |= F_N;
+            }
+            m6502.u8_a = (lo & 0xF | hi & 0xF0);
+        } else {
+            int c = m6502.u8_p & F_C ^ F_C;
+            int sum = m6502.u8_a - tmp - c;
+            m6502.u8_p &= ((F_V | F_C) ^ 0xFFFFFFFF);
+            if (((m6502.u8_a ^ tmp) & (m6502.u8_a ^ sum) & F_N) != 0) {
+                m6502.u8_p |= F_V;
+            }
+            if ((sum & 0xFF00) == 0) {
+                m6502.u8_p |= F_C;
+            }
+            m6502.u8_a = (sum & 0xFF);
+            SET_NZ(m6502.u8_a);
+        }
+    }
+
+    /* 6502 ********************************************************
+    *	SEC Set carry flag
+    ***************************************************************/
+    public static void SEC() {
+        m6502.u8_p |= F_C;
+    }
+
+    /* 6502 ********************************************************
+    *	SED Set decimal flag
+    ***************************************************************/
+    public static void SED() {
+        m6502.u8_p |= F_D;
+    }
+
+    /* 6502 ********************************************************
+    *	SEI Set interrupt flag
+    ***************************************************************/
+    public static void SEI() {
+        m6502.u8_p |= F_I;
+    }
+
+
+    /* 6502 ********************************************************
+     * STA	Store accumulator
+     ***************************************************************/
+    public static int STA() {
+        return m6502.u8_a & 0xFF;
+    }
+
+    /* 6502 ********************************************************
+     * STX	Store index X
+     ***************************************************************/
+    public static int STX() {
+        return m6502.u8_x & 0xFF;
+    }
+
+    /* 6502 ********************************************************
+     * STY	Store index Y
+     ***************************************************************/
+    public static int STY() {
+        return m6502.u8_y & 0xFF;
+    }
+
+    /* 6502 ********************************************************
+     * TAX	Transfer accumulator to index X
+     ***************************************************************/
+    public static void TAX() {
+        m6502.u8_x = m6502.u8_a & 0xFF;
+        SET_NZ(m6502.u8_x);
+    }
+
+    /* 6502 ********************************************************
+     * TAY	Transfer accumulator to index Y
+     ***************************************************************/
+    public static void TAY() {
+        m6502.u8_y = m6502.u8_a & 0xFF;
+        SET_NZ(m6502.u8_y);
+    }
+
+    /* 6502 ********************************************************
+     * TSX	Transfer stack LSB to index X
+     ***************************************************************/
+    public static void TSX() {
+        m6502.u8_x = m6502.sp.L;
+        SET_NZ(m6502.u8_x);
+    }
+
+    /* 6502 ********************************************************
+     * TXA	Transfer index X to accumulator
+     ***************************************************************/
+    public static void TXA() {
+        m6502.u8_a = m6502.u8_x & 0xFF;
+        SET_NZ(m6502.u8_a);
+    }
+
+    /* 6502 ********************************************************
+     * TXS	Transfer index X to stack LSB
+     * no flags changed (sic!)
+     ***************************************************************/
+    public static void TXS() {
+        m6502.sp.SetL(m6502.u8_x);
+    }
+
+    /* 6502 ********************************************************
+     * TYA	Transfer index Y to accumulator
+     ***************************************************************/
+    public static void TYA() {
+        m6502.u8_a = m6502.u8_y & 0xFF;
+        SET_NZ(m6502.u8_a);
+    }
 }

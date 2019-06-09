@@ -30,11 +30,11 @@ public class m6502H {
 /*TODO*///};
 /*TODO*///
     public static final int M6502_IRQ_LINE = 0;
-    /*TODO*////* use cpu_set_irq_line(cpu, M6502_SET_OVERFLOW, level)
-/*TODO*///   to change level of the so input line
-/*TODO*///   positiv edge sets overflow flag */
-/*TODO*///#define M6502_SET_OVERFLOW	1
-/*TODO*///
+    /* use cpu_set_irq_line(cpu, M6502_SET_OVERFLOW, level)
+   to change level of the so input line
+   positiv edge sets overflow flag */
+    public static final int M6502_SET_OVERFLOW = 1;
+    /*TODO*///
 /*TODO*////****************************************************************************
 /*TODO*/// * The 6510
 /*TODO*/// ****************************************************************************/

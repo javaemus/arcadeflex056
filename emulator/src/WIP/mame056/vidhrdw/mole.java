@@ -39,7 +39,7 @@ public class mole {
 
     public static VhStartPtr moleattack_vh_start = new VhStartPtr() {
         public int handler() {
-            tile_data = new UShortPtr(NUM_TILES * 2);
+            tile_data = new UShortPtr(NUM_TILES * 2*2);
             if (tile_data != null) {
                 dirtybuffer = new char[NUM_TILES];
                 if (dirtybuffer != null) {

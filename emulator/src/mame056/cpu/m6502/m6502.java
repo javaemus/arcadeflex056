@@ -39,15 +39,55 @@ public class m6502 extends cpu_interface {
      * The 6502 registers.
      * **************************************************************************
      */
+    public static class PAIR {
+        //L = low 8 bits
+        //H = high 8 bits
+        //D = whole 16 bits
+
+        public int H, L, D;
+
+        public void SetH(int val) {
+            H = val & 0xFF;
+            D = ((H << 8) | L) & 0xFFFF;
+        }
+
+        public void SetL(int val) {
+            L = val & 0xFF;
+            D = ((H << 8) | L) & 0xFFFF;
+        }
+
+        public void SetD(int val) {
+            D = val & 0xFFFF;
+            H = D >> 8 & 0xFF;
+            L = D & 0xFF;
+        }
+
+        public void AddH(int val) {
+            H = (H + val) & 0xFF;
+            D = ((H << 8) | L) & 0xFFFF;
+        }
+
+        public void AddL(int val) {
+            L = (L + val) & 0xFF;
+            D = ((H << 8) | L) & 0xFFFF;
+        }
+
+        public void AddD(int val) {
+            D = (D + val) & 0xFFFF;
+            H = D >> 8 & 0xFF;
+            L = D & 0xFF;
+        }
+    };
+
     public static class m6502_Regs {
 
         //int subtype;/* currently selected cpu sub type */
         //void	(**insn)(void); /* pointer to the function pointer table */
-        int/*PAIR*/ ppc;/* previous program counter */
-        int/*PAIR*/ pc;/* program counter */
-        int/*PAIR*/ sp;/* stack pointer (always 100 - 1FF) */
-        int/*PAIR*/ zp;/* zero page address */
-        int/*PAIR*/ ea;/* effective address */
+        PAIR ppc = new PAIR();/* previous program counter */
+        PAIR pc = new PAIR();/* program counter */
+        PAIR sp = new PAIR();/* stack pointer (always 100 - 1FF) */
+        PAIR zp = new PAIR();/* zero page address */
+        PAIR ea = new PAIR();/* effective address */
         int u8_a;/* Accumulator */
         int u8_x;/* X index register */
         int u8_y;/* Y index register */
@@ -70,17 +110,15 @@ public class m6502 extends cpu_interface {
     public void reset(Object param) {
         /* wipe out the rest of the m6502 structure */
  /* read the reset vector into PC */
-        int PCL = RDMEM(M6502_RST_VEC);
-        int PCH = RDMEM(M6502_RST_VEC + 1);
-        m6502.pc = ((PCH << 8) | PCL) & 0xFFFF;
-
-        m6502.sp = 0x01ff;/* stack pointer starts at page 1 offset FF */
+        m6502.pc.SetL(RDMEM(M6502_RST_VEC));
+        m6502.pc.SetH(RDMEM(M6502_RST_VEC + 1));
+        m6502.sp.SetD(0x01ff);/* stack pointer starts at page 1 offset FF */
         m6502.u8_p = F_T | F_I | F_Z | F_B | (m6502.u8_p & F_D);/* set T, I and Z flags */
         m6502.u8_pending_irq = 0;/* nonzero if an IRQ is pending */
         m6502.u8_after_cli = 0;/* pending IRQ and last insn cleared I */
         m6502.irq_callback = null;
 
-        change_pc16(m6502.pc);
+        change_pc16(m6502.pc.D);
     }
 
     @Override
@@ -89,34 +127,35 @@ public class m6502 extends cpu_interface {
     }
 
     public static void m6502_take_irq() {
-        throw new UnsupportedOperationException("Not supported yet.");
-        /*TODO*///	if( !(P & F_I) )
-/*TODO*///	{
-/*TODO*///		EAD = M6502_IRQ_VEC;
-/*TODO*///		m6502_ICount -= 7;
-/*TODO*///		PUSH(PCH);
-/*TODO*///		PUSH(PCL);
-/*TODO*///		PUSH(P & ~F_B);
-/*TODO*///		P |= F_I;		/* set I flag */
-/*TODO*///		PCL = RDMEM(EAD);
-/*TODO*///		PCH = RDMEM(EAD+1);
-/*TODO*///		LOG(("M6502#%d takes IRQ ($%04x)\n", cpu_getactivecpu(), PCD));
-/*TODO*///		/* call back the cpuintrf to let it clear the line */
-/*TODO*///		if (m6502.irq_callback) (*m6502.irq_callback)(0);
-/*TODO*///		change_pc16(PCD);
-/*TODO*///	}
-/*TODO*///	m6502.pending_irq = 0;
+        if ((m6502.u8_p & F_I) == 0) {
+            m6502.ea.SetD(M6502_IRQ_VEC);
+            m6502_ICount[0] -= 7;
+            PUSH(m6502.pc.H);
+            PUSH(m6502.pc.L);
+            PUSH(m6502.u8_p & ~F_B);
+            m6502.u8_p = (m6502.u8_p | F_I) & 0xFF;/* set I flag */
+            m6502.pc.SetL(RDMEM(m6502.ea.D));
+            m6502.ea.AddD(1);
+            m6502.pc.SetH(RDMEM(m6502.ea.D));
+            //logerror("M6502#%d takes IRQ ($%04x)\n", cpu_getactivecpu(), m6502.pc.D);
+            /* call back the cpuintrf to let it clear the line */
+            if (m6502.irq_callback != null) {
+                (m6502.irq_callback).handler(0);
+            }
+            change_pc16(m6502.pc.D);
+        }
+        m6502.u8_pending_irq = 0;
     }
 
     @Override
     public int execute(int cycles) {
         m6502_ICount[0] = cycles;
 
-        change_pc16(m6502.pc);
+        change_pc16(m6502.pc.D);
 
         do {
             int/*UINT8*/ op;
-            m6502.ppc = m6502.pc & 0xFFFF;
+            m6502.ppc.SetD(m6502.pc.D);
 
             /* if an irq is pending, take it now */
             if (m6502.u8_pending_irq != 0) {
@@ -148,11 +187,11 @@ public class m6502 extends cpu_interface {
     @Override
     public Object get_context() {
         m6502_Regs regs = new m6502_Regs();
-        regs.ppc = m6502.ppc;
-        regs.pc = m6502.pc;
-        regs.zp = m6502.zp;
-        regs.sp = m6502.sp;
-        regs.ea = m6502.ea;
+        regs.ppc.SetD(m6502.ppc.D);
+        regs.pc.SetD(m6502.pc.D);
+        regs.zp.SetD(m6502.zp.D);
+        regs.sp.SetD(m6502.sp.D);
+        regs.ea.SetD(m6502.ea.D);
         regs.u8_a = m6502.u8_a;
         regs.u8_x = m6502.u8_x;
         regs.u8_y = m6502.u8_y;
@@ -169,11 +208,11 @@ public class m6502 extends cpu_interface {
     @Override
     public void set_context(Object reg) {
         m6502_Regs regs = (m6502_Regs) reg;
-        m6502.ppc = regs.ppc;
-        m6502.pc = regs.pc;
-        m6502.zp = regs.zp;
-        m6502.sp = regs.sp;
-        m6502.ea = regs.ea;
+        m6502.ppc.SetD(regs.ppc.D);
+        m6502.pc.SetD(regs.pc.D);
+        m6502.zp.SetD(regs.zp.D);
+        m6502.sp.SetD(regs.sp.D);
+        m6502.ea.SetD(regs.ea.D);
         m6502.u8_a = regs.u8_a;
         m6502.u8_x = regs.u8_x;
         m6502.u8_y = regs.u8_y;
@@ -185,14 +224,14 @@ public class m6502 extends cpu_interface {
         m6502.u8_so_state = regs.u8_so_state;
         m6502.irq_callback = regs.irq_callback;
 
-        change_pc16(m6502.pc);
+        change_pc16(m6502.pc.D);
     }
 
     @Override
     public int get_reg(int regnum) {
         switch (regnum) {
             case REG_PC:
-                return m6502.pc;
+                return m6502.pc.D;
             /*TODO*///		case M6502_PC: return m6502.pc.w.l;
 /*TODO*///		case REG_SP: return S;
 /*TODO*///		case M6502_S: return m6502.sp.b.l;
@@ -206,8 +245,9 @@ public class m6502 extends cpu_interface {
 /*TODO*///		case M6502_IRQ_STATE: return m6502.irq_state;
 /*TODO*///		case M6502_SO_STATE: return m6502.so_state;
 /*TODO*///		case M6502_SUBTYPE: return m6502.subtype;
-/*TODO*///		case REG_PREVIOUSPC: return m6502.ppc.w.l;
-/*TODO*///		default:
+            case REG_PREVIOUSPC:
+                return m6502.ppc.D;
+            /*TODO*///		default:
 /*TODO*///			if( regnum <= REG_SP_CONTENTS )
 /*TODO*///			{
 /*TODO*///				unsigned offset = S + 2 * (REG_SP_CONTENTS - regnum);
@@ -225,8 +265,41 @@ public class m6502 extends cpu_interface {
     }
 
     @Override
-    public void set_irq_line(int irqline, int linestate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void set_irq_line(int irqline, int state) {
+        if (irqline == IRQ_LINE_NMI) {
+            if (m6502.u8_nmi_state == state) {
+                return;
+            }
+            m6502.u8_nmi_state = state;
+            if (state != CLEAR_LINE) {
+                //LOG(( "M6502#%d set_nmi_line(ASSERT)\n", cpu_getactivecpu()));
+                m6502.ea.SetD(M6502_NMI_VEC);
+                m6502_ICount[0] -= 7;
+                PUSH(m6502.pc.H);
+                PUSH(m6502.pc.L);
+                PUSH(m6502.u8_p & ~F_B);
+                m6502.u8_p = (m6502.u8_p | F_I) & 0xFF;/* set I flag */
+                m6502.pc.SetL(RDMEM(m6502.ea.D));
+                m6502.ea.AddD(1);
+                m6502.pc.SetH(RDMEM(m6502.ea.D));
+                //LOG(("M6502#%d takes NMI ($%04x)\n", cpu_getactivecpu(), PCD));
+                change_pc16(m6502.pc.D);
+            }
+        } else {
+            if (irqline == M6502_SET_OVERFLOW) {
+                if (m6502.u8_so_state != 0 && state == 0) {
+                    //LOG(( "M6502#%d set overflow\n", cpu_getactivecpu()));
+                    m6502.u8_p = (m6502.u8_p | F_V) & 0xFF;
+                }
+                m6502.u8_so_state = state;
+                return;
+            }
+            m6502.u8_irq_state = state;
+            if (state != CLEAR_LINE) {
+                //LOG(( "M6502#%d set_irq_line(ASSERT)\n", cpu_getactivecpu()));
+                m6502.u8_pending_irq = 1;
+            }
+        }
     }
 
     @Override
