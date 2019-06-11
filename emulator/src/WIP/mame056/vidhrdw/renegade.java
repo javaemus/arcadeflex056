@@ -109,10 +109,10 @@ public class renegade
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap,0);
-		/*TODO*///tilemap_set_scrolldx( bg_tilemap, 256, 0 );
+		tilemap_set_scrolldx( bg_tilemap, 256, 0 );
 	
-		/*TODO*///tilemap_set_scrolldy( fg_tilemap, 0, 16 );
-		/*TODO*///tilemap_set_scrolldy( bg_tilemap, 0, 16 );
+		tilemap_set_scrolldy( fg_tilemap, 0, 16 );
+		tilemap_set_scrolldy( bg_tilemap, 0, 16 );
 		return 0;
 	} };
 	

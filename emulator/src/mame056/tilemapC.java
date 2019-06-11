@@ -70,7 +70,7 @@ public class tilemapC {
         /*TODO*///	int *cached_rowscroll, *cached_colscroll;
 /*TODO*///
         public int logical_scroll_rows, logical_scroll_cols;
-        /*TODO*///	int *logical_rowscroll, *logical_colscroll;
+        public int[] logical_rowscroll, logical_colscroll;
 /*TODO*///
         public int orientation;
         /*TODO*///	int clip_left,clip_right,clip_top,clip_bottom;
@@ -648,9 +648,9 @@ public class tilemapC {
             tilemap.tile_granularity = 0;
             tilemap.tile_dirty_map = null;
             /*TODO*///
-/*TODO*///		tilemap->logical_rowscroll	= calloc(tilemap->cached_height,sizeof(int));
+            tilemap.logical_rowscroll	= new int[tilemap.cached_height];
 /*TODO*///		tilemap->cached_rowscroll	= calloc(tilemap->cached_height,sizeof(int));
-/*TODO*///		tilemap->logical_colscroll	= calloc(tilemap->cached_width, sizeof(int));
+            tilemap.logical_colscroll	= new int[tilemap.cached_width];
 /*TODO*///		tilemap->cached_colscroll	= calloc(tilemap->cached_width, sizeof(int));
 /*TODO*///
 /*TODO*///		tilemap->transparency_data = malloc( num_tiles );
@@ -914,43 +914,41 @@ public class tilemapC {
 /*TODO*///{
 /*TODO*///	return tilemap->transparency_bitmap;
 /*TODO*///}
-/*TODO*///
-/*TODO*////***********************************************************************************/
-/*TODO*///
-/*TODO*///static void
-/*TODO*///recalculate_scroll( struct tilemap *tilemap )
-/*TODO*///{
-/*TODO*///	int i;
-/*TODO*///
-/*TODO*///	tilemap->scrollx_delta = (tilemap->attributes & TILEMAP_FLIPX )?tilemap->dx_if_flipped:tilemap->dx;
-/*TODO*///	tilemap->scrolly_delta = (tilemap->attributes & TILEMAP_FLIPY )?tilemap->dy_if_flipped:tilemap->dy;
-/*TODO*///
-/*TODO*///	for( i=0; i<tilemap->logical_scroll_rows; i++ )
-/*TODO*///	{
-/*TODO*///		tilemap_set_scrollx( tilemap, i, tilemap->logical_rowscroll[i] );
-/*TODO*///	}
-/*TODO*///	for( i=0; i<tilemap->logical_scroll_cols; i++ )
-/*TODO*///	{
-/*TODO*///		tilemap_set_scrolly( tilemap, i, tilemap->logical_colscroll[i] );
-/*TODO*///	}
-/*TODO*///}
-/*TODO*///
-/*TODO*///void
-/*TODO*///tilemap_set_scrolldx( struct tilemap *tilemap, int dx, int dx_if_flipped )
-/*TODO*///{
-/*TODO*///	tilemap->dx = dx;
-/*TODO*///	tilemap->dx_if_flipped = dx_if_flipped;
-/*TODO*///	recalculate_scroll( tilemap );
-/*TODO*///}
-/*TODO*///
-/*TODO*///void
-/*TODO*///tilemap_set_scrolldy( struct tilemap *tilemap, int dy, int dy_if_flipped )
-/*TODO*///{
-/*TODO*///	tilemap->dy = dy;
-/*TODO*///	tilemap->dy_if_flipped = dy_if_flipped;
-/*TODO*///	recalculate_scroll( tilemap );
-/*TODO*///}
-/*TODO*///
+
+    /***********************************************************************************/
+
+    static void recalculate_scroll( struct_tilemap tilemap )
+    {
+            int i;
+
+            tilemap.scrollx_delta = (tilemap.attributes & TILEMAP_FLIPX )!=0?tilemap.dx_if_flipped:tilemap.dx;
+            tilemap.scrolly_delta = (tilemap.attributes & TILEMAP_FLIPY )!=0?tilemap.dy_if_flipped:tilemap.dy;
+
+            for( i=0; i<tilemap.logical_scroll_rows; i++ )
+            {
+                    tilemap_set_scrollx( tilemap, i, tilemap.logical_rowscroll[i] );
+            }
+            for( i=0; i<tilemap.logical_scroll_cols; i++ )
+            {
+                    tilemap_set_scrolly( tilemap, i, tilemap.logical_colscroll[i] );
+            }
+    }
+
+
+    public static void tilemap_set_scrolldx( struct_tilemap tilemap, int dx, int dx_if_flipped )
+    {
+            tilemap.dx = dx;
+            tilemap.dx_if_flipped = dx_if_flipped;
+            recalculate_scroll( tilemap );
+    }
+
+    public static void tilemap_set_scrolldy( struct_tilemap tilemap, int dy, int dy_if_flipped )
+    {
+            tilemap.dy = dy;
+            tilemap.dy_if_flipped = dy_if_flipped;
+            recalculate_scroll( tilemap );
+    }
+
     public static void tilemap_set_scrollx(struct_tilemap tilemap, int which, int value) {
         System.out.println("dummy tilemap_set_scrollx");
         /*TODO*///	tilemap->logical_rowscroll[which] = value;
