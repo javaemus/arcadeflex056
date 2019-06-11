@@ -174,6 +174,7 @@ import static WIP.mame056.drivers.mole.*;
 import static mame056.drivers.btime.*;
 import static WIP.mame056.drivers.exprraid.*;
 import static WIP.mame056.drivers.renegade.*;
+import static WIP.mame056.drivers.pcktgal.*;
 
 public class driver {
 
@@ -2574,11 +2575,11 @@ public class driver {
         driver_wexpress,	/* (c) 1986 Data East Corporation (World?) */
         driver_wexpresb,	/* bootleg */
         driver_wexpresc,	/* bootleg */
-        /*TODO*///	driver_pcktgal,	/* (c) 1987 Data East Corporation (Japan) */
-        /*TODO*///	driver_pcktgalb,	/* bootleg */
-        /*TODO*///	driver_pcktgal2,	/* (c) 1989 Data East Corporation (World?) */
-        /*TODO*///	driver_spool3,	/* (c) 1989 Data East Corporation (World?) */
-        /*TODO*///	driver_spool3i,	/* (c) 1990 Data East Corporation + I-Vics license */
+        driver_pcktgal,	/* (c) 1987 Data East Corporation (Japan) */
+        driver_pcktgalb,	/* bootleg */
+        driver_pcktgal2,	/* (c) 1989 Data East Corporation (World?) */
+        driver_spool3,	/* (c) 1989 Data East Corporation (World?) */
+        driver_spool3i,	/* (c) 1990 Data East Corporation + I-Vics license */
         /*TODO*///	driver_battlera,	/* (c) 1988 Data East Corporation (World) */
         /*TODO*///	driver_bldwolf,	/* (c) 1988 Data East USA (US) */
         /*TODO*///	driver_actfancr,	/* (c) 1989 Data East Corporation (World) */
