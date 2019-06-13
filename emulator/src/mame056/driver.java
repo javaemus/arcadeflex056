@@ -178,6 +178,7 @@ import static WIP.mame056.drivers.pcktgal.*;
 import static WIP.mame056.drivers.jedi.*;
 import static WIP.mame056.drivers.warlord.*;
 import static WIP.mame056.drivers.scregg.*;
+import static WIP.mame056.drivers.tagteam.*;
 
 public class driver {
 
@@ -3292,8 +3293,8 @@ public class driver {
         driver_scregg,          /* TA-0001 (c) 1983 */
         driver_eggs,		/* TA-0002 (c) 1983 Universal USA */
         driver_dommy,		/* TA-00?? (c) */
-        /*TODO*///	driver_bigprowr,	/* TA-0007 (c) 1983 */
-        /*TODO*///	driver_tagteam,	/* TA-0007 (c) 1983 + Data East license */
+        driver_bigprowr,	/* TA-0007 (c) 1983 */
+        driver_tagteam,	/* TA-0007 (c) 1983 + Data East license */
         /*TODO*///	driver_ssozumo,	/* TA-0008 (c) 1984 */
         /*TODO*///	driver_mystston,	/* TA-0010 (c) 1984 */
         /*TODO*///	/* TA-0011 Dog Fight (Data East) / Batten O'hara no Sucha-Raka Kuuchuu Sen 1985 */
