@@ -177,6 +177,7 @@ import static WIP.mame056.drivers.renegade.*;
 import static WIP.mame056.drivers.pcktgal.*;
 import static WIP.mame056.drivers.jedi.*;
 import static WIP.mame056.drivers.warlord.*;
+import static WIP.mame056.drivers.scregg.*;
 
 public class driver {
 
@@ -3286,11 +3287,11 @@ public class driver {
         /*exctsccr*/ driver_exctscca,
         /*exctsccr*/ driver_exctsccb,
         /*exctsccr*/ driver_exctscc2,
-        /*TODO*///
-        /*TODO*///	/* Technos games */
-        /*TODO*///	driver_scregg,	/* TA-0001 (c) 1983 */
-        /*TODO*///	driver_eggs,		/* TA-0002 (c) 1983 Universal USA */
-        /*TODO*///	driver_dommy,		/* TA-00?? (c) */
+        
+        /* Technos games */
+        driver_scregg,          /* TA-0001 (c) 1983 */
+        driver_eggs,		/* TA-0002 (c) 1983 Universal USA */
+        driver_dommy,		/* TA-00?? (c) */
         /*TODO*///	driver_bigprowr,	/* TA-0007 (c) 1983 */
         /*TODO*///	driver_tagteam,	/* TA-0007 (c) 1983 + Data East license */
         /*TODO*///	driver_ssozumo,	/* TA-0008 (c) 1984 */
