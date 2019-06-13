@@ -175,6 +175,7 @@ import static mame056.drivers.btime.*;
 import static WIP.mame056.drivers.exprraid.*;
 import static WIP.mame056.drivers.renegade.*;
 import static WIP.mame056.drivers.pcktgal.*;
+import static WIP.mame056.drivers.jedi.*;
 
 public class driver {
 
@@ -3085,8 +3086,8 @@ public class driver {
         /*TODO*///	driver_ccastle2,	/* 136022			(c) 1983 */
         /*TODO*///	driver_cloak,		/* 136023			(c) 1983 */
         /*TODO*///	driver_cloud9,	/* (proto)			(c) 1983 */
-        /*TODO*///	driver_jedi,		/* 136030			(c) 1984 */
-        /*TODO*///
+        driver_jedi,		/* 136030			(c) 1984 */
+        
         /*TODO*///	/* Atari System 1 games */
         /*TODO*///	driver_peterpak,	/* 136028			(c) 1984 */
         /*TODO*///	driver_marble,	/* 136033			(c) 1984 */
