@@ -179,6 +179,7 @@ import static WIP.mame056.drivers.jedi.*;
 import static WIP.mame056.drivers.warlord.*;
 import static WIP.mame056.drivers.scregg.*;
 import static WIP.mame056.drivers.tagteam.*;
+import static WIP.mame056.drivers.exidy.*;
 
 public class driver {
 
@@ -2962,21 +2963,21 @@ public class driver {
         /*TODO*///1997.07 Winning Spike (GX705)
         /*TODO*///1997.11 Rushing Heroes (GX?. Not released in Japan)
         /*TODO*///*/
-        /*TODO*///
-        /*TODO*///	/* Exidy games */
-        /*TODO*///	driver_sidetrac,	/* (c) 1979 */
-        /*TODO*///	driver_targ,		/* (c) 1980 */
-        /*TODO*///	driver_spectar,	/* (c) 1980 */
-        /*TODO*///	driver_spectar1,	/* (c) 1980 */
-        /*TODO*///	driver_venture,	/* (c) 1981 */
-        /*TODO*///	driver_venture2,	/* (c) 1981 */
-        /*TODO*///	driver_venture4,	/* (c) 1981 */
-        /*TODO*///	driver_mtrap,		/* (c) 1981 */
-        /*TODO*///	driver_mtrap3,	/* (c) 1981 */
-        /*TODO*///	driver_mtrap4,	/* (c) 1981 */
-        /*TODO*///	driver_pepper2,	/* (c) 1982 */
-        /*TODO*///	driver_hardhat,	/* (c) 1982 */
-        /*TODO*///	driver_fax,		/* (c) 1983 */
+        
+        /* Exidy games */
+        driver_sidetrac,	/* (c) 1979 */
+        driver_targ,		/* (c) 1980 */
+        driver_spectar,	/* (c) 1980 */
+        driver_spectar1,	/* (c) 1980 */
+        driver_venture,	/* (c) 1981 */
+        driver_venture2,	/* (c) 1981 */
+        driver_venture4,	/* (c) 1981 */
+        driver_mtrap,		/* (c) 1981 */
+        driver_mtrap3,	/* (c) 1981 */
+        driver_mtrap4,	/* (c) 1981 */
+        driver_pepper2,	/* (c) 1982 */
+        driver_hardhat,	/* (c) 1982 */
+        driver_fax,		/* (c) 1983 */
         /*TODO*///	driver_circus,	/* no copyright notice [1977?] */
         /*TODO*///	driver_robotbwl,	/* no copyright notice */
         /*TODO*///	driver_crash,		/* Exidy [1979?] */

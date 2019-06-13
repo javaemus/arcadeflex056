@@ -209,7 +209,7 @@ public class _6812pia {
 				if (OUTPUT_SELECTED(p.ctl_a))
 				{
 					/* update the input */
-					if (p.intf.in_a_func!=null) p.in_a = (char)(p.intf.in_a_func.handler(0)&0xFF);
+					if (p.intf!=null && p.intf.in_a_func!=null) p.in_a = (char)(p.intf.in_a_func.handler(0)&0xFF);
 	
 					/* combine input and output values */
 					val = (p.out_a & p.ddr_a) + (p.in_a & ~p.ddr_a);
@@ -223,13 +223,13 @@ public class _6812pia {
 					{
 						/* this will cause a transition low; call the output function if we're currently high */
 						if (p.out_ca2!=0)
-							if (p.intf.out_ca2_func!=null) p.intf.out_ca2_func.handler(0, 0);
+							if (p.intf!=null && p.intf.out_ca2_func!=null) p.intf.out_ca2_func.handler(0, 0);
 						p.out_ca2 = 0;
 	
 						/* if the CA2 strobe is cleared by the E, reset it right away */
 						if (STROBE_E_RESET(p.ctl_a))
 						{
-							if (p.intf.out_ca2_func!=null) p.intf.out_ca2_func.handler(0, 1);
+							if (p.intf!=null && p.intf.out_ca2_func!=null) p.intf.out_ca2_func.handler(0, 1);
 							p.out_ca2 = 1;
 						}
 					}
@@ -252,7 +252,7 @@ public class _6812pia {
 				if (OUTPUT_SELECTED(p.ctl_b))
 				{
 					/* update the input */
-					if (p.intf.in_b_func!=null) p.in_b = (char)(p.intf.in_b_func.handler(0)&0xFF);
+					if (p.intf!=null && p.intf.in_b_func!=null) p.in_b = (char)(p.intf.in_b_func.handler(0)&0xFF);
 	
 					/* combine input and output values */
 					val = (p.out_b & p.ddr_b) + (p.in_b & ~p.ddr_b);
@@ -276,8 +276,8 @@ public class _6812pia {
 			case PIA_CTLA:
 	
 				/* Update CA1 & CA2 if callback exists, these in turn may update IRQ's */
-				if (p.intf.in_ca1_func!=null) pia_set_input_ca1.handler(which, p.intf.in_ca1_func.handler(0));
-				if (p.intf.in_ca2_func!=null) pia_set_input_ca2.handler(which, p.intf.in_ca2_func.handler(0));
+				if (p.intf!=null && p.intf.in_ca1_func!=null) pia_set_input_ca1.handler(which, p.intf.in_ca1_func.handler(0));
+				if (p.intf!=null && p.intf.in_ca2_func!=null) pia_set_input_ca2.handler(which, p.intf.in_ca2_func.handler(0));
 	
 				/* read control register */
 				val = p.ctl_a;
@@ -293,8 +293,8 @@ public class _6812pia {
 			case PIA_CTLB:
 	
 				/* Update CB1 & CB2 if callback exists, these in turn may update IRQ's */
-				if (p.intf.in_cb1_func!=null) pia_set_input_cb1.handler(which, p.intf.in_cb1_func.handler(0));
-				if (p.intf.in_cb2_func!=null) pia_set_input_cb2.handler(which, p.intf.in_cb2_func.handler(0));
+				if (p.intf!=null && p.intf.in_cb1_func!=null) pia_set_input_cb1.handler(which, p.intf.in_cb1_func.handler(0));
+				if (p.intf!=null && p.intf.in_cb2_func!=null) pia_set_input_cb2.handler(which, p.intf.in_cb2_func.handler(0));
 	
 				/* read control register */
 				val = p.ctl_b;
@@ -369,7 +369,7 @@ public class _6812pia {
 					p.out_a = (char)(data&0xFF);/* & p.ddr_a; */	/* NS990130 - don't mask now, DDR could change later */
 	
 					/* send it to the output function */
-					if (p.intf.out_a_func!=null && p.ddr_a!=0) p.intf.out_a_func.handler(0, p.out_a & p.ddr_a);	/* NS990130 */
+					if (p.intf!=null && p.intf.out_a_func!=null && p.ddr_a!=0) p.intf.out_a_func.handler(0, p.out_a & p.ddr_a);	/* NS990130 */
 				}
 	
 				/* write DDR register */
@@ -383,7 +383,7 @@ public class _6812pia {
 						p.ddr_a = (char)(data&0xFF);
 	
 						/* send it to the output function */
-						if (p.intf.out_a_func!=null && p.ddr_a!=0) p.intf.out_a_func.handler(0, p.out_a & p.ddr_a);
+						if (p.intf!=null && p.intf.out_a_func!=null && p.ddr_a!=0) p.intf.out_a_func.handler(0, p.out_a & p.ddr_a);
 					}
 				}
 				break;
@@ -400,14 +400,14 @@ public class _6812pia {
 					p.out_b = (char)(data&0xFF);/* & p.ddr_b */	/* NS990130 - don't mask now, DDR could change later */
 	
 					/* send it to the output function */
-					if (p.intf.out_b_func!=null && p.ddr_b!=0) p.intf.out_b_func.handler(0, p.out_b & p.ddr_b);	/* NS990130 */
+					if (p.intf!=null && p.intf.out_b_func!=null && p.ddr_b!=0) p.intf.out_b_func.handler(0, p.out_b & p.ddr_b);	/* NS990130 */
 	
 					/* CB2 is configured as output and in write strobe mode */
 					if (C2_OUTPUT(p.ctl_b) && C2_STROBE_MODE(p.ctl_b))
 					{
 						/* this will cause a transition low; call the output function if we're currently high */
 						if (p.out_cb2!=0)
-							if (p.intf.out_cb2_func!=null) p.intf.out_cb2_func.handler(0, 0);
+							if (p.intf!=null && p.intf.out_cb2_func!=null) p.intf.out_cb2_func.handler(0, 0);
 						p.out_cb2 = 0;
 	
 						/* if the CB2 strobe is cleared by the E, reset it right away */
@@ -430,7 +430,7 @@ public class _6812pia {
 						p.ddr_b = (char)(data&0xFF);
 	
 						/* send it to the output function */
-						if (p.intf.out_b_func!=null && p.ddr_b!=0) p.intf.out_b_func.handler(0, p.out_b & p.ddr_b);
+                                                if (p.intf!=null && p.intf.out_b_func!=null && p.ddr_b!=0) p.intf.out_b_func.handler(0, p.out_b & p.ddr_b);
 					}
 				}
 				break;
@@ -455,7 +455,7 @@ public class _6812pia {
 	
 					/* if this creates a transition, call the CA2 output function */
 					if ((p.out_ca2 ^ temp)!=0)
-						if (p.intf.out_ca2_func!=null) p.intf.out_ca2_func.handler(0, temp);
+						if (p.intf!=null && p.intf.out_ca2_func!=null) p.intf.out_ca2_func.handler(0, temp);
 	
 					/* set the new value */
 					p.out_ca2 = (char)(temp&0xFF);
@@ -487,7 +487,7 @@ public class _6812pia {
 	
 					/* if this creates a transition, call the CA2 output function */
 					if ((p.out_cb2 ^ temp)!=0)
-						if (p.intf.out_cb2_func!=null) p.intf.out_cb2_func.handler(0, temp);
+						if (p.intf!=null && p.intf.out_cb2_func!=null) p.intf.out_cb2_func.handler(0, temp);
 	
 					/* set the new value */
 					p.out_cb2 = (char)(temp&0xFF);
@@ -541,7 +541,7 @@ public class _6812pia {
 				{
 					/* call the CA2 output function */
 					if (p.out_ca2==0)
-						if (p.intf.out_ca2_func!=null) p.intf.out_ca2_func.handler(0, 1);
+						if (p.intf!=null && p.intf.out_ca2_func!=null) p.intf.out_ca2_func.handler(0, 1);
 	
 					/* clear CA2 */
 					p.out_ca2 = 1;
@@ -629,7 +629,7 @@ public class _6812pia {
 					{
 						/* call the CB2 output function */
 						if (p.out_cb2==0)
-							if (p.intf.out_cb2_func!=null) p.intf.out_cb2_func.handler(0, 1);
+							if (p.intf!=null && p.intf.out_cb2_func!=null) p.intf.out_cb2_func.handler(0, 1);
 	
 						/* clear CB2 */
 						p.out_cb2 = 1;
