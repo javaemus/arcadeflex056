@@ -176,6 +176,7 @@ import static WIP.mame056.drivers.exprraid.*;
 import static WIP.mame056.drivers.renegade.*;
 import static WIP.mame056.drivers.pcktgal.*;
 import static WIP.mame056.drivers.jedi.*;
+import static WIP.mame056.drivers.warlord.*;
 
 public class driver {
 
@@ -3069,7 +3070,7 @@ public class driver {
         /*TODO*///	driver_mhavocrv,	/* (hack) */
         driver_esb, /* 136031			(c) 1985 */
         /*TODO*///	/* Atari "Centipede hardware" games */
-        /*TODO*///	driver_warlord,	/* 037153-037159	(c) 1980 */
+        driver_warlord,	/* 037153-037159	(c) 1980 */
         /*TODO*///	driver_centiped,	/* 136001			(c) 1980 */
         /*TODO*///	driver_centipd2,	/* 136001			(c) 1980 */
         /*TODO*///	driver_centipdb,	/* (bootleg) */
