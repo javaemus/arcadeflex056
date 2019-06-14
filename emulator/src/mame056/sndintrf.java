@@ -37,6 +37,7 @@ import mame056.sound._5110intf;
 import mame056.sound.adpcm;
 import mame056.sound.nes_apu;
 import mame056.sound.oki6295;
+import mame056.sound.pokey;
 
 public class sndintrf {
 
@@ -522,31 +523,7 @@ public class sndintrf {
                 new y8950intf(),
                 new sn76477(),
                 new sn76496(),
-                /*TODO*///#endif
-                /*TODO*///#if (HAS_POKEY)
-                /*TODO*///    {
-                /*TODO*///		SOUND_POKEY,
-                /*TODO*///		"Pokey",
-                /*TODO*///		POKEY_num,
-                /*TODO*///		POKEY_clock,
-                /*TODO*///		pokey_sh_start,
-                /*TODO*///		pokey_sh_stop,
-                /*TODO*///		0,
-                /*TODO*///		0
-                /*TODO*///	},
-                new Dummy_snd(),
-                /*TODO*///#endif
-                /*TODO*///#if (HAS_NES)
-                /*TODO*///    {
-                /*TODO*///		SOUND_NES,
-                /*TODO*///		"Nintendo",
-                /*TODO*///		NES_num,
-                /*TODO*///		0,
-                /*TODO*///		NESPSG_sh_start,
-                /*TODO*///		NESPSG_sh_stop,
-                /*TODO*///		NESPSG_sh_update,
-                /*TODO*///		0
-                /*TODO*///	},
+                new pokey(),
                 new nes_apu(),
                 /*TODO*///#endif
                 /*TODO*///#if (HAS_ASTROCADE)
@@ -579,18 +556,6 @@ public class sndintrf {
                 new Dummy_snd(),
                 new vlm5030(),
                 new adpcm(),
-                /*TODO*///#endif
-                /*TODO*///#if (HAS_OKIM6295)
-                /*TODO*///    {
-                /*TODO*///		SOUND_OKIM6295,
-                /*TODO*///		"OKI6295",
-                /*TODO*///		OKIM6295_num,
-                /*TODO*///		OKIM6295_clock,
-                /*TODO*///		OKIM6295_sh_start,
-                /*TODO*///		OKIM6295_sh_stop,
-                /*TODO*///		OKIM6295_sh_update,
-                /*TODO*///		0
-                /*TODO*///	},
                 new oki6295(),
                 new MSM5205(),
                 /*TODO*///#endif
