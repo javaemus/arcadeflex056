@@ -113,6 +113,7 @@ IO:
  */ 
 package WIP.mame056.drivers;
 
+import static WIP.mame056.sndhrdw.exidy.*;
 import static arcadeflex056.fucPtr.*;
 import static common.ptr.*;
 
@@ -155,6 +156,7 @@ import static mame056.sound.dac.*;
 import static mame056.sound.dacH.*;
 import static mame056.sound.samplesH.*;
 import static mame056.sound.samples.*;
+import static WIP.mame056.sndhrdw.targ.*;
 
 public class exidy
 {
@@ -268,11 +270,11 @@ public class exidy
 	public static Memory_ReadAddress sound_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ),
-		/*TODO*///new Memory_ReadAddress( 0x0800, 0x0fff, exidy_shriot_r ),
+		new Memory_ReadAddress( 0x0800, 0x0fff, exidy_shriot_r ),
 		new Memory_ReadAddress( 0x1000, 0x100f, pia_1_r ),
-		/*TODO*///new Memory_ReadAddress( 0x1800, 0x1fff, exidy_sh8253_r ),
+		new Memory_ReadAddress( 0x1800, 0x1fff, exidy_sh8253_r ),
 		new Memory_ReadAddress( 0x2000, 0x27ff, MRA_RAM ),
-		/*TODO*///new Memory_ReadAddress( 0x2800, 0x2fff, exidy_sh6840_r ),
+		new Memory_ReadAddress( 0x2800, 0x2fff, exidy_sh6840_r ),
 		new Memory_ReadAddress( 0x5800, 0x7fff, MRA_ROM ),
 		new Memory_ReadAddress( 0x8000, 0xf7ff, MRA_RAM ),
 		new Memory_ReadAddress( 0xf800, 0xffff, MRA_ROM ),
@@ -282,12 +284,12 @@ public class exidy
 	public static Memory_WriteAddress sound_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM ),
-		/*TODO*///new Memory_WriteAddress( 0x0800, 0x0fff, exidy_shriot_w ),
+		new Memory_WriteAddress( 0x0800, 0x0fff, exidy_shriot_w ),
 		new Memory_WriteAddress( 0x1000, 0x100f, pia_1_w ),
-		/*TODO*///new Memory_WriteAddress( 0x1800, 0x1fff, exidy_sh8253_w ),
+		new Memory_WriteAddress( 0x1800, 0x1fff, exidy_sh8253_w ),
 		new Memory_WriteAddress( 0x2000, 0x27ff, MWA_RAM ),
-		/*TODO*///new Memory_WriteAddress( 0x2800, 0x2fff, exidy_sh6840_w ),
-		/*TODO*///new Memory_WriteAddress( 0x3000, 0x3700, exidy_sfxctrl_w ),
+		new Memory_WriteAddress( 0x2800, 0x2fff, exidy_sh6840_w ),
+		new Memory_WriteAddress( 0x3000, 0x3700, exidy_sfxctrl_w ),
 		new Memory_WriteAddress( 0x5800, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x8000, 0xf7ff, MWA_RAM ),
 		new Memory_WriteAddress( 0xf800, 0xffff, MWA_ROM ),
@@ -309,13 +311,13 @@ public class exidy
 	
 	public static IO_WritePort cvsd_iowrite[]={
 		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
-		/*TODO*///new IO_WritePort( 0x00, 0xff, mtrap_voiceio_w ),
+		new IO_WritePort( 0x00, 0xff, mtrap_voiceio_w ),
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
 	public static IO_ReadPort cvsd_ioread[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
-		/*TODO*///new IO_ReadPort( 0x00, 0xff, mtrap_voiceio_r ),
+		new IO_ReadPort( 0x00, 0xff, mtrap_voiceio_r ),
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
@@ -808,11 +810,12 @@ public class exidy
 		targ_sample_names
 	);
 	
-	/*TODO*///static CustomSound_interface targ_custom_interface = new CustomSound_interface
-	/*TODO*///(
-	/*TODO*///	targ_sh_start,
-	/*TODO*///	targ_sh_stop
-	/*TODO*///);
+	static CustomSound_interface targ_custom_interface = new CustomSound_interface
+	(
+		targ_sh_start,
+		targ_sh_stop,
+                null
+	);
 	
 	static DACinterface targ_DAC_interface = new DACinterface
 	(
@@ -826,10 +829,11 @@ public class exidy
 	/*TODO*///	{ 80 }
 	/*TODO*///};
 	
-	/*TODO*///static CustomSound_interface exidy_custom_interface = new CustomSound_interface
-	/*TODO*///(
-	/*TODO*///	exidy_sh_start
-	/*TODO*///);
+	static CustomSound_interface exidy_custom_interface = new CustomSound_interface
+	(
+		exidy_sh_start,
+                null, null
+	);
 	
 	
 	
@@ -868,12 +872,12 @@ public class exidy
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound( SOUND_CUSTOM,  targ_custom_interface ),
-		/*TODO*///	new MachineSound( SOUND_SAMPLES, targ_samples_interface ),
-		/*TODO*///	new MachineSound( SOUND_DAC,     targ_DAC_interface )
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound( SOUND_CUSTOM,  targ_custom_interface ),
+			new MachineSound( SOUND_SAMPLES, targ_samples_interface ),
+			new MachineSound( SOUND_DAC,     targ_DAC_interface )
+		}
+                
 	);
 	
 	
@@ -918,11 +922,11 @@ public class exidy
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
+		new MachineSound[] {
 		/*TODO*///	new MachineSound( SOUND_HC55516, cvsd_interface ),
-		/*TODO*///	new MachineSound( SOUND_CUSTOM,  exidy_custom_interface )
-		/*TODO*///}
-                null
+			new MachineSound( SOUND_CUSTOM,  exidy_custom_interface )
+		}
+                
 	);
 	
 	
@@ -961,10 +965,10 @@ public class exidy
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound( SOUND_CUSTOM,  exidy_custom_interface )
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound( SOUND_CUSTOM,  exidy_custom_interface )
+		}
+                
 	);
 	
 	
@@ -1003,11 +1007,10 @@ public class exidy
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound( SOUND_CUSTOM, exidy_custom_interface )
-		/*TODO*///}
-                null
-	
+		new MachineSound[] {
+			new MachineSound( SOUND_CUSTOM, exidy_custom_interface )
+		}
+                
 	);
 	
 	
@@ -1046,10 +1049,10 @@ public class exidy
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound( SOUND_CUSTOM, exidy_custom_interface )
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound( SOUND_CUSTOM, exidy_custom_interface )
+		}
+                
 	);
 	
 	
@@ -1371,10 +1374,10 @@ public class exidy
 	
 		/* there is no sprite enable register so we have to fake it out */
 		exidy_sprite_enable.write(0x10);
-		/*TODO*///targ_spec_flag 			= 0;
+		targ_spec_flag 			= 0;
 	
 		/* sound is handled directly instead of via a PIA */
-		/*TODO*///install_mem_write_handler(0, 0x5200, 0x5201, targ_sh_w);
+		install_mem_write_handler(0, 0x5200, 0x5201, targ_sh_w);
 	} };
 	
 	public static InitDriverPtr init_targ = new InitDriverPtr() { public void handler() 
@@ -1386,10 +1389,10 @@ public class exidy
 	
 		/* there is no sprite enable register so we have to fake it out */
 		exidy_sprite_enable.write(0x10);
-		/*TODO*///targ_spec_flag 			= 1;
+		targ_spec_flag 			= 1;
 	
 		/* sound is handled directly instead of via a PIA */
-		/*TODO*///install_mem_write_handler(0, 0x5200, 0x5201, targ_sh_w);
+		install_mem_write_handler(0, 0x5200, 0x5201, targ_sh_w);
 	} };
 	
 	public static InitDriverPtr init_spectar = new InitDriverPtr() { public void handler() 
@@ -1401,10 +1404,10 @@ public class exidy
 	
 		/* there is no sprite enable register so we have to fake it out */
 		exidy_sprite_enable.write(0x10);
-		/*TODO*///targ_spec_flag 			= 0;
+		targ_spec_flag 			= 0;
 	
 		/* sound is handled directly instead of via a PIA */
-		/*TODO*///install_mem_write_handler(0, 0x5200, 0x5201, targ_sh_w);
+		install_mem_write_handler(0, 0x5200, 0x5201, targ_sh_w);
 	} };
 	
 	public static InitDriverPtr init_mtrap = new InitDriverPtr() { public void handler() 
