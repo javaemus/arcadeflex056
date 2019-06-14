@@ -6718,7 +6718,7 @@ public class drawgfx {
                                         
 /*TODO*///						BLOCKMOVERAWPRI(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask,transparent_color));
                                         } else {
-                                            //System.out.println("BLOCKMOVERAW(8toN_transpen");
+                                            System.out.println("BLOCKMOVERAW(8toN_transpen");
 /*TODO*///						BLOCKMOVERAW(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,transparent_color));
                                         }
 				}
