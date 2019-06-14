@@ -184,6 +184,7 @@ import static WIP.mame056.drivers.circus.*;
 import static WIP.mame056.drivers.tankbatt.*;
 import static WIP.mame056.drivers.skychut.*;
 import static WIP.mame056.drivers.redalert.*;
+import static WIP.mame056.drivers.astrof.*;
 
 public class driver {
 
@@ -2558,13 +2559,13 @@ public class driver {
         /*TODO*///TESTDRIVER ( chwy,		/* ?? (c) 198? */
         /*TODO*///TESTDRIVER ( cflyball, /* ?? (c) 198? */
         /*TODO*///TESTDRIVER ( czeroize, /* ?? (c) 198? */
-        /*TODO*///
-        /*TODO*///	/* other Data East games */
-        /*TODO*///	driver_astrof,	/* (c) [1980?] */
-        /*TODO*///	driver_astrof2,	/* (c) [1980?] */
-        /*TODO*///	driver_astrof3,	/* (c) [1980?] */
-        /*TODO*///	driver_tomahawk,	/* (c) [1980?] */
-        /*TODO*///	driver_tomahaw5,	/* (c) [1980?] */
+        
+        /* other Data East games */
+        driver_astrof,	/* (c) [1980?] */
+        driver_astrof2,	/* (c) [1980?] */
+        driver_astrof3,	/* (c) [1980?] */
+        driver_tomahawk,	/* (c) [1980?] */
+        driver_tomahaw5,	/* (c) [1980?] */
         driver_kchamp, /* (c) 1984 Data East USA (US) */
         driver_karatedo, /* (c) 1984 Data East Corporation (Japan) */
         driver_kchampvs, /* (c) 1984 Data East USA (US) */
