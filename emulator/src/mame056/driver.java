@@ -182,6 +182,7 @@ import static WIP.mame056.drivers.tagteam.*;
 import static WIP.mame056.drivers.exidy.*;
 import static WIP.mame056.drivers.circus.*;
 import static WIP.mame056.drivers.tankbatt.*;
+import static WIP.mame056.drivers.skychut.*;
 
 public class driver {
 
@@ -1143,13 +1144,13 @@ public class driver {
 
         /* Bally / Sente games */
         driver_gridlee, /* [1983 Videa] prototype - no copyright notice */
-        /*TODO*///	/* Irem games */
-        /*TODO*///	/* trivia: IREM means "International Rental Electronics Machines" */
-        /*TODO*///TESTdriver_iremm10,	/* M10 */
-        /*TODO*///	driver_skychut,	/* (c) [1980] */
-        /*TODO*///	driver_spacbeam,	/* M15 no copyright notice */
-        /*TODO*///TESTdriver_greenber,
-        /*TODO*///
+        	/* Irem games */
+        	/* trivia: IREM means "International Rental Electronics Machines" */
+        driver_iremm10,	/* M10 */
+        driver_skychut,	/* (c) [1980] */
+        driver_spacbeam,	/* M15 no copyright notice */
+        driver_greenber,
+        
         /*TODO*///	driver_redalert,	/* (c) 1981 + "GDI presents" */
         driver_olibochu, /* M47 (c) 1981 + "GDI presents" */
         driver_mpatrol, /* M52 (c) 1982 */
