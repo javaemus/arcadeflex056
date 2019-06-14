@@ -180,6 +180,9 @@ import static WIP.mame056.drivers.warlord.*;
 import static WIP.mame056.drivers.scregg.*;
 import static WIP.mame056.drivers.tagteam.*;
 import static WIP.mame056.drivers.exidy.*;
+import static WIP.mame056.drivers.circus.*;
+import static WIP.mame056.drivers.tankbatt.*;
+import static WIP.mame056.drivers.skychut.*;
 
 public class driver {
 
@@ -617,7 +620,7 @@ public class driver {
         /*TODO*///	driver_kaitei,	/* [1980] K.K. Tokki */
         /*TODO*///	driver_kaitein,	/* [1980] Namco */
         /*TODO*///	driver_sos,		/* [1980] Namco */
-        /*TODO*///	driver_tankbatt,	/* (c) 1980 Namco */
+        driver_tankbatt,	/* (c) 1980 Namco */
         /*TODO*///	driver_warpwarp,	/* (c) 1981 Namco */
         /*TODO*///	driver_warpwarr,	/* (c) 1981 Rock-ola - the high score table says "NAMCO" */
         /*TODO*///	driver_warpwar2,	/* (c) 1981 Rock-ola - the high score table says "NAMCO" */
@@ -1141,13 +1144,13 @@ public class driver {
 
         /* Bally / Sente games */
         driver_gridlee, /* [1983 Videa] prototype - no copyright notice */
-        /*TODO*///	/* Irem games */
-        /*TODO*///	/* trivia: IREM means "International Rental Electronics Machines" */
-        /*TODO*///TESTdriver_iremm10,	/* M10 */
-        /*TODO*///	driver_skychut,	/* (c) [1980] */
-        /*TODO*///	driver_spacbeam,	/* M15 no copyright notice */
-        /*TODO*///TESTdriver_greenber,
-        /*TODO*///
+        	/* Irem games */
+        	/* trivia: IREM means "International Rental Electronics Machines" */
+        driver_iremm10,	/* M10 */
+        driver_skychut,	/* (c) [1980] */
+        driver_spacbeam,	/* M15 no copyright notice */
+        driver_greenber,
+        
         /*TODO*///	driver_redalert,	/* (c) 1981 + "GDI presents" */
         driver_olibochu, /* M47 (c) 1981 + "GDI presents" */
         driver_mpatrol, /* M52 (c) 1982 */
@@ -2978,10 +2981,10 @@ public class driver {
         driver_pepper2,	/* (c) 1982 */
         driver_hardhat,	/* (c) 1982 */
         driver_fax,		/* (c) 1983 */
-        /*TODO*///	driver_circus,	/* no copyright notice [1977?] */
-        /*TODO*///	driver_robotbwl,	/* no copyright notice */
-        /*TODO*///	driver_crash,		/* Exidy [1979?] */
-        /*TODO*///	driver_ripcord,	/* Exidy [1977?] */
+        driver_circus,	/* no copyright notice [1977?] */
+        driver_robotbwl,	/* no copyright notice */
+        driver_crash,		/* Exidy [1979?] */
+        driver_ripcord,	/* Exidy [1977?] */
         driver_starfire, /* Exidy [1979?] */
         driver_starfira, /* Exidy [1979?] */
         driver_fireone, /* (c) 1979 Exidy */
