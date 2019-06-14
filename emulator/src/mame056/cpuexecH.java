@@ -10,6 +10,7 @@ import static mame056.cpuintrfH.*;
 
 import static mame056.cpu.m6502.m6502H.*;
 import static mame056.cpu.m6809.m6809H.*;
+import static mame056.cpu.i8085.i8085H.*;
 
 public class cpuexecH {
 
@@ -208,7 +209,7 @@ public class cpuexecH {
 /*TODO*///#define H6280_INT_IRQ2		1
 /*TODO*///#define H6280_INT_NMI		INTERRUPT_NMI
 /*TODO*///#define HD63701_INT_NMI 	INTERRUPT_NMI
-/*TODO*///#define I8085_RST75     	I8085_RST75_LINE
+    public static final int I8085_RST75 = I8085_RST75_LINE;
 /*TODO*///
 /*TODO*////* OBSOLETE OBSOLETE OBSOLETE OBSOLETE OBSOLETE OBSOLETE OBSOLETE OBSOLETE */
 /*TODO*////* OBSOLETE OBSOLETE OBSOLETE OBSOLETE OBSOLETE OBSOLETE OBSOLETE OBSOLETE */

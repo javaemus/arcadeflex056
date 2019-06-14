@@ -1,0 +1,64 @@
+/*
+ * ported to v0.56
+ * using automatic conversion tool v0.01
+ */ 
+package mame056.cpu.i8085;
+
+public class i8085H {
+    
+    /*TODO*///enum {
+    /*TODO*///		I8085_PC=1, I8085_SP, I8085_AF ,I8085_BC, I8085_DE, I8085_HL,
+    /*TODO*///		I8085_HALT, I8085_IM, I8085_IREQ, I8085_ISRV, I8085_VECTOR,
+    /*TODO*///		I8085_TRAP_STATE, I8085_INTR_STATE,
+    /*TODO*///		I8085_RST55_STATE, I8085_RST65_STATE, I8085_RST75_STATE};
+	
+	public static final int I8085_INTR_LINE = 0;
+	public static final int I8085_RST55_LINE = 1;
+	public static final int I8085_RST65_LINE = 2;
+	public static final int I8085_RST75_LINE = 3;
+	
+	
+	/*TODO*///extern unsigned i8085_get_context(void *dst);
+	/*TODO*///extern unsigned i8085_get_reg(int regnum);
+	/*TODO*///extern const char *i8085_info(void *context, int regnum);
+	/*TODO*///extern unsigned i8085_dasm(char *buffer, unsigned pc);
+	
+	/**************************************************************************
+	 * I8080 section
+	 **************************************************************************/
+	/*TODO*///#if (HAS_8080)
+	/*TODO*///#define I8080_PC                I8085_PC
+	/*TODO*///#define I8080_SP				I8085_SP
+	/*TODO*///#define I8080_BC				I8085_BC
+	/*TODO*///#define I8080_DE				I8085_DE
+	/*TODO*///#define I8080_HL				I8085_HL
+	/*TODO*///#define I8080_AF				I8085_AF
+	/*TODO*///#define I8080_HALT				I8085_HALT
+	/*TODO*///#define I8080_IREQ				I8085_IREQ
+	/*TODO*///#define I8080_ISRV				I8085_ISRV
+	/*TODO*///#define I8080_VECTOR			I8085_VECTOR
+	/*TODO*///#define I8080_TRAP_STATE		I8085_TRAP_STATE
+	/*TODO*///#define I8080_INTR_STATE		I8085_INTR_STATE
+	
+	/*TODO*///#define I8080_REG_LAYOUT \
+	/*TODO*///{	CPU_8080, \
+	/*TODO*///	I8080_AF,I8080_BC,I8080_DE,I8080_HL,I8080_SP,I8080_PC, DBG_ROW, \
+	/*TODO*///	I8080_HALT,I8080_IREQ,I8080_ISRV,I8080_VECTOR, I8080_TRAP_STATE,I8080_INTR_STATE, \
+	/*TODO*///    DBG_END }
+	
+	/*TODO*///#define I8080_INTR_LINE         I8085_INTR_LINE
+	/*TODO*///
+	/*TODO*///#define     i8080_ICount            i8085_ICount
+	/*TODO*///extern unsigned i8080_get_context(void *dst);
+	/*TODO*///extern unsigned i8080_get_reg(int regnum);
+	/*TODO*///extern const char *i8080_info(void *context, int regnum);
+	/*TODO*///extern unsigned i8080_dasm(char *buffer, unsigned pc);
+	/*TODO*///#endif
+	
+	/*TODO*///#ifdef	MAME_DEBUG
+	/*TODO*///extern unsigned Dasm8085(char *buffer, unsigned pc);
+	/*TODO*///#endif
+	
+	/*TODO*///#endif
+    
+}
