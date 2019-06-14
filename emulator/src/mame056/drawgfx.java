@@ -6699,24 +6699,31 @@ public class drawgfx {
                     }
                 }
                 break;
-            /*TODO*///
-/*TODO*///			case TRANSPARENCY_PEN_RAW:
-/*TODO*///				if (gfx->flags & GFX_PACKED)
-/*TODO*///				{
-/*TODO*///					if (pribuf)
+            
+			case TRANSPARENCY_PEN_RAW:
+				if ((gfx.flags & GFX_PACKED) != 0)
+				{
+					if (pribuf != null){
+                                            System.out.println("BLOCKMOVERAWPRI(4toN_transpen");
 /*TODO*///						BLOCKMOVERAWPRI(4toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask,transparent_color));
-/*TODO*///					else
+                                        } else {
+                                            System.out.println("BLOCKMOVERAW(4toN_transpen");
 /*TODO*///						BLOCKMOVERAW(4toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,transparent_color));
-/*TODO*///				}
-/*TODO*///				else
-/*TODO*///				{
-/*TODO*///					if (pribuf)
+                                        }
+				}
+				else
+				{
+					if (pribuf != null) {
+                                            System.out.println("BLOCKMOVERAWPRI(8toN_transpen");
+                                        
 /*TODO*///						BLOCKMOVERAWPRI(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask,transparent_color));
-/*TODO*///					else
+                                        } else {
+                                            System.out.println("BLOCKMOVERAW(8toN_transpen");
 /*TODO*///						BLOCKMOVERAW(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,transparent_color));
-/*TODO*///				}
-/*TODO*///				break;
-/*TODO*///
+                                        }
+				}
+				break;
+
             case TRANSPARENCY_PENS:
                 if (pribuf != null) {
                     /*TODO*///BLOCKMOVEPRI(8toN_transmask,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
@@ -7006,7 +7013,7 @@ public class drawgfx {
                 }
                 break;
             case TRANSPARENCY_BLEND_RAW:
-                throw new UnsupportedOperationException("Unsupported");
+                System.out.println("BLOCKMOVE(NtoN_blend_noremap,flipx");
             /*TODO*///				BLOCKMOVE(NtoN_blend_noremap,flipx,(sd,sw,sh,sm,dd,dm,transparent_color));
 /*TODO*///				break;
 /*TODO*///

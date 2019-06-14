@@ -124,6 +124,8 @@ import static mame056.inptport.*;
 
 import static WIP.mame056.vidhrdw.warlord.*;
 import static common.libc.cstring.*;
+import static mame056.sound.pokey.*;
+import static mame056.sound.pokeyH.*;
 
 public class warlord
 {
@@ -147,7 +149,7 @@ public class warlord
 		new Memory_ReadAddress( 0x0801, 0x0801, input_port_3_r ), /* DSW2 */
 		new Memory_ReadAddress( 0x0c00, 0x0c00, input_port_0_r ), /* IN0 */
 		new Memory_ReadAddress( 0x0c01, 0x0c01, input_port_1_r ), /* IN1 */
-		/*TODO*///new Memory_ReadAddress( 0x1000, 0x100f, pokey1_r ),		/* Read the 4 paddle values  the random # gen */
+		new Memory_ReadAddress( 0x1000, 0x100f, pokey1_r ),		/* Read the 4 paddle values  the random # gen */
 		new Memory_ReadAddress( 0x5000, 0x7fff, MRA_ROM ),
 		new Memory_ReadAddress( 0xf800, 0xffff, MRA_ROM ),		/* for the reset / interrupt vectors */
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
@@ -158,7 +160,7 @@ public class warlord
 		new Memory_WriteAddress( 0x0000, 0x03ff, MWA_RAM ),
 		new Memory_WriteAddress( 0x0400, 0x07bf, videoram_w, videoram, videoram_size ),
 		new Memory_WriteAddress( 0x07c0, 0x07ff, MWA_RAM, spriteram ),
-		/*TODO*///new Memory_WriteAddress( 0x1000, 0x100f, pokey1_w ),
+		new Memory_WriteAddress( 0x1000, 0x100f, pokey1_w ),
 		new Memory_WriteAddress( 0x1800, 0x1800, MWA_NOP ),		/* IRQ Acknowledge */
 		new Memory_WriteAddress( 0x1c00, 0x1c02, warlord_coin_counter_w ),
 		new Memory_WriteAddress( 0x1c03, 0x1c06, warlord_led_w ),	/* 4 start lights */
@@ -262,23 +264,23 @@ public class warlord
 	
 	
 	
-	/*TODO*///static struct POKEYinterface pokey_interface =
-	/*TODO*///{
-	/*TODO*///	1,	/* 1 chip */
-	/*TODO*///	12096000/8, /* 1.512 MHz */
-	/*TODO*///	{ 100 },
-	/*TODO*///	/* The 8 pot handlers */
-	/*TODO*///	{ input_port_4_r },
-	/*TODO*///	{ input_port_5_r },
-	/*TODO*///	{ input_port_6_r },
-	/*TODO*///	{ input_port_7_r },
-	/*TODO*///	{ 0 },
-	/*TODO*///	{ 0 },
-	/*TODO*///	{ 0 },
-	/*TODO*///	{ 0 },
-	/*TODO*///	/* The allpot handler */
-	/*TODO*///	{ 0 },
-	/*TODO*///};
+	static POKEYinterface pokey_interface = new POKEYinterface
+	(
+		1,	/* 1 chip */
+		12096000/8, /* 1.512 MHz */
+		new int[]{ 100 },
+		/* The 8 pot handlers */
+		new ReadHandlerPtr[]{ input_port_4_r },
+		new ReadHandlerPtr[]{ input_port_5_r },
+		new ReadHandlerPtr[]{ input_port_6_r },
+		new ReadHandlerPtr[]{ input_port_7_r },
+		new ReadHandlerPtr[]{ null },
+		new ReadHandlerPtr[]{ null },
+		new ReadHandlerPtr[]{ null },
+		new ReadHandlerPtr[]{ null },
+		/* The allpot handler */
+		new ReadHandlerPtr[]{ null }
+	);
 	
 	
 	
@@ -311,13 +313,13 @@ public class warlord
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_POKEY,
-		/*TODO*///		pokey_interface
-		/*TODO*///	)
-		/*TODO*///}
-                null
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_POKEY,
+				pokey_interface
+			)
+		}
+                
 	);
 	
 	

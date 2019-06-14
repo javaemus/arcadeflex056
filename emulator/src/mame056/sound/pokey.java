@@ -1175,9 +1175,9 @@ public class pokey extends snd_interface {
 
             default:
                 System.out.println(offs & 15);
-                throw new UnsupportedOperationException("Not supported yet.");
+                //throw new UnsupportedOperationException("Not supported yet.");
             /*TODO*///		LOG((errorlog, "POKEY #%d register $%02x\n", chip, offs));
-/*TODO*///        break;
+        break;
         }
         return data;
     }

@@ -148,6 +148,9 @@ import static mame056.inptport.*;
 
 import static WIP.mame056.vidhrdw.jedi.*;
 import static common.libc.cstring.*;
+import static mame056.sound.mixerH.*;
+import static mame056.sound.pokey.*;
+import static mame056.sound.pokeyH.*;
 
 public class jedi
 {
@@ -454,10 +457,10 @@ public class jedi
 	public static Memory_ReadAddress readmem2[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ),
-		/*TODO*///new Memory_ReadAddress( 0x0800, 0x080f, pokey1_r ),
-		/*TODO*///new Memory_ReadAddress( 0x0810, 0x081f, pokey2_r ),
-		/*TODO*///new Memory_ReadAddress( 0x0820, 0x082f, pokey3_r ),
-		/*TODO*///new Memory_ReadAddress( 0x0830, 0x083f, pokey4_r ),
+		new Memory_ReadAddress( 0x0800, 0x080f, pokey1_r ),
+		new Memory_ReadAddress( 0x0810, 0x081f, pokey2_r ),
+		new Memory_ReadAddress( 0x0820, 0x082f, pokey3_r ),
+		new Memory_ReadAddress( 0x0830, 0x083f, pokey4_r ),
 		new Memory_ReadAddress( 0x1800, 0x1800, sound_latch_r ),
 		new Memory_ReadAddress( 0x1c00, 0x1c00, speech_ready_r ),
 		new Memory_ReadAddress( 0x1c01, 0x1c01, soundstat_r ),
@@ -469,10 +472,10 @@ public class jedi
 	public static Memory_WriteAddress writemem2[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM ),
-		/*TODO*///new Memory_WriteAddress( 0x0800, 0x080f, pokey1_w ),
-		/*TODO*///new Memory_WriteAddress( 0x0810, 0x081f, pokey2_w ),
-		/*TODO*///new Memory_WriteAddress( 0x0820, 0x082f, pokey3_w ),
-		/*TODO*///new Memory_WriteAddress( 0x0830, 0x083f, pokey4_w ),
+		new Memory_WriteAddress( 0x0800, 0x080f, pokey1_w ),
+		new Memory_WriteAddress( 0x0810, 0x081f, pokey2_w ),
+		new Memory_WriteAddress( 0x0820, 0x082f, pokey3_w ),
+		new Memory_WriteAddress( 0x0830, 0x083f, pokey4_w ),
 		new Memory_WriteAddress( 0x1000, 0x1000, sound_irq_ack_w ),
 		new Memory_WriteAddress( 0x1100, 0x11ff, speech_data_w ),
 		new Memory_WriteAddress( 0x1200, 0x13ff, speech_strobe_w ),
@@ -576,23 +579,23 @@ public class jedi
 	 *
 	 *************************************/
 	
-	/*TODO*///static struct POKEYinterface pokey_interface =
-	/*TODO*///{
-	/*TODO*///	4,
-	/*TODO*///	SOUND_CPU_OSC/2/4,	/* 1.5MHz */
-	/*TODO*///	{ 30, 30, MIXER(30,MIXER_PAN_LEFT), MIXER(30,MIXER_PAN_RIGHT) },
-	/*TODO*///	/* The 8 pot handlers */
-	/*TODO*///	{ 0, 0, 0, 0 },
-	/*TODO*///	{ 0, 0, 0, 0 },
-	/*TODO*///	{ 0, 0, 0, 0 },
-	/*TODO*///	{ 0, 0, 0, 0 },
-	/*TODO*///	{ 0, 0, 0, 0 },
-	/*TODO*///	{ 0, 0, 0, 0 },
-	/*TODO*///	{ 0, 0, 0, 0 },
-	/*TODO*///	{ 0, 0, 0, 0 },
-	/*TODO*///	/* The allpot handler */
-	/*TODO*///	{ 0, 0, 0, 0 }
-	/*TODO*///};
+	static POKEYinterface pokey_interface = new POKEYinterface
+	(
+		4,
+		SOUND_CPU_OSC/2/4,	/* 1.5MHz */
+		new int[]{ 30, 30, MIXER(30,MIXER_PAN_LEFT), MIXER(30,MIXER_PAN_RIGHT) },
+		/* The 8 pot handlers */
+		new ReadHandlerPtr[]{ null, null, null, null },
+		new ReadHandlerPtr[]{ null, null, null, null },
+		new ReadHandlerPtr[]{ null, null, null, null },
+		new ReadHandlerPtr[]{ null, null, null, null },
+		new ReadHandlerPtr[]{ null, null, null, null },
+		new ReadHandlerPtr[]{ null, null, null, null },
+		new ReadHandlerPtr[]{ null, null, null, null },
+		new ReadHandlerPtr[]{ null, null, null, null },
+		/* The allpot handler */
+		new ReadHandlerPtr[]{ null, null, null, null }
+	);
 	
 	
 	/*TODO*///static struct TMS5220interface tms5220_interface =
@@ -646,17 +649,17 @@ public class jedi
 	
 		/* sound hardware */
 		SOUND_SUPPORTS_STEREO,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_POKEY,
-		/*TODO*///		pokey_interface
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_POKEY,
+				pokey_interface
 		/*TODO*///	),
 		/*TODO*///	new MachineSound(
 		/*TODO*///		SOUND_TMS5220,
 		/*TODO*///		tms5220_interface
-		/*TODO*///	)
-		/*TODO*///},
-                null,
+			)
+		},
+                
 	
 		nvram_handler
 	);
