@@ -186,6 +186,7 @@ import static WIP.mame056.drivers.skychut.*;
 import static WIP.mame056.drivers.redalert.*;
 import static WIP.mame056.drivers.astrof.*;
 import static WIP.mame056.drivers.bogeyman.*;
+import static WIP.mame056.drivers.copsnrob.*;
 
 public class driver {
 
@@ -3004,9 +3005,9 @@ public class driver {
         driver_hitnmis2, /* (c) 1987 */
         driver_whodunit, /* (c) 1988 */
         driver_showdown, /* (c) 1988 */
-        /*TODO*///	/* Atari b/w games */
-        /*TODO*///	/* Tank 8 */  		/* ??????			1976/04 [6800] */
-        /*TODO*///	driver_copsnrob,	/* 005625			1976/07 [6502] */
+        /* Atari b/w games */
+        /* Tank 8 */  		/* ??????			1976/04 [6800] */
+        driver_copsnrob,	/* 005625			1976/07 [6502] */
         /*TODO*///	/* Flyball */		/* 005629			1976/07 [6502] */
         /*TODO*///	driver_sprint2,	/* 005922			1976/11 [6502] */
         /*TODO*///	driver_nitedrvr,	/* 006321			1976/10 [6502] */
