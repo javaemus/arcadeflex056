@@ -185,6 +185,7 @@ import static WIP.mame056.drivers.tankbatt.*;
 import static WIP.mame056.drivers.skychut.*;
 import static WIP.mame056.drivers.redalert.*;
 import static WIP.mame056.drivers.astrof.*;
+import static WIP.mame056.drivers.bogeyman.*;
 
 public class driver {
 
@@ -622,7 +623,7 @@ public class driver {
         /*TODO*///	driver_kaitei,	/* [1980] K.K. Tokki */
         /*TODO*///	driver_kaitein,	/* [1980] Namco */
         /*TODO*///	driver_sos,		/* [1980] Namco */
-        driver_tankbatt,	/* (c) 1980 Namco */
+        driver_tankbatt, /* (c) 1980 Namco */
         /*TODO*///	driver_warpwarp,	/* (c) 1981 Namco */
         /*TODO*///	driver_warpwarr,	/* (c) 1981 Rock-ola - the high score table says "NAMCO" */
         /*TODO*///	driver_warpwar2,	/* (c) 1981 Rock-ola - the high score table says "NAMCO" */
@@ -1148,12 +1149,11 @@ public class driver {
         driver_gridlee, /* [1983 Videa] prototype - no copyright notice */
         /* Irem games */
         /* trivia: IREM means "International Rental Electronics Machines" */
-        driver_iremm10,	/* M10 */
-        driver_skychut,	/* (c) [1980] */
-        driver_spacbeam,	/* M15 no copyright notice */
+        driver_iremm10, /* M10 */
+        driver_skychut, /* (c) [1980] */
+        driver_spacbeam, /* M15 no copyright notice */
         driver_greenber,
-        
-        driver_redalert,	/* (c) 1981 + "GDI presents" */
+        driver_redalert, /* (c) 1981 + "GDI presents" */
         driver_olibochu, /* M47 (c) 1981 + "GDI presents" */
         driver_mpatrol, /* M52 (c) 1982 */
         driver_mpatrolw, /* M52 (c) 1982 + Williams license */
@@ -2559,13 +2559,13 @@ public class driver {
         /*TODO*///TESTDRIVER ( chwy,		/* ?? (c) 198? */
         /*TODO*///TESTDRIVER ( cflyball, /* ?? (c) 198? */
         /*TODO*///TESTDRIVER ( czeroize, /* ?? (c) 198? */
-        
+
         /* other Data East games */
-        driver_astrof,	/* (c) [1980?] */
-        driver_astrof2,	/* (c) [1980?] */
-        driver_astrof3,	/* (c) [1980?] */
-        driver_tomahawk,	/* (c) [1980?] */
-        driver_tomahaw5,	/* (c) [1980?] */
+        driver_astrof, /* (c) [1980?] */
+        driver_astrof2, /* (c) [1980?] */
+        driver_astrof3, /* (c) [1980?] */
+        driver_tomahawk, /* (c) [1980?] */
+        driver_tomahaw5, /* (c) [1980?] */
         driver_kchamp, /* (c) 1984 Data East USA (US) */
         driver_karatedo, /* (c) 1984 Data East Corporation (Japan) */
         driver_kchampvs, /* (c) 1984 Data East USA (US) */
@@ -2581,15 +2581,15 @@ public class driver {
         /*TODO*///	driver_sidepckt,	/* (c) 1986 Data East Corporation */
         /*TODO*///	driver_sidepctj,	/* (c) 1986 Data East Corporation */
         /*TODO*///	driver_sidepctb,	/* bootleg */
-        driver_exprraid,	/* (c) 1986 Data East USA (US) */
-        driver_wexpress,	/* (c) 1986 Data East Corporation (World?) */
-        driver_wexpresb,	/* bootleg */
-        driver_wexpresc,	/* bootleg */
-        driver_pcktgal,	/* (c) 1987 Data East Corporation (Japan) */
-        driver_pcktgalb,	/* bootleg */
-        driver_pcktgal2,	/* (c) 1989 Data East Corporation (World?) */
-        driver_spool3,	/* (c) 1989 Data East Corporation (World?) */
-        driver_spool3i,	/* (c) 1990 Data East Corporation + I-Vics license */
+        driver_exprraid, /* (c) 1986 Data East USA (US) */
+        driver_wexpress, /* (c) 1986 Data East Corporation (World?) */
+        driver_wexpresb, /* bootleg */
+        driver_wexpresc, /* bootleg */
+        driver_pcktgal, /* (c) 1987 Data East Corporation (Japan) */
+        driver_pcktgalb, /* bootleg */
+        driver_pcktgal2, /* (c) 1989 Data East Corporation (World?) */
+        driver_spool3, /* (c) 1989 Data East Corporation (World?) */
+        driver_spool3i, /* (c) 1990 Data East Corporation + I-Vics license */
         /*TODO*///	driver_battlera,	/* (c) 1988 Data East Corporation (World) */
         /*TODO*///	driver_bldwolf,	/* (c) 1988 Data East USA (US) */
         /*TODO*///	driver_actfancr,	/* (c) 1989 Data East Corporation (World) */
@@ -2968,25 +2968,25 @@ public class driver {
         /*TODO*///1997.07 Winning Spike (GX705)
         /*TODO*///1997.11 Rushing Heroes (GX?. Not released in Japan)
         /*TODO*///*/
-        
+
         /* Exidy games */
-        driver_sidetrac,	/* (c) 1979 */
-        driver_targ,		/* (c) 1980 */
-        driver_spectar,	/* (c) 1980 */
-        driver_spectar1,	/* (c) 1980 */
-        driver_venture,	/* (c) 1981 */
-        driver_venture2,	/* (c) 1981 */
-        driver_venture4,	/* (c) 1981 */
-        driver_mtrap,		/* (c) 1981 */
-        driver_mtrap3,	/* (c) 1981 */
-        driver_mtrap4,	/* (c) 1981 */
-        driver_pepper2,	/* (c) 1982 */
-        driver_hardhat,	/* (c) 1982 */
-        driver_fax,		/* (c) 1983 */
-        driver_circus,	/* no copyright notice [1977?] */
-        driver_robotbwl,	/* no copyright notice */
-        driver_crash,		/* Exidy [1979?] */
-        driver_ripcord,	/* Exidy [1977?] */
+        driver_sidetrac, /* (c) 1979 */
+        driver_targ, /* (c) 1980 */
+        driver_spectar, /* (c) 1980 */
+        driver_spectar1, /* (c) 1980 */
+        driver_venture, /* (c) 1981 */
+        driver_venture2, /* (c) 1981 */
+        driver_venture4, /* (c) 1981 */
+        driver_mtrap, /* (c) 1981 */
+        driver_mtrap3, /* (c) 1981 */
+        driver_mtrap4, /* (c) 1981 */
+        driver_pepper2, /* (c) 1982 */
+        driver_hardhat, /* (c) 1982 */
+        driver_fax, /* (c) 1983 */
+        driver_circus, /* no copyright notice [1977?] */
+        driver_robotbwl, /* no copyright notice */
+        driver_crash, /* Exidy [1979?] */
+        driver_ripcord, /* Exidy [1977?] */
         driver_starfire, /* Exidy [1979?] */
         driver_starfira, /* Exidy [1979?] */
         driver_fireone, /* (c) 1979 Exidy */
@@ -3078,7 +3078,7 @@ public class driver {
         /*TODO*///	driver_mhavocrv,	/* (hack) */
         driver_esb, /* 136031			(c) 1985 */
         /*TODO*///	/* Atari "Centipede hardware" games */
-        driver_warlord,	/* 037153-037159	(c) 1980 */
+        driver_warlord, /* 037153-037159	(c) 1980 */
         /*TODO*///	driver_centiped,	/* 136001			(c) 1980 */
         /*TODO*///	driver_centipd2,	/* 136001			(c) 1980 */
         /*TODO*///	driver_centipdb,	/* (bootleg) */
@@ -3095,8 +3095,7 @@ public class driver {
         /*TODO*///	driver_ccastle2,	/* 136022			(c) 1983 */
         /*TODO*///	driver_cloak,		/* 136023			(c) 1983 */
         /*TODO*///	driver_cloud9,	/* (proto)			(c) 1983 */
-        driver_jedi,		/* 136030			(c) 1984 */
-        
+        driver_jedi, /* 136030			(c) 1984 */
         /*TODO*///	/* Atari System 1 games */
         /*TODO*///	driver_peterpak,	/* 136028			(c) 1984 */
         /*TODO*///	driver_marble,	/* 136033			(c) 1984 */
@@ -3294,24 +3293,23 @@ public class driver {
         /*exctsccr*/ driver_exctscca,
         /*exctsccr*/ driver_exctsccb,
         /*exctsccr*/ driver_exctscc2,
-        
         /* Technos games */
-        driver_scregg,          /* TA-0001 (c) 1983 */
-        driver_eggs,		/* TA-0002 (c) 1983 Universal USA */
-        driver_dommy,		/* TA-00?? (c) */
-        driver_bigprowr,	/* TA-0007 (c) 1983 */
-        driver_tagteam,	/* TA-0007 (c) 1983 + Data East license */
+        driver_scregg, /* TA-0001 (c) 1983 */
+        driver_eggs, /* TA-0002 (c) 1983 Universal USA */
+        driver_dommy, /* TA-00?? (c) */
+        driver_bigprowr, /* TA-0007 (c) 1983 */
+        driver_tagteam, /* TA-0007 (c) 1983 + Data East license */
         /*TODO*///	driver_ssozumo,	/* TA-0008 (c) 1984 */
         /*TODO*///	driver_mystston,	/* TA-0010 (c) 1984 */
         /*TODO*///	/* TA-0011 Dog Fight (Data East) / Batten O'hara no Sucha-Raka Kuuchuu Sen 1985 */
-        /*TODO*///	driver_bogeyman,	/* -0204-0 (Data East part number) (c) [1985?] */
+        driver_bogeyman, /* -0204-0 (Data East part number) (c) [1985?] */
         /*TODO*///	driver_matmania,	/* TA-0015 (c) 1985 + Taito America license */
         /*TODO*///	driver_excthour,	/* TA-0015 (c) 1985 + Taito license */
         /*TODO*///	driver_maniach,	/* TA-0017 (c) 1986 + Taito America license */
         /*TODO*///	driver_maniach2,	/* TA-0017 (c) 1986 + Taito America license */
-        driver_renegade,	/* TA-0018 (c) 1986 + Taito America license */
-        driver_kuniokun,	/* TA-0018 (c) 1986 */
-        driver_kuniokub,	/* bootleg */
+        driver_renegade, /* TA-0018 (c) 1986 + Taito America license */
+        driver_kuniokun, /* TA-0018 (c) 1986 */
+        driver_kuniokub, /* bootleg */
         /*TODO*///	driver_xsleena,	/* TA-0019 (c) 1986 */
         /*TODO*///	driver_xsleenab,	/* bootleg */
         /*TODO*///	driver_solarwar,	/* TA-0019 (c) 1986 Taito + Memetron license */
