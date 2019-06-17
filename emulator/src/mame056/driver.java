@@ -187,6 +187,7 @@ import static WIP.mame056.drivers.redalert.*;
 import static WIP.mame056.drivers.astrof.*;
 import static WIP.mame056.drivers.bogeyman.*;
 import static WIP.mame056.drivers.copsnrob.*;
+import static WIP.mame056.drivers.sprint2.*;
 
 public class driver {
 
@@ -3009,7 +3010,7 @@ public class driver {
         /* Tank 8 */  		/* ??????			1976/04 [6800] */
         driver_copsnrob,	/* 005625			1976/07 [6502] */
         /*TODO*///	/* Flyball */		/* 005629			1976/07 [6502] */
-        /*TODO*///	driver_sprint2,	/* 005922			1976/11 [6502] */
+        driver_sprint2,	/* 005922			1976/11 [6502] */
         /*TODO*///	driver_nitedrvr,	/* 006321			1976/10 [6502] */
         /*TODO*///	driver_dominos,	/* 007305			1977/01 [6502] */
         /*TODO*///	/* Triple Hunt */	/* 008422-008791	1977/04 [6800] */
@@ -3022,7 +3023,7 @@ public class driver {
         /*TODO*///	driver_canbprot,	/* 009493-009504	1977/10 [6502] */
         /*TODO*///	/* Destroyer */		/* 030131-030136	1977/10 [6800] */
         /*TODO*///	/* Sprint 4 */		/* 008716			1977/12 [6502] */
-        /*TODO*///	driver_sprint1,	/* 006443			1978/01 [6502] */
+        driver_sprint1,	/* 006443			1978/01 [6502] */
         /*TODO*///	driver_ultratnk,	/* 009801			1978/02 [6502] */
         /*TODO*///	/* Sky Raider */	/* 009709			1978/03 [6502] */
         /*TODO*///	/* Tourn. Table */	/* 030170			1978/03 [6507] */
