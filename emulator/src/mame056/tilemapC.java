@@ -3,6 +3,7 @@
  */
 package mame056;
 
+import static common.libc.cstring.memset;
 import common.ptr.UBytePtr;
 import static mame056.common.*;
 import static mame056.commonH.*;
@@ -58,8 +59,8 @@ public class tilemapC {
 
         public int type;
         public int transparent_pen;
-        /*TODO*///	UINT32 fgmask[4], bgmask[4]; /* for TILEMAP_SPLIT */
-/*TODO*///
+        public int[] fgmask=new int[4], bgmask=new int[4]; /* for TILEMAP_SPLIT */
+
 /*TODO*///	UINT32 *pPenToPixel[8];
 /*TODO*///
 /*TODO*///	UINT8 (*draw_tile)( struct tilemap *tilemap, UINT32 col, UINT32 row, UINT32 flags );
@@ -209,17 +210,17 @@ public class tilemapC {
         tilemap.transparent_pen = pen;
     }
 
-    /*TODO*///
-/*TODO*///void tilemap_set_transmask( struct tilemap *tilemap, int which, UINT32 fgmask, UINT32 bgmask )
-/*TODO*///{
-/*TODO*///	if( tilemap->fgmask[which] != fgmask || tilemap->bgmask[which] != bgmask )
-/*TODO*///	{
-/*TODO*///		tilemap->fgmask[which] = fgmask;
-/*TODO*///		tilemap->bgmask[which] = bgmask;
-/*TODO*///		tilemap_mark_all_tiles_dirty( tilemap );
-/*TODO*///	}
-/*TODO*///}
-/*TODO*///
+    
+    public static void tilemap_set_transmask( struct_tilemap tilemap, int which, int fgmask, int bgmask )
+    {
+            if( tilemap.fgmask[which] != fgmask || tilemap.bgmask[which] != bgmask )
+            {
+                    tilemap.fgmask[which] = fgmask;
+                    tilemap.bgmask[which] = bgmask;
+                    tilemap_mark_all_tiles_dirty( tilemap );
+            }
+    }
+
     public static void tilemap_set_depth(struct_tilemap tilemap, int tile_depth, int tile_granularity) {
         if (tilemap.tile_dirty_map != null) {
             tilemap.tile_dirty_map = null;
@@ -846,24 +847,24 @@ public class tilemapC {
 	}
     }
 
-    /*TODO*///
-/*TODO*///void tilemap_mark_all_tiles_dirty( struct tilemap *tilemap )
-/*TODO*///{
-/*TODO*///	if( tilemap==ALL_TILEMAPS )
-/*TODO*///	{
-/*TODO*///		tilemap = first_tilemap;
-/*TODO*///		while( tilemap )
-/*TODO*///		{
-/*TODO*///			tilemap_mark_all_tiles_dirty( tilemap );
-/*TODO*///			tilemap = tilemap->next;
-/*TODO*///		}
-/*TODO*///	}
-/*TODO*///	else
-/*TODO*///	{
-/*TODO*///		memset( tilemap->transparency_data, TILE_FLAG_DIRTY, tilemap->num_tiles );
-/*TODO*///	}
-/*TODO*///}
-/*TODO*///
+    
+    public static void tilemap_mark_all_tiles_dirty( struct_tilemap tilemap )
+    {
+            if( tilemap==ALL_TILEMAPS )
+            {
+                    tilemap = first_tilemap;
+                    while( tilemap != null )
+                    {
+                            tilemap_mark_all_tiles_dirty( tilemap );
+                            tilemap = tilemap.next;
+                    }
+            }
+            else
+            {
+                    memset( tilemap.transparency_data, TILE_FLAG_DIRTY, tilemap.num_tiles );
+            }
+    }
+
 /*TODO*////***********************************************************************************/
 /*TODO*///
 /*TODO*///static void update_tile_info( struct tilemap *tilemap, UINT32 cached_indx, UINT32 col, UINT32 row )

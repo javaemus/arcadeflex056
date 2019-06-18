@@ -42,10 +42,10 @@ public class tilemapH {
 
     public static final int TILEMAP_IGNORE_TRANSPARENCY = 0x10;
 
-    /*TODO*///#define TILEMAP_BACK					0x20
-/*TODO*///#define TILEMAP_FRONT					0x40
-/*TODO*///#define TILEMAP_ALPHA					0x80
-/*TODO*///
+    public static final int TILEMAP_BACK                = 0x20;
+    public static final int TILEMAP_FRONT               = 0x40;
+    public static final int TILEMAP_ALPHA               = 0x80;
+
 /*TODO*////*
 /*TODO*///	when rendering a split layer, pass TILEMAP_FRONT or TILEMAP_BACK or'd with the
 /*TODO*///	tile_priority value to specify the part to draw.
@@ -99,11 +99,13 @@ public class tilemapH {
     public static final int TILE_4BPP = 0x10;
     public static final int TILE_SPLIT = 0x60;
 
-    /*TODO*///
-/*TODO*////* TILE_SPLIT is for use with TILEMAP_SPLIT layers.  It selects transparency type. */
-/*TODO*///#define TILE_SPLIT_OFFSET			5
-/*TODO*///#define TILE_SPLIT(T)				((T)<<TILE_SPLIT_OFFSET)
-/*TODO*///
+    
+    /* TILE_SPLIT is for use with TILEMAP_SPLIT layers.  It selects transparency type. */
+    public static int TILE_SPLIT_OFFSET			= 5;
+    public static int TILE_SPLIT(int T){
+        return ((T)<<TILE_SPLIT_OFFSET);
+    }
+
     public static int TILE_FLIPYX(int YX) {
         return YX;
     }

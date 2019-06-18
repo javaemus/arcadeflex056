@@ -192,6 +192,7 @@ import static WIP.mame056.drivers.nitedrvr.*;
 import static WIP.mame056.drivers.matmania.*;
 import static WIP.mame056.drivers.vball.*;
 import static WIP.mame056.drivers.videopin.*;
+import static WIP.mame056.drivers.gng.*;
 
 public class driver {
 
@@ -1810,13 +1811,13 @@ public class driver {
         driver_commandu, /*  5/1985 (c) 1985 + Data East license (US) */
         driver_commandj, /*  5/1985 (c) 1985 (Japan) */
         driver_spaceinv, /* bootleg */
-        /*TODO*///	driver_gng,		/*  9/1985 (c) 1985 */
-        /*TODO*///	driver_gnga,		/*  9/1985 (c) 1985 */
-        /*TODO*///	driver_gngt,		/*  9/1985 (c) 1985 */
-        /*TODO*///	driver_makaimur,	/*  9/1985 (c) 1985 */
-        /*TODO*///	driver_makaimuc,	/*  9/1985 (c) 1985 */
-        /*TODO*///	driver_makaimug,	/*  9/1985 (c) 1985 */
-        /*TODO*///	driver_diamond,	/* (c) 1989 KH Video (NOT A CAPCOM GAME but runs on GnG hardware) */
+        driver_gng,		/*  9/1985 (c) 1985 */
+        driver_gnga,		/*  9/1985 (c) 1985 */
+        driver_gngt,		/*  9/1985 (c) 1985 */
+        driver_makaimur,	/*  9/1985 (c) 1985 */
+        driver_makaimuc,	/*  9/1985 (c) 1985 */
+        driver_makaimug,	/*  9/1985 (c) 1985 */
+        driver_diamond,	/* (c) 1989 KH Video (NOT A CAPCOM GAME but runs on GnG hardware) */
         driver_gunsmoke, /* 11/1985 (c) 1985 (World) */
         driver_gunsmrom, /* 11/1985 (c) 1985 + Romstar (US) */
         driver_gunsmoka, /* 11/1985 (c) 1985 (US) */
