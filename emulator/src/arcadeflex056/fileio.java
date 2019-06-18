@@ -44,7 +44,7 @@ public class fileio {
     static String nvdir = "nvram";
     /*HACK*/
     static String hidir = "hi";
-    /*TODO*///static const char *memcarddir, *artworkdir, *screenshotdir, *cheatdir;
+    static String memcarddir, artworkdir="artwork", screenshotdir, cheatdir;
 /*TODO*////* from datafile.c */
 /*TODO*///extern const char *history_filename;
 /*TODO*///extern const char *mameinfo_filename;
@@ -600,58 +600,59 @@ public class fileio {
 /*TODO*///		f->file = fopen (name, openforwrite ? "wb" : "rb");
 /*TODO*///		found = !(f->file == 0);
 /*TODO*///		break;
-/*TODO*///
-/*TODO*///	case OSD_FILETYPE_ARTWORK:
-/*TODO*///		/* only for reading */
-/*TODO*///		if( openforwrite )
-/*TODO*///		{
-/*TODO*///			logerror("osd_fopen: type %02x write not supported\n",filetype);
-/*TODO*///			break;
-/*TODO*///		}
-/*TODO*///		sprintf (name, "%s/%s", artworkdir, filename);
-/*TODO*///		f->type = kPlainFile;
-/*TODO*///		f->file = fopen (name, openforwrite ? "wb" : "rb");
-/*TODO*///		found = f->file != 0;
-/*TODO*///
-/*TODO*///		if( !found )
-/*TODO*///		{
-/*TODO*///			char file[256], *extension;
-/*TODO*///			sprintf(file, "%s", filename);
-/*TODO*///			sprintf(name, "%s/%s", artworkdir, filename);
-/*TODO*///			extension = strrchr(name, '.');
-/*TODO*///			if( extension )
-/*TODO*///				strcpy (extension, ".zip");
-/*TODO*///			else
-/*TODO*///				strcat (name, ".zip");
-/*TODO*///			LOG(("Trying %s in %s\n", file, name));
-/*TODO*///			if( cache_stat (name, &stat_buffer) == 0 )
-/*TODO*///			{
-/*TODO*///				if( load_zipped_file (name, file, &f->data, &f->length) == 0 )
-/*TODO*///				{
-/*TODO*///					LOG(("Using (osd_fopen) zip file %s\n", name));
-/*TODO*///					f->type = kZippedFile;
-/*TODO*///					f->offset = 0;
-/*TODO*///					found = 1;
-/*TODO*///				}
-/*TODO*///			}
-/*TODO*///			if( !found )
-/*TODO*///			{
-/*TODO*///				sprintf(name, "%s/%s.zip", artworkdir, game);
-/*TODO*///				LOG(("Trying %s in %s\n", file, name));
-/*TODO*///				if( cache_stat (name, &stat_buffer) == 0 )
-/*TODO*///				{
-/*TODO*///					if( load_zipped_file (name, file, &f->data, &f->length) == 0 )
-/*TODO*///					{
-/*TODO*///						LOG(("Using (osd_fopen) zip file %s\n", name));
-/*TODO*///						f->type = kZippedFile;
-/*TODO*///						f->offset = 0;
-/*TODO*///						found = 1;
-/*TODO*///					}
-/*TODO*///				}
-/*TODO*///			}
-/*TODO*///		}
-/*TODO*///		break;
-/*TODO*///
+
+	case OSD_FILETYPE_ARTWORK:
+		/* only for reading */
+		if( openforwrite != 0)
+		{
+			logerror("osd_fopen: type %02x write not supported\n",filetype);
+			break;
+		}
+		name = sprintf ("%s/%s", artworkdir, filename);
+		f.type = kPlainFile;
+		f.file = fopen (name, openforwrite != 0 ? "wb" : "rb");
+		found = f.file != null ? 1 : 0;
+
+		if( found == 0 )
+		{
+			String file, extension;
+			file = sprintf("%s", filename);
+			name = sprintf("%s/%s", artworkdir, filename);
+                        System.out.println(name);
+			/*TODO*///extension = strrchr(name, '.');
+			/*TODO*///if( extension != null )
+			/*TODO*///	strcpy (extension, ".zip");
+			/*TODO*///else
+			/*TODO*///	strcat (name, ".zip");
+			/*TODO*///LOG(("Trying %s in %s\n", file, name));
+			/*TODO*///if( cache_stat (name, stat_buffer) == 0 )
+			/*TODO*///{
+			/*TODO*///	if( load_zipped_file (name, file, f.data, f.length) == 0 )
+			/*TODO*///	{
+					/*TODO*///LOG(("Using (osd_fopen) zip file %s\n", name));
+			/*TODO*///		f.type = kZippedFile;
+			/*TODO*///		f.offset = 0;
+			/*TODO*///		found = 1;
+			/*TODO*///	}
+			/*TODO*///}
+			if( found == 0 )
+			{
+				name = sprintf("%s/%s.zip", artworkdir, game);
+				/*TODO*///LOG(("Trying %s in %s\n", file, name));
+			/*TODO*///	if( cache_stat (name, stat_buffer) == null )
+			/*TODO*///	{
+			/*TODO*///		if( load_zipped_file (name, file, f.data, f.length) == 0 )
+			/*TODO*///		{
+			/*TODO*///			/*TODO*///LOG(("Using (osd_fopen) zip file %s\n", name));
+			/*TODO*///			f.type = kZippedFile;
+			/*TODO*///			f.offset = 0;
+			/*TODO*///			found = 1;
+			/*TODO*///		}
+			/*TODO*///	}
+			}
+		}
+		break;
+
 /*TODO*///	case OSD_FILETYPE_MEMCARD:
 /*TODO*///		sprintf (name, "%s/%s", memcarddir, filename);
 /*TODO*///		f->type = kPlainFile;

@@ -183,7 +183,7 @@ public class videopin
             public void handler(char[] game_palette, char[] game_colortable, UBytePtr color_prom) {
                 memcpy(game_palette,videopin_palette,videopin_palette.length);
 		memcpy(game_colortable,videopin_colortable,videopin_colortable.length);
-	
+                System.out.println("init_palette");
 		/* Get Artwork */
 		artwork_load(videopin_backdrop, "videopin.png", 2);
             }

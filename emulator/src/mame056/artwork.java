@@ -22,8 +22,22 @@
  */ 
 package mame056;
 
+import static common.ptr.*;
 import static mame056.artworkH.*;
 import static mame056.common.*;
+import static mame056.commonH.*;
+import static mame056.drawgfxH.*;
+import static mame056.drawgfx.*;
+import static mame056.driverH.*;
+import static mame056.mame.*;
+import static mame056.palette.*;
+// refactor
+import static arcadeflex036.osdepend.logerror;
+import static common.subArrays.*;
+import static mame056.osdependH.*;
+import static mame056.pngH.*;
+import static mame056.png.*;
+import static arcadeflex056.fileio.*;
 
 public class artwork
 {
@@ -116,18 +130,18 @@ public class artwork
 /*TODO*///		int x, y, w, h;
 /*TODO*///		struct mame_bitmap *dest, *dest_alpha;
 /*TODO*///	
-/*TODO*///		dest = a->orig_artwork;
-/*TODO*///		dest_alpha = a->alpha;
+/*TODO*///		dest = a.orig_artwork;
+/*TODO*///		dest_alpha = a.alpha;
 /*TODO*///	
-/*TODO*///		if (Machine->orientation & ORIENTATION_SWAP_XY)
+/*TODO*///		if (Machine.orientation & ORIENTATION_SWAP_XY)
 /*TODO*///		{
-/*TODO*///			w = source->height;
-/*TODO*///			h = source->width;
+/*TODO*///			w = source.height;
+/*TODO*///			h = source.width;
 /*TODO*///		}
 /*TODO*///		else
 /*TODO*///		{
-/*TODO*///			h = source->height;
-/*TODO*///			w = source->width;
+/*TODO*///			h = source.height;
+/*TODO*///			w = source.width;
 /*TODO*///		}
 /*TODO*///	
 /*TODO*///		for (y = 0; y < h; y++)
@@ -162,68 +176,68 @@ public class artwork
 /*TODO*///				plot_pixel(dest_alpha, sx + x, sy + y, alpha);
 /*TODO*///			}
 /*TODO*///	}
-/*TODO*///	
-/*TODO*///	/*********************************************************************
-/*TODO*///	  allocate_artwork_mem
-/*TODO*///	
-/*TODO*///	  Allocates memory for all the bitmaps.
-/*TODO*///	 *********************************************************************/
-/*TODO*///	static void allocate_artwork_mem (int width, int height, struct artwork_info **a)
-/*TODO*///	{
-/*TODO*///		if (Machine->orientation & ORIENTATION_SWAP_XY)
-/*TODO*///		{
-/*TODO*///			int temp;
-/*TODO*///	
-/*TODO*///			temp = height;
-/*TODO*///			height = width;
-/*TODO*///			width = temp;
-/*TODO*///		}
-/*TODO*///	
-/*TODO*///		*a = (struct artwork_info *)malloc(sizeof(struct artwork_info));
-/*TODO*///		if (*a == 0)
-/*TODO*///		{
-/*TODO*///			logerror("Not enough memory for artwork!\n");
-/*TODO*///			return;
-/*TODO*///		}
-/*TODO*///	
-/*TODO*///		if (((*a)->orig_artwork = bitmap_alloc(width, height)) == 0)
-/*TODO*///		{
-/*TODO*///			logerror("Not enough memory for artwork!\n");
-/*TODO*///			artwork_free(a);
-/*TODO*///			return;
-/*TODO*///		}
-/*TODO*///		fillbitmap((*a)->orig_artwork,0,0);
-/*TODO*///	
-/*TODO*///		if (((*a)->alpha = bitmap_alloc(width, height)) == 0)
-/*TODO*///		{
-/*TODO*///			logerror("Not enough memory for artwork!\n");
-/*TODO*///			artwork_free(a);
-/*TODO*///			return;
-/*TODO*///		}
-/*TODO*///		fillbitmap((*a)->alpha,0,0);
-/*TODO*///	
-/*TODO*///		if (((*a)->artwork = bitmap_alloc(width,height)) == 0)
-/*TODO*///		{
-/*TODO*///			logerror("Not enough memory for artwork!\n");
-/*TODO*///			artwork_free(a);
-/*TODO*///			return;
-/*TODO*///		}
-/*TODO*///	
-/*TODO*///		if (((*a)->artwork1 = bitmap_alloc(width,height)) == 0)
-/*TODO*///		{
-/*TODO*///			logerror("Not enough memory for artwork!\n");
-/*TODO*///			artwork_free(a);
-/*TODO*///			return;
-/*TODO*///		}
-/*TODO*///	
-/*TODO*///		if (((*a)->rgb = (UINT32*)malloc(width*height*sizeof(UINT32)))==0)
-/*TODO*///		{
-/*TODO*///			logerror("Not enough memory.\n");
-/*TODO*///			artwork_free(a);
-/*TODO*///			return;
-/*TODO*///		}
-/*TODO*///	}
-/*TODO*///	
+	
+	/*********************************************************************
+	  allocate_artwork_mem
+	
+	  Allocates memory for all the bitmaps.
+	 *********************************************************************/
+	static void allocate_artwork_mem (int width, int height, artwork_info a)
+	{
+		if ((Machine.orientation & ORIENTATION_SWAP_XY) != 0)
+		{
+			int temp;
+	
+			temp = height;
+			height = width;
+			width = temp;
+		}
+	
+		a = new artwork_info();
+		if (a == null)
+		{
+			logerror("Not enough memory for artwork!\n");
+			return;
+		}
+	
+		if (((a).orig_artwork = bitmap_alloc(width, height)) == null)
+		{
+			logerror("Not enough memory for artwork!\n");
+			artwork_free(a);
+			return;
+		}
+		fillbitmap((a).orig_artwork,0,null);
+	
+		if (((a).alpha = bitmap_alloc(width, height)) == null)
+		{
+			logerror("Not enough memory for artwork!\n");
+			artwork_free(a);
+			return;
+		}
+		fillbitmap((a).alpha,0,null);
+	
+		if (((a).artwork = bitmap_alloc(width,height)) == null)
+		{
+			logerror("Not enough memory for artwork!\n");
+			artwork_free(a);
+			return;
+		}
+	
+		if (((a).artwork1 = bitmap_alloc(width,height)) == null)
+		{
+			logerror("Not enough memory for artwork!\n");
+			artwork_free(a);
+			return;
+		}
+	
+		if (((a).rgb = new IntArray(width*height))==null)
+		{
+			logerror("Not enough memory.\n");
+			artwork_free(a);
+			return;
+		}
+	}
+	
 /*TODO*///	/*********************************************************************
 /*TODO*///	  create_disk
 /*TODO*///	
@@ -277,152 +291,154 @@ public class artwork
 /*TODO*///		}
 /*TODO*///		return disk;
 /*TODO*///	}
-/*TODO*///	
-/*TODO*///	/*********************************************************************
-/*TODO*///	  artwork_remap
-/*TODO*///	
-/*TODO*///	  Creates the final artwork by adding the start_pen to the
-/*TODO*///	  original artwork.
-/*TODO*///	 *********************************************************************/
-/*TODO*///	static void artwork_remap(struct artwork_info *a)
-/*TODO*///	{
-/*TODO*///		int x, y;
-/*TODO*///		if (Machine->color_depth == 16)
-/*TODO*///		{
-/*TODO*///			for ( y = 0; y < a->orig_artwork->height; y++)
-/*TODO*///				for (x = 0; x < a->orig_artwork->width; x++)
-/*TODO*///					((UINT16 *)a->artwork->line[y])[x] = ((UINT16 *)a->orig_artwork->line[y])[x]+a->start_pen;
-/*TODO*///		}
-/*TODO*///		else
-/*TODO*///			copybitmap(a->artwork, a->orig_artwork ,0,0,0,0,NULL,TRANSPARENCY_NONE,0);
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	/*********************************************************************
-/*TODO*///	  init_palette
-/*TODO*///	
-/*TODO*///	  This sets the palette colors used by the backdrop. It is a simple
-/*TODO*///	  rgb555 palette of 32768 entries.
-/*TODO*///	 *********************************************************************/
-/*TODO*///	static void init_palette(int start_pen)
-/*TODO*///	{
-/*TODO*///		int r, g, b;
-/*TODO*///	
-/*TODO*///		for (r = 0; r < 32; r++)
-/*TODO*///			for (g = 0; g < 32; g++)
-/*TODO*///				for (b = 0; b < 32; b++)
-/*TODO*///					palette_set_color(start_pen++, (r << 3) | (r >> 2), (g << 3) | (g >> 2), (b << 3) | (b >> 2));
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	/*********************************************************************
-/*TODO*///	
-/*TODO*///	  Reads a PNG for a artwork struct and converts it into a format
-/*TODO*///	  usable for mame.
-/*TODO*///	 *********************************************************************/
-/*TODO*///	static int decode_png(const char *file_name, struct mame_bitmap **bitmap, struct mame_bitmap **alpha, struct png_info *p)
-/*TODO*///	{
-/*TODO*///		UINT8 *tmp;
-/*TODO*///		UINT32 x, y, pen;
-/*TODO*///		void *fp;
-/*TODO*///		int file_name_len, depth;
-/*TODO*///		char file_name2[256];
-/*TODO*///	
-/*TODO*///		depth = Machine->color_depth;
-/*TODO*///	
-/*TODO*///		/* check for .png */
-/*TODO*///		strcpy(file_name2, file_name);
-/*TODO*///		file_name_len = strlen(file_name2);
+	
+	/*********************************************************************
+	  artwork_remap
+	
+	  Creates the final artwork by adding the start_pen to the
+	  original artwork.
+	 *********************************************************************/
+	static void artwork_remap(artwork_info a)
+	{
+		int x, y;
+		if (Machine.color_depth == 16)
+		{
+			for ( y = 0; y < a.orig_artwork.height; y++)
+				for (x = 0; x < a.orig_artwork.width; x++)
+					new UShortPtr(a.artwork.line[y]).write(x, (char) (new UShortPtr(a.orig_artwork.line[y]).read(x)+a.start_pen));
+		}
+		else
+			copybitmap(a.artwork, a.orig_artwork ,0,0,0,0,null,TRANSPARENCY_NONE,0);
+	}
+	
+	/*********************************************************************
+	  init_palette
+	
+	  This sets the palette colors used by the backdrop. It is a simple
+	  rgb555 palette of 32768 entries.
+	 *********************************************************************/
+	static void init_palette(int start_pen)
+	{
+		int r, g, b;
+	
+		for (r = 0; r < 32; r++)
+			for (g = 0; g < 32; g++)
+				for (b = 0; b < 32; b++)
+					palette_set_color(start_pen++, (r << 3) | (r >> 2), (g << 3) | (g >> 2), (b << 3) | (b >> 2));
+	}
+	
+	/*********************************************************************
+	
+	  Reads a PNG for a artwork struct and converts it into a format
+	  usable for mame.
+	 *********************************************************************/
+	static int decode_png(String file_name, mame_bitmap bitmap, mame_bitmap alpha, png_info p)
+	{
+            System.out.println("decode_png");
+		UBytePtr tmp = new UBytePtr();
+		int x, y, pen;
+		Object fp;
+		int file_name_len, depth;
+		String file_name2="";
+	
+		depth = Machine.color_depth;
+	
+		/* check for .png */
+		file_name2 = file_name;
+		file_name_len = file_name2.length();
+                System.out.println(file_name2);
 /*TODO*///		if ((file_name_len < 4) || my_stricmp(&file_name2[file_name_len - 4], ".png"))
 /*TODO*///		{
 /*TODO*///			strcat(file_name2, ".png");
 /*TODO*///		}
-/*TODO*///	
-/*TODO*///		if (!(fp = osd_fopen(Machine->gamedrv->name, file_name2, OSD_FILETYPE_ARTWORK, 0)))
-/*TODO*///		{
-/*TODO*///			logerror("Unable to open PNG %s\n", file_name);
-/*TODO*///			return 0;
-/*TODO*///		}
-/*TODO*///	
+	
+		if ((fp = osd_fopen(Machine.gamedrv.name, file_name2, OSD_FILETYPE_ARTWORK, 0)) == null)
+		{
+			logerror("Unable to open PNG %s\n", file_name);
+			return 0;
+		}
+	
 /*TODO*///		if (!png_read_file(fp, p))
 /*TODO*///		{
 /*TODO*///			osd_fclose (fp);
 /*TODO*///			return 0;
 /*TODO*///		}
-/*TODO*///		osd_fclose (fp);
-/*TODO*///	
-/*TODO*///		if (p->bit_depth > 8)
-/*TODO*///		{
-/*TODO*///			logerror("Unsupported bit depth %i (8 bit max.)\n", p->bit_depth);
-/*TODO*///			return 0;
-/*TODO*///		}
-/*TODO*///	
-/*TODO*///		if (p->interlace_method != 0)
-/*TODO*///		{
-/*TODO*///			logerror("Interlace unsupported\n");
-/*TODO*///			return 0;
-/*TODO*///		}
-/*TODO*///	
-/*TODO*///		switch (p->color_type)
-/*TODO*///		{
+		osd_fclose (fp);
+	
+		if (p.bit_depth > 8)
+		{
+			logerror("Unsupported bit depth %i (8 bit max.)\n", p.bit_depth);
+			return 0;
+		}
+	
+		if (p.interlace_method != 0)
+		{
+			logerror("Interlace unsupported\n");
+			return 0;
+		}
+	
+		switch (p.color_type)
+		{
 /*TODO*///		case 3:
 /*TODO*///			/* Convert to 8 bit */
 /*TODO*///			png_expand_buffer_8bit (p);
 /*TODO*///	
 /*TODO*///			png_delete_unused_colors (p);
 /*TODO*///	
-/*TODO*///			if ((*bitmap = bitmap_alloc(p->width,p->height)) == 0)
+/*TODO*///			if ((*bitmap = bitmap_alloc(p.width,p.height)) == 0)
 /*TODO*///			{
 /*TODO*///				logerror("Unable to allocate memory for artwork\n");
 /*TODO*///				return 0;
 /*TODO*///			}
 /*TODO*///	
-/*TODO*///			tmp = p->image;
+/*TODO*///			tmp = p.image;
 /*TODO*///			/* convert to 15/32 bit */
-/*TODO*///			if (p->num_trans > 0)
-/*TODO*///				if ((*alpha = bitmap_alloc(p->width,p->height)) == 0)
+/*TODO*///			if (p.num_trans > 0)
+/*TODO*///				if ((*alpha = bitmap_alloc(p.width,p.height)) == 0)
 /*TODO*///				{
 /*TODO*///					logerror("Unable to allocate memory for artwork\n");
 /*TODO*///					return 0;
 /*TODO*///				}
 /*TODO*///	
-/*TODO*///			for (y=0; y<p->height; y++)
-/*TODO*///				for (x=0; x<p->width; x++)
+/*TODO*///			for (y=0; y<p.height; y++)
+/*TODO*///				for (x=0; x<p.width; x++)
 /*TODO*///				{
 /*TODO*///					if (depth == 32)
-/*TODO*///						pen = (p->palette[*tmp * 3] << 16) | (p->palette[*tmp * 3 + 1] << 8) | p->palette[*tmp * 3 + 2];
+/*TODO*///						pen = (p.palette[*tmp * 3] << 16) | (p.palette[*tmp * 3 + 1] << 8) | p.palette[*tmp * 3 + 2];
 /*TODO*///					else
-/*TODO*///						pen = ((p->palette[*tmp * 3] & 0xf8) << 7) | ((p->palette[*tmp * 3 + 1] & 0xf8) << 2) | (p->palette[*tmp * 3 + 2] >> 3);
+/*TODO*///						pen = ((p.palette[*tmp * 3] & 0xf8) << 7) | ((p.palette[*tmp * 3 + 1] & 0xf8) << 2) | (p.palette[*tmp * 3 + 2] >> 3);
 /*TODO*///					plot_pixel(*bitmap, x, y, pen);
 /*TODO*///	
-/*TODO*///					if (p->num_trans > 0)
+/*TODO*///					if (p.num_trans > 0)
 /*TODO*///					{
-/*TODO*///						if (*tmp < p->num_trans)
-/*TODO*///							plot_pixel(*alpha, x, y, p->trans[*tmp]);
+/*TODO*///						if (*tmp < p.num_trans)
+/*TODO*///							plot_pixel(*alpha, x, y, p.trans[*tmp]);
 /*TODO*///						else
 /*TODO*///							plot_pixel(*alpha, x, y, 255);
 /*TODO*///					}
 /*TODO*///					tmp++;
 /*TODO*///				}
 /*TODO*///	
-/*TODO*///			free (p->palette);
+/*TODO*///			free (p.palette);
 /*TODO*///			break;
 /*TODO*///	
 /*TODO*///		case 6:
-/*TODO*///			if ((*alpha = bitmap_alloc(p->width,p->height)) == 0)
+/*TODO*///			if ((*alpha = bitmap_alloc(p.width,p.height)) == 0)
 /*TODO*///			{
 /*TODO*///				logerror("Unable to allocate memory for artwork\n");
 /*TODO*///				return 0;
 /*TODO*///			}
 /*TODO*///	
 /*TODO*///		case 2:
-/*TODO*///			if ((*bitmap = bitmap_alloc(p->width,p->height)) == 0)
+/*TODO*///			if ((*bitmap = bitmap_alloc(p.width,p.height)) == 0)
 /*TODO*///			{
 /*TODO*///				logerror("Unable to allocate memory for artwork\n");
 /*TODO*///				return 0;
 /*TODO*///			}
 /*TODO*///	
-/*TODO*///			tmp = p->image;
-/*TODO*///			for (y=0; y<p->height; y++)
-/*TODO*///				for (x=0; x<p->width; x++)
+/*TODO*///			tmp = p.image;
+/*TODO*///			for (y=0; y<p.height; y++)
+/*TODO*///				for (x=0; x<p.width; x++)
 /*TODO*///				{
 /*TODO*///					if (depth == 32)
 /*TODO*///						pen = (tmp[0] << 16) | (tmp[1] << 8) | tmp[2];
@@ -430,7 +446,7 @@ public class artwork
 /*TODO*///						pen = ((tmp[0] & 0xf8) << 7) | ((tmp[1] & 0xf8) << 2) | (tmp[2] >> 3);
 /*TODO*///					plot_pixel(*bitmap, x, y, pen);
 /*TODO*///	
-/*TODO*///					if (p->color_type == 6)
+/*TODO*///					if (p.color_type == 6)
 /*TODO*///					{
 /*TODO*///						plot_pixel(*alpha, x, y, tmp[3]);
 /*TODO*///						tmp += 4;
@@ -442,76 +458,77 @@ public class artwork
 /*TODO*///			break;
 /*TODO*///	
 /*TODO*///		default:
-/*TODO*///			logerror("Unsupported color type %i \n", p->color_type);
+/*TODO*///			logerror("Unsupported color type %i \n", p.color_type);
 /*TODO*///			return 0;
 /*TODO*///			break;
-/*TODO*///		}
-/*TODO*///		free (p->image);
-/*TODO*///		return 1;
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	/*********************************************************************
-/*TODO*///	  load_png
-/*TODO*///	
-/*TODO*///	  This is what loads your backdrop in from disk.
-/*TODO*///	  start_pen = the first pen available for the backdrop to use
-/*TODO*///	 *********************************************************************/
-/*TODO*///	
-/*TODO*///	static void load_png(const char *filename, unsigned int start_pen,
-/*TODO*///						 int width, int height, struct artwork_info **a)
-/*TODO*///	{
-/*TODO*///		struct mame_bitmap *picture = 0, *alpha = 0;
-/*TODO*///		struct png_info p;
-/*TODO*///		int scalex, scaley;
-/*TODO*///	
-/*TODO*///		/* If the user turned artwork off, bail */
-/*TODO*///		if (!options.use_artwork) return;
-/*TODO*///	
-/*TODO*///		if (!decode_png(filename, &picture, &alpha, &p))
-/*TODO*///			return;
-/*TODO*///	
-/*TODO*///		allocate_artwork_mem(width, height, a);
-/*TODO*///	
-/*TODO*///	
-/*TODO*///		if (*a==NULL)
-/*TODO*///			return;
-/*TODO*///	
-/*TODO*///		/* Scale the original picture to be the same size as the visible area */
-/*TODO*///		scalex = 0x10000 * picture->width  / (*a)->artwork->width;
-/*TODO*///		scaley = 0x10000 * picture->height / (*a)->artwork->height;
-/*TODO*///	
-/*TODO*///		if (Machine->orientation & ORIENTATION_SWAP_XY)
-/*TODO*///		{
-/*TODO*///			int tmp;
-/*TODO*///			tmp = scalex;
-/*TODO*///			scalex = scaley;
-/*TODO*///			scaley = tmp;
-/*TODO*///		}
-/*TODO*///	
-/*TODO*///		copyrozbitmap((*a)->orig_artwork, picture, 0, 0, scalex, 0, 0, scaley, 0, 0, TRANSPARENCY_NONE, 0, 0);
-/*TODO*///		/* We don't need the original any more */
-/*TODO*///		bitmap_free(picture);
-/*TODO*///	
-/*TODO*///		if (alpha)
-/*TODO*///		{
-/*TODO*///			copyrozbitmap((*a)->alpha, alpha, 0, 0, scalex, 0, 0, scaley, 0, 0, TRANSPARENCY_NONE, 0, 0);
-/*TODO*///			bitmap_free(alpha);
-/*TODO*///		}
-/*TODO*///	
-/*TODO*///		if (Machine->color_depth == 16)
-/*TODO*///		{
-/*TODO*///			(*a)->start_pen = start_pen;
-/*TODO*///			init_palette(start_pen);
-/*TODO*///		}
-/*TODO*///		else
-/*TODO*///			(*a)->start_pen = 0;
-/*TODO*///	
-/*TODO*///		artwork_remap(*a);
-/*TODO*///	}
+		}
+		p.image = null;
+		return 1;
+	}
+	
+	/*********************************************************************
+	  load_png
+	
+	  This is what loads your backdrop in from disk.
+	  start_pen = the first pen available for the backdrop to use
+	 *********************************************************************/
+	
+	static void load_png(String filename, int start_pen,int width, int height, artwork_info a)
+	{
+            System.out.println("load_png");
+		mame_bitmap picture = null, alpha = null;
+		png_info p = new png_info();
+		int scalex, scaley;
+	
+		/* If the user turned artwork off, bail */
+		/*TODO*///if (options.use_artwork == 0) return;
+	
+		if (decode_png(filename, picture, alpha, p) == 0)
+			return;
+
+		allocate_artwork_mem(width, height, a);
+	
+	
+		if (a==null)
+			return;
+	
+		/* Scale the original picture to be the same size as the visible area */
+		scalex = 0x10000 * picture.width  / (a).artwork.width;
+		scaley = 0x10000 * picture.height / (a).artwork.height;
+	
+		if ((Machine.orientation & ORIENTATION_SWAP_XY) != 0)
+		{
+			int tmp;
+			tmp = scalex;
+			scalex = scaley;
+			scaley = tmp;
+		}
+	
+		copyrozbitmap((a).orig_artwork, picture, 0, 0, scalex, 0, 0, scaley, 0, null, TRANSPARENCY_NONE, 0, 0);
+		/* We don't need the original any more */
+		bitmap_free(picture);
+	
+		if (alpha != null)
+		{
+			copyrozbitmap((a).alpha, alpha, 0, 0, scalex, 0, 0, scaley, 0, null, TRANSPARENCY_NONE, 0, 0);
+			bitmap_free(alpha);
+		}
+	
+		if (Machine.color_depth == 16)
+		{
+			(a).start_pen = start_pen;
+			init_palette(start_pen);
+		}
+		else
+			(a).start_pen = 0;
+	
+		artwork_remap(a);
+	}
 	
 	static void load_png_fit(String filename, int start_pen, artwork_info a)
 	{
-/*TODO*///		load_png(filename, start_pen, Machine->scrbitmap->width, Machine->scrbitmap->height, a);
+            System.out.println("load_png_fit");
+		load_png(filename, start_pen, Machine.scrbitmap.width, Machine.scrbitmap.height, a);
 	}
 
 	
@@ -528,38 +545,38 @@ public class artwork
 /*TODO*///		int offset, height, width;
 /*TODO*///		struct mame_bitmap *overlay, *overlay1, *orig;
 /*TODO*///	
-/*TODO*///		offset = a->start_pen;
-/*TODO*///		height = a->artwork->height;
-/*TODO*///		width = a->artwork->width;
-/*TODO*///		overlay = a->artwork;
-/*TODO*///		overlay1 = a->artwork1;
-/*TODO*///		orig = a->orig_artwork;
+/*TODO*///		offset = a.start_pen;
+/*TODO*///		height = a.artwork.height;
+/*TODO*///		width = a.artwork.width;
+/*TODO*///		overlay = a.artwork;
+/*TODO*///		overlay1 = a.artwork1;
+/*TODO*///		orig = a.orig_artwork;
 /*TODO*///	
-/*TODO*///		if (a->alpha)
+/*TODO*///		if (a.alpha)
 /*TODO*///		{
 /*TODO*///			for ( j=0; j<height; j++)
 /*TODO*///				for (i=0; i<width; i++)
 /*TODO*///				{
 /*TODO*///					UINT32 v1,v2;
-/*TODO*///					UINT16 alpha = ((UINT16 *)a->alpha->line[j])[i];
+/*TODO*///					UINT16 alpha = ((UINT16 *)a.alpha.line[j])[i];
 /*TODO*///	
-/*TODO*///					rgb555 = ((UINT16 *)orig->line[j])[i];
+/*TODO*///					rgb555 = ((UINT16 *)orig.line[j])[i];
 /*TODO*///					r = rgb555 >> 10;
 /*TODO*///					g = (rgb555 >> 5) & 0x1f;
 /*TODO*///					b = rgb555 &0x1f;
 /*TODO*///					v1 = (MAX(r, MAX(g, b)));
 /*TODO*///					v2 = (v1 * (alpha >> 3)) / 0x1f;
-/*TODO*///					a->rgb[j*width+i] = (v1 << 24) | (v2 << 16) | rgb555;
+/*TODO*///					a.rgb[j*width+i] = (v1 << 24) | (v2 << 16) | rgb555;
 /*TODO*///	
 /*TODO*///					RGBtoHSV( r/31.0, g/31.0, b/31.0, &h, &s, &v );
 /*TODO*///	
 /*TODO*///					HSVtoRGB( &rf, &gf, &bf, h, s, v * alpha/255.0);
 /*TODO*///					r = rf*31; g = gf*31; b = bf*31;
-/*TODO*///					((UINT16 *)overlay->line[j])[i] = ((r << 10) | (g << 5) | b) + offset;
+/*TODO*///					((UINT16 *)overlay.line[j])[i] = ((r << 10) | (g << 5) | b) + offset;
 /*TODO*///	
 /*TODO*///					HSVtoRGB( &rf, &gf, &bf, h, s, 1);
 /*TODO*///					r = rf*31; g = gf*31; b = bf*31;
-/*TODO*///					((UINT16 *)overlay1->line[j])[i] = ((r << 10) | (g << 5) | b) + offset;
+/*TODO*///					((UINT16 *)overlay1.line[j])[i] = ((r << 10) | (g << 5) | b) + offset;
 /*TODO*///				}
 /*TODO*///		}
 /*TODO*///	}
@@ -582,24 +599,24 @@ public class artwork
 /*TODO*///		UINT32 *rgb;
 /*TODO*///	
 /*TODO*///		memset (bright, 0xff, sizeof(int)*65536);
-/*TODO*///		height = source->height;
-/*TODO*///		width = source->width;
+/*TODO*///		height = source.height;
+/*TODO*///		width = source.width;
 /*TODO*///	
-/*TODO*///		switch (Machine->color_depth)
+/*TODO*///		switch (Machine.color_depth)
 /*TODO*///		{
 /*TODO*///		case 16:
-/*TODO*///			if (artwork_overlay->start_pen == 2)
+/*TODO*///			if (artwork_overlay.start_pen == 2)
 /*TODO*///			{
 /*TODO*///				/* fast version */
-/*TODO*///				height = artwork_overlay->artwork->height;
-/*TODO*///				width = artwork_overlay->artwork->width;
+/*TODO*///				height = artwork_overlay.artwork.height;
+/*TODO*///				width = artwork_overlay.artwork.width;
 /*TODO*///	
 /*TODO*///				for ( j = 0; j < height; j++)
 /*TODO*///				{
-/*TODO*///					dst = (UINT16 *)dest->line[j];
-/*TODO*///					src = (UINT16 *)source->line[j];
-/*TODO*///					bg = (UINT16 *)artwork_overlay->artwork->line[j];
-/*TODO*///					fg = (UINT16 *)artwork_overlay->artwork1->line[j];
+/*TODO*///					dst = (UINT16 *)dest.line[j];
+/*TODO*///					src = (UINT16 *)source.line[j];
+/*TODO*///					bg = (UINT16 *)artwork_overlay.artwork.line[j];
+/*TODO*///					fg = (UINT16 *)artwork_overlay.artwork1.line[j];
 /*TODO*///					for (i = width; i > 0; i--)
 /*TODO*///					{
 /*TODO*///						if (*src!=0)
@@ -615,14 +632,14 @@ public class artwork
 /*TODO*///			}
 /*TODO*///			else /* slow version */
 /*TODO*///			{
-/*TODO*///				rgb = artwork_overlay->rgb;
-/*TODO*///				start_pen = artwork_overlay->start_pen;
-/*TODO*///				copybitmap(dest, artwork_overlay->artwork ,0,0,0,0,NULL,TRANSPARENCY_NONE,0);
+/*TODO*///				rgb = artwork_overlay.rgb;
+/*TODO*///				start_pen = artwork_overlay.start_pen;
+/*TODO*///				copybitmap(dest, artwork_overlay.artwork ,0,0,0,0,NULL,TRANSPARENCY_NONE,0);
 /*TODO*///				black = -1;
 /*TODO*///				for ( j = 0; j < height; j++)
 /*TODO*///				{
-/*TODO*///					dst = (UINT16 *)dest->line[j];
-/*TODO*///					src = (UINT16 *)source->line[j];
+/*TODO*///					dst = (UINT16 *)dest.line[j];
+/*TODO*///					src = (UINT16 *)source.line[j];
 /*TODO*///	
 /*TODO*///					for (i = width; i > 0; i--)
 /*TODO*///					{
@@ -662,14 +679,14 @@ public class artwork
 /*TODO*///			}
 /*TODO*///			break;
 /*TODO*///		case 15:
-/*TODO*///			rgb = artwork_overlay->rgb;
-/*TODO*///			start_pen = artwork_overlay->start_pen;
-/*TODO*///			copybitmap(dest, artwork_overlay->artwork ,0,0,0,0,NULL,TRANSPARENCY_NONE,0);
+/*TODO*///			rgb = artwork_overlay.rgb;
+/*TODO*///			start_pen = artwork_overlay.start_pen;
+/*TODO*///			copybitmap(dest, artwork_overlay.artwork ,0,0,0,0,NULL,TRANSPARENCY_NONE,0);
 /*TODO*///			black = -1;
 /*TODO*///			for ( j = 0; j < height; j++)
 /*TODO*///			{
-/*TODO*///				dst = (UINT16 *)dest->line[j];
-/*TODO*///				src = (UINT16 *)source->line[j];
+/*TODO*///				dst = (UINT16 *)dest.line[j];
+/*TODO*///				src = (UINT16 *)source.line[j];
 /*TODO*///	
 /*TODO*///				for (i = width; i > 0; i--)
 /*TODO*///				{
@@ -706,7 +723,7 @@ public class artwork
 /*TODO*///			}
 /*TODO*///			break;
 /*TODO*///		default:
-/*TODO*///			logerror ("Color depth of %d not supported with overlays\n", Machine->color_depth);
+/*TODO*///			logerror ("Color depth of %d not supported with overlays\n", Machine.color_depth);
 /*TODO*///			break;
 /*TODO*///		}
 /*TODO*///	}
@@ -723,19 +740,19 @@ public class artwork
 /*TODO*///		UINT32 bright[65536];
 /*TODO*///	
 /*TODO*///		memset (bright, 0xff, sizeof(int)*65536);
-/*TODO*///		copybitmap(dest, artwork_backdrop->artwork ,0,0,0,0,NULL,TRANSPARENCY_NONE,0);
+/*TODO*///		copybitmap(dest, artwork_backdrop.artwork ,0,0,0,0,NULL,TRANSPARENCY_NONE,0);
 /*TODO*///	
-/*TODO*///		switch (Machine->color_depth)
+/*TODO*///		switch (Machine.color_depth)
 /*TODO*///		{
 /*TODO*///		case 16:
 /*TODO*///		{
 /*TODO*///			UINT16 *dst, *bdr, *src;
-/*TODO*///			for ( j = 0; j < source->height; j++)
+/*TODO*///			for ( j = 0; j < source.height; j++)
 /*TODO*///			{
-/*TODO*///				dst = (UINT16 *)dest->line[j];
-/*TODO*///				src = (UINT16 *)source->line[j];
-/*TODO*///				bdr = (UINT16 *)artwork_backdrop->artwork->line[j];
-/*TODO*///				for (i = 0; i < source->width; i++)
+/*TODO*///				dst = (UINT16 *)dest.line[j];
+/*TODO*///				src = (UINT16 *)source.line[j];
+/*TODO*///				bdr = (UINT16 *)artwork_backdrop.artwork.line[j];
+/*TODO*///				for (i = 0; i < source.width; i++)
 /*TODO*///				{
 /*TODO*///					if (*src != black)
 /*TODO*///					{
@@ -753,14 +770,14 @@ public class artwork
 /*TODO*///							r >>= 3;
 /*TODO*///							g >>= 3;
 /*TODO*///							b >>= 3;
-/*TODO*///							brgb = *bdr - artwork_backdrop->start_pen;
+/*TODO*///							brgb = *bdr - artwork_backdrop.start_pen;
 /*TODO*///							r += brgb >> 10;
 /*TODO*///							if (r > 0x1f) r = 0x1f;
 /*TODO*///							g += (brgb >> 5) & 0x1f;
 /*TODO*///							if (g > 0x1f) g = 0x1f;
 /*TODO*///							b += brgb & 0x1f;
 /*TODO*///							if (b > 0x1f) b = 0x1f;
-/*TODO*///							*dst = ((r << 10) | (g << 5) | b) + artwork_backdrop->start_pen;
+/*TODO*///							*dst = ((r << 10) | (g << 5) | b) + artwork_backdrop.start_pen;
 /*TODO*///						}
 /*TODO*///						else
 /*TODO*///							black = *src;
@@ -775,12 +792,12 @@ public class artwork
 /*TODO*///		case 15:
 /*TODO*///		{
 /*TODO*///			UINT16 *dst, *src, *bdr;
-/*TODO*///			for ( j = 0; j < source->height; j++)
+/*TODO*///			for ( j = 0; j < source.height; j++)
 /*TODO*///			{
-/*TODO*///				dst = (UINT16 *)dest->line[j];
-/*TODO*///				src = (UINT16 *)source->line[j];
-/*TODO*///				bdr = (UINT16 *)artwork_backdrop->artwork->line[j];
-/*TODO*///				for (i = 0; i < source->width; i++)
+/*TODO*///				dst = (UINT16 *)dest.line[j];
+/*TODO*///				src = (UINT16 *)source.line[j];
+/*TODO*///				bdr = (UINT16 *)artwork_backdrop.artwork.line[j];
+/*TODO*///				for (i = 0; i < source.width; i++)
 /*TODO*///				{
 /*TODO*///					if (*src)
 /*TODO*///					{
@@ -798,12 +815,12 @@ public class artwork
 /*TODO*///		case 32:
 /*TODO*///		{
 /*TODO*///			UINT32 *dst, *src, *bdr;
-/*TODO*///			for ( j = 0; j < source->height; j++)
+/*TODO*///			for ( j = 0; j < source.height; j++)
 /*TODO*///			{
-/*TODO*///				dst = (UINT32 *)dest->line[j];
-/*TODO*///				src = (UINT32 *)source->line[j];
-/*TODO*///				bdr = (UINT32 *)artwork_backdrop->artwork->line[j];
-/*TODO*///				for (i = 0; i < source->width; i++)
+/*TODO*///				dst = (UINT32 *)dest.line[j];
+/*TODO*///				src = (UINT32 *)source.line[j];
+/*TODO*///				bdr = (UINT32 *)artwork_backdrop.artwork.line[j];
+/*TODO*///				for (i = 0; i < source.width; i++)
 /*TODO*///				{
 /*TODO*///					if (*src)
 /*TODO*///					{
@@ -865,13 +882,13 @@ public class artwork
 /*TODO*///	{
 /*TODO*///		int width, height;
 /*TODO*///	
-/*TODO*///		/* replace the real display with a fake one, this way drivers can access Machine->scrbitmap
+/*TODO*///		/* replace the real display with a fake one, this way drivers can access Machine.scrbitmap
 /*TODO*///		   the same way as before */
 /*TODO*///	
-/*TODO*///		width = Machine->scrbitmap->width;
-/*TODO*///		height = Machine->scrbitmap->height;
+/*TODO*///		width = Machine.scrbitmap.width;
+/*TODO*///		height = Machine.scrbitmap.height;
 /*TODO*///	
-/*TODO*///		if (Machine->orientation & ORIENTATION_SWAP_XY)
+/*TODO*///		if (Machine.orientation & ORIENTATION_SWAP_XY)
 /*TODO*///		{
 /*TODO*///			int temp;
 /*TODO*///	
@@ -898,17 +915,17 @@ public class artwork
 /*TODO*///	{
 /*TODO*///		int width, height;
 /*TODO*///	
-/*TODO*///		/* replace the real display with a fake one, this way drivers can access Machine->scrbitmap
+/*TODO*///		/* replace the real display with a fake one, this way drivers can access Machine.scrbitmap
 /*TODO*///		   the same way as before */
 /*TODO*///	
 /*TODO*///		load_png_fit(filename, start_pen, &artwork_backdrop);
 /*TODO*///	
 /*TODO*///		if (artwork_backdrop)
 /*TODO*///		{
-/*TODO*///			width = artwork_backdrop->artwork->width;
-/*TODO*///			height = artwork_backdrop->artwork->height;
+/*TODO*///			width = artwork_backdrop.artwork.width;
+/*TODO*///			height = artwork_backdrop.artwork.height;
 /*TODO*///	
-/*TODO*///			if (Machine->orientation & ORIENTATION_SWAP_XY)
+/*TODO*///			if (Machine.orientation & ORIENTATION_SWAP_XY)
 /*TODO*///			{
 /*TODO*///				int temp;
 /*TODO*///	
@@ -928,6 +945,7 @@ public class artwork
 	
 	public static void artwork_load(artwork_info a, String filename, int start_pen)
 	{
+            System.out.println("artwork_load");
 		load_png_fit(filename, start_pen, a);
 	}
 	
@@ -950,23 +968,23 @@ public class artwork
 /*TODO*///	{
 /*TODO*///		int scale_w, scale_h;
 /*TODO*///	
-/*TODO*///		if (Machine->orientation & ORIENTATION_SWAP_XY)
+/*TODO*///		if (Machine.orientation & ORIENTATION_SWAP_XY)
 /*TODO*///		{
-/*TODO*///			scale_w = (height << 16)/(ae->box.max_x + 1);
-/*TODO*///			scale_h = (width << 16)/(ae->box.max_y + 1);
+/*TODO*///			scale_w = (height << 16)/(ae.box.max_x + 1);
+/*TODO*///			scale_h = (width << 16)/(ae.box.max_y + 1);
 /*TODO*///		}
 /*TODO*///		else
 /*TODO*///		{
-/*TODO*///			scale_w = (width << 16)/(ae->box.max_x + 1);
-/*TODO*///			scale_h = (height << 16)/(ae->box.max_y + 1);
+/*TODO*///			scale_w = (width << 16)/(ae.box.max_x + 1);
+/*TODO*///			scale_h = (height << 16)/(ae.box.max_y + 1);
 /*TODO*///		}
-/*TODO*///		while (ae->box.min_x >= 0)
+/*TODO*///		while (ae.box.min_x >= 0)
 /*TODO*///		{
-/*TODO*///			ae->box.min_x = (ae->box.min_x * scale_w) >> 16;
-/*TODO*///			ae->box.max_x = (ae->box.max_x * scale_w) >> 16;
-/*TODO*///			ae->box.min_y = (ae->box.min_y * scale_h) >> 16;
-/*TODO*///			if (ae->box.max_y >= 0)
-/*TODO*///				ae->box.max_y = (ae->box.max_y * scale_h) >> 16;
+/*TODO*///			ae.box.min_x = (ae.box.min_x * scale_w) >> 16;
+/*TODO*///			ae.box.max_x = (ae.box.max_x * scale_w) >> 16;
+/*TODO*///			ae.box.min_y = (ae.box.min_y * scale_h) >> 16;
+/*TODO*///			if (ae.box.max_y >= 0)
+/*TODO*///				ae.box.max_y = (ae.box.max_y * scale_h) >> 16;
 /*TODO*///			ae++;
 /*TODO*///		}
 /*TODO*///	}
@@ -991,18 +1009,18 @@ public class artwork
 /*TODO*///		int pen, transparent_pen = -1, disk_type, white_pen;
 /*TODO*///		int width, height;
 /*TODO*///	
-/*TODO*///		allocate_artwork_mem(Machine->scrbitmap->width, Machine->scrbitmap->height, &artwork_overlay);
+/*TODO*///		allocate_artwork_mem(Machine.scrbitmap.width, Machine.scrbitmap.height, &artwork_overlay);
 /*TODO*///	
 /*TODO*///		if (artwork_overlay==NULL)
 /*TODO*///			return;
 /*TODO*///	
-/*TODO*///		/* replace the real display with a fake one, this way drivers can access Machine->scrbitmap
+/*TODO*///		/* replace the real display with a fake one, this way drivers can access Machine.scrbitmap
 /*TODO*///		   the same way as before */
 /*TODO*///	
-/*TODO*///		width = Machine->scrbitmap->width;
-/*TODO*///		height = Machine->scrbitmap->height;
+/*TODO*///		width = Machine.scrbitmap.width;
+/*TODO*///		height = Machine.scrbitmap.height;
 /*TODO*///	
-/*TODO*///		if (Machine->orientation & ORIENTATION_SWAP_XY)
+/*TODO*///		if (Machine.orientation & ORIENTATION_SWAP_XY)
 /*TODO*///		{
 /*TODO*///			int temp;
 /*TODO*///	
@@ -1020,23 +1038,23 @@ public class artwork
 /*TODO*///	
 /*TODO*///		transparent_pen = 0xffff;
 /*TODO*///		white_pen = 0x7fff;
-/*TODO*///		fillbitmap (artwork_overlay->orig_artwork, white_pen, 0);
-/*TODO*///		fillbitmap (artwork_overlay->alpha, 0, 0);
+/*TODO*///		fillbitmap (artwork_overlay.orig_artwork, white_pen, 0);
+/*TODO*///		fillbitmap (artwork_overlay.alpha, 0, 0);
 /*TODO*///	
-/*TODO*///		while (ae->box.min_x >= 0)
+/*TODO*///		while (ae.box.min_x >= 0)
 /*TODO*///		{
-/*TODO*///			int alpha = ae->alpha;
+/*TODO*///			int alpha = ae.alpha;
 /*TODO*///	
 /*TODO*///			if (alpha == OVERLAY_DEFAULT_OPACITY)
 /*TODO*///			{
 /*TODO*///				alpha = 0x18;
 /*TODO*///			}
 /*TODO*///	
-/*TODO*///			pen = ((ae->red & 0xf8) << 7) | ((ae->green & 0xf8) << 2) | (ae->blue >> 3);
-/*TODO*///			if (ae->box.max_y < 0) /* disk */
+/*TODO*///			pen = ((ae.red & 0xf8) << 7) | ((ae.green & 0xf8) << 2) | (ae.blue >> 3);
+/*TODO*///			if (ae.box.max_y < 0) /* disk */
 /*TODO*///			{
-/*TODO*///				int r = ae->box.max_x;
-/*TODO*///				disk_type = ae->box.max_y;
+/*TODO*///				int r = ae.box.max_x;
+/*TODO*///				disk_type = ae.box.max_y;
 /*TODO*///	
 /*TODO*///				switch (disk_type)
 /*TODO*///				{
@@ -1051,7 +1069,7 @@ public class artwork
 /*TODO*///						artwork_kill();
 /*TODO*///						return;
 /*TODO*///					}
-/*TODO*///					merge_cmy (artwork_overlay, disk, disk_alpha, ae->box.min_x - r, ae->box.min_y - r);
+/*TODO*///					merge_cmy (artwork_overlay, disk, disk_alpha, ae.box.min_x - r, ae.box.min_y - r);
 /*TODO*///					bitmap_free(disk_alpha);
 /*TODO*///					bitmap_free(disk);
 /*TODO*///					break;
@@ -1062,9 +1080,9 @@ public class artwork
 /*TODO*///						artwork_kill();
 /*TODO*///						return;
 /*TODO*///					}
-/*TODO*///					copybitmap(artwork_overlay->orig_artwork,disk,0, 0,
-/*TODO*///							   ae->box.min_x - r,
-/*TODO*///							   ae->box.min_y - r,
+/*TODO*///					copybitmap(artwork_overlay.orig_artwork,disk,0, 0,
+/*TODO*///							   ae.box.min_x - r,
+/*TODO*///							   ae.box.min_y - r,
 /*TODO*///							   0,TRANSPARENCY_PEN, transparent_pen);
 /*TODO*///					/* alpha */
 /*TODO*///					if ((disk_alpha = create_disk (r, alpha, transparent_pen)) == NULL)
@@ -1072,9 +1090,9 @@ public class artwork
 /*TODO*///						artwork_kill();
 /*TODO*///						return;
 /*TODO*///					}
-/*TODO*///					copybitmap(artwork_overlay->alpha,disk_alpha,0, 0,
-/*TODO*///							   ae->box.min_x - r,
-/*TODO*///							   ae->box.min_y - r,
+/*TODO*///					copybitmap(artwork_overlay.alpha,disk_alpha,0, 0,
+/*TODO*///							   ae.box.min_x - r,
+/*TODO*///							   ae.box.min_y - r,
 /*TODO*///							   0,TRANSPARENCY_PEN, transparent_pen);
 /*TODO*///					bitmap_free(disk_alpha);
 /*TODO*///					bitmap_free(disk);
@@ -1084,15 +1102,15 @@ public class artwork
 /*TODO*///			}
 /*TODO*///			else
 /*TODO*///			{
-/*TODO*///				if ((box = bitmap_alloc(ae->box.max_x - ae->box.min_x + 1,
-/*TODO*///											 ae->box.max_y - ae->box.min_y + 1)) == 0)
+/*TODO*///				if ((box = bitmap_alloc(ae.box.max_x - ae.box.min_x + 1,
+/*TODO*///											 ae.box.max_y - ae.box.min_y + 1)) == 0)
 /*TODO*///				{
 /*TODO*///					logerror("Not enough memory for artwork!\n");
 /*TODO*///					artwork_kill();
 /*TODO*///					return;
 /*TODO*///				}
-/*TODO*///				if ((box_alpha = bitmap_alloc(ae->box.max_x - ae->box.min_x + 1,
-/*TODO*///											 ae->box.max_y - ae->box.min_y + 1)) == 0)
+/*TODO*///				if ((box_alpha = bitmap_alloc(ae.box.max_x - ae.box.min_x + 1,
+/*TODO*///											 ae.box.max_y - ae.box.min_y + 1)) == 0)
 /*TODO*///				{
 /*TODO*///					logerror("Not enough memory for artwork!\n");
 /*TODO*///					artwork_kill();
@@ -1100,20 +1118,20 @@ public class artwork
 /*TODO*///				}
 /*TODO*///				fillbitmap (box, pen, 0);
 /*TODO*///				fillbitmap (box_alpha, alpha, 0);
-/*TODO*///				merge_cmy (artwork_overlay, box, box_alpha, ae->box.min_x, ae->box.min_y);
+/*TODO*///				merge_cmy (artwork_overlay, box, box_alpha, ae.box.min_x, ae.box.min_y);
 /*TODO*///				bitmap_free(box);
 /*TODO*///				bitmap_free(box_alpha);
 /*TODO*///			}
 /*TODO*///			ae++;
 /*TODO*///		}
 /*TODO*///	
-/*TODO*///		if (Machine->color_depth == 16)
+/*TODO*///		if (Machine.color_depth == 16)
 /*TODO*///		{
-/*TODO*///			artwork_overlay->start_pen = start_pen;
+/*TODO*///			artwork_overlay.start_pen = start_pen;
 /*TODO*///			init_palette(start_pen);
 /*TODO*///		}
 /*TODO*///		else
-/*TODO*///			artwork_overlay->start_pen = 0;
+/*TODO*///			artwork_overlay.start_pen = 0;
 /*TODO*///	
 /*TODO*///		artwork_remap(artwork_overlay);
 /*TODO*///		overlay_init(artwork_overlay);
@@ -1137,7 +1155,7 @@ public class artwork
 /*TODO*///			strcat(file_name2, ".png");
 /*TODO*///		}
 /*TODO*///	
-/*TODO*///		if (!(fp = osd_fopen(Machine->gamedrv->name, file_name2, OSD_FILETYPE_ARTWORK, 0)))
+/*TODO*///		if (!(fp = osd_fopen(Machine.gamedrv.name, file_name2, OSD_FILETYPE_ARTWORK, 0)))
 /*TODO*///		{
 /*TODO*///			logerror("Unable to open PNG %s\n", file_name);
 /*TODO*///			return 0;
@@ -1150,9 +1168,9 @@ public class artwork
 /*TODO*///		}
 /*TODO*///		osd_fclose (fp);
 /*TODO*///	
-/*TODO*///		a->width = p.width;
-/*TODO*///		a->height = p.height;
-/*TODO*///		a->screen = p.screen;
+/*TODO*///		a.width = p.width;
+/*TODO*///		a.height = p.height;
+/*TODO*///		a.screen = p.screen;
 /*TODO*///	
 /*TODO*///		return 1;
 /*TODO*///	}
