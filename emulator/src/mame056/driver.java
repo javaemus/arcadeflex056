@@ -190,6 +190,7 @@ import static WIP.mame056.drivers.copsnrob.*;
 import static WIP.mame056.drivers.sprint2.*;
 import static WIP.mame056.drivers.nitedrvr.*;
 import static WIP.mame056.drivers.matmania.*;
+import static WIP.mame056.drivers.vball.*;
 
 public class driver {
 
@@ -3330,8 +3331,8 @@ public class driver {
         /*TODO*///	driver_saiyugb1,	/* bootleg */
         /*TODO*///	driver_saiyugb2,	/* bootleg */
         /*TODO*///	driver_wwfsstar,	/* TA-0024 (c) 1989 (US) */
-        /*TODO*///	driver_vball,		/* TA-0025 (c) 1988 */
-        /*TODO*///	driver_vball2pj,	/* TA-0025 (c) 1988 (Japan) */
+        driver_vball,		/* TA-0025 (c) 1988 */
+        driver_vball2pj,	/* TA-0025 (c) 1988 (Japan) */
         /*TODO*///	driver_ddragon2,	/* TA-0026 (c) 1988 (World) */
         /*TODO*///	driver_ddragn2u,	/* TA-0026 (c) 1988 (US) */
         /*TODO*///	driver_ctribe,	/* TA-0028 (c) 1990 (US) */

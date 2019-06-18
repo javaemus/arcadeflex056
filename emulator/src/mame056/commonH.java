@@ -319,17 +319,21 @@ public class commonH {
     public static final int ROM_REVERSEMASK = 0x00100000;/* reverse the byte order within a group */
     public static final int ROM_NOREVERSE = 0x00000000;
     public static final int ROM_REVERSE = 0x00100000;
-    /*TODO*///
+    
     public static final int ROM_BITWIDTHMASK = 0x00e00000;/* width of data in bits */
- /*TODO*///#define		ROM_BITWIDTH(n)			(((n) & 7) << 21)
-/*TODO*///#define		ROM_NIBBLE				ROM_BITWIDTH(4)
-/*TODO*///#define		ROM_FULLBYTE			ROM_BITWIDTH(8)
+    public static int ROM_BITWIDTH(int n){
+        return (((n) & 7) << 21);
+    }
+    public static int ROM_NIBBLE = ROM_BITWIDTH(4);
+    public static int ROM_FULLBYTE = ROM_BITWIDTH(8);
 
     public static final int ROM_BITSHIFTMASK = 0x07000000;/* left-shift count for the bits */
- /*TODO*///#define		ROM_BITSHIFT(n)			(((n) & 7) << 24)
-/*TODO*///#define		ROM_NOSHIFT				ROM_BITSHIFT(0)
-/*TODO*///#define		ROM_SHIFT_NIBBLE_LO		ROM_BITSHIFT(0)
-/*TODO*///#define		ROM_SHIFT_NIBBLE_HI		ROM_BITSHIFT(4)
+    public static int ROM_BITSHIFT(int n){
+        return (((n) & 7) << 24);
+    }
+    public static final int ROM_NOSHIFT = ROM_BITSHIFT(0);
+    public static final int ROM_SHIFT_NIBBLE_LO = ROM_BITSHIFT(0);
+    public static final int ROM_SHIFT_NIBBLE_HI = ROM_BITSHIFT(4);
 
     public static final int ROM_INHERITFLAGSMASK = 0x08000000;/* inherit all flags from previous definition */
     public static final int ROM_INHERITFLAGS = 0x08000000;
@@ -449,11 +453,15 @@ public class commonH {
         ROMX_LOAD(ROMENTRY_COPY, offset, length, srcoffset, (rgn) << 24);
     }
 
-/*TODO*////* ----- nibble loading macros ----- */
-/*TODO*///#define ROM_LOAD_NIB_HIGH(name,offset,length,crc)	ROMX_LOAD(name, offset, length, crc, ROM_NIBBLE | ROM_SHIFT_NIBBLE_HI)
-/*TODO*///#define ROM_LOAD_NIB_LOW(name,offset,length,crc)	ROMX_LOAD(name, offset, length, crc, ROM_NIBBLE | ROM_SHIFT_NIBBLE_LO)
-/*TODO*///
-/*TODO*////* ----- new-style 16-bit loading macros ----- */
+    /* ----- nibble loading macros ----- */
+    public static void ROM_LOAD_NIB_HIGH(String name, int offset, int length, int crc){
+        ROMX_LOAD(name, offset, length, crc, ROM_NIBBLE | ROM_SHIFT_NIBBLE_HI);
+    }
+    public static void ROM_LOAD_NIB_LOW(String name, int offset, int length, int crc){
+        ROMX_LOAD(name, offset, length, crc, ROM_NIBBLE | ROM_SHIFT_NIBBLE_LO);
+    }
+
+    /* ----- new-style 16-bit loading macros ----- */
     public static void ROM_LOAD16_BYTE(String name, int offset, int length, int crc){
             ROMX_LOAD(name, offset, length, crc, ROM_SKIP(1));
     }
