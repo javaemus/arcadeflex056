@@ -189,6 +189,7 @@ import static WIP.mame056.drivers.bogeyman.*;
 import static WIP.mame056.drivers.copsnrob.*;
 import static WIP.mame056.drivers.sprint2.*;
 import static WIP.mame056.drivers.nitedrvr.*;
+import static WIP.mame056.drivers.matmania.*;
 
 public class driver {
 
@@ -3306,10 +3307,10 @@ public class driver {
         /*TODO*///	driver_mystston,	/* TA-0010 (c) 1984 */
         /*TODO*///	/* TA-0011 Dog Fight (Data East) / Batten O'hara no Sucha-Raka Kuuchuu Sen 1985 */
         driver_bogeyman, /* -0204-0 (Data East part number) (c) [1985?] */
-        /*TODO*///	driver_matmania,	/* TA-0015 (c) 1985 + Taito America license */
-        /*TODO*///	driver_excthour,	/* TA-0015 (c) 1985 + Taito license */
-        /*TODO*///	driver_maniach,	/* TA-0017 (c) 1986 + Taito America license */
-        /*TODO*///	driver_maniach2,	/* TA-0017 (c) 1986 + Taito America license */
+        driver_matmania,	/* TA-0015 (c) 1985 + Taito America license */
+        driver_excthour,	/* TA-0015 (c) 1985 + Taito license */
+        driver_maniach,	/* TA-0017 (c) 1986 + Taito America license */
+        driver_maniach2,	/* TA-0017 (c) 1986 + Taito America license */
         driver_renegade, /* TA-0018 (c) 1986 + Taito America license */
         driver_kuniokun, /* TA-0018 (c) 1986 */
         driver_kuniokub, /* bootleg */
