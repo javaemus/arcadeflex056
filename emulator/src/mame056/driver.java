@@ -191,6 +191,7 @@ import static WIP.mame056.drivers.sprint2.*;
 import static WIP.mame056.drivers.nitedrvr.*;
 import static WIP.mame056.drivers.matmania.*;
 import static WIP.mame056.drivers.vball.*;
+import static WIP.mame056.drivers.videopin.*;
 
 public class driver {
 
@@ -3038,7 +3039,7 @@ public class driver {
         /*TODO*///	driver_atarifb,	/* 033xxx			1978/10 [6502] */
         /*TODO*///	driver_atarifb1,	/* 033xxx			1978/10 [6502] */
         /*TODO*///	/* Orbit */			/* 033689-033702	1978/11 [6800] */
-        /*TODO*///	driver_videopin,	/* 034253-034267	1979/02 [6502] */
+        driver_videopin,	/* 034253-034267	1979/02 [6502] */
         /*TODO*///	driver_atarifb4,	/* 034754			1979/04 [6502] */
         /*TODO*///	driver_subs,		/* 033714			1979/05 [6502] */
         /*TODO*///	driver_bsktball,	/* 034756-034766	1979/05 [6502] */
