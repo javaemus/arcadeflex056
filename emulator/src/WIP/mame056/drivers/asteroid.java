@@ -162,7 +162,7 @@ import static mame056.memoryH.*;
 import static mame056.sndintrfH.*;
 import static mame056.cpuexec.*;
 import static WIP.mame056.machine.asteroid.*;
-import static WIP.mame056.machine.atari_vg.*;
+import static mame056.machine.atari_vg.*;
 import static mame056.osdependH.OSD_FILETYPE_HIGHSCORE;
 import static WIP.mame056.sndhrdw.asteroid.*;
 

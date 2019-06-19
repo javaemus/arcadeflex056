@@ -194,6 +194,7 @@ import static WIP.mame056.drivers.vball.*;
 import static WIP.mame056.drivers.videopin.*;
 import static WIP.mame056.drivers.gng.*;
 import static WIP.mame056.drivers.markham.*;
+import static mame056.drivers.centiped.*;
 
 public class driver {
 
@@ -383,6 +384,10 @@ public class driver {
         /*btime*/ driver_disco,
         /*btime*/ driver_discof,
         /*btime*/ driver_mmonkey,
+        /*centiped*/ driver_centiped,
+        /*centiped*/ driver_centipd2,
+        /*centiped*/ driver_centipdb,
+        /*centiped*/ driver_centipb2,
         /**
          * GAME NOT WORKING FLAG
          */
@@ -1812,13 +1817,13 @@ public class driver {
         driver_commandu, /*  5/1985 (c) 1985 + Data East license (US) */
         driver_commandj, /*  5/1985 (c) 1985 (Japan) */
         driver_spaceinv, /* bootleg */
-        driver_gng,		/*  9/1985 (c) 1985 */
-        driver_gnga,		/*  9/1985 (c) 1985 */
-        driver_gngt,		/*  9/1985 (c) 1985 */
-        driver_makaimur,	/*  9/1985 (c) 1985 */
-        driver_makaimuc,	/*  9/1985 (c) 1985 */
-        driver_makaimug,	/*  9/1985 (c) 1985 */
-        driver_diamond,	/* (c) 1989 KH Video (NOT A CAPCOM GAME but runs on GnG hardware) */
+        driver_gng, /*  9/1985 (c) 1985 */
+        driver_gnga, /*  9/1985 (c) 1985 */
+        driver_gngt, /*  9/1985 (c) 1985 */
+        driver_makaimur, /*  9/1985 (c) 1985 */
+        driver_makaimuc, /*  9/1985 (c) 1985 */
+        driver_makaimug, /*  9/1985 (c) 1985 */
+        driver_diamond, /* (c) 1989 KH Video (NOT A CAPCOM GAME but runs on GnG hardware) */
         driver_gunsmoke, /* 11/1985 (c) 1985 (World) */
         driver_gunsmrom, /* 11/1985 (c) 1985 + Romstar (US) */
         driver_gunsmoka, /* 11/1985 (c) 1985 (US) */
@@ -3013,11 +3018,11 @@ public class driver {
         driver_whodunit, /* (c) 1988 */
         driver_showdown, /* (c) 1988 */
         /* Atari b/w games */
-        /* Tank 8 */  		/* ??????			1976/04 [6800] */
-        driver_copsnrob,	/* 005625			1976/07 [6502] */
+        /* Tank 8 */ /* ??????			1976/04 [6800] */
+        driver_copsnrob, /* 005625			1976/07 [6502] */
         /*TODO*///	/* Flyball */		/* 005629			1976/07 [6502] */
-        driver_sprint2,	/* 005922			1976/11 [6502] */
-        driver_nitedrvr,	/* 006321			1976/10 [6502] */
+        driver_sprint2, /* 005922			1976/11 [6502] */
+        driver_nitedrvr, /* 006321			1976/10 [6502] */
         /*TODO*///	driver_dominos,	/* 007305			1977/01 [6502] */
         /*TODO*///	/* Triple Hunt */	/* 008422-008791	1977/04 [6800] */
         /*TODO*///	/* Sprint 8 */		/* ??????			1977/05 [6800] */
@@ -3029,7 +3034,7 @@ public class driver {
         /*TODO*///	driver_canbprot,	/* 009493-009504	1977/10 [6502] */
         /*TODO*///	/* Destroyer */		/* 030131-030136	1977/10 [6800] */
         /*TODO*///	/* Sprint 4 */		/* 008716			1977/12 [6502] */
-        driver_sprint1,	/* 006443			1978/01 [6502] */
+        driver_sprint1, /* 006443			1978/01 [6502] */
         /*TODO*///	driver_ultratnk,	/* 009801			1978/02 [6502] */
         /*TODO*///	/* Sky Raider */	/* 009709			1978/03 [6502] */
         /*TODO*///	/* Tourn. Table */	/* 030170			1978/03 [6507] */
@@ -3041,7 +3046,7 @@ public class driver {
         /*TODO*///	driver_atarifb,	/* 033xxx			1978/10 [6502] */
         /*TODO*///	driver_atarifb1,	/* 033xxx			1978/10 [6502] */
         /*TODO*///	/* Orbit */			/* 033689-033702	1978/11 [6800] */
-        driver_videopin,	/* 034253-034267	1979/02 [6502] */
+        driver_videopin, /* 034253-034267	1979/02 [6502] */
         /*TODO*///	driver_atarifb4,	/* 034754			1979/04 [6502] */
         /*TODO*///	driver_subs,		/* 033714			1979/05 [6502] */
         /*TODO*///	driver_bsktball,	/* 034756-034766	1979/05 [6502] */
@@ -3087,10 +3092,6 @@ public class driver {
         driver_esb, /* 136031			(c) 1985 */
         /*TODO*///	/* Atari "Centipede hardware" games */
         driver_warlord, /* 037153-037159	(c) 1980 */
-        /*TODO*///	driver_centiped,	/* 136001			(c) 1980 */
-        /*TODO*///	driver_centipd2,	/* 136001			(c) 1980 */
-        /*TODO*///	driver_centipdb,	/* (bootleg) */
-        /*TODO*///	driver_centipb2,	/* (bootleg) */
         /*TODO*///	driver_milliped,	/* 136013			(c) 1982 */
         /*TODO*///	driver_qwakprot,	/* (proto)			(c) 1982 */
         /*TODO*///
@@ -3311,10 +3312,10 @@ public class driver {
         /*TODO*///	driver_mystston,	/* TA-0010 (c) 1984 */
         /*TODO*///	/* TA-0011 Dog Fight (Data East) / Batten O'hara no Sucha-Raka Kuuchuu Sen 1985 */
         driver_bogeyman, /* -0204-0 (Data East part number) (c) [1985?] */
-        driver_matmania,	/* TA-0015 (c) 1985 + Taito America license */
-        driver_excthour,	/* TA-0015 (c) 1985 + Taito license */
-        driver_maniach,	/* TA-0017 (c) 1986 + Taito America license */
-        driver_maniach2,	/* TA-0017 (c) 1986 + Taito America license */
+        driver_matmania, /* TA-0015 (c) 1985 + Taito America license */
+        driver_excthour, /* TA-0015 (c) 1985 + Taito license */
+        driver_maniach, /* TA-0017 (c) 1986 + Taito America license */
+        driver_maniach2, /* TA-0017 (c) 1986 + Taito America license */
         driver_renegade, /* TA-0018 (c) 1986 + Taito America license */
         driver_kuniokun, /* TA-0018 (c) 1986 */
         driver_kuniokub, /* bootleg */
@@ -3334,8 +3335,8 @@ public class driver {
         /*TODO*///	driver_saiyugb1,	/* bootleg */
         /*TODO*///	driver_saiyugb2,	/* bootleg */
         /*TODO*///	driver_wwfsstar,	/* TA-0024 (c) 1989 (US) */
-        driver_vball,		/* TA-0025 (c) 1988 */
-        driver_vball2pj,	/* TA-0025 (c) 1988 (Japan) */
+        driver_vball, /* TA-0025 (c) 1988 */
+        driver_vball2pj, /* TA-0025 (c) 1988 (Japan) */
         /*TODO*///	driver_ddragon2,	/* TA-0026 (c) 1988 (World) */
         /*TODO*///	driver_ddragn2u,	/* TA-0026 (c) 1988 (US) */
         /*TODO*///	driver_ctribe,	/* TA-0028 (c) 1990 (US) */
@@ -3762,7 +3763,7 @@ public class driver {
         driver_kangarob, /* (bootleg) */
         driver_arabian, /* TVG13 (c) 1983 Sun Electronics */
         driver_arabiana, /* 136019			(c) 1983 Atari */
-        driver_markham,	/* TVG14 (c) 1983 Sun Electronics */
+        driver_markham, /* TVG14 (c) 1983 Sun Electronics */
         driver_strnskil, /* TVG15 (c) 1984 Sun Electronics */
         driver_guiness, /* TVG15 (c) 1984 Sun Electronics */
         driver_pettanp, /* TVG16 (c) 1984 Sun Electronics (Japan) */
