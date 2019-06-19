@@ -16,13 +16,7 @@ import static mame056.tilemapH.*;
 
 public class tilemapC {
 
-    /*TODO*///#if !defined(DECLARE) && !defined(TRANSP)
-/*TODO*///
-/*TODO*///#include "driver.h"
-/*TODO*///#include "tilemap.h"
-/*TODO*///#include "state.h"
-
-/*TODO*///#define SWAP(X,Y) { UINT32 temp=X; X=Y; Y=temp; }
+    public static void SWAP(int X, int Y) { int temp=X; X=Y; Y=temp; }
     public static int MAX_TILESIZE = 32;
 
     public static int TILE_FLAG_DIRTY	= (0x80);
@@ -314,7 +308,7 @@ public class tilemapC {
 		int memory_offset = tilemap.get_memory_offset.handler(logical_col, logical_row, num_logical_cols, num_logical_rows );
 		int cached_col = logical_col;
 		int cached_row = logical_row;
-		/*TODO*///if (( tilemap.orientation & ORIENTATION_SWAP_XY ) != 0) SWAP(cached_col,cached_row);
+		if (( tilemap.orientation & ORIENTATION_SWAP_XY ) != 0) SWAP(cached_col,cached_row);
 		if (( tilemap.orientation & ORIENTATION_FLIP_X ) != 0) cached_col = (num_cached_cols-1)-cached_col;
 		if (( tilemap.orientation & ORIENTATION_FLIP_Y ) != 0) cached_row = (num_cached_rows-1)-cached_row;
 		cached_indx = cached_row*num_cached_cols+cached_col;
@@ -553,7 +547,7 @@ public class tilemapC {
 			/*TODO*///tilemap.draw_tile = HandleTransparencyColor_ind;
                 } else {
                     System.out.println("HandleTransparencyNone_ind 6");
-			/*TODO*///tilemap.draw_tile = HandleTransparencyNone_ind;
+			tilemap.draw_tile = HandleTransparencyNone_ind;
                 }
 	}
 	else
@@ -646,11 +640,11 @@ public class tilemapC {
             tilemap.num_logical_cols = num_cols;
             tilemap.num_logical_rows = num_rows;
             if ((Machine.orientation & ORIENTATION_SWAP_XY) != 0) {
-                //SWAP( num_cols,num_rows )
+                SWAP( num_cols,num_rows );
                 int temp2 = num_cols;
                 num_cols = num_rows;
                 num_rows = temp2;
-                //SWAP( tile_width, tile_height )
+                SWAP( tile_width, tile_height );
                 int temp = tile_width;
                 tile_width = tile_height;
                 tile_height = temp;
@@ -771,22 +765,22 @@ public class tilemapC {
                 tilemap = tilemap.next;
             }
         } else if (tilemap.attributes != attributes) {
-            System.out.println("dummy tilemap_set_flip (tilemap.attributes != attributes)");
-            /*TODO*///		tilemap->attributes = attributes;
-/*TODO*///		tilemap->orientation = Machine->orientation;
-/*TODO*///		if( attributes&TILEMAP_FLIPY )
-/*TODO*///		{
-/*TODO*///			tilemap->orientation ^= ORIENTATION_FLIP_Y;
-/*TODO*///		}
-/*TODO*///
-/*TODO*///		if( attributes&TILEMAP_FLIPX )
-/*TODO*///		{
-/*TODO*///			tilemap->orientation ^= ORIENTATION_FLIP_X;
-/*TODO*///		}
-/*TODO*///
-/*TODO*///		mappings_update( tilemap );
-/*TODO*///		recalculate_scroll( tilemap );
-/*TODO*///		tilemap_mark_all_tiles_dirty( tilemap );
+            System.out.println("tilemap_set_flip (tilemap.attributes != attributes)");
+            tilemap.attributes = attributes;
+            tilemap.orientation = Machine.orientation;
+            if (( attributes&TILEMAP_FLIPY ) != 0)
+            {
+                    tilemap.orientation ^= ORIENTATION_FLIP_Y;
+            }
+
+            if (( attributes&TILEMAP_FLIPX ) != 0)
+            {
+                    tilemap.orientation ^= ORIENTATION_FLIP_X;
+            }
+
+            mappings_update( tilemap );
+            recalculate_scroll( tilemap );
+            tilemap_mark_all_tiles_dirty( tilemap );
         }
     }
 
@@ -805,20 +799,20 @@ public class tilemapC {
 
                     if (( tilemap.orientation & ORIENTATION_SWAP_XY ) != 0)
                     {
-                            /*TODO*///SWAP(left,top)
-                            /*TODO*///SWAP(right,bottom)
+                            SWAP(left,top);
+                            SWAP(right,bottom);
                     }
 
                     if (( tilemap.orientation & ORIENTATION_FLIP_X ) != 0)
                     {
-                            /*TODO*///SWAP(left,right)
+                            SWAP(left,right);
                             left	= screen_width-left;
                             right	= screen_width-right;
                     }
 
                     if (( tilemap.orientation & ORIENTATION_FLIP_Y ) != 0)
                     {
-                            /*TODO*///SWAP(top,bottom)
+                            SWAP(top,bottom);
                             top		= screen_height-top;
                             bottom	= screen_height-bottom;
                     }
@@ -863,9 +857,9 @@ public class tilemapC {
         }
     }
 
-    /*TODO*///
-/*TODO*////***********************************************************************************/
-/*TODO*///
+    
+    /***********************************************************************************/
+
     public static void tilemap_mark_tile_dirty(struct_tilemap tilemap, int memory_offset) {
         if( memory_offset<tilemap.max_memory_offset )
 	{
@@ -2668,6 +2662,11 @@ public class tilemapC {
 /*TODO*///	return and_flags ^ or_flags;
 /*TODO*///}
 /*TODO*///
+    public static DrawTileHandlerPtr HandleTransparencyNone_ind = new DrawTileHandlerPtr() {
+        public int handler(struct_tilemap tilemap, int x0, int y0, int flags) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+    };
 /*TODO*///static UINT8 TRANSP(HandleTransparencyNone)(struct tilemap *tilemap, UINT32 x0, UINT32 y0, UINT32 flags)
 /*TODO*///{
 /*TODO*///	UINT32 tile_width = tilemap->cached_tile_width;
