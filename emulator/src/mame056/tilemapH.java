@@ -89,13 +89,13 @@ public class tilemapH {
         }
     }
 
-    /*TODO*///
-/*TODO*////* tile flags, set by get_tile_info callback */
-/*TODO*////* TILE_IGNORE_TRANSPARENCY is used if you need an opaque tile in a transparent layer. */
-/*TODO*///#define TILE_FLIPX					0x01
-/*TODO*///#define TILE_FLIPY					0x02
+    
+    /* tile flags, set by get_tile_info callback */
+    /* TILE_IGNORE_TRANSPARENCY is used if you need an opaque tile in a transparent layer. */
+    public static final int TILE_FLIPX = 0x01;
+    public static final int TILE_FLIPY = 0x02;
     public static final int TILE_SWAPXY = 0x04;
-    /*TODO*///#define TILE_IGNORE_TRANSPARENCY	0x08
+    public static final int TILE_IGNORE_TRANSPARENCY = 0x08;
     public static final int TILE_4BPP = 0x10;
     public static final int TILE_SPLIT = 0x60;
 
