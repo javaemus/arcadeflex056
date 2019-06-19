@@ -195,6 +195,8 @@ import static WIP.mame056.drivers.videopin.*;
 import static WIP.mame056.drivers.gng.*;
 import static WIP.mame056.drivers.markham.*;
 import static mame056.drivers.centiped.*;
+import static WIP.mame056.drivers.ikki.*;
+import static WIP.mame056.drivers.hanaawas.*;
 
 public class driver {
 
@@ -3705,8 +3707,8 @@ public class driver {
         /*TODO*///	driver_galpanic,	/* (c) 1990 Kaneko */
         /*TODO*///	driver_airbustr,	/* (c) 1990 Kaneko */
         /*TODO*///
-        /*TODO*///	/* Seta games */
-        /*TODO*///	driver_hanaawas,	/* (c) SetaKikaku */
+        /* Seta games */
+        driver_hanaawas,	/* (c) SetaKikaku */
         /*TODO*///	driver_srmp2,		/* UB or UC?? (c) 1987 */
         /*TODO*///	driver_srmp3,		/* ZA-0? (c) 1988 */
         /*TODO*///	driver_mjyuugi,	/* (c) 1990 Visco */
@@ -3767,7 +3769,7 @@ public class driver {
         driver_strnskil, /* TVG15 (c) 1984 Sun Electronics */
         driver_guiness, /* TVG15 (c) 1984 Sun Electronics */
         driver_pettanp, /* TVG16 (c) 1984 Sun Electronics (Japan) */
-        /*TODO*///	driver_ikki,		/* TVG17 (c) 1985 Sun Electronics (Japan) */
+        driver_ikki,		/* TVG17 (c) 1985 Sun Electronics (Japan) */
         /*TODO*///	driver_shanghai,	/* (c) 1988 Sunsoft (Sun Electronics) */
         /*TODO*///	driver_shangha2,	/* (c) 1989 Sunsoft (Sun Electronics) */
         /*TODO*///	driver_shangha3,	/* (c) 1993 Sunsoft */
