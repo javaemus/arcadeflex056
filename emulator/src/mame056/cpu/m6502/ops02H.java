@@ -399,7 +399,7 @@ public class ops02H {
             int c = m6502.u8_p & F_C;
             int sum = m6502.u8_a + tmp + c;
             m6502.u8_p &= ((F_V | F_C) ^ 0xFFFFFFFF);
-            if (((m6502.u8_p ^ tmp ^ 0xFFFFFFFF) & (m6502.u8_p ^ sum) & F_N) != 0) {
+            if (((m6502.u8_a ^ tmp ^ 0xFFFFFFFF) & (m6502.u8_a ^ sum) & F_N) != 0) {
                 m6502.u8_p |= F_V;
             }
             if ((sum & 0xFF00) != 0) {
