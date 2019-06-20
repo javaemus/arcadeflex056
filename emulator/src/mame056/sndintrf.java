@@ -38,6 +38,8 @@ import mame056.sound.adpcm;
 import mame056.sound.nes_apu;
 import mame056.sound.oki6295;
 import mame056.sound.pokey;
+import WIP.mame056.sound.hc55516;
+import WIP.mame056.sound._5220intf;
 
 public class sndintrf {
 
@@ -267,9 +269,6 @@ public class sndintrf {
 /*TODO*///#if (HAS_OKIM6295)
 /*TODO*///int OKIM6295_num(const struct MachineSound *msound) { return ((struct OKIM6295interface*)msound->sound_interface)->num; }
 /*TODO*///int OKIM6295_clock(const struct MachineSound *msound) { return ((struct OKIM6295interface*)msound->sound_interface)->frequency[0]; }
-/*TODO*///#endif
-/*TODO*///#if (HAS_HC55516)
-/*TODO*///int HC55516_num(const struct MachineSound *msound) { return ((struct hc55516_interface*)msound->sound_interface)->num; }
 /*TODO*///#endif
 /*TODO*///#if (HAS_K007232)
 /*TODO*///int K007232_num(const struct MachineSound *msound) { return ((struct K007232_interface*)msound->sound_interface)->num_chips; }
@@ -541,19 +540,7 @@ public class sndintrf {
                 new namco(),
                 new tms36xx(),
                 new _5110intf(),
-                /*TODO*///#endif
-                /*TODO*///#if (HAS_TMS5220)
-                /*TODO*///    {
-                /*TODO*///		SOUND_TMS5220,
-                /*TODO*///		"TMS5220",
-                /*TODO*///		0,
-                /*TODO*///		TMS5220_clock,
-                /*TODO*///		tms5220_sh_start,
-                /*TODO*///		tms5220_sh_stop,
-                /*TODO*///		tms5220_sh_update,
-                /*TODO*///		0
-                /*TODO*///	},
-                new Dummy_snd(),
+                new _5220intf(),
                 new vlm5030(),
                 new adpcm(),
                 new oki6295(),
@@ -571,19 +558,7 @@ public class sndintrf {
                 /*TODO*///		0
                 /*TODO*///	},
                 new Dummy_snd(),
-                /*TODO*///#endif
-                /*TODO*///#if (HAS_HC55516)
-                /*TODO*///    {
-                /*TODO*///		SOUND_HC55516,
-                /*TODO*///		"HC55516",
-                /*TODO*///		HC55516_num,
-                /*TODO*///		0,
-                /*TODO*///		hc55516_sh_start,
-                /*TODO*///		0,
-                /*TODO*///		0,
-                /*TODO*///		0
-                /*TODO*///	},
-                new Dummy_snd(),
+                new hc55516(),
                 /*TODO*///#endif
                 /*TODO*///#if (HAS_K005289)
                 /*TODO*///    {
