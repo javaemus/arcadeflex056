@@ -347,14 +347,7 @@ import static mame056.palette.*;
 
 public class playch10
 {
-	
-	/* clock frequency */
-	public static int N2A03_DEFAULTCLOCK = (int) (21477272.724 / 12);
-	
-	/* from vidhrdw */
-	
-	/* from machine */
-	
+		
 	/******************************************************************************/
 	
 	/* local stuff */
@@ -578,8 +571,7 @@ public class playch10
 				playch10_interrupt, 1										
 			),																
 			new MachineCPU(																
-				CPU_N2A03,													
-				N2A03_DEFAULTCLOCK,											
+				CPU_N2A03, (int) N2A03_DEFAULTCLOCK,											
 				cart_readmem, cart_writemem, null, null,							
 				ignore_interrupt, 0											
 			)																
@@ -627,8 +619,7 @@ public class playch10
 				playch10_interrupt, 1										
 			),																
 			new MachineCPU(																
-				CPU_N2A03,													
-				N2A03_DEFAULTCLOCK,											
+				CPU_N2A03, (int) N2A03_DEFAULTCLOCK,											
 				cart_readmem, cart_writemem, null, null,							
 				ignore_interrupt, 0											
 			)																

@@ -44,6 +44,7 @@ import static common.libc.cstdio.*;
 import static arcadeflex036.osdepend.logerror;
 import static common.subArrays.*;
 import static mame056.common.memory_region;
+import static mame056.cpu.m6502.n2a03.n2a03_irq;
 import static mame056.mame.Machine;
 import static mame056.sndintrf.*;
 import static mame056.sndintrfH.*;
@@ -535,7 +536,7 @@ public class nes_apu extends snd_interface
                     } else {
                         if ((chan.regs[0] & 0x80) != 0) /* IRQ Generator */ {
                             chan.irq_occurred = true;
-                            /*TODO*///n2a03_irq();
+                            n2a03_irq();
                         }
                         break;
                     }

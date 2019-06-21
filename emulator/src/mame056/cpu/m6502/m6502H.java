@@ -188,8 +188,8 @@ public class m6502H {
 /*TODO*///extern unsigned n2a03_dasm(char *buffer, unsigned pc);
 /*TODO*///
 /*TODO*///
-/*TODO*///#define N2A03_DEFAULTCLOCK (21477272.724 / 12)
-/*TODO*///
+    public static final double N2A03_DEFAULTCLOCK = (21477272.724 / 12);
+    /*TODO*///
 /*TODO*////* The N2A03 is integrally tied to its PSG (they're on the same die).
 /*TODO*///   Bit 7 of address $4011 (the PSG's DPCM control register), when set,
 /*TODO*///   causes an IRQ to be generated.  This function allows the IRQ to be called
