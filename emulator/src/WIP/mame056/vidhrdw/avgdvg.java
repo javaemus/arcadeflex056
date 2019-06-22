@@ -988,11 +988,14 @@ public class avgdvg
 				logerror("Wrong palette type in avgdvg.c");
 				break;
 		}
+                
+                
 	};
 	
 	public static VhConvertColorPromPtr avg_init_palette_white = new VhConvertColorPromPtr() {
             public void handler(char[] palette, char[] colortable, UBytePtr color_prom) {
                 avg_init_palette (VEC_PAL_WHITE, palette, colortable, color_prom);
+                
             }
         };
 	

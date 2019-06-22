@@ -130,7 +130,7 @@ public class ppu2c03b
 		public int						sprite_page;			/* current sprite page */
 		public int						back_color;				/* background color */
 		public UBytePtr[]                                       ppu_page=new UBytePtr[4];			/* ppu pages */
-		public int[]						nes_vram= new int[8];			/* keep track of 8 .5k vram pages to speed things up */
+		public int[]						nes_vram= new int[8 * 1024];			/* keep track of 8 .5k vram pages to speed things up */
 		public int						scan_scale;				/* scan scale */
 	};
 	

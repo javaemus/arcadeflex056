@@ -212,7 +212,7 @@ public class nes_apu extends snd_interface
         public dpcm_t dpcm;
 
         /* APU registers */
-        public int[] regs = new int[22];//unsigned 8 bit
+        public int[] regs = new int[24];//unsigned 8 bit
 
         /* Sound pointers */
         public byte[] buffer; //unsigned 8 bit

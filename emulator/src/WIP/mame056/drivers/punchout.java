@@ -743,12 +743,11 @@ public class punchout
 				8000000/2,	/* 4 MHz */													
 				readmem,writemem,readport,writeport,									
 				nmi_interrupt,1															
-			/*TODO*///),																			
-			/*TODO*///new MachineCPU(																			
-			/*TODO*///	CPU_N2A03 | CPU_AUDIO_CPU,												
-			/*TODO*///	N2A03_DEFAULTCLOCK,														
-			/*TODO*///	sound_readmem,sound_writemem,null,null,										
-			/*TODO*///	nmi_interrupt,1															
+			),																			
+			new MachineCPU(																			
+				CPU_N2A03 | CPU_AUDIO_CPU, (int) N2A03_DEFAULTCLOCK,														
+				sound_readmem,sound_writemem,null,null,										
+				nmi_interrupt,1															
 			)																			
 		},																				
 		60, DEFAULT_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */	
@@ -793,12 +792,11 @@ public class punchout
 				8000000/2,	/* 4 MHz */													
 				readmem,writemem,readport,writeport,									
 				nmi_interrupt,1															
-			/*TODO*///),																			
-			/*TODO*///new MachineCPU(																			
-			/*TODO*///	CPU_N2A03 | CPU_AUDIO_CPU,												
-			/*TODO*///	N2A03_DEFAULTCLOCK,														
-			/*TODO*///	sound_readmem,sound_writemem,null,null,										
-			/*TODO*///	nmi_interrupt,1															
+			),																			
+			new MachineCPU(																			
+				CPU_N2A03 | CPU_AUDIO_CPU, (int) N2A03_DEFAULTCLOCK,														
+				sound_readmem,sound_writemem,null,null,										
+				nmi_interrupt,1															
 			)																			
 		},																				
 		60, DEFAULT_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */	

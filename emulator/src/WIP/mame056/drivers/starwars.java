@@ -60,8 +60,11 @@ import static mame056.cpu.m6809.m6809H.M6809_IRQ_LINE;
 import static mame056.machine.slapstic.*;
 import static WIP.mame056.machine.starwars.*;
 import static WIP.mame056.sndhrdw.starwars.*;
+import WIP.mame056.sound._5220intfH.*;
 import static WIP.mame056.vidhrdw.vector.*;
 import static WIP.mame056.vidhrdw.avgdvg.*;
+import static mame056.sound.pokey.*;
+import static mame056.sound.pokeyH.*;
 
 public class starwars
 {
@@ -287,7 +290,7 @@ public class starwars
 		new Memory_WriteAddress( 0x0000, 0x07ff, starwars_sout_w ),
 		new Memory_WriteAddress( 0x1000, 0x107f, MWA_RAM ), /* 6532 ram */
 		new Memory_WriteAddress( 0x1080, 0x109f, starwars_m6532_w ),
-		/*TODO*///new Memory_WriteAddress( 0x1800, 0x183f, quad_pokey_w ),
+		new Memory_WriteAddress( 0x1800, 0x183f, quad_pokey_w ),
 		new Memory_WriteAddress( 0x2000, 0x27ff, MWA_RAM ), /* program RAM */
 		new Memory_WriteAddress( 0x4000, 0xbfff, MWA_ROM ), /* sound rom */
 		new Memory_WriteAddress( 0xc000, 0xffff, MWA_ROM ), /* sound rom again, for intvecs */
@@ -463,31 +466,31 @@ public class starwars
 	 *
 	 *************************************/
 	
-	/*TODO*///static struct POKEYinterface pokey_interface =
-	/*TODO*///{
-	/*TODO*///	4,			/* 4 chips */
-	/*TODO*///	1500000,	/* 1.5 MHz? */
-	/*TODO*///	{ 20, 20, 20, 20 },	/* volume */
-	/*TODO*///	/* The 8 pot handlers */
-	/*TODO*///	{ 0, 0, 0, 0 },
-	/*TODO*///	{ 0, 0, 0, 0 },
-	/*TODO*///	{ 0, 0, 0, 0 },
-	/*TODO*///	{ 0, 0, 0, 0 },
-	/*TODO*///	{ 0, 0, 0, 0 },
-	/*TODO*///	{ 0, 0, 0, 0 },
-	/*TODO*///	{ 0, 0, 0, 0 },
-	/*TODO*///	{ 0, 0, 0, 0 },
-	/*TODO*///	/* The allpot handler */
-	/*TODO*///	{ 0, 0, 0, 0 },
-	/*TODO*///};
+	static POKEYinterface pokey_interface = new POKEYinterface
+	(
+		4,			/* 4 chips */
+		1500000,	/* 1.5 MHz? */
+		new int[]{ 20, 20, 20, 20 },	/* volume */
+		/* The 8 pot handlers */
+		new ReadHandlerPtr[]{ null, null, null, null },
+		new ReadHandlerPtr[]{ null, null, null, null },
+		new ReadHandlerPtr[]{ null, null, null, null },
+		new ReadHandlerPtr[]{ null, null, null, null },
+		new ReadHandlerPtr[]{ null, null, null, null },
+		new ReadHandlerPtr[]{ null, null, null, null },
+		new ReadHandlerPtr[]{ null, null, null, null },
+		new ReadHandlerPtr[]{ null, null, null, null },
+		/* The allpot handler */
+		new ReadHandlerPtr[]{ null, null, null, null }
+	);
 	
 	
-	/*TODO*///static struct TMS5220interface tms5220_interface =
-	/*TODO*///{
-	/*TODO*///	640000,     /* clock speed (80*samplerate) */
-	/*TODO*///	50,         /* volume */
-	/*TODO*///	0           /* IRQ handler */
-	/*TODO*///};
+	static TMS5220interface tms5220_interface = new TMS5220interface
+        (
+		640000,     /* clock speed (80*samplerate) */
+		50,         /* volume */
+		null           /* IRQ handler */
+	);
 	
 	
 	
@@ -532,11 +535,11 @@ public class starwars
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound( SOUND_POKEY, pokey_interface ),
-		/*TODO*///	new MachineSound( SOUND_TMS5220, tms5220_interface )
-		/*TODO*///},
-                null,
+		new MachineSound[] {
+			new MachineSound( SOUND_POKEY, pokey_interface ),
+			new MachineSound( SOUND_TMS5220, tms5220_interface )
+		},
+                
 	
 		nvram_handler
 	);

@@ -1059,18 +1059,16 @@ public class dkong
 				8000000/2,	/* 4 MHz */
 				dkong3_readmem,dkong3_writemem,null,dkong3_writeport,
 				nmi_interrupt,1
-			/*TODO*///),
-			/*TODO*///new MachineCPU(
-			/*TODO*///	CPU_N2A03 | CPU_AUDIO_CPU,
-			/*TODO*///	N2A03_DEFAULTCLOCK,
-			/*TODO*///	dkong3_sound1_readmem,dkong3_sound1_writemem,null,null,
-			/*TODO*///	nmi_interrupt,1
-			/*TODO*///),
-			/*TODO*///new MachineCPU(
-			/*TODO*///	CPU_N2A03 | CPU_AUDIO_CPU,
-			/*TODO*///	N2A03_DEFAULTCLOCK,
-			/*TODO*///	dkong3_sound2_readmem,dkong3_sound2_writemem,null,null,
-			/*TODO*///	nmi_interrupt,1
+			),
+			new MachineCPU(
+				CPU_N2A03 | CPU_AUDIO_CPU, (int) N2A03_DEFAULTCLOCK,
+				dkong3_sound1_readmem,dkong3_sound1_writemem,null,null,
+				nmi_interrupt,1
+			),
+			new MachineCPU(
+				CPU_N2A03 | CPU_AUDIO_CPU, (int) N2A03_DEFAULTCLOCK,
+				dkong3_sound2_readmem,dkong3_sound2_writemem,null,null,
+				nmi_interrupt,1
 			)
 		},
 		60, DEFAULT_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */
