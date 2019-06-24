@@ -197,6 +197,7 @@ import static WIP.mame056.drivers.markham.*;
 import static mame056.drivers.centiped.*;
 import static WIP.mame056.drivers.ikki.*;
 import static WIP.mame056.drivers.hanaawas.*;
+import static WIP.mame056.drivers.route16.*;
 
 public class driver {
 
@@ -3752,12 +3753,12 @@ public class driver {
         /*TODO*///	driver_naname,	/* (c) 1994 Atlus (Japan) */
         /*TODO*///	driver_blmbycar,	/* (c) 1994 ABM & Gecas - uses same gfx chip as powerins? */
         /*TODO*///	driver_blmbycau,	/* (c) 1994 ABM & Gecas - uses same gfx chip as powerins? */
-        /*TODO*///
-        /*TODO*///	/* Sun Electronics / SunSoft games */
-        /*TODO*///	driver_speakres,	/* [Sun Electronics] */
-        /*TODO*///	driver_stratvox,	/* [1980 Sun Electronics] Taito */
-        /*TODO*///	driver_route16,	/* (c) 1981 Tehkan/Sun + Centuri license */
-        /*TODO*///	driver_route16b,	/* bootleg */
+        
+        /* Sun Electronics / SunSoft games */
+        driver_speakres,	/* [Sun Electronics] */
+        driver_stratvox,	/* [1980 Sun Electronics] Taito */
+        driver_route16,	/* (c) 1981 Tehkan/Sun + Centuri license */
+        driver_route16b,	/* bootleg */
         /*TODO*///	driver_ttmahjng,	/* Taito */
         driver_fnkyfish, /* (c) 1981 Sun Electronics */
         driver_kangaroo, /* (c) 1982 Sun Electronics */

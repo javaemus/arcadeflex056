@@ -3690,8 +3690,9 @@ public class drawgfx {
     };
     public static plot_pixel_procPtr pp_16_d_fy_s = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//x = b -> height - 1 - x;((UINT16 *)b -> line[x])[y] = p;
-            //osd_mark_dirty(y, x, y, x);
+            x = b.height - 1 - x;
+            new UShortPtr(b.line[x]).write(y, (char) p);
+            osd_mark_dirty(y, x, y, x);
         }
     };
     public static plot_pixel_procPtr pp_16_d_fxy_s = new plot_pixel_procPtr() {
