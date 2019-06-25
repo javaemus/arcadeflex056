@@ -71,7 +71,7 @@ public class playch10
 			color_prom.inc();
 		}
 	
-		ppu2c03b_init_palette( palette );
+		ppu2c03b_init_palette( _palette,palette );
             }
         };
 	

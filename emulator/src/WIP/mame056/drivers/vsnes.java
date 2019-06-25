@@ -108,9 +108,6 @@ import static mame056.sound.nes_apuH.*;
 public class vsnes
 {
 	
-	/* clock frequency */
-	public static double N2A03_DEFAULTCLOCK = ( 21477272.724 / 12 );
-	
 	/* local stuff */
 	static UBytePtr work_ram = new UBytePtr(), work_ram_1 = new UBytePtr();
 	
