@@ -198,6 +198,8 @@ import static mame056.drivers.centiped.*;
 import static WIP.mame056.drivers.ikki.*;
 import static WIP.mame056.drivers.hanaawas.*;
 import static WIP.mame056.drivers.route16.*;
+import static WIP.mame056.drivers.dynax.*;
+import static WIP.mame056.drivers.vsnes.*;
 
 public class driver {
 
@@ -952,41 +954,41 @@ public class driver {
         driver_pc_cshwk, /* (c) 1989 Rare (Nintendo of America license) */
         driver_pc_sjetm, /* (c) 1990 Rare */
         driver_pc_moglf, /* (c) 1991 Nintendo */
-        /*TODO*///	/* Nintendo VS games */
-        /*TODO*///	driver_btlecity,	/* (c) 1985 Namco */
-        /*TODO*///	driver_starlstr,	/* (c) 1985 Namco */
-        /*TODO*///	driver_cstlevna,	/* (c) 1987 Konami */
-        /*TODO*///	driver_cluclu,	/* (c) 1984 Nintendo */
-        /*TODO*///	driver_drmario,	/* (c) 1990 Nintendo */
-        /*TODO*///	driver_duckhunt,	/* (c) 1985 Nintendo */
-        /*TODO*///	driver_excitebk,	/* (c) 1984 Nintendo */
-        /*TODO*///	driver_excitbkj,	/* (c) 1984 Nintendo */
-        /*TODO*///	driver_goonies,	/* (c) 1986 Konami */
-        /*TODO*///	driver_hogalley,	/* (c) 1985 Nintendo */
-        /*TODO*///	driver_iceclimb,	/* (c) 1984 Nintendo */
-        /*TODO*///	driver_ladygolf,	/* (c) 1984 Nintendo */
-        /*TODO*///	driver_machridr,	/* (c) 1985 Nintendo */
-        /*TODO*///	driver_rbibb,		/* (c) 1987 Namco */
-        /*TODO*///	driver_suprmrio,	/* (c) 1986 Nintendo */
-        /*TODO*///	driver_vsskykid,	/* (c) 1986 Namco */
-        /*TODO*///	driver_tkoboxng,	/* (c) 1987 Data East */
-        /*TODO*///	driver_smgolf,	/* (c) 1984 Nintendo */
-        /*TODO*///	driver_smgolfj,	/* (c) 1984 Nintendo */
-        /*TODO*///	driver_vspinbal,	/* (c) 1984 Nintendo */
-        /*TODO*///	driver_vspinblj,	/* (c) 1984 Nintendo */
-        /*TODO*///	driver_vsslalom,	/* (c) 1986 Nintendo */
-        /*TODO*///	driver_vssoccer,	/* (c) 1985 Nintendo */
-        /*TODO*///	driver_vsgradus,	/* (c) 1986 Konami */
-        /*TODO*///	driver_platoon,	/* (c) 1987 Ocean */
-        /*TODO*///	driver_vstetris,	/* (c) 1988 Atari */
-        /*TODO*///	driver_vstennis,	/* (c) 1984 Nintendo */
-        /*TODO*///	driver_wrecking,	/* (c) 1984 Nintendo */
-        /*TODO*///	driver_balonfgt,	/* (c) 1984 Nintendo */
-        /*TODO*///	driver_vsmahjng,	/* (c) 1984 Nintendo */
-        /*TODO*///	driver_vsbball,	/* (c) 1984 Nintendo */
-        /*TODO*///	driver_vsbballj,	/* (c) 1984 Nintendo */
-        /*TODO*///	driver_vsbbalja,	/* (c) 1984 Nintendo */
-        /*TODO*///	driver_iceclmrj,	/* (c) 1984 Nintendo */
+        /* Nintendo VS games */
+        driver_btlecity,	/* (c) 1985 Namco */
+        driver_starlstr,	/* (c) 1985 Namco */
+        driver_cstlevna,	/* (c) 1987 Konami */
+        driver_cluclu,	/* (c) 1984 Nintendo */
+        driver_drmario,	/* (c) 1990 Nintendo */
+        driver_duckhunt,	/* (c) 1985 Nintendo */
+        driver_excitebk,	/* (c) 1984 Nintendo */
+        driver_excitbkj,	/* (c) 1984 Nintendo */
+        driver_goonies,	/* (c) 1986 Konami */
+        driver_hogalley,	/* (c) 1985 Nintendo */
+        driver_iceclimb,	/* (c) 1984 Nintendo */
+        driver_ladygolf,	/* (c) 1984 Nintendo */
+        driver_machridr,	/* (c) 1985 Nintendo */
+        driver_rbibb,		/* (c) 1987 Namco */
+        driver_suprmrio,	/* (c) 1986 Nintendo */
+        driver_vsskykid,	/* (c) 1986 Namco */
+        driver_tkoboxng,	/* (c) 1987 Data East */
+        driver_smgolf,	/* (c) 1984 Nintendo */
+        driver_smgolfj,	/* (c) 1984 Nintendo */
+        driver_vspinbal,	/* (c) 1984 Nintendo */
+        driver_vspinblj,	/* (c) 1984 Nintendo */
+        driver_vsslalom,	/* (c) 1986 Nintendo */
+        driver_vssoccer,	/* (c) 1985 Nintendo */
+        driver_vsgradus,	/* (c) 1986 Konami */
+        driver_platoon,	/* (c) 1987 Ocean */
+        driver_vstetris,	/* (c) 1988 Atari */
+        driver_vstennis,	/* (c) 1984 Nintendo */
+        driver_wrecking,	/* (c) 1984 Nintendo */
+        driver_balonfgt,	/* (c) 1984 Nintendo */
+        driver_vsmahjng,	/* (c) 1984 Nintendo */
+        driver_vsbball,	/* (c) 1984 Nintendo */
+        driver_vsbballj,	/* (c) 1984 Nintendo */
+        driver_vsbbalja,	/* (c) 1984 Nintendo */
+        driver_iceclmrj,	/* (c) 1984 Nintendo */
         /*TODO*///TESTdriver_topgun,
         /*TODO*///TESTdriver_jajamaru,
         /*TODO*///TESTdriver_vsxevus,
@@ -3914,8 +3916,8 @@ public class driver {
         /*TODO*///	/* http://www.esdgame.co.kr/english/ */
         /*TODO*///	driver_multchmp,	/* (c) 1998 (Korea) */
         /*TODO*///
-        /*TODO*///	/* Dynax games */
-        /*TODO*///	driver_sprtmtch,	/* (c) 1989 Log+Dynax + Fabtek license */
+        /* Dynax games */
+        driver_sprtmtch,	/* (c) 1989 Log+Dynax + Fabtek license */
         /*TODO*///TESTdriver_ddenlovr,
         /*TODO*///TESTdriver_rongrong,
 

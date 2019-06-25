@@ -1401,7 +1401,7 @@ public class ppu2c03b
 		chips[num].scanline_callback_proc = cb;
 	}
 	
-	void ppu2c03b_set_vidaccess_callback( int num, ppu2c03b_vidaccess_cb cb )
+	public static void ppu2c03b_set_vidaccess_callback( int num, ppu2c03b_vidaccess_cb cb )
 	{
 		/* check bounds */
 		if ( num >= intf.num )

@@ -1479,7 +1479,12 @@ public class inptport {
             return readinputport(2);
         } 
     };
-/*TODO*///READ16_HANDLER( input_port_3_word_r ) { return readinputport(3); }
+    
+    public static ReadHandlerPtr input_port_3_word_r = new ReadHandlerPtr() {
+        public int handler(int offset) {
+            return readinputport(3);
+        } 
+    };
 /*TODO*///READ16_HANDLER( input_port_4_word_r ) { return readinputport(4); }
 /*TODO*///READ16_HANDLER( input_port_5_word_r ) { return readinputport(5); }
 /*TODO*///READ16_HANDLER( input_port_6_word_r ) { return readinputport(6); }

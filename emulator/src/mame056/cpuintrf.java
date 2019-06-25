@@ -505,7 +505,9 @@ public class cpuintrf {
 /*TODO*///		case CPU_I88:				irqline = 0; break;
 /*TODO*///#endif
 /*TODO*///#if (HAS_I186)
-/*TODO*///		case CPU_I186:				irqline = 0; break;
+            case CPU_I186:
+                irqline = 0; 
+                break;
 /*TODO*///#endif
 /*TODO*///#if (HAS_I188)
 /*TODO*///		case CPU_I188:				irqline = 0; break;

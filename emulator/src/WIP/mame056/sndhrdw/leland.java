@@ -327,7 +327,7 @@ public class leland
 	public static class i186_state
 	{
 		public timer_state[]	timer   = new timer_state[3];
-		public dma_state[]	dma     = new dma_state[2];
+                public dma_state[]	dma     = new dma_state[2];
 		public intr_state	intr    = new intr_state();
 		public mem_state	mem     = new mem_state();
 	};
@@ -627,6 +627,16 @@ public class leland
 	
 	static void leland_i186_reset()
 	{
+                if (i186.timer[0]==null){
+                    for (int i=0 ; i<3 ; i++)
+                        i186.timer[i] = new timer_state();                    
+                }
+                
+                if (i186.dma[0]==null){
+                    for (int i=0 ; i<2 ; i++)
+                        i186.dma[i] = new dma_state();
+                }
+                
 		/* kill any live timers */
 		if (i186.timer[0].int_timer != null) timer_remove(i186.timer[0].int_timer);
 		if (i186.timer[1].int_timer != null) timer_remove(i186.timer[1].int_timer);
@@ -1797,8 +1807,8 @@ public class leland
 			i186.intr.request |= 0x20;
 	
 		/* handle reset here */
-		/*TODO*///if (((diff & 0x80)  != 0) && ((data & 0x80)  != 0))
-		/*TODO*///	leland_i186_reset();
+		if (((diff & 0x80)  != 0) && ((data & 0x80)  != 0))
+			leland_i186_reset();
 	
 		update_interrupt_state();
 	} };

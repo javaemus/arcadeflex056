@@ -446,7 +446,7 @@ public class leland
 		update_master_bank.handler();
 	
 		/* sound control is in the rest */
-		/*TODO*///leland_i86_control_w.handler(offset, data);
+		leland_i86_control_w.handler(offset, data);
 	} };
 	
 	
