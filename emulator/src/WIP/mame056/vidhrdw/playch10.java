@@ -121,8 +121,8 @@ public class playch10
 	{
 		int offs;
 	
-		rectangle top_monitor = Machine.visible_area;
-		rectangle bottom_monitor = Machine.visible_area;
+		rectangle top_monitor = new rectangle(Machine.visible_area);
+		rectangle bottom_monitor = new rectangle(Machine.visible_area);
 	
 		top_monitor.max_y = ( top_monitor.max_y - top_monitor.min_y ) / 2;
 		bottom_monitor.min_y = ( bottom_monitor.max_y - bottom_monitor.min_y ) / 2;
