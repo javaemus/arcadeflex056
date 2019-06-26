@@ -15,8 +15,6 @@ package mame056.vidhrdw;
 import static arcadeflex056.fucPtr.*;
 import static common.ptr.*;
 import common.subArrays.IntArray;
-import static mame056.tilemapC.*;
-import static mame056.tilemapH.*;
 import static mame056.cpuintrfH.*;
 import static mame056.cpuintrf.*;
 import static mame056.cpuexec.*;

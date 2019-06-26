@@ -13,7 +13,6 @@
 package WIP.mame056.vidhrdw;
 
 import common.ptr.UBytePtr;
-import static mame056.tilemapH.*;
 
 import static arcadeflex056.fucPtr.*;
 import static common.ptr.*;
@@ -23,7 +22,6 @@ import static mame056.mame.*;
 import static mame056.cpuexec.*;
 import static mame056.drawgfxH.*;
 import static mame056.drawgfx.*;
-import static mame056.tilemapC.*;
 import static mame056.vidhrdw.generic.*;
 
 public class toypop

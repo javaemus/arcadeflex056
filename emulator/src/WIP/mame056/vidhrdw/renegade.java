@@ -27,8 +27,10 @@ import static mame056.vidhrdw.generic.*;
 
 // refactor
 import static arcadeflex036.osdepend.logerror;
-import static mame056.tilemapC.*;
-import static mame056.tilemapH.*;
+/*TODO*///import static mame056.tilemapC.*;
+/*TODO*///import static mame056.tilemapH.*;
+import static mame037b11.mame.tilemapC.*;
+import static mame037b11.mame.tilemapH.*;
 
 
 public class renegade
@@ -83,8 +85,9 @@ public class renegade
 		SET_TILE_INFO(
 				1+(attributes&0x7),
 				source.read(0),
-				attributes>>5,
-				0);
+				attributes>>5
+				);
+                tile_info.u32_flags = 0;
             }
         };
 	
@@ -95,8 +98,9 @@ public class renegade
 		SET_TILE_INFO(
 				0,
 				(attributes&3)*256 + source.read(0),
-				attributes>>6,
-				0);
+				attributes>>6
+				);
+                tile_info.u32_flags = 0;
             }
         };
 	
@@ -108,7 +112,8 @@ public class renegade
 		if (bg_tilemap==null || fg_tilemap==null)
 			return 1;
 	
-		tilemap_set_transparent_pen(fg_tilemap,0);
+		/*TODO*///tilemap_set_transparent_pen(fg_tilemap,0);
+                fg_tilemap.transparent_pen = 0;
 		tilemap_set_scrolldx( bg_tilemap, 256, 0 );
 	
 		tilemap_set_scrolldy( fg_tilemap, 0, 16 );
@@ -162,12 +167,16 @@ public class renegade
 	
 	public static VhUpdatePtr renegade_vh_screenrefresh = new VhUpdatePtr() { public void handler(mame_bitmap bitmap,int fullrefresh) 
 	{
+                tilemap_update(ALL_TILEMAPS);
+	
+		tilemap_render(ALL_TILEMAPS);
+                
 		tilemap_set_scrollx( bg_tilemap, 0, renegade_scrollx );
 		tilemap_set_scrolly( bg_tilemap, 0, 0 );
 		tilemap_set_scrolly( fg_tilemap, 0, 0 );
 	
-		tilemap_draw( bitmap,bg_tilemap,0 ,0);
+		tilemap_draw( bitmap,bg_tilemap,0);
 		draw_sprites( bitmap );
-		tilemap_draw( bitmap,fg_tilemap,0 ,0);
+		tilemap_draw( bitmap,fg_tilemap,0);
 	} };
 }

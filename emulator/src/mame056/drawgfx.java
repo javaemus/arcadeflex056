@@ -1106,6 +1106,7 @@ public class drawgfx {
             int code, int color, int flipx, int flipy, int sx, int sy,
             rectangle clip, int transparency, int transparent_color, int priority_mask) {
         /*TODO*///	profiler_mark(PROFILER_DRAWGFX);
+        System.out.println("Drawing priority_bitmap...");
         common_drawgfx(dest, gfx, code, color, flipx, flipy, sx, sy, clip, transparency, transparent_color, priority_bitmap, priority_mask | (1 << 31));
         /*TODO*///	profiler_mark(PROFILER_END);
     }
@@ -6751,7 +6752,8 @@ public class drawgfx {
 /*TODO*///						BLOCKMOVELU(4toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
                 } else {
                     if (pribuf != null) {
-                        throw new UnsupportedOperationException("Unsupported");/*TODO*///						BLOCKMOVEPRI(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
+                        System.out.println("BLOCKMOVEPRI(8toN_transcolor,");
+                        /*TODO*///						BLOCKMOVEPRI(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
                     } else {
                         if ((gfx.flags & GFX_SWAPXY) != 0) {
                             throw new UnsupportedOperationException("Unsupported");//BLOCKMOVELU(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));

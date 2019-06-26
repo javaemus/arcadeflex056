@@ -1365,7 +1365,7 @@ public class vsnes
 		/* basic machine hardware */											   
 		new MachineCPU[] {																		   
 			new MachineCPU(
-				CPU_N2A03, (int) N2A03_DEFAULTCLOCK,
+				CPU_N2A03, 21477272,
 				readmem,writemem,null,null,
 				ignore_interrupt, 0	/* NMIs are triggered by the PPU */
 									/* some carts also trigger IRQs */
@@ -1407,13 +1407,13 @@ public class vsnes
 		new MachineCPU[] {																		   
 			new MachineCPU(
 				CPU_N2A03, (int) N2A03_DEFAULTCLOCK,
-				readmem,writemem,0,0,
+				readmem,writemem,null,null,
 				ignore_interrupt, 0	/* NMIs are triggered by the PPU */
 									/* some carts also trigger IRQs */
                         ),
 			new MachineCPU(
 				CPU_N2A03, (int) N2A03_DEFAULTCLOCK,
-				readmem_1,writemem_1,0,0,
+				readmem_1,writemem_1,null,null,
 				ignore_interrupt, 0	/* NMIs are triggered by the PPU */
 									/* some carts also trigger IRQs */
                         )

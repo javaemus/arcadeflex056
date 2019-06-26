@@ -119,7 +119,7 @@ public class tilemapH {
 	tile attributes byte.
      */
 
- /*TODO*///#define TILE_LINE_DISABLED 0x80000000
+    public static int TILE_LINE_DISABLED = 0x80000000;
 /*TODO*///
 /*TODO*///extern struct mame_bitmap *priority_bitmap;
 /*TODO*///

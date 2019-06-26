@@ -14,7 +14,6 @@ package WIP.mame056.vidhrdw;
 
 import static WIP.mame056.machine.mcr.*;
 import static common.ptr.*;
-import static mame056.tilemapH.*;
 
 import static arcadeflex056.fucPtr.*;
 import static common.ptr.*;

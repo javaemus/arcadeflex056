@@ -23,8 +23,10 @@ import static mame056.vidhrdw.generic.*;
 // refactor
 import static arcadeflex036.osdepend.logerror;
 
-import static mame056.tilemapC.*;
-import static mame056.tilemapH.*;
+//import static mame056.tilemapH.*;
+//import static mame056.tilemapC.*;
+import static mame037b11.mame.tilemapC.*;
+import static mame037b11.mame.tilemapH.*;
 
 public class namcos1
 {
@@ -324,8 +326,10 @@ public class namcos1
 		SET_TILE_INFO(
 				1,
 				code,
-				info_color,
-				0);
+				info_color
+                                //,0
+                );
+                tile_info.u32_flags = 0;
 		tile_info.mask_data = mask_ptr[code];
 	}
 	
@@ -335,8 +339,10 @@ public class namcos1
 		SET_TILE_INFO(
 				1,
 				code,
-				info_color,
-				0);
+				info_color
+                                //,0
+                );
+                tile_info.u32_flags = 0;
 		tile_info.mask_data = mask_ptr[code];
 	}
 	
@@ -563,7 +569,10 @@ public class namcos1
 	public static VhUpdatePtr namcos1_vh_screenrefresh = new VhUpdatePtr() { public void handler(mame_bitmap bitmap,int full_refresh) 
 	{
 		int i,priority;
+                
+                /*TODO*///tilemap_update(ALL_TILEMAPS);
 	
+		/*TODO*///tilemap_render(ALL_TILEMAPS);
 	
 		/* update all tilemaps */
 		for(i=0;i<MAX_PLAYFIELDS;i++)
@@ -595,14 +604,18 @@ public class namcos1
 		{
 			/* bit 0-2 priority */
 			/* bit 3   disable	*/
-			if (namcos1_playfield_control[16] == priority) tilemap_draw(bitmap,tilemap[0],0,0);
-			if (namcos1_playfield_control[17] == priority) tilemap_draw(bitmap,tilemap[1],0,0);
-			if (namcos1_playfield_control[18] == priority) tilemap_draw(bitmap,tilemap[2],0,0);
-			if (namcos1_playfield_control[19] == priority) tilemap_draw(bitmap,tilemap[3],0,0);
-			if (namcos1_playfield_control[20] == priority) tilemap_draw(bitmap,tilemap[4],0,0);
-			if (namcos1_playfield_control[21] == priority) tilemap_draw(bitmap,tilemap[5],0,0);
+			if (namcos1_playfield_control[16] == priority) tilemap_draw(bitmap,tilemap[0],0);
+			if (namcos1_playfield_control[17] == priority) tilemap_draw(bitmap,tilemap[1],0);
+			if (namcos1_playfield_control[18] == priority) tilemap_draw(bitmap,tilemap[2],0);
+			if (namcos1_playfield_control[19] == priority) tilemap_draw(bitmap,tilemap[3],0);
+			if (namcos1_playfield_control[20] == priority) tilemap_draw(bitmap,tilemap[4],0);
+			if (namcos1_playfield_control[21] == priority) tilemap_draw(bitmap,tilemap[5],0);
 	
 			draw_sprites(bitmap,priority);
 		}
+                
+                tilemap_update(ALL_TILEMAPS);
+	
+		tilemap_render(ALL_TILEMAPS);
 	} };
 }

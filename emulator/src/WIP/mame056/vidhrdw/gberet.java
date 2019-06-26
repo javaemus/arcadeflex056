@@ -13,7 +13,6 @@
 package WIP.mame056.vidhrdw;
 
 import common.ptr.UBytePtr;
-import static mame056.tilemapH.*;
 
 import static arcadeflex056.fucPtr.*;
 import static common.ptr.*;
@@ -22,7 +21,10 @@ import static mame056.mame.*;
 import static mame056.cpuexec.*;
 import static mame056.drawgfxH.*;
 import static mame056.drawgfx.*;
-import static mame056.tilemapC.*;
+//import static mame056.tilemapH.*;
+//import static mame056.tilemapC.*;
+import static mame037b11.mame.tilemapC.*;
+import static mame037b11.mame.tilemapH.*;
 import static mame056.vidhrdw.generic.*;
 
 public class gberet
@@ -115,13 +117,17 @@ public class gberet
 	
 	public static GetTileInfoPtr get_tile_info = new GetTileInfoPtr() {
             public void handler(int tile_index) {
+                
                 char attr = gberet_colorram.read(tile_index);
-		SET_TILE_INFO(
-				0,
-				gberet_videoram.read(tile_index) + ((attr & 0x40) << 2),
-				attr & 0x0f,
-				TILE_FLIPYX((attr & 0x30) >> 4));
-		tile_info.priority = (attr & 0x80) >> 7;
+		SET_TILE_INFO( 
+ 				0, 
+ 				gberet_videoram.read(tile_index) + ((attr & 0x40) << 2), 
+ 				attr & 0x0f
+                                //,TILE_FLIPYX((attr & 0x30) >> 4)
+                                );
+		//tile_info.priority = (attr & 0x80) >> 7;
+ 		tile_info.u32_flags = (attr & 0x80) >> 7 | TILE_FLIPYX((attr & 0x30) >> 4); 
+
             }
         };
 	
@@ -133,13 +139,19 @@ public class gberet
 	
 	public static VhStartPtr gberet_vh_start = new VhStartPtr() { public int handler() 
 	{
+            
+            
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT_COLOR,8,8,64,32);
 	
 		if (bg_tilemap == null)
 			return 0;
 	
-		tilemap_set_transparent_pen(bg_tilemap,0x10);
-		tilemap_set_scroll_rows(bg_tilemap,32);
+		//tilemap_set_transparent_pen(bg_tilemap,0x10);
+                bg_tilemap.transparent_pen = 0x10;
+                bg_tilemap.u32_transmask[0] = 0x0001; /* split type 0 has pen 1 transparent in front half */
+		bg_tilemap.u32_transmask[1] = 0xffff; /* split type 1 is totally transparent in front half */
+		
+                tilemap_set_scroll_rows(bg_tilemap,32);
 	
 		return 0;
 	} };
@@ -304,17 +316,27 @@ public class gberet
 	
 	public static VhUpdatePtr gberet_vh_screenrefresh = new VhUpdatePtr() { public void handler(mame_bitmap bitmap,int full_refresh) 
 	{
-		tilemap_draw(bitmap,bg_tilemap,TILEMAP_IGNORE_TRANSPARENCY|0,0);
-		tilemap_draw(bitmap,bg_tilemap,TILEMAP_IGNORE_TRANSPARENCY|1,0);
+                tilemap_update(ALL_TILEMAPS);
+	
+		tilemap_render(ALL_TILEMAPS);
+	
+	    
+                
+		tilemap_draw(bitmap,bg_tilemap,TILEMAP_IGNORE_TRANSPARENCY|0);
+		tilemap_draw(bitmap,bg_tilemap,TILEMAP_IGNORE_TRANSPARENCY|1);
 		draw_sprites(bitmap);
-		tilemap_draw(bitmap,bg_tilemap,0,0);
+		tilemap_draw(bitmap,bg_tilemap,0);
 	} };
 	
 	public static VhUpdatePtr gberetb_vh_screenrefresh = new VhUpdatePtr() { public void handler(mame_bitmap bitmap,int full_refresh) 
 	{
-		tilemap_draw(bitmap,bg_tilemap,TILEMAP_IGNORE_TRANSPARENCY|0,0);
-		tilemap_draw(bitmap,bg_tilemap,TILEMAP_IGNORE_TRANSPARENCY|1,0);
+                tilemap_update(ALL_TILEMAPS);
+	
+		tilemap_render(ALL_TILEMAPS);
+                
+		tilemap_draw(bitmap,bg_tilemap,TILEMAP_IGNORE_TRANSPARENCY|0);
+		tilemap_draw(bitmap,bg_tilemap,TILEMAP_IGNORE_TRANSPARENCY|1);
 		draw_sprites_bootleg(bitmap);
-		tilemap_draw(bitmap,bg_tilemap,0,0);
+		tilemap_draw(bitmap,bg_tilemap,0);
 	} };
 }

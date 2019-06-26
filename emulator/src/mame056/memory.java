@@ -2477,7 +2477,7 @@ public class memory {
     /*TODO*///
     public static setopbase cpu_setOPbase16 = new setopbase() {
         public void handler(int pc) {
-            UBytePtr base;
+            UBytePtr base = null;
             int entry;
 
             /* allow overrides */
@@ -2495,11 +2495,14 @@ public class memory {
                 entry = readmem_lookup.read(LEVEL2_INDEX(entry, pc, 16, 0));
             }
             opcode_entry = entry;
+            
             /* RAM/ROM/RAMROM */
             if (entry >= STATIC_RAM && entry <= STATIC_RAMROM) {
-                base = cpu_bankbase[STATIC_RAM];
+                base = new UBytePtr(cpu_bankbase[STATIC_RAM]);
             } /* banked memory */ else if (entry >= STATIC_BANK1 && entry <= STATIC_RAM) {
-                base = cpu_bankbase[entry];
+                if (cpu_bankbase[entry] != null){
+                    base = new UBytePtr(cpu_bankbase[entry]);
+                }
             } /* other memory -- could be very slow! */ else {
                 logerror("cpu #%d (PC=%08X): warning - op-code execute on mapped I/O\n", cpu_getactivecpu(), activecpu_get_pc());
                 /*base = memory_find_base(cpu_getactivecpu(), pc);*/
@@ -3117,25 +3120,25 @@ public class memory {
         set_static_handler(STATIC_BANK3, mrh8_bank3, mwh8_bank3);/*TODO*///	set_static_handler(STATIC_BANK3,  mrh8_bank3,  NULL,         NULL,         mwh8_bank3,  NULL,         NULL);
         set_static_handler(STATIC_BANK4, mrh8_bank4, mwh8_bank4);/*TODO*///	set_static_handler(STATIC_BANK4,  mrh8_bank4,  NULL,         NULL,         mwh8_bank4,  NULL,         NULL);
         set_static_handler(STATIC_BANK5, mrh8_bank5, mwh8_bank5);/*TODO*///	set_static_handler(STATIC_BANK5,  mrh8_bank5,  NULL,         NULL,         mwh8_bank5,  NULL,         NULL);
-        /*TODO*///	set_static_handler(STATIC_BANK6,  mrh8_bank6,  NULL,         NULL,         mwh8_bank6,  NULL,         NULL);
-        /*TODO*///	set_static_handler(STATIC_BANK7,  mrh8_bank7,  NULL,         NULL,         mwh8_bank7,  NULL,         NULL);
-        /*TODO*///	set_static_handler(STATIC_BANK8,  mrh8_bank8,  NULL,         NULL,         mwh8_bank8,  NULL,         NULL);
-        /*TODO*///	set_static_handler(STATIC_BANK9,  mrh8_bank9,  NULL,         NULL,         mwh8_bank9,  NULL,         NULL);
-        /*TODO*///	set_static_handler(STATIC_BANK10, mrh8_bank10, NULL,         NULL,         mwh8_bank10, NULL,         NULL);
-        /*TODO*///	set_static_handler(STATIC_BANK11, mrh8_bank11, NULL,         NULL,         mwh8_bank11, NULL,         NULL);
-        /*TODO*///	set_static_handler(STATIC_BANK12, mrh8_bank12, NULL,         NULL,         mwh8_bank12, NULL,         NULL);
-        /*TODO*///	set_static_handler(STATIC_BANK13, mrh8_bank13, NULL,         NULL,         mwh8_bank13, NULL,         NULL);
-        /*TODO*///	set_static_handler(STATIC_BANK14, mrh8_bank14, NULL,         NULL,         mwh8_bank14, NULL,         NULL);
-        /*TODO*///	set_static_handler(STATIC_BANK15, mrh8_bank15, NULL,         NULL,         mwh8_bank15, NULL,         NULL);
-        /*TODO*///	set_static_handler(STATIC_BANK16, mrh8_bank16, NULL,         NULL,         mwh8_bank16, NULL,         NULL);
-        /*TODO*///	set_static_handler(STATIC_BANK17, mrh8_bank17, NULL,         NULL,         mwh8_bank17, NULL,         NULL);
-        /*TODO*///	set_static_handler(STATIC_BANK18, mrh8_bank18, NULL,         NULL,         mwh8_bank18, NULL,         NULL);
-        /*TODO*///	set_static_handler(STATIC_BANK19, mrh8_bank19, NULL,         NULL,         mwh8_bank19, NULL,         NULL);
-        /*TODO*///	set_static_handler(STATIC_BANK20, mrh8_bank20, NULL,         NULL,         mwh8_bank20, NULL,         NULL);
-        /*TODO*///	set_static_handler(STATIC_BANK21, mrh8_bank21, NULL,         NULL,         mwh8_bank21, NULL,         NULL);
-        /*TODO*///	set_static_handler(STATIC_BANK22, mrh8_bank22, NULL,         NULL,         mwh8_bank22, NULL,         NULL);
-        /*TODO*///	set_static_handler(STATIC_BANK23, mrh8_bank23, NULL,         NULL,         mwh8_bank23, NULL,         NULL);
-        /*TODO*///	set_static_handler(STATIC_BANK24, mrh8_bank24, NULL,         NULL,         mwh8_bank24, NULL,         NULL);
+        set_static_handler(STATIC_BANK6, mrh8_bank6, mwh8_bank6);/*TODO*///	set_static_handler(STATIC_BANK6,  mrh8_bank6,  NULL,         NULL,         mwh8_bank6,  NULL,         NULL);
+        set_static_handler(STATIC_BANK7, mrh8_bank7, mwh8_bank7);/*TODO*///	set_static_handler(STATIC_BANK7,  mrh8_bank7,  NULL,         NULL,         mwh8_bank7,  NULL,         NULL);
+        set_static_handler(STATIC_BANK8, mrh8_bank8, mwh8_bank8);/*TODO*///	set_static_handler(STATIC_BANK8,  mrh8_bank8,  NULL,         NULL,         mwh8_bank8,  NULL,         NULL);
+        set_static_handler(STATIC_BANK9, mrh8_bank9, mwh8_bank9);/*TODO*///	set_static_handler(STATIC_BANK9,  mrh8_bank9,  NULL,         NULL,         mwh8_bank9,  NULL,         NULL);
+        set_static_handler(STATIC_BANK10, mrh8_bank10, mwh8_bank10);/*TODO*///	set_static_handler(STATIC_BANK10, mrh8_bank10, NULL,         NULL,         mwh8_bank10, NULL,         NULL);
+        set_static_handler(STATIC_BANK11, mrh8_bank11, mwh8_bank11);/*TODO*///	set_static_handler(STATIC_BANK11, mrh8_bank11, NULL,         NULL,         mwh8_bank11, NULL,         NULL);
+        set_static_handler(STATIC_BANK12, mrh8_bank12, mwh8_bank12);/*TODO*///	set_static_handler(STATIC_BANK12, mrh8_bank12, NULL,         NULL,         mwh8_bank12, NULL,         NULL);
+        set_static_handler(STATIC_BANK13, mrh8_bank13, mwh8_bank13);/*TODO*///	set_static_handler(STATIC_BANK13, mrh8_bank13, NULL,         NULL,         mwh8_bank13, NULL,         NULL);
+        set_static_handler(STATIC_BANK14, mrh8_bank14, mwh8_bank14);/*TODO*///	set_static_handler(STATIC_BANK14, mrh8_bank14, NULL,         NULL,         mwh8_bank14, NULL,         NULL);
+        set_static_handler(STATIC_BANK15, mrh8_bank15, mwh8_bank15);/*TODO*///	set_static_handler(STATIC_BANK15, mrh8_bank15, NULL,         NULL,         mwh8_bank15, NULL,         NULL);
+        set_static_handler(STATIC_BANK16, mrh8_bank16, mwh8_bank16);/*TODO*///	set_static_handler(STATIC_BANK16, mrh8_bank16, NULL,         NULL,         mwh8_bank16, NULL,         NULL);
+        set_static_handler(STATIC_BANK17, mrh8_bank17, mwh8_bank17);/*TODO*///	set_static_handler(STATIC_BANK17, mrh8_bank17, NULL,         NULL,         mwh8_bank17, NULL,         NULL);
+        set_static_handler(STATIC_BANK18, mrh8_bank18, mwh8_bank18);/*TODO*///	set_static_handler(STATIC_BANK18, mrh8_bank18, NULL,         NULL,         mwh8_bank18, NULL,         NULL);
+        set_static_handler(STATIC_BANK19, mrh8_bank19, mwh8_bank19);/*TODO*///	set_static_handler(STATIC_BANK19, mrh8_bank19, NULL,         NULL,         mwh8_bank19, NULL,         NULL);
+        set_static_handler(STATIC_BANK20, mrh8_bank20, mwh8_bank20);/*TODO*///	set_static_handler(STATIC_BANK20, mrh8_bank20, NULL,         NULL,         mwh8_bank20, NULL,         NULL);
+        set_static_handler(STATIC_BANK21, mrh8_bank21, mwh8_bank21);/*TODO*///	set_static_handler(STATIC_BANK21, mrh8_bank21, NULL,         NULL,         mwh8_bank21, NULL,         NULL);
+        set_static_handler(STATIC_BANK22, mrh8_bank22, mwh8_bank22);/*TODO*///	set_static_handler(STATIC_BANK22, mrh8_bank22, NULL,         NULL,         mwh8_bank22, NULL,         NULL);
+        set_static_handler(STATIC_BANK23, mrh8_bank23, mwh8_bank23);/*TODO*///	set_static_handler(STATIC_BANK23, mrh8_bank23, NULL,         NULL,         mwh8_bank23, NULL,         NULL);
+        set_static_handler(STATIC_BANK24, mrh8_bank24, mwh8_bank24);/*TODO*///	set_static_handler(STATIC_BANK24, mrh8_bank24, NULL,         NULL,         mwh8_bank24, NULL,         NULL);
         set_static_handler(STATIC_UNMAP, mrh8_bad, mwh8_bad);/*TODO*///	set_static_handler(STATIC_UNMAP,  mrh8_bad,    mrh16_bad,    mrh32_bad,    mwh8_bad,    mwh16_bad,    mwh32_bad);
         set_static_handler(STATIC_NOP, mrh8_nop, mwh8_nop);/*TODO*///	set_static_handler(STATIC_NOP,    mrh8_nop,    mrh16_nop,    mrh32_nop,    mwh8_nop,    mwh16_nop,    mwh32_nop);
         set_static_handler(STATIC_RAM, mrh8_ram, mwh8_ram);/*TODO*///	set_static_handler(STATIC_RAM,    mrh8_ram,    NULL,         NULL,         mwh8_ram,    NULL,         NULL);

@@ -19,8 +19,10 @@ import static mame056.drawgfx.*;
 import static mame056.mame.*;
 import static mame056.commonH.*;
 import static mame056.drawgfxH.*;
-import static mame056.tilemapH.*;
-import static mame056.tilemapC.*;
+/*TODO*///import static mame056.tilemapH.*;
+/*TODO*///import static mame056.tilemapC.*;
+import static mame037b11.mame.tilemapC.*;
+import static mame037b11.mame.tilemapH.*;
 
 import static mame056.vidhrdw.generic.*;
 
@@ -117,8 +119,9 @@ public class kncljoe {
 		SET_TILE_INFO(
 				0,
 				code,
-				attr & 0xf,
-				TILE_FLIPXY((attr & 0x30) >> 4));
+				attr & 0xf
+				);
+                tile_info.u32_flags = TILE_FLIPXY((attr & 0x30) >> 4);
             }
         };
 	
@@ -246,7 +249,11 @@ public class kncljoe {
 
     public static VhUpdatePtr kncljoe_vh_screenrefresh = new VhUpdatePtr() {
         public void handler(mame_bitmap bitmap, int full_refresh) {
-            tilemap_draw(bitmap, bg_tilemap, 0, 0);
+            tilemap_update(ALL_TILEMAPS);
+	
+            tilemap_render(ALL_TILEMAPS);
+                
+            tilemap_draw(bitmap, bg_tilemap, 0);
             draw_sprites(bitmap);
         }
     };
