@@ -3,11 +3,16 @@
  */
 package mame056;
 
+import static arcadeflex056.fucPtr.*;
 import static common.ptr.*;
 import static common.subArrays.*;
+import static mame056.commonH.*;
 import static mame056.drawgfxH.*;
 import static mame056.mame.*;
-import static mame056.tilemapC.*;
+
+import static mame037b11.mame.tilemapC.tile_info;
+import mame056.tilemapC.DrawHandlerPtr;
+import mame056.tilemapC.DrawTileHandlerPtr;
 
 public class tilemapH {
 
@@ -135,4 +140,107 @@ public class tilemapH {
     public static final int TILE_FLAG_FG_OPAQUE = (0x10);
     public static final int TILE_FLAG_BG_OPAQUE = (0x20);
 
+    public static class struct_tilemap {
+
+        public struct_tilemap() {
+
+        }
+        public GetMemoryOffsetPtr get_memory_offset;
+        public int[] memory_offset_to_cached_indx;
+        public int[] cached_indx_to_memory_offset;
+        public int[] logical_flip_to_cached_flip = new int[4];
+
+        /* callback to interpret video RAM for the tilemap */
+        public GetTileInfoPtr tile_get_info;
+
+        public int/*UINT32*/ max_memory_offset;
+        public int/*UINT32*/ num_tiles;
+        public int/*UINT32*/ num_pens;
+
+        public int/*UINT32*/ num_logical_rows, num_logical_cols;
+        public int/*UINT32*/ num_cached_rows, num_cached_cols;
+
+        public int/*UINT32*/ logical_tile_width, logical_tile_height;
+        public int/*UINT32*/ cached_tile_width, cached_tile_height;
+        public int/*UINT32*/ cached_width, cached_height;
+
+        public int dx, dx_if_flipped;
+        public int dy, dy_if_flipped;
+        public int scrollx_delta, scrolly_delta;
+
+        public int enable;
+        public int attributes;
+
+        public int type;
+        public int transparent_pen;
+        public int[] fgmask=new int[4], bgmask=new int[4]; /* for TILEMAP_SPLIT */
+
+        public IntArray pPenToPixel = new IntArray(1024);
+
+        public DrawTileHandlerPtr draw_tile;
+
+        public DrawHandlerPtr draw;
+
+        public int cached_scroll_rows, cached_scroll_cols;
+        public int[] cached_rowscroll, cached_colscroll;
+
+        public int logical_scroll_rows, logical_scroll_cols;
+        public int[] logical_rowscroll, logical_colscroll;
+
+        public int orientation;
+        public int clip_left,clip_right,clip_top,clip_bottom;
+        public rectangle logical_clip = new rectangle();
+
+        public char tile_depth, tile_granularity;
+        public UBytePtr tile_dirty_map;
+
+	/* cached color data */
+	public mame_bitmap pixmap;
+	public int pixmap_pitch_line;
+	public int pixmap_pitch_row;
+
+        public mame_bitmap transparency_bitmap;
+	public int transparency_bitmap_pitch_line;
+	public int transparency_bitmap_pitch_row;
+        public UBytePtr transparency_data = new UBytePtr();
+        public UBytePtr[] transparency_data_row;
+
+        public struct_tilemap next;/* resource tracking */
+        
+        // old variables
+        public WriteHandlerPtr draw037;//void (*draw)( int, int );
+        public WriteHandlerPtr draw_opaque;//void (*draw_opaque)( int, int );
+        public int[] memory_offset_to_cached_index;
+        public int scroll_rows, scroll_cols;
+        public cached_tile_info[] cached_tile_info;
+        public char[] u8_priority;
+        public int[] u8_visible;
+        public int[] u8_dirty_vram;
+        public int[] u8_dirty_pixels;
+        public int[] rowscroll;
+        public int[] colscroll;
+        public UBytePtr[] priority_row;
+        public tilemap_mask foreground;
+        public tilemap_mask background;
+        public int pixmap_line_offset;
+        public int[] u32_transmask = new int[4];
+    }
+    
+    // old method
+    public static class tilemap_mask {
+
+        public mame_bitmap bitmask;
+        public int line_offset;
+        public char[]/*UINT8*/ u8_data;
+        public UBytePtr[] data_row;
+    }
+    
+    // old method
+    public static class cached_tile_info {
+
+        public UBytePtr pen_data;
+        public IntArray pal_data;
+        public int u32_pen_usage;
+        public int u32_flags;
+    }
 }

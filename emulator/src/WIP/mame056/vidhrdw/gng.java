@@ -31,8 +31,7 @@ import static mame056.vidhrdw.generic.*;
 import static arcadeflex036.osdepend.logerror;
 /*TODO*///import static mame056.tilemapC.*;
 import static mame037b11.mame.tilemapC.*;
-/*TODO*///import static mame056.tilemapH.*;
-import static mame037b11.mame.tilemapH.*;
+import static mame056.tilemapH.*;
 
 public class gng
 {
@@ -57,9 +56,9 @@ public class gng
 		SET_TILE_INFO(
 				0,
 				gng_fgvideoram.read(tile_index) + ((attr & 0xc0) << 2),
-				attr & 0x0f
-				);
-                tile_info.u32_flags = TILE_FLIPYX((attr & 0x30) >> 4);
+				attr & 0x0f,
+				TILE_FLIPYX((attr & 0x30) >> 4));
+                tile_info.flags = TILE_FLIPYX((attr & 0x30) >> 4);
             }
         };
 	
@@ -69,9 +68,9 @@ public class gng
 		SET_TILE_INFO(
 				1,
 				gng_bgvideoram.read(tile_index) + ((attr & 0xc0) << 2),
-				attr & 0x07
-				);
-                tile_info.u32_flags = TILE_FLIPYX((attr & 0x30) >> 4) | TILE_SPLIT((attr & 0x08) >> 3);
+				attr & 0x07,
+				TILE_FLIPYX((attr & 0x30) >> 4) | TILE_SPLIT((attr & 0x08) >> 3));
+                tile_info.flags = TILE_FLIPYX((attr & 0x30) >> 4) | TILE_SPLIT((attr & 0x08) >> 3);
             }
         };
 	

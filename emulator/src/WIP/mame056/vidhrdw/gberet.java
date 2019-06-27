@@ -21,10 +21,10 @@ import static mame056.mame.*;
 import static mame056.cpuexec.*;
 import static mame056.drawgfxH.*;
 import static mame056.drawgfx.*;
-//import static mame056.tilemapH.*;
+import static mame056.tilemapH.*;
 //import static mame056.tilemapC.*;
 import static mame037b11.mame.tilemapC.*;
-import static mame037b11.mame.tilemapH.*;
+//import static mame037b11.mame.tilemapH.*;
 import static mame056.vidhrdw.generic.*;
 
 public class gberet
@@ -122,11 +122,11 @@ public class gberet
 		SET_TILE_INFO( 
  				0, 
  				gberet_videoram.read(tile_index) + ((attr & 0x40) << 2), 
- 				attr & 0x0f
-                                //,TILE_FLIPYX((attr & 0x30) >> 4)
+ 				attr & 0x0f,
+                                TILE_FLIPYX((attr & 0x30) >> 4)
                                 );
 		//tile_info.priority = (attr & 0x80) >> 7;
- 		tile_info.u32_flags = (attr & 0x80) >> 7 | TILE_FLIPYX((attr & 0x30) >> 4); 
+ 		tile_info.flags = (attr & 0x80) >> 7 | TILE_FLIPYX((attr & 0x30) >> 4); 
 
             }
         };

@@ -23,10 +23,9 @@ import static mame056.vidhrdw.generic.*;
 // refactor
 import static arcadeflex036.osdepend.logerror;
 
-//import static mame056.tilemapH.*;
+import static mame056.tilemapH.*;
 //import static mame056.tilemapC.*;
 import static mame037b11.mame.tilemapC.*;
-import static mame037b11.mame.tilemapH.*;
 
 public class namcos1
 {
@@ -327,9 +326,9 @@ public class namcos1
 				1,
 				code,
 				info_color
-                                //,0
+                                ,0
                 );
-                tile_info.u32_flags = 0;
+                tile_info.flags = 0;
 		tile_info.mask_data = mask_ptr[code];
 	}
 	
@@ -340,9 +339,9 @@ public class namcos1
 				1,
 				code,
 				info_color
-                                //,0
+                                ,0
                 );
-                tile_info.u32_flags = 0;
+                tile_info.flags = 0;
 		tile_info.mask_data = mask_ptr[code];
 	}
 	

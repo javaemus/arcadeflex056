@@ -26,73 +26,7 @@ public class tilemapC {
     public static abstract interface DrawHandlerPtr { public abstract void handler(struct_tilemap tilemap, int xpos, int ypos, int mask, int value); }
     public static abstract interface DrawTileHandlerPtr { public abstract int handler( struct_tilemap tilemap, int col, int row, int flags );}
     
-    public static class struct_tilemap {
-
-        public struct_tilemap() {
-
-        }
-        public GetMemoryOffsetPtr get_memory_offset;
-        public int[] memory_offset_to_cached_indx;
-        public UShortPtr cached_indx_to_memory_offset = new UShortPtr();
-        public int[] logical_flip_to_cached_flip = new int[4];
-
-        /* callback to interpret video RAM for the tilemap */
-        public GetTileInfoPtr tile_get_info;
-
-        public int/*UINT32*/ max_memory_offset;
-        public int/*UINT32*/ num_tiles;
-        public int/*UINT32*/ num_pens;
-
-        public int/*UINT32*/ num_logical_rows, num_logical_cols;
-        public int/*UINT32*/ num_cached_rows, num_cached_cols;
-
-        public int/*UINT32*/ logical_tile_width, logical_tile_height;
-        public int/*UINT32*/ cached_tile_width, cached_tile_height;
-        public int/*UINT32*/ cached_width, cached_height;
-
-        public int dx, dx_if_flipped;
-        public int dy, dy_if_flipped;
-        public int scrollx_delta, scrolly_delta;
-
-        public int enable;
-        public int attributes;
-
-        public int type;
-        public int transparent_pen;
-        public int[] fgmask=new int[4], bgmask=new int[4]; /* for TILEMAP_SPLIT */
-
-        public IntArray pPenToPixel = new IntArray(1024);
-
-        public DrawTileHandlerPtr draw_tile;
-
-        public DrawHandlerPtr draw;
-
-        public int cached_scroll_rows, cached_scroll_cols;
-        public int[] cached_rowscroll, cached_colscroll;
-
-        public int logical_scroll_rows, logical_scroll_cols;
-        public int[] logical_rowscroll, logical_colscroll;
-
-        public int orientation;
-        public int clip_left,clip_right,clip_top,clip_bottom;
-        public rectangle logical_clip = new rectangle();
-
-        public char tile_depth, tile_granularity;
-        public UBytePtr tile_dirty_map;
-
-	/* cached color data */
-	public mame_bitmap pixmap;
-	public int pixmap_pitch_line;
-	public int pixmap_pitch_row;
-
-        public mame_bitmap transparency_bitmap;
-	public int transparency_bitmap_pitch_line;
-	public int transparency_bitmap_pitch_row;
-        public UBytePtr transparency_data = new UBytePtr();
-        public UBytePtr[] transparency_data_row;
-
-        public struct_tilemap next;/* resource tracking */
-    }
+    
     public static mame_bitmap priority_bitmap;
 
     public static int/*UINT32*/ priority_bitmap_pitch_line;
@@ -275,7 +209,7 @@ public class tilemapC {
             if( tilemap.memory_offset_to_cached_indx != null )
             {
                     /* cached to logical (get_tile_info) */
-                    tilemap.cached_indx_to_memory_offset = new UShortPtr( tilemap.num_tiles * 2);
+                    tilemap.cached_indx_to_memory_offset = new int[ tilemap.num_tiles * 2 ];
                     if( tilemap.cached_indx_to_memory_offset != null ) return 0; /* no error */
                     tilemap.memory_offset_to_cached_indx = null;
             }
@@ -313,7 +247,7 @@ public class tilemapC {
 		if (( tilemap.orientation & ORIENTATION_FLIP_Y ) != 0) cached_row = (num_cached_rows-1)-cached_row;
 		cached_indx = cached_row*num_cached_cols+cached_col;
 		tilemap.memory_offset_to_cached_indx[memory_offset] = cached_indx;
-		tilemap.cached_indx_to_memory_offset.write(cached_indx, (char) memory_offset);
+		tilemap.cached_indx_to_memory_offset[cached_indx] = memory_offset;
 	}
 	for( logical_flip = 0; logical_flip<4; logical_flip++ )
 	{
@@ -659,7 +593,7 @@ public class tilemapC {
         first_tilemap = null;
         /*TODO*///	state_save_register_func_postload(tilemap_reset);
         tilemap_reset();
-        priority_bitmap = bitmap_alloc_depth(screen_width, screen_height, 8);
+        priority_bitmap = bitmap_alloc_depth(screen_width, screen_height, 16);
         if (priority_bitmap != null) {
             priority_bitmap_pitch_line = priority_bitmap.line[1].offset - priority_bitmap.line[0].offset;
             return 0;
@@ -961,7 +895,7 @@ public class tilemapC {
 
 /*TODO*///profiler_mark(PROFILER_TILEMAP_UPDATE);
 
-            memory_offset = tilemap.cached_indx_to_memory_offset.read(cached_indx);
+            memory_offset = tilemap.cached_indx_to_memory_offset[cached_indx];
             tilemap.tile_get_info.handler(memory_offset );
             flags = tile_info.flags;
             flags = (flags&0xfc)|tilemap.logical_flip_to_cached_flip[flags&0x3];

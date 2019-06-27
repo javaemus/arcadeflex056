@@ -19,10 +19,9 @@ import static mame056.drawgfx.*;
 import static mame056.mame.*;
 import static mame056.commonH.*;
 import static mame056.drawgfxH.*;
-/*TODO*///import static mame056.tilemapH.*;
+import static mame056.tilemapH.*;
 /*TODO*///import static mame056.tilemapC.*;
 import static mame037b11.mame.tilemapC.*;
-import static mame037b11.mame.tilemapH.*;
 
 import static mame056.vidhrdw.generic.*;
 
@@ -119,9 +118,9 @@ public class kncljoe {
 		SET_TILE_INFO(
 				0,
 				code,
-				attr & 0xf
-				);
-                tile_info.u32_flags = TILE_FLIPXY((attr & 0x30) >> 4);
+				attr & 0xf,
+				TILE_FLIPXY((attr & 0x30) >> 4));
+                tile_info.flags = TILE_FLIPXY((attr & 0x30) >> 4);
             }
         };
 	

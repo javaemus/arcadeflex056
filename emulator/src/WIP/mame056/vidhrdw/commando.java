@@ -14,10 +14,9 @@ package WIP.mame056.vidhrdw;
 
 import static arcadeflex056.fucPtr.*;
 import static common.ptr.*;
-//import static mame056.tilemapH.*;
+import static mame056.tilemapH.*;
 //import static mame056.tilemapC.*;
 import static mame037b11.mame.tilemapC.*;
-import static mame037b11.mame.tilemapH.*;
 import static mame056.cpuintrfH.*;
 import static mame056.cpuintrf.*;
 import static mame056.cpuexec.*;
@@ -56,9 +55,9 @@ public class commando
 				0,
 				code + ((color & 0xc0) << 2),
 				color & 0x0f
-                                //,TILE_FLIPYX((color & 0x30) >> 4)
+                                ,TILE_FLIPYX((color & 0x30) >> 4)
                 );
-                tile_info.u32_flags = TILE_FLIPYX((color & 0x30) >> 4);
+                tile_info.flags = TILE_FLIPYX((color & 0x30) >> 4);
             }
         };
 	
@@ -72,9 +71,9 @@ public class commando
 				1,
 				code + ((color & 0xc0) << 2),
 				color & 0x0f
-				//,TILE_FLIPYX((color & 0x30) >> 4)
+				,TILE_FLIPYX((color & 0x30) >> 4)
                 );
-                tile_info.u32_flags = TILE_FLIPYX((color & 0x30) >> 4);
+                tile_info.flags = TILE_FLIPYX((color & 0x30) >> 4);
             }
         };
 	

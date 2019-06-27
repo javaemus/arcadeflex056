@@ -28,10 +28,8 @@ import static mame056.vidhrdw.generic.*;
 // refactor
 import static arcadeflex036.osdepend.logerror;
 /*TODO*///import static mame056.tilemapC.*;
-/*TODO*///import static mame056.tilemapH.*;
+import static mame056.tilemapH.*;
 import static mame037b11.mame.tilemapC.*;
-import static mame037b11.mame.tilemapH.*;
-
 
 public class renegade
 {
@@ -85,9 +83,9 @@ public class renegade
 		SET_TILE_INFO(
 				1+(attributes&0x7),
 				source.read(0),
-				attributes>>5
-				);
-                tile_info.u32_flags = 0;
+				attributes>>5,
+				0);
+                tile_info.flags = 0;
             }
         };
 	
@@ -98,9 +96,9 @@ public class renegade
 		SET_TILE_INFO(
 				0,
 				(attributes&3)*256 + source.read(0),
-				attributes>>6
-				);
-                tile_info.u32_flags = 0;
+				attributes>>6,
+				0);
+                tile_info.flags = 0;
             }
         };
 	
