@@ -125,8 +125,8 @@ public class gberet
  				attr & 0x0f,
                                 TILE_FLIPYX((attr & 0x30) >> 4)
                                 );
-		//tile_info.priority = (attr & 0x80) >> 7;
- 		tile_info.flags = (attr & 0x80) >> 7 | TILE_FLIPYX((attr & 0x30) >> 4); 
+		tile_info.priority = (attr & 0x80) >> 7;
+ 		//tile_info.flags = (attr & 0x80) >> 7 | TILE_FLIPYX((attr & 0x30) >> 4); 
 
             }
         };

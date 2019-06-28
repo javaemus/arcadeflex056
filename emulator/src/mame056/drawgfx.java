@@ -1106,7 +1106,7 @@ public class drawgfx {
             int code, int color, int flipx, int flipy, int sx, int sy,
             rectangle clip, int transparency, int transparent_color, int priority_mask) {
         /*TODO*///	profiler_mark(PROFILER_DRAWGFX);
-        System.out.println("Drawing priority_bitmap...");
+        //System.out.println("Drawing priority_bitmap...");
         common_drawgfx(dest, gfx, code, color, flipx, flipy, sx, sy, clip, transparency, transparent_color, priority_bitmap, priority_mask | (1 << 31));
         /*TODO*///	profiler_mark(PROFILER_END);
     }
@@ -5184,7 +5184,271 @@ public class drawgfx {
     public static boolean PEN_IS_OPAQUE(int col, int transmask) {
         return ((1 << col) & transmask) == 0;
     }
+    
+    public static void blockmove_8toN_transmask(UBytePtr srcdata, int srcwidth, int srcheight, int srcmodulo, int leftskip, int topskip, int flipx, int flipy, UShortPtr dstdata, int dstwidth, int dstheight, int dstmodulo, IntArray paldata, int tran_mask, int transpen) {
+        int ydir;
+        if (flipy != 0) {
+            dstdata.inc(dstmodulo * (dstheight - 1));
+            srcdata.inc((srcheight - dstheight - topskip) * srcmodulo);
+            ydir = -1;
+        } else {
+            srcdata.inc(topskip * srcmodulo);
+            ydir = 1;
+        }
+        if (flipx != 0) {
+            dstdata.inc(dstwidth - 1);
+            srcdata.inc(srcwidth - dstwidth - leftskip);
+        } else {
+            srcdata.inc(leftskip);
+        }
+        srcmodulo -= dstwidth;
+        if (flipx != 0) {
+            int end;
+            int trans4;
+            IntPtr sd4;
 
+            trans4 = transpen & tran_mask;
+
+            while (dstheight != 0) {
+
+                end = dstdata.offset / 2 - dstwidth;
+                while (((long) srcdata.offset & 3) != 0 && dstdata.offset / 2 > end) /* longword align */ {
+                    int col;
+
+                    col = srcdata.readinc();
+                    if (col != transpen) {
+                        dstdata.write(0, (char) paldata.read(col));
+                    }
+                    dstdata.dec();
+                }
+
+                sd4 = new IntPtr(srcdata);
+                while (dstdata.offset / 2 >= end + 4) {
+                    int col4;
+
+                    dstdata.dec(4);
+                    if ((col4 = sd4.read(0)) != trans4) {
+                        int xod4;
+
+                        xod4 = col4 ^ trans4;
+                        if ((xod4 & (0xff << SHIFT0)) != 0) {
+                            dstdata.write(4, (char) paldata.read(((col4 >> SHIFT0) & 0xff)));
+                        }
+                        if ((xod4 & (0xff << SHIFT1)) != 0) {
+                            dstdata.write(3, (char) paldata.read((((col4 >> SHIFT1) & 0xff))));
+                        }
+                        if ((xod4 & (0xff << SHIFT2)) != 0) {
+                            dstdata.write(2, (char) paldata.read((((col4 >> SHIFT2) & 0xff))));
+                        }
+                        if ((xod4 & (0xff << SHIFT3)) != 0) {
+                            dstdata.write(1, (char) paldata.read((((col4 >> SHIFT3) & 0xff))));
+                        }
+                    }
+                    sd4.base += 4;
+                }
+                srcdata.set(sd4.readCA(), sd4.getBase());
+                while (dstdata.offset / 2 > end) {
+                    int col;
+
+                    col = srcdata.readinc();
+                    if (col != transpen) {
+                        dstdata.write(0, (char) paldata.read(col));
+                    }
+                    dstdata.dec();
+                }
+
+                srcdata.inc(srcmodulo);
+                dstdata.inc(ydir * dstmodulo + dstwidth);
+                dstheight--;
+            }
+        } else {
+            int end;
+            int trans4;
+            IntPtr sd4;
+
+            trans4 = transpen & tran_mask;
+
+            while (dstheight != 0) {
+                end = dstdata.offset / 2 + dstwidth;
+                while (((long) srcdata.offset & 3) != 0 && dstdata.offset / 2 < end) /* longword align */ {
+                    int col;
+
+                    col = srcdata.readinc();
+                    if (col != transpen) {
+                        dstdata.write(0, (char) paldata.read(col));
+                    }
+                    dstdata.inc();
+                }
+                sd4 = new IntPtr(srcdata);
+                while (dstdata.offset / 2 <= end - 4) {
+                    int col4;
+
+                    if ((col4 = sd4.read(0)) != trans4) {
+                        int xod4;
+
+                        xod4 = col4 ^ trans4;
+                        if ((xod4 & (0xff << SHIFT0)) != 0) {
+                            dstdata.write(0, (char) paldata.read(((col4 >> SHIFT0) & 0xff)));
+                        }
+                        if ((xod4 & (0xff << SHIFT1)) != 0) {
+                            dstdata.write(1, (char) paldata.read((char) (((col4 >> SHIFT1) & 0xff))));
+                        }
+                        if ((xod4 & (0xff << SHIFT2)) != 0) {
+                            dstdata.write(2, (char) paldata.read((((col4 >> SHIFT2) & 0xff))));
+                        }
+                        if ((xod4 & (0xff << SHIFT3)) != 0) {
+                            dstdata.write(3, (char) paldata.read((((col4 >> SHIFT3) & 0xff))));
+                        }
+                    }
+                    dstdata.inc(4);
+                    sd4.base += 4;
+                }
+                srcdata.set(sd4.readCA(), sd4.getBase());
+                while (dstdata.offset / 2 < end) {
+                    int col;
+
+                    col = srcdata.readinc();
+                    if (col != transpen) {
+                        dstdata.write(0, (char) paldata.read(col));
+                    }
+                    dstdata.inc();
+                }
+
+                srcdata.inc(srcmodulo);
+                dstdata.inc(ydir * dstmodulo - dstwidth);
+                dstheight--;
+            }
+        }
+    }
+    
+    // TO REMOVE
+    public static void blockmove_8toN_transmask(UBytePtr srcdata, int srcwidth, int srcheight, int srcmodulo, int leftskip, int topskip, int flipx, int flipy, UShortPtr dstdata, int dstwidth, int dstheight, int dstmodulo, IntArray paldata, int transmask){
+        int ydir;
+        if (flipy != 0) {
+            dstdata.inc(dstmodulo * (dstheight - 1));
+            srcdata.inc((srcheight - dstheight - topskip) * srcmodulo);
+            ydir = -1;
+        } else {
+            srcdata.inc(topskip * srcmodulo);
+            ydir = 1;
+        }
+        if (flipx != 0) {
+            dstdata.inc(dstwidth - 1);
+            srcdata.inc(srcwidth - dstwidth - leftskip);
+        } else {
+            srcdata.inc(leftskip);
+        }
+        srcmodulo -= dstwidth;
+        
+        if (flipx != 0)
+	{
+		int end;
+		UBytePtr sd4;
+
+		while (dstheight != 0)
+		{
+			end = dstdata.offset/2 - dstwidth;
+			while (((srcdata.read() & 3)!=0) && ((dstdata.offset / 2) > end))	/* longword align */
+			{
+				int col;
+
+				col = srcdata.readinc();
+				if (PEN_IS_OPAQUE(col, transmask)) 
+                                    dstdata.write(0, (char) paldata.read(srcdata.read(col)));
+				dstdata.dec();
+			}
+			sd4 = new UBytePtr(srcdata);
+			while (dstdata.offset/2 > end)
+			{
+				int col;
+				int col4;
+
+				dstdata.dec(4);
+				col4 = sd4.readinc();
+				col = (col4 >> SHIFT0) & 0xff;
+				if (PEN_IS_OPAQUE(col, transmask)) 
+                                    dstdata.write(4, (char) paldata.read(srcdata.read(col)));
+				col = (col4 >> SHIFT1) & 0xff;
+				if (PEN_IS_OPAQUE(col, transmask)) 
+                                    dstdata.write(3, (char) paldata.read(srcdata.read(col)));
+				col = (col4 >> SHIFT2) & 0xff;
+				if (PEN_IS_OPAQUE(col, transmask)) 
+                                    dstdata.write(2, (char) paldata.read(srcdata.read(col)));
+				col = (col4 >> SHIFT3) & 0xff;
+				if (PEN_IS_OPAQUE(col, transmask)) 
+                                    dstdata.write(1, (char) paldata.read(srcdata.read(col)));
+			}
+			srcdata = new UBytePtr(sd4);
+			while (dstdata.offset/2 > end)
+			{
+				int col;
+
+				col = srcdata.readinc();
+				if (PEN_IS_OPAQUE(col, transmask)) 
+                                    dstdata.write(0, (char) paldata.read(srcdata.read(col)));
+				dstdata.dec();
+			}
+
+			srcdata.inc( srcmodulo );
+			dstdata.inc(ydir*dstmodulo + dstwidth*1);
+			dstheight--;
+		}
+	}
+	else
+	{
+		int end;
+		UBytePtr sd4;
+
+		while (dstheight != 0)
+		{
+			end = dstdata.offset / 2 + dstwidth;
+			while ((srcdata.read() & 3)!=0 && dstdata.offset/2 < end)	/* longword align */
+			{
+				int col;
+
+				col = srcdata.readinc();
+				if (PEN_IS_OPAQUE(col, transmask)) 
+                                    dstdata.write(0, (char) paldata.read(srcdata.read(col)));
+				dstdata.inc();
+			}
+			sd4 = new UBytePtr(srcdata);
+			while (dstdata.offset/2 < end)
+			{
+				int col;
+				int col4;
+
+				col4 = sd4.readinc();
+				col = (col4 >> SHIFT0) & 0xff;
+				if (PEN_IS_OPAQUE(col, transmask)) 
+                                    dstdata.write(0, (char) paldata.read(srcdata.read(col)));
+				col = (col4 >> SHIFT1) & 0xff;
+				if (PEN_IS_OPAQUE(col, transmask)) 
+                                    dstdata.write(1, (char) paldata.read(srcdata.read(col)));
+				col = (col4 >> SHIFT2) & 0xff;
+				if (PEN_IS_OPAQUE(col, transmask)) 
+                                    dstdata.write(2, (char) paldata.read(srcdata.read(col)));
+				col = (col4 >> SHIFT3) & 0xff;
+				if (PEN_IS_OPAQUE(col, transmask)) 
+                                    dstdata.write(3, (char) paldata.read(srcdata.read(col)));
+				dstdata.inc(4*1);
+			}
+			srcdata = new UBytePtr(sd4);
+			while (dstdata.offset/2 < end)
+			{
+				int col;
+
+				col = srcdata.readinc();
+				if (PEN_IS_OPAQUE(col, transmask)) 
+                                    dstdata.write(0, (char) paldata.read(srcdata.read(col)));
+				dstdata.inc();
+			}
+
+			srcdata.inc( srcmodulo );
+			dstdata.inc(ydir*dstmodulo - dstwidth*1);
+			dstheight--;
+		}
+	}
+    }
     /*TODO*///DECLARE_SWAP_RAW_PRI(blockmove_8toN_transmask,(COMMON_ARGS,
 /*TODO*///		COLOR_ARG,int transmask),
 /*TODO*///{
@@ -6729,10 +6993,15 @@ public class drawgfx {
             case TRANSPARENCY_PENS:
                 if (pribuf != null) {
                     /*TODO*///BLOCKMOVEPRI(8toN_transmask,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
-                    System.out.println("BLOCKMOVEPRI(8toN_transmask1 not supported");
+                    //System.out.println("BLOCKMOVEPRI(8toN_transmask1 not supported");
+                    //System.out.println("Aquí");
+                    //blockmove_8toN_transmask(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color);
+                    //blockmove_8toN_transpen16(sd, sw, sh, sm, ls, ts, flipx, flipy, dd, dw, dh, dm, paldata, transparent_color);
+                    blockmove_8toN_transmask(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pri_mask,transparent_color);
                 } else {
-                    System.out.println("BLOCKMOVELU(8toN_transmask2 not supported");
                     /*TODO*///BLOCKMOVELU(8toN_transmask,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
+                    //blockmove_8toN_transmask(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color);
+                    blockmove_8toN_transmask(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pri_mask,transparent_color);
                 }
                 break;
             /*TODO*///
@@ -6754,6 +7023,7 @@ public class drawgfx {
                     if (pribuf != null) {
                         System.out.println("BLOCKMOVEPRI(8toN_transcolor,");
                         /*TODO*///						BLOCKMOVEPRI(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
+                        
                     } else {
                         if ((gfx.flags & GFX_SWAPXY) != 0) {
                             throw new UnsupportedOperationException("Unsupported");//BLOCKMOVELU(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
@@ -6764,41 +7034,56 @@ public class drawgfx {
                 }
                 break;
             /*TODO*///
-/*TODO*///			case TRANSPARENCY_PEN_TABLE:
-/*TODO*///				if (pribuf)
-/*TODO*///					BLOCKMOVEPRI(8toN_pen_table,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
-/*TODO*///				else
-/*TODO*///					BLOCKMOVELU(8toN_pen_table,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
-/*TODO*///				break;
-/*TODO*///
-/*TODO*///			case TRANSPARENCY_PEN_TABLE_RAW:
-/*TODO*///				if (pribuf)
-/*TODO*///					BLOCKMOVERAWPRI(8toN_pen_table,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask,transparent_color));
-/*TODO*///				else
-/*TODO*///					BLOCKMOVERAW(8toN_pen_table,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,transparent_color));
-/*TODO*///				break;
-/*TODO*///
-/*TODO*///			case TRANSPARENCY_BLEND_RAW:
-/*TODO*///				if (pribuf)
-/*TODO*///					BLOCKMOVERAWPRI(8toN_transblend,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask,transparent_color));
-/*TODO*///				else
-/*TODO*///					BLOCKMOVERAW(8toN_transblend,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,transparent_color));
-/*TODO*///				break;
-/*TODO*///
-/*TODO*///			case TRANSPARENCY_ALPHAONE:
-/*TODO*///				if (pribuf)
-/*TODO*///					BLOCKMOVEPRI(8toN_alphaone,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color & 0xff, (transparent_color>>8) & 0xff));
-/*TODO*///				else
-/*TODO*///					BLOCKMOVELU(8toN_alphaone,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color & 0xff, (transparent_color>>8) & 0xff));
-/*TODO*///				break;
-/*TODO*///
-/*TODO*///			case TRANSPARENCY_ALPHA:
-/*TODO*///				if (pribuf)
-/*TODO*///					BLOCKMOVEPRI(8toN_alpha,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
-/*TODO*///				else
-/*TODO*///					BLOCKMOVELU(8toN_alpha,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
-/*TODO*///				break;
-/*TODO*///
+			case TRANSPARENCY_PEN_TABLE:
+				if (pribuf != null){
+                                    System.out.println("BLOCKMOVEPRI(8toN_pen_table1,");
+                                    /*TODO*///BLOCKMOVEPRI(8toN_pen_table,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
+                                } else {
+                                    System.out.println("BLOCKMOVELU(8toN_pen_table2,");
+                                    /*TODO*///BLOCKMOVELU(8toN_pen_table,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
+                                }
+				break;
+
+			case TRANSPARENCY_PEN_TABLE_RAW:
+				if (pribuf != null){
+                                    System.out.println("BLOCKMOVERAWPRI(8toN_pen_table1,");
+                                    /*TODO*///BLOCKMOVERAWPRI(8toN_pen_table,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask,transparent_color));
+                                } else {
+                                    System.out.println("BLOCKMOVERAW(8toN_pen_table2,");
+                                    /*TODO*///BLOCKMOVERAW(8toN_pen_table,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,transparent_color));
+                                }
+				break;
+
+			case TRANSPARENCY_BLEND_RAW:
+				if (pribuf != null){
+                                    System.out.println("BLOCKMOVERAWPRI(8toN_transblend1,");
+                                    /*TODO*///BLOCKMOVERAWPRI(8toN_transblend,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask,transparent_color));
+                                } else {
+                                    System.out.println("BLOCKMOVERAW(8toN_transblend2,");
+                                    /*TODO*///BLOCKMOVERAW(8toN_transblend,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,transparent_color));
+                                }
+				break;
+
+			case TRANSPARENCY_ALPHAONE:
+				if (pribuf != null){
+                                    System.out.println("BLOCKMOVEPRI(8toN_alphaone,");
+                                    /*TODO*///BLOCKMOVEPRI(8toN_alphaone,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color & 0xff, (transparent_color>>8) & 0xff));
+                                } else {
+                                    System.out.println("BLOCKMOVELU(8toN_alphaone,");
+                                    /*TODO*///BLOCKMOVELU(8toN_alphaone,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color & 0xff, (transparent_color>>8) & 0xff));
+                                }
+				break;
+
+			case TRANSPARENCY_ALPHA:
+				if (pribuf != null){
+                                    System.out.println("BLOCKMOVEPRI(8toN_alpha,");
+                                    /*TODO*///BLOCKMOVEPRI(8toN_alpha,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
+                                } else {
+                                    System.out.println("BLOCKMOVELU(8toN_alpha,");
+                                    /*TODO*///BLOCKMOVELU(8toN_alpha,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
+                                }
+				break;
+
             default:
                 throw new UnsupportedOperationException("unsupported");
             /*TODO*///				if (pribuf)
@@ -8757,5 +9042,6 @@ public class drawgfx {
 		}
 	}
     }
+
     
 }

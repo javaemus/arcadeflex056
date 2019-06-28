@@ -44,7 +44,7 @@ public class tilemapC {
      * ******************************************************************************
      */
     static mame_bitmap create_tmpbitmap(int width, int height, int depth) {
-        return bitmap_alloc(width, height);
+        return bitmap_alloc(width * 2, height * 2);
     }
 
     static mame_bitmap create_bitmask(int width, int height) {
@@ -485,7 +485,7 @@ public class tilemapC {
             tilemap.rowscroll = new int[tilemap.cached_height];//calloc(tilemap->cached_height,sizeof(int));
             tilemap.colscroll = new int[tilemap.cached_width];//calloc(tilemap->cached_width,sizeof(int));
             tilemap.priority_row = new UBytePtr[num_rows];//malloc( sizeof(UINT8 *)*num_rows );
-            tilemap.pixmap = create_tmpbitmap(tilemap.cached_width*2, tilemap.cached_height*2, Machine.scrbitmap.depth);
+            tilemap.pixmap = create_tmpbitmap(tilemap.cached_width, tilemap.cached_height, Machine.scrbitmap.depth);
             tilemap.foreground = mask_create(tilemap);
             tilemap.background = (type & TILEMAP_SPLIT) != 0 ? mask_create(tilemap) : null;
             if (tilemap.cached_tile_info != null

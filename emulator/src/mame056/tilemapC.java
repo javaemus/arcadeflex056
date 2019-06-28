@@ -27,7 +27,7 @@ public class tilemapC {
     public static abstract interface DrawTileHandlerPtr { public abstract int handler( struct_tilemap tilemap, int col, int row, int flags );}
     
     
-    public static mame_bitmap priority_bitmap;
+    public static mame_bitmap priority_bitmap = bitmap_alloc_depth(Machine.scrbitmap.width, Machine.scrbitmap.height, 16);;
 
     public static int/*UINT32*/ priority_bitmap_pitch_line;
     public static int/*UINT32*/ priority_bitmap_pitch_row;
