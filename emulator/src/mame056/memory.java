@@ -346,7 +346,7 @@ public class memory {
 
             /* set the new handler */
             if (HANDLER_IS_STATIC(handler))
-                    _handler = (ReadHandlerPtr) rmemhandler8[handler];
+                    _handler = (ReadHandlerPtr) rmemhandler8[handler].handler;
             rmemhandler8[bank].handler = _handler;
     }
 
@@ -380,7 +380,7 @@ public class memory {
 
             /* set the new handler */
             if (HANDLER_IS_STATIC(handler))
-                    _handler = (WriteHandlerPtr) wmemhandler8[handler];
+                    _handler = (WriteHandlerPtr) wmemhandler8[handler].handler;
             wmemhandler8[bank].handler = _handler;
     }
 

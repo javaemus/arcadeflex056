@@ -110,18 +110,20 @@ public class williams
                 BLIT_TRANSPARENT_SOLID(sstart, data, mem_amask);
             }
         };
-	static williams_blit_func_Ptr sinistar_blit_opaque;
-	static williams_blit_func_Ptr sinistar_blit_transparent;
-	static williams_blit_func_Ptr sinistar_blit_opaque_solid;
-	static williams_blit_func_Ptr sinistar_blit_transparent_solid;
-	static williams_blit_func_Ptr blaster_blit_opaque;
-	static williams_blit_func_Ptr blaster_blit_transparent;
-	static williams_blit_func_Ptr blaster_blit_opaque_solid;
-	static williams_blit_func_Ptr blaster_blit_transparent_solid;
-	static williams_blit_func_Ptr williams2_blit_opaque;
-	static williams_blit_func_Ptr williams2_blit_transparent;
-	static williams_blit_func_Ptr williams2_blit_opaque_solid;
-	static williams_blit_func_Ptr williams2_blit_transparent_solid;
+        
+        
+	static williams_blit_func_Ptr sinistar_blit_opaque = williams_blit_opaque;
+	static williams_blit_func_Ptr sinistar_blit_transparent = williams_blit_transparent;
+	static williams_blit_func_Ptr sinistar_blit_opaque_solid = williams_blit_opaque_solid;
+	static williams_blit_func_Ptr sinistar_blit_transparent_solid = williams_blit_transparent_solid;
+	static williams_blit_func_Ptr blaster_blit_opaque = williams_blit_opaque;
+	static williams_blit_func_Ptr blaster_blit_transparent = williams_blit_transparent;
+	static williams_blit_func_Ptr blaster_blit_opaque_solid = williams_blit_opaque_solid;
+	static williams_blit_func_Ptr blaster_blit_transparent_solid = williams_blit_transparent_solid;
+	static williams_blit_func_Ptr williams2_blit_opaque = williams_blit_opaque;
+	static williams_blit_func_Ptr williams2_blit_transparent = williams_blit_transparent;
+	static williams_blit_func_Ptr williams2_blit_opaque_solid = williams_blit_opaque;
+	static williams_blit_func_Ptr williams2_blit_transparent_solid = williams_blit_transparent_solid;
 	
 	/* blitter tables */
 	static williams_blit_func_Ptr[] blitter_table;
@@ -742,7 +744,7 @@ public class williams
 		if (w == 255) w = 256;
 		if (h == 255) h = 256;
                 
-		/* call the appropriate blitter */
+                /* call the appropriate blitter */
 		(blitter_table[(data >> 3) & 3]).handler(sstart, dstart, w, h, data);
 	
 		/* compute the ending address */
