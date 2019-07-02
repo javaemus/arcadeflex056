@@ -23,8 +23,8 @@ import static mame056.cpuintrfH.*;
 import static mame056.drawgfxH.*;
 import static arcadeflex056.fucPtr.*;
 import static mame056.tilemapH.*;
-//import static mame056.tilemapC.*;
-import static mame037b11.mame.tilemapC.*;
+import static mame056.tilemapC.*;
+//import static mame037b11.mame.tilemapC.*;
 //import static mame037b11.mame.tilemapH.*;
 import static arcadeflex056.video.osd_set_visible_area;
 

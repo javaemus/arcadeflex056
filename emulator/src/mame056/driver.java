@@ -200,6 +200,7 @@ import static WIP.mame056.drivers.hanaawas.*;
 import static WIP.mame056.drivers.route16.*;
 import static WIP.mame056.drivers.dynax.*;
 import static WIP.mame056.drivers.vsnes.*;
+import static WIP.mame056.drivers.grchamp.*;
 
 public class driver {
 
@@ -1327,7 +1328,7 @@ public class driver {
         /* other Taito games */
         driver_crbaloon, /* CL  (c) 1980 Taito Corporation */
         driver_crbalon2, /* CL  (c) 1980 Taito Corporation */
-        /*TODO*///	driver_grchamp,	/* GM  (c) 1981 Taito Corporation */
+        driver_grchamp,	/* GM  (c) 1981 Taito Corporation */
         driver_bking2, /* AD6 (c) 1983 Taito Corporation */
         /*TODO*///TESTdriver_josvolly,	/* ??? (c) 1983 Taito Corporation */
         driver_gsword, /* ??? (c) 1984 Taito Corporation */

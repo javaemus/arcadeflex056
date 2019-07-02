@@ -10,9 +10,10 @@ import static mame056.commonH.*;
 import static mame056.drawgfxH.*;
 import static mame056.mame.*;
 
-import static mame037b11.mame.tilemapC.tile_info;
-import mame056.tilemapC.DrawHandlerPtr;
-import mame056.tilemapC.DrawTileHandlerPtr;
+//import static mame037b11.mame.tilemapC.tile_info;
+//import mame056.tilemapC.DrawHandlerPtr;
+//import mame056.tilemapC.DrawTileHandlerPtr;
+import static mame056.tilemapC.*;
 
 public class tilemapH {
 

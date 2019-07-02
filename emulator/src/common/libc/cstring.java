@@ -122,6 +122,12 @@ public class cstring {
             dst.write(i, src.read(i));
         }
     }
+    
+    public static void memcpy(UShortPtr dst, UShortPtr src, int size) {
+        for (int i = 0; i < Math.min(size, src.memory.length); i++) {
+            dst.write(i, src.read(i));
+        }
+    }
 
     public static void memcpy(UBytePtr dst, int dstoffs, int[] src, int size) {
         for (int i = 0; i < Math.min(size, src.length); i++) {

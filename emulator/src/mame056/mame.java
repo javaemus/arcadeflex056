@@ -38,8 +38,8 @@ import static arcadeflex056.fileio.*;
 import common.subArrays.IntArray;
 import static mame056.common.bitmap_alloc_depth;
 import static mame056.tilemapH.*;
-//import static mame056.tilemapC.*;
-import static mame037b11.mame.tilemapC.*;
+import static mame056.tilemapC.*;
+//import static mame037b11.mame.tilemapC.*;
 //import static mame037b11.mame.tilemapH.*;
 
 public class mame {
@@ -624,7 +624,7 @@ public class mame {
 
         if (vh_open() == 0) {
             tilemap_init();
-            System.out.println(priority_bitmap);
+            //System.out.println(priority_bitmap);
             if (drv.vh_start == null || drv.vh_start.handler() == 0)/* start the video hardware */ {
                 if (sound_start() == 0) /* start the audio hardware */ {
                     int region;

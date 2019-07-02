@@ -7720,32 +7720,34 @@ public class drawgfx {
 /*TODO*///	}
 /*TODO*///})
 /*TODO*///
-/*TODO*///#define ADJUST_FOR_ORIENTATION(type, orientation, bitmap, x, y)				\
-/*TODO*///	int dy = ((type *)bitmap->line[1]) - ((type *)bitmap->line[0]);			\
-/*TODO*///	type *dst = (type *)bitmap->line[0] + y * dy + x;						\
-/*TODO*///	int xadv = 1;															\
-/*TODO*///	if (orientation)														\
-/*TODO*///	{																		\
-/*TODO*///		int tx = x, ty = y, temp;											\
-/*TODO*///		if ((orientation) & ORIENTATION_SWAP_XY)							\
-/*TODO*///		{																	\
-/*TODO*///			temp = tx; tx = ty; ty = temp;									\
-/*TODO*///			xadv = dy;														\
-/*TODO*///		}																	\
-/*TODO*///		if ((orientation) & ORIENTATION_FLIP_X)								\
-/*TODO*///		{																	\
-/*TODO*///			tx = bitmap->width - 1 - tx;									\
-/*TODO*///			if (!((orientation) & ORIENTATION_SWAP_XY)) xadv = -xadv;		\
-/*TODO*///		}																	\
-/*TODO*///		if ((orientation) & ORIENTATION_FLIP_Y)								\
-/*TODO*///		{																	\
-/*TODO*///			ty = bitmap->height - 1 - ty;									\
-/*TODO*///			if ((orientation) & ORIENTATION_SWAP_XY) xadv = -xadv;			\
-/*TODO*///		}																	\
-/*TODO*///		/* can't lookup line because it may be negative! */					\
-/*TODO*///		dst = ((type *)bitmap->line[0]) + dy * ty + tx;						\
-/*TODO*///	}
-/*TODO*///
+    public static void ADJUST_FOR_ORIENTATION(int orientation, mame_bitmap bitmap, int x, int y)
+    {
+	int dy = (new UShortPtr(bitmap.line[1]).read(0)) - (new UShortPtr(bitmap.line[0]).read(0));
+	UShortPtr dst = new UShortPtr(bitmap.line[0], y * dy + x);
+	int xadv = 1;
+	if (orientation != 0)
+	{
+		int tx = x, ty = y, temp;
+		if (((orientation) & ORIENTATION_SWAP_XY) != 0)
+		{
+			temp = tx; tx = ty; ty = temp;
+			xadv = dy;
+		}
+		if (((orientation) & ORIENTATION_FLIP_X) != 0)
+		{
+			tx = bitmap.width - 1 - tx;
+			if (((orientation) & ORIENTATION_SWAP_XY) == 0) xadv = -xadv;
+		}
+		if (((orientation) & ORIENTATION_FLIP_Y) != 0)
+		{
+			ty = bitmap.height - 1 - ty;
+			if (((orientation) & ORIENTATION_SWAP_XY) != 0) xadv = -xadv;
+		}
+		/* can't lookup line because it may be negative! */
+		dst = new UShortPtr(bitmap.line[0], dy * ty + tx);
+        }
+    }
+
     public static void draw_scanline8(mame_bitmap bitmap, int x, int y, int length, UBytePtr src, IntArray pens, int transparent_pen) {
         /* 8bpp destination */
         if (bitmap.depth == 8) {
@@ -7792,7 +7794,7 @@ public class drawgfx {
 /*TODO*///		}
         } /* 16bpp destination */ else if (bitmap.depth == 15 || bitmap.depth == 16) {
             /* adjust in case we're oddly oriented */
- /*TODO*///#define ADJUST_FOR_ORIENTATION(type, orientation, bitmap, x, y)				
+            ADJUST_FOR_ORIENTATION(Machine.orientation, bitmap, x, y);
             int dy = bitmap.line[1].offset / 2 - bitmap.line[0].offset / 2;
             UShortPtr dst = new UShortPtr(bitmap.line[0], (y * dy + x) * 2);
             int xadv = 1;
