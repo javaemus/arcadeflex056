@@ -350,5 +350,10 @@ public class stfight
 	
 		/*TODO*///tilemap_draw(bitmap,tx_tilemap,0,0);
                 tilemap_draw(bitmap,tx_tilemap,0);
+                
+                // HACK - ONLY for tilemaps 0.37. REMOVE in 0.56
+                tilemap_update(ALL_TILEMAPS);	
+		tilemap_render(ALL_TILEMAPS);
+                // END HACK
 	} };
 }
