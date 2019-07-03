@@ -10,8 +10,9 @@ import static arcadeflex056.fucPtr.*;
 import static common.ptr.*;
 import static mame056.commonH.*;
 import static mame056.common.*;
-import static mame056.tilemapC.*;
 import static mame056.tilemapH.*;
+//import static mame056.tilemapC.*;
+import static mame037b11.mame.tilemapC.*;
 import static mame056.vidhrdw.generic.*;
 import static common.libc.cstring.*;
 import static mame056.drawgfxH.*;
@@ -173,12 +174,17 @@ public class grchamp
 			if( work_bitmap != null ){
                                 tilemap = new struct_tilemap[3];
 				tilemap[0] = tilemap_create(get_bg0_tile_info,get_memory_offset,TILEMAP_OPAQUE,8,8,64,32);
-				tilemap[1] = tilemap_create(get_bg1_tile_info,get_memory_offset,TILEMAP_TRANSPARENT,8,8,64,32);
-				tilemap[2] = tilemap_create(get_bg2_tile_info,get_memory_offset,TILEMAP_TRANSPARENT,8,8,64,32);
+				/*TODO*///tilemap[1] = tilemap_create(get_bg1_tile_info,get_memory_offset,TILEMAP_TRANSPARENT,8,8,64,32);
+                                tilemap[1] = tilemap_create(get_bg1_tile_info,get_memory_offset,TILEMAP_OPAQUE,8,8,64,32);
+				/*TODO*///tilemap[2] = tilemap_create(get_bg2_tile_info,get_memory_offset,TILEMAP_TRANSPARENT,8,8,64,32);
+                                tilemap[2] = tilemap_create(get_bg2_tile_info,get_memory_offset,TILEMAP_OPAQUE,8,8,64,32);
 				if( tilemap[0]!=null && tilemap[1]!=null && tilemap[2]!=null )
 				{
-					tilemap_set_transparent_pen( tilemap[1], 0 );
-					tilemap_set_transparent_pen( tilemap[2], 0 );
+					/*TODO*///tilemap_set_transparent_pen( tilemap[1], 0 );
+                                        tilemap[1].transparent_pen = 0;
+					/*TODO*///tilemap_set_transparent_pen( tilemap[2], 0 );
+                                        tilemap[2].transparent_pen = 0;
+                                        
 					return 0;
 				}
 				bitmap_free( work_bitmap );
@@ -245,9 +251,12 @@ public class grchamp
 		tilemap_set_scrollx( tilemap[2], 0, dx-(grchamp_vreg1[0x9]+ ((attributes&0x20)!=0?256:(grchamp_vreg1[0xa]*256))));
 		tilemap_set_scrolly( tilemap[2], 0, dy - grchamp_vreg1[0xb] );
 	
-		tilemap_draw(bitmap,tilemap[0],0,0);
-		tilemap_draw(bitmap,tilemap[1],0,0);
-		tilemap_draw(bitmap,tilemap[2],0,0);
+		/*TODO*///tilemap_draw(bitmap,tilemap[0],0,0);
+                tilemap_draw(bitmap,tilemap[0],0);
+		/*TODO*///tilemap_draw(bitmap,tilemap[1],0,0);
+                tilemap_draw(bitmap,tilemap[1],0);
+		/*TODO*///tilemap_draw(bitmap,tilemap[2],0,0);
+                tilemap_draw(bitmap,tilemap[2],0);
 	}
 	
 	static void draw_player_car( mame_bitmap bitmap )
@@ -463,5 +472,10 @@ public class grchamp
 		draw_text( bitmap );
 		if(( grchamp_videoreg0.read()&0x80 ) != 0) draw_radar( bitmap );
 		draw_tachometer( bitmap );
+                
+                // HACK - ONLY for tilemaps 0.37. REMOVE in 0.56
+                tilemap_update(ALL_TILEMAPS);	
+		tilemap_render(ALL_TILEMAPS);
+                // END HACK
 	} };
 }
