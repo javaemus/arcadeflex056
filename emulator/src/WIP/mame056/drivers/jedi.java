@@ -114,6 +114,8 @@
  */ 
 package WIP.mame056.drivers;
 
+import static WIP.mame056.sound._5220intf.*;
+import static WIP.mame056.sound._5220intfH.*;
 import static arcadeflex056.fucPtr.*;
 import static common.ptr.*;
 
@@ -350,16 +352,16 @@ public class jedi
 	{
 		int state = (~offset >> 8) & 1;
 	
-		/*TODO*///if ((state ^ speech_strobe_state)!= 0 && state!= 0)
-		/*TODO*///	tms5220_data_w(0, speech_write_buffer);
+		if ((state ^ speech_strobe_state)!= 0 && state!= 0)
+			tms5220_data_w.handler(0, speech_write_buffer);
 		speech_strobe_state = state;
 	} };
 	
 	
 	public static ReadHandlerPtr speech_ready_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-	    /*TODO*///return (!tms5220_ready_r()) << 7;
-            return 0;
+	    return (tms5220_ready_r()!=0?0:1) << 7;
+            
 	} };
 	
 	
@@ -598,12 +600,12 @@ public class jedi
 	);
 	
 	
-	/*TODO*///static struct TMS5220interface tms5220_interface =
-	/*TODO*///{
-	/*TODO*///	SOUND_CPU_OSC/2/9,
-	/*TODO*///	100,
-	/*TODO*///	0
-	/*TODO*///};
+	static TMS5220interface tms5220_interface = new TMS5220interface
+	(
+		SOUND_CPU_OSC/2/9,
+		100,
+		null
+	);
 	
 	
 	
@@ -653,10 +655,10 @@ public class jedi
 			new MachineSound(
 				SOUND_POKEY,
 				pokey_interface
-		/*TODO*///	),
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_TMS5220,
-		/*TODO*///		tms5220_interface
+			),
+			new MachineSound(
+				SOUND_TMS5220,
+				tms5220_interface
 			)
 		},
                 

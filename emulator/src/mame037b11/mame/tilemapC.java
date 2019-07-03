@@ -350,7 +350,7 @@ public class tilemapC {
             mask.u8_data = new char[tilemap.num_tiles];
             mask.data_row = new UBytePtr[tilemap.num_cached_rows];
             mask.bitmask = //create_bitmask(tilemap.cached_width, tilemap.cached_height);
-            create_tmpbitmap(tilemap.cached_width, tilemap.cached_height, Machine.scrbitmap.depth);
+            create_bitmask(tilemap.cached_width, tilemap.cached_height);
             if (mask.u8_data != null && mask.data_row != null && mask.bitmask != null) {
                 int row;
                 for (row = 0; row < tilemap.num_cached_rows; row++) {
@@ -486,8 +486,11 @@ public class tilemapC {
             tilemap.colscroll = new int[tilemap.cached_width];//calloc(tilemap->cached_width,sizeof(int));
             tilemap.priority_row = new UBytePtr[num_rows];//malloc( sizeof(UINT8 *)*num_rows );
             tilemap.pixmap = create_tmpbitmap(tilemap.cached_width*2, tilemap.cached_height*2, Machine.scrbitmap.depth);
+            
             tilemap.foreground = mask_create(tilemap);
-            tilemap.background = (type & TILEMAP_SPLIT) != 0 ? mask_create(tilemap) : null;
+            /*TODO*///tilemap.background = (type & TILEMAP_SPLIT) != 0 ? mask_create(tilemap) : null;
+            tilemap.background = mask_create(tilemap);
+            
             if (tilemap.cached_tile_info != null
                     && tilemap.u8_priority != null && tilemap.u8_visible != null
                     && tilemap.u8_dirty_vram != null && tilemap.u8_dirty_pixels != null
