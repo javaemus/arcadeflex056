@@ -22,7 +22,9 @@ public class tilemapC {
 
     public static int TILE_FLAG_DIRTY	= (0x80);
 
-    public static enum trans_t { eWHOLLY_TRANSPARENT, eWHOLLY_OPAQUE, eMASKED };
+    public static int eWHOLLY_TRANSPARENT   = 0;
+    public static int eWHOLLY_OPAQUE        = 1;
+    public static int eMASKED               = 2;
 
     public static abstract interface DrawHandlerPtr { public abstract void handler(struct_tilemap tilemap, int xpos, int ypos, int mask, int value); }
     public static abstract interface DrawTileHandlerPtr { public abstract int handler( struct_tilemap tilemap, int col, int row, int flags );}
@@ -708,7 +710,7 @@ public class tilemapC {
 			{
 				tilemap.transparency_data_row[row] = new UBytePtr(tilemap.transparency_data, num_cols*row);
 			}
-			install_draw_handlers( tilemap );
+			install_draw_handlers056( tilemap );
 			mappings_update( tilemap );
 			tilemap_set_clip( tilemap, Machine.visible_area );
 			memset( tilemap.transparency_data, TILE_FLAG_DIRTY, num_tiles );
@@ -1714,6 +1716,7 @@ public class tilemapC {
     
     public static DrawHandlerPtr draw8BPP = new DrawHandlerPtr() {
         public void handler(struct_tilemap tilemap, int xpos, int ypos, int mask, int value) {
+            //System.out.println("draw8BPP");
             int tilemap_priority_code = blit.tilemap_priority_code;
         int x1 = xpos;
         int y1 = ypos;
@@ -1790,8 +1793,8 @@ public class tilemapC {
                 UBytePtr mask_data = new UBytePtr(mask_baseaddr, row);
                 UBytePtr priority_data = new UBytePtr(tilemap.transparency_data, row);
 
-                trans_t tile_type;
-                trans_t prev_tile_type = trans_t.eWHOLLY_TRANSPARENT;
+                int tile_type;
+                int prev_tile_type = eWHOLLY_TRANSPARENT;
 
                 int x_start = x1;
                 int x_end;
@@ -1799,16 +1802,16 @@ public class tilemapC {
                 int column;
                 for (column = c1; column <= c2; column++) {
                     if (column == c2 || priority_data.read(column) != priority) {
-                        tile_type = trans_t.eWHOLLY_TRANSPARENT;
+                        tile_type = eWHOLLY_TRANSPARENT;
                     } else {
-                        /*TODO*///tile_type = mask_data.read(column);
+                        tile_type = mask_data.read(column);
                         if(( (tilemap.transparency_data.read(column)&mask)!=0 ))
                                     {
-                                            tile_type = trans_t.eMASKED;
+                                            tile_type = eMASKED;
                                     }
                                     else
                                     {
-                                            tile_type = (((tilemap.transparency_data.read())&mask) == value)?trans_t.eWHOLLY_OPAQUE:trans_t.eWHOLLY_TRANSPARENT;
+                                            tile_type = (((tilemap.transparency_data.read())&mask) == value)?eWHOLLY_OPAQUE:eWHOLLY_TRANSPARENT;
                                     }
                     }
 
@@ -1821,8 +1824,8 @@ public class tilemapC {
                             x_end = x2;
                         }
 
-                        if (prev_tile_type != trans_t.eWHOLLY_TRANSPARENT) {
-                            if (prev_tile_type == trans_t.eMASKED) {
+                        if (prev_tile_type != eWHOLLY_TRANSPARENT) {
+                            if (prev_tile_type == eMASKED) {
                                 int count = (x_end + 7) / 8 - x_start / 8;
                                 UBytePtr mask0 = new UBytePtr(mask_baseaddr, x_start / 8);
                                 UBytePtr source0 = new UBytePtr(source_baseaddr, (x_start & 0xfff8));
@@ -1897,9 +1900,9 @@ public class tilemapC {
     
     public static DrawHandlerPtr draw16BPP = new DrawHandlerPtr() {
         public void handler(struct_tilemap tilemap, int xpos, int ypos, int mask, int value) {
-            
-            trans_t transPrev = trans_t.eWHOLLY_OPAQUE;
-            trans_t transCur = trans_t.eWHOLLY_OPAQUE;
+            System.out.println("draw16BPP");
+            int transPrev = eWHOLLY_OPAQUE;
+            int transCur = eWHOLLY_OPAQUE;
             UShortPtr pTrans = new UShortPtr();
             int cached_indx;
             //mame_bitmap screen = blit.screen_bitmap;
@@ -1990,7 +1993,7 @@ public class tilemapC {
                             row = y/tilemap.cached_tile_height;
                             x_start = x1;
 
-                            transPrev = trans_t.eWHOLLY_TRANSPARENT;
+                            transPrev = eWHOLLY_TRANSPARENT;
                             pTrans = new UShortPtr(mask_baseaddr, x_start);
 
                             cached_indx = row*tilemap.num_cached_cols + c1;
@@ -1999,7 +2002,7 @@ public class tilemapC {
                             {
                                     if( column == c2 )
                                     {
-                                            transCur = trans_t.eWHOLLY_TRANSPARENT;
+                                            transCur = eWHOLLY_TRANSPARENT;
                                             L_Skip = true;
                                     }
 
@@ -2010,11 +2013,11 @@ public class tilemapC {
 
                                     if(( (tilemap.transparency_data.read(cached_indx)&mask)!=0 ) && !L_Skip)
                                     {
-                                            transCur = trans_t.eMASKED;
+                                            transCur = eMASKED;
                                     }
                                     else if (!L_Skip)
                                     {
-                                            transCur = (((pTrans.read(pTrans.offset))&mask) == value)?trans_t.eWHOLLY_OPAQUE:trans_t.eWHOLLY_TRANSPARENT;
+                                            transCur = (((pTrans.read(pTrans.offset))&mask) == value)?eWHOLLY_OPAQUE:eWHOLLY_TRANSPARENT;
                                     }
                                     if (!L_Skip)
                                         pTrans.inc( tilemap.cached_tile_width );
@@ -2026,7 +2029,7 @@ public class tilemapC {
                                             if( x_end<x1 ) x_end = x1;
                                             if( x_end>x2 ) x_end = x2;
 
-                                            if( transPrev != trans_t.eWHOLLY_TRANSPARENT )
+                                            if( transPrev != eWHOLLY_TRANSPARENT )
                                             {
                                                     count = x_end - x_start;
                                                     source0 = new UShortPtr(source_baseaddr, x_start);
@@ -2034,7 +2037,7 @@ public class tilemapC {
                                                     pmap0 = new UShortPtr(priority_bitmap_baseaddr, x_start);
                                                     mask0 = new UShortPtr(mask_baseaddr, x_start / 8);
 
-                                                    if( transPrev == trans_t.eWHOLLY_OPAQUE )
+                                                    if( transPrev == eWHOLLY_OPAQUE )
                                                     {
                                                             i = y;
                                                             for(;;)

@@ -6953,8 +6953,10 @@ public class drawgfx {
 /*TODO*///						BLOCKMOVELU(4toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
                 } else {
                     if (pribuf != null) {
-                        throw new UnsupportedOperationException("Unsupported");
+                        //throw new UnsupportedOperationException("Unsupported");
+                        System.out.println("BLOCKMOVEPRI(8toN_transpen,");
                         /*TODO*///						BLOCKMOVEPRI(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
+                        blockmove_8toN_transpen16(sd, sw, sh, sm, ls, ts, flipx, flipy, dd, dw, dh, dm, paldata, transparent_color);
                     } else {
                         if ((gfx.flags & GFX_SWAPXY) != 0) {
                             throw new UnsupportedOperationException("Unsupported");//blockmove_##function##_swapxy##16 args ;
