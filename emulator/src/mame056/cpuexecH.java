@@ -203,7 +203,7 @@ public class cpuexecH {
 /*TODO*///#define M68705_INT_IRQ		M68705_IRQ_LINE
 /*TODO*///#define KONAMI_INT_IRQ		KONAMI_IRQ_LINE
 /*TODO*///#define KONAMI_INT_FIRQ		KONAMI_FIRQ_LINE
-/*TODO*///#define I8035_EXT_INT		0
+    public static final int I8035_EXT_INT   = 0;
 /*TODO*///#define I8039_EXT_INT		0
 /*TODO*///#define H6280_INT_IRQ1		0
 /*TODO*///#define H6280_INT_IRQ2		1

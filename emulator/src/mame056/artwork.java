@@ -878,8 +878,8 @@ public class artwork
 /*TODO*///		if (artwork_overlay) artwork_free(&artwork_overlay);
 /*TODO*///	}
 /*TODO*///	
-/*TODO*///	void overlay_load(const char *filename, unsigned int start_pen)
-/*TODO*///	{
+	public static void overlay_load(String filename, int start_pen)
+	{
 /*TODO*///		int width, height;
 /*TODO*///	
 /*TODO*///		/* replace the real display with a fake one, this way drivers can access Machine.scrbitmap
@@ -909,10 +909,10 @@ public class artwork
 /*TODO*///			}
 /*TODO*///			overlay_init(artwork_overlay);
 /*TODO*///		}
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	void backdrop_load(const char *filename, unsigned int start_pen)
-/*TODO*///	{
+	}
+
+	public static void backdrop_load(String filename, int start_pen)
+	{
 /*TODO*///		int width, height;
 /*TODO*///	
 /*TODO*///		/* replace the real display with a fake one, this way drivers can access Machine.scrbitmap
@@ -941,7 +941,7 @@ public class artwork
 /*TODO*///				return;
 /*TODO*///			}
 /*TODO*///		}
-/*TODO*///	}
+	}
 	
 	public static void artwork_load(artwork_info a, String filename, int start_pen)
 	{
@@ -1003,8 +1003,8 @@ public class artwork
 /*TODO*///	  have to be at the end of the list to stay compatible with the PNG
 /*TODO*///	  artwork.
 /*TODO*///	 *********************************************************************/
-/*TODO*///	void overlay_create(const struct artwork_element *ae, unsigned int start_pen)
-/*TODO*///	{
+	public static void overlay_create(artwork_element[] ae, int start_pen)
+	{
 /*TODO*///		struct mame_bitmap *disk, *disk_alpha, *box, *box_alpha;
 /*TODO*///		int pen, transparent_pen = -1, disk_type, white_pen;
 /*TODO*///		int width, height;
@@ -1135,7 +1135,7 @@ public class artwork
 /*TODO*///	
 /*TODO*///		artwork_remap(artwork_overlay);
 /*TODO*///		overlay_init(artwork_overlay);
-/*TODO*///	}
+	}
 /*TODO*///	
 /*TODO*///	int artwork_get_size_info(const char *file_name, struct artwork_size_info *a)
 /*TODO*///	{

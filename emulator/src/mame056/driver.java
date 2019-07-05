@@ -202,6 +202,8 @@ import static WIP.mame056.drivers.dynax.*;
 import static WIP.mame056.drivers.vsnes.*;
 import static WIP.mame056.drivers.grchamp.*;
 import static WIP.mame056.drivers.stfight.*;
+import static WIP.mame056.drivers.z80bw.*;
+import static WIP.mame056.drivers._8080bw.*;
 
 public class driver {
 
@@ -994,93 +996,93 @@ public class driver {
         /*TODO*///TESTdriver_topgun,
         /*TODO*///TESTdriver_jajamaru,
         /*TODO*///TESTdriver_vsxevus,
-        /*TODO*///
-        /*TODO*///	/* Midway 8080 b/w games */
-        /*TODO*///	driver_seawolf,	/* 596 [1976] */
-        /*TODO*///	driver_gunfight,	/* 597 [1975] */
-        /*TODO*///	/* 603 - Top Gun [1976] */
-        /*TODO*///	driver_tornbase,	/* 605 [1976] */
-        /*TODO*///	driver_280zzzap,	/* 610 [1976] */
-        /*TODO*///	driver_maze,		/* 611 [1976] */
-        /*TODO*///	driver_boothill,	/* 612 [1977] */
-        /*TODO*///	driver_checkmat,	/* 615 [1977] */
-        /*TODO*///	driver_desertgu,	/* 618 [1977] */
-        /*TODO*///	driver_dplay,		/* 619 [1977] */
-        /*TODO*///	driver_lagunar,	/* 622 [1977] */
-        /*TODO*///	driver_gmissile,	/* 623 [1977] */
-        /*TODO*///	driver_m4,		/* 626 [1977] */
-        /*TODO*///	driver_clowns,	/* 630 [1978] */
-        /*TODO*///	/* 640 - Space Walk [1978] */
-        /*TODO*///	driver_einnings,	/* 642 [1978] Midway */
-        /*TODO*///	driver_shuffle,	/* 643 [1978] */
-        /*TODO*///	driver_dogpatch,	/* 644 [1977] */
-        /*TODO*///	driver_spcenctr,	/* 645 (c) 1980 Midway */
-        /*TODO*///	driver_phantom2,	/* 652 [1979] */
-        /*TODO*///	driver_bowler,	/* 730 [1978] Midway */
-        /*TODO*///	driver_invaders,	/* 739 [1979] */
-        /*TODO*///	driver_blueshrk,	/* 742 [1978] */
-        /*TODO*///	driver_invad2ct,	/* 851 (c) 1980 Midway */
-        /*TODO*///	driver_invadpt2,	/* 852 [1980] Taito */
-        /*TODO*///	driver_invaddlx,	/* 852 [1980] Midway */
-        /*TODO*///	driver_moonbase,	/* Zeta - Nichibutsu */
-        /*TODO*///	/* 870 - Space Invaders Deluxe cocktail */
-        /*TODO*///	driver_earthinv,
-        /*TODO*///	driver_spaceatt,
-        /*TODO*///	driver_spaceat2,
-        /*TODO*///	driver_sinvzen,
-        /*TODO*///	driver_superinv,
-        /*TODO*///	driver_sstrangr,
-        /*TODO*///	driver_sstrngr2,
-        /*TODO*///	driver_sinvemag,
-        /*TODO*///	driver_jspecter,
-        /*TODO*///	driver_jspectr2,
-        /*TODO*///	driver_invrvnge,
-        /*TODO*///	driver_invrvnga,
-        /*TODO*///	driver_galxwars,
-        /*TODO*///	driver_galxwar2,
-        /*TODO*///	driver_galxwart,
-        /*TODO*///	driver_starw,
-        /*TODO*///	driver_lrescue,	/* LR  (c) 1979 Taito */
-        /*TODO*///	driver_grescue,	/* bootleg? */
-        /*TODO*///	driver_desterth,	/* bootleg */
-        /*TODO*///	driver_cosmicmo,	/* Universal */
-        /*TODO*///	driver_rollingc,	/* Nichibutsu */
-        /*TODO*///	driver_sheriff,	/* (c) Nintendo */
-        /*TODO*///	driver_bandido,	/* (c) Exidy */
-        /*TODO*///	driver_ozmawars,	/* Shin Nihon Kikaku (SNK) */
-        /*TODO*///	driver_ozmawar2,	/* Shin Nihon Kikaku (SNK) */
-        /*TODO*///	driver_solfight,	/* bootleg */
-        /*TODO*///	driver_spaceph,	/* Zilec Games */
-        /*TODO*///	driver_schaser,	/* RT  Taito */
-        /*TODO*///	driver_schasrcv,	/* RT  Taito */
-        /*TODO*///	driver_lupin3,	/* LP  (c) 1980 Taito */
-        /*TODO*///	driver_helifire,	/* (c) Nintendo */
-        /*TODO*///	driver_helifira,	/* (c) Nintendo */
-        /*TODO*///	driver_spacefev,
-        /*TODO*///	driver_sfeverbw,
-        /*TODO*///	driver_spclaser,
-        /*TODO*///	driver_laser,
-        /*TODO*///	driver_spcewarl,
-        /*TODO*///	driver_polaris,	/* PS  (c) 1980 Taito */
-        /*TODO*///	driver_polarisa,	/* PS  (c) 1980 Taito */
-        /*TODO*///	driver_ballbomb,	/* TN  (c) 1980 Taito */
-        /*TODO*///	driver_m79amb,
-        /*TODO*///	driver_alieninv,
-        /*TODO*///	driver_sitv,
-        /*TODO*///	driver_sicv,
-        /*TODO*///	driver_sisv,
-        /*TODO*///	driver_sisv2,
-        /*TODO*///	driver_spacewr3,
-        /*TODO*///	driver_invaderl,
-        /*TODO*///	driver_yosakdon,
-        /*TODO*///	driver_spceking,
-        /*TODO*///	driver_spcewars,
-        /*TODO*///
-        /*TODO*///	/* "Midway" Z80 b/w games */
-        /*TODO*///	driver_astinvad,	/* (c) 1980 Stern */
-        /*TODO*///	driver_kamikaze,	/* Leijac Corporation */
-        /*TODO*///	driver_spaceint,	/* [1980] Shoei */
-        /*TODO*///
+        
+        /* Midway 8080 b/w games */
+        driver_seawolf,	/* 596 [1976] */
+        driver_gunfight,	/* 597 [1975] */
+        /* 603 - Top Gun [1976] */
+        driver_tornbase,	/* 605 [1976] */
+        driver_280zzzap,	/* 610 [1976] */
+        driver_maze,		/* 611 [1976] */
+        driver_boothill,	/* 612 [1977] */
+        driver_checkmat,	/* 615 [1977] */
+        driver_desertgu,	/* 618 [1977] */
+        driver_dplay,		/* 619 [1977] */
+        driver_lagunar,	/* 622 [1977] */
+        driver_gmissile,	/* 623 [1977] */
+        driver_m4,		/* 626 [1977] */
+        driver_clowns,	/* 630 [1978] */
+        /* 640 - Space Walk [1978] */
+        driver_einnings,	/* 642 [1978] Midway */
+        driver_shuffle,	/* 643 [1978] */
+        driver_dogpatch,	/* 644 [1977] */
+        driver_spcenctr,	/* 645 (c) 1980 Midway */
+        driver_phantom2,	/* 652 [1979] */
+        driver_bowler,	/* 730 [1978] Midway */
+        driver_invaders,	/* 739 [1979] */
+        driver_blueshrk,	/* 742 [1978] */
+        driver_invad2ct,	/* 851 (c) 1980 Midway */
+        driver_invadpt2,	/* 852 [1980] Taito */
+        driver_invaddlx,	/* 852 [1980] Midway */
+        driver_moonbase,	/* Zeta - Nichibutsu */
+        /* 870 - Space Invaders Deluxe cocktail */
+        driver_earthinv,
+        driver_spaceatt,
+        driver_spaceat2,
+        driver_sinvzen,
+        driver_superinv,
+        driver_sstrangr,
+        driver_sstrngr2,
+        driver_sinvemag,
+        driver_jspecter,
+        driver_jspectr2,
+        driver_invrvnge,
+        driver_invrvnga,
+        driver_galxwars,
+        driver_galxwar2,
+        driver_galxwart,
+        driver_starw,
+        driver_lrescue,	/* LR  (c) 1979 Taito */
+        driver_grescue,	/* bootleg? */
+        driver_desterth,	/* bootleg */
+        driver_cosmicmo,	/* Universal */
+        driver_rollingc,	/* Nichibutsu */
+        driver_sheriff,	/* (c) Nintendo */
+        driver_bandido,	/* (c) Exidy */
+        driver_ozmawars,	/* Shin Nihon Kikaku (SNK) */
+        driver_ozmawar2,	/* Shin Nihon Kikaku (SNK) */
+        driver_solfight,	/* bootleg */
+        driver_spaceph,	/* Zilec Games */
+        driver_schaser,	/* RT  Taito */
+        driver_schasrcv,	/* RT  Taito */
+        driver_lupin3,	/* LP  (c) 1980 Taito */
+        driver_helifire,	/* (c) Nintendo */
+        driver_helifira,	/* (c) Nintendo */
+        driver_spacefev,
+        driver_sfeverbw,
+        driver_spclaser,
+        driver_laser,
+        driver_spcewarl,
+        driver_polaris,	/* PS  (c) 1980 Taito */
+        driver_polarisa,	/* PS  (c) 1980 Taito */
+        driver_ballbomb,	/* TN  (c) 1980 Taito */
+/*TODO*///driver_m79amb,
+        driver_alieninv,
+        driver_sitv,
+        driver_sicv,
+        driver_sisv,
+        driver_sisv2,
+        driver_spacewr3,
+        driver_invaderl,
+        driver_yosakdon,
+        driver_spceking,
+        driver_spcewars,
+        
+        /* "Midway" Z80 b/w games */
+        driver_astinvad,	/* (c) 1980 Stern */
+        driver_kamikaze,	/* Leijac Corporation */
+        driver_spaceint,	/* [1980] Shoei */
+        
         /*TODO*///	/* Meadows S2650 games */
         /*TODO*///	driver_lazercmd,	/* [1976?] */
         /*TODO*///	driver_bbonk,		/* [1976?] */
