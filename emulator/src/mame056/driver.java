@@ -204,6 +204,7 @@ import static WIP.mame056.drivers.grchamp.*;
 import static WIP.mame056.drivers.stfight.*;
 import static WIP.mame056.drivers.z80bw.*;
 import static WIP.mame056.drivers._8080bw.*;
+import static WIP.mame056.drivers.mitchell.*;
 
 public class driver {
 
@@ -2139,31 +2140,31 @@ public class driver {
         /*TODO*///	/* Tecmo ZN1 */
         /*TODO*///TESTdriver_glpracr2,	/*  Gallop Racer 2 (JAPAN) */
         /*TODO*///TESTdriver_doapp,		/*  Dead Or Alive ++ (JAPAN) */
-        /*TODO*///
-        /*TODO*///	/* Mitchell games */
-        /*TODO*///	driver_mgakuen,	/* (c) 1988 Yuga */
-        /*TODO*///	driver_mgakuen2,	/* (c) 1989 Face */
-        /*TODO*///	driver_pkladies,	/* (c) 1989 Mitchell */
-        /*TODO*///	driver_pkladiel,	/* (c) 1989 Leprechaun */
-        /*TODO*///	driver_dokaben,	/*  3/1989 (c) 1989 Capcom (Japan) */
-        /*TODO*///	/*  8/1989 Dokaben 2 (baseball) */
-        /*TODO*///	driver_pang,		/* (c) 1989 Mitchell (World) */
-        /*TODO*///	driver_pangb,		/* bootleg */
-        /*TODO*///	driver_bbros,		/* (c) 1989 Capcom (US) not listed on Capcom's site */
-        /*TODO*///	driver_pompingw,	/* (c) 1989 Mitchell (Japan) */
-        /*TODO*///	driver_cbasebal,	/* 10/1989 (c) 1989 Capcom (Japan) (different hardware) */
-        /*TODO*///	driver_cworld,	/* 11/1989 (QUIZ 1) (c) 1989 Capcom */
-        /*TODO*///	driver_hatena,	/* 28/02/1990 (QUIZ 2) (c) 1990 Capcom (Japan) */
-        /*TODO*///	driver_spang,		/* 14/09/1990 (c) 1990 Mitchell (World) */
-        /*TODO*///	driver_sbbros,	/* 01/10/1990 (c) 1990 Mitchell + Capcom (US) not listed on Capcom's site */
-        /*TODO*///	driver_marukin,	/* 17/10/1990 (c) 1990 Yuga (Japan) */
-        /*TODO*///	driver_qtono1,	/* 25/12/1990 (QUIZ 3) (c) 1991 Capcom (Japan) */
-        /*TODO*///	/*  4/1991 Ashita Tenki ni Naare (golf) */
-        /*TODO*///	driver_qsangoku,	/* 07/06/1991 (QUIZ 4) (c) 1991 Capcom (Japan) */
-        /*TODO*///	driver_block,		/* 06/11/1991 (c) 1991 Capcom (World) */
-        /*TODO*///	driver_blocka,	/* 10/09/1991 (c) 1991 Capcom (World) */
-        /*TODO*///	driver_blockj,	/* 10/09/1991 (c) 1991 Capcom (Japan) */
-        /*TODO*///	driver_blockbl,	/* bootleg */
+
+        /* Mitchell games */
+        driver_mgakuen,	/* (c) 1988 Yuga */
+        driver_mgakuen2,	/* (c) 1989 Face */
+        driver_pkladies,	/* (c) 1989 Mitchell */
+        driver_pkladiel,	/* (c) 1989 Leprechaun */
+        driver_dokaben,	/*  3/1989 (c) 1989 Capcom (Japan) */
+        /*  8/1989 Dokaben 2 (baseball) */
+        driver_pang,		/* (c) 1989 Mitchell (World) */
+        driver_pangb,		/* bootleg */
+        driver_bbros,		/* (c) 1989 Capcom (US) not listed on Capcom's site */
+        driver_pompingw,	/* (c) 1989 Mitchell (Japan) */
+        /*TODO*///driver_cbasebal,	/* 10/1989 (c) 1989 Capcom (Japan) (different hardware) */
+        driver_cworld,	/* 11/1989 (QUIZ 1) (c) 1989 Capcom */
+        driver_hatena,	/* 28/02/1990 (QUIZ 2) (c) 1990 Capcom (Japan) */
+        driver_spang,		/* 14/09/1990 (c) 1990 Mitchell (World) */
+        driver_sbbros,	/* 01/10/1990 (c) 1990 Mitchell + Capcom (US) not listed on Capcom's site */
+        driver_marukin,	/* 17/10/1990 (c) 1990 Yuga (Japan) */
+        driver_qtono1,	/* 25/12/1990 (QUIZ 3) (c) 1991 Capcom (Japan) */
+        /*  4/1991 Ashita Tenki ni Naare (golf) */
+        driver_qsangoku,	/* 07/06/1991 (QUIZ 4) (c) 1991 Capcom (Japan) */
+        driver_block,		/* 06/11/1991 (c) 1991 Capcom (World) */
+        driver_blocka,	/* 10/09/1991 (c) 1991 Capcom (World) */
+        driver_blockj,	/* 10/09/1991 (c) 1991 Capcom (Japan) */
+        driver_blockbl,	/* bootleg */
 
         /* Incredible Technologies games */
         /* http://www.itsgames.com */

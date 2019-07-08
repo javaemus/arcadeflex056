@@ -129,7 +129,7 @@ public class oki6295 extends snd_interface {
 	
 	***********************************************************************************************/
 	
-	void OKIM6295_set_bank_base(int which, int base)
+	public static void OKIM6295_set_bank_base(int which, int base)
 	{
 		int channel;
 	
