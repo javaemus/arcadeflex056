@@ -40,6 +40,7 @@ import mame056.sound.oki6295;
 import mame056.sound.pokey;
 import WIP.mame056.sound.hc55516;
 import WIP.mame056.sound._5220intf;
+import mame056.sound._2413intf;
 
 public class sndintrf {
 
@@ -455,19 +456,7 @@ public class sndintrf {
                 /*TODO*///		YM2612_sh_reset
                 /*TODO*///	},
                 new Dummy_snd(),
-                /*TODO*///#endif
-                /*TODO*///#if (HAS_YM2413)
-                /*TODO*///    {
-                /*TODO*///		SOUND_YM2413,
-                /*TODO*///		"YM2413",
-                /*TODO*///		YM2413_num,
-                /*TODO*///		YM2413_clock,
-                /*TODO*///		YM2413_sh_start,
-                /*TODO*///		YM2413_sh_stop,
-                /*TODO*///		0,
-                /*TODO*///		0
-                /*TODO*///	},
-                new Dummy_snd(),
+                new _2413intf(),
                 /*TODO*///#endif
                 /*TODO*///#if (HAS_YM3812)
                 /*TODO*///    {

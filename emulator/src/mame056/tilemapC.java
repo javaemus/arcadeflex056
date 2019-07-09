@@ -578,7 +578,7 @@ public class tilemapC {
 /*TODO*///
 /*TODO*///	case 15:
 	case 16:
-		tilemap.draw			= draw8BPP; //draw16BPP;
+		tilemap.draw			= draw16BPP;
 		break;
 
 	default:
@@ -684,7 +684,7 @@ public class tilemapC {
             tilemap.logical_colscroll	= new int[tilemap.cached_width];
             tilemap.cached_colscroll	= new int[tilemap.cached_width];
 
-            tilemap.transparency_data = new UBytePtr( num_tiles );
+            tilemap.transparency_data = new UBytePtr( num_tiles * 1024 );
             tilemap.transparency_data_row = new UBytePtr[ num_rows ];
             for (int i = 0 ; i < num_rows ; i++)
                 tilemap.transparency_data_row[i] = new UBytePtr();
@@ -1900,7 +1900,7 @@ public class tilemapC {
     
     public static DrawHandlerPtr draw16BPP = new DrawHandlerPtr() {
         public void handler(struct_tilemap tilemap, int xpos, int ypos, int mask, int value) {
-            System.out.println("draw16BPP");
+            //System.out.println("draw16BPP");
             int transPrev = eWHOLLY_OPAQUE;
             int transCur = eWHOLLY_OPAQUE;
             UShortPtr pTrans = new UShortPtr();
@@ -1958,7 +1958,7 @@ public class tilemapC {
             //System.out.println("x2="+xx2);
             //System.out.println("y2="+y2);
 
-            if( true ) /* do nothing if totally clipped */
+            if( x1<x2 && y1<y2 ) /* do nothing if totally clipped */
             {
                 //System.out.println("IN");
                     priority_bitmap_baseaddr = new UShortPtr(priority_bitmap.line[y1], xpos );
@@ -2607,7 +2607,8 @@ public class tilemapC {
     public static DrawTileHandlerPtr HandleTransparencyPen_raw = new DrawTileHandlerPtr() {
         public int handler(struct_tilemap tilemap, int x0, int y0, int flags) {
             System.out.println("HandleTransparencyPen_raw");
-            return HandleTransparencyPen_ind.handler(tilemap, x0, y0, flags);
+            //return HandleTransparencyPen_ind.handler(tilemap, x0, y0, flags);
+            return 1;
         }
     };
     

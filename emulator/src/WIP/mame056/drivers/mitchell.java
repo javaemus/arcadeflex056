@@ -65,6 +65,9 @@ import static arcadeflex036.osdepend.logerror;
 import static mame056.sound.oki6295.*;
 import static mame056.sound.oki6295H.*;
 import static WIP.mame056.machine.kabuki.*;
+import static mame056.sound._2413intf.*;
+import static mame056.sound._2413intfH.*;
+
 
 public class mitchell
 {
@@ -358,8 +361,8 @@ public class mitchell
 		new IO_WritePort( 0x00, 0x00, pang_gfxctrl_w ),    /* Palette bank, layer enable, coin counters, more */
 		new IO_WritePort( 0x01, 0x01, input_w ),
 		new IO_WritePort( 0x02, 0x02, pang_bankswitch_w ),      /* Code bank register */
-		/*TODO*///new IO_WritePort( 0x03, 0x03, YM2413_data_port_0_w ),
-		/*TODO*///new IO_WritePort( 0x04, 0x04, YM2413_register_port_0_w ),
+		new IO_WritePort( 0x03, 0x03, YM2413_data_port_0_w ),
+		new IO_WritePort( 0x04, 0x04, YM2413_register_port_0_w ),
 		new IO_WritePort( 0x05, 0x05, OKIM6295_data_0_w ),
 		new IO_WritePort( 0x06, 0x06, MWA_NOP ),	/* watchdog? irq ack? */
 		new IO_WritePort( 0x07, 0x07, pang_video_bank_w ),      /* Video RAM bank register */
@@ -967,12 +970,12 @@ public class mitchell
 	
 	
 	
-	/*TODO*///static struct YM2413interface ym2413_interface=
-	/*TODO*///{
-	/*TODO*///	1,	/* 1 chip */
-	/*TODO*///	8000000,	/* 8MHz ??? (hand tuned) */
-	/*TODO*///	{ 50 },	/* Volume */
-	/*TODO*///};
+	static YM2413interface ym2413_interface= new YM2413interface
+	(
+		1,	/* 1 chip */
+		8000000,	/* 8MHz ??? (hand tuned) */
+		new int[]{ 50 }	/* Volume */
+	);
 	
 	static OKIM6295interface okim6295_interface = new OKIM6295interface
         (
@@ -1012,10 +1015,10 @@ public class mitchell
 			new MachineSound(
 				SOUND_OKIM6295,
 				okim6295_interface
-			/*TODO*///),
-			/*TODO*///new MachineSound(
-			/*TODO*///	SOUND_YM2413,
-			/*TODO*///	ym2413_interface
+			),
+			new MachineSound(
+				SOUND_YM2413,
+				ym2413_interface
 			)
 		}
 	
@@ -1050,10 +1053,10 @@ public class mitchell
 			new MachineSound(
 				SOUND_OKIM6295,
 				okim6295_interface
-			/*TODO*///),
-			/*TODO*///new MachineSound(
-			/*TODO*///	SOUND_YM2413,
-			/*TODO*///	ym2413_interface
+			),
+			new MachineSound(
+				SOUND_YM2413,
+				ym2413_interface
 			)
 		},
 	
@@ -1088,10 +1091,10 @@ public class mitchell
 			new MachineSound(
 				SOUND_OKIM6295,
 				okim6295_interface
-			/*TODO*///),
-			/*TODO*///new MachineSound(
-			/*TODO*///	SOUND_YM2413,
-			/*TODO*///	ym2413_interface
+			),
+			new MachineSound(
+				SOUND_YM2413,
+				ym2413_interface
 			)
 		},
 	

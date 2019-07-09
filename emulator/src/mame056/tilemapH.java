@@ -68,7 +68,7 @@ public class tilemapH {
 		tile_info.flags and tile_info.priority will be automatically preset to 0,
 		games that don't need them don't need to explicitly set them to 0
          */
-        public UBytePtr pen_data;
+        public UBytePtr pen_data=new UBytePtr();
         public IntArray pal_data;
         public int/*UINT32*/ flags;
         public int skip;
