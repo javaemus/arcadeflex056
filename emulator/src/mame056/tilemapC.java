@@ -976,14 +976,14 @@ public class tilemapC {
 		}
 	}
 	
-	static void tilemap_set_scrolldx( struct_tilemap tilemap, int dx, int dx_if_flipped )
+	public static void tilemap_set_scrolldx( struct_tilemap tilemap, int dx, int dx_if_flipped )
 	{
 		tilemap.dx = dx;
 		tilemap.dx_if_flipped = dx_if_flipped;
 		recalculate_scroll( tilemap );
 	}
 	
-	static void tilemap_set_scrolldy( struct_tilemap tilemap, int dy, int dy_if_flipped )
+	public static void tilemap_set_scrolldy( struct_tilemap tilemap, int dy, int dy_if_flipped )
 	{
 		tilemap.dy = dy;
 		tilemap.dy_if_flipped = dy_if_flipped;
