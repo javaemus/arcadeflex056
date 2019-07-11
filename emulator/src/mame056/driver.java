@@ -208,6 +208,7 @@ import static WIP.mame056.drivers.mitchell.*;
 import static WIP.mame056.drivers.tecmo.*;
 import static WIP.mame056.drivers.mermaid.*;
 import static WIP.mame056.drivers.spacefb.*;
+import static WIP.mame056.drivers.mrjong.*;
 
 public class driver {
 
@@ -3959,8 +3960,8 @@ public class driver {
         driver_mole, /* (c) 1982 Yachiyo Electronics, Ltd. */
         /*TODO*///	driver_thehand,	/* (c) 1981 T.I.C. */
         /*TODO*///	driver_gotya,		/* (c) 1981 Game-A-Tron */
-        /*TODO*///	driver_mrjong,	/* (c) 1983 Kiwako */
-        /*TODO*///	driver_crazyblk,	/* (c) 1983 Kiwako + ECI license */
+        driver_mrjong,	/* (c) 1983 Kiwako */
+        driver_crazyblk,	/* (c) 1983 Kiwako + ECI license */
 
         driver_mermaid,	/* (c) 1982 Rock-ola */
         /*TODO*///	driver_royalmah,	/* (c) 1982 Falcon */
