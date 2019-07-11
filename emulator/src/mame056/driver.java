@@ -209,6 +209,7 @@ import static WIP.mame056.drivers.tecmo.*;
 import static WIP.mame056.drivers.mermaid.*;
 import static WIP.mame056.drivers.spacefb.*;
 import static WIP.mame056.drivers.mrjong.*;
+import static WIP.mame056.drivers.namcos86.*;
 
 public class driver {
 
@@ -718,16 +719,16 @@ public class driver {
         /*TODO*///	driver_skykidb,	/* (c) 1985 */
         /*TODO*///	driver_baraduke,	/* (c) 1985 */
         /*TODO*///	driver_metrocrs,	/* (c) 1985 */
-        /*TODO*///
-        /*TODO*///	/* Namco System 86 games */
-        /*TODO*///	driver_hopmappy,	/* (c) 1986 */
-        /*TODO*///	driver_skykiddx,	/* (c) 1986 */
-        /*TODO*///	driver_skykiddo,	/* (c) 1986 */
-        /*TODO*///	driver_roishtar,	/* (c) 1986 */
-        /*TODO*///	driver_genpeitd,	/* (c) 1986 */
-        /*TODO*///	driver_rthunder,	/* (c) 1986 new version */
-        /*TODO*///	driver_rthundro,	/* (c) 1986 old version */
-        /*TODO*///	driver_wndrmomo,	/* (c) 1987 */
+        
+        /* Namco System 86 games */
+        driver_hopmappy,	/* (c) 1986 */
+        driver_skykiddx,	/* (c) 1986 */
+        driver_skykiddo,	/* (c) 1986 */
+        driver_roishtar,	/* (c) 1986 */
+        driver_genpeitd,	/* (c) 1986 */
+        driver_rthunder,	/* (c) 1986 new version */
+        driver_rthundro,	/* (c) 1986 old version */
+        driver_wndrmomo,	/* (c) 1987 */
 
         /* Namco System 1 games */
         driver_shadowld, /* (c) 1987 */

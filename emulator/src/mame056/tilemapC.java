@@ -921,7 +921,7 @@ public class tilemapC {
             //System.out.println(tilemap.transparency_data);
             //System.out.println(tilemap.draw_tile);
             
-            tilemap.transparency_data.write(cached_indx, tilemap.draw_tile.handler(tilemap,x0,y0,flags ));
+            /*TODO*///tilemap.transparency_data.write(cached_indx, tilemap.draw_tile.handler(tilemap,x0,y0,flags ));
             //System.out.println("draw_tile.handler");
 
 /*TODO*///profiler_mark(PROFILER_END);
