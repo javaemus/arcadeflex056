@@ -206,6 +206,8 @@ import static WIP.mame056.drivers.z80bw.*;
 import static WIP.mame056.drivers._8080bw.*;
 import static WIP.mame056.drivers.mitchell.*;
 import static WIP.mame056.drivers.tecmo.*;
+import static WIP.mame056.drivers.mermaid.*;
+import static WIP.mame056.drivers.spacefb.*;
 
 public class driver {
 
@@ -3933,12 +3935,12 @@ public class driver {
         driver_arcadia, /* (c) 1982 Sigma Ent. Inc. */
         /*TODO*///	driver_spiders,	/* (c) 1981 Sigma Ent. Inc. */
         /*TODO*///	driver_spiders2,	/* (c) 1981 Sigma Ent. Inc. */
-        /*TODO*///
-        /*TODO*///	driver_spacefb,	/* (c) [1980?] Nintendo */
-        /*TODO*///	driver_spacefbg,	/* 834-0031 (c) 1980 Gremlin */
-        /*TODO*///	driver_spacefbb,	/* bootleg */
-        /*TODO*///	driver_spacebrd,	/* bootleg */
-        /*TODO*///	driver_spacedem,	/* (c) 1980 Fortrek + made by Nintendo */
+        
+        driver_spacefb,	/* (c) [1980?] Nintendo */
+        driver_spacefbg,	/* 834-0031 (c) 1980 Gremlin */
+        driver_spacefbb,	/* bootleg */
+        driver_spacebrd,	/* bootleg */
+        driver_spacedem,	/* (c) 1980 Fortrek + made by Nintendo */
         /*TODO*///	driver_omegrace,	/* (c) 1981 Midway */
         /*TODO*///	driver_dday,		/* (c) 1982 Olympia */
         /*TODO*///	driver_ddayc,		/* (c) 1982 Olympia + Centuri license */
@@ -3960,7 +3962,7 @@ public class driver {
         /*TODO*///	driver_mrjong,	/* (c) 1983 Kiwako */
         /*TODO*///	driver_crazyblk,	/* (c) 1983 Kiwako + ECI license */
 
-        /*TODO*///	driver_mermaid,	/* (c) 1982 Rock-ola */
+        driver_mermaid,	/* (c) 1982 Rock-ola */
         /*TODO*///	driver_royalmah,	/* (c) 1982 Falcon */
         /*TODO*///	driver_amspdwy,	/* no copyright notice, but (c) 1987 Enerdyne Technologies, Inc. */
         /*TODO*///	driver_amspdwya,	/* no copyright notice, but (c) 1987 Enerdyne Technologies, Inc. */
