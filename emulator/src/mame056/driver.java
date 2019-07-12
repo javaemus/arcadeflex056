@@ -210,6 +210,7 @@ import static WIP.mame056.drivers.mermaid.*;
 import static WIP.mame056.drivers.spacefb.*;
 import static WIP.mame056.drivers.mrjong.*;
 import static WIP.mame056.drivers.namcos86.*;
+import static WIP.mame056.drivers.baraduke.*;
 
 public class driver {
 
@@ -717,8 +718,8 @@ public class driver {
         /*TODO*///	driver_drgnbstr,	/* (c) 1984 */
         /*TODO*///	driver_skykid,	/* (c) 1985 */
         /*TODO*///	driver_skykidb,	/* (c) 1985 */
-        /*TODO*///	driver_baraduke,	/* (c) 1985 */
-        /*TODO*///	driver_metrocrs,	/* (c) 1985 */
+        driver_baraduke,	/* (c) 1985 */
+        driver_metrocrs,	/* (c) 1985 */
         
         /* Namco System 86 games */
         driver_hopmappy,	/* (c) 1986 */

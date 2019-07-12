@@ -13,8 +13,8 @@ package WIP.mame056.vidhrdw;
 import static arcadeflex056.fucPtr.*;
 import static common.ptr.*;
 import static mame056.tilemapH.*;
-import static mame056.tilemapC.*;
-//import static mame037b11.mame.tilemapC.*;
+//import static mame056.tilemapC.*;
+import static mame037b11.mame.tilemapC.*;
 import static mame056.cpuintrfH.*;
 import static mame056.cpuintrf.*;
 import static mame056.cpuexec.*;
@@ -122,9 +122,12 @@ public class tecmo
 		if (bg_tilemap==null || fg_tilemap==null || tx_tilemap==null)
 			return 1;
 	
-		tilemap_set_transparent_pen(bg_tilemap,0);
-		tilemap_set_transparent_pen(fg_tilemap,0);
-		tilemap_set_transparent_pen(tx_tilemap,0);
+		/*TODO*///tilemap_set_transparent_pen(bg_tilemap,0);
+                bg_tilemap.transparent_pen = 0;
+		/*TODO*///tilemap_set_transparent_pen(fg_tilemap,0);
+                fg_tilemap.transparent_pen = 0;
+		/*TODO*///tilemap_set_transparent_pen(tx_tilemap,0);
+                tx_tilemap.transparent_pen = 0;
 	
 		tilemap_set_scrolldx(bg_tilemap,-48,256+48);
 		tilemap_set_scrolldx(fg_tilemap,-48,256+48);
@@ -279,10 +282,18 @@ public class tecmo
 	{
 		fillbitmap(priority_bitmap,0,null);
 		fillbitmap(bitmap,Machine.pens[0x100],Machine.visible_area);
-		tilemap_draw(bitmap,bg_tilemap,0,1);
-		tilemap_draw(bitmap,fg_tilemap,0,2);
-		tilemap_draw(bitmap,tx_tilemap,0,4);
+		/*TODO*///tilemap_draw(bitmap,bg_tilemap,0,1);
+                tilemap_draw(bitmap,bg_tilemap,1);
+		/*TODO*///tilemap_draw(bitmap,fg_tilemap,0,2);
+                tilemap_draw(bitmap,fg_tilemap,2);
+		/*TODO*///tilemap_draw(bitmap,tx_tilemap,0,4);
+                tilemap_draw(bitmap,tx_tilemap,4);
 	
 		draw_sprites(bitmap);
+                
+                // HACK - ONLY for tilemaps 0.37. REMOVE in 0.56
+                tilemap_update(ALL_TILEMAPS);	
+		tilemap_render(ALL_TILEMAPS);
+                // END HACK
 	} };
 }
