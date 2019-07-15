@@ -6,11 +6,22 @@ package mame056.cpu.i8085;
 
 public class i8085H {
     
-    /*TODO*///enum {
-    /*TODO*///		I8085_PC=1, I8085_SP, I8085_AF ,I8085_BC, I8085_DE, I8085_HL,
-    /*TODO*///		I8085_HALT, I8085_IM, I8085_IREQ, I8085_ISRV, I8085_VECTOR,
-    /*TODO*///		I8085_TRAP_STATE, I8085_INTR_STATE,
-    /*TODO*///		I8085_RST55_STATE, I8085_RST65_STATE, I8085_RST75_STATE};
+        public static final int I8085_PC=1;
+        public static final int I8085_SP=2;
+        public static final int I8085_AF=3;
+        public static final int I8085_BC=4;
+        public static final int I8085_DE=5;
+        public static final int I8085_HL=6;
+        public static final int I8085_HALT=7;
+        public static final int I8085_IM=8;
+        public static final int I8085_IREQ=9;
+        public static final int I8085_ISRV=10;
+        public static final int I8085_VECTOR=11;
+        public static final int I8085_TRAP_STATE=12;
+        public static final int I8085_INTR_STATE=13;
+        public static final int I8085_RST55_STATE=14;
+        public static final int I8085_RST65_STATE=15;
+        public static final int I8085_RST75_STATE=16;
 	
 	public static final int I8085_INTR_LINE = 0;
 	public static final int I8085_RST55_LINE = 1;

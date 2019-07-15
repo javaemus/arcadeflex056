@@ -323,12 +323,12 @@ public class redalert
 				/* IRQ is hooked to a 555 timer, whose freq is 1150 Hz */
 				null,0,
 				interrupt,1150
-			/*TODO*///),
-			/*TODO*///new MachineCPU(
-			/*TODO*///	CPU_8085A | CPU_AUDIO_CPU,
-			/*TODO*///	1000000,	   /* 1 MHz? */
-			/*TODO*///	voice_readmem,voice_writemem,null,null,
-			/*TODO*///	ignore_interrupt,1
+			),
+			new MachineCPU(
+				CPU_8085A | CPU_AUDIO_CPU,
+				1000000,	   /* 1 MHz? */
+				voice_readmem,voice_writemem,null,null,
+				ignore_interrupt,1
 			)
 		},
 		60, DEFAULT_REAL_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */
