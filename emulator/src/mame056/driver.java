@@ -211,6 +211,7 @@ import static WIP.mame056.drivers.spacefb.*;
 import static WIP.mame056.drivers.mrjong.*;
 import static WIP.mame056.drivers.namcos86.*;
 import static WIP.mame056.drivers.baraduke.*;
+import static WIP.mame056.drivers.phoenix.*;
 
 public class driver {
 
@@ -428,7 +429,7 @@ public class driver {
 
         /* (c) 1984 */ /*TODO*///
         /* "Galaxian hardware" games */
-        /*galaxian*//*TODO*///driver_batman2,/* needs phoenix driver */
+        /*galaxian*/ driver_batman2,/* needs phoenix driver */
         /*galaxian*/ driver_ghostmun,/*No rom*/
         /*galaxian*/ driver_devilfsg, /*No rom*/
         /*galaxian*/ driver_jumpbug, /* scrolling issues */
@@ -624,17 +625,17 @@ public class driver {
         /*TODO*///	driver_mjegolf,	/* (c) 1994 FUJIC/AV JAPAN */
         /*TODO*///
         /*TODO*///	driver_niyanpai,	/* (c) 1996 */
-        /*TODO*///
-        /*TODO*///	/* "Phoenix hardware" (and variations) games */
+        
+        /* "Phoenix hardware" (and variations) games */
         /*TODO*///	driver_safarir,	/* Shin Nihon Kikaku (SNK) */
-        /*TODO*///	driver_phoenix,	/* (c) 1980 Amstar */
-        /*TODO*///	driver_phoenixa,	/* (c) 1980 Amstar + Centuri license */
-        /*TODO*///	driver_phoenixt,	/* (c) 1980 Taito */
-        /*TODO*///	driver_phoenix3,	/* bootleg */
-        /*TODO*///	driver_phoenixc,	/* bootleg */
-        /*TODO*///	driver_pleiads,	/* (c) 1981 Tehkan */
-        /*TODO*///	driver_pleiadbl,	/* bootleg */
-        /*TODO*///	driver_pleiadce,	/* (c) 1981 Centuri + Tehkan */
+        driver_phoenix,	/* (c) 1980 Amstar */
+        driver_phoenixa,	/* (c) 1980 Amstar + Centuri license */
+        driver_phoenixt,	/* (c) 1980 Taito */
+        driver_phoenix3,	/* bootleg */
+        driver_phoenixc,	/* bootleg */
+        driver_pleiads,	/* (c) 1981 Tehkan */
+        driver_pleiadbl,	/* bootleg */
+        driver_pleiadce,	/* (c) 1981 Centuri + Tehkan */
         /*TODO*///TESTdriver_survival,	/* (c) 1982 Rock-ola */
         driver_naughtyb, /* (c) 1982 Jaleco */
         driver_naughtya, /* bootleg */

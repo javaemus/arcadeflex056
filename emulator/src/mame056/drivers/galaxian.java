@@ -4,6 +4,7 @@
  */
 package mame056.drivers;
 
+import static WIP.mame056.drivers.phoenix.driver_phoenix;
 import static arcadeflex056.fucPtr.*;
 import static common.ptr.*;
 import static mame056.common.*;
@@ -3972,7 +3973,7 @@ public class galaxian {
     public static GameDriver driver_gteikokb = new GameDriver("1980", "gteikokb", "galaxian.java", rom_gteikokb, driver_uniwars, machine_driver_pisces, input_ports_gteikokb, init_pisces, ROT270, "bootleg", "Gingateikoku No Gyakushu (bootleg)");
     public static GameDriver driver_gteikob2 = new GameDriver("1980", "gteikob2", "galaxian.java", rom_gteikob2, driver_uniwars, machine_driver_gteikob2, input_ports_gteikob2, init_gteikob2, ROT270, "bootleg", "Gingateikoku No Gyakushu (bootleg, set 2)");
     public static GameDriver driver_spacbatt = new GameDriver("1980", "spacbatt", "galaxian.java", rom_spacbatt, driver_uniwars, machine_driver_pisces, input_ports_superg, init_pisces, ROT90, "bootleg", "Space Battle");
-    /*TODO*///public static GameDriver driver_batman2	   = new GameDriver("1980"	,"batman2"	,"galaxian.java"	,rom_batman2,driver_phoenix	,machine_driver_batman2	,input_ports_batman2	,init_pisces	,ROT270	,	"bootleg", "Batman Part 2" );
+    public static GameDriver driver_batman2	   = new GameDriver("1980"	,"batman2"	,"galaxian.java"	,rom_batman2,driver_phoenix	,machine_driver_batman2	,input_ports_batman2	,init_pisces	,ROT270	,	"bootleg", "Batman Part 2" );
     public static GameDriver driver_warofbug = new GameDriver("1981", "warofbug", "galaxian.java", rom_warofbug, null, machine_driver_galaxian, input_ports_warofbug, init_pisces, ROT90, "Armenia", "War of the Bugs or Monsterous Manouvers in a Mushroom Maze");
     public static GameDriver driver_redufo = new GameDriver("19??", "redufo", "galaxian.java", rom_redufo, null, machine_driver_galaxian, input_ports_redufo, init_pisces, ROT90, "bootleg", "Defend the Terra Attack on the Red UFO (bootleg)");
     public static GameDriver driver_exodus = new GameDriver("19??", "exodus", "galaxian.java", rom_exodus, driver_redufo, machine_driver_galaxian, input_ports_exodus, init_pisces, ROT90, "Subelectro", "Exodus (bootleg?)");

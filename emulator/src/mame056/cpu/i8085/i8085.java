@@ -297,12 +297,12 @@ public class i8085  extends cpu_interface {
 
     public static int RM(int a)
     {
-            return cpu_readmem16(a);
+            return cpu_readmem16(a) & 0xFF;
     }
 
     public static void WM(int a, int v)
     {
-            cpu_writemem16(a, v);
+            cpu_writemem16(a, v & 0xFF);
     }
 	
 	static	void illegal()
