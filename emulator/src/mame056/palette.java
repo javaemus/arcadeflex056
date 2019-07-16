@@ -20,7 +20,7 @@ public class palette {
 
     /*TODO*///#define VERBOSE 0
     public static char[] game_palette;/* RGB palette as set by the driver */
-    static char[] actual_palette;/* actual RGB palette after brightness adjustments */
+    public static char[] actual_palette;/* actual RGB palette after brightness adjustments */
     static double[] brightness;
     /*TODO*///
     static int colormode;
@@ -180,7 +180,7 @@ public class palette {
 
         /* now the driver can modify the default values if it wants to. */
         if (Machine.drv.vh_init_palette != null) {
-            (Machine.drv.vh_init_palette).handler(game_palette, Machine.game_colortable, memory_region(REGION_PROMS));
+            (Machine.drv.vh_init_palette).handler(game_palette, Machine.game_colortable, new UBytePtr(memory_region(REGION_PROMS)));
         }
 
         switch (colormode) {
@@ -354,14 +354,14 @@ public class palette {
             return;
         }
 
-        game_palette[3 * color + 0] = (char) (r & 0xFF);
-        game_palette[3 * color + 1] = (char) (g & 0xFF);
-        game_palette[3 * color + 2] = (char) (b & 0xFF);
+        game_palette[3 * color + 0] = (char) (r & 0xFFFF);
+        game_palette[3 * color + 1] = (char) (g & 0xFFFF);
+        game_palette[3 * color + 2] = (char) (b & 0xFFFF);
 
         if (color < Machine.drv.total_colors && brightness[color] != 1.0) {
-            r = (int) (r * brightness[color] + 0.5) & 0xFF;
-            g = (int) (g * brightness[color] + 0.5) & 0xFF;
-            b = (int) (b * brightness[color] + 0.5) & 0xFF;
+            r = (int) (r * brightness[color] + 0.5) & 0xFFFF;
+            g = (int) (g * brightness[color] + 0.5) & 0xFFFF;
+            b = (int) (b * brightness[color] + 0.5) & 0xFFFF;
         }
 
         switch (colormode) {
