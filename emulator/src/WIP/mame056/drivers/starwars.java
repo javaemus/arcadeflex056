@@ -60,7 +60,7 @@ import static mame056.cpu.m6809.m6809H.M6809_IRQ_LINE;
 import static mame056.machine.slapstic.*;
 import static WIP.mame056.machine.starwars.*;
 import static WIP.mame056.sndhrdw.starwars.*;
-import WIP.mame056.sound._5220intfH.*;
+import static WIP.mame056.sound._5220intfH.*;
 import static WIP.mame056.vidhrdw.vector.*;
 import static WIP.mame056.vidhrdw.avgdvg.*;
 import static mame056.sound.pokey.*;

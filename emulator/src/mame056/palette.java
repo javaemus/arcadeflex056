@@ -180,7 +180,10 @@ public class palette {
 
         /* now the driver can modify the default values if it wants to. */
         if (Machine.drv.vh_init_palette != null) {
-            (Machine.drv.vh_init_palette).handler(game_palette, Machine.game_colortable, new UBytePtr(memory_region(REGION_PROMS)));
+            if (memory_region(REGION_PROMS) != null)
+                (Machine.drv.vh_init_palette).handler(game_palette, Machine.game_colortable, new UBytePtr(memory_region(REGION_PROMS)));
+            //else
+            //    (Machine.drv.vh_init_palette).handler(game_palette, Machine.game_colortable, null);                
         }
 
         switch (colormode) {
