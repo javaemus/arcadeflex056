@@ -7796,7 +7796,7 @@ public class drawgfx {
 /*TODO*///		}
         } /* 16bpp destination */ else if (bitmap.depth == 15 || bitmap.depth == 16) {
             /* adjust in case we're oddly oriented */
-            ADJUST_FOR_ORIENTATION(Machine.orientation, bitmap, x, y);
+            /*TODO*///ADJUST_FOR_ORIENTATION(Machine.orientation, bitmap, x, y);
             int dy = bitmap.line[1].offset / 2 - bitmap.line[0].offset / 2;
             UShortPtr dst = new UShortPtr(bitmap.line[0], (y * dy + x) * 2);
             int xadv = 1;
