@@ -80,7 +80,7 @@ public class i8080 extends i8085 {
 /*TODO*///	unsigned i8080_get_context(void *dst) { return i8085_get_context(dst); }
 	public void i8080_set_context(Object src) { i8085_set_context(src); }
 	public int i8080_get_reg(int regnum) { return i8085_get_reg(regnum); }
-/*TODO*///	void i8080_set_reg(int regnum, unsigned val)  { i8085_set_reg(regnum,val); }
+	public void i8080_set_reg(int regnum, int val)  { i8085_set_reg(regnum,val); }
         
 	public void i8080_set_irq_line(int irqline, int state)
 	{
@@ -184,7 +184,7 @@ public class i8080 extends i8085 {
 
     @Override
     public void set_reg(int regnum, int val) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        i8080_set_reg(regnum, val);
     }
 
     @Override

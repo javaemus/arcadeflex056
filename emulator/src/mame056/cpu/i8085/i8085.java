@@ -169,7 +169,7 @@ public class i8085 extends cpu_interface {
 
     @Override
     public void set_reg(int regnum, int val) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        i8085_set_reg(regnum, val);
     }
 
     @Override
@@ -1468,45 +1468,45 @@ public class i8085 extends cpu_interface {
 		}
 		return 0;
 	}
-/*TODO*///	
-/*TODO*///	/****************************************************************************
-/*TODO*///	 * Set a specific register
-/*TODO*///	 ****************************************************************************/
-/*TODO*///	void i8085_set_reg(int regnum, unsigned val)
-/*TODO*///	{
-/*TODO*///		switch( regnum )
-/*TODO*///		{
-/*TODO*///			case REG_PC: I.PC.L = val; change_pc16(I.PC.d); break;
-/*TODO*///			case I8085_PC: I.PC.L = val; break;
-/*TODO*///			case REG_SP: I.SP.L = val; break;
-/*TODO*///			case I8085_SP: I.SP.L = val; break;
-/*TODO*///			case I8085_AF: I.AF.L = val; break;
-/*TODO*///			case I8085_BC: I.BC.L = val; break;
-/*TODO*///			case I8085_DE: I.DE.L = val; break;
-/*TODO*///			case I8085_HL: I.HL.L = val; break;
-/*TODO*///			case I8085_IM: I.IM = val; break;
-/*TODO*///			case I8085_HALT: I.HALT = val; break;
-/*TODO*///			case I8085_IREQ: I.IREQ = val; break;
-/*TODO*///			case I8085_ISRV: I.ISRV = val; break;
-/*TODO*///			case I8085_VECTOR: I.INTR = val; break;
-/*TODO*///			case I8085_TRAP_STATE: I.nmi_state = val; break;
-/*TODO*///			case I8085_INTR_STATE: I.irq_state[I8085_INTR_LINE] = val; break;
-/*TODO*///			case I8085_RST55_STATE: I.irq_state[I8085_RST55_LINE] = val; break;
-/*TODO*///			case I8085_RST65_STATE: I.irq_state[I8085_RST65_LINE] = val; break;
-/*TODO*///			case I8085_RST75_STATE: I.irq_state[I8085_RST75_LINE] = val; break;
-/*TODO*///			default:
-/*TODO*///				if( regnum <= REG_SP_CONTENTS )
-/*TODO*///				{
-/*TODO*///					unsigned offset = I.SP.L + 2 * (REG_SP_CONTENTS - regnum);
-/*TODO*///					if( offset < 0xffff )
-/*TODO*///					{
-/*TODO*///						WM( offset, val&0xff );
-/*TODO*///						WM( offset+1, (val>>8)&0xff );
-/*TODO*///					}
-/*TODO*///				}
-/*TODO*///		}
-/*TODO*///	}
-/*TODO*///	
+	
+	/****************************************************************************
+	 * Set a specific register
+	 ****************************************************************************/
+	void i8085_set_reg(int regnum, int val)
+	{
+		switch( regnum )
+		{
+			case REG_PC: I.PC.L = val; change_pc16(I.PC.D); break;
+			case I8085_PC: I.PC.L = val; break;
+			case REG_SP: I.SP.L = val; break;
+			case I8085_SP: I.SP.L = val; break;
+			case I8085_AF: I.AF.L = val; break;
+			case I8085_BC: I.BC.L = val; break;
+			case I8085_DE: I.DE.L = val; break;
+			case I8085_HL: I.HL.L = val; break;
+			case I8085_IM: I.IM = val; break;
+			case I8085_HALT: I.HALT = val; break;
+			case I8085_IREQ: I.IREQ = val; break;
+			case I8085_ISRV: I.ISRV = val; break;
+			case I8085_VECTOR: I.INTR = val; break;
+			case I8085_TRAP_STATE: I.nmi_state = val; break;
+			case I8085_INTR_STATE: I.irq_state[I8085_INTR_LINE] = val; break;
+			case I8085_RST55_STATE: I.irq_state[I8085_RST55_LINE] = val; break;
+			case I8085_RST65_STATE: I.irq_state[I8085_RST65_LINE] = val; break;
+			case I8085_RST75_STATE: I.irq_state[I8085_RST75_LINE] = val; break;
+			default:
+				if( regnum <= REG_SP_CONTENTS )
+				{
+					int offset = I.SP.L + 2 * (REG_SP_CONTENTS - regnum);
+					if( offset < 0xffff )
+					{
+						WM( offset, val&0xff );
+						WM( offset+1, (val>>8)&0xff );
+					}
+				}
+		}
+	}
+	
 /*TODO*///	/****************************************************************************/
 /*TODO*///	/* Set the 8085 SID input signal state										*/
 /*TODO*///	/****************************************************************************/
