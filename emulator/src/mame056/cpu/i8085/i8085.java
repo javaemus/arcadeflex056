@@ -59,7 +59,7 @@ import static mame056.cpuintrfH.*;
 import static mame056.memory.*;
 import static mame056.memoryH.*;
 
-public class i8085  extends cpu_interface {
+public class i8085 extends cpu_interface {
     
     public static int[] i8085_ICount = new int[1];
     
@@ -128,7 +128,7 @@ public class i8085  extends cpu_interface {
 
     @Override
     public void exit() {
-        
+        i8085_exit();
     }
 
     @Override
@@ -179,6 +179,10 @@ public class i8085  extends cpu_interface {
 
     @Override
     public void set_irq_callback(irqcallbacksPtr callback) {
+        i8085_set_irq_callback(callback);
+    }
+    
+    public void i8085_set_irq_callback(irqcallbacksPtr callback) {
         I.irq_callback = callback;
     }
 
@@ -187,6 +191,10 @@ public class i8085  extends cpu_interface {
      ****************************************************************************/
     @Override
     public String cpu_info(Object context, int regnum) {
+        return i8085_info(context, regnum);
+    }
+
+    public String i8085_info(Object context, int regnum){
         /*TODO*///static char buffer[16][47+1];
         /*TODO*///static int which = 0;
         /*TODO*///i8085_Regs *r = context;
@@ -234,9 +242,9 @@ public class i8085  extends cpu_interface {
                 /*TODO*///case CPU_INFO_WIN_LAYOUT: return (const char *)i8085_win_layout;
         }
         /*TODO*///return buffer[which];
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Not supported yet.");    
     }
-
+    
     @Override
     public String cpu_dasm(String buffer, int pc) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -1394,14 +1402,14 @@ public class i8085  extends cpu_interface {
 		change_pc16(I.PC.D);
 	}
 	
-/*TODO*///	/****************************************************************************
-/*TODO*///	 * Shut down the CPU emulation
-/*TODO*///	 ****************************************************************************/
-/*TODO*///	void i8085_exit(void)
-/*TODO*///	{
-/*TODO*///		/* nothing to do */
-/*TODO*///	}
-/*TODO*///	
+	/****************************************************************************
+	 * Shut down the CPU emulation
+	 ****************************************************************************/
+	public void i8085_exit()
+	{
+		/* nothing to do */
+	}
+	
 /*TODO*///	/****************************************************************************
 /*TODO*///	 * Get the current 8085 context
 /*TODO*///	 ****************************************************************************/
@@ -1673,99 +1681,5 @@ public class i8085  extends cpu_interface {
 /*TODO*///		return 1;
 /*TODO*///	#endif
 /*TODO*///	}
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	/**************************************************************************
-/*TODO*///	 * 8080 section
-/*TODO*///	 **************************************************************************/
-/*TODO*///	#if (HAS_8080)
-/*TODO*///	/* Layout of the registers in the debugger */
-/*TODO*///	static UINT8 i8080_reg_layout[] = {
-/*TODO*///		I8080_AF, I8080_BC, I8080_DE, I8080_HL, I8080_SP, I8080_PC, -1,
-/*TODO*///		I8080_HALT, I8080_IREQ, I8080_ISRV, I8080_VECTOR, I8080_TRAP_STATE, I8080_INTR_STATE,
-/*TODO*///		0 };
-/*TODO*///	
-/*TODO*///	/* Layout of the debugger windows x,y,w,h */
-/*TODO*///	static UINT8 i8080_win_layout[] = {
-/*TODO*///		25, 0,55, 2,	/* register window (top, right rows) */
-/*TODO*///		 0, 0,24,22,	/* disassembler window (left colums) */
-/*TODO*///		25, 3,55,10,	/* memory #1 window (right, upper middle) */
-/*TODO*///		25,14,55, 8,	/* memory #2 window (right, lower middle) */
-/*TODO*///		 0,23,80, 1,	/* command line window (bottom rows) */
-/*TODO*///	};
-/*TODO*///	
-/*TODO*///	void i8080_init(void)
-/*TODO*///	{
-/*TODO*///		int cpu = cpu_getactivecpu();
-/*TODO*///		init_tables();
-/*TODO*///		I.cputype = 0;
-/*TODO*///	
-/*TODO*///		state_save_register_UINT16("i8080", cpu, "AF", &I.AF.L, 1);
-/*TODO*///		state_save_register_UINT16("i8080", cpu, "BC", &I.BC.L, 1);
-/*TODO*///		state_save_register_UINT16("i8080", cpu, "DE", &I.DE.L, 1);
-/*TODO*///		state_save_register_UINT16("i8080", cpu, "HL", &I.HL.L, 1);
-/*TODO*///		state_save_register_UINT16("i8080", cpu, "SP", &I.SP.L, 1);
-/*TODO*///		state_save_register_UINT16("i8080", cpu, "PC", &I.PC.L, 1);
-/*TODO*///		state_save_register_UINT8("i8080", cpu, "HALT", &I.HALT, 1);
-/*TODO*///		state_save_register_UINT8("i8080", cpu, "IREQ", &I.IREQ, 1);
-/*TODO*///		state_save_register_UINT8("i8080", cpu, "ISRV", &I.ISRV, 1);
-/*TODO*///		state_save_register_UINT32("i8080", cpu, "INTR", &I.INTR, 1);
-/*TODO*///		state_save_register_UINT32("i8080", cpu, "IRQ2", &I.IRQ2, 1);
-/*TODO*///		state_save_register_UINT32("i8080", cpu, "IRQ1", &I.IRQ1, 1);
-/*TODO*///		state_save_register_INT8("i8080", cpu, "nmi_state", &I.nmi_state, 1);
-/*TODO*///		state_save_register_INT8("i8080", cpu, "irq_state", I.irq_state, 1);
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	void i8080_reset(void *param) { i8085_reset(param); }
-/*TODO*///	void i8080_exit(void) { i8085_exit(); }
-/*TODO*///	int i8080_execute(int cycles) { return i8085_execute(cycles); }
-/*TODO*///	unsigned i8080_get_context(void *dst) { return i8085_get_context(dst); }
-/*TODO*///	void i8080_set_context(void *src) { i8085_set_context(src); }
-/*TODO*///	unsigned i8080_get_reg(int regnum) { return i8085_get_reg(regnum); }
-/*TODO*///	void i8080_set_reg(int regnum, unsigned val)  { i8085_set_reg(regnum,val); }
-/*TODO*///	void i8080_set_irq_line(int irqline, int state)
-/*TODO*///	{
-/*TODO*///		if (irqline == IRQ_LINE_NMI)
-/*TODO*///		{
-/*TODO*///			i8085_set_irq_line(irqline, state);
-/*TODO*///		}
-/*TODO*///		else
-/*TODO*///		{
-/*TODO*///			I.irq_state[irqline] = state;
-/*TODO*///			if (state == CLEAR_LINE)
-/*TODO*///			{
-/*TODO*///				if (!(I.IM & IM_IEN))
-/*TODO*///					i8085_set_INTR(0);
-/*TODO*///			}
-/*TODO*///			else
-/*TODO*///			{
-/*TODO*///				if (I.IM & IM_IEN)
-/*TODO*///					i8085_set_INTR(1);
-/*TODO*///			}
-/*TODO*///		}
-/*TODO*///	}
-/*TODO*///	void i8080_set_irq_callback(int (*callback)(int irqline)) { i8085_set_irq_callback(callback); }
-/*TODO*///	const char *i8080_info(void *context, int regnum)
-/*TODO*///	{
-/*TODO*///		switch( regnum )
-/*TODO*///		{
-/*TODO*///			case CPU_INFO_NAME: return "8080";
-/*TODO*///			case CPU_INFO_VERSION: return "1.2";
-/*TODO*///			case CPU_INFO_REG_LAYOUT: return (const char *)i8080_reg_layout;
-/*TODO*///			case CPU_INFO_WIN_LAYOUT: return (const char *)i8080_win_layout;
-/*TODO*///		}
-/*TODO*///		return i8085_info(context,regnum);
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	unsigned i8080_dasm(char *buffer, unsigned pc)
-/*TODO*///	{
-/*TODO*///	#ifdef MAME_DEBUG
-/*TODO*///		return Dasm8085(buffer,pc);
-/*TODO*///	#else
-/*TODO*///		sprintf( buffer, "$%02X", cpu_readop(pc) );
-/*TODO*///		return 1;
-/*TODO*///	#endif
-/*TODO*///	}
-/*TODO*///	#endif
 
 }

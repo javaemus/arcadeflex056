@@ -4,6 +4,8 @@
  */ 
 package mame056.cpu.i8085;
 
+import static mame056.cpu.i8085.i8085.i8085_ICount;
+
 public class i8085H {
     
         public static final int I8085_PC=1;
@@ -38,18 +40,18 @@ public class i8085H {
 	 * I8080 section
 	 **************************************************************************/
 	/*TODO*///#if (HAS_8080)
-	/*TODO*///#define I8080_PC                I8085_PC
-	/*TODO*///#define I8080_SP				I8085_SP
-	/*TODO*///#define I8080_BC				I8085_BC
-	/*TODO*///#define I8080_DE				I8085_DE
-	/*TODO*///#define I8080_HL				I8085_HL
-	/*TODO*///#define I8080_AF				I8085_AF
-	/*TODO*///#define I8080_HALT				I8085_HALT
-	/*TODO*///#define I8080_IREQ				I8085_IREQ
-	/*TODO*///#define I8080_ISRV				I8085_ISRV
-	/*TODO*///#define I8080_VECTOR			I8085_VECTOR
-	/*TODO*///#define I8080_TRAP_STATE		I8085_TRAP_STATE
-	/*TODO*///#define I8080_INTR_STATE		I8085_INTR_STATE
+	public static final int I8080_PC                = I8085_PC;
+	public static final int I8080_SP		= I8085_SP;
+	public static final int I8080_BC                = I8085_BC;
+	public static final int I8080_DE                = I8085_DE;
+	public static final int I8080_HL                = I8085_HL;
+        public static final int I8080_AF                = I8085_AF;
+	public static final int I8080_HALT              = I8085_HALT;
+	public static final int I8080_IREQ              = I8085_IREQ;
+	public static final int I8080_ISRV              = I8085_ISRV;
+	public static final int I8080_VECTOR            = I8085_VECTOR;
+	public static final int I8080_TRAP_STATE        = I8085_TRAP_STATE;
+	public static final int I8080_INTR_STATE        = I8085_INTR_STATE;
 	
 	/*TODO*///#define I8080_REG_LAYOUT \
 	/*TODO*///{	CPU_8080, \
@@ -57,9 +59,9 @@ public class i8085H {
 	/*TODO*///	I8080_HALT,I8080_IREQ,I8080_ISRV,I8080_VECTOR, I8080_TRAP_STATE,I8080_INTR_STATE, \
 	/*TODO*///    DBG_END }
 	
-	/*TODO*///#define I8080_INTR_LINE         I8085_INTR_LINE
-	/*TODO*///
-	/*TODO*///#define     i8080_ICount            i8085_ICount
+	public static final int I8080_INTR_LINE         = I8085_INTR_LINE;
+	
+        /*TODO*///public static int[] i8080_ICount = i8085_ICount;
 	/*TODO*///extern unsigned i8080_get_context(void *dst);
 	/*TODO*///extern unsigned i8080_get_reg(int regnum);
 	/*TODO*///extern const char *i8080_info(void *context, int regnum);
