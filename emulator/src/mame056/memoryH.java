@@ -883,7 +883,10 @@ public static final int MRA_BANK24 = STATIC_BANK24;
 /*TODO*///DECLARE_MEM_HANDLERS_16BIT_BE(16)
 /*TODO*///DECLARE_MEM_HANDLERS_16BIT_BE(24)
 /*TODO*///DECLARE_MEM_HANDLERS_16BIT_BE(32)
-/*TODO*///#define change_pc16bew(pc)		change_pc_generic(pc, 16, 1, cpu_setopbase16bew)
+    public static void change_pc16bew(int pc){
+        /*TODO*///change_pc_generic(pc, 16, 1, cpu_setopbase16bew);
+        change_pc_generic(pc, 16, 1, cpu_setOPbase16);
+    }
 /*TODO*///#define change_pc24bew(pc)		change_pc_generic(pc, 24, 1, cpu_setopbase24bew)
 /*TODO*///#define change_pc32bew(pc)		change_pc_generic(pc, 32, 1, cpu_setopbase32bew)
 /*TODO*///

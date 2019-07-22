@@ -102,18 +102,18 @@ public class i8085 extends cpu_interface {
     
     public i8085() {
         cpu_num = CPU_8085A;
-        num_irqs = 1;
-        default_vector = 0;
+        num_irqs = 4;
+        default_vector = 255;
         icount = i8085_ICount;
         overclock = 1.00;
-        irq_int = 0;
+        irq_int = I8085_INTR_LINE;
         databus_width = 8;
         pgm_memory_base = 0;
         address_shift = 0;
         address_bits = 16;
         endianess = CPU_IS_LE;
         align_unit = 1;
-        max_inst_len = 2;
+        max_inst_len = 3;
     }
 
     @Override
@@ -144,7 +144,7 @@ public class i8085 extends cpu_interface {
 
     @Override
     public Object get_context() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return i8085_get_context(null);
     }
 
     @Override
@@ -1410,15 +1410,15 @@ public class i8085 extends cpu_interface {
 		/* nothing to do */
 	}
 	
-/*TODO*///	/****************************************************************************
-/*TODO*///	 * Get the current 8085 context
-/*TODO*///	 ****************************************************************************/
-/*TODO*///	unsigned i8085_get_context(void *dst)
-/*TODO*///	{
-/*TODO*///		if( dst )
-/*TODO*///			*(i8085_Regs*)dst = I;
-/*TODO*///		return sizeof(i8085_Regs);
-/*TODO*///	}
+	/****************************************************************************
+	 * Get the current 8085 context
+	 ****************************************************************************/
+	public static Object i8085_get_context(Object dst)
+	{
+		if( dst != null )
+			dst = (I8085_Regs)I;
+		return dst;
+	}
 	
 	/****************************************************************************
 	 * Set the current 8085 context

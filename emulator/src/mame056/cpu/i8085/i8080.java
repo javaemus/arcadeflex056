@@ -6,9 +6,12 @@ package mame056.cpu.i8085;
 
 import static mame056.cpu.i8085.i8085.I;
 import static mame056.cpu.i8085.i8085.init_tables;
+import static mame056.cpu.i8085.i8085H.I8080_INTR_LINE;
 //import static mame056.cpu.i8085.i8085H.i8080_ICount;
 import static mame056.cpu.i8085.i8085cpuH.IM_IEN;
 import static mame056.cpuintrfH.*;
+import static mame056.memory.cpu_readmem16;
+import static mame056.memory.cpu_writemem16;
 
 
 
@@ -36,18 +39,18 @@ public class i8080 extends i8085 {
 /*TODO*///	
         public i8080() {
             cpu_num = CPU_8080;
-            num_irqs = 1;
-            default_vector = 0;
-            icount = i8085_ICount;
-            overclock = 1.00;
-            irq_int = 0;
-            databus_width = 8;
-            pgm_memory_base = 0;
-            address_shift = 0;
-            address_bits = 16;
-            endianess = CPU_IS_LE;
-            align_unit = 1;
-            max_inst_len = 2;
+            num_irqs = 4;
+        default_vector = 255;
+        icount = i8085_ICount;
+        overclock = 1.00;
+        irq_int = I8080_INTR_LINE;
+        databus_width = 8;
+        pgm_memory_base = 0;
+        address_shift = 0;
+        address_bits = 16;
+        endianess = CPU_IS_LE;
+        align_unit = 1;
+        max_inst_len = 3;
         }
 	
         public void i8080_init()
@@ -77,18 +80,22 @@ public class i8080 extends i8085 {
 	public void i8080_reset(Object param) { i8085_reset(param); }
 	public void i8080_exit() { i8085_exit(); }
 	public int i8080_execute(int cycles) { return i8085_execute(cycles); }
-/*TODO*///	unsigned i8080_get_context(void *dst) { return i8085_get_context(dst); }
+	public Object i8080_get_context(Object dst) { return i8085_get_context(dst); }
 	public void i8080_set_context(Object src) { i8085_set_context(src); }
 	public int i8080_get_reg(int regnum) { return i8085_get_reg(regnum); }
 	public void i8080_set_reg(int regnum, int val)  { i8085_set_reg(regnum,val); }
         
 	public void i8080_set_irq_line(int irqline, int state)
 	{
+            //irqline = irqline & 3;
+            
+            //System.out.println("i8080_set_irq_line "+irqline);
+            
 		if (irqline == IRQ_LINE_NMI)
 		{
 			i8085_set_irq_line(irqline, state);
 		}
-                else /*HACK*/  if (irqline < 4)
+                else /*HACK*/  //if (irqline < 4)
 		{
 			I.irq_state[irqline] = state;
 			if (state == CLEAR_LINE)
@@ -104,7 +111,10 @@ public class i8080 extends i8085 {
 		}
 	}
         
-	public void i8080_set_irq_callback(irqcallbacksPtr callback) { i8085_set_irq_callback(callback); }
+	public void i8080_set_irq_callback(irqcallbacksPtr callback) { 
+            System.out.println("i8080_set_irq_callback");
+            i8085_set_irq_callback(callback); 
+        }
         
 	public String i8080_info(Object context, int regnum)
 	{
@@ -159,7 +169,7 @@ public class i8080 extends i8085 {
 
     @Override
     public Object get_context() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return i8085_get_context(null);
     }
 
     @Override
@@ -209,22 +219,22 @@ public class i8080 extends i8085 {
 
     @Override
     public int memory_read(int offset) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return cpu_readmem16(offset);
     }
 
     @Override
     public void memory_write(int offset, int data) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        cpu_writemem16(offset, data);
     }
 
     @Override
     public int internal_read(int offset) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return 0;
     }
 
     @Override
     public void internal_write(int offset, int data) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }    
     
     /*
