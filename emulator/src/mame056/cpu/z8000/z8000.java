@@ -33,6 +33,11 @@ import static mame056.cpuintrfH.*;
 import static mame056.memory.*;
 import static mame056.memoryH.*;
 import static arcadeflex036.osdepend.*;
+import static mame056.cpu.z8000.z8000cpuH.F_NVIE;
+import static mame056.cpu.z8000.z8000cpuH.F_VIE;
+import static mame056.cpu.z8000.z8000cpuH.RW;
+import static mame056.cpu.z8000.z8000cpuH.*;
+import static mame056.cpu.z8000.z8000tbl.*;
 
 public class z8000 extends cpu_interface
 {
@@ -56,7 +61,8 @@ public class z8000 extends cpu_interface
 
     @Override
     public void init() {
-        // nothing to do
+        z8000tbl tab = new z8000tbl();
+        tab.z8000_init(); // in z8000tbl class
     }
 
     @Override
@@ -66,12 +72,12 @@ public class z8000 extends cpu_interface
 
     @Override
     public void exit() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        z8000_exit();
     }
 
     @Override
     public int execute(int cycles) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return z8000_execute(cycles);
     }
 
     @Override
@@ -82,7 +88,24 @@ public class z8000 extends cpu_interface
 
     @Override
     public Object get_context() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        z8000_Regs Regs = new z8000_Regs();
+        
+        Regs.op=Z.op;
+        Regs.ppc=Z.ppc;
+	Regs.pc=Z.pc;
+        Regs.psap=Z.psap;
+        Regs.fcw=Z.fcw;
+        Regs.refresh=Z.refresh;
+        Regs.nsp=Z.nsp;
+        Regs.irq_req=Z.irq_req;
+        Regs.irq_srv=Z.irq_srv;
+        Regs.irq_vec=Z.irq_vec;
+	Regs.regs=Z.regs;
+        Regs.nmi_state=Z.nmi_state;
+        Regs.irq_state=Z.irq_state;
+	Regs.irq_callback=Z.irq_callback;
+        
+        return Regs;
     }
 
     @Override
@@ -102,7 +125,7 @@ public class z8000 extends cpu_interface
 
     @Override
     public int get_reg(int regnum) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return z8000_get_reg(regnum);
     }
 
     @Override
@@ -152,13 +175,15 @@ public class z8000 extends cpu_interface
 
     @Override
     public void set_op_base(int pc) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        cpu_setOPbase16.handler(pc);
     }
 
     @Override
     public int mem_address_bits_of_cpu() {
         return 16;
     }
+    
+    
 	
 /*TODO*///	#define VERBOSE 0
 /*TODO*///	
@@ -183,31 +208,36 @@ public class z8000 extends cpu_interface
 /*TODO*///		27,14,53, 8,	/* memory #2 window (right, lower middle) */
 /*TODO*///		 0,23,80, 1,	/* command line window (bottom rows) */
 /*TODO*///	};
-/*TODO*///	
-/*TODO*///	/* opcode execution table */
-/*TODO*///	Z8000_exec *z8000_exec = NULL;
-/*TODO*///	
-/*TODO*///	typedef union {
-/*TODO*///	    UINT8   B[16]; /* RL0,RH0,RL1,RH1...RL7,RH7 */
-/*TODO*///	    UINT16  W[16]; /* R0,R1,R2...R15 */
-/*TODO*///	    UINT32  L[8];  /* RR0,RR2,RR4..RR14 */
-/*TODO*///	    UINT64  Q[4];  /* RQ0,RQ4,..RQ12 */
-/*TODO*///	}   z8000_reg_file;
-/*TODO*///	
+	
+	/* opcode execution table */
+	public static Z8000_exec[] z8000_exec = new Z8000_exec[0x10000];
+        
+        static {
+            for (int i=0 ; i<0x10000 ; i++)
+                z8000_exec[i] = new Z8000_exec();
+        }
+	
+	public class z8000_reg_file {
+	    public int[]  B = new int[16]; /* RL0,RH0,RL1,RH1...RL7,RH7 */
+	    public int[]  W = new int[16]; /* R0,R1,R2...R15 */
+	    public int[]  L = new int[8];  /* RR0,RR2,RR4..RR14 */
+	    public int[]  Q = new int[4];  /* RQ0,RQ4,..RQ12 */
+	};
+	
         public class z8000_Regs {
-/*TODO*///	    UINT16  op[4];      /* opcodes/data of current instruction */
-/*TODO*///		UINT16	ppc;		/* previous program counter */
+	    public int[]  op=new int[4];      /* opcodes/data of current instruction */
+            public int	ppc;		/* previous program counter */
 	    public int  pc;         /* program counter */
-/*TODO*///	    UINT16  psap;       /* program status pointer */
-/*TODO*///	    UINT16  fcw;        /* flags and control word */
-/*TODO*///	    UINT16  refresh;    /* refresh timer/counter */
-/*TODO*///	    UINT16  nsp;        /* system stack pointer */
-/*TODO*///	    UINT16  irq_req;    /* CPU is halted, interrupt or trap request */
-/*TODO*///	    UINT16  irq_srv;    /* serviced interrupt request */
-/*TODO*///	    UINT16  irq_vec;    /* interrupt vector */
-/*TODO*///	    z8000_reg_file regs;/* registers */
-/*TODO*///		int nmi_state;		/* NMI line state */
-/*TODO*///		int irq_state[2];	/* IRQ line states (NVI, VI) */
+            public int  psap;       /* program status pointer */
+            public int  fcw;        /* flags and control word */
+            public int  refresh;    /* refresh timer/counter */
+            public int  nsp;        /* system stack pointer */
+            public int  irq_req;    /* CPU is halted, interrupt or trap request */
+            public int  irq_srv;    /* serviced interrupt request */
+            public int  irq_vec;    /* interrupt vector */
+	    public z8000_reg_file regs = new z8000_reg_file();/* registers */
+            public int nmi_state;		/* NMI line state */
+            public int[] irq_state = new int[2];	/* IRQ line states (NVI, VI) */
 	    public irqcallbacksPtr irq_callback;
 	};
 
@@ -216,9 +246,9 @@ public class z8000 extends cpu_interface
 	/* current CPU context */
 	static z8000_Regs Z;
 	
-/*TODO*///	/* zero, sign and parity flags for logical byte operations */
-/*TODO*///	static UINT8 z8000_zsp[256];
-/*TODO*///	
+	/* zero, sign and parity flags for logical byte operations */
+	static int[] z8000_zsp = new int[256];
+
 /*TODO*///	/* conversion table for Z8000 DAB opcode */
 /*TODO*///	
 /*TODO*///	/**************************************************************************
@@ -258,15 +288,48 @@ public class z8000 extends cpu_interface
 /*TODO*///			&Z.regs.B[ 6],&Z.regs.B[ 4],&Z.regs.B[ 2],&Z.regs.B[ 0],
 /*TODO*///			&Z.regs.B[14],&Z.regs.B[12],&Z.regs.B[10],&Z.regs.B[ 8]
 /*TODO*///		};
-/*TODO*///	
-/*TODO*///		static UINT16	*pRW[16] =
-/*TODO*///		{
-/*TODO*///	        &Z.regs.W[ 3],&Z.regs.W[ 2],&Z.regs.W[ 1],&Z.regs.W[ 0],
-/*TODO*///	        &Z.regs.W[ 7],&Z.regs.W[ 6],&Z.regs.W[ 5],&Z.regs.W[ 4],
-/*TODO*///	        &Z.regs.W[11],&Z.regs.W[10],&Z.regs.W[ 9],&Z.regs.W[ 8],
-/*TODO*///	        &Z.regs.W[15],&Z.regs.W[14],&Z.regs.W[13],&Z.regs.W[12]
-/*TODO*///	    };
-/*TODO*///	
+	
+          public static int pRW(int _pos)
+          {
+              switch(_pos){
+                  case 0:
+                      return Z.regs.W[ 3];
+                  case 1:
+                      return Z.regs.W[ 2];
+                  case 2:
+                      return Z.regs.W[ 1];
+                  case 3:
+                      return Z.regs.W[ 0];
+                  case 4:
+                      return Z.regs.W[ 7];
+                  case 5:
+                      return Z.regs.W[ 6];
+                  case 6:
+                      return Z.regs.W[ 5];
+                  case 7:
+                      return Z.regs.W[ 4];
+                  case 8:
+                      return Z.regs.W[ 11];
+                  case 9:
+                      return Z.regs.W[ 10];
+                  case 10:
+                      return Z.regs.W[ 9];
+                  case 11:
+                      return Z.regs.W[ 8];
+                  case 12:
+                      return Z.regs.W[ 15];
+                  case 13:
+                      return Z.regs.W[ 14];
+                  case 14:
+                      return Z.regs.W[ 13];
+                  case 15:
+                      return Z.regs.W[ 12];
+                  default:
+                      return 0;
+              }
+	        
+	    };
+	
 /*TODO*///	    /* pointers to long (32bit) registers */
 /*TODO*///		static UINT32	*pRL[16] =
 /*TODO*///		{
@@ -313,25 +376,27 @@ public class z8000 extends cpu_interface
 /*TODO*///	    &Z.regs.Q[ 1],&Z.regs.Q[ 1],&Z.regs.Q[ 1],&Z.regs.Q[ 1],
 /*TODO*///	    &Z.regs.Q[ 2],&Z.regs.Q[ 2],&Z.regs.Q[ 2],&Z.regs.Q[ 2],
 /*TODO*///	    &Z.regs.Q[ 3],&Z.regs.Q[ 3],&Z.regs.Q[ 3],&Z.regs.Q[ 3]};
-/*TODO*///	
-/*TODO*///	INLINE UINT16 RDOP(void)
-/*TODO*///	{
-/*TODO*///		UINT16 res = cpu_readop16(PC);
-/*TODO*///	    PC += 2;
-/*TODO*///	    return res;
-/*TODO*///	}
-/*TODO*///	
+	
+	public int RDOP()
+	{
+            /*TODO*///int res = cpu_readop16(Z.pc);
+            int res = cpu_readop(Z.pc);
+	    Z.pc += 2;
+	    return res;
+	}
+	
 /*TODO*///	INLINE UINT8 RDMEM_B(UINT16 addr)
 /*TODO*///	{
 /*TODO*///		return cpu_readmem16bew(addr);
 /*TODO*///	}
-/*TODO*///	
-/*TODO*///	INLINE UINT16 RDMEM_W(UINT16 addr)
-/*TODO*///	{
-/*TODO*///		addr &= ~1;
-/*TODO*///		return cpu_readmem16bew_word(addr);
-/*TODO*///	}
-/*TODO*///	
+	
+	public int RDMEM_W(int addr)
+	{
+		addr &= ~1;
+		/*TODO*///return cpu_readmem16bew_word(addr);
+                return cpu_readmem16(addr);
+	}
+	
 /*TODO*///	INLINE UINT32 RDMEM_L(UINT16 addr)
 /*TODO*///	{
 /*TODO*///		UINT32 result;
@@ -440,69 +505,69 @@ public class z8000 extends cpu_interface
 /*TODO*///			/* how to handle MMU writes? */
 /*TODO*///		}
 /*TODO*///	}
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	INLINE void set_irq(int type)
-/*TODO*///	{
-/*TODO*///	    switch ((type >> 8) & 255)
-/*TODO*///	    {
-/*TODO*///	        case Z8000_TRAP >> 8:
-/*TODO*///	            if (IRQ_SRV >= Z8000_TRAP)
-/*TODO*///	                return; /* double TRAP.. very bad :( */
-/*TODO*///	            IRQ_REQ = type;
-/*TODO*///	            break;
-/*TODO*///	        case Z8000_NMI >> 8:
-/*TODO*///	            if (IRQ_SRV >= Z8000_NMI)
-/*TODO*///	                return; /* no NMIs inside trap */
-/*TODO*///	            IRQ_REQ = type;
-/*TODO*///	            break;
-/*TODO*///	        case Z8000_SEGTRAP >> 8:
-/*TODO*///	            if (IRQ_SRV >= Z8000_SEGTRAP)
-/*TODO*///	                return; /* no SEGTRAPs inside NMI/TRAP */
-/*TODO*///	            IRQ_REQ = type;
-/*TODO*///	            break;
-/*TODO*///	        case Z8000_NVI >> 8:
-/*TODO*///	            if (IRQ_SRV >= Z8000_NVI)
-/*TODO*///	                return; /* no NVIs inside SEGTRAP/NMI/TRAP */
-/*TODO*///	            IRQ_REQ = type;
-/*TODO*///	            break;
-/*TODO*///	        case Z8000_VI >> 8:
-/*TODO*///	            if (IRQ_SRV >= Z8000_VI)
-/*TODO*///	                return; /* no VIs inside NVI/SEGTRAP/NMI/TRAP */
-/*TODO*///	            IRQ_REQ = type;
-/*TODO*///	            break;
-/*TODO*///	        case Z8000_SYSCALL >> 8:
+	
+	
+	public void set_irq(int type)
+	{
+	    switch ((type >> 8) & 255)
+	    {
+	        case Z8000_TRAP >> 8:
+	            if (Z.irq_srv >= Z8000_TRAP)
+	                return; /* double TRAP.. very bad :( */
+	            Z.irq_req = type;
+	            break;
+	        case Z8000_NMI >> 8:
+	            if (Z.irq_srv >= Z8000_NMI)
+	                return; /* no NMIs inside trap */
+	            Z.irq_req = type;
+	            break;
+	        case Z8000_SEGTRAP >> 8:
+	            if (Z.irq_srv >= Z8000_SEGTRAP)
+	                return; /* no SEGTRAPs inside NMI/TRAP */
+	            Z.irq_req = type;
+	            break;
+	        case Z8000_NVI >> 8:
+	            if (Z.irq_srv >= Z8000_NVI)
+	                return; /* no NVIs inside SEGTRAP/NMI/TRAP */
+	            Z.irq_req = type;
+	            break;
+	        case Z8000_VI >> 8:
+	            if (Z.irq_srv >= Z8000_VI)
+	                return; /* no VIs inside NVI/SEGTRAP/NMI/TRAP */
+	            Z.irq_req = type;
+	            break;
+	        case Z8000_SYSCALL >> 8:
 /*TODO*///	            LOG(("Z8K#%d SYSCALL $%02x\n", cpu_getactivecpu(), type & 0xff));
-/*TODO*///	            IRQ_REQ = type;
-/*TODO*///	            break;
-/*TODO*///	        default:
-/*TODO*///	            logerror("Z8000 invalid Cause_Interrupt %04x\n", type);
-/*TODO*///	            return;
-/*TODO*///	    }
-/*TODO*///	    /* set interrupt request flag, reset HALT flag */
-/*TODO*///	    IRQ_REQ = type & ~Z8000_HALT;
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	
-/*TODO*///	INLINE void Interrupt(void)
-/*TODO*///	{
-/*TODO*///	    UINT16 fcw = FCW;
-/*TODO*///	
-/*TODO*///	    if (IRQ_REQ & Z8000_NVI)
-/*TODO*///	    {
-/*TODO*///	        int type = (*Z.irq_callback)(0);
-/*TODO*///	        set_irq(type);
-/*TODO*///	    }
-/*TODO*///	
-/*TODO*///	    if (IRQ_REQ & Z8000_VI)
-/*TODO*///	    {
-/*TODO*///	        int type = (*Z.irq_callback)(1);
-/*TODO*///	        set_irq(type);
-/*TODO*///	    }
-/*TODO*///	
-/*TODO*///	   /* trap ? */
-/*TODO*///	   if ( IRQ_REQ & Z8000_TRAP )
-/*TODO*///	   {
+	            Z.irq_req = type;
+	            break;
+	        default:
+	            logerror("Z8000 invalid Cause_Interrupt %04x\n", type);
+	            return;
+	    }
+	    /* set interrupt request flag, reset HALT flag */
+	    Z.irq_req = type & ~Z8000_HALT;
+	}
+	
+	
+	public void Interrupt()
+	{
+	    int fcw = Z.fcw;
+	
+	    if ((Z.irq_req & Z8000_NVI) != 0)
+	    {
+	        int type = Z.irq_callback.handler(0);
+	        set_irq(type);
+	    }
+	
+	    if ((Z.irq_req & Z8000_VI) != 0)
+	    {
+	        int type = Z.irq_callback.handler(1);
+	        set_irq(type);
+	    }
+	
+	   /* trap ? */
+	   if ((Z.irq_req & Z8000_TRAP ) != 0)
+	   {
 /*TODO*///	        CHANGE_FCW(fcw | F_S_N);/* swap to system stack */
 /*TODO*///	        PUSHW( SP, PC );        /* save current PC */
 /*TODO*///	        PUSHW( SP, fcw );       /* save current FCW */
@@ -511,10 +576,10 @@ public class z8000 extends cpu_interface
 /*TODO*///	        IRQ_REQ &= ~Z8000_TRAP;
 /*TODO*///	        PC = TRAP;
 /*TODO*///	        LOG(("Z8K#%d trap $%04x\n", cpu_getactivecpu(), PC ));
-/*TODO*///	   }
-/*TODO*///	   else
-/*TODO*///	   if ( IRQ_REQ & Z8000_SYSCALL )
-/*TODO*///	   {
+	   }
+	   else
+	   if ((Z.irq_req & Z8000_SYSCALL ) != 0)
+	   {
 /*TODO*///	        CHANGE_FCW(fcw | F_S_N);/* swap to system stack */
 /*TODO*///	        PUSHW( SP, PC );        /* save current PC */
 /*TODO*///	        PUSHW( SP, fcw );       /* save current FCW */
@@ -523,10 +588,10 @@ public class z8000 extends cpu_interface
 /*TODO*///	        IRQ_REQ &= ~Z8000_SYSCALL;
 /*TODO*///	        PC = SYSCALL;
 /*TODO*///	        LOG(("Z8K#%d syscall $%04x\n", cpu_getactivecpu(), PC ));
-/*TODO*///	   }
-/*TODO*///	   else
-/*TODO*///	   if ( IRQ_REQ & Z8000_SEGTRAP )
-/*TODO*///	   {
+	   }
+	   else
+	   if ((Z.irq_req & Z8000_SEGTRAP ) != 0)
+	   {
 /*TODO*///	        CHANGE_FCW(fcw | F_S_N);/* swap to system stack */
 /*TODO*///	        PUSHW( SP, PC );        /* save current PC */
 /*TODO*///	        PUSHW( SP, fcw );       /* save current FCW */
@@ -535,10 +600,10 @@ public class z8000 extends cpu_interface
 /*TODO*///	        IRQ_REQ &= ~Z8000_SEGTRAP;
 /*TODO*///	        PC = SEGTRAP;
 /*TODO*///	        LOG(("Z8K#%d segtrap $%04x\n", cpu_getactivecpu(), PC ));
-/*TODO*///	   }
-/*TODO*///	   else
-/*TODO*///	   if ( IRQ_REQ & Z8000_NMI )
-/*TODO*///	   {
+	   }
+	   else
+	   if ((Z.irq_req & Z8000_NMI ) != 0)
+	   {
 /*TODO*///	        CHANGE_FCW(fcw | F_S_N);/* swap to system stack */
 /*TODO*///	        PUSHW( SP, PC );        /* save current PC */
 /*TODO*///	        PUSHW( SP, fcw );       /* save current FCW */
@@ -550,10 +615,10 @@ public class z8000 extends cpu_interface
 /*TODO*///	        CHANGE_FCW(fcw);
 /*TODO*///	        PC = NMI;
 /*TODO*///	        LOG(("Z8K#%d NMI $%04x\n", cpu_getactivecpu(), PC ));
-/*TODO*///	    }
-/*TODO*///	    else
-/*TODO*///	    if ( (IRQ_REQ & Z8000_NVI) && (FCW & F_NVIE) )
-/*TODO*///	    {
+	    }
+	    else
+	    if ( ((Z.irq_req & Z8000_NVI)!=0) && (Z.fcw & F_NVIE)!=0 )
+	    {
 /*TODO*///	        CHANGE_FCW(fcw | F_S_N);/* swap to system stack */
 /*TODO*///	        PUSHW( SP, PC );        /* save current PC */
 /*TODO*///	        PUSHW( SP, fcw );       /* save current FCW */
@@ -564,10 +629,10 @@ public class z8000 extends cpu_interface
 /*TODO*///	        IRQ_REQ &= ~Z8000_NVI;
 /*TODO*///	        CHANGE_FCW(fcw);
 /*TODO*///	        LOG(("Z8K#%d NVI $%04x\n", cpu_getactivecpu(), PC ));
-/*TODO*///	    }
-/*TODO*///	    else
-/*TODO*///	    if ( (IRQ_REQ & Z8000_VI) && (FCW & F_VIE) )
-/*TODO*///	    {
+	    }
+	    else
+	    if ( ((Z.irq_req & Z8000_VI)!=0) && (Z.fcw & F_VIE)!=0 )
+	    {
 /*TODO*///	        CHANGE_FCW(fcw | F_S_N);/* swap to system stack */
 /*TODO*///	        PUSHW( SP, PC );        /* save current PC */
 /*TODO*///	        PUSHW( SP, fcw );       /* save current FCW */
@@ -578,10 +643,10 @@ public class z8000 extends cpu_interface
 /*TODO*///	        IRQ_REQ &= ~Z8000_VI;
 /*TODO*///	        CHANGE_FCW(fcw);
 /*TODO*///	        LOG(("Z8K#%d VI [$%04x/$%04x] fcw $%04x, pc $%04x\n", cpu_getactivecpu(), IRQ_VEC, VEC00 + VEC00 + 2 * (IRQ_REQ & 0xff), FCW, PC ));
-/*TODO*///	    }
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	
+	    }
+	}
+	
+	
 	public void z8000_reset(Object param)
 	{
 /*TODO*///		memset(&Z, 0, sizeof(z8000_Regs));
@@ -590,49 +655,49 @@ public class z8000 extends cpu_interface
 /*TODO*///		change_pc16bew(PC);
 	}
 	
-/*TODO*///	void z8000_exit(void)
-/*TODO*///	{
-/*TODO*///		z8000_deinit();
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	int z8000_execute(int cycles)
-/*TODO*///	{
-/*TODO*///	    z8000_ICount = cycles;
-/*TODO*///	
-/*TODO*///	    do
-/*TODO*///	    {
-/*TODO*///	        /* any interrupt request pending? */
-/*TODO*///	        if (IRQ_REQ)
-/*TODO*///				Interrupt();
-/*TODO*///	
+	public void z8000_exit()
+	{
+		z8000_deinit();
+	}
+	
+	public int z8000_execute(int cycles)
+	{
+	    z8000_ICount[0] = cycles;
+	
+	    do
+	    {
+	        /* any interrupt request pending? */
+	        if (Z.irq_req != 0)
+				Interrupt();
+	
 /*TODO*///			CALL_MAME_DEBUG;
-/*TODO*///	
-/*TODO*///			if (IRQ_REQ & Z8000_HALT)
-/*TODO*///	        {
-/*TODO*///	            z8000_ICount = 0;
-/*TODO*///	        }
-/*TODO*///	        else
-/*TODO*///	        {
-/*TODO*///	            Z8000_exec *exec;
-/*TODO*///	            Z.op[0] = RDOP();
-/*TODO*///	            exec = &z8000_exec[Z.op[0]];
-/*TODO*///	
-/*TODO*///	            if (exec->size > 1)
-/*TODO*///	                Z.op[1] = RDOP();
-/*TODO*///	            if (exec->size > 2)
-/*TODO*///	                Z.op[2] = RDOP();
-/*TODO*///	
-/*TODO*///	            z8000_ICount -= exec->cycles;
-/*TODO*///	            (*exec->opcode)();
-/*TODO*///	
-/*TODO*///	        }
-/*TODO*///	    } while (z8000_ICount > 0);
-/*TODO*///	
-/*TODO*///	    return cycles - z8000_ICount;
-/*TODO*///	
-/*TODO*///	}
-/*TODO*///	
-/*TODO*///	unsigned z8000_get_context(void *dst)
+	
+		if ((Z.irq_req & Z8000_HALT) != 0)
+	        {
+	            z8000_ICount[0] = 0;
+	        }
+	        else
+	        {
+	            Z8000_exec exec;
+	            Z.op[0] = RDOP();
+	            exec = z8000_exec[Z.op[0]];
+	
+	            if (exec.size > 1)
+	                Z.op[1] = RDOP();
+	            if (exec.size > 2)
+	                Z.op[2] = RDOP();
+	
+	            z8000_ICount[0] -= exec.cycles;
+                    /*TODO*///exec.opcode.handler(Z.pc);
+
+	        }
+	    } while (z8000_ICount[0] > 0);
+	
+	    return cycles - z8000_ICount[0];
+	
+	}
+	
+/*TODO*///	public Object z8000_get_context(Object dst)
 /*TODO*///	{
 /*TODO*///		if( dst )
 /*TODO*///			*(z8000_Regs*)dst = Z;
@@ -648,51 +713,51 @@ public class z8000 extends cpu_interface
 		}
 	}
 	
-/*TODO*///	unsigned z8000_get_reg(int regnum)
-/*TODO*///	{
-/*TODO*///		switch( regnum )
-/*TODO*///		{
-/*TODO*///			case REG_PC:
-/*TODO*///			case Z8000_PC: return PC;
-/*TODO*///			case REG_SP:
-/*TODO*///	        case Z8000_NSP: return NSP;
-/*TODO*///	        case Z8000_FCW: return FCW;
-/*TODO*///			case Z8000_PSAP: return PSAP;
-/*TODO*///			case Z8000_REFRESH: return REFRESH;
-/*TODO*///			case Z8000_IRQ_REQ: return IRQ_REQ;
-/*TODO*///			case Z8000_IRQ_SRV: return IRQ_SRV;
-/*TODO*///			case Z8000_IRQ_VEC: return IRQ_VEC;
-/*TODO*///			case Z8000_R0: return RW( 0);
-/*TODO*///			case Z8000_R1: return RW( 1);
-/*TODO*///			case Z8000_R2: return RW( 2);
-/*TODO*///			case Z8000_R3: return RW( 3);
-/*TODO*///			case Z8000_R4: return RW( 4);
-/*TODO*///			case Z8000_R5: return RW( 5);
-/*TODO*///			case Z8000_R6: return RW( 6);
-/*TODO*///			case Z8000_R7: return RW( 7);
-/*TODO*///			case Z8000_R8: return RW( 8);
-/*TODO*///			case Z8000_R9: return RW( 9);
-/*TODO*///			case Z8000_R10: return RW(10);
-/*TODO*///			case Z8000_R11: return RW(11);
-/*TODO*///			case Z8000_R12: return RW(12);
-/*TODO*///			case Z8000_R13: return RW(13);
-/*TODO*///			case Z8000_R14: return RW(14);
-/*TODO*///			case Z8000_R15: return RW(15);
-/*TODO*///			case Z8000_NMI_STATE: return Z.nmi_state;
-/*TODO*///			case Z8000_NVI_STATE: return Z.irq_state[0];
-/*TODO*///			case Z8000_VI_STATE: return Z.irq_state[1];
-/*TODO*///			case REG_PREVIOUSPC: return PPC;
-/*TODO*///			default:
-/*TODO*///				if( regnum <= REG_SP_CONTENTS )
-/*TODO*///				{
-/*TODO*///					unsigned offset = NSP + 2 * (REG_SP_CONTENTS - regnum);
-/*TODO*///					if( offset < 0xffff )
-/*TODO*///						return RDMEM_W( offset );
-/*TODO*///				}
-/*TODO*///		}
-/*TODO*///	    return 0;
-/*TODO*///	}
-/*TODO*///	
+	public int z8000_get_reg(int regnum)
+	{
+		switch( regnum )
+		{
+			case REG_PC:
+			case Z8000_PC: return Z.pc;
+			case REG_SP:
+                        case Z8000_NSP: return Z.nsp;
+                        case Z8000_FCW: return Z.fcw;
+			case Z8000_PSAP: return Z.psap;
+			case Z8000_REFRESH: return Z.refresh;
+			case Z8000_IRQ_REQ: return Z.irq_req;
+			case Z8000_IRQ_SRV: return Z.irq_srv;
+			case Z8000_IRQ_VEC: return Z.irq_vec;
+			case Z8000_R0: return RW( 0);
+			case Z8000_R1: return RW( 1);
+			case Z8000_R2: return RW( 2);
+			case Z8000_R3: return RW( 3);
+			case Z8000_R4: return RW( 4);
+			case Z8000_R5: return RW( 5);
+			case Z8000_R6: return RW( 6);
+			case Z8000_R7: return RW( 7);
+			case Z8000_R8: return RW( 8);
+			case Z8000_R9: return RW( 9);
+			case Z8000_R10: return RW(10);
+			case Z8000_R11: return RW(11);
+			case Z8000_R12: return RW(12);
+			case Z8000_R13: return RW(13);
+			case Z8000_R14: return RW(14);
+			case Z8000_R15: return RW(15);
+			case Z8000_NMI_STATE: return Z.nmi_state;
+			case Z8000_NVI_STATE: return Z.irq_state[0];
+			case Z8000_VI_STATE: return Z.irq_state[1];
+			case REG_PREVIOUSPC: return Z.ppc;
+			default:
+				if( regnum <= REG_SP_CONTENTS )
+				{
+					int offset = Z.nsp + 2 * (REG_SP_CONTENTS - regnum);
+					if( offset < 0xffff )
+						return RDMEM_W( offset );
+				}
+		}
+	    return 0;
+	}
+	
 /*TODO*///	void z8000_set_reg(int regnum, unsigned val)
 /*TODO*///	{
 /*TODO*///		switch( regnum )

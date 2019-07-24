@@ -144,7 +144,31 @@ public class i8085 extends cpu_interface {
 
     @Override
     public Object get_context() {
-        return i8085_get_context(null);
+        System.out.println("get_context");
+        I8085_Regs Regs = new I8085_Regs();
+        
+        Regs.AF = I.AF;
+        Regs.BC = I.BC;
+        Regs.cputype = I.cputype;	/* 0 8080, 1 8085A */
+        Regs.PC=I.PC;
+        Regs.SP=I.SP;
+        Regs.DE=I.DE;
+        Regs.HL=I.HL;
+        Regs.XX=I.XX;
+        Regs.HALT=I.HALT;
+        Regs.IM=I.IM; 		/* interrupt mask */
+        Regs.IREQ=I.IREQ;		/* requested interrupts */
+        Regs.ISRV=I.ISRV;		/* serviced interrupt */
+        Regs.INTR=I.INTR;		/* vector for INTR */
+        Regs.IRQ2=I.IRQ2;		/* scheduled interrupt address */
+        Regs.IRQ1=I.IRQ2;		/* executed interrupt address */
+        Regs.nmi_state=I.nmi_state;
+        Regs.irq_state = I.irq_state;
+        Regs.filler=I.filler; /* align on dword boundary */
+        Regs.irq_callback=I.irq_callback;
+        Regs.sod_callback=I.sod_callback;
+
+        return Regs;
     }
 
     @Override

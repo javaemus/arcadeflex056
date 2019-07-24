@@ -212,6 +212,7 @@ import static WIP.mame056.drivers.mrjong.*;
 import static WIP.mame056.drivers.namcos86.*;
 import static WIP.mame056.drivers.baraduke.*;
 import static WIP.mame056.drivers.phoenix.*;
+import static WIP.mame056.drivers.zac2650.*;
 
 public class driver {
 
@@ -3372,10 +3373,10 @@ public class driver {
         /*TODO*///	driver_killcom,	/* (c) 1980 Centuri */
         /*TODO*///	driver_challeng,	/* (c) 1981 Centuri */
         /*TODO*///	driver_kaos,		/* (c) 1981 */
-        /*TODO*///
-        /*TODO*///	/* Zaccaria games */
-        /*TODO*///	driver_sia2650,
-        /*TODO*///	driver_tinv2650,
+        
+        /* Zaccaria games */
+        driver_sia2650,
+        driver_tinv2650,
         /*TODO*///TESTdriver_embargo,
         /*TODO*///	driver_monymony,	/* (c) 1983 */
         /*TODO*///	driver_jackrabt,	/* (c) 1984 */

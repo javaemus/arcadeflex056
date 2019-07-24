@@ -1113,7 +1113,6 @@ public class cpuintrf {
     public static String cputype_core_file(int cputype) {
         cputype &= ~CPU_FLAGS_MASK;
         if (cputype >= 0 && cputype < CPU_COUNT) {
-            System.out.println(cputype);
             return cpuintrf[cputype].cpu_info(null, CPU_INFO_FILE);
         } else {
             logerror("cputype_core_file() called with invalid cpu type!\n");
