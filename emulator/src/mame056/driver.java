@@ -213,6 +213,7 @@ import static WIP.mame056.drivers.namcos86.*;
 import static WIP.mame056.drivers.baraduke.*;
 import static WIP.mame056.drivers.phoenix.*;
 import static WIP.mame056.drivers.zac2650.*;
+import static WIP.mame056.drivers.astrocde.*;
 
 public class driver {
 
@@ -1118,15 +1119,15 @@ public class driver {
         /*TODO*///	driver_superbik,	/* (c) 1983 Century */
         /*TODO*///	driver_hero,		/* (c) 1983 Seatongrove (c) 1984 CVS */
         /*TODO*///	driver_huncholy,	/* (c) 1984 Seatongrove (c) CVS */
-        /*TODO*///
-        /*TODO*///	/* Midway "Astrocade" games */
-        /*TODO*///	driver_seawolf2,
-        /*TODO*///	driver_spacezap,	/* (c) 1980 */
-        /*TODO*///	driver_ebases,
-        /*TODO*///	driver_wow,		/* (c) 1980 */
-        /*TODO*///	driver_gorf,		/* (c) 1981 */
-        /*TODO*///	driver_gorfpgm1,	/* (c) 1981 */
-        /*TODO*///	driver_robby,		/* (c) 1981 Bally Midway */
+        
+        /* Midway "Astrocade" games */
+        driver_seawolf2,
+        driver_spacezap,	/* (c) 1980 */
+        driver_ebases,
+        driver_wow,		/* (c) 1980 */
+        driver_gorf,		/* (c) 1981 */
+        driver_gorfpgm1,	/* (c) 1981 */
+        driver_robby,		/* (c) 1981 Bally Midway */
         /*TODO*///TESTdriver_profpac,	/* (c) 1983 Bally Midway */
 
         /* Bally Midway MCR games */

@@ -41,6 +41,7 @@ import mame056.sound.pokey;
 import WIP.mame056.sound.hc55516;
 import WIP.mame056.sound._5220intf;
 import mame056.sound._2413intf;
+import WIP.mame056.sound.astrocde;
 
 public class sndintrf {
 
@@ -525,7 +526,7 @@ public class sndintrf {
                 /*TODO*///		astrocade_sh_update,
                 /*TODO*///		0
                 /*TODO*///	},
-                new Dummy_snd(),
+                new astrocde(),
                 new namco(),
                 new tms36xx(),
                 new _5110intf(),
