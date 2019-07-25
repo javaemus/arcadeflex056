@@ -988,7 +988,7 @@ public class drawgfx {
 /*TODO*///
     public static void common_drawgfx(mame_bitmap dest, GfxElement gfx,/*unsigned*/ int code,/*unsigned*/ int color, int flipx, int flipy, int sx, int sy, rectangle clip, int transparency, int transparent_color, mame_bitmap pri_buffer, int/*UINT32*/ pri_mask) {
         rectangle myclip = new rectangle();
-
+        
         //System.out.println("color_drawgfx: "+color);
         if (gfx == null) {
             usrintf_showmessage("drawgfx() gfx == 0");
@@ -1090,6 +1090,13 @@ public class drawgfx {
             drawgfx_core8(dest, gfx, code, color, flipx, flipy, sx, sy, clip, transparency, transparent_color, pri_buffer, pri_mask);
         } else if (dest.depth == 15 || dest.depth == 16) {
             //System.out.println("color-->"+color);
+            /*
+            if (transparency==TRANSPARENCY_PEN_TABLE)
+                System.out.println("TRANSPARENCY_PEN_TABLE");
+            else if (transparency==TRANSPARENCY_PEN)
+                System.out.println("TRANSPARENCY_PEN");
+            */
+            
             drawgfx_core16(dest, gfx, code, color, flipx, flipy, sx, sy, clip, transparency, transparent_color, pri_buffer, pri_mask);
         } else {
             System.out.println("drawgfx_core32 TODO");
@@ -6117,42 +6124,45 @@ public class drawgfx {
 /*TODO*///		srcheight--;
 /*TODO*///	}
 /*TODO*///})
-/*TODO*///
-/*TODO*///DECLARE(blockmove_NtoN_opaque_remap,(
-/*TODO*///		const DATA_TYPE *srcdata,int srcwidth,int srcheight,int srcmodulo,
-/*TODO*///		DATA_TYPE *dstdata,int dstmodulo,
-/*TODO*///		const pen_t *paldata),
-/*TODO*///{
-/*TODO*///	DATA_TYPE *end;
-/*TODO*///
-/*TODO*///	srcmodulo -= srcwidth;
-/*TODO*///	dstmodulo -= srcwidth;
-/*TODO*///
-/*TODO*///	while (srcheight)
-/*TODO*///	{
-/*TODO*///		end = dstdata + srcwidth;
-/*TODO*///		while (dstdata <= end - 8)
-/*TODO*///		{
-/*TODO*///			dstdata[0] = paldata[srcdata[0]];
-/*TODO*///			dstdata[1] = paldata[srcdata[1]];
-/*TODO*///			dstdata[2] = paldata[srcdata[2]];
-/*TODO*///			dstdata[3] = paldata[srcdata[3]];
-/*TODO*///			dstdata[4] = paldata[srcdata[4]];
-/*TODO*///			dstdata[5] = paldata[srcdata[5]];
-/*TODO*///			dstdata[6] = paldata[srcdata[6]];
-/*TODO*///			dstdata[7] = paldata[srcdata[7]];
-/*TODO*///			dstdata += 8;
-/*TODO*///			srcdata += 8;
-/*TODO*///		}
-/*TODO*///		while (dstdata < end)
-/*TODO*///			*(dstdata++) = paldata[*(srcdata++)];
-/*TODO*///
-/*TODO*///		srcdata += srcmodulo;
-/*TODO*///		dstdata += dstmodulo;
-/*TODO*///		srcheight--;
-/*TODO*///	}
-/*TODO*///})
-/*TODO*///
+
+public static void blockmove_NtoN_opaque_remap(
+		UShortPtr srcdata,int srcwidth,int srcheight,int srcmodulo,
+		UShortPtr dstdata,int dstmodulo,
+		int[] paldata)
+{
+	int end;
+
+	srcmodulo -= srcwidth;
+	dstmodulo -= srcwidth;
+
+	while (srcheight != 0)
+	{
+		end = dstdata.offset/2 + srcwidth;
+		while (dstdata.offset/2 <= end - 8)
+		{
+			dstdata.write(0, (char) paldata[srcdata.read(0)]);
+			dstdata.write(1, (char) paldata[srcdata.read(1)]);
+			dstdata.write(2, (char) paldata[srcdata.read(2)]);
+			dstdata.write(3, (char) paldata[srcdata.read(3)]);
+			dstdata.write(4, (char) paldata[srcdata.read(4)]);
+			dstdata.write(5, (char) paldata[srcdata.read(5)]);
+			dstdata.write(6, (char) paldata[srcdata.read(6)]);
+			dstdata.write(7, (char) paldata[srcdata.read(7)]);
+			dstdata.inc( 8 );
+			srcdata.inc( 8 );
+		}
+		while (dstdata.offset/2 < end){
+			dstdata.write((char) paldata[(srcdata.read(srcdata.offset))]);
+                        dstdata.inc();
+                        srcdata.inc();
+                }
+
+		srcdata.inc(srcmodulo);
+		dstdata.inc(dstmodulo);
+		srcheight--;
+	}
+}
+
 /*TODO*///DECLARE(blockmove_NtoN_opaque_remap_flipx,(
 /*TODO*///		const DATA_TYPE *srcdata,int srcwidth,int srcheight,int srcmodulo,
 /*TODO*///		DATA_TYPE *dstdata,int dstmodulo,
@@ -7276,9 +7286,10 @@ public class drawgfx {
 
         switch (transparency) {
             case TRANSPARENCY_NONE:
-                throw new UnsupportedOperationException("Unsupported");
+                //throw new UnsupportedOperationException("Unsupported");
             /*TODO*///				BLOCKMOVE(NtoN_opaque_remap,flipx,(sd,sw,sh,sm,dd,dm,Machine->pens));
-/*TODO*///				break;
+                blockmove_NtoN_opaque_remap(sd, sw, sh, sm, dd, dm, Machine.pens);
+				break;
 /*TODO*///
             case TRANSPARENCY_NONE_RAW:
                 if (flipx != 0) {
