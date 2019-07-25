@@ -214,6 +214,7 @@ import static WIP.mame056.drivers.baraduke.*;
 import static WIP.mame056.drivers.phoenix.*;
 import static WIP.mame056.drivers.zac2650.*;
 import static WIP.mame056.drivers.astrocde.*;
+import static WIP.mame056.drivers.dominos.*;
 
 public class driver {
 
@@ -3042,7 +3043,7 @@ public class driver {
         /*TODO*///	/* Flyball */		/* 005629			1976/07 [6502] */
         driver_sprint2, /* 005922			1976/11 [6502] */
         driver_nitedrvr, /* 006321			1976/10 [6502] */
-        /*TODO*///	driver_dominos,	/* 007305			1977/01 [6502] */
+        driver_dominos,	/* 007305			1977/01 [6502] */
         /*TODO*///	/* Triple Hunt */	/* 008422-008791	1977/04 [6800] */
         /*TODO*///	/* Sprint 8 */		/* ??????			1977/05 [6800] */
         /*TODO*///	/* Drag Race */		/* 008505-008521	1977/06 [6800] */

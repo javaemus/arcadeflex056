@@ -6124,12 +6124,12 @@ public class drawgfx {
 /*TODO*///		srcheight--;
 /*TODO*///	}
 /*TODO*///})
-
-public static void blockmove_NtoN_opaque_remap(
+/*TODO*///
+    public static void blockmove_NtoN_opaque_remap(
 		UShortPtr srcdata,int srcwidth,int srcheight,int srcmodulo,
 		UShortPtr dstdata,int dstmodulo,
 		int[] paldata)
-{
+    {
 	int end;
 
 	srcmodulo -= srcwidth;
@@ -6148,11 +6148,11 @@ public static void blockmove_NtoN_opaque_remap(
 			dstdata.write(5, (char) paldata[srcdata.read(5)]);
 			dstdata.write(6, (char) paldata[srcdata.read(6)]);
 			dstdata.write(7, (char) paldata[srcdata.read(7)]);
-			dstdata.inc( 8 );
-			srcdata.inc( 8 );
+			dstdata.inc(8);
+			srcdata.inc(8);
 		}
 		while (dstdata.offset/2 < end){
-			dstdata.write((char) paldata[(srcdata.read(srcdata.offset))]);
+			dstdata.write((char) paldata[srcdata.read(0)]);
                         dstdata.inc();
                         srcdata.inc();
                 }
@@ -6161,44 +6161,47 @@ public static void blockmove_NtoN_opaque_remap(
 		dstdata.inc(dstmodulo);
 		srcheight--;
 	}
-}
+    }
 
-/*TODO*///DECLARE(blockmove_NtoN_opaque_remap_flipx,(
-/*TODO*///		const DATA_TYPE *srcdata,int srcwidth,int srcheight,int srcmodulo,
-/*TODO*///		DATA_TYPE *dstdata,int dstmodulo,
-/*TODO*///		const pen_t *paldata),
-/*TODO*///{
-/*TODO*///	DATA_TYPE *end;
-/*TODO*///
-/*TODO*///	srcmodulo += srcwidth;
-/*TODO*///	dstmodulo -= srcwidth;
-/*TODO*///	//srcdata += srcwidth-1;
-/*TODO*///
-/*TODO*///	while (srcheight)
-/*TODO*///	{
-/*TODO*///		end = dstdata + srcwidth;
-/*TODO*///		while (dstdata <= end - 8)
-/*TODO*///		{
-/*TODO*///			srcdata -= 8;
-/*TODO*///			dstdata[0] = paldata[srcdata[8]];
-/*TODO*///			dstdata[1] = paldata[srcdata[7]];
-/*TODO*///			dstdata[2] = paldata[srcdata[6]];
-/*TODO*///			dstdata[3] = paldata[srcdata[5]];
-/*TODO*///			dstdata[4] = paldata[srcdata[4]];
-/*TODO*///			dstdata[5] = paldata[srcdata[3]];
-/*TODO*///			dstdata[6] = paldata[srcdata[2]];
-/*TODO*///			dstdata[7] = paldata[srcdata[1]];
-/*TODO*///			dstdata += 8;
-/*TODO*///		}
-/*TODO*///		while (dstdata < end)
-/*TODO*///			*(dstdata++) = paldata[*(srcdata--)];
-/*TODO*///
-/*TODO*///		srcdata += srcmodulo;
-/*TODO*///		dstdata += dstmodulo;
-/*TODO*///		srcheight--;
-/*TODO*///	}
-/*TODO*///})
-/*TODO*///
+    public static void blockmove_NtoN_opaque_remap_flipx(
+		UShortPtr srcdata,int srcwidth,int srcheight,int srcmodulo,
+		UShortPtr dstdata,int dstmodulo,
+		int[] paldata)
+    {
+            int end;
+
+            srcmodulo += srcwidth;
+            dstmodulo -= srcwidth;
+            //srcdata += srcwidth-1;
+
+            while (srcheight != 0)
+            {
+                    end = dstdata.offset/2 + srcwidth;
+                    while (dstdata.offset/2 <= end - 8)
+                    {
+                            srcdata.dec( 8 );
+                            dstdata.write(0, (char) paldata[srcdata.read(8)]);
+                            dstdata.write(1, (char) paldata[srcdata.read(7)]);
+                            dstdata.write(2, (char) paldata[srcdata.read(6)]);
+                            dstdata.write(3, (char) paldata[srcdata.read(5)]);
+                            dstdata.write(4, (char) paldata[srcdata.read(4)]);
+                            dstdata.write(5, (char) paldata[srcdata.read(3)]);
+                            dstdata.write(6, (char) paldata[srcdata.read(2)]);
+                            dstdata.write(7, (char) paldata[srcdata.read(1)]);
+                            dstdata.inc( 8 );
+                    }
+                    while (dstdata.offset/2 < end){
+                            dstdata.write((char) paldata[srcdata.read(srcdata.offset)]);
+                            dstdata.inc();
+                            srcdata.dec();
+                    }
+
+                    srcdata.inc( srcmodulo );
+                    dstdata.inc( dstmodulo );
+                    srcheight--;
+            }
+    }
+
 /*TODO*///
 /*TODO*///DECLARE(blockmove_NtoN_blend_noremap,(
 /*TODO*///		const DATA_TYPE *srcdata,int srcwidth,int srcheight,int srcmodulo,
@@ -7288,7 +7291,7 @@ public static void blockmove_NtoN_opaque_remap(
             case TRANSPARENCY_NONE:
                 //throw new UnsupportedOperationException("Unsupported");
             /*TODO*///				BLOCKMOVE(NtoN_opaque_remap,flipx,(sd,sw,sh,sm,dd,dm,Machine->pens));
-                blockmove_NtoN_opaque_remap(sd, sw, sh, sm, dd, dm, Machine.pens);
+                blockmove_NtoN_opaque_remap(sd,sw,sh,sm,dd,dm,Machine.pens);
 				break;
 /*TODO*///
             case TRANSPARENCY_NONE_RAW:
@@ -7807,7 +7810,7 @@ public static void blockmove_NtoN_opaque_remap(
 /*TODO*///		}
         } /* 16bpp destination */ else if (bitmap.depth == 15 || bitmap.depth == 16) {
             /* adjust in case we're oddly oriented */
-            /*TODO*///ADJUST_FOR_ORIENTATION(Machine.orientation, bitmap, x, y);
+            ADJUST_FOR_ORIENTATION(Machine.orientation, bitmap, x, y);
             int dy = bitmap.line[1].offset / 2 - bitmap.line[0].offset / 2;
             UShortPtr dst = new UShortPtr(bitmap.line[0], (y * dy + x) * 2);
             int xadv = 1;
