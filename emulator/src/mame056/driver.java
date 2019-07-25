@@ -215,6 +215,7 @@ import static WIP.mame056.drivers.phoenix.*;
 import static WIP.mame056.drivers.zac2650.*;
 import static WIP.mame056.drivers.astrocde.*;
 import static WIP.mame056.drivers.dominos.*;
+import static WIP.mame056.drivers.canyon.*;
 
 public class driver {
 
@@ -3050,8 +3051,8 @@ public class driver {
         /*TODO*///	/* Pool Shark */	/* 006281			1977/06 [6502] */
         /*TODO*///	/* Starship One */	/* 007513-007531	1977/07 [6502] */
         /*TODO*///	/* Super Bug */		/* 009115-009467	1977/09 [6800] */
-        /*TODO*///	driver_canyon,	/* 009493-009504	1977/10 [6502] */
-        /*TODO*///	driver_canbprot,	/* 009493-009504	1977/10 [6502] */
+        driver_canyon,	/* 009493-009504	1977/10 [6502] */
+        driver_canbprot,	/* 009493-009504	1977/10 [6502] */
         /*TODO*///	/* Destroyer */		/* 030131-030136	1977/10 [6800] */
         /*TODO*///	/* Sprint 4 */		/* 008716			1977/12 [6502] */
         driver_sprint1, /* 006443			1978/01 [6502] */
