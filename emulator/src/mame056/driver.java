@@ -216,6 +216,7 @@ import static WIP.mame056.drivers.zac2650.*;
 import static WIP.mame056.drivers.astrocde.*;
 import static WIP.mame056.drivers.dominos.*;
 import static WIP.mame056.drivers.canyon.*;
+import static WIP.mame056.drivers.ultratnk.*;
 
 public class driver {
 
@@ -3056,7 +3057,7 @@ public class driver {
         /*TODO*///	/* Destroyer */		/* 030131-030136	1977/10 [6800] */
         /*TODO*///	/* Sprint 4 */		/* 008716			1977/12 [6502] */
         driver_sprint1, /* 006443			1978/01 [6502] */
-        /*TODO*///	driver_ultratnk,	/* 009801			1978/02 [6502] */
+        driver_ultratnk,	/* 009801			1978/02 [6502] */
         /*TODO*///	/* Sky Raider */	/* 009709			1978/03 [6502] */
         /*TODO*///	/* Tourn. Table */	/* 030170			1978/03 [6507] */
         /*TODO*///	driver_avalnche,	/* 030574			1978/04 [6502] */
