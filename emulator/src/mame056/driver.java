@@ -223,6 +223,7 @@ import static WIP.mame056.drivers.atarifb.*;
 import static WIP.mame056.drivers.bsktball.*;
 import static WIP.mame056.drivers.missile.*;
 import static WIP.mame056.drivers.subs.*;
+import static WIP.mame056.drivers.milliped.*;
 
 public class driver {
 
@@ -3120,7 +3121,7 @@ public class driver {
         driver_esb, /* 136031			(c) 1985 */
         /*TODO*///	/* Atari "Centipede hardware" games */
         driver_warlord, /* 037153-037159	(c) 1980 */
-        /*TODO*///	driver_milliped,	/* 136013			(c) 1982 */
+        driver_milliped,	/* 136013			(c) 1982 */
         /*TODO*///	driver_qwakprot,	/* (proto)			(c) 1982 */
         /*TODO*///
         /*TODO*///	/* misc Atari games */
