@@ -224,6 +224,7 @@ import static WIP.mame056.drivers.bsktball.*;
 import static WIP.mame056.drivers.missile.*;
 import static WIP.mame056.drivers.subs.*;
 import static WIP.mame056.drivers.milliped.*;
+import static WIP.mame056.drivers.qwakprot.*;
 
 public class driver {
 
@@ -3119,11 +3120,11 @@ public class driver {
         /*TODO*///	driver_mhavocp,	/* 136025			(c) 1983 */
         /*TODO*///	driver_mhavocrv,	/* (hack) */
         driver_esb, /* 136031			(c) 1985 */
-        /*TODO*///	/* Atari "Centipede hardware" games */
+        /* Atari "Centipede hardware" games */
         driver_warlord, /* 037153-037159	(c) 1980 */
         driver_milliped,	/* 136013			(c) 1982 */
-        /*TODO*///	driver_qwakprot,	/* (proto)			(c) 1982 */
-        /*TODO*///
+        driver_qwakprot,	/* (proto)			(c) 1982 */
+        
         /*TODO*///	/* misc Atari games */
         /*TODO*///	driver_tunhunt,	/* 136000			(c) 1981 */
         /*TODO*///	driver_liberatr,	/* 136012			(c) 1982 */
