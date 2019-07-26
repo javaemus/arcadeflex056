@@ -220,6 +220,7 @@ import static WIP.mame056.drivers.ultratnk.*;
 import static WIP.mame056.drivers.avalnche.*;
 import static WIP.mame056.drivers.sbrkout.*;
 import static WIP.mame056.drivers.atarifb.*;
+import static WIP.mame056.drivers.bsktball.*;
 
 public class driver {
 
@@ -3074,7 +3075,7 @@ public class driver {
         driver_videopin, /* 034253-034267	1979/02 [6502] */
         driver_atarifb4,	/* 034754			1979/04 [6502] */
         /*TODO*///	driver_subs,		/* 033714			1979/05 [6502] */
-        /*TODO*///	driver_bsktball,	/* 034756-034766	1979/05 [6502] */
+        driver_bsktball,	/* 034756-034766	1979/05 [6502] */
         driver_abaseb,	/* 034711-034738	1979/06 [6502] */
         driver_abaseb2,	/* 034711-034738	1979/06 [6502] */
         /*TODO*///	/* Monte Carlo */	/* 035763-035780	1980/04 [6502] */
