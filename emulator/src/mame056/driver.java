@@ -217,6 +217,7 @@ import static WIP.mame056.drivers.astrocde.*;
 import static WIP.mame056.drivers.dominos.*;
 import static WIP.mame056.drivers.canyon.*;
 import static WIP.mame056.drivers.ultratnk.*;
+import static WIP.mame056.drivers.avalnche.*;
 
 public class driver {
 
@@ -3060,7 +3061,7 @@ public class driver {
         driver_ultratnk,	/* 009801			1978/02 [6502] */
         /*TODO*///	/* Sky Raider */	/* 009709			1978/03 [6502] */
         /*TODO*///	/* Tourn. Table */	/* 030170			1978/03 [6507] */
-        /*TODO*///	driver_avalnche,	/* 030574			1978/04 [6502] */
+        driver_avalnche,	/* 030574			1978/04 [6502] */
         driver_firetrk, /* 030926			1978/06 [6808] */
         driver_skydiver, /* 009787			1978/06 [6800] */
         /*TODO*///	/* Smokey Joe */	/* 030926			1978/07 [6502] */
