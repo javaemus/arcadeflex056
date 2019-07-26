@@ -218,6 +218,7 @@ import static WIP.mame056.drivers.dominos.*;
 import static WIP.mame056.drivers.canyon.*;
 import static WIP.mame056.drivers.ultratnk.*;
 import static WIP.mame056.drivers.avalnche.*;
+import static WIP.mame056.drivers.sbrkout.*;
 
 public class driver {
 
@@ -3065,7 +3066,7 @@ public class driver {
         driver_firetrk, /* 030926			1978/06 [6808] */
         driver_skydiver, /* 009787			1978/06 [6800] */
         /*TODO*///	/* Smokey Joe */	/* 030926			1978/07 [6502] */
-        /*TODO*///	driver_sbrkout,	/* 033442-033455	1978/09 [6502] */
+        driver_sbrkout,	/* 033442-033455	1978/09 [6502] */
         /*TODO*///	driver_atarifb,	/* 033xxx			1978/10 [6502] */
         /*TODO*///	driver_atarifb1,	/* 033xxx			1978/10 [6502] */
         /*TODO*///	/* Orbit */			/* 033689-033702	1978/11 [6800] */
