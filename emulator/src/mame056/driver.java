@@ -221,6 +221,7 @@ import static WIP.mame056.drivers.avalnche.*;
 import static WIP.mame056.drivers.sbrkout.*;
 import static WIP.mame056.drivers.atarifb.*;
 import static WIP.mame056.drivers.bsktball.*;
+import static WIP.mame056.drivers.missile.*;
 
 public class driver {
 
@@ -3080,12 +3081,12 @@ public class driver {
         driver_abaseb2,	/* 034711-034738	1979/06 [6502] */
         /*TODO*///	/* Monte Carlo */	/* 035763-035780	1980/04 [6502] */
         driver_soccer,	/* 035222-035260	1980/04 [6502] */
-        /*TODO*///
-        /*TODO*///	/* Atari "Missile Command hardware" games */
-        /*TODO*///	driver_missile,	/* 035820-035825	(c) 1980 */
-        /*TODO*///	driver_missile2,	/* 035820-035825	(c) 1980 */
-        /*TODO*///	driver_suprmatk,	/* 					(c) 1980 + (c) 1981 Gencomp */
-        /*TODO*///
+        
+        /* Atari "Missile Command hardware" games */
+        driver_missile,	/* 035820-035825	(c) 1980 */
+        driver_missile2,	/* 035820-035825	(c) 1980 */
+        driver_suprmatk,	/* 					(c) 1980 + (c) 1981 Gencomp */
+
         /* Atari vector games */
         /*TODO*///	driver_llander,	/* 0345xx			no copyright notice */
         /*TODO*///	driver_llander1,	/* 0345xx			no copyright notice */
