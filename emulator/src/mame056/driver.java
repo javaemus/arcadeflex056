@@ -219,6 +219,7 @@ import static WIP.mame056.drivers.canyon.*;
 import static WIP.mame056.drivers.ultratnk.*;
 import static WIP.mame056.drivers.avalnche.*;
 import static WIP.mame056.drivers.sbrkout.*;
+import static WIP.mame056.drivers.atarifb.*;
 
 public class driver {
 
@@ -3067,17 +3068,17 @@ public class driver {
         driver_skydiver, /* 009787			1978/06 [6800] */
         /*TODO*///	/* Smokey Joe */	/* 030926			1978/07 [6502] */
         driver_sbrkout,	/* 033442-033455	1978/09 [6502] */
-        /*TODO*///	driver_atarifb,	/* 033xxx			1978/10 [6502] */
-        /*TODO*///	driver_atarifb1,	/* 033xxx			1978/10 [6502] */
+        driver_atarifb,	/* 033xxx			1978/10 [6502] */
+        driver_atarifb1,	/* 033xxx			1978/10 [6502] */
         /*TODO*///	/* Orbit */			/* 033689-033702	1978/11 [6800] */
         driver_videopin, /* 034253-034267	1979/02 [6502] */
-        /*TODO*///	driver_atarifb4,	/* 034754			1979/04 [6502] */
+        driver_atarifb4,	/* 034754			1979/04 [6502] */
         /*TODO*///	driver_subs,		/* 033714			1979/05 [6502] */
         /*TODO*///	driver_bsktball,	/* 034756-034766	1979/05 [6502] */
-        /*TODO*///	driver_abaseb,	/* 034711-034738	1979/06 [6502] */
-        /*TODO*///	driver_abaseb2,	/* 034711-034738	1979/06 [6502] */
+        driver_abaseb,	/* 034711-034738	1979/06 [6502] */
+        driver_abaseb2,	/* 034711-034738	1979/06 [6502] */
         /*TODO*///	/* Monte Carlo */	/* 035763-035780	1980/04 [6502] */
-        /*TODO*///	driver_soccer,	/* 035222-035260	1980/04 [6502] */
+        driver_soccer,	/* 035222-035260	1980/04 [6502] */
         /*TODO*///
         /*TODO*///	/* Atari "Missile Command hardware" games */
         /*TODO*///	driver_missile,	/* 035820-035825	(c) 1980 */
