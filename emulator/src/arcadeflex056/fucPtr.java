@@ -15,6 +15,16 @@ public class fucPtr {
 
         public abstract void handler(int offset, int data);
     }
+    
+    public static abstract interface ReadHandlerPtr16 {
+
+        public abstract int handler(int offset, int d2);
+    }
+
+    public static abstract interface WriteHandlerPtr16 {
+
+        public abstract void handler(int offset, int data, int d2);
+    }
 
     public static abstract interface InitMachinePtr {
 

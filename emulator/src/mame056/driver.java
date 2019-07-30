@@ -225,6 +225,8 @@ import static WIP.mame056.drivers.missile.*;
 import static WIP.mame056.drivers.subs.*;
 import static WIP.mame056.drivers.milliped.*;
 import static WIP.mame056.drivers.qwakprot.*;
+import static WIP.mame056.drivers.tunhunt.*;
+import static WIP.mame056.drivers.wardner.*;
 
 public class driver {
 
@@ -1683,9 +1685,9 @@ public class driver {
         /*TODO*///	driver_skyshark,	/* TP-007 (c) 1987 Taito America Corporation + Romstar license (US) */
         /*TODO*///	driver_hishouza,	/* TP-007 (c) 1987 Taito Corporation (Japan) */
         /*TODO*///	driver_fsharkbt,	/* bootleg */
-        /*TODO*///	driver_wardner,	/* TP-009 (c) 1987 Taito Corporation Japan (World) */
-        /*TODO*///	driver_pyros,		/* TP-009 (c) 1987 Taito America Corporation (US) */
-        /*TODO*///	driver_wardnerj,	/* TP-009 (c) 1987 Taito Corporation (Japan) */
+        driver_wardner,	/* TP-009 (c) 1987 Taito Corporation Japan (World) */
+        driver_pyros,		/* TP-009 (c) 1987 Taito America Corporation (US) */
+        driver_wardnerj,	/* TP-009 (c) 1987 Taito Corporation (Japan) */
         /*TODO*///	driver_twincobr,	/* TP-011 (c) 1987 Taito Corporation (World) */
         /*TODO*///	driver_twincobu,	/* TP-011 (c) 1987 Taito America Corporation + Romstar license (US) */
         /*TODO*///	driver_ktiger,	/* TP-011 (c) 1987 Taito Corporation (Japan) */
@@ -3126,7 +3128,7 @@ public class driver {
         driver_qwakprot,	/* (proto)			(c) 1982 */
         
         /*TODO*///	/* misc Atari games */
-        /*TODO*///	driver_tunhunt,	/* 136000			(c) 1981 */
+        driver_tunhunt,	/* 136000			(c) 1981 */
         /*TODO*///	driver_liberatr,	/* 136012			(c) 1982 */
         /*TODO*///TESTdriver_liberat2,	/* 136012			(c) 1982 */
         /*TODO*///	driver_foodf,		/* 136020			(c) 1982 */	/* made by Gencomp */

@@ -462,7 +462,7 @@ public class palette {
     public static UBytePtr paletteram = new UBytePtr();
     public static UBytePtr paletteram_2 = new UBytePtr();
     /* use when palette RAM is split in two parts */
- /*TODO*///data16_t *paletteram16;
+    public static UBytePtr paletteram16 = new UBytePtr();
 /*TODO*///data16_t *paletteram16_2;
 /*TODO*///data32_t *paletteram32;
 

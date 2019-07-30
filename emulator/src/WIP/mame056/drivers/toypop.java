@@ -312,12 +312,12 @@ public class toypop
 				1536000,	/* 1.536 MHz (measured on Libble Rabble board) */
 				readmem_soundCPU,writemem_soundCPU,null,null,
 				toypop_sound_interrupt,1
-                        /*TODO*///),
-			/*TODO*///new MachineCPU(
-			/*TODO*///	CPU_M68000,
-			/*TODO*///	6144000,	/* 6.144 MHz (measured on Libble Rabble board) */
-			/*TODO*///	readmem_68k,writemem_68k,0,0,
-			/*TODO*///	toypop_m68000_interrupt,1
+                        ),
+			new MachineCPU(
+				CPU_M68000,
+				6144000,	/* 6.144 MHz (measured on Libble Rabble board) */
+				readmem_68k,writemem_68k,null,null,
+				toypop_m68000_interrupt,1
                         )
                 },
 		60.606060f, DEFAULT_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */

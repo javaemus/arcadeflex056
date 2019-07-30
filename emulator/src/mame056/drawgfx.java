@@ -6975,6 +6975,7 @@ public class drawgfx {
                             throw new UnsupportedOperationException("Unsupported");//blockmove_##function##_swapxy##16 args ;
                             //BLOCKMOVELU(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
                         } else {
+                            //System.out.println("BLOCKMOVEPRI(8toN_8toN_transpen16,");
                             blockmove_8toN_transpen16(sd, sw, sh, sm, ls, ts, flipx, flipy, dd, dw, dh, dm, paldata, transparent_color);
                         }
                     }

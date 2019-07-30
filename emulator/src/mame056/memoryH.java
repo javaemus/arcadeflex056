@@ -877,8 +877,10 @@ public static final int MRA_BANK24 = STATIC_BANK24;
     /*TODO*///#define change_pc17(pc) 		change_pc_generic(pc, 17, 0, cpu_setopbase17)
 /*TODO*///#define change_pc20(pc)			change_pc_generic(pc, 20, 0, cpu_setopbase20)
 /*TODO*///#define change_pc21(pc)			change_pc_generic(pc, 21, 0, cpu_setopbase21)
-/*TODO*///#define change_pc24(pc)			change_pc_generic(pc, 24, 0, cpu_setopbase24)
-/*TODO*///
+    public static void change_pc24(int pc) {
+        change_pc_generic(pc, 24, 0, cpu_setOPbase24);
+    }
+
 /*TODO*////* ----- declare 16-bit bigendian handlers ----- */
 /*TODO*///DECLARE_MEM_HANDLERS_16BIT_BE(16)
 /*TODO*///DECLARE_MEM_HANDLERS_16BIT_BE(24)
@@ -1035,7 +1037,10 @@ public static final int MRA_BANK24 = STATIC_BANK24;
         return OP_ROM.read(A & mem_amask);
     }
 
-    /*TODO*///#define cpu_readop16(A)				(*(data16_t *)&OP_ROM[(A) & mem_amask])
+    public static char cpu_readop16(int A){
+        /*TODO*///(*(data16_t *)&OP_ROM[(A) & mem_amask]);
+        return OP_ROM.read(A & mem_amask);
+    }
 /*TODO*///#define cpu_readop32(A)				(*(data32_t *)&OP_ROM[(A) & mem_amask])
 /*TODO*///
 /* ----- opcode argument reading ----- */

@@ -112,7 +112,7 @@ public class toypop
 	
 	public static InterruptPtr toypop_m68000_interrupt = new InterruptPtr() { public int handler() 
 	{
-		/*TODO*///if (interrupt_enable_68k)
+		/*TODO*///if (interrupt_enable_68k != 0)
 		/*TODO*///	return MC68000_IRQ_6;
 		/*TODO*///else
 			return ignore_interrupt.handler();

@@ -21,14 +21,14 @@ import static arcadeflex036.osdepend.*;
 public class generic {
 
     public static UBytePtr videoram = new UBytePtr();
-    /*TODO*///	data16_t *videoram16;
+    public static UBytePtr videoram16 = new UBytePtr();
 /*TODO*///	data32_t *videoram32;
     public static int[] videoram_size = new int[1];
     public static UBytePtr colorram = new UBytePtr();
     /*TODO*///	data16_t *colorram16;
 /*TODO*///	data32_t *colorram32;
     public static UBytePtr spriteram = new UBytePtr();/* not used in this module... */
- /*TODO*///	data16_t *spriteram16;		/* ... */
+    public static UBytePtr spriteram16 = new UBytePtr();		/* ... */
 /*TODO*///	data32_t *spriteram32;		/* ... */
     public static UBytePtr spriteram_2 = new UBytePtr();
     /*TODO*///	data16_t *spriteram16_2;
@@ -37,7 +37,7 @@ public class generic {
     /*TODO*///	data16_t *spriteram16_3;
 /*TODO*///	data32_t *spriteram32_3;
     public static UBytePtr buffered_spriteram = new UBytePtr();
-    /*TODO*///	data16_t *buffered_spriteram16;
+    public static UBytePtr buffered_spriteram16 = new UBytePtr(1024 * 128);
 /*TODO*///	data32_t *buffered_spriteram32;
     public static UBytePtr buffered_spriteram_2 = new UBytePtr();
     /*TODO*///	data16_t *buffered_spriteram16_2;
@@ -246,12 +246,15 @@ public class generic {
             memcpy(buffered_spriteram, spriteram, spriteram_size[0]);
         }
     };
-    /*TODO*///	
-/*TODO*///	WRITE16_HANDLER( buffer_spriteram16_w )
-/*TODO*///	{
-/*TODO*///		memcpy(buffered_spriteram16,spriteram16,spriteram_size);
-/*TODO*///	}
-/*TODO*///	
+    	
+    public static WriteHandlerPtr16 buffer_spriteram16_w = new WriteHandlerPtr16() {
+        public void handler(int offset, int data, int d2) {
+            //System.out.println("EOF!");
+            memcpy(buffered_spriteram16,spriteram16,spriteram_size[0]);
+        }
+    };
+
+	
 /*TODO*///	WRITE32_HANDLER( buffer_spriteram32_w )
 /*TODO*///	{
 /*TODO*///		memcpy(buffered_spriteram32,spriteram32,spriteram_size);
