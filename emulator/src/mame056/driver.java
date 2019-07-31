@@ -228,6 +228,7 @@ import static WIP.mame056.drivers.qwakprot.*;
 import static WIP.mame056.drivers.tunhunt.*;
 import static WIP.mame056.drivers.wardner.*;
 import static WIP.mame056.drivers.safarir.*;
+import static WIP.mame056.drivers.royalmah.*;
 
 public class driver {
 
@@ -3983,7 +3984,7 @@ public class driver {
         driver_crazyblk,	/* (c) 1983 Kiwako + ECI license */
 
         driver_mermaid,	/* (c) 1982 Rock-ola */
-        /*TODO*///	driver_royalmah,	/* (c) 1982 Falcon */
+        driver_royalmah,	/* (c) 1982 Falcon */
         /*TODO*///	driver_amspdwy,	/* no copyright notice, but (c) 1987 Enerdyne Technologies, Inc. */
         /*TODO*///	driver_amspdwya,	/* no copyright notice, but (c) 1987 Enerdyne Technologies, Inc. */
         /*TODO*///	driver_dynamski,	/* (c) 1984 Taiyo */

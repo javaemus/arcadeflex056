@@ -102,14 +102,14 @@ public class drawgfx {
 
         if ((gfx.flags & GFX_PACKED) != 0) {
             throw new UnsupportedOperationException("Unsupported");
-            /*TODO*///		for (y = 0;y < gfx->height;y++)
+            /*TODO*///		for (y = 0;y < gfx.height;y++)
 /*TODO*///		{
-/*TODO*///			for (x = 0;x < gfx->width/2;x++)
+/*TODO*///			for (x = 0;x < gfx.width/2;x++)
 /*TODO*///			{
-/*TODO*///				gfx->pen_usage[num] |= 1 << (dp[x] & 0x0f);
-/*TODO*///				gfx->pen_usage[num] |= 1 << (dp[x] >> 4);
+/*TODO*///				gfx.pen_usage[num] |= 1 << (dp[x] & 0x0f);
+/*TODO*///				gfx.pen_usage[num] |= 1 << (dp[x] >> 4);
 /*TODO*///			}
-/*TODO*///			dp += gfx->line_modulo;
+/*TODO*///			dp += gfx.line_modulo;
 /*TODO*///		}
         } else {
             for (y = 0; y < gfx.height; y++) {
@@ -147,19 +147,19 @@ public class drawgfx {
 
         if ((gfx.flags & GFX_PACKED) != 0) {
             throw new UnsupportedOperationException("unsupported");
-            /*TODO*///		for (plane = 0;plane < gl->planes;plane++)
+            /*TODO*///		for (plane = 0;plane < gl.planes;plane++)
 /*TODO*///		{
-/*TODO*///			int shiftedbit = 1 << (gl->planes-1-plane);
-/*TODO*///			int offs = baseoffs + gl->planeoffset[plane];
+/*TODO*///			int shiftedbit = 1 << (gl.planes-1-plane);
+/*TODO*///			int offs = baseoffs + gl.planeoffset[plane];
 /*TODO*///
-/*TODO*///			dp = gfx->gfxdata + num * gfx->char_modulo + (gfx->height-1) * gfx->line_modulo;
+/*TODO*///			dp = gfx.gfxdata + num * gfx.char_modulo + (gfx.height-1) * gfx.line_modulo;
 /*TODO*///
-/*TODO*///			y = gfx->height;
+/*TODO*///			y = gfx.height;
 /*TODO*///			while (--y >= 0)
 /*TODO*///			{
 /*TODO*///				int offs2 = offs + yoffset[y];
 /*TODO*///
-/*TODO*///				x = gfx->width/2;
+/*TODO*///				x = gfx.width/2;
 /*TODO*///				while (--x >= 0)
 /*TODO*///				{
 /*TODO*///					if (readbit(src,offs2 + xoffset[2*x+1]))
@@ -167,7 +167,7 @@ public class drawgfx {
 /*TODO*///					if (readbit(src,offs2 + xoffset[2*x]))
 /*TODO*///						dp[x] |= shiftedbit;
 /*TODO*///				}
-/*TODO*///				dp -= gfx->line_modulo;
+/*TODO*///				dp -= gfx.line_modulo;
 /*TODO*///			}
 /*TODO*///		}
         } else {
@@ -218,19 +218,19 @@ public class drawgfx {
 
         if (gl.planeoffset[0] == GFX_RAW) {
             throw new UnsupportedOperationException("Unsupported");
-            /*TODO*///		if (gl->planes <= 4) gfx->flags |= GFX_PACKED;
-/*TODO*///		if (Machine->orientation & ORIENTATION_SWAP_XY) gfx->flags |= GFX_SWAPXY;
+            /*TODO*///		if (gl.planes <= 4) gfx.flags |= GFX_PACKED;
+/*TODO*///		if (Machine.orientation & ORIENTATION_SWAP_XY) gfx.flags |= GFX_SWAPXY;
 /*TODO*///
-/*TODO*///		gfx->line_modulo = gl->yoffset[0] / 8;
-/*TODO*///		gfx->char_modulo = gl->charincrement / 8;
+/*TODO*///		gfx.line_modulo = gl.yoffset[0] / 8;
+/*TODO*///		gfx.char_modulo = gl.charincrement / 8;
 /*TODO*///
-/*TODO*///		gfx->gfxdata = (UINT8 *)src + gl->xoffset[0] / 8;
-/*TODO*///		gfx->flags |= GFX_DONT_FREE_GFXDATA;
+/*TODO*///		gfx.gfxdata = (UINT8 *)src + gl.xoffset[0] / 8;
+/*TODO*///		gfx.flags |= GFX_DONT_FREE_GFXDATA;
 /*TODO*///
-/*TODO*///		for (c = 0;c < gfx->total_elements;c++)
+/*TODO*///		for (c = 0;c < gfx.total_elements;c++)
 /*TODO*///			calc_penusage(gfx,c);
         } else {
-            if (false && gl.planes <= 4 && (gfx.width & 1) == 0) //if (gl->planes <= 4 && !(gfx->width & 1))
+            if (false && gl.planes <= 4 && (gfx.width & 1) == 0) //if (gl.planes <= 4 && !(gfx.width & 1))
             {
                 gfx.flags |= GFX_PACKED;
                 gfx.line_modulo = gfx.width / 2;
@@ -636,16 +636,16 @@ public class drawgfx {
 /*TODO*///	if (flipx) blockmove_##function##_flipx##8 args ; \
 /*TODO*///	else blockmove_##function##8 args
 /*TODO*///#define BLOCKMOVELU(function,args) \
-/*TODO*///	if (gfx->flags & GFX_SWAPXY) blockmove_##function##_swapxy##8 args ; \
+/*TODO*///	if (gfx.flags & GFX_SWAPXY) blockmove_##function##_swapxy##8 args ; \
 /*TODO*///	else blockmove_##function##8 args
 /*TODO*///#define BLOCKMOVERAW(function,args) \
-/*TODO*///	if (gfx->flags & GFX_SWAPXY) blockmove_##function##_swapxy##_raw##8 args ; \
+/*TODO*///	if (gfx.flags & GFX_SWAPXY) blockmove_##function##_swapxy##_raw##8 args ; \
 /*TODO*///	else blockmove_##function##_raw##8 args
 /*TODO*///#define BLOCKMOVEPRI(function,args) \
-/*TODO*///	if (gfx->flags & GFX_SWAPXY) blockmove_##function##_swapxy##_pri##8 args ; \
+/*TODO*///	if (gfx.flags & GFX_SWAPXY) blockmove_##function##_swapxy##_pri##8 args ; \
 /*TODO*///	else blockmove_##function##_pri##8 args
 /*TODO*///#define BLOCKMOVERAWPRI(function,args) \
-/*TODO*///	if (gfx->flags & GFX_SWAPXY) blockmove_##function##_swapxy##_raw_pri##8 args ; \
+/*TODO*///	if (gfx.flags & GFX_SWAPXY) blockmove_##function##_swapxy##_raw_pri##8 args ; \
 /*TODO*///	else blockmove_##function##_raw_pri##8 args
 /*TODO*///#include "drawgfx.c"
 /*TODO*///#undef DECLARE
@@ -787,16 +787,16 @@ public class drawgfx {
 /*TODO*///	if (flipx) blockmove_##function##_flipx##16 args ; \
 /*TODO*///	else blockmove_##function##16 args
 /*TODO*///#define BLOCKMOVELU(function,args) \
-/*TODO*///	if (gfx->flags & GFX_SWAPXY) blockmove_##function##_swapxy##16 args ; \
+/*TODO*///	if (gfx.flags & GFX_SWAPXY) blockmove_##function##_swapxy##16 args ; \
 /*TODO*///	else blockmove_##function##16 args
 /*TODO*///#define BLOCKMOVERAW(function,args) \
-/*TODO*///	if (gfx->flags & GFX_SWAPXY) blockmove_##function##_swapxy##_raw##16 args ; \
+/*TODO*///	if (gfx.flags & GFX_SWAPXY) blockmove_##function##_swapxy##_raw##16 args ; \
 /*TODO*///	else blockmove_##function##_raw##16 args
 /*TODO*///#define BLOCKMOVEPRI(function,args) \
-/*TODO*///	if (gfx->flags & GFX_SWAPXY) blockmove_##function##_swapxy##_pri##16 args ; \
+/*TODO*///	if (gfx.flags & GFX_SWAPXY) blockmove_##function##_swapxy##_pri##16 args ; \
 /*TODO*///	else blockmove_##function##_pri##16 args
 /*TODO*///#define BLOCKMOVERAWPRI(function,args) \
-/*TODO*///	if (gfx->flags & GFX_SWAPXY) blockmove_##function##_swapxy##_raw_pri##16 args ; \
+/*TODO*///	if (gfx.flags & GFX_SWAPXY) blockmove_##function##_swapxy##_raw_pri##16 args ; \
 /*TODO*///	else blockmove_##function##_raw_pri##16 args
 /*TODO*///#include "drawgfx.c"
 /*TODO*///#undef DECLARE
@@ -939,16 +939,16 @@ public class drawgfx {
 /*TODO*///	if (flipx) blockmove_##function##_flipx##32 args ; \
 /*TODO*///	else blockmove_##function##32 args
 /*TODO*///#define BLOCKMOVELU(function,args) \
-/*TODO*///	if (gfx->flags & GFX_SWAPXY) blockmove_##function##_swapxy##32 args ; \
+/*TODO*///	if (gfx.flags & GFX_SWAPXY) blockmove_##function##_swapxy##32 args ; \
 /*TODO*///	else blockmove_##function##32 args
 /*TODO*///#define BLOCKMOVERAW(function,args) \
-/*TODO*///	if (gfx->flags & GFX_SWAPXY) blockmove_##function##_swapxy##_raw##32 args ; \
+/*TODO*///	if (gfx.flags & GFX_SWAPXY) blockmove_##function##_swapxy##_raw##32 args ; \
 /*TODO*///	else blockmove_##function##_raw##32 args
 /*TODO*///#define BLOCKMOVEPRI(function,args) \
-/*TODO*///	if (gfx->flags & GFX_SWAPXY) blockmove_##function##_swapxy##_pri##32 args ; \
+/*TODO*///	if (gfx.flags & GFX_SWAPXY) blockmove_##function##_swapxy##_pri##32 args ; \
 /*TODO*///	else blockmove_##function##_pri##32 args
 /*TODO*///#define BLOCKMOVERAWPRI(function,args) \
-/*TODO*///	if (gfx->flags & GFX_SWAPXY) blockmove_##function##_swapxy##_raw_pri##32 args ; \
+/*TODO*///	if (gfx.flags & GFX_SWAPXY) blockmove_##function##_swapxy##_raw_pri##32 args ; \
 /*TODO*///	else blockmove_##function##_raw_pri##32 args
 /*TODO*///#include "drawgfx.c"
 /*TODO*///#undef DECLARE
@@ -976,7 +976,7 @@ public class drawgfx {
 /*TODO*///  transparency == TRANSPARENCY_PENS - as above, but transparent_color is a mask of
 /*TODO*///  									 transparent pens.
 /*TODO*///  transparency == TRANSPARENCY_COLOR - bits whose _remapped_ palette index (taken from
-/*TODO*///                                     Machine->game_colortable) is == transparent_color
+/*TODO*///                                     Machine.game_colortable) is == transparent_color
 /*TODO*///
 /*TODO*///  transparency == TRANSPARENCY_PEN_TABLE - the transparency condition is same as TRANSPARENCY_PEN
 /*TODO*///					A special drawing is done according to gfx_drawmode_table[source pixel].
@@ -995,7 +995,7 @@ public class drawgfx {
             return;
         }
         if (gfx.colortable == null && is_raw[transparency] == 0) {
-            usrintf_showmessage("drawgfx() gfx->colortable == 0");
+            usrintf_showmessage("drawgfx() gfx.colortable == 0");
             return;
         }
 
@@ -1089,7 +1089,7 @@ public class drawgfx {
         if (dest.depth == 8) {
             drawgfx_core8(dest, gfx, code, color, flipx, flipy, sx, sy, clip, transparency, transparent_color, pri_buffer, pri_mask);
         } else if (dest.depth == 15 || dest.depth == 16) {
-            //System.out.println("color-->"+color);
+            //System.out.println("color-."+color);
             /*
             if (transparency==TRANSPARENCY_PEN_TABLE)
                 System.out.println("TRANSPARENCY_PEN_TABLE");
@@ -1512,7 +1512,7 @@ public class drawgfx {
 
     /* notes:
        - startx and starty MUST be UINT32 for calculations to work correctly
-       - srcbitmap->width and height are assumed to be a power of 2 to speed up wraparound
+       - srcbitmap.width and height are assumed to be a power of 2 to speed up wraparound
        */
     public static void copyrozbitmap(mame_bitmap dest, mame_bitmap src,
                     int startx, int starty,int incxx,int incxy,int incyx,int incyy,int wraparound,
@@ -1715,7 +1715,7 @@ public class drawgfx {
 /*TODO*///	}
 /*TODO*///
 /*TODO*///	if (transparency == TRANSPARENCY_COLOR)
-/*TODO*///		transparent_color = Machine->pens[transparent_color];
+/*TODO*///		transparent_color = Machine.pens[transparent_color];
 /*TODO*///
 /*TODO*///
 /*TODO*///	/*
@@ -1726,7 +1726,7 @@ public class drawgfx {
 /*TODO*///	*/
 /*TODO*///
 /*TODO*///
-/*TODO*///	if (Machine->orientation & ORIENTATION_SWAP_XY)
+/*TODO*///	if (Machine.orientation & ORIENTATION_SWAP_XY)
 /*TODO*///	{
 /*TODO*///		int temp;
 /*TODO*///
@@ -1745,49 +1745,49 @@ public class drawgfx {
 /*TODO*///		if (clip)
 /*TODO*///		{
 /*TODO*///			/* clip and myclip might be the same, so we need a temporary storage */
-/*TODO*///			temp = clip->min_x;
-/*TODO*///			myclip.min_x = clip->min_y;
+/*TODO*///			temp = clip.min_x;
+/*TODO*///			myclip.min_x = clip.min_y;
 /*TODO*///			myclip.min_y = temp;
-/*TODO*///			temp = clip->max_x;
-/*TODO*///			myclip.max_x = clip->max_y;
+/*TODO*///			temp = clip.max_x;
+/*TODO*///			myclip.max_x = clip.max_y;
 /*TODO*///			myclip.max_y = temp;
 /*TODO*///			clip = &myclip;
 /*TODO*///		}
 /*TODO*///	}
-/*TODO*///	if (Machine->orientation & ORIENTATION_FLIP_X)
+/*TODO*///	if (Machine.orientation & ORIENTATION_FLIP_X)
 /*TODO*///	{
-/*TODO*///		sx = dest_bmp->width - ((gfx->width * scalex + 0x7fff) >> 16) - sx;
+/*TODO*///		sx = dest_bmp.width - ((gfx.width * scalex + 0x7fff) >> 16) - sx;
 /*TODO*///		if (clip)
 /*TODO*///		{
 /*TODO*///			int temp;
 /*TODO*///
 /*TODO*///
 /*TODO*///			/* clip and myclip might be the same, so we need a temporary storage */
-/*TODO*///			temp = clip->min_x;
-/*TODO*///			myclip.min_x = dest_bmp->width-1 - clip->max_x;
-/*TODO*///			myclip.max_x = dest_bmp->width-1 - temp;
-/*TODO*///			myclip.min_y = clip->min_y;
-/*TODO*///			myclip.max_y = clip->max_y;
+/*TODO*///			temp = clip.min_x;
+/*TODO*///			myclip.min_x = dest_bmp.width-1 - clip.max_x;
+/*TODO*///			myclip.max_x = dest_bmp.width-1 - temp;
+/*TODO*///			myclip.min_y = clip.min_y;
+/*TODO*///			myclip.max_y = clip.max_y;
 /*TODO*///			clip = &myclip;
 /*TODO*///		}
 /*TODO*///#ifndef PREROTATE_GFX
 /*TODO*///		flipx = !flipx;
 /*TODO*///#endif
 /*TODO*///	}
-/*TODO*///	if (Machine->orientation & ORIENTATION_FLIP_Y)
+/*TODO*///	if (Machine.orientation & ORIENTATION_FLIP_Y)
 /*TODO*///	{
-/*TODO*///		sy = dest_bmp->height - ((gfx->height * scaley + 0x7fff) >> 16) - sy;
+/*TODO*///		sy = dest_bmp.height - ((gfx.height * scaley + 0x7fff) >> 16) - sy;
 /*TODO*///		if (clip)
 /*TODO*///		{
 /*TODO*///			int temp;
 /*TODO*///
 /*TODO*///
-/*TODO*///			myclip.min_x = clip->min_x;
-/*TODO*///			myclip.max_x = clip->max_x;
+/*TODO*///			myclip.min_x = clip.min_x;
+/*TODO*///			myclip.max_x = clip.max_x;
 /*TODO*///			/* clip and myclip might be the same, so we need a temporary storage */
-/*TODO*///			temp = clip->min_y;
-/*TODO*///			myclip.min_y = dest_bmp->height-1 - clip->max_y;
-/*TODO*///			myclip.max_y = dest_bmp->height-1 - temp;
+/*TODO*///			temp = clip.min_y;
+/*TODO*///			myclip.min_y = dest_bmp.height-1 - clip.max_y;
+/*TODO*///			myclip.max_y = dest_bmp.height-1 - temp;
 /*TODO*///			clip = &myclip;
 /*TODO*///		}
 /*TODO*///#ifndef PREROTATE_GFX
@@ -1798,36 +1798,36 @@ public class drawgfx {
 /*TODO*///	/* KW 991012 -- Added code to force clip to bitmap boundary */
 /*TODO*///	if(clip)
 /*TODO*///	{
-/*TODO*///		myclip.min_x = clip->min_x;
-/*TODO*///		myclip.max_x = clip->max_x;
-/*TODO*///		myclip.min_y = clip->min_y;
-/*TODO*///		myclip.max_y = clip->max_y;
+/*TODO*///		myclip.min_x = clip.min_x;
+/*TODO*///		myclip.max_x = clip.max_x;
+/*TODO*///		myclip.min_y = clip.min_y;
+/*TODO*///		myclip.max_y = clip.max_y;
 /*TODO*///
 /*TODO*///		if (myclip.min_x < 0) myclip.min_x = 0;
-/*TODO*///		if (myclip.max_x >= dest_bmp->width) myclip.max_x = dest_bmp->width-1;
+/*TODO*///		if (myclip.max_x >= dest_bmp.width) myclip.max_x = dest_bmp.width-1;
 /*TODO*///		if (myclip.min_y < 0) myclip.min_y = 0;
-/*TODO*///		if (myclip.max_y >= dest_bmp->height) myclip.max_y = dest_bmp->height-1;
+/*TODO*///		if (myclip.max_y >= dest_bmp.height) myclip.max_y = dest_bmp.height-1;
 /*TODO*///
 /*TODO*///		clip=&myclip;
 /*TODO*///	}
 /*TODO*///
 /*TODO*///
 /*TODO*///	/* ASG 980209 -- added 16-bit version */
-/*TODO*///	if (dest_bmp->depth == 8)
+/*TODO*///	if (dest_bmp.depth == 8)
 /*TODO*///	{
-/*TODO*///		if( gfx && gfx->colortable )
+/*TODO*///		if( gfx && gfx.colortable )
 /*TODO*///		{
-/*TODO*///			const pen_t *pal = &gfx->colortable[gfx->color_granularity * (color % gfx->total_colors)]; /* ASG 980209 */
-/*TODO*///			int source_base = (code % gfx->total_elements) * gfx->height;
+/*TODO*///			const pen_t *pal = &gfx.colortable[gfx.color_granularity * (color % gfx.total_colors)]; /* ASG 980209 */
+/*TODO*///			int source_base = (code % gfx.total_elements) * gfx.height;
 /*TODO*///
-/*TODO*///			int sprite_screen_height = (scaley*gfx->height+0x8000)>>16;
-/*TODO*///			int sprite_screen_width = (scalex*gfx->width+0x8000)>>16;
+/*TODO*///			int sprite_screen_height = (scaley*gfx.height+0x8000)>>16;
+/*TODO*///			int sprite_screen_width = (scalex*gfx.width+0x8000)>>16;
 /*TODO*///
 /*TODO*///			if (sprite_screen_width && sprite_screen_height)
 /*TODO*///			{
 /*TODO*///				/* compute sprite increment per screen pixel */
-/*TODO*///				int dx = (gfx->width<<16)/sprite_screen_width;
-/*TODO*///				int dy = (gfx->height<<16)/sprite_screen_height;
+/*TODO*///				int dx = (gfx.width<<16)/sprite_screen_width;
+/*TODO*///				int dy = (gfx.height<<16)/sprite_screen_height;
 /*TODO*///
 /*TODO*///				int ex = sx+sprite_screen_width;
 /*TODO*///				int ey = sy+sprite_screen_height;
@@ -1857,27 +1857,27 @@ public class drawgfx {
 /*TODO*///
 /*TODO*///				if( clip )
 /*TODO*///				{
-/*TODO*///					if( sx < clip->min_x)
+/*TODO*///					if( sx < clip.min_x)
 /*TODO*///					{ /* clip left */
-/*TODO*///						int pixels = clip->min_x-sx;
+/*TODO*///						int pixels = clip.min_x-sx;
 /*TODO*///						sx += pixels;
 /*TODO*///						x_index_base += pixels*dx;
 /*TODO*///					}
-/*TODO*///					if( sy < clip->min_y )
+/*TODO*///					if( sy < clip.min_y )
 /*TODO*///					{ /* clip top */
-/*TODO*///						int pixels = clip->min_y-sy;
+/*TODO*///						int pixels = clip.min_y-sy;
 /*TODO*///						sy += pixels;
 /*TODO*///						y_index += pixels*dy;
 /*TODO*///					}
 /*TODO*///					/* NS 980211 - fixed incorrect clipping */
-/*TODO*///					if( ex > clip->max_x+1 )
+/*TODO*///					if( ex > clip.max_x+1 )
 /*TODO*///					{ /* clip right */
-/*TODO*///						int pixels = ex-clip->max_x-1;
+/*TODO*///						int pixels = ex-clip.max_x-1;
 /*TODO*///						ex -= pixels;
 /*TODO*///					}
-/*TODO*///					if( ey > clip->max_y+1 )
+/*TODO*///					if( ey > clip.max_y+1 )
 /*TODO*///					{ /* clip bottom */
-/*TODO*///						int pixels = ey-clip->max_y-1;
+/*TODO*///						int pixels = ey-clip.max_y-1;
 /*TODO*///						ey -= pixels;
 /*TODO*///					}
 /*TODO*///				}
@@ -1891,13 +1891,13 @@ public class drawgfx {
 /*TODO*///					{
 /*TODO*///						if (pri_buffer)
 /*TODO*///						{
-/*TODO*///							if (gfx->flags & GFX_PACKED)
+/*TODO*///							if (gfx.flags & GFX_PACKED)
 /*TODO*///							{
 /*TODO*///								for( y=sy; y<ey; y++ )
 /*TODO*///								{
-/*TODO*///									UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///									UINT8 *dest = dest_bmp->line[y];
-/*TODO*///									UINT8 *pri = pri_buffer->line[y];
+/*TODO*///									UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///									UINT8 *dest = dest_bmp.line[y];
+/*TODO*///									UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///									int x, x_index = x_index_base;
 /*TODO*///									for( x=sx; x<ex; x++ )
@@ -1919,9 +1919,9 @@ public class drawgfx {
 /*TODO*///							{
 /*TODO*///								for( y=sy; y<ey; y++ )
 /*TODO*///								{
-/*TODO*///									UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///									UINT8 *dest = dest_bmp->line[y];
-/*TODO*///									UINT8 *pri = pri_buffer->line[y];
+/*TODO*///									UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///									UINT8 *dest = dest_bmp.line[y];
+/*TODO*///									UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///									int x, x_index = x_index_base;
 /*TODO*///									for( x=sx; x<ex; x++ )
@@ -1942,12 +1942,12 @@ public class drawgfx {
 /*TODO*///						}
 /*TODO*///						else
 /*TODO*///						{
-/*TODO*///							if (gfx->flags & GFX_PACKED)
+/*TODO*///							if (gfx.flags & GFX_PACKED)
 /*TODO*///							{
 /*TODO*///								for( y=sy; y<ey; y++ )
 /*TODO*///								{
-/*TODO*///									UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///									UINT8 *dest = dest_bmp->line[y];
+/*TODO*///									UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///									UINT8 *dest = dest_bmp.line[y];
 /*TODO*///
 /*TODO*///									int x, x_index = x_index_base;
 /*TODO*///									for( x=sx; x<ex; x++ )
@@ -1964,8 +1964,8 @@ public class drawgfx {
 /*TODO*///							{
 /*TODO*///								for( y=sy; y<ey; y++ )
 /*TODO*///								{
-/*TODO*///									UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///									UINT8 *dest = dest_bmp->line[y];
+/*TODO*///									UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///									UINT8 *dest = dest_bmp.line[y];
 /*TODO*///
 /*TODO*///									int x, x_index = x_index_base;
 /*TODO*///									for( x=sx; x<ex; x++ )
@@ -1988,9 +1988,9 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT8 *dest = dest_bmp->line[y];
-/*TODO*///								UINT8 *pri = pri_buffer->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT8 *dest = dest_bmp.line[y];
+/*TODO*///								UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2012,8 +2012,8 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT8 *dest = dest_bmp->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT8 *dest = dest_bmp.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2035,9 +2035,9 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT8 *dest = dest_bmp->line[y];
-/*TODO*///								UINT8 *pri = pri_buffer->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT8 *dest = dest_bmp.line[y];
+/*TODO*///								UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2059,8 +2059,8 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT8 *dest = dest_bmp->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT8 *dest = dest_bmp.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2082,9 +2082,9 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT8 *dest = dest_bmp->line[y];
-/*TODO*///								UINT8 *pri = pri_buffer->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT8 *dest = dest_bmp.line[y];
+/*TODO*///								UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2106,8 +2106,8 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT8 *dest = dest_bmp->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT8 *dest = dest_bmp.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2130,9 +2130,9 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT8 *dest = dest_bmp->line[y];
-/*TODO*///								UINT8 *pri = pri_buffer->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT8 *dest = dest_bmp.line[y];
+/*TODO*///								UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2154,8 +2154,8 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT8 *dest = dest_bmp->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT8 *dest = dest_bmp.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2177,9 +2177,9 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT8 *dest = dest_bmp->line[y];
-/*TODO*///								UINT8 *pri = pri_buffer->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT8 *dest = dest_bmp.line[y];
+/*TODO*///								UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2216,8 +2216,8 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT8 *dest = dest_bmp->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT8 *dest = dest_bmp.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2250,9 +2250,9 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT8 *dest = dest_bmp->line[y];
-/*TODO*///								UINT8 *pri = pri_buffer->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT8 *dest = dest_bmp.line[y];
+/*TODO*///								UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2289,8 +2289,8 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT8 *dest = dest_bmp->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT8 *dest = dest_bmp.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2321,21 +2321,21 @@ public class drawgfx {
 /*TODO*///	}
 /*TODO*///
 /*TODO*///	/* ASG 980209 -- new 16-bit part */
-/*TODO*///	else if (dest_bmp->depth == 15 || dest_bmp->depth == 16)
+/*TODO*///	else if (dest_bmp.depth == 15 || dest_bmp.depth == 16)
 /*TODO*///	{
-/*TODO*///		if( gfx && gfx->colortable )
+/*TODO*///		if( gfx && gfx.colortable )
 /*TODO*///		{
-/*TODO*///			const pen_t *pal = &gfx->colortable[gfx->color_granularity * (color % gfx->total_colors)]; /* ASG 980209 */
-/*TODO*///			int source_base = (code % gfx->total_elements) * gfx->height;
+/*TODO*///			const pen_t *pal = &gfx.colortable[gfx.color_granularity * (color % gfx.total_colors)]; /* ASG 980209 */
+/*TODO*///			int source_base = (code % gfx.total_elements) * gfx.height;
 /*TODO*///
-/*TODO*///			int sprite_screen_height = (scaley*gfx->height+0x8000)>>16;
-/*TODO*///			int sprite_screen_width = (scalex*gfx->width+0x8000)>>16;
+/*TODO*///			int sprite_screen_height = (scaley*gfx.height+0x8000)>>16;
+/*TODO*///			int sprite_screen_width = (scalex*gfx.width+0x8000)>>16;
 /*TODO*///
 /*TODO*///			if (sprite_screen_width && sprite_screen_height)
 /*TODO*///			{
 /*TODO*///				/* compute sprite increment per screen pixel */
-/*TODO*///				int dx = (gfx->width<<16)/sprite_screen_width;
-/*TODO*///				int dy = (gfx->height<<16)/sprite_screen_height;
+/*TODO*///				int dx = (gfx.width<<16)/sprite_screen_width;
+/*TODO*///				int dy = (gfx.height<<16)/sprite_screen_height;
 /*TODO*///
 /*TODO*///				int ex = sx+sprite_screen_width;
 /*TODO*///				int ey = sy+sprite_screen_height;
@@ -2365,27 +2365,27 @@ public class drawgfx {
 /*TODO*///
 /*TODO*///				if( clip )
 /*TODO*///				{
-/*TODO*///					if( sx < clip->min_x)
+/*TODO*///					if( sx < clip.min_x)
 /*TODO*///					{ /* clip left */
-/*TODO*///						int pixels = clip->min_x-sx;
+/*TODO*///						int pixels = clip.min_x-sx;
 /*TODO*///						sx += pixels;
 /*TODO*///						x_index_base += pixels*dx;
 /*TODO*///					}
-/*TODO*///					if( sy < clip->min_y )
+/*TODO*///					if( sy < clip.min_y )
 /*TODO*///					{ /* clip top */
-/*TODO*///						int pixels = clip->min_y-sy;
+/*TODO*///						int pixels = clip.min_y-sy;
 /*TODO*///						sy += pixels;
 /*TODO*///						y_index += pixels*dy;
 /*TODO*///					}
 /*TODO*///					/* NS 980211 - fixed incorrect clipping */
-/*TODO*///					if( ex > clip->max_x+1 )
+/*TODO*///					if( ex > clip.max_x+1 )
 /*TODO*///					{ /* clip right */
-/*TODO*///						int pixels = ex-clip->max_x-1;
+/*TODO*///						int pixels = ex-clip.max_x-1;
 /*TODO*///						ex -= pixels;
 /*TODO*///					}
-/*TODO*///					if( ey > clip->max_y+1 )
+/*TODO*///					if( ey > clip.max_y+1 )
 /*TODO*///					{ /* clip bottom */
-/*TODO*///						int pixels = ey-clip->max_y-1;
+/*TODO*///						int pixels = ey-clip.max_y-1;
 /*TODO*///						ey -= pixels;
 /*TODO*///					}
 /*TODO*///				}
@@ -2399,13 +2399,13 @@ public class drawgfx {
 /*TODO*///					{
 /*TODO*///						if (pri_buffer)
 /*TODO*///						{
-/*TODO*///							if (gfx->flags & GFX_PACKED)
+/*TODO*///							if (gfx.flags & GFX_PACKED)
 /*TODO*///							{
 /*TODO*///								for( y=sy; y<ey; y++ )
 /*TODO*///								{
-/*TODO*///									UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///									UINT16 *dest = (UINT16 *)dest_bmp->line[y];
-/*TODO*///									UINT8 *pri = pri_buffer->line[y];
+/*TODO*///									UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///									UINT16 *dest = (UINT16 *)dest_bmp.line[y];
+/*TODO*///									UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///									int x, x_index = x_index_base;
 /*TODO*///									for( x=sx; x<ex; x++ )
@@ -2427,9 +2427,9 @@ public class drawgfx {
 /*TODO*///							{
 /*TODO*///								for( y=sy; y<ey; y++ )
 /*TODO*///								{
-/*TODO*///									UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///									UINT16 *dest = (UINT16 *)dest_bmp->line[y];
-/*TODO*///									UINT8 *pri = pri_buffer->line[y];
+/*TODO*///									UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///									UINT16 *dest = (UINT16 *)dest_bmp.line[y];
+/*TODO*///									UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///									int x, x_index = x_index_base;
 /*TODO*///									for( x=sx; x<ex; x++ )
@@ -2450,12 +2450,12 @@ public class drawgfx {
 /*TODO*///						}
 /*TODO*///						else
 /*TODO*///						{
-/*TODO*///							if (gfx->flags & GFX_PACKED)
+/*TODO*///							if (gfx.flags & GFX_PACKED)
 /*TODO*///							{
 /*TODO*///								for( y=sy; y<ey; y++ )
 /*TODO*///								{
-/*TODO*///									UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///									UINT16 *dest = (UINT16 *)dest_bmp->line[y];
+/*TODO*///									UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///									UINT16 *dest = (UINT16 *)dest_bmp.line[y];
 /*TODO*///
 /*TODO*///									int x, x_index = x_index_base;
 /*TODO*///									for( x=sx; x<ex; x++ )
@@ -2472,8 +2472,8 @@ public class drawgfx {
 /*TODO*///							{
 /*TODO*///								for( y=sy; y<ey; y++ )
 /*TODO*///								{
-/*TODO*///									UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///									UINT16 *dest = (UINT16 *)dest_bmp->line[y];
+/*TODO*///									UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///									UINT16 *dest = (UINT16 *)dest_bmp.line[y];
 /*TODO*///
 /*TODO*///									int x, x_index = x_index_base;
 /*TODO*///									for( x=sx; x<ex; x++ )
@@ -2496,9 +2496,9 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp->line[y];
-/*TODO*///								UINT8 *pri = pri_buffer->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp.line[y];
+/*TODO*///								UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2520,8 +2520,8 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2543,9 +2543,9 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp->line[y];
-/*TODO*///								UINT8 *pri = pri_buffer->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp.line[y];
+/*TODO*///								UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2567,8 +2567,8 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2590,9 +2590,9 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp->line[y];
-/*TODO*///								UINT8 *pri = pri_buffer->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp.line[y];
+/*TODO*///								UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2614,8 +2614,8 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2638,9 +2638,9 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp->line[y];
-/*TODO*///								UINT8 *pri = pri_buffer->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp.line[y];
+/*TODO*///								UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2662,8 +2662,8 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2685,9 +2685,9 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp->line[y];
-/*TODO*///								UINT8 *pri = pri_buffer->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp.line[y];
+/*TODO*///								UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2724,8 +2724,8 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2758,9 +2758,9 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp->line[y];
-/*TODO*///								UINT8 *pri = pri_buffer->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp.line[y];
+/*TODO*///								UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2797,8 +2797,8 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2831,9 +2831,9 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp->line[y];
-/*TODO*///								UINT8 *pri = pri_buffer->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp.line[y];
+/*TODO*///								UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2860,8 +2860,8 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2889,9 +2889,9 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp->line[y];
-/*TODO*///								UINT8 *pri = pri_buffer->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp.line[y];
+/*TODO*///								UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2913,8 +2913,8 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT16 *dest = (UINT16 *)dest_bmp.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -2934,19 +2934,19 @@ public class drawgfx {
 /*TODO*///	}
 /*TODO*///	else
 /*TODO*///	{
-/*TODO*///		if( gfx && gfx->colortable )
+/*TODO*///		if( gfx && gfx.colortable )
 /*TODO*///		{
-/*TODO*///			const pen_t *pal = &gfx->colortable[gfx->color_granularity * (color % gfx->total_colors)]; /* ASG 980209 */
-/*TODO*///			int source_base = (code % gfx->total_elements) * gfx->height;
+/*TODO*///			const pen_t *pal = &gfx.colortable[gfx.color_granularity * (color % gfx.total_colors)]; /* ASG 980209 */
+/*TODO*///			int source_base = (code % gfx.total_elements) * gfx.height;
 /*TODO*///
-/*TODO*///			int sprite_screen_height = (scaley*gfx->height+0x8000)>>16;
-/*TODO*///			int sprite_screen_width = (scalex*gfx->width+0x8000)>>16;
+/*TODO*///			int sprite_screen_height = (scaley*gfx.height+0x8000)>>16;
+/*TODO*///			int sprite_screen_width = (scalex*gfx.width+0x8000)>>16;
 /*TODO*///
 /*TODO*///			if (sprite_screen_width && sprite_screen_height)
 /*TODO*///			{
 /*TODO*///				/* compute sprite increment per screen pixel */
-/*TODO*///				int dx = (gfx->width<<16)/sprite_screen_width;
-/*TODO*///				int dy = (gfx->height<<16)/sprite_screen_height;
+/*TODO*///				int dx = (gfx.width<<16)/sprite_screen_width;
+/*TODO*///				int dy = (gfx.height<<16)/sprite_screen_height;
 /*TODO*///
 /*TODO*///				int ex = sx+sprite_screen_width;
 /*TODO*///				int ey = sy+sprite_screen_height;
@@ -2976,27 +2976,27 @@ public class drawgfx {
 /*TODO*///
 /*TODO*///				if( clip )
 /*TODO*///				{
-/*TODO*///					if( sx < clip->min_x)
+/*TODO*///					if( sx < clip.min_x)
 /*TODO*///					{ /* clip left */
-/*TODO*///						int pixels = clip->min_x-sx;
+/*TODO*///						int pixels = clip.min_x-sx;
 /*TODO*///						sx += pixels;
 /*TODO*///						x_index_base += pixels*dx;
 /*TODO*///					}
-/*TODO*///					if( sy < clip->min_y )
+/*TODO*///					if( sy < clip.min_y )
 /*TODO*///					{ /* clip top */
-/*TODO*///						int pixels = clip->min_y-sy;
+/*TODO*///						int pixels = clip.min_y-sy;
 /*TODO*///						sy += pixels;
 /*TODO*///						y_index += pixels*dy;
 /*TODO*///					}
 /*TODO*///					/* NS 980211 - fixed incorrect clipping */
-/*TODO*///					if( ex > clip->max_x+1 )
+/*TODO*///					if( ex > clip.max_x+1 )
 /*TODO*///					{ /* clip right */
-/*TODO*///						int pixels = ex-clip->max_x-1;
+/*TODO*///						int pixels = ex-clip.max_x-1;
 /*TODO*///						ex -= pixels;
 /*TODO*///					}
-/*TODO*///					if( ey > clip->max_y+1 )
+/*TODO*///					if( ey > clip.max_y+1 )
 /*TODO*///					{ /* clip bottom */
-/*TODO*///						int pixels = ey-clip->max_y-1;
+/*TODO*///						int pixels = ey-clip.max_y-1;
 /*TODO*///						ey -= pixels;
 /*TODO*///					}
 /*TODO*///				}
@@ -3012,9 +3012,9 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp->line[y];
-/*TODO*///								UINT8 *pri = pri_buffer->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp.line[y];
+/*TODO*///								UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -3036,8 +3036,8 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -3059,9 +3059,9 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp->line[y];
-/*TODO*///								UINT8 *pri = pri_buffer->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp.line[y];
+/*TODO*///								UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -3083,8 +3083,8 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -3106,9 +3106,9 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp->line[y];
-/*TODO*///								UINT8 *pri = pri_buffer->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp.line[y];
+/*TODO*///								UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -3130,8 +3130,8 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -3153,9 +3153,9 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp->line[y];
-/*TODO*///								UINT8 *pri = pri_buffer->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp.line[y];
+/*TODO*///								UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -3177,8 +3177,8 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -3201,9 +3201,9 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp->line[y];
-/*TODO*///								UINT8 *pri = pri_buffer->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp.line[y];
+/*TODO*///								UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -3225,8 +3225,8 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -3248,9 +3248,9 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp->line[y];
-/*TODO*///								UINT8 *pri = pri_buffer->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp.line[y];
+/*TODO*///								UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -3287,8 +3287,8 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -3321,9 +3321,9 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp->line[y];
-/*TODO*///								UINT8 *pri = pri_buffer->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp.line[y];
+/*TODO*///								UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -3360,8 +3360,8 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -3395,9 +3395,9 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp->line[y];
-/*TODO*///								UINT8 *pri = pri_buffer->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp.line[y];
+/*TODO*///								UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -3424,8 +3424,8 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -3453,9 +3453,9 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp->line[y];
-/*TODO*///								UINT8 *pri = pri_buffer->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp.line[y];
+/*TODO*///								UINT8 *pri = pri_buffer.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -3477,8 +3477,8 @@ public class drawgfx {
 /*TODO*///						{
 /*TODO*///							for( y=sy; y<ey; y++ )
 /*TODO*///							{
-/*TODO*///								UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp->line[y];
+/*TODO*///								UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+/*TODO*///								UINT32 *dest = (UINT32 *)dest_bmp.line[y];
 /*TODO*///
 /*TODO*///								int x, x_index = x_index_base;
 /*TODO*///								for( x=sx; x<ex; x++ )
@@ -3538,83 +3538,83 @@ public class drawgfx {
 /*TODO*///
     public static plot_pixel_procPtr pp_8_nd = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b->line[y])[x] = p; 
+            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b.line[y])[x] = p; 
         }
     };
     public static plot_pixel_procPtr pp_8_nd_fx = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b->line[y])[b->width-1-x] = p; 
+            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b.line[y])[b.width-1-x] = p; 
         }
     };
     public static plot_pixel_procPtr pp_8_nd_fy = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b->line[b->height-1-y])[x] = p; 
+            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b.line[b.height-1-y])[x] = p; 
         }
     };
     public static plot_pixel_procPtr pp_8_nd_fxy = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b->line[b->height-1-y])[b->width-1-x] = p; 
+            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b.line[b.height-1-y])[b.width-1-x] = p; 
         }
     };
     public static plot_pixel_procPtr pp_8_nd_s = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b->line[x])[y] = p; 
+            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b.line[x])[y] = p; 
         }
     };
     public static plot_pixel_procPtr pp_8_nd_fx_s = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b->line[x])[b->width-1-y] = p; 
+            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b.line[x])[b.width-1-y] = p; 
         }
     };
     public static plot_pixel_procPtr pp_8_nd_fy_s = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b->line[b->height-1-x])[y] = p; 
+            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b.line[b.height-1-x])[y] = p; 
         }
     };
     public static plot_pixel_procPtr pp_8_nd_fxy_s = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b->line[b->height-1-x])[b->width-1-y] = p; 
+            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b.line[b.height-1-x])[b.width-1-y] = p; 
         }
     };
 
     public static plot_pixel_procPtr pp_8_d = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b->line[y])[x] = p; osd_mark_dirty(x,y,x,y); 
+            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b.line[y])[x] = p; osd_mark_dirty(x,y,x,y); 
         }
     };
     public static plot_pixel_procPtr pp_8_d_fx = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//x = b->width-1-x; ((UINT8 *)b->line[y])[x] = p; osd_mark_dirty(x,y,x,y); 
+            throw new UnsupportedOperationException("unsupported");//x = b.width-1-x; ((UINT8 *)b.line[y])[x] = p; osd_mark_dirty(x,y,x,y); 
         }
     };
     public static plot_pixel_procPtr pp_8_d_fy = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//y = b->height-1-y; ((UINT8 *)b->line[y])[x] = p; osd_mark_dirty(x,y,x,y); 
+            throw new UnsupportedOperationException("unsupported");//y = b.height-1-y; ((UINT8 *)b.line[y])[x] = p; osd_mark_dirty(x,y,x,y); 
         }
     };
     public static plot_pixel_procPtr pp_8_d_fxy = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");// x = b->width-1-x; y = b->height-1-y; ((UINT8 *)b->line[y])[x] = p; osd_mark_dirty(x,y,x,y); 
+            throw new UnsupportedOperationException("unsupported");// x = b.width-1-x; y = b.height-1-y; ((UINT8 *)b.line[y])[x] = p; osd_mark_dirty(x,y,x,y); 
         }
     };
     public static plot_pixel_procPtr pp_8_d_s = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b->line[x])[y] = p; osd_mark_dirty(y,x,y,x); 
+            throw new UnsupportedOperationException("unsupported");//((UINT8 *)b.line[x])[y] = p; osd_mark_dirty(y,x,y,x); 
         }
     };
     public static plot_pixel_procPtr pp_8_d_fx_s = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//y = b->width-1-y; ((UINT8 *)b->line[x])[y] = p; osd_mark_dirty(y,x,y,x); 
+            throw new UnsupportedOperationException("unsupported");//y = b.width-1-y; ((UINT8 *)b.line[x])[y] = p; osd_mark_dirty(y,x,y,x); 
         }
     };
     public static plot_pixel_procPtr pp_8_d_fy_s = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//x = b->height-1-x; ((UINT8 *)b->line[x])[y] = p; osd_mark_dirty(y,x,y,x); 
+            throw new UnsupportedOperationException("unsupported");//x = b.height-1-x; ((UINT8 *)b.line[x])[y] = p; osd_mark_dirty(y,x,y,x); 
         }
     };
     public static plot_pixel_procPtr pp_8_d_fxy_s = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//x = b->height-1-x; y = b->width-1-y; ((UINT8 *)b->line[x])[y] = p; osd_mark_dirty(y,x,y,x); 
+            throw new UnsupportedOperationException("unsupported");//x = b.height-1-x; y = b.width-1-y; ((UINT8 *)b.line[x])[y] = p; osd_mark_dirty(y,x,y,x); 
         }
     };
 
@@ -3630,12 +3630,12 @@ public class drawgfx {
     };
     public static plot_pixel_procPtr pp_16_nd_fy = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT16 *)b -> line[b -> height - 1 - y])[x] = p;
+            throw new UnsupportedOperationException("unsupported");//((UINT16 *)b . line[b . height - 1 - y])[x] = p;
         }
     };
     public static plot_pixel_procPtr pp_16_nd_fxy = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT16 *)b -> line[b -> height - 1 - y])[b -> width - 1 - x] = p;
+                new UShortPtr(b.line[b.height - 1 - y]).write(b.width - 1 - x, (char) p);//((UINT16 *)b . line[b . height - 1 - y])[b . width - 1 - x] = p;            
         }
     };
     public static plot_pixel_procPtr pp_16_nd_s = new plot_pixel_procPtr() {
@@ -3655,7 +3655,7 @@ public class drawgfx {
     };
     public static plot_pixel_procPtr pp_16_nd_fxy_s = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT16 *)b -> line[b -> height - 1 - x])[b -> width - 1 - y] = p;
+            throw new UnsupportedOperationException("unsupported");//((UINT16 *)b . line[b . height - 1 - x])[b . width - 1 - y] = p;
         }
     };
 
@@ -3667,32 +3667,32 @@ public class drawgfx {
     };
     public static plot_pixel_procPtr pp_16_d_fx = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//x = b -> width - 1 - x;((UINT16 *)b -> line[y])[x] = p;
+            throw new UnsupportedOperationException("unsupported");//x = b . width - 1 - x;((UINT16 *)b . line[y])[x] = p;
             //osd_mark_dirty(x, y, x, y);
         }
     };
     public static plot_pixel_procPtr pp_16_d_fy = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//y = b -> height - 1 - y;((UINT16 *)b -> line[y])[x] = p;
+            throw new UnsupportedOperationException("unsupported");//y = b . height - 1 - y;((UINT16 *)b . line[y])[x] = p;
             //osd_mark_dirty(x, y, x, y);
         }
     };
     public static plot_pixel_procPtr pp_16_d_fxy = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//x = b -> width - 1 - x;
-            //y = b -> height - 1 - y;((UINT16 *)b -> line[y])[x] = p;
+            throw new UnsupportedOperationException("unsupported");//x = b . width - 1 - x;
+            //y = b . height - 1 - y;((UINT16 *)b . line[y])[x] = p;
             //osd_mark_dirty(x, y, x, y);
         }
     };
     public static plot_pixel_procPtr pp_16_d_s = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT16 *)b -> line[x])[y] = p;
+            throw new UnsupportedOperationException("unsupported");//((UINT16 *)b . line[x])[y] = p;
             //osd_mark_dirty(y, x, y, x);
         }
     };
     public static plot_pixel_procPtr pp_16_d_fx_s = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//y = b -> width - 1 - y;((UINT16 *)b -> line[x])[y] = p;
+            throw new UnsupportedOperationException("unsupported");//y = b . width - 1 - y;((UINT16 *)b . line[x])[y] = p;
             //osd_mark_dirty(y, x, y, x);
         }
     };
@@ -3705,142 +3705,142 @@ public class drawgfx {
     };
     public static plot_pixel_procPtr pp_16_d_fxy_s = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//x = b -> height - 1 - x;
-            //y = b -> width - 1 - y;((UINT16 *)b -> line[x])[y] = p;
+            throw new UnsupportedOperationException("unsupported");//x = b . height - 1 - x;
+            //y = b . width - 1 - y;((UINT16 *)b . line[x])[y] = p;
             //osd_mark_dirty(y, x, y, x);
         }
     };
 
     public static plot_pixel_procPtr pp_32_nd = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b -> line[y])[x] = p;
+            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b . line[y])[x] = p;
         }
     };
     public static plot_pixel_procPtr pp_32_nd_fx = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b -> line[y])[b -> width - 1 - x] = p;
+            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b . line[y])[b . width - 1 - x] = p;
         }
     };
     public static plot_pixel_procPtr pp_32_nd_fy = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b -> line[b -> height - 1 - y])[x] = p;
+            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b . line[b . height - 1 - y])[x] = p;
         }
     };
     public static plot_pixel_procPtr pp_32_nd_fxy = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b -> line[b -> height - 1 - y])[b -> width - 1 - x] = p;
+            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b . line[b . height - 1 - y])[b . width - 1 - x] = p;
         }
     };
     public static plot_pixel_procPtr pp_32_nd_s = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b -> line[x])[y] = p;
+            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b . line[x])[y] = p;
         }
     };
     public static plot_pixel_procPtr pp_32_nd_fx_s = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b -> line[x])[b -> width - 1 - y] = p;
+            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b . line[x])[b . width - 1 - y] = p;
         }
     };
     public static plot_pixel_procPtr pp_32_nd_fy_s = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b -> line[b -> height - 1 - x])[y] = p;
+            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b . line[b . height - 1 - x])[y] = p;
         }
     };
     public static plot_pixel_procPtr pp_32_nd_fxy_s = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b -> line[b -> height - 1 - x])[b -> width - 1 - y] = p;
+            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b . line[b . height - 1 - x])[b . width - 1 - y] = p;
         }
     };
 
     public static plot_pixel_procPtr pp_32_d = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b -> line[y])[x] = p;
+            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b . line[y])[x] = p;
             //osd_mark_dirty(x, y, x, y);
         }
     };
     public static plot_pixel_procPtr pp_32_d_fx = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//x = b -> width - 1 - x;((UINT32 *)b -> line[y])[x] = p;
+            throw new UnsupportedOperationException("unsupported");//x = b . width - 1 - x;((UINT32 *)b . line[y])[x] = p;
             //osd_mark_dirty(x, y, x, y);
         }
     };
     public static plot_pixel_procPtr pp_32_d_fy = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//y = b -> height - 1 - y;((UINT32 *)b -> line[y])[x] = p;
+            throw new UnsupportedOperationException("unsupported");//y = b . height - 1 - y;((UINT32 *)b . line[y])[x] = p;
             //osd_mark_dirty(x, y, x, y);
         }
     };
     public static plot_pixel_procPtr pp_32_d_fxy = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//x = b -> width - 1 - x;
-            //y = b -> height - 1 - y;((UINT32 *)b -> line[y])[x] = p;
+            throw new UnsupportedOperationException("unsupported");//x = b . width - 1 - x;
+            //y = b . height - 1 - y;((UINT32 *)b . line[y])[x] = p;
             //osd_mark_dirty(x, y, x, y);
         }
     };
     public static plot_pixel_procPtr pp_32_d_s = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b -> line[x])[y] = p;
+            throw new UnsupportedOperationException("unsupported");//((UINT32 *)b . line[x])[y] = p;
             //osd_mark_dirty(y, x, y, x);
         }
     };
     public static plot_pixel_procPtr pp_32_d_fx_s = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//y = b -> width - 1 - y;((UINT32 *)b -> line[x])[y] = p;
+            throw new UnsupportedOperationException("unsupported");//y = b . width - 1 - y;((UINT32 *)b . line[x])[y] = p;
             //osd_mark_dirty(y, x, y, x);
         }
     };
     public static plot_pixel_procPtr pp_32_d_fy_s = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//x = b -> height - 1 - x;((UINT32 *)b -> line[x])[y] = p;
+            throw new UnsupportedOperationException("unsupported");//x = b . height - 1 - x;((UINT32 *)b . line[x])[y] = p;
             //osd_mark_dirty(y, x, y, x);
         }
     };
     public static plot_pixel_procPtr pp_32_d_fxy_s = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//x = b -> height - 1 - x;
-            //y = b -> width - 1 - y;((UINT32 *)b -> line[x])[y] = p;
+            throw new UnsupportedOperationException("unsupported");//x = b . height - 1 - x;
+            //y = b . width - 1 - y;((UINT32 *)b . line[x])[y] = p;
             //osd_mark_dirty(y, x, y, x);
         }
     };
 
     public static read_pixel_procPtr rp_8 = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
-            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b->line[y])[x]; 
+            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b.line[y])[x]; 
         }
     };
     public static read_pixel_procPtr rp_8_fx = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
-            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b->line[y])[b->width-1-x]; 
+            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b.line[y])[b.width-1-x]; 
         }
     };
     public static read_pixel_procPtr rp_8_fy = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
-            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b->line[b->height-1-y])[x]; 
+            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b.line[b.height-1-y])[x]; 
         }
     };
     public static read_pixel_procPtr rp_8_fxy = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
-            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b->line[b->height-1-y])[b->width-1-x]; 
+            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b.line[b.height-1-y])[b.width-1-x]; 
         }
     };
     public static read_pixel_procPtr rp_8_s = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
-            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b->line[x])[y]; 
+            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b.line[x])[y]; 
         }
     };
     public static read_pixel_procPtr rp_8_fx_s = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
-            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b->line[x])[b->width-1-y]; 
+            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b.line[x])[b.width-1-y]; 
         }
     };
     public static read_pixel_procPtr rp_8_fy_s = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
-            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b->line[b->height-1-x])[y]; 
+            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b.line[b.height-1-x])[y]; 
         }
     };
     public static read_pixel_procPtr rp_8_fxy_s = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
-            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b->line[b->height-1-x])[b->width-1-y]; 
+            throw new UnsupportedOperationException("unsupported");//return ((UINT8 *)b.line[b.height-1-x])[b.width-1-y]; 
         }
     };
 
@@ -3851,12 +3851,12 @@ public class drawgfx {
     };
     public static read_pixel_procPtr rp_16_fx = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
-            throw new UnsupportedOperationException("unsupported");//return ((UINT16 *)b -> line[y])[b -> width - 1 - x];
+            throw new UnsupportedOperationException("unsupported");//return ((UINT16 *)b . line[y])[b . width - 1 - x];
         }
     };
     public static read_pixel_procPtr rp_16_fy = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
-            throw new UnsupportedOperationException("unsupported");//return ((UINT16 *)b -> line[b -> height - 1 - y])[x];
+            throw new UnsupportedOperationException("unsupported");//return ((UINT16 *)b . line[b . height - 1 - y])[x];
         }
     };
     public static read_pixel_procPtr rp_16_fxy = new read_pixel_procPtr() {
@@ -3866,7 +3866,7 @@ public class drawgfx {
     };
     public static read_pixel_procPtr rp_16_s = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
-            throw new UnsupportedOperationException("unsupported");//return ((UINT16 *)b -> line[x])[y];
+            throw new UnsupportedOperationException("unsupported");//return ((UINT16 *)b . line[x])[y];
         }
     };
     public static read_pixel_procPtr rp_16_fx_s = new read_pixel_procPtr() {
@@ -3881,53 +3881,53 @@ public class drawgfx {
     };
     public static read_pixel_procPtr rp_16_fxy_s = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
-            throw new UnsupportedOperationException("unsupported");//            return ((UINT16 *)b -> line[b -> height - 1 - x])[b -> width - 1 - y];
+            throw new UnsupportedOperationException("unsupported");//            return ((UINT16 *)b . line[b . height - 1 - x])[b . width - 1 - y];
         }
     };
 
     public static read_pixel_procPtr rp_32 = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
-            throw new UnsupportedOperationException("unsupported");//            return ((UINT32 *)b -> line[y])[x];
+            throw new UnsupportedOperationException("unsupported");//            return ((UINT32 *)b . line[y])[x];
         }
     };
     public static read_pixel_procPtr rp_32_fx = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
-            throw new UnsupportedOperationException("unsupported");//            return ((UINT32 *)b -> line[y])[b -> width - 1 - x];
+            throw new UnsupportedOperationException("unsupported");//            return ((UINT32 *)b . line[y])[b . width - 1 - x];
 
         }
     };
     public static read_pixel_procPtr rp_32_fy = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
-            throw new UnsupportedOperationException("unsupported");//            return ((UINT32 *)b -> line[b -> height - 1 - y])[x]; 
+            throw new UnsupportedOperationException("unsupported");//            return ((UINT32 *)b . line[b . height - 1 - y])[x]; 
         }
     };
     public static read_pixel_procPtr rp_32_fxy = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
-            throw new UnsupportedOperationException("unsupported");//           return ((UINT32 *)b -> line[b -> height - 1 - y])[b -> width - 1 - x];
+            throw new UnsupportedOperationException("unsupported");//           return ((UINT32 *)b . line[b . height - 1 - y])[b . width - 1 - x];
 
         }
     };
     public static read_pixel_procPtr rp_32_s = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
-            throw new UnsupportedOperationException("unsupported");//            return ((UINT32 *)b -> line[x])[y];
+            throw new UnsupportedOperationException("unsupported");//            return ((UINT32 *)b . line[x])[y];
 
         }
     };
     public static read_pixel_procPtr rp_32_fx_s = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
-            throw new UnsupportedOperationException("unsupported");//           return ((UINT32 *)b -> line[x])[b -> width - 1 - y];
+            throw new UnsupportedOperationException("unsupported");//           return ((UINT32 *)b . line[x])[b . width - 1 - y];
 
         }
     };
     public static read_pixel_procPtr rp_32_fy_s = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
-            throw new UnsupportedOperationException("unsupported");//            return ((UINT32 *)b -> line[b -> height - 1 - x])[y];
+            throw new UnsupportedOperationException("unsupported");//            return ((UINT32 *)b . line[b . height - 1 - x])[y];
 
         }
     };
     public static read_pixel_procPtr rp_32_fxy_s = new read_pixel_procPtr() {
         public int handler(mame_bitmap bitmap, int x, int y) {
-            throw new UnsupportedOperationException("unsupported");//          return ((UINT32 *)b -> line[b -> height - 1 - x])[b -> width - 1 - y];
+            throw new UnsupportedOperationException("unsupported");//          return ((UINT32 *)b . line[b . height - 1 - x])[b . width - 1 - y];
         }
     };
     public static plot_box_procPtr pb_8_nd = new plot_box_procPtr() {
@@ -3946,78 +3946,78 @@ public class drawgfx {
     };
     public static plot_box_procPtr pb_8_nd_fx = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//int t=b->width-1-x; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x--; } y++; } 
+            throw new UnsupportedOperationException("unsupported");//int t=b.width-1-x; while(h-.0){ int c=w; x=t; while(c-.0){ ((UINT8 *)b.line[y])[x] = p; x--; } y++; } 
         }
     };
     public static plot_box_procPtr pb_8_nd_fy = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//int t=x; y = b->height-1-y; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x++; } y--; } 
+            throw new UnsupportedOperationException("unsupported");//int t=x; y = b.height-1-y; while(h-.0){ int c=w; x=t; while(c-.0){ ((UINT8 *)b.line[y])[x] = p; x++; } y--; } 
         }
     };
     public static plot_box_procPtr pb_8_nd_fxy = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//int t=b->width-1-x; y = b->height-1-y; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x--; } y--; } 
+            throw new UnsupportedOperationException("unsupported");//int t=b.width-1-x; y = b.height-1-y; while(h-.0){ int c=w; x=t; while(c-.0){ ((UINT8 *)b.line[y])[x] = p; x--; } y--; } 
         }
     };
     public static plot_box_procPtr pb_8_nd_s = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//int t=x; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x++; } y++; } 
+            throw new UnsupportedOperationException("unsupported");//int t=x; while(h-.0){ int c=w; x=t; while(c-.0){ ((UINT8 *)b.line[x])[y] = p; x++; } y++; } 
         }
     };
     public static plot_box_procPtr pb_8_nd_fx_s = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//int t=x; y = b->width-1-y; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x++; } y--; } 
+            throw new UnsupportedOperationException("unsupported");//int t=x; y = b.width-1-y; while(h-.0){ int c=w; x=t; while(c-.0){ ((UINT8 *)b.line[x])[y] = p; x++; } y--; } 
         }
     };
     public static plot_box_procPtr pb_8_nd_fy_s = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//int t=b->height-1-x; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x--; } y++; } 
+            throw new UnsupportedOperationException("unsupported");//int t=b.height-1-x; while(h-.0){ int c=w; x=t; while(c-.0){ ((UINT8 *)b.line[x])[y] = p; x--; } y++; } 
         }
     };
     public static plot_box_procPtr pb_8_nd_fxy_s = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//int t=b->height-1-x; y = b->width-1-y; while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x--; } y--; } 
+            throw new UnsupportedOperationException("unsupported");//int t=b.height-1-x; y = b.width-1-y; while(h-.0){ int c=w; x=t; while(c-.0){ ((UINT8 *)b.line[x])[y] = p; x--; } y--; } 
         }
     };
 
     public static plot_box_procPtr pb_8_d = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//int t=x; osd_mark_dirty(t,y,t+w-1,y+h-1); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x++; } y++; } 
+            throw new UnsupportedOperationException("unsupported");//int t=x; osd_mark_dirty(t,y,t+w-1,y+h-1); while(h-.0){ int c=w; x=t; while(c-.0){ ((UINT8 *)b.line[y])[x] = p; x++; } y++; } 
         }
     };
     public static plot_box_procPtr pb_8_d_fx = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//int t=b->width-1-x;  osd_mark_dirty(t-w+1,y,t,y+h-1); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x--; } y++; } 
+            throw new UnsupportedOperationException("unsupported");//int t=b.width-1-x;  osd_mark_dirty(t-w+1,y,t,y+h-1); while(h-.0){ int c=w; x=t; while(c-.0){ ((UINT8 *)b.line[y])[x] = p; x--; } y++; } 
         }
     };
     public static plot_box_procPtr pb_8_d_fy = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//int t=x; y = b->height-1-y; osd_mark_dirty(t,y-h+1,t+w-1,y); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x++; } y--; } 
+            throw new UnsupportedOperationException("unsupported");//int t=x; y = b.height-1-y; osd_mark_dirty(t,y-h+1,t+w-1,y); while(h-.0){ int c=w; x=t; while(c-.0){ ((UINT8 *)b.line[y])[x] = p; x++; } y--; } 
         }
     };
     public static plot_box_procPtr pb_8_d_fxy = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//int t=b->width-1-x; y = b->height-1-y; osd_mark_dirty(t-w+1,y-h+1,t,y); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[y])[x] = p; x--; } y--; }
+            throw new UnsupportedOperationException("unsupported");//int t=b.width-1-x; y = b.height-1-y; osd_mark_dirty(t-w+1,y-h+1,t,y); while(h-.0){ int c=w; x=t; while(c-.0){ ((UINT8 *)b.line[y])[x] = p; x--; } y--; }
         }
     };
     public static plot_box_procPtr pb_8_d_s = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//int t=x; osd_mark_dirty(y,t,y+h-1,t+w-1); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x++; } y++; } 
+            throw new UnsupportedOperationException("unsupported");//int t=x; osd_mark_dirty(y,t,y+h-1,t+w-1); while(h-.0){ int c=w; x=t; while(c-.0){ ((UINT8 *)b.line[x])[y] = p; x++; } y++; } 
         }
     };
     public static plot_box_procPtr pb_8_d_fx_s = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//int t=x; y = b->width-1-y;  osd_mark_dirty(y-h+1,t,y,t+w-1); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x++; } y--; } 
+            throw new UnsupportedOperationException("unsupported");//int t=x; y = b.width-1-y;  osd_mark_dirty(y-h+1,t,y,t+w-1); while(h-.0){ int c=w; x=t; while(c-.0){ ((UINT8 *)b.line[x])[y] = p; x++; } y--; } 
         }
     };
     public static plot_box_procPtr pb_8_d_fy_s = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//int t=b->height-1-x; osd_mark_dirty(y,t-w+1,y+h-1,t); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x--; } y++; } 
+            throw new UnsupportedOperationException("unsupported");//int t=b.height-1-x; osd_mark_dirty(y,t-w+1,y+h-1,t); while(h-.0){ int c=w; x=t; while(c-.0){ ((UINT8 *)b.line[x])[y] = p; x--; } y++; } 
         }
     };
     public static plot_box_procPtr pb_8_d_fxy_s = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
-            throw new UnsupportedOperationException("unsupported");//int t=b->height-1-x; y = b->width-1-y; osd_mark_dirty(y-h+1,t-w+1,y,t); while(h-->0){ int c=w; x=t; while(c-->0){ ((UINT8 *)b->line[x])[y] = p; x--; } y--; } 
+            throw new UnsupportedOperationException("unsupported");//int t=b.height-1-x; y = b.width-1-y; osd_mark_dirty(y-h+1,t-w+1,y,t); while(h-.0){ int c=w; x=t; while(c-.0){ ((UINT8 *)b.line[x])[y] = p; x--; } y--; } 
         }
     };
 
@@ -4038,11 +4038,11 @@ public class drawgfx {
     public static plot_box_procPtr pb_16_nd_fx = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
-            int t = b -> width - 1 - x;
+            int t = b . width - 1 - x;
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT16 *)b -> line[y])[x] = p;
+                while (c-- > 0) {((UINT16 *)b . line[y])[x] = p;
                     x--;
                 }
                 y++;
@@ -4053,11 +4053,11 @@ public class drawgfx {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
             int t = x;
-            y = b -> height - 1 - y;
+            y = b . height - 1 - y;
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT16 *)b -> line[y])[x] = p;
+                while (c-- > 0) {((UINT16 *)b . line[y])[x] = p;
                     x++;
                 }
                 y--;
@@ -4067,12 +4067,12 @@ public class drawgfx {
     public static plot_box_procPtr pb_16_nd_fxy = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
-            int t = b -> width - 1 - x;
-            y = b -> height - 1 - y;
+            int t = b . width - 1 - x;
+            y = b . height - 1 - y;
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT16 *)b -> line[y])[x] = p;
+                while (c-- > 0) {((UINT16 *)b . line[y])[x] = p;
                     x--;
                 }
                 y--;
@@ -4086,7 +4086,7 @@ public class drawgfx {
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT16 *)b -> line[x])[y] = p;
+                while (c-- > 0) {((UINT16 *)b . line[x])[y] = p;
                     x++;
                 }
                 y++;
@@ -4112,11 +4112,11 @@ public class drawgfx {
     public static plot_box_procPtr pb_16_nd_fy_s = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
-            int t = b -> height - 1 - x;
+            int t = b . height - 1 - x;
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT16 *)b -> line[x])[y] = p;
+                while (c-- > 0) {((UINT16 *)b . line[x])[y] = p;
                     x--;
                 }
                 y++;
@@ -4126,12 +4126,12 @@ public class drawgfx {
     public static plot_box_procPtr pb_16_nd_fxy_s = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
-            int t = b -> height - 1 - x;
-            y = b -> width - 1 - y;
+            int t = b . height - 1 - x;
+            y = b . width - 1 - y;
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT16 *)b -> line[x])[y] = p;
+                while (c-- > 0) {((UINT16 *)b . line[x])[y] = p;
                     x--;
                 }
                 y--;
@@ -4157,12 +4157,12 @@ public class drawgfx {
     public static plot_box_procPtr pb_16_d_fx = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
-            int t = b -> width - 1 - x;
+            int t = b . width - 1 - x;
             osd_mark_dirty(t - w + 1, y, t, y + h - 1);
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT16 *)b -> line[y])[x] = p;
+                while (c-- > 0) {((UINT16 *)b . line[y])[x] = p;
                     x--;
                 }
                 y++;
@@ -4174,12 +4174,12 @@ public class drawgfx {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
             int t = x;
-            y = b -> height - 1 - y;
+            y = b . height - 1 - y;
             osd_mark_dirty(t, y - h + 1, t + w - 1, y);
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT16 *)b -> line[y])[x] = p;
+                while (c-- > 0) {((UINT16 *)b . line[y])[x] = p;
                     x++;
                 }
                 y--;
@@ -4189,13 +4189,13 @@ public class drawgfx {
     public static plot_box_procPtr pb_16_d_fxy = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
-            int t = b -> width - 1 - x;
-            y = b -> height - 1 - y;
+            int t = b . width - 1 - x;
+            y = b . height - 1 - y;
             osd_mark_dirty(t - w + 1, y - h + 1, t, y);
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT16 *)b -> line[y])[x] = p;
+                while (c-- > 0) {((UINT16 *)b . line[y])[x] = p;
                     x--;
                 }
                 y--;
@@ -4210,7 +4210,7 @@ public class drawgfx {
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT16 *)b -> line[x])[y] = p;
+                while (c-- > 0) {((UINT16 *)b . line[x])[y] = p;
                     x++;
                 }
                 y++;
@@ -4221,12 +4221,12 @@ public class drawgfx {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
             int t = x;
-            y = b -> width - 1 - y;
+            y = b . width - 1 - y;
             osd_mark_dirty(y - h + 1, t, y, t + w - 1);
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT16 *)b -> line[x])[y] = p;
+                while (c-- > 0) {((UINT16 *)b . line[x])[y] = p;
                     x++;
                 }
                 y--;
@@ -4236,12 +4236,12 @@ public class drawgfx {
     public static plot_box_procPtr pb_16_d_fy_s = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
-            int t = b -> height - 1 - x;
+            int t = b . height - 1 - x;
             osd_mark_dirty(y, t - w + 1, y + h - 1, t);
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT16 *)b -> line[x])[y] = p;
+                while (c-- > 0) {((UINT16 *)b . line[x])[y] = p;
                     x--;
                 }
                 y++;
@@ -4251,13 +4251,13 @@ public class drawgfx {
     public static plot_box_procPtr pb_16_d_fxy_s = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
-            int t = b -> height - 1 - x;
-            y = b -> width - 1 - y;
+            int t = b . height - 1 - x;
+            y = b . width - 1 - y;
             osd_mark_dirty(y - h + 1, t - w + 1, y, t);
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT16 *)b -> line[x])[y] = p;
+                while (c-- > 0) {((UINT16 *)b . line[x])[y] = p;
                     x--;
                 }
                 y--;
@@ -4272,7 +4272,7 @@ public class drawgfx {
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT32 *)b -> line[y])[x] = p;
+                while (c-- > 0) {((UINT32 *)b . line[y])[x] = p;
                     x++;
                 }
                 y++;
@@ -4282,11 +4282,11 @@ public class drawgfx {
     public static plot_box_procPtr pb_32_nd_fx = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
-            int t = b -> width - 1 - x;
+            int t = b . width - 1 - x;
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT32 *)b -> line[y])[x] = p;
+                while (c-- > 0) {((UINT32 *)b . line[y])[x] = p;
                     x--;
                 }
                 y++;
@@ -4297,11 +4297,11 @@ public class drawgfx {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
             int t = x;
-            y = b -> height - 1 - y;
+            y = b . height - 1 - y;
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT32 *)b -> line[y])[x] = p;
+                while (c-- > 0) {((UINT32 *)b . line[y])[x] = p;
                     x++;
                 }
                 y--;
@@ -4311,12 +4311,12 @@ public class drawgfx {
     public static plot_box_procPtr pb_32_nd_fxy = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
-            int t = b -> width - 1 - x;
-            y = b -> height - 1 - y;
+            int t = b . width - 1 - x;
+            y = b . height - 1 - y;
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT32 *)b -> line[y])[x] = p;
+                while (c-- > 0) {((UINT32 *)b . line[y])[x] = p;
                     x--;
                 }
                 y--;
@@ -4330,7 +4330,7 @@ public class drawgfx {
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT32 *)b -> line[x])[y] = p;
+                while (c-- > 0) {((UINT32 *)b . line[x])[y] = p;
                     x++;
                 }
                 y++;
@@ -4341,11 +4341,11 @@ public class drawgfx {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
             int t = x;
-            y = b -> width - 1 - y;
+            y = b . width - 1 - y;
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT32 *)b -> line[x])[y] = p;
+                while (c-- > 0) {((UINT32 *)b . line[x])[y] = p;
                     x++;
                 }
                 y--;
@@ -4355,11 +4355,11 @@ public class drawgfx {
     public static plot_box_procPtr pb_32_nd_fy_s = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
-            int t = b -> height - 1 - x;
+            int t = b . height - 1 - x;
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT32 *)b -> line[x])[y] = p;
+                while (c-- > 0) {((UINT32 *)b . line[x])[y] = p;
                     x--;
                 }
                 y++;
@@ -4369,12 +4369,12 @@ public class drawgfx {
     public static plot_box_procPtr pb_32_nd_fxy_s = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
-            int t = b -> height - 1 - x;
-            y = b -> width - 1 - y;
+            int t = b . height - 1 - x;
+            y = b . width - 1 - y;
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT32 *)b -> line[x])[y] = p;
+                while (c-- > 0) {((UINT32 *)b . line[x])[y] = p;
                     x--;
                 }
                 y--;
@@ -4390,7 +4390,7 @@ public class drawgfx {
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT32 *)b -> line[y])[x] = p;
+                while (c-- > 0) {((UINT32 *)b . line[y])[x] = p;
                     x++;
                 }
                 y++;
@@ -4400,12 +4400,12 @@ public class drawgfx {
     public static plot_box_procPtr pb_32_d_fx = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
-            int t = b -> width - 1 - x;
+            int t = b . width - 1 - x;
             osd_mark_dirty(t - w + 1, y, t, y + h - 1);
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT32 *)b -> line[y])[x] = p;
+                while (c-- > 0) {((UINT32 *)b . line[y])[x] = p;
                     x--;
                 }
                 y++;
@@ -4416,12 +4416,12 @@ public class drawgfx {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
             int t = x;
-            y = b -> height - 1 - y;
+            y = b . height - 1 - y;
             osd_mark_dirty(t, y - h + 1, t + w - 1, y);
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT32 *)b -> line[y])[x] = p;
+                while (c-- > 0) {((UINT32 *)b . line[y])[x] = p;
                     x++;
                 }
                 y--;
@@ -4431,13 +4431,13 @@ public class drawgfx {
     public static plot_box_procPtr pb_32_d_fxy = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
-            int t = b -> width - 1 - x;
-            y = b -> height - 1 - y;
+            int t = b . width - 1 - x;
+            y = b . height - 1 - y;
             osd_mark_dirty(t - w + 1, y - h + 1, t, y);
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT32 *)b -> line[y])[x] = p;
+                while (c-- > 0) {((UINT32 *)b . line[y])[x] = p;
                     x--;
                 }
                 y--;
@@ -4452,7 +4452,7 @@ public class drawgfx {
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT32 *)b -> line[x])[y] = p;
+                while (c-- > 0) {((UINT32 *)b . line[x])[y] = p;
                     x++;
                 }
                 y++;
@@ -4463,12 +4463,12 @@ public class drawgfx {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
             int t = x;
-            y = b -> width - 1 - y;
+            y = b . width - 1 - y;
             osd_mark_dirty(y - h + 1, t, y, t + w - 1);
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT32 *)b -> line[x])[y] = p;
+                while (c-- > 0) {((UINT32 *)b . line[x])[y] = p;
                     x++;
                 }
                 y--;
@@ -4478,12 +4478,12 @@ public class drawgfx {
     public static plot_box_procPtr pb_32_d_fy_s = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
-            int t = b -> height - 1 - x;
+            int t = b . height - 1 - x;
             osd_mark_dirty(y, t - w + 1, y + h - 1, t);
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT32 *)b -> line[x])[y] = p;
+                while (c-- > 0) {((UINT32 *)b . line[x])[y] = p;
                     x--;
                 }
                 y++;
@@ -4493,13 +4493,13 @@ public class drawgfx {
     public static plot_box_procPtr pb_32_d_fxy_s = new plot_box_procPtr() {
         public void handler(mame_bitmap b, int x, int y, int w, int h, /*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");/*
-            int t = b -> height - 1 - x;
-            y = b -> width - 1 - y;
+            int t = b . height - 1 - x;
+            y = b . width - 1 - y;
             osd_mark_dirty(y - h + 1, t - w + 1, y, t);
             while (h-- > 0) {
                 int c = w;
                 x = t;
-                while (c-- > 0) {((UINT32 *)b -> line[x])[y] = p;
+                while (c-- > 0) {((UINT32 *)b . line[x])[y] = p;
                     x--;
                 }
                 y--;
@@ -6371,61 +6371,61 @@ public class drawgfx {
 /*TODO*///	ox = sx;
 /*TODO*///	oy = sy;
 /*TODO*///
-/*TODO*///	ex = sx + gfx->width-1;
+/*TODO*///	ex = sx + gfx.width-1;
 /*TODO*///	if (sx < 0) sx = 0;
-/*TODO*///	if (clip && sx < clip->min_x) sx = clip->min_x;
-/*TODO*///	if (ex >= dest->width) ex = dest->width-1;
-/*TODO*///	if (clip && ex > clip->max_x) ex = clip->max_x;
+/*TODO*///	if (clip && sx < clip.min_x) sx = clip.min_x;
+/*TODO*///	if (ex >= dest.width) ex = dest.width-1;
+/*TODO*///	if (clip && ex > clip.max_x) ex = clip.max_x;
 /*TODO*///	if (sx > ex) return;
 /*TODO*///
-/*TODO*///	ey = sy + gfx->height-1;
+/*TODO*///	ey = sy + gfx.height-1;
 /*TODO*///	if (sy < 0) sy = 0;
-/*TODO*///	if (clip && sy < clip->min_y) sy = clip->min_y;
-/*TODO*///	if (ey >= dest->height) ey = dest->height-1;
-/*TODO*///	if (clip && ey > clip->max_y) ey = clip->max_y;
+/*TODO*///	if (clip && sy < clip.min_y) sy = clip.min_y;
+/*TODO*///	if (ey >= dest.height) ey = dest.height-1;
+/*TODO*///	if (clip && ey > clip.max_y) ey = clip.max_y;
 /*TODO*///	if (sy > ey) return;
 /*TODO*///
-/*TODO*///	if (Machine->drv->video_attributes & VIDEO_SUPPORTS_DIRTY)
+/*TODO*///	if (Machine.drv.video_attributes & VIDEO_SUPPORTS_DIRTY)
 /*TODO*///		osd_mark_dirty(sx,sy,ex,ey);
 /*TODO*///
 /*TODO*///	{
-/*TODO*///		UINT8 *sd = gfx->gfxdata + code * gfx->char_modulo;		/* source data */
-/*TODO*///		int sw = gfx->width;									/* source width */
-/*TODO*///		int sh = gfx->height;									/* source height */
-/*TODO*///		int sm = gfx->line_modulo;								/* source modulo */
+/*TODO*///		UINT8 *sd = gfx.gfxdata + code * gfx.char_modulo;		/* source data */
+/*TODO*///		int sw = gfx.width;									/* source width */
+/*TODO*///		int sh = gfx.height;									/* source height */
+/*TODO*///		int sm = gfx.line_modulo;								/* source modulo */
 /*TODO*///		int ls = sx-ox;											/* left skip */
 /*TODO*///		int ts = sy-oy;											/* top skip */
-/*TODO*///		DATA_TYPE *dd = ((DATA_TYPE *)dest->line[sy]) + sx;		/* dest data */
+/*TODO*///		DATA_TYPE *dd = ((DATA_TYPE *)dest.line[sy]) + sx;		/* dest data */
 /*TODO*///		int dw = ex-sx+1;										/* dest width */
 /*TODO*///		int dh = ey-sy+1;										/* dest height */
-/*TODO*///		int dm = ((DATA_TYPE *)dest->line[1])-((DATA_TYPE *)dest->line[0]);	/* dest modulo */
-/*TODO*///		const pen_t *paldata = &gfx->colortable[gfx->color_granularity * color];
-/*TODO*///		UINT8 *pribuf = (pri_buffer) ? ((UINT8 *)pri_buffer->line[sy]) + sx : NULL;
+/*TODO*///		int dm = ((DATA_TYPE *)dest.line[1])-((DATA_TYPE *)dest.line[0]);	/* dest modulo */
+/*TODO*///		const pen_t *paldata = &gfx.colortable[gfx.color_granularity * color];
+/*TODO*///		UINT8 *pribuf = (pri_buffer) ? ((UINT8 *)pri_buffer.line[sy]) + sx : NULL;
 /*TODO*///
 /*TODO*///
 /*TODO*///		/* optimizations for 1:1 mapping */
-/*TODO*/////		if (Machine->drv->color_table_len == 0 && gfx != Machine->uifont)
-/*TODO*///		if (Machine->drv->color_table_len == 0 &&
-/*TODO*///				!(Machine->drv->video_attributes & VIDEO_RGB_DIRECT) &&
-/*TODO*///				paldata >= Machine->remapped_colortable && paldata < Machine->remapped_colortable + Machine->drv->total_colors)
+/*TODO*/////		if (Machine.drv.color_table_len == 0 && gfx != Machine.uifont)
+/*TODO*///		if (Machine.drv.color_table_len == 0 &&
+/*TODO*///				!(Machine.drv.video_attributes & VIDEO_RGB_DIRECT) &&
+/*TODO*///				paldata >= Machine.remapped_colortable && paldata < Machine.remapped_colortable + Machine.drv.total_colors)
 /*TODO*///		{
 /*TODO*///			switch (transparency)
 /*TODO*///			{
 /*TODO*///				case TRANSPARENCY_NONE:
 /*TODO*///					transparency = TRANSPARENCY_NONE_RAW;
-/*TODO*///					color = paldata - Machine->remapped_colortable;
+/*TODO*///					color = paldata - Machine.remapped_colortable;
 /*TODO*///					break;
 /*TODO*///				case TRANSPARENCY_PEN:
 /*TODO*///					transparency = TRANSPARENCY_PEN_RAW;
-/*TODO*///					color = paldata - Machine->remapped_colortable;
+/*TODO*///					color = paldata - Machine.remapped_colortable;
 /*TODO*///					break;
 /*TODO*///				case TRANSPARENCY_PENS:
 /*TODO*///					transparency = TRANSPARENCY_PENS_RAW;
-/*TODO*///					color = paldata - Machine->remapped_colortable;
+/*TODO*///					color = paldata - Machine.remapped_colortable;
 /*TODO*///					break;
 /*TODO*///				case TRANSPARENCY_PEN_TABLE:
 /*TODO*///					transparency = TRANSPARENCY_PEN_TABLE_RAW;
-/*TODO*///					color = paldata - Machine->remapped_colortable;
+/*TODO*///					color = paldata - Machine.remapped_colortable;
 /*TODO*///					break;
 /*TODO*///			}
 /*TODO*///		}
@@ -6433,7 +6433,7 @@ public class drawgfx {
 /*TODO*///		switch (transparency)
 /*TODO*///		{
 /*TODO*///			case TRANSPARENCY_NONE:
-/*TODO*///				if (gfx->flags & GFX_PACKED)
+/*TODO*///				if (gfx.flags & GFX_PACKED)
 /*TODO*///				{
 /*TODO*///					if (pribuf)
 /*TODO*///						BLOCKMOVEPRI(4toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask));
@@ -6450,7 +6450,7 @@ public class drawgfx {
 /*TODO*///				break;
 /*TODO*///
 /*TODO*///			case TRANSPARENCY_NONE_RAW:
-/*TODO*///				if (gfx->flags & GFX_PACKED)
+/*TODO*///				if (gfx.flags & GFX_PACKED)
 /*TODO*///				{
 /*TODO*///					if (pribuf)
 /*TODO*///						BLOCKMOVERAWPRI(4toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask));
@@ -6467,7 +6467,7 @@ public class drawgfx {
 /*TODO*///				break;
 /*TODO*///
 /*TODO*///			case TRANSPARENCY_PEN:
-/*TODO*///				if (gfx->flags & GFX_PACKED)
+/*TODO*///				if (gfx.flags & GFX_PACKED)
 /*TODO*///				{
 /*TODO*///					if (pribuf)
 /*TODO*///						BLOCKMOVEPRI(4toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
@@ -6484,7 +6484,7 @@ public class drawgfx {
 /*TODO*///				break;
 /*TODO*///
 /*TODO*///			case TRANSPARENCY_PEN_RAW:
-/*TODO*///				if (gfx->flags & GFX_PACKED)
+/*TODO*///				if (gfx.flags & GFX_PACKED)
 /*TODO*///				{
 /*TODO*///					if (pribuf)
 /*TODO*///						BLOCKMOVERAWPRI(4toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask,transparent_color));
@@ -6515,19 +6515,19 @@ public class drawgfx {
 /*TODO*///				break;
 /*TODO*///
 /*TODO*///			case TRANSPARENCY_COLOR:
-/*TODO*///				if (gfx->flags & GFX_PACKED)
+/*TODO*///				if (gfx.flags & GFX_PACKED)
 /*TODO*///				{
 /*TODO*///					if (pribuf)
-/*TODO*///						BLOCKMOVEPRI(4toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
+/*TODO*///						BLOCKMOVEPRI(4toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,Machine.game_colortable + (paldata - Machine.remapped_colortable),transparent_color));
 /*TODO*///					else
-/*TODO*///						BLOCKMOVELU(4toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
+/*TODO*///						BLOCKMOVELU(4toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,Machine.game_colortable + (paldata - Machine.remapped_colortable),transparent_color));
 /*TODO*///				}
 /*TODO*///				else
 /*TODO*///				{
 /*TODO*///					if (pribuf)
-/*TODO*///						BLOCKMOVEPRI(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
+/*TODO*///						BLOCKMOVEPRI(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,Machine.game_colortable + (paldata - Machine.remapped_colortable),transparent_color));
 /*TODO*///					else
-/*TODO*///						BLOCKMOVELU(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
+/*TODO*///						BLOCKMOVELU(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,Machine.game_colortable + (paldata - Machine.remapped_colortable),transparent_color));
 /*TODO*///				}
 /*TODO*///				break;
 /*TODO*///
@@ -6640,31 +6640,31 @@ public class drawgfx {
         if (gfx.colortable != null) {
             paldata = new IntArray(gfx.colortable, gfx.color_granularity * color);
         }
-        UBytePtr pribuf = null;/*TODO*///		UINT8 *pribuf = (pri_buffer) ? ((UINT8 *)pri_buffer->line[sy]) + sx : NULL;
+        UBytePtr pribuf = null;/*TODO*///		UINT8 *pribuf = (pri_buffer) ? ((UINT8 *)pri_buffer.line[sy]) + sx : NULL;
 
         /* optimizations for 1:1 mapping */
-//		if (Machine->drv->color_table_len == 0 && gfx != Machine->uifont)
-/*TODO*///        if (Machine->drv->color_table_len == 0 &&
-/*TODO*/// 				!(Machine->drv->video_attributes & VIDEO_RGB_DIRECT) &&
-/*TODO*/// 				paldata >= Machine->remapped_colortable && paldata < Machine->remapped_colortable + Machine->drv->total_colors)
+//		if (Machine.drv.color_table_len == 0 && gfx != Machine.uifont)
+/*TODO*///        if (Machine.drv.color_table_len == 0 &&
+/*TODO*/// 				!(Machine.drv.video_attributes & VIDEO_RGB_DIRECT) &&
+/*TODO*/// 				paldata >= Machine.remapped_colortable && paldata < Machine.remapped_colortable + Machine.drv.total_colors)
 /*TODO*/// 		{
 /*TODO*///             	switch (transparency)
 /*TODO*///  			{
 /*TODO*/// 				case TRANSPARENCY_NONE:
 /*TODO*/// 					transparency = TRANSPARENCY_NONE_RAW;	
-/*TODO*///                                         color = paldata - Machine->remapped_colortable;
+/*TODO*///                                         color = paldata - Machine.remapped_colortable;
 /*TODO*/// 					break;
 /*TODO*/// 				case TRANSPARENCY_PEN:
 /*TODO*/// 					transparency = TRANSPARENCY_PEN_RAW;
-/*TODO*/// 					color = paldata - Machine->remapped_colortable;
+/*TODO*/// 					color = paldata - Machine.remapped_colortable;
 /*TODO*/// 					break;
 /*TODO*/// 				case TRANSPARENCY_PENS:
 /*TODO*/// 					transparency = TRANSPARENCY_PENS_RAW;
-/*TODO*/// 					color = paldata - Machine->remapped_colortable;
+/*TODO*/// 					color = paldata - Machine.remapped_colortable;
 /*TODO*/// 					break;
 /*TODO*/// 				case TRANSPARENCY_PEN_TABLE:
 /*TODO*/// 					transparency = TRANSPARENCY_PEN_TABLE_RAW;
-/*TODO*/// 					color = paldata - Machine->remapped_colortable;
+/*TODO*/// 					color = paldata - Machine.remapped_colortable;
 /*TODO*/// 					break;
 /*TODO*/// 			}
 /*TODO*///         }
@@ -6692,7 +6692,7 @@ public class drawgfx {
                 break;
             /*TODO*///
 /*TODO*///			case TRANSPARENCY_NONE_RAW:
-/*TODO*///				if (gfx->flags & GFX_PACKED)
+/*TODO*///				if (gfx.flags & GFX_PACKED)
 /*TODO*///				{
 /*TODO*///					if (pribuf)
 /*TODO*///						BLOCKMOVERAWPRI(4toN_opaque,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask));
@@ -6709,7 +6709,7 @@ public class drawgfx {
 /*TODO*///				break;
 /*TODO*///
 /*TODO*///			case TRANSPARENCY_PEN:
-/*TODO*///				if (gfx->flags & GFX_PACKED)
+/*TODO*///				if (gfx.flags & GFX_PACKED)
 /*TODO*///				{
 /*TODO*///					if (pribuf)
 /*TODO*///						BLOCKMOVEPRI(4toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,transparent_color));
@@ -6726,7 +6726,7 @@ public class drawgfx {
 /*TODO*///				break;
 /*TODO*///
 /*TODO*///			case TRANSPARENCY_PEN_RAW:
-/*TODO*///				if (gfx->flags & GFX_PACKED)
+/*TODO*///				if (gfx.flags & GFX_PACKED)
 /*TODO*///				{
 /*TODO*///					if (pribuf)
 /*TODO*///						BLOCKMOVERAWPRI(4toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask,transparent_color));
@@ -6757,19 +6757,19 @@ public class drawgfx {
 /*TODO*///				break;
 /*TODO*///
 /*TODO*///			case TRANSPARENCY_COLOR:
-/*TODO*///				if (gfx->flags & GFX_PACKED)
+/*TODO*///				if (gfx.flags & GFX_PACKED)
 /*TODO*///				{
 /*TODO*///					if (pribuf)
-/*TODO*///						BLOCKMOVEPRI(4toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
+/*TODO*///						BLOCKMOVEPRI(4toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,Machine.game_colortable + (paldata - Machine.remapped_colortable),transparent_color));
 /*TODO*///					else
-/*TODO*///						BLOCKMOVELU(4toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
+/*TODO*///						BLOCKMOVELU(4toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,Machine.game_colortable + (paldata - Machine.remapped_colortable),transparent_color));
 /*TODO*///				}
 /*TODO*///				else
 /*TODO*///				{
 /*TODO*///					if (pribuf)
-/*TODO*///						BLOCKMOVEPRI(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
+/*TODO*///						BLOCKMOVEPRI(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,Machine.game_colortable + (paldata - Machine.remapped_colortable),transparent_color));
 /*TODO*///					else
-/*TODO*///						BLOCKMOVELU(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
+/*TODO*///						BLOCKMOVELU(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,Machine.game_colortable + (paldata - Machine.remapped_colortable),transparent_color));
 /*TODO*///				}
 /*TODO*///				break;
 /*TODO*///
@@ -6886,28 +6886,28 @@ public class drawgfx {
 
 
         /* optimizations for 1:1 mapping */
-//		if (Machine->drv->color_table_len == 0 && gfx != Machine->uifont)
-/*TODO*///        if (Machine->drv->color_table_len == 0 &&
-/*TODO*/// 				!(Machine->drv->video_attributes & VIDEO_RGB_DIRECT) &&
-/*TODO*/// 				paldata >= Machine->remapped_colortable && paldata < Machine->remapped_colortable + Machine->drv->total_colors)
+//		if (Machine.drv.color_table_len == 0 && gfx != Machine.uifont)
+/*TODO*///        if (Machine.drv.color_table_len == 0 &&
+/*TODO*/// 				!(Machine.drv.video_attributes & VIDEO_RGB_DIRECT) &&
+/*TODO*/// 				paldata >= Machine.remapped_colortable && paldata < Machine.remapped_colortable + Machine.drv.total_colors)
 /*TODO*/// 		{
 /*TODO*///             	switch (transparency)
 /*TODO*///  			{
 /*TODO*/// 				case TRANSPARENCY_NONE:
 /*TODO*/// 					transparency = TRANSPARENCY_NONE_RAW;	
-/*TODO*///                                         color = paldata - Machine->remapped_colortable;
+/*TODO*///                                         color = paldata - Machine.remapped_colortable;
 /*TODO*/// 					break;
 /*TODO*/// 				case TRANSPARENCY_PEN:
 /*TODO*/// 					transparency = TRANSPARENCY_PEN_RAW;
-/*TODO*/// 					color = paldata - Machine->remapped_colortable;
+/*TODO*/// 					color = paldata - Machine.remapped_colortable;
 /*TODO*/// 					break;
 /*TODO*/// 				case TRANSPARENCY_PENS:
 /*TODO*/// 					transparency = TRANSPARENCY_PENS_RAW;
-/*TODO*/// 					color = paldata - Machine->remapped_colortable;
+/*TODO*/// 					color = paldata - Machine.remapped_colortable;
 /*TODO*/// 					break;
 /*TODO*/// 				case TRANSPARENCY_PEN_TABLE:
 /*TODO*/// 					transparency = TRANSPARENCY_PEN_TABLE_RAW;
-/*TODO*/// 					color = paldata - Machine->remapped_colortable;
+/*TODO*/// 					color = paldata - Machine.remapped_colortable;
 /*TODO*/// 					break;
 /*TODO*/// 			}
 /*TODO*///         }
@@ -7032,17 +7032,17 @@ public class drawgfx {
                 if ((gfx.flags & GFX_PACKED) != 0) {
                     throw new UnsupportedOperationException("Unsupported");
                     /*TODO*///					if (pribuf)
-/*TODO*///						BLOCKMOVEPRI(4toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
+/*TODO*///						BLOCKMOVEPRI(4toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,Machine.game_colortable + (paldata - Machine.remapped_colortable),transparent_color));
 /*TODO*///					else
-/*TODO*///						BLOCKMOVELU(4toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
+/*TODO*///						BLOCKMOVELU(4toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,Machine.game_colortable + (paldata - Machine.remapped_colortable),transparent_color));
                 } else {
                     if (pribuf != null) {
                         System.out.println("BLOCKMOVEPRI(8toN_transcolor,");
-                        /*TODO*///						BLOCKMOVEPRI(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
+                        /*TODO*///						BLOCKMOVEPRI(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pribuf,pri_mask,Machine.game_colortable + (paldata - Machine.remapped_colortable),transparent_color));
                         
                     } else {
                         if ((gfx.flags & GFX_SWAPXY) != 0) {
-                            throw new UnsupportedOperationException("Unsupported");//BLOCKMOVELU(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,Machine->game_colortable + (paldata - Machine->remapped_colortable),transparent_color));
+                            throw new UnsupportedOperationException("Unsupported");//BLOCKMOVELU(8toN_transcolor,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,Machine.game_colortable + (paldata - Machine.remapped_colortable),transparent_color));
                         } else {
                             blockmove_8toN_transcolor16(sd, sw, sh, sm, ls, ts, flipx, flipy, dd, dw, dh, dm, paldata, new UShortArray(Machine.game_colortable, (paldata.offset - Machine.remapped_colortable.offset)), transparent_color);
                         }
@@ -7163,14 +7163,14 @@ public class drawgfx {
         int dm = (dest.line[1].offset) - (dest.line[0].offset);/* dest modulo */
 
         if (flipx != 0) {
-            //if ((sx-ox) == 0) sd += gfx->width - sw;
+            //if ((sx-ox) == 0) sd += gfx.width - sw;
             sd.inc(src.width - 1 - (sx - ox));
         } else {
             sd.inc(sx - ox);
         }
 
         if (flipy != 0) {
-            //if ((sy-oy) == 0) sd += sm * (gfx->height - sh);
+            //if ((sy-oy) == 0) sd += sm * (gfx.height - sh);
             //dd += dm * (sh - 1);
             //dm = -dm;
             sd.inc(sm * (src.height - 1 - (sy - oy)));
@@ -7182,7 +7182,7 @@ public class drawgfx {
         switch (transparency) {
             case TRANSPARENCY_NONE:
                 throw new UnsupportedOperationException("Unsupported");
-            /*TODO*///				BLOCKMOVE(NtoN_opaque_remap,flipx,(sd,sw,sh,sm,dd,dm,Machine->pens));
+            /*TODO*///				BLOCKMOVE(NtoN_opaque_remap,flipx,(sd,sw,sh,sm,dd,dm,Machine.pens));
 /*TODO*///				break;
 /*TODO*///
             case TRANSPARENCY_NONE_RAW:
@@ -7205,7 +7205,7 @@ public class drawgfx {
 
             case TRANSPARENCY_BLEND:
                 throw new UnsupportedOperationException("Unsupported");
-            /*TODO*///				BLOCKMOVE(NtoN_blend_remap,flipx,(sd,sw,sh,sm,dd,dm,Machine->pens,transparent_color));
+            /*TODO*///				BLOCKMOVE(NtoN_blend_remap,flipx,(sd,sw,sh,sm,dd,dm,Machine.pens,transparent_color));
 /*TODO*///				break;
 /*TODO*///
             case TRANSPARENCY_BLEND_RAW:
@@ -7272,14 +7272,14 @@ public class drawgfx {
 
 
         if (flipx != 0) {
-            //if ((sx-ox) == 0) sd += gfx->width - sw;
+            //if ((sx-ox) == 0) sd += gfx.width - sw;
             sd.inc(src.width - 1 - (sx - ox));
         } else {
             sd.inc(sx - ox);
         }
 
         if (flipy != 0) {
-            //if ((sy-oy) == 0) sd += sm * (gfx->height - sh);
+            //if ((sy-oy) == 0) sd += sm * (gfx.height - sh);
             //dd += dm * (sh - 1);
             //dm = -dm;
             sd.inc(sm * (src.height - 1 - (sy - oy)));
@@ -7291,7 +7291,7 @@ public class drawgfx {
         switch (transparency) {
             case TRANSPARENCY_NONE:
                 //throw new UnsupportedOperationException("Unsupported");
-            /*TODO*///				BLOCKMOVE(NtoN_opaque_remap,flipx,(sd,sw,sh,sm,dd,dm,Machine->pens));
+            /*TODO*///				BLOCKMOVE(NtoN_opaque_remap,flipx,(sd,sw,sh,sm,dd,dm,Machine.pens));
                 blockmove_NtoN_opaque_remap(sd,sw,sh,sm,dd,dm,Machine.pens);
 				break;
 /*TODO*///
@@ -7312,7 +7312,7 @@ public class drawgfx {
 
             case TRANSPARENCY_BLEND:
                 if (flipx != 0) {
-                    throw new UnsupportedOperationException("Unsupported");//BLOCKMOVE(NtoN_blend_remap,flipx,(sd,sw,sh,sm,dd,dm,Machine->pens,transparent_color));
+                    throw new UnsupportedOperationException("Unsupported");//BLOCKMOVE(NtoN_blend_remap,flipx,(sd,sw,sh,sm,dd,dm,Machine.pens,transparent_color));
                 } else {
                     blockmove_NtoN_blend_remap16(sd, sw, sh, sm, dd, dm, Machine.pens, transparent_color);
                 }
@@ -7344,42 +7344,42 @@ public class drawgfx {
 /*TODO*///	ox = sx;
 /*TODO*///	oy = sy;
 /*TODO*///
-/*TODO*///	ex = sx + src->width-1;
+/*TODO*///	ex = sx + src.width-1;
 /*TODO*///	if (sx < 0) sx = 0;
-/*TODO*///	if (clip && sx < clip->min_x) sx = clip->min_x;
-/*TODO*///	if (ex >= dest->width) ex = dest->width-1;
-/*TODO*///	if (clip && ex > clip->max_x) ex = clip->max_x;
+/*TODO*///	if (clip && sx < clip.min_x) sx = clip.min_x;
+/*TODO*///	if (ex >= dest.width) ex = dest.width-1;
+/*TODO*///	if (clip && ex > clip.max_x) ex = clip.max_x;
 /*TODO*///	if (sx > ex) return;
 /*TODO*///
-/*TODO*///	ey = sy + src->height-1;
+/*TODO*///	ey = sy + src.height-1;
 /*TODO*///	if (sy < 0) sy = 0;
-/*TODO*///	if (clip && sy < clip->min_y) sy = clip->min_y;
-/*TODO*///	if (ey >= dest->height) ey = dest->height-1;
-/*TODO*///	if (clip && ey > clip->max_y) ey = clip->max_y;
+/*TODO*///	if (clip && sy < clip.min_y) sy = clip.min_y;
+/*TODO*///	if (ey >= dest.height) ey = dest.height-1;
+/*TODO*///	if (clip && ey > clip.max_y) ey = clip.max_y;
 /*TODO*///	if (sy > ey) return;
 /*TODO*///
 /*TODO*///	{
-/*TODO*///		DATA_TYPE *sd = ((DATA_TYPE *)src->line[0]);							/* source data */
+/*TODO*///		DATA_TYPE *sd = ((DATA_TYPE *)src.line[0]);							/* source data */
 /*TODO*///		int sw = ex-sx+1;														/* source width */
 /*TODO*///		int sh = ey-sy+1;														/* source height */
-/*TODO*///		int sm = ((DATA_TYPE *)src->line[1])-((DATA_TYPE *)src->line[0]);		/* source modulo */
-/*TODO*///		DATA_TYPE *dd = ((DATA_TYPE *)dest->line[sy]) + sx;						/* dest data */
-/*TODO*///		int dm = ((DATA_TYPE *)dest->line[1])-((DATA_TYPE *)dest->line[0]);		/* dest modulo */
+/*TODO*///		int sm = ((DATA_TYPE *)src.line[1])-((DATA_TYPE *)src.line[0]);		/* source modulo */
+/*TODO*///		DATA_TYPE *dd = ((DATA_TYPE *)dest.line[sy]) + sx;						/* dest data */
+/*TODO*///		int dm = ((DATA_TYPE *)dest.line[1])-((DATA_TYPE *)dest.line[0]);		/* dest modulo */
 /*TODO*///
 /*TODO*///		if (flipx)
 /*TODO*///		{
-/*TODO*///			//if ((sx-ox) == 0) sd += gfx->width - sw;
-/*TODO*///			sd += src->width -1 -(sx-ox);
+/*TODO*///			//if ((sx-ox) == 0) sd += gfx.width - sw;
+/*TODO*///			sd += src.width -1 -(sx-ox);
 /*TODO*///		}
 /*TODO*///		else
 /*TODO*///			sd += (sx-ox);
 /*TODO*///
 /*TODO*///		if (flipy)
 /*TODO*///		{
-/*TODO*///			//if ((sy-oy) == 0) sd += sm * (gfx->height - sh);
+/*TODO*///			//if ((sy-oy) == 0) sd += sm * (gfx.height - sh);
 /*TODO*///			//dd += dm * (sh - 1);
 /*TODO*///			//dm = -dm;
-/*TODO*///			sd += sm * (src->height -1 -(sy-oy));
+/*TODO*///			sd += sm * (src.height -1 -(sy-oy));
 /*TODO*///			sm = -sm;
 /*TODO*///		}
 /*TODO*///		else
@@ -7388,7 +7388,7 @@ public class drawgfx {
 /*TODO*///		switch (transparency)
 /*TODO*///		{
 /*TODO*///			case TRANSPARENCY_NONE:
-/*TODO*///				BLOCKMOVE(NtoN_opaque_remap,flipx,(sd,sw,sh,sm,dd,dm,Machine->pens));
+/*TODO*///				BLOCKMOVE(NtoN_opaque_remap,flipx,(sd,sw,sh,sm,dd,dm,Machine.pens));
 /*TODO*///				break;
 /*TODO*///
 /*TODO*///			case TRANSPARENCY_NONE_RAW:
@@ -7400,7 +7400,7 @@ public class drawgfx {
 /*TODO*///				break;
 /*TODO*///
 /*TODO*///			case TRANSPARENCY_BLEND:
-/*TODO*///				BLOCKMOVE(NtoN_blend_remap,flipx,(sd,sw,sh,sm,dd,dm,Machine->pens,transparent_color));
+/*TODO*///				BLOCKMOVE(NtoN_blend_remap,flipx,(sd,sw,sh,sm,dd,dm,Machine.pens,transparent_color));
 /*TODO*///				break;
 /*TODO*///
 /*TODO*///			case TRANSPARENCY_BLEND_RAW:
@@ -7425,33 +7425,33 @@ public class drawgfx {
 /*TODO*///	int sy;
 /*TODO*///	int ex;
 /*TODO*///	int ey;
-/*TODO*///	const int xmask = srcbitmap->width-1;
-/*TODO*///	const int ymask = srcbitmap->height-1;
-/*TODO*///	const int widthshifted = srcbitmap->width << 16;
-/*TODO*///	const int heightshifted = srcbitmap->height << 16;
+/*TODO*///	const int xmask = srcbitmap.width-1;
+/*TODO*///	const int ymask = srcbitmap.height-1;
+/*TODO*///	const int widthshifted = srcbitmap.width << 16;
+/*TODO*///	const int heightshifted = srcbitmap.height << 16;
 /*TODO*///	DATA_TYPE *dest;
 /*TODO*///
 /*TODO*///
 /*TODO*///	if (clip)
 /*TODO*///	{
-/*TODO*///		startx += clip->min_x * incxx + clip->min_y * incyx;
-/*TODO*///		starty += clip->min_x * incxy + clip->min_y * incyy;
+/*TODO*///		startx += clip.min_x * incxx + clip.min_y * incyx;
+/*TODO*///		starty += clip.min_x * incxy + clip.min_y * incyy;
 /*TODO*///
-/*TODO*///		sx = clip->min_x;
-/*TODO*///		sy = clip->min_y;
-/*TODO*///		ex = clip->max_x;
-/*TODO*///		ey = clip->max_y;
+/*TODO*///		sx = clip.min_x;
+/*TODO*///		sy = clip.min_y;
+/*TODO*///		ex = clip.max_x;
+/*TODO*///		ey = clip.max_y;
 /*TODO*///	}
 /*TODO*///	else
 /*TODO*///	{
 /*TODO*///		sx = 0;
 /*TODO*///		sy = 0;
-/*TODO*///		ex = bitmap->width-1;
-/*TODO*///		ey = bitmap->height-1;
+/*TODO*///		ex = bitmap.width-1;
+/*TODO*///		ey = bitmap.height-1;
 /*TODO*///	}
 /*TODO*///
 /*TODO*///
-/*TODO*///	if (Machine->orientation & ORIENTATION_SWAP_XY)
+/*TODO*///	if (Machine.orientation & ORIENTATION_SWAP_XY)
 /*TODO*///	{
 /*TODO*///		int t;
 /*TODO*///
@@ -7465,7 +7465,7 @@ public class drawgfx {
 /*TODO*///		t = incxy; incxy = incyx; incyx = t;
 /*TODO*///	}
 /*TODO*///
-/*TODO*///	if (Machine->orientation & ORIENTATION_FLIP_X)
+/*TODO*///	if (Machine.orientation & ORIENTATION_FLIP_X)
 /*TODO*///	{
 /*TODO*///		int w = ex - sx;
 /*TODO*///
@@ -7476,11 +7476,11 @@ public class drawgfx {
 /*TODO*///		starty -= incxy * w;
 /*TODO*///
 /*TODO*///		w = sx;
-/*TODO*///		sx = bitmap->width-1 - ex;
-/*TODO*///		ex = bitmap->width-1 - w;
+/*TODO*///		sx = bitmap.width-1 - ex;
+/*TODO*///		ex = bitmap.width-1 - w;
 /*TODO*///	}
 /*TODO*///
-/*TODO*///	if (Machine->orientation & ORIENTATION_FLIP_Y)
+/*TODO*///	if (Machine.orientation & ORIENTATION_FLIP_Y)
 /*TODO*///	{
 /*TODO*///		int h = ey - sy;
 /*TODO*///
@@ -7491,8 +7491,8 @@ public class drawgfx {
 /*TODO*///		starty -= incyy * h;
 /*TODO*///
 /*TODO*///		h = sy;
-/*TODO*///		sy = bitmap->height-1 - ey;
-/*TODO*///		ey = bitmap->height-1 - h;
+/*TODO*///		sy = bitmap.height-1 - ey;
+/*TODO*///		ey = bitmap.height-1 - h;
 /*TODO*///	}
 /*TODO*///
 /*TODO*///	if (incxy == 0 && incyx == 0 && !wraparound)
@@ -7506,7 +7506,7 @@ public class drawgfx {
 /*TODO*///			/* startx is unsigned */
 /*TODO*///			startx = ((INT32)startx) >> 16;
 /*TODO*///
-/*TODO*///			if (startx >= srcbitmap->width)
+/*TODO*///			if (startx >= srcbitmap.width)
 /*TODO*///			{
 /*TODO*///				sx += -startx;
 /*TODO*///				startx = 0;
@@ -7521,13 +7521,13 @@ public class drawgfx {
 /*TODO*///						x = sx;
 /*TODO*///						cx = startx;
 /*TODO*///						cy = starty >> 16;
-/*TODO*///						dest = ((DATA_TYPE *)bitmap->line[sy]) + sx;
+/*TODO*///						dest = ((DATA_TYPE *)bitmap.line[sy]) + sx;
 /*TODO*///						if (priority)
 /*TODO*///						{
-/*TODO*///							UINT8 *pri = ((UINT8 *)priority_bitmap->line[sy]) + sx;
-/*TODO*///							DATA_TYPE *src = (DATA_TYPE *)srcbitmap->line[cy];
+/*TODO*///							UINT8 *pri = ((UINT8 *)priority_bitmap.line[sy]) + sx;
+/*TODO*///							DATA_TYPE *src = (DATA_TYPE *)srcbitmap.line[cy];
 /*TODO*///
-/*TODO*///							while (x <= ex && cx < srcbitmap->width)
+/*TODO*///							while (x <= ex && cx < srcbitmap.width)
 /*TODO*///							{
 /*TODO*///								int c = src[cx];
 /*TODO*///
@@ -7545,9 +7545,9 @@ public class drawgfx {
 /*TODO*///						}
 /*TODO*///						else
 /*TODO*///						{
-/*TODO*///							DATA_TYPE *src = (DATA_TYPE *)srcbitmap->line[cy];
+/*TODO*///							DATA_TYPE *src = (DATA_TYPE *)srcbitmap.line[cy];
 /*TODO*///
-/*TODO*///							while (x <= ex && cx < srcbitmap->width)
+/*TODO*///							while (x <= ex && cx < srcbitmap.width)
 /*TODO*///							{
 /*TODO*///								int c = src[cx];
 /*TODO*///
@@ -7582,11 +7582,11 @@ public class drawgfx {
 /*TODO*///						x = sx;
 /*TODO*///						cx = startx;
 /*TODO*///						cy = starty >> 16;
-/*TODO*///						dest = ((DATA_TYPE *)bitmap->line[sy]) + sx;
+/*TODO*///						dest = ((DATA_TYPE *)bitmap.line[sy]) + sx;
 /*TODO*///						if (priority)
 /*TODO*///						{
-/*TODO*///							UINT8 *pri = ((UINT8 *)priority_bitmap->line[sy]) + sx;
-/*TODO*///							DATA_TYPE *src = (DATA_TYPE *)srcbitmap->line[cy];
+/*TODO*///							UINT8 *pri = ((UINT8 *)priority_bitmap.line[sy]) + sx;
+/*TODO*///							DATA_TYPE *src = (DATA_TYPE *)srcbitmap.line[cy];
 /*TODO*///
 /*TODO*///							while (x <= ex && cx < widthshifted)
 /*TODO*///							{
@@ -7606,7 +7606,7 @@ public class drawgfx {
 /*TODO*///						}
 /*TODO*///						else
 /*TODO*///						{
-/*TODO*///							DATA_TYPE *src = (DATA_TYPE *)srcbitmap->line[cy];
+/*TODO*///							DATA_TYPE *src = (DATA_TYPE *)srcbitmap.line[cy];
 /*TODO*///
 /*TODO*///							while (x <= ex && cx < widthshifted)
 /*TODO*///							{
@@ -7637,14 +7637,14 @@ public class drawgfx {
 /*TODO*///				x = sx;
 /*TODO*///				cx = startx;
 /*TODO*///				cy = starty;
-/*TODO*///				dest = ((DATA_TYPE *)bitmap->line[sy]) + sx;
+/*TODO*///				dest = ((DATA_TYPE *)bitmap.line[sy]) + sx;
 /*TODO*///				if (priority)
 /*TODO*///				{
-/*TODO*///					UINT8 *pri = ((UINT8 *)priority_bitmap->line[sy]) + sx;
+/*TODO*///					UINT8 *pri = ((UINT8 *)priority_bitmap.line[sy]) + sx;
 /*TODO*///
 /*TODO*///					while (x <= ex)
 /*TODO*///					{
-/*TODO*///						int c = ((DATA_TYPE *)srcbitmap->line[(cy >> 16) & ymask])[(cx >> 16) & xmask];
+/*TODO*///						int c = ((DATA_TYPE *)srcbitmap.line[(cy >> 16) & ymask])[(cx >> 16) & xmask];
 /*TODO*///
 /*TODO*///						if (c != transparent_color)
 /*TODO*///						{
@@ -7663,7 +7663,7 @@ public class drawgfx {
 /*TODO*///				{
 /*TODO*///					while (x <= ex)
 /*TODO*///					{
-/*TODO*///						int c = ((DATA_TYPE *)srcbitmap->line[(cy >> 16) & ymask])[(cx >> 16) & xmask];
+/*TODO*///						int c = ((DATA_TYPE *)srcbitmap.line[(cy >> 16) & ymask])[(cx >> 16) & xmask];
 /*TODO*///
 /*TODO*///						if (c != transparent_color)
 /*TODO*///							*dest = c;
@@ -7686,16 +7686,16 @@ public class drawgfx {
 /*TODO*///				x = sx;
 /*TODO*///				cx = startx;
 /*TODO*///				cy = starty;
-/*TODO*///				dest = ((DATA_TYPE *)bitmap->line[sy]) + sx;
+/*TODO*///				dest = ((DATA_TYPE *)bitmap.line[sy]) + sx;
 /*TODO*///				if (priority)
 /*TODO*///				{
-/*TODO*///					UINT8 *pri = ((UINT8 *)priority_bitmap->line[sy]) + sx;
+/*TODO*///					UINT8 *pri = ((UINT8 *)priority_bitmap.line[sy]) + sx;
 /*TODO*///
 /*TODO*///					while (x <= ex)
 /*TODO*///					{
 /*TODO*///						if (cx < widthshifted && cy < heightshifted)
 /*TODO*///						{
-/*TODO*///							int c = ((DATA_TYPE *)srcbitmap->line[cy >> 16])[cx >> 16];
+/*TODO*///							int c = ((DATA_TYPE *)srcbitmap.line[cy >> 16])[cx >> 16];
 /*TODO*///
 /*TODO*///							if (c != transparent_color)
 /*TODO*///							{
@@ -7717,7 +7717,7 @@ public class drawgfx {
 /*TODO*///					{
 /*TODO*///						if (cx < widthshifted && cy < heightshifted)
 /*TODO*///						{
-/*TODO*///							int c = ((DATA_TYPE *)srcbitmap->line[cy >> 16])[cx >> 16];
+/*TODO*///							int c = ((DATA_TYPE *)srcbitmap.line[cy >> 16])[cx >> 16];
 /*TODO*///
 /*TODO*///							if (c != transparent_color)
 /*TODO*///								*dest = c;
@@ -7770,7 +7770,7 @@ public class drawgfx {
         if (bitmap.depth == 8) {
             throw new UnsupportedOperationException("Unsupported");
             /*TODO*///		/* adjust in case we're oddly oriented */
-/*TODO*///		ADJUST_FOR_ORIENTATION(UINT8, Machine->orientation, bitmap, x, y);
+/*TODO*///		ADJUST_FOR_ORIENTATION(UINT8, Machine.orientation, bitmap, x, y);
 /*TODO*///
 /*TODO*///		/* with pen lookups */
 /*TODO*///		if (pens)
@@ -7877,7 +7877,7 @@ public class drawgfx {
         } /* 32bpp destination */ else {
             throw new UnsupportedOperationException("Unsupported");
             /*TODO*///		/* adjust in case we're oddly oriented */
-/*TODO*///		ADJUST_FOR_ORIENTATION(UINT32, Machine->orientation, bitmap, x, y);
+/*TODO*///		ADJUST_FOR_ORIENTATION(UINT32, Machine.orientation, bitmap, x, y);
 /*TODO*///
 /*TODO*///		/* with pen lookups */
 /*TODO*///		if (pens)
@@ -7924,10 +7924,10 @@ public class drawgfx {
 /*TODO*///		const DATA_TYPE *src,pen_t *pens,int transparent_pen),
 /*TODO*///{
 /*TODO*///	/* 8bpp destination */
-/*TODO*///	if (bitmap->depth == 8)
+/*TODO*///	if (bitmap.depth == 8)
 /*TODO*///	{
 /*TODO*///		/* adjust in case we're oddly oriented */
-/*TODO*///		ADJUST_FOR_ORIENTATION(UINT8, Machine->orientation, bitmap, x, y);
+/*TODO*///		ADJUST_FOR_ORIENTATION(UINT8, Machine.orientation, bitmap, x, y);
 /*TODO*///
 /*TODO*///		/* with pen lookups */
 /*TODO*///		if (pens)
@@ -7969,10 +7969,10 @@ public class drawgfx {
 /*TODO*///	}
 /*TODO*///
 /*TODO*///	/* 16bpp destination */
-/*TODO*///	else if(bitmap->depth == 15 || bitmap->depth == 16)
+/*TODO*///	else if(bitmap.depth == 15 || bitmap.depth == 16)
 /*TODO*///	{
 /*TODO*///		/* adjust in case we're oddly oriented */
-/*TODO*///		ADJUST_FOR_ORIENTATION(UINT16, Machine->orientation, bitmap, x, y);
+/*TODO*///		ADJUST_FOR_ORIENTATION(UINT16, Machine.orientation, bitmap, x, y);
 /*TODO*///
 /*TODO*///		/* with pen lookups */
 /*TODO*///		if (pens)
@@ -8017,7 +8017,7 @@ public class drawgfx {
 /*TODO*///	else
 /*TODO*///	{
 /*TODO*///		/* adjust in case we're oddly oriented */
-/*TODO*///		ADJUST_FOR_ORIENTATION(UINT32, Machine->orientation, bitmap, x, y);
+/*TODO*///		ADJUST_FOR_ORIENTATION(UINT32, Machine.orientation, bitmap, x, y);
 /*TODO*///
 /*TODO*///		/* with pen lookups */
 /*TODO*///		if (pens)
@@ -8062,10 +8062,10 @@ public class drawgfx {
 /*TODO*///#undef ADJUST_FOR_ORIENTATION
 /*TODO*///
 /*TODO*///#define ADJUST_FOR_ORIENTATION(type, orientation, bitmapi, bitmapp, x, y)	\
-/*TODO*///	int dy = ((type *)bitmap->line[1]) - ((type *)bitmap->line[0]);			\
-/*TODO*///	int dyp = ((UINT8 *)bitmapp->line[1]) - ((UINT8 *)bitmapp->line[0]);	\
-/*TODO*///	type *dsti = (type *)bitmapi->line[0] + y * dy + x;						\
-/*TODO*///	UINT8 *dstp = (UINT8 *)bitmapp->line[0] + y * dyp + x;					\
+/*TODO*///	int dy = ((type *)bitmap.line[1]) - ((type *)bitmap.line[0]);			\
+/*TODO*///	int dyp = ((UINT8 *)bitmapp.line[1]) - ((UINT8 *)bitmapp.line[0]);	\
+/*TODO*///	type *dsti = (type *)bitmapi.line[0] + y * dy + x;						\
+/*TODO*///	UINT8 *dstp = (UINT8 *)bitmapp.line[0] + y * dyp + x;					\
 /*TODO*///	int xadv = 1;															\
 /*TODO*///	if (orientation)														\
 /*TODO*///	{																		\
@@ -8077,17 +8077,17 @@ public class drawgfx {
 /*TODO*///		}																	\
 /*TODO*///		if ((orientation) & ORIENTATION_FLIP_X)								\
 /*TODO*///		{																	\
-/*TODO*///			tx = bitmap->width - 1 - tx;									\
+/*TODO*///			tx = bitmap.width - 1 - tx;									\
 /*TODO*///			if (!((orientation) & ORIENTATION_SWAP_XY)) xadv = -xadv;		\
 /*TODO*///		}																	\
 /*TODO*///		if ((orientation) & ORIENTATION_FLIP_Y)								\
 /*TODO*///		{																	\
-/*TODO*///			ty = bitmap->height - 1 - ty;									\
+/*TODO*///			ty = bitmap.height - 1 - ty;									\
 /*TODO*///			if ((orientation) & ORIENTATION_SWAP_XY) xadv = -xadv;			\
 /*TODO*///		}																	\
 /*TODO*///		/* can't lookup line because it may be negative! */					\
-/*TODO*///		dsti = ((type *)bitmapi->line[0]) + dy * ty + tx;					\
-/*TODO*///		dstp = ((UINT8 *)bitmapp->line[0]) + dyp * ty + tx;					\
+/*TODO*///		dsti = ((type *)bitmapi.line[0]) + dy * ty + tx;					\
+/*TODO*///		dstp = ((UINT8 *)bitmapp.line[0]) + dyp * ty + tx;					\
 /*TODO*///	}
 /*TODO*///
 /*TODO*///DECLAREG(pdraw_scanline, (
@@ -8095,10 +8095,10 @@ public class drawgfx {
 /*TODO*///		const DATA_TYPE *src,pen_t *pens,int transparent_pen,UINT32 orient,int pri),
 /*TODO*///{
 /*TODO*///	/* 8bpp destination */
-/*TODO*///	if (bitmap->depth == 8)
+/*TODO*///	if (bitmap.depth == 8)
 /*TODO*///	{
 /*TODO*///		/* adjust in case we're oddly oriented */
-/*TODO*///		ADJUST_FOR_ORIENTATION(UINT8, orient^Machine->orientation, bitmap, priority_bitmap, x, y);
+/*TODO*///		ADJUST_FOR_ORIENTATION(UINT8, orient^Machine.orientation, bitmap, priority_bitmap, x, y);
 /*TODO*///
 /*TODO*///		/* with pen lookups */
 /*TODO*///		if (pens)
@@ -8152,10 +8152,10 @@ public class drawgfx {
 /*TODO*///	}
 /*TODO*///
 /*TODO*///	/* 16bpp destination */
-/*TODO*///	else if(bitmap->depth == 15 || bitmap->depth == 16)
+/*TODO*///	else if(bitmap.depth == 15 || bitmap.depth == 16)
 /*TODO*///	{
 /*TODO*///		/* adjust in case we're oddly oriented */
-/*TODO*///		ADJUST_FOR_ORIENTATION(UINT16, Machine->orientation ^ orient, bitmap, priority_bitmap, x, y);
+/*TODO*///		ADJUST_FOR_ORIENTATION(UINT16, Machine.orientation ^ orient, bitmap, priority_bitmap, x, y);
 /*TODO*///		/* with pen lookups */
 /*TODO*///		if (pens)
 /*TODO*///		{
@@ -8211,7 +8211,7 @@ public class drawgfx {
 /*TODO*///	else
 /*TODO*///	{
 /*TODO*///		/* adjust in case we're oddly oriented */
-/*TODO*///		ADJUST_FOR_ORIENTATION(UINT32, Machine->orientation ^ orient, bitmap, priority_bitmap, x, y);
+/*TODO*///		ADJUST_FOR_ORIENTATION(UINT32, Machine.orientation ^ orient, bitmap, priority_bitmap, x, y);
 /*TODO*///		/* with pen lookups */
 /*TODO*///		if (pens)
 /*TODO*///		{
@@ -8268,8 +8268,8 @@ public class drawgfx {
 /*TODO*///#undef ADJUST_FOR_ORIENTATION
 /*TODO*///
 /*TODO*///#define ADJUST_FOR_ORIENTATION(type, orientation, bitmap, x, y)				\
-/*TODO*///	int dy = ((type *)bitmap->line[1]) - ((type *)bitmap->line[0]);			\
-/*TODO*///	type *src = (type *)bitmap->line[0] + y * dy + x;						\
+/*TODO*///	int dy = ((type *)bitmap.line[1]) - ((type *)bitmap.line[0]);			\
+/*TODO*///	type *src = (type *)bitmap.line[0] + y * dy + x;						\
 /*TODO*///	int xadv = 1;															\
 /*TODO*///	if (orientation)														\
 /*TODO*///	{																		\
@@ -8281,16 +8281,16 @@ public class drawgfx {
 /*TODO*///		}																	\
 /*TODO*///		if ((orientation) & ORIENTATION_FLIP_X)								\
 /*TODO*///		{																	\
-/*TODO*///			tx = bitmap->width - 1 - tx;									\
+/*TODO*///			tx = bitmap.width - 1 - tx;									\
 /*TODO*///			if (!((orientation) & ORIENTATION_SWAP_XY)) xadv = -xadv;		\
 /*TODO*///		}																	\
 /*TODO*///		if ((orientation) & ORIENTATION_FLIP_Y)								\
 /*TODO*///		{																	\
-/*TODO*///			ty = bitmap->height - 1 - ty;									\
+/*TODO*///			ty = bitmap.height - 1 - ty;									\
 /*TODO*///			if ((orientation) & ORIENTATION_SWAP_XY) xadv = -xadv;			\
 /*TODO*///		}																	\
 /*TODO*///		/* can't lookup line because it may be negative! */					\
-/*TODO*///		src = ((type *)bitmap->line[0]) + dy * ty + tx;						\
+/*TODO*///		src = ((type *)bitmap.line[0]) + dy * ty + tx;						\
 /*TODO*///	}
 /*TODO*///
 /*TODO*///DECLAREG(extract_scanline, (
@@ -8298,10 +8298,10 @@ public class drawgfx {
 /*TODO*///		DATA_TYPE *dst),
 /*TODO*///{
 /*TODO*///	/* 8bpp destination */
-/*TODO*///	if (bitmap->depth == 8)
+/*TODO*///	if (bitmap.depth == 8)
 /*TODO*///	{
 /*TODO*///		/* adjust in case we're oddly oriented */
-/*TODO*///		ADJUST_FOR_ORIENTATION(UINT8, Machine->orientation, bitmap, x, y);
+/*TODO*///		ADJUST_FOR_ORIENTATION(UINT8, Machine.orientation, bitmap, x, y);
 /*TODO*///
 /*TODO*///		while (length--)
 /*TODO*///		{
@@ -8311,10 +8311,10 @@ public class drawgfx {
 /*TODO*///	}
 /*TODO*///
 /*TODO*///	/* 16bpp destination */
-/*TODO*///	else if(bitmap->depth == 15 || bitmap->depth == 16)
+/*TODO*///	else if(bitmap.depth == 15 || bitmap.depth == 16)
 /*TODO*///	{
 /*TODO*///		/* adjust in case we're oddly oriented */
-/*TODO*///		ADJUST_FOR_ORIENTATION(UINT16, Machine->orientation, bitmap, x, y);
+/*TODO*///		ADJUST_FOR_ORIENTATION(UINT16, Machine.orientation, bitmap, x, y);
 /*TODO*///
 /*TODO*///		while (length--)
 /*TODO*///		{
@@ -8327,7 +8327,7 @@ public class drawgfx {
 /*TODO*///	else
 /*TODO*///	{
 /*TODO*///		/* adjust in case we're oddly oriented */
-/*TODO*///		ADJUST_FOR_ORIENTATION(UINT32, Machine->orientation, bitmap, x, y);
+/*TODO*///		ADJUST_FOR_ORIENTATION(UINT32, Machine.orientation, bitmap, x, y);
 /*TODO*///
 /*TODO*///		while (length--)
 /*TODO*///		{
