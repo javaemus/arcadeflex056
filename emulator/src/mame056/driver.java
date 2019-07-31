@@ -230,6 +230,7 @@ import static WIP.mame056.drivers.wardner.*;
 import static WIP.mame056.drivers.safarir.*;
 import static WIP.mame056.drivers.royalmah.*;
 import static WIP.mame056.drivers.m79amb.*;
+import static WIP.mame056.drivers.skyfox.*;
 
 public class driver {
 
@@ -3590,8 +3591,8 @@ public class driver {
         /*TODO*///	driver_butasan,	/* (c) 1987 Jaleco */
         driver_psychic5, /* (c) 1987 Jaleco */
         /*TODO*///	driver_ginganin,	/* (c) 1987 Jaleco */
-        /*TODO*///	driver_skyfox,	/* (c) 1987 Jaleco + Nichibutsu USA license */
-        /*TODO*///	driver_exerizrb,	/* bootleg */
+        driver_skyfox,	/* (c) 1987 Jaleco + Nichibutsu USA license */
+        driver_exerizrb,	/* bootleg */
         /*TODO*///	driver_bigrun,	/* (c) 1989 Jaleco */
         /*TODO*///	driver_cischeat,	/* (c) 1990 Jaleco */
         /*TODO*///	driver_f1gpstar,	/* (c) 1991 Jaleco */
