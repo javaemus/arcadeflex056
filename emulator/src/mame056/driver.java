@@ -232,6 +232,7 @@ import static WIP.mame056.drivers.royalmah.*;
 import static WIP.mame056.drivers.m79amb.*;
 import static WIP.mame056.drivers.skyfox.*;
 import static WIP.mame056.drivers.ccastles.*;
+import static WIP.mame056.drivers.leprechn.*;
 
 public class driver {
 
@@ -3859,9 +3860,9 @@ public class driver {
         driver_gundl94, /* (c) 1994 Dooyong */
         driver_primella, /* (c) 1994 NTC */
         driver_rshark, /* (c) 1995 Dooyong */
-        /*TODO*///	/* Tong Electronic games */
-        /*TODO*///	driver_leprechn,	/* (c) 1982 */
-        /*TODO*///	driver_potogold,	/* (c) 1982 */
+        /* Tong Electronic games */
+        driver_leprechn,	/* (c) 1982 */
+        driver_potogold,	/* (c) 1982 */
         driver_beezer, /* (c) 1982 */
         driver_beezer1, /* (c) 1982 */
         /*TODO*///	/* Comad games */
