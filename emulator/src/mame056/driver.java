@@ -227,6 +227,7 @@ import static WIP.mame056.drivers.milliped.*;
 import static WIP.mame056.drivers.qwakprot.*;
 import static WIP.mame056.drivers.tunhunt.*;
 import static WIP.mame056.drivers.wardner.*;
+import static WIP.mame056.drivers.safarir.*;
 
 public class driver {
 
@@ -642,7 +643,7 @@ public class driver {
         /*TODO*///	driver_niyanpai,	/* (c) 1996 */
         
         /* "Phoenix hardware" (and variations) games */
-        /*TODO*///	driver_safarir,	/* Shin Nihon Kikaku (SNK) */
+        driver_safarir,	/* Shin Nihon Kikaku (SNK) */
         driver_phoenix,	/* (c) 1980 Amstar */
         driver_phoenixa,	/* (c) 1980 Amstar + Centuri license */
         driver_phoenixt,	/* (c) 1980 Taito */
