@@ -3529,13 +3529,13 @@ public class drawgfx {
 /*TODO*///			clip,transparency,transparent_color,scalex,scaley,priority_bitmap,priority_mask);
 /*TODO*///	profiler_mark(PROFILER_END);
 /*TODO*///}
-/*TODO*///
-/*TODO*///void plot_pixel2(struct mame_bitmap *bitmap1,struct mame_bitmap *bitmap2,int x,int y,int pen)
-/*TODO*///{
-/*TODO*///	plot_pixel(bitmap1, x, y, pen);
-/*TODO*///	plot_pixel(bitmap2, x, y, pen);
-/*TODO*///}
-/*TODO*///
+
+    public static void plot_pixel2(mame_bitmap bitmap1, mame_bitmap bitmap2,int x,int y,int pen)
+    {
+            plot_pixel.handler(bitmap1, x, y, pen);
+            plot_pixel.handler(bitmap2, x, y, pen);
+    }
+
     public static plot_pixel_procPtr pp_8_nd = new plot_pixel_procPtr() {
         public void handler(mame_bitmap b, int x, int y,/*UINT32*/ int p) {
             throw new UnsupportedOperationException("unsupported");//((UINT8 *)b.line[y])[x] = p; 

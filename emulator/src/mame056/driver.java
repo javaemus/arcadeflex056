@@ -229,6 +229,7 @@ import static WIP.mame056.drivers.tunhunt.*;
 import static WIP.mame056.drivers.wardner.*;
 import static WIP.mame056.drivers.safarir.*;
 import static WIP.mame056.drivers.royalmah.*;
+import static WIP.mame056.drivers.m79amb.*;
 
 public class driver {
 
@@ -1091,7 +1092,7 @@ public class driver {
         driver_polaris,	/* PS  (c) 1980 Taito */
         driver_polarisa,	/* PS  (c) 1980 Taito */
         driver_ballbomb,	/* TN  (c) 1980 Taito */
-/*TODO*///driver_m79amb,
+        driver_m79amb,
         driver_alieninv,
         driver_sitv,
         driver_sicv,
