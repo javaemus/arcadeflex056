@@ -242,6 +242,7 @@ import static WIP.mame056.drivers.pinbo.*;
 import static WIP.mame056.drivers.gotya.*;
 import static WIP.mame056.drivers.liberatr.*;
 import static WIP.mame056.drivers.thief.*;
+import static WIP.mame056.drivers.geebee.*;
 
 public class driver {
 
@@ -673,16 +674,16 @@ public class driver {
         driver_popflame, /* (c) 1982 Jaleco */
         driver_popflama, /* (c) 1982 Jaleco */
         /*TODO*///TESTdriver_popflamb,
-        /*TODO*///
-        /*TODO*///	/* Namco games (plus some intruders on similar hardware) */
-        /*TODO*///	driver_geebee,	/* [1978] Namco */
-        /*TODO*///	driver_geebeeg,	/* [1978] Gremlin */
+        
+        /* Namco games (plus some intruders on similar hardware) */
+        driver_geebee,	/* [1978] Namco */
+        driver_geebeeg,	/* [1978] Gremlin */
         /*TODO*///	driver_bombbee,	/* [1979] Namco */
         /*TODO*///	driver_cutieq,	/* (c) 1979 Namco */
-        /*TODO*///	driver_navalone,	/* (c) 1980 Namco */
-        /*TODO*///	driver_kaitei,	/* [1980] K.K. Tokki */
-        /*TODO*///	driver_kaitein,	/* [1980] Namco */
-        /*TODO*///	driver_sos,		/* [1980] Namco */
+        driver_navalone,	/* (c) 1980 Namco */
+        driver_kaitei,	/* [1980] K.K. Tokki */
+        driver_kaitein,	/* [1980] Namco */
+        driver_sos,		/* [1980] Namco */
         driver_tankbatt, /* (c) 1980 Namco */
         /*TODO*///	driver_warpwarp,	/* (c) 1981 Namco */
         /*TODO*///	driver_warpwarr,	/* (c) 1981 Rock-ola - the high score table says "NAMCO" */
