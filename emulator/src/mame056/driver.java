@@ -240,6 +240,7 @@ import static WIP.mame056.drivers.gameplan.*;
 import static WIP.mame056.drivers.ssozumo.*;
 import static WIP.mame056.drivers.pinbo.*;
 import static WIP.mame056.drivers.gotya.*;
+import static WIP.mame056.drivers.liberatr.*;
 
 public class driver {
 
@@ -3142,7 +3143,7 @@ public class driver {
         
         /*TODO*///	/* misc Atari games */
         driver_tunhunt,	/* 136000			(c) 1981 */
-        /*TODO*///	driver_liberatr,	/* 136012			(c) 1982 */
+        driver_liberatr,	/* 136012			(c) 1982 */
         /*TODO*///TESTdriver_liberat2,	/* 136012			(c) 1982 */
         /*TODO*///	driver_foodf,		/* 136020			(c) 1982 */	/* made by Gencomp */
         driver_ccastles,	/* 136022			(c) 1983 */
