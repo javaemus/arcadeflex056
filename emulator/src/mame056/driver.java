@@ -237,6 +237,7 @@ import static WIP.mame056.drivers.cloak.*;
 import static WIP.mame056.drivers.cloud9.*;
 import static WIP.mame056.drivers.rockola.*;
 import static WIP.mame056.drivers.gameplan.*;
+import static WIP.mame056.drivers.ssozumo.*;
 
 public class driver {
 
@@ -3350,7 +3351,7 @@ public class driver {
         driver_dommy, /* TA-00?? (c) */
         driver_bigprowr, /* TA-0007 (c) 1983 */
         driver_tagteam, /* TA-0007 (c) 1983 + Data East license */
-        /*TODO*///	driver_ssozumo,	/* TA-0008 (c) 1984 */
+        driver_ssozumo,	/* TA-0008 (c) 1984 */
         /*TODO*///	driver_mystston,	/* TA-0010 (c) 1984 */
         /*TODO*///	/* TA-0011 Dog Fight (Data East) / Batten O'hara no Sucha-Raka Kuuchuu Sen 1985 */
         driver_bogeyman, /* -0204-0 (Data East part number) (c) [1985?] */
