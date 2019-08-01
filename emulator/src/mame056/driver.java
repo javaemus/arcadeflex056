@@ -236,6 +236,7 @@ import static WIP.mame056.drivers.leprechn.*;
 import static WIP.mame056.drivers.cloak.*;
 import static WIP.mame056.drivers.cloud9.*;
 import static WIP.mame056.drivers.rockola.*;
+import static WIP.mame056.drivers.gameplan.*;
 
 public class driver {
 
@@ -3390,12 +3391,12 @@ public class driver {
         /*TODO*///	driver_wwfwfsta,	/* TA-0031 (c) 1991 + Tecmo license (US) */
         /*TODO*///	driver_wwfwfstj,	/* TA-0031 (c) 1991 (Japan) */
         /*TODO*///	/* TA-0032 Shadow Force (c) 1993 */
-        /*TODO*///
-        /*TODO*///	/* GamePlan games */
-        /*TODO*///	driver_megatack,	/* (c) 1980 Centuri */
-        /*TODO*///	driver_killcom,	/* (c) 1980 Centuri */
-        /*TODO*///	driver_challeng,	/* (c) 1981 Centuri */
-        /*TODO*///	driver_kaos,		/* (c) 1981 */
+        
+        /* GamePlan games */
+        driver_megatack,	/* (c) 1980 Centuri */
+        driver_killcom,	/* (c) 1980 Centuri */
+        driver_challeng,	/* (c) 1981 Centuri */
+        driver_kaos,		/* (c) 1981 */
         
         /* Zaccaria games */
         driver_sia2650,
