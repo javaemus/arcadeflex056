@@ -241,6 +241,7 @@ import static WIP.mame056.drivers.ssozumo.*;
 import static WIP.mame056.drivers.pinbo.*;
 import static WIP.mame056.drivers.gotya.*;
 import static WIP.mame056.drivers.liberatr.*;
+import static WIP.mame056.drivers.thief.*;
 
 public class driver {
 
@@ -3887,12 +3888,12 @@ public class driver {
         /*TODO*///	/* Playmark games */
         /*TODO*///	driver_bigtwin,	/* (c) 1995 */
         /*TODO*///	driver_wbeachvl,	/* (c) 1995 */
-        /*TODO*///
-        /*TODO*///	/* Pacific Novelty games */
-        /*TODO*///	driver_sharkatt,	/* (c) [1980] */
-        /*TODO*///	driver_thief,		/* (c) 1981 */
-        /*TODO*///	driver_natodef,	/* (c) 1982 */
-        /*TODO*///	driver_natodefa,	/* (c) 1982 */
+        
+        /* Pacific Novelty games */
+        driver_sharkatt,	/* (c) [1980] */
+        driver_thief,		/* (c) 1981 */
+        driver_natodef,	/* (c) 1982 */
+        driver_natodefa,	/* (c) 1982 */
         driver_mrflea, /* (c) 1982 */
         /*TODO*///
         /*TODO*///	/* Tecfri games */
