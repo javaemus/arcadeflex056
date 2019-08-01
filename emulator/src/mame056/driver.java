@@ -233,6 +233,8 @@ import static WIP.mame056.drivers.m79amb.*;
 import static WIP.mame056.drivers.skyfox.*;
 import static WIP.mame056.drivers.ccastles.*;
 import static WIP.mame056.drivers.leprechn.*;
+import static WIP.mame056.drivers.cloak.*;
+import static WIP.mame056.drivers.cloud9.*;
 
 public class driver {
 
@@ -3140,8 +3142,8 @@ public class driver {
         /*TODO*///	driver_foodf,		/* 136020			(c) 1982 */	/* made by Gencomp */
         driver_ccastles,	/* 136022			(c) 1983 */
         driver_ccastle2,	/* 136022			(c) 1983 */
-        /*TODO*///	driver_cloak,		/* 136023			(c) 1983 */
-        /*TODO*///	driver_cloud9,	/* (proto)			(c) 1983 */
+        driver_cloak,		/* 136023			(c) 1983 */
+        driver_cloud9,	/* (proto)			(c) 1983 */
         driver_jedi, /* 136030			(c) 1984 */
         /*TODO*///	/* Atari System 1 games */
         /*TODO*///	driver_peterpak,	/* 136028			(c) 1984 */
