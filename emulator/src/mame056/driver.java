@@ -239,6 +239,7 @@ import static WIP.mame056.drivers.rockola.*;
 import static WIP.mame056.drivers.gameplan.*;
 import static WIP.mame056.drivers.ssozumo.*;
 import static WIP.mame056.drivers.pinbo.*;
+import static WIP.mame056.drivers.gotya.*;
 
 public class driver {
 
@@ -3988,8 +3989,8 @@ public class driver {
         /*TODO*///TESTdriver_dlair,
         /*TODO*///	driver_aztarac,	/* (c) 1983 Centuri (vector game) */
         driver_mole, /* (c) 1982 Yachiyo Electronics, Ltd. */
-        /*TODO*///	driver_thehand,	/* (c) 1981 T.I.C. */
-        /*TODO*///	driver_gotya,		/* (c) 1981 Game-A-Tron */
+        driver_thehand,	/* (c) 1981 T.I.C. */
+        driver_gotya,		/* (c) 1981 Game-A-Tron */
         driver_mrjong,	/* (c) 1983 Kiwako */
         driver_crazyblk,	/* (c) 1983 Kiwako + ECI license */
 
