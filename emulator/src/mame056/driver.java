@@ -235,6 +235,7 @@ import static WIP.mame056.drivers.ccastles.*;
 import static WIP.mame056.drivers.leprechn.*;
 import static WIP.mame056.drivers.cloak.*;
 import static WIP.mame056.drivers.cloud9.*;
+import static WIP.mame056.drivers.rockola.*;
 
 public class driver {
 
@@ -3249,19 +3250,19 @@ public class driver {
         /*TODO*///TESTdriver_primrage,	/* 136102			(c) 1994 */
         /*TODO*///TESTdriver_primrag2,	/* 136102			(c) 1994 */
         /*TODO*///	/* Area 51 */		/* 136105			(c) 1995 */
-        /*TODO*///
-        /*TODO*///	/* SNK / Rock-ola games */
-        /*TODO*///	driver_sasuke,	/* [1980] Shin Nihon Kikaku (SNK) */
-        /*TODO*///	driver_satansat,	/* (c) 1981 SNK */
-        /*TODO*///	driver_zarzon,	/* (c) 1981 Taito, gameplay says SNK */
-        /*TODO*///	driver_vanguard,	/* (c) 1981 SNK */
-        /*TODO*///	driver_vangrdce,	/* (c) 1981 SNK + Centuri */
-        /*TODO*///	driver_fantasy,	/* (c) 1981 Rock-ola */
-        /*TODO*///	driver_fantasyj,	/* (c) 1981 SNK */
-        /*TODO*///	driver_pballoon,	/* (c) 1982 SNK */
-        /*TODO*///	driver_nibbler,	/* (c) 1982 Rock-ola */
-        /*TODO*///	driver_nibblera,	/* (c) 1982 Rock-ola */
-        /*TODO*///
+        
+        /* SNK / Rock-ola games */
+        driver_sasuke,	/* [1980] Shin Nihon Kikaku (SNK) */
+        driver_satansat,	/* (c) 1981 SNK */
+        driver_zarzon,	/* (c) 1981 Taito, gameplay says SNK */
+        driver_vanguard,	/* (c) 1981 SNK */
+        driver_vangrdce,	/* (c) 1981 SNK + Centuri */
+        driver_fantasy,	/* (c) 1981 Rock-ola */
+        driver_fantasyj,	/* (c) 1981 SNK */
+        driver_pballoon,	/* (c) 1982 SNK */
+        driver_nibbler,	/* (c) 1982 Rock-ola */
+        driver_nibblera,	/* (c) 1982 Rock-ola */
+        
         /*TODO*///	/* later SNK games, each game can be identified by PCB code and ROM
         /*TODO*///	code, the ROM code is the same between versions, and usually based
         /*TODO*///	upon the Japanese title. */
