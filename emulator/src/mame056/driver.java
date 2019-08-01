@@ -238,6 +238,7 @@ import static WIP.mame056.drivers.cloud9.*;
 import static WIP.mame056.drivers.rockola.*;
 import static WIP.mame056.drivers.gameplan.*;
 import static WIP.mame056.drivers.ssozumo.*;
+import static WIP.mame056.drivers.pinbo.*;
 
 public class driver {
 
@@ -3590,8 +3591,8 @@ public class driver {
         /*TODO*///	driver_citycon,	/* (c) 1985 Jaleco */
         /*TODO*///	driver_citycona,	/* (c) 1985 Jaleco */
         /*TODO*///	driver_cruisin,	/* (c) 1985 Jaleco/Kitkorp */
-        /*TODO*///	driver_pinbo,		/* (c) 1984 Jaleco */
-        /*TODO*///	driver_pinbos,	/* (c) 1985 Strike */
+        driver_pinbo,		/* (c) 1984 Jaleco */
+        driver_pinbos,	/* (c) 1985 Strike */
         driver_momoko, /* (c) 1986 Jaleco */
         /*TODO*///	driver_argus,		/* (c) 1986 Jaleco */
         /*TODO*///	driver_valtric,	/* (c) 1986 Jaleco */
