@@ -245,6 +245,7 @@ import static WIP.mame056.drivers.thief.*;
 import static WIP.mame056.drivers.geebee.*;
 import static WIP.mame056.drivers.warpwarp.*;
 import static WIP.mame056.drivers.blockade.*;
+import static WIP.mame056.drivers.spiders.*;
 
 public class driver {
 
@@ -3970,8 +3971,8 @@ public class driver {
         driver_nyny, /* (c) 1980 Sigma Ent. Inc. */
         driver_nynyg, /* (c) 1980 Sigma Ent. Inc. + Gottlieb */
         driver_arcadia, /* (c) 1982 Sigma Ent. Inc. */
-        /*TODO*///	driver_spiders,	/* (c) 1981 Sigma Ent. Inc. */
-        /*TODO*///	driver_spiders2,	/* (c) 1981 Sigma Ent. Inc. */
+        driver_spiders,	/* (c) 1981 Sigma Ent. Inc. */
+        driver_spiders2,	/* (c) 1981 Sigma Ent. Inc. */
         
         driver_spacefb,	/* (c) [1980?] Nintendo */
         driver_spacefbg,	/* 834-0031 (c) 1980 Gremlin */
