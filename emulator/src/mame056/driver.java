@@ -244,6 +244,7 @@ import static WIP.mame056.drivers.liberatr.*;
 import static WIP.mame056.drivers.thief.*;
 import static WIP.mame056.drivers.geebee.*;
 import static WIP.mame056.drivers.warpwarp.*;
+import static WIP.mame056.drivers.blockade.*;
 
 public class driver {
 
@@ -2273,14 +2274,14 @@ public class driver {
         driver_wsf, /* (c) 1990 Leland */
         driver_indyheat, /* (c) 1991 Leland */
         driver_brutforc, /* (c) 1991 Leland */
-        /*TODO*///	/* Gremlin 8080 games */
-        /*TODO*///	/* the numbers listed are the range of ROM part numbers */
-        /*TODO*///	driver_blockade,	/* 1-4 [1977 Gremlin] */
-        /*TODO*///	driver_comotion,	/* 5-7 [1977 Gremlin] */
-        /*TODO*///	driver_hustle,	/* 16-21 [1977 Gremlin] */
-        /*TODO*///	driver_blasto,	/* [1978 Gremlin] */
-        /*TODO*///	driver_mineswpr,	/* [1977 Amutech] */
-        /*TODO*///
+        /* Gremlin 8080 games */
+        /* the numbers listed are the range of ROM part numbers */
+        driver_blockade,	/* 1-4 [1977 Gremlin] */
+        driver_comotion,	/* 5-7 [1977 Gremlin] */
+        driver_hustle,	/* 16-21 [1977 Gremlin] */
+        driver_blasto,	/* [1978 Gremlin] */
+        driver_mineswpr,	/* [1977 Amutech] */
+
         /* Gremlin/Sega "VIC dual game board" games */
         /* the numbers listed are the range of ROM part numbers */
         driver_depthch, /* 50-55 [1977 Gremlin?] */
