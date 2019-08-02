@@ -247,6 +247,7 @@ import static WIP.mame056.drivers.warpwarp.*;
 import static WIP.mame056.drivers.blockade.*;
 import static WIP.mame056.drivers.spiders.*;
 import static WIP.mame056.drivers.spcforce.*;
+import static WIP.mame056.drivers.mjsikaku.*;
 
 public class driver {
 
@@ -582,25 +583,25 @@ public class driver {
         /*TODO*///	driver_hyhoo2,	/* (c) 1987 */
         /*TODO*///
         /*TODO*///	driver_pastelgl,	/* (c) 1985 */
-        /*TODO*///
-        /*TODO*///	driver_mjsikaku,	/* (c) 1988 */
-        /*TODO*///	driver_mjsikakb,	/* (c) 1988 */
-        /*TODO*///	driver_otonano,	/* (c) 1988 Apple */
-        /*TODO*///	driver_mjcamera,	/* (c) 1988 MIKI SYOUJI */
-        /*TODO*///	driver_secolove,	/* (c) 1986 */
-        /*TODO*///	driver_citylove,	/* (c) 1986 */
-        /*TODO*///	driver_seiha,		/* (c) 1987 */
-        /*TODO*///	driver_seiham,	/* (c) 1987 */
-        /*TODO*///	driver_iemoto,	/* (c) 1987 */
-        /*TODO*///	driver_ojousan,	/* (c) 1987 */
-        /*TODO*///	driver_bijokkoy,	/* (c) 1987 */
-        /*TODO*///	driver_bijokkog,	/* (c) 1988 */
-        /*TODO*///	driver_housemnq,	/* (c) 1987 */
-        /*TODO*///	driver_housemn2,	/* (c) 1987 */
-        /*TODO*///	driver_kaguya,	/* (c) 1988 MIKI SYOUJI */
-        /*TODO*///	driver_crystal2,	/* (c) 1986 */
-        /*TODO*///	driver_apparel,	/* (c) 1986 Central Denshi */
-        /*TODO*///
+        
+        driver_mjsikaku,	/* (c) 1988 */
+        driver_mjsikakb,	/* (c) 1988 */
+        driver_otonano,	/* (c) 1988 Apple */
+        driver_mjcamera,	/* (c) 1988 MIKI SYOUJI */
+        driver_secolove,	/* (c) 1986 */
+        driver_citylove,	/* (c) 1986 */
+        driver_seiha,		/* (c) 1987 */
+        driver_seiham,	/* (c) 1987 */
+        driver_iemoto,	/* (c) 1987 */
+        driver_ojousan,	/* (c) 1987 */
+        driver_bijokkoy,	/* (c) 1987 */
+        driver_bijokkog,	/* (c) 1988 */
+        driver_housemnq,	/* (c) 1987 */
+        driver_housemn2,	/* (c) 1987 */
+        driver_kaguya,	/* (c) 1988 MIKI SYOUJI */
+        driver_crystal2,	/* (c) 1986 */
+        driver_apparel,	/* (c) 1986 Central Denshi */
+
         /*TODO*///	driver_hanamomo,	/* (c) 1988 */
         /*TODO*///	driver_msjiken,	/* (c) 1988 */
         /*TODO*///	driver_telmahjn,	/* (c) 1988 */
