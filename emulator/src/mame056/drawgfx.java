@@ -5220,14 +5220,14 @@ public class drawgfx {
             while (dstheight != 0) {
 
                 end = dstdata.offset / 2 - dstwidth;
-                while ((srcdata.read() & 3) != 0 && dstdata.offset / 2 > end) /* longword align */ {
+                while ((srcdata.offset & 3) != 0 && dstdata.offset / 2 > end) /* longword align */ {
                     int col;
 
                     col = srcdata.readinc();
                     if (col != transpen) {
                         dstdata.write(0, (char) paldata.read(col));
                     }
-                    dstdata.dec(2);
+                    dstdata.dec();
                 }
 
                 sd4 = new IntPtr(srcdata);
