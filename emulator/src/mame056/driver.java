@@ -249,6 +249,7 @@ import static WIP.mame056.drivers.spiders.*;
 import static WIP.mame056.drivers.spcforce.*;
 import static WIP.mame056.drivers.mjsikaku.*;
 import static WIP.mame056.drivers.pastelgl.*;
+import static WIP.mame056.drivers.hyhoo.*;
 
 public class driver {
 
@@ -578,11 +579,11 @@ public class driver {
         /*TODO*///	driver_kodure,	/* (c) 1987 (Japan) */
         /*TODO*///	driver_armedf,	/* (c) 1988 */
         /*TODO*///	driver_cclimbr2,	/* (c) 1988 (Japan) */
-        /*TODO*///
-        /*TODO*///	/* Nichibutsu Mahjong games */
-        /*TODO*///	driver_hyhoo,		/* (c) 1987 */
-        /*TODO*///	driver_hyhoo2,	/* (c) 1987 */
-        /*TODO*///
+        
+        /* Nichibutsu Mahjong games */
+        driver_hyhoo,		/* (c) 1987 */
+        driver_hyhoo2,	/* (c) 1987 */
+
         driver_pastelgl,	/* (c) 1985 */
         
         driver_mjsikaku,	/* (c) 1988 */
