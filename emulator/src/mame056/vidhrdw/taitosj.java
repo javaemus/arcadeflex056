@@ -16,56 +16,103 @@ import static arcadeflex056.fucPtr.*;
 import static common.libc.cstring.memset;
 
 import static common.ptr.*;
-import common.subArrays.IntArray;
+import static mame056.memoryH.*;
 import static mame056.common.*;
-
+import static mame056.cpuexec.*;
+import static mame056.cpuintrf.*;
+import static mame056.cpuintrfH.*;
 import static mame056.palette.*;
 import static mame056.drawgfx.*;
 import static mame056.mame.*;
 import static mame056.commonH.*;
 import static mame056.drawgfxH.*;
+import static mame056.memory.*;
 
 import static mame056.vidhrdw.generic.*;
 
 // refactor
 import static arcadeflex036.osdepend.logerror;
-import static java.lang.Math.abs;
-
 
 public class taitosj
 {
 	
-	/*#ifndef MIN
-	#define MIN(x,y) (x)<(y)?(x):(y)
-	#endif*/
+	public static int MIN(int x, int y){
+            return (x)<(y)?(x):(y);
+        }
 	
 	
-	public static UBytePtr taitosj_videoram2=new UBytePtr();
-        public static UBytePtr taitosj_videoram3=new UBytePtr();
+	public static UBytePtr taitosj_videoram2=new UBytePtr(),taitosj_videoram3=new UBytePtr();
 	public static UBytePtr taitosj_characterram=new UBytePtr();
 	public static UBytePtr taitosj_scroll=new UBytePtr();
 	public static UBytePtr taitosj_colscrolly=new UBytePtr();
-	public static UBytePtr taitosj_gfxpointer=new UBytePtr();        
-	public static UBytePtr taitosj_colorbank=new UBytePtr();
-        public static UBytePtr taitosj_video_priority=new UBytePtr();
-        
-	static /*unsigned*/ char[] taitosj_collision_reg=new char[4];
-	static /*unsigned*/ char[] dirtybuffer2,dirtybuffer3;
+	public static UBytePtr taitosj_gfxpointer=new UBytePtr();
+	public static UBytePtr taitosj_colorbank=new UBytePtr(),taitosj_video_priority=new UBytePtr();
+	static char[] taitosj_collision_reg=new char[4];
+	public static UBytePtr dirtybuffer2=new UBytePtr(),dirtybuffer3=new UBytePtr();
 	static mame_bitmap[] taitosj_tmpbitmap=new mame_bitmap[3];
+        static{
+            for (int ii=0 ; ii<3 ; ii++)
+                taitosj_tmpbitmap[ii] = new mame_bitmap();
+        }
 	static mame_bitmap sprite_sprite_collbitmap1,sprite_sprite_collbitmap2;
 	static mame_bitmap sprite_plane_collbitmap1;
 	static mame_bitmap[] sprite_plane_collbitmap2=new mame_bitmap[3];
-	static /*unsigned*/ char[] dirtycharacter1=new char[256];
-        static /*unsigned*/ char[] dirtycharacter2=new char[256];
-	static /*unsigned*/ char[] dirtysprite1=new char[64];
-        static /*unsigned*/ char[] dirtysprite2=new char[64];
+	static char[] dirtycharacter1=new char[256],dirtycharacter2=new char[256];
+	static char[] dirtysprite1=new char[64],dirtysprite2=new char[64];
 	static int taitosj_video_enable;
 	static int[] flipscreen=new int[2];
 	static rectangle[] spritearea=new rectangle[32]; /*areas on bitmap (sprite locations)*/
+        static {
+            for (int ii=0 ; ii<32 ; ii++)
+                spritearea[ii]=new rectangle();
+        }
 	static int[] spriteon=new int[32]; /* 1 if sprite is active */
 	
 	static int playfield_enable_mask[] = { 0x10, 0x20, 0x40 };
-		
+	
+	
+	/***************************************************************************
+	
+	  I call the three planes with the conventional names "front", "middle" and
+	  "back", because that's their default order, but they can be arranged,
+	  together with the sprites, in any order. The priority is selected by
+	  register 0xd300, which works as follow:
+	
+	  bits 0-3 go to A4-A7 of a 256x4 PROM
+	  bit 4 selects D0/D1 or D2/D3 of the PROM
+	  bit 5-7 n.c.
+	  A0-A3 of the PROM is fed with a mask of the inactive planes
+	  (i.e. all-zero) in the order sprites-front-middle-back
+	  the 2-bit code which comes out from the PROM selects the plane
+	  to display.
+	
+	  Here is a dump of one of these PROMs; on the right is the resulting order
+	  (s = sprites f = front m = middle b = back). Note that, in theory, the
+	  PROM could encode some really funky priority schemes which couldn't be
+	  reconducted to the simple layer order given here. Luckily, none of the
+	  games seem to do that. Actually, all of them seem to use the same PROM,
+	  with the exception of Wild Western.
+	
+	                                                        d300 pri    d300 pri
+	  00: 08 09 08 0A 00 05 00 0F 08 09 08 0A 00 05 00 0F |  00  sfmb    10  msfb
+	  10: 08 09 08 0B 00 0D 00 0F 08 09 08 0A 00 05 00 0F |  01  sfbm    11  msbf
+	  20: 08 0A 08 0A 04 05 00 0F 08 0A 08 0A 04 05 00 0F |  02  smfb    12  mfsb
+	  30: 08 0A 08 0A 04 07 0C 0F 08 0A 08 0A 04 05 00 0F |  03  smbf    13  mfbs
+	  40: 08 0B 08 0B 0C 0F 0C 0F 08 09 08 0A 00 05 00 0F |  04  sbfm    14  mbsf
+	  50: 08 0B 08 0B 0C 0F 0C 0F 08 0A 08 0A 04 05 00 0F |  05  sbmf    15  mbfs
+	  60: 0D 0D 0C 0E 0D 0D 0C 0F 01 05 00 0A 01 05 00 0F |  06  fsmb    16  bsfm
+	  70: 0D 0D 0C 0F 0D 0D 0C 0F 01 09 00 0A 01 05 00 0F |  07  fsbm    17  bsmf
+	  80: 0D 0D 0E 0E 0D 0D 0C 0F 05 05 02 0A 05 05 00 0F |  08  fmsb    18  bfsm
+	  90: 0D 0D 0E 0E 0D 0D 0F 0F 05 05 0A 0A 05 05 00 0F |  09  fmbs    19  bfms
+	  A0: 0D 0D 0F 0F 0D 0D 0F 0F 09 09 08 0A 01 05 00 0F |  0A  fbsm    1A  bmsf
+	  B0: 0D 0D 0F 0F 0D 0D 0F 0F 09 09 0A 0A 05 05 00 0F |  0B  fbms    1B  bmfs
+	  C0: 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F |  0C   -      1C   -
+	  D0: 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F |  0D   -      1D   -
+	  E0: 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F |  0E   -      1E   -
+	  F0: 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F |  0F   -      1F   -
+	
+	***************************************************************************/
+	
 	static int[][] draworder=new int[32][4];
 	
 	
@@ -89,21 +136,23 @@ public class taitosj
 	  bit 0 -- inverter -- 1  kohm resistor  -- BLUE
 	
 	***************************************************************************/
-	
-	public static VhConvertColorPromPtr taitosj_vh_convert_color_prom = new VhConvertColorPromPtr() { 
-            public void handler(char []palette, char []colortable, UBytePtr color_prom) 
+	public static void COLOR(char[] colortable, int gfxn, int offs, int value){
+            (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])=(char) value;
+        }
+        
+	public static VhConvertColorPromPtr taitosj_vh_convert_color_prom = new VhConvertColorPromPtr() { public void handler(char []palette, char []colortable, UBytePtr color_prom) 
 	{
 		int i;
-		//#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
+		
 	
 		/* all gfx elements use the same palette */
 		for (i = 0;i < 64;i++)
 		{
-			colortable[Machine.drv.gfxdecodeinfo[0].color_codes_start + i] = (char)i;
+			COLOR(colortable,0,i, i);
 			/* we create both a "normal" lookup table and one where pen 0 is */
 			/* always mapped to color 0. This is needed for transparency. */
-			if (i % 8 == 0) colortable[Machine.drv.gfxdecodeinfo[0].color_codes_start + i+64] = (char)0;
-			else colortable[Machine.drv.gfxdecodeinfo[0].color_codes_start + i+64] = (char)i;
+			if (i % 8 == 0) COLOR(colortable,0,i + 64, 0);
+			else COLOR(colortable,0,i + 64, i);
 		}
 	
 	
@@ -123,20 +172,18 @@ public class taitosj
 				int data;
 	
 				data = color_prom.read(0x10 * (i & 0x0f) + mask);
-				if ((i & 0x10) != 0) data >>= 2;
+				if ((i & 0x10)!=0) data >>= 2;
 				data &= 0x03;
 				mask |= (1 << data);	/* in next loop, we'll see which of the remaining */
 										/* layers has top priority when this one is transparent */
 				draworder[i][j] = data;
 			}
 		}
-                palette_set_color(0, 0, 0, 0);
-                palette_set_color(1, 0xff, 0xff, 0xff);
 	} };
 	
 	
 	
-	public static WriteHandlerPtr taitosj_paletteram_w = new WriteHandlerPtr() { public void handler(int offset, int data)
+	public static WriteHandlerPtr taitosj_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bit0,bit1,bit2;
 		int r,g,b,val;
@@ -191,14 +238,14 @@ public class taitosj
 		if (generic_vh_start.handler()!= 0)
 			return 1;
 	
-		if ((dirtybuffer2 = new char[videoram_size[0]]) == null)
+		if ((dirtybuffer2 = new UBytePtr(videoram_size[0])) == null)
 		{
 			generic_vh_stop.handler();
 			return 1;
 		}
 		memset(dirtybuffer2,1,videoram_size[0]);
 	
-		if ((dirtybuffer3 =new char[videoram_size[0]]) == null)
+		if ((dirtybuffer3 = new UBytePtr(videoram_size[0])) == null)
 		{
 			generic_vh_stop.handler();
 			return 1;
@@ -262,59 +309,58 @@ public class taitosj
 	
 		for (i = 0; i < 3; i++)
 		{
-			if (taitosj_tmpbitmap[i]!=null) bitmap_free(taitosj_tmpbitmap[i]);
-			if (sprite_plane_collbitmap2[i]!=null) bitmap_free(sprite_plane_collbitmap2[i]);
+			if (taitosj_tmpbitmap[i] != null) bitmap_free(taitosj_tmpbitmap[i]);
+			if (sprite_plane_collbitmap2[i] != null) bitmap_free(sprite_plane_collbitmap2[i]);
 		}
 	
-		if (dirtybuffer3 != null) dirtybuffer3=null;
-		if (dirtybuffer2 != null) dirtybuffer2=null;
+		if (dirtybuffer3 != null) dirtybuffer3 = null;
+		if (dirtybuffer2 != null) dirtybuffer2 =null;
 		generic_vh_stop.handler();
 	} };
 	
 	
 	
-	public static ReadHandlerPtr taitosj_gfxrom_r = new ReadHandlerPtr() { public int handler(int offset)
+	public static ReadHandlerPtr taitosj_gfxrom_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int offs;
 	
 	
 		offs = taitosj_gfxpointer.read(0)+taitosj_gfxpointer.read(1)*256;
 	
-		taitosj_gfxpointer.write(0,taitosj_gfxpointer.read(0) + 1);//taitosj_gfxpointer[0]++;
-		if (taitosj_gfxpointer.read(0) == 0) taitosj_gfxpointer.write(1,taitosj_gfxpointer.read(1) + 1);//taitosj_gfxpointer[1]++;
+		taitosj_gfxpointer.write(0, taitosj_gfxpointer.read(0)+1);
+		if (taitosj_gfxpointer.read(0) == 0) taitosj_gfxpointer.write(1, taitosj_gfxpointer.read(1)+1);
 	
 		if (offs < 0x8000)
-			return memory_region(REGION_GFX1).read(offs);
+			return new UBytePtr(memory_region(REGION_GFX1)).read(offs);
 		else return 0;
 	} };
 	
 	
-	
-	public static WriteHandlerPtr taitosj_videoram2_w = new WriteHandlerPtr() { public void handler(int offset, int data)
+	public static WriteHandlerPtr taitosj_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (taitosj_videoram2.read(offset) != data)
 		{
-			dirtybuffer2[offset] = 1;
+			dirtybuffer2.write(offset, 1);
 	
-			taitosj_videoram2.write(offset,data);
+			taitosj_videoram2.write(offset, data);
 		}
 	} };
 	
 	
 	
-	public static WriteHandlerPtr taitosj_videoram3_w = new WriteHandlerPtr() { public void handler(int offset, int data)
+	public static WriteHandlerPtr taitosj_videoram3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (taitosj_videoram3.read(offset) != data)
 		{
-			dirtybuffer3[offset] = 1;
+			dirtybuffer3.write(offset, 1);
 	
-			taitosj_videoram3.write(offset,data);
+			taitosj_videoram3.write(offset, data);
 		}
 	} };
 	
 	
 	
-	public static WriteHandlerPtr taitosj_colorbank_w = new WriteHandlerPtr() { public void handler(int offset, int data)
+	public static WriteHandlerPtr taitosj_colorbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (taitosj_colorbank.read(offset) != data)
 		{
@@ -323,13 +369,13 @@ public class taitosj
 			memset(dirtybuffer2,1,videoram_size[0]);
 			memset(dirtybuffer3,1,videoram_size[0]);
 	
-			taitosj_colorbank.write(offset,data);
+			taitosj_colorbank.write(offset, data);
 		}
 	} };
 	
 	
 	
-	public static WriteHandlerPtr taitosj_videoenable_w = new WriteHandlerPtr() { public void handler(int offset, int data)
+	public static WriteHandlerPtr taitosj_videoenable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (taitosj_video_enable != data)
 		{
@@ -351,7 +397,7 @@ public class taitosj
 	
 	
 	
-	public static WriteHandlerPtr taitosj_characterram_w = new WriteHandlerPtr() { public void handler(int offset, int data)
+	public static WriteHandlerPtr taitosj_characterram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (taitosj_characterram.read(offset) != data)
 		{
@@ -366,10 +412,14 @@ public class taitosj
 				dirtysprite2[(offset / 32) & 0x3f] = 1;
 			}
 	
-			taitosj_characterram.write(offset,data);
+			taitosj_characterram.write(offset, data);
 		}
 	} };
 	
+	public static WriteHandlerPtr junglhbr_characterram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
+	{
+		taitosj_characterram_w.handler(offset, data ^ 0xfc);
+	} };
 	
 	/***************************************************************************
 	
@@ -377,12 +427,12 @@ public class taitosj
 	  collision detection.
 	
 	***************************************************************************/
-	public static ReadHandlerPtr taitosj_collision_reg_r = new ReadHandlerPtr() { public int handler(int offset)
+	public static ReadHandlerPtr taitosj_collision_reg_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return taitosj_collision_reg[offset];
 	} };
 	
-	public static WriteHandlerPtr taitosj_collision_reg_clear_w = new WriteHandlerPtr() { public void handler(int offset, int data)
+	public static WriteHandlerPtr taitosj_collision_reg_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		taitosj_collision_reg[0] = 0;
 		taitosj_collision_reg[1] = 0;
@@ -390,19 +440,18 @@ public class taitosj
 		taitosj_collision_reg[3] = 0;
 	} };
 	
-	public static int get_sprite_xy(/*UINT8*/int num, /*UINT8**/int[] sx, /*UINT8**/ int[] sy)
+	public static int get_sprite_xy(int num)
 	{
 		int offs = num * 4;
 	
 	
-		sx[0] = spriteram.read(offs) - 1;
-		sy[0] = 240 - spriteram.read(offs + 1);
-		return (sy[0] < 240)?1:0;
+		sx = spriteram.read(offs)- 1 ;
+		sy = 240 - spriteram.read(offs + 1);
+		return (sy < 240)?1:0;
 	}
 	
 	
-	static int check_sprite_sprite_bitpattern(int sx1, int sy1, int num1,
-	                                          int sx2, int sy2, int num2)
+	static int check_sprite_sprite_bitpattern(int num1,int num2)
 	{
 		int x,y,minx,miny,maxx = 16,maxy = 16;
 		int offs1 = num1 * 4;
@@ -436,17 +485,17 @@ public class taitosj
 		}
 	
 		/* draw the sprites into seperate bitmaps and check overlapping region */
-		drawgfx(sprite_sprite_collbitmap1,Machine.gfx[(spriteram.read(offs1 + 3) & 0x40)!=0 ? 3 : 1],
-				spriteram.read(offs1 + 3) & 0x3f,
+		drawgfx(sprite_sprite_collbitmap1,Machine.gfx[(spriteram.read(offs1 + 3)& 0x40)!=0 ? 3 : 1],
+				spriteram.read(offs1 + 3)& 0x3f,
 				0,
-				spriteram.read(offs1 + 2) & 1, spriteram.read(offs1 + 2) & 2,
+				spriteram.read(offs1 + 2)& 1, spriteram.read(offs1 + 2)& 2,
 				sx1,sy1,
 				null,TRANSPARENCY_NONE,0);
 	
-		drawgfx(sprite_sprite_collbitmap2,Machine.gfx[(spriteram.read(offs2 + 3) & 0x40)!=0 ? 3 : 1],
-				spriteram.read(offs2 + 3) & 0x3f,
+		drawgfx(sprite_sprite_collbitmap2,Machine.gfx[(spriteram.read(offs2 + 3)& 0x40)!=0 ? 3 : 1],
+				spriteram.read(offs2 + 3)& 0x3f,
 				0,
-				spriteram.read(offs2 + 2) & 1, spriteram.read(offs2 + 2) & 2,
+				spriteram.read(offs2 + 2)& 1, spriteram.read(offs2 + 2)& 2,
 				sx2,sy2,
 				null,TRANSPARENCY_NONE,0);
 	
@@ -468,18 +517,15 @@ public class taitosj
 	
 	static void check_sprite_sprite_collision()
 	{
-		/*UINT8*/int i,j;//,sx1,sx2,sy1,sy2;
-                int[] sx1=new int[1];
-                int[] sx2=new int[1];
-                int[] sy1=new int[1];
-                int[] sy2=new int[1];
+		int i,j;
+	
 	
 		/* chech each pair of sprites */
 		for (i = 0x00; i < 0x20; i++)
 		{
 			if ((i >= 0x10) && (i <= 0x17)) continue;	/* no sprites here */
 	
-			if (get_sprite_xy(i, sx1, sy1)!=0)
+			if (get_sprite_xy(i) != 0)
 			{
 				for (j = 0x00; j < 0x20; j++)
 				{
@@ -487,13 +533,13 @@ public class taitosj
 	
 					if ((j >= 0x10) && (j <= 0x17)) continue;	  /* no sprites here */
 	
-					if (get_sprite_xy(j, sx2, sy2)!=0)
+					if (get_sprite_xy(j) != 0)
 					{
 						/* rule out any pairs that cannot be touching */
-						if ((Math.abs(sx1[0] - sx2[0]) < 16) &&
-							(Math.abs(sy1[0] - sy2[0]) < 16))
+						if ((Math.abs(sx1 - sx2) < 16) &&
+							(Math.abs(sy1 - sy2) < 16))
 						{
-							if (check_sprite_sprite_bitpattern(sx1[0], sy1[0], i, sx2[0], sy2[0], j)!=0)
+							if (check_sprite_sprite_bitpattern(i, j) != 0)
 							{
 								/* mark sprites as collided */
 								int reg1,reg2;
@@ -517,19 +563,16 @@ public class taitosj
 	
 	static void calculate_sprites_areas()
 	{
-		//UINT8 sx,sy;
-                int[] sx=new int[1];
-                int[] sy=new int[1];
 		int i,minx,miny,maxx,maxy;
 	
 		for (i = 0x00; i < 0x20; i++)
 		{
 			if ((i >= 0x10) && (i <= 0x17)) continue;	/* no sprites here */
 	
-			if (get_sprite_xy(i, sx, sy)!=0)
+			if (get_sprite_xy(i) != 0)
 			{
-				minx = sx[0];
-				miny = sy[0];
+				minx = sx;
+				miny = sy;
 	
 				maxx = minx+15;
 				maxy = miny+15;
@@ -541,7 +584,7 @@ public class taitosj
 					maxx = Machine.drv.screen_width - 1;
 				if (maxy >= Machine.drv.screen_height - 1)
 					maxy = Machine.drv.screen_height - 1;
-                                spritearea[i]=new rectangle();
+	
 				spritearea[i].min_x = minx;
 				spritearea[i].max_x = maxx;
 				spritearea[i].min_y = miny;
@@ -555,9 +598,9 @@ public class taitosj
 		}
 	}
 	
-	public static ReadHandlerPtr check_sprite_plane_bitpattern = new ReadHandlerPtr() { public int handler(int num)
+	static int check_sprite_plane_bitpattern(int num)
 	{
-		int x,y,flipx,flipy,minx,miny,maxx,maxy;
+		int x,y,minx,miny,maxx,maxy;
 		int offs = num * 4;
 		int result = 0;  /* no collisions */
 	
@@ -571,25 +614,25 @@ public class taitosj
 		maxy = spritearea[num].max_y + 1;
 	
 	
-		flipx = spriteram.read(offs + 2) & 1;
-		flipy = spriteram.read(offs + 2) & 2;
+		flipx = spriteram.read(offs + 2)& 1;
+		flipy = spriteram.read(offs + 2)& 2;
 	
 		if (flipscreen[0]!=0)
 		{
 			flipx = flipx!=0?0:1;
-			minx = Math.min(minx + 2, Machine.drv.screen_width);
-			maxx = Math.min(maxx + 2, Machine.drv.screen_width);
+			minx = MIN(minx + 2, Machine.drv.screen_width);
+			maxx = MIN(maxx + 2, Machine.drv.screen_width);
 		}
 		if (flipscreen[1]!=0)
 		{
-			flipy = flipy!=0?0:1;
-			miny = Math.min(miny + 2, Machine.drv.screen_height);
-			maxy = Math.min(maxy + 2, Machine.drv.screen_height);
+			flipy = flipy!=0?0:1;;
+			miny = MIN(miny + 2, Machine.drv.screen_height);
+			maxy = MIN(maxy + 2, Machine.drv.screen_height);
 		}
 	
 		/* draw sprite into a bitmap and check if playfields collide */
-		drawgfx(sprite_plane_collbitmap1, Machine.gfx[(spriteram.read(offs + 3) & 0x40)!=0 ? 3 : 1],
-				spriteram.read(offs + 3) & 0x3f,
+		drawgfx(sprite_plane_collbitmap1, Machine.gfx[(spriteram.read(offs + 3)& 0x40)!=0 ? 3 : 1],
+				spriteram.read(offs + 3)& 0x3f,
 				0,
 				flipx, flipy,
 				0,0,
@@ -604,20 +647,20 @@ public class taitosj
 					if (check_playfield1!=0 && (read_pixel.handler(sprite_plane_collbitmap2[0], x, y) != Machine.pens[0]))
 					{
 						result |= 1;  /* collided */
-						if (result == 7)  return result;
+						if (result == 7)  return result;//goto done;
 						check_playfield1 = 0;
 					}
 					if (check_playfield2!=0 && (read_pixel.handler(sprite_plane_collbitmap2[1], x, y) != Machine.pens[0]))
 					{
 						result |= 2;  /* collided */
-						if (result == 7)  return result;
+						if (result == 7)  return result;//goto done;
 						check_playfield2 = 0;
 	
 					}
 					if (check_playfield3!=0 && (read_pixel.handler(sprite_plane_collbitmap2[2], x, y) != Machine.pens[0]))
 					{
 						result |= 4;  /* collided */
-						if (result == 7)  return result;
+						if (result == 7)  return result;//goto done;
 						check_playfield3 = 0;
 					}
 				}
@@ -626,11 +669,11 @@ public class taitosj
 	
 	//done:
 		return result;
-	} };
+	}
 	
 	static void check_sprite_plane_collision()
 	{
-		/*UINT8*/int i;
+		int i;
 	
 	
 		/* check each sprite */
@@ -640,12 +683,13 @@ public class taitosj
 	
 			if (spriteon[i]!=0)
 			{
-				taitosj_collision_reg[3] |= check_sprite_plane_bitpattern.handler(i);
+				taitosj_collision_reg[3] |= check_sprite_plane_bitpattern(i);
 			}
 		}
 	}
 	
-	
+	static int sx,sy,sx1,sy1,sx2,sy2,flipx,flipy;
+        
 	static void drawsprites(mame_bitmap bitmap)
 	{
 		/* Draw the sprites. Note that it is important to draw them exactly in this */
@@ -657,83 +701,83 @@ public class taitosj
 	
 			for (offs = spriteram_size[0] - 4;offs >= 0;offs -= 4)
 			{
-				int flipx,flipy;
-                                int[] sx= new int[1];
-                                int[] sy=new int[1];
+				
+	
+	
 				if ((offs >= 0x40) && (offs <= 0x5f))  continue;	/* no sprites here */
 	
 	
-				if (get_sprite_xy(offs / 4, sx, sy)!=0)
+				if (get_sprite_xy(offs / 4) != 0)
 				{
-					flipx = spriteram.read(offs + 2) & 1;
-					flipy = spriteram.read(offs + 2) & 2;
-					if (flipscreen[0]!=0)
+					flipx = spriteram.read(offs + 2)& 1;
+					flipy = spriteram.read(offs + 2)& 2;
+					if (flipscreen[0] != 0)
 					{
-						sx[0] = 238 - sx[0];
+						sx = 238 - sx;
 						flipx = flipx!=0?0:1;
 					}
 					if (flipscreen[1]!=0)
 					{
-						sy[0] = 242 - sy[0];
+						sy = 242 - sy;
 						flipy = flipy!=0?0:1;
 					}
 	
-					drawgfx(bitmap,Machine.gfx[(spriteram.read(offs + 3) & 0x40)!=0 ? 3 : 1],
-							spriteram.read(offs + 3) & 0x3f,
-							2 * ((taitosj_colorbank.read(1) >> 4) & 0x03) + ((spriteram.read(offs + 2) >> 2) & 1),
+					drawgfx(bitmap,Machine.gfx[(spriteram.read(offs + 3)& 0x40)!=0 ? 3 : 1],
+							spriteram.read(offs + 3)& 0x3f,
+							2 * ((taitosj_colorbank.read(1) >> 4) & 0x03) + ((spriteram.read(offs + 2)>> 2) & 1),
 							flipx,flipy,
-							sx[0],sy[0],
+							sx,sy,
 							Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 					/* draw with wrap around. The horizontal games (eg. sfposeid) need this */
-					drawgfx(bitmap,Machine.gfx[(spriteram.read(offs + 3) & 0x40) !=0 ? 3 : 1],
-							spriteram.read(offs + 3) & 0x3f,
-							2 * ((taitosj_colorbank.read(1) >> 4) & 0x03) + ((spriteram.read(offs + 2) >> 2) & 1),
+					drawgfx(bitmap,Machine.gfx[(spriteram.read(offs + 3)& 0x40)!=0 ? 3 : 1],
+							spriteram.read(offs + 3)& 0x3f,
+							2 * ((taitosj_colorbank.read(1) >> 4) & 0x03) + ((spriteram.read(offs + 2)>> 2) & 1),
 							flipx,flipy,
-							sx[0] - 0x100,sy[0],
+							sx - 0x100,sy,
 							Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}
 	}
 	
-	static int fudge1[] = { 3,  1, -1 };
+        static int fudge1[] = { 3,  1, -1 };
 	static int fudge2[] = { 8, 10, 12 };
+	
 	static void drawplayfield(int n, mame_bitmap bitmap)
 	{
 		
 	
-		if (taitosj_video_enable!=0 & playfield_enable_mask[n]!=0)
+		if ((taitosj_video_enable & playfield_enable_mask[n]) != 0)
 		{
-			int i,scrollx;
+			int i=0, scrollx=0;
                         int[] scrolly=new int[32];
 	
-	
 			scrollx = taitosj_scroll.read(2*n);
-			if (flipscreen[0]!=0)
+			if (flipscreen[0] != 0)
 				scrollx =  (scrollx & 0xf8) + ((scrollx + fudge1[n]) & 7) + fudge2[n];
 			else
 				scrollx = -(scrollx & 0xf8) + ((scrollx + fudge1[n]) & 7) + fudge2[n];
 	
-			if (flipscreen[1]!=0)
+			if (flipscreen[1] != 0)
 			{
 				for (i = 0;i < 32;i++)
-					scrolly[31-i] =  taitosj_colscrolly.read(32*n+i) + taitosj_scroll.read(2*n+1);
+					scrolly[31-i] = taitosj_colscrolly.read(32*n+i) + taitosj_scroll.read(2*n+1);
 			}
 			else
 			{
 				for (i = 0;i < 32;i++)
 					scrolly[i]    = -taitosj_colscrolly.read(32*n+i) - taitosj_scroll.read(2*n+1);
 			}
-	
-			copyscrollbitmap(bitmap,taitosj_tmpbitmap[n],1,new int[]{scrollx},32,scrolly,Machine.visible_area,TRANSPARENCY_COLOR,0);
+                        
+                        copyscrollbitmap(bitmap,taitosj_tmpbitmap[n],1,new int[]{(scrollx)},32,scrolly,Machine.visible_area,TRANSPARENCY_COLOR,0);
 	
 			/* store parts covered with sprites for sprites/playfields collision detection */
 			for (i=0x00; i<0x20; i++)
 			{
 				if ((i >= 0x10) && (i <= 0x17)) continue; /* no sprites here */
-				if (spriteon[i]!=0)
-					copyscrollbitmap( sprite_plane_collbitmap2[n],taitosj_tmpbitmap[n],1,new int[] {scrollx},32,scrolly,spritearea[i],TRANSPARENCY_NONE,0);
+				if (spriteon[i] != 0)
+					copyscrollbitmap( sprite_plane_collbitmap2[n],taitosj_tmpbitmap[n],1,new int[]{scrollx},32,scrolly,spritearea[i],TRANSPARENCY_NONE,0);
 			}
 		}
 	}
@@ -760,25 +804,17 @@ public class taitosj
 		int offs,i;
 	
 	
-		/* update palette */
-		/*if (palette_recalc()!=null)
-		{
-			memset(dirtybuffer, 1, videoram_size[0]);
-			memset(dirtybuffer2, 1, videoram_size[0]);
-			memset(dirtybuffer3, 1, videoram_size[0]);
-		}*/
-	
 		/* decode modified characters */
 		for (offs = 0;offs < 256;offs++)
 		{
 			if (dirtycharacter1[offs] == 1)
 			{
-				decodechar(Machine.gfx[0],offs,new UBytePtr(taitosj_characterram),Machine.drv.gfxdecodeinfo[0].gfxlayout);
+				decodechar(Machine.gfx[0],offs,taitosj_characterram,Machine.drv.gfxdecodeinfo[0].gfxlayout);
 				dirtycharacter1[offs] = 0;
 			}
 			if (dirtycharacter2[offs] == 1)
 			{
-				decodechar(Machine.gfx[2],offs,new UBytePtr(taitosj_characterram,0x1800),Machine.drv.gfxdecodeinfo[2].gfxlayout);
+				decodechar(Machine.gfx[2],offs,new UBytePtr(taitosj_characterram, 0x1800),Machine.drv.gfxdecodeinfo[2].gfxlayout);
 				dirtycharacter2[offs] = 0;
 			}
 		}
@@ -792,7 +828,7 @@ public class taitosj
 			}
 			if (dirtysprite2[offs] == 1)
 			{
-				decodechar(Machine.gfx[3],offs,new UBytePtr(taitosj_characterram,0x1800),Machine.drv.gfxdecodeinfo[3].gfxlayout);
+				decodechar(Machine.gfx[3],offs,new UBytePtr(taitosj_characterram, 0x1800),Machine.drv.gfxdecodeinfo[3].gfxlayout);
 				dirtysprite2[offs] = 0;
 			}
 		}
@@ -802,7 +838,7 @@ public class taitosj
 		/* since last time and update it accordingly. */
 		for (offs = videoram_size[0] - 1;offs >= 0;offs--)
 		{
-			if (dirtybuffer[offs]!=0)
+			if (dirtybuffer[offs] != 0)
 			{
 				int sx,sy;
 	
@@ -811,10 +847,10 @@ public class taitosj
 	
 				sx = offs % 32;
 				sy = offs / 32;
-				if (flipscreen[0]!=0) sx = 31 - sx;
-				if (flipscreen[1]!=0) sy = 31 - sy;
+				if (flipscreen[0] != 0) sx = 31 - sx;
+				if (flipscreen[1] != 0) sy = 31 - sy;
 	
-				drawgfx(taitosj_tmpbitmap[0],Machine.gfx[(taitosj_colorbank.read(0) & 0x08)!=0 ? 2 : 0],
+				drawgfx(taitosj_tmpbitmap[0],Machine.gfx[(taitosj_colorbank.read(0) & 0x08) != 0 ? 2 : 0],
 						videoram.read(offs),
 						(taitosj_colorbank.read(0) & 0x07) + 8,	/* use transparent pen 0 */
 						flipscreen[0],flipscreen[1],
@@ -822,12 +858,12 @@ public class taitosj
 						null,TRANSPARENCY_NONE,0);
 			}
 	
-			if (dirtybuffer2[offs]!=0)
+			if (dirtybuffer2.read(offs)!=0)
 			{
 				int sx,sy;
 	
 	
-				dirtybuffer2[offs] = 0;
+				dirtybuffer2.write(offs, 0);
 	
 				sx = offs % 32;
 				sy = offs / 32;
@@ -842,12 +878,12 @@ public class taitosj
 						null,TRANSPARENCY_NONE,0);
 			}
 	
-			if (dirtybuffer3[offs]!=0)
+			if (dirtybuffer3.read(offs)!=0)
 			{
 				int sx,sy;
 	
 	
-				dirtybuffer3[offs] = 0;
+				dirtybuffer3.write(offs, 0);
 	
 				sx = offs % 32;
 				sy = offs / 32;
@@ -868,7 +904,7 @@ public class taitosj
 		calculate_sprites_areas();
 	
 		/* first of all, fill the screen with the background color */
-		fillbitmap(bitmap,Machine.gfx[0].colortable.read(8 * (taitosj_colorbank.read(1) & 0x07)),
+		fillbitmap(bitmap,Machine.pens[8 * (taitosj_colorbank.read(1) & 0x07)],
 				Machine.visible_area);
 	
 		for (i = 0;i < 4;i++)
@@ -881,10 +917,5 @@ public class taitosj
 		check_sprite_plane_collision();
 	
 		/*check_plane_plane_collision();*/	/*not implemented !!!*/
-	} };
-        
-        public static WriteHandlerPtr junglhbr_characterram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		taitosj_characterram_w.handler(offset, data ^ 0xfc);
 	} };
 }
