@@ -248,6 +248,7 @@ import static WIP.mame056.drivers.blockade.*;
 import static WIP.mame056.drivers.spiders.*;
 import static WIP.mame056.drivers.spcforce.*;
 import static WIP.mame056.drivers.mjsikaku.*;
+import static WIP.mame056.drivers.pastelgl.*;
 
 public class driver {
 
@@ -582,7 +583,7 @@ public class driver {
         /*TODO*///	driver_hyhoo,		/* (c) 1987 */
         /*TODO*///	driver_hyhoo2,	/* (c) 1987 */
         /*TODO*///
-        /*TODO*///	driver_pastelgl,	/* (c) 1985 */
+        driver_pastelgl,	/* (c) 1985 */
         
         driver_mjsikaku,	/* (c) 1988 */
         driver_mjsikakb,	/* (c) 1988 */
