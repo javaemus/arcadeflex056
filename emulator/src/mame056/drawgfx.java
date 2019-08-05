@@ -5192,7 +5192,8 @@ public class drawgfx {
         return ((1 << col) & transmask) == 0;
     }
     
-    public static void blockmove_8toN_transmask(UBytePtr srcdata, int srcwidth, int srcheight, int srcmodulo, int leftskip, int topskip, int flipx, int flipy, UShortPtr dstdata, int dstwidth, int dstheight, int dstmodulo, IntArray paldata, int tran_mask, int transpen) {
+    public static void blockmove_8toN_transmaskPRI(UBytePtr srcdata, int srcwidth, int srcheight, int srcmodulo, int leftskip, int topskip, int flipx, int flipy, UShortPtr dstdata, int dstwidth, int dstheight, int dstmodulo, IntArray paldata, int tran_mask, int transpen) {
+        
         int ydir;
         if (flipy != 0) {
             dstdata.inc(dstmodulo * (dstheight - 1));
@@ -5219,14 +5220,14 @@ public class drawgfx {
             while (dstheight != 0) {
 
                 end = dstdata.offset / 2 - dstwidth;
-                while (((long) srcdata.offset & 3) != 0 && dstdata.offset / 2 > end) /* longword align */ {
+                while ((srcdata.read() & 3) != 0 && dstdata.offset / 2 > end) /* longword align */ {
                     int col;
 
                     col = srcdata.readinc();
                     if (col != transpen) {
                         dstdata.write(0, (char) paldata.read(col));
                     }
-                    dstdata.dec();
+                    dstdata.dec(2);
                 }
 
                 sd4 = new IntPtr(srcdata);
@@ -5326,6 +5327,7 @@ public class drawgfx {
                 dstheight--;
             }
         }
+
     }
     
     // TO REMOVE
@@ -6911,6 +6913,7 @@ public class drawgfx {
 /*TODO*/// 					break;
 /*TODO*/// 			}
 /*TODO*///         }
+
         switch (transparency) {
             case TRANSPARENCY_NONE:
                 if ((gfx.flags & GFX_PACKED) != 0) {
@@ -7013,11 +7016,13 @@ public class drawgfx {
                     //System.out.println("Aquí");
                     //blockmove_8toN_transmask(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color);
                     //blockmove_8toN_transpen16(sd, sw, sh, sm, ls, ts, flipx, flipy, dd, dw, dh, dm, paldata, transparent_color);
-                    blockmove_8toN_transmask(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pri_mask,transparent_color);
+                    //System.out.println("1");
+                    blockmove_8toN_transmaskPRI(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pri_mask,transparent_color);
                 } else {
                     /*TODO*///BLOCKMOVELU(8toN_transmask,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color));
                     //blockmove_8toN_transmask(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color);
-                    blockmove_8toN_transmask(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,pri_mask,transparent_color);
+                    //System.out.println("2");
+                    blockmove_8toN_transmaskLU(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,paldata,transparent_color);                    
                 }
                 break;
             /*TODO*///
@@ -9058,6 +9063,130 @@ public class drawgfx {
 				starty += incyy;
 				sy++;
 			}
+		}
+	}
+    }
+
+    public static void blockmove_8toN_transmaskLU(UBytePtr srcdata, int srcwidth, int srcheight, int srcmodulo, int leftskip, int topskip, int flipx, int flipy, UShortPtr dstdata, int dstwidth, int dstheight, int dstmodulo, IntArray paldata, int transpen) {
+        int ydir;
+        if (flipy != 0) {
+            dstdata.inc(dstmodulo * (dstheight - 1));
+            srcdata.inc((srcheight - dstheight - topskip) * srcmodulo);
+            ydir = -1;
+        } else {
+            srcdata.inc(topskip * srcmodulo);
+            ydir = 1;
+        }
+        if (flipx != 0) {
+            dstdata.inc(dstwidth - 1);
+            srcdata.inc(srcwidth - dstwidth - leftskip);
+        } else {
+            srcdata.inc(leftskip);
+        }
+        srcmodulo -= dstwidth;
+
+	if (flipx != 0)
+	{
+            System.out.println("NOT IMPLEMENTED STILL "+flipx);
+/*TODO*///		DATA_TYPE *end;
+/*TODO*///		UINT32 *sd4;
+/*TODO*///
+/*TODO*///		while (dstheight)
+/*TODO*///		{
+/*TODO*///			end = dstdata - dstwidth*HMODULO;
+/*TODO*///			while (((long)srcdata & 3) && dstdata > end)	/* longword align */
+/*TODO*///			{
+/*TODO*///				int col;
+/*TODO*///
+/*TODO*///				col = *(srcdata++);
+/*TODO*///				if (PEN_IS_OPAQUE) SETPIXELCOLOR(0,LOOKUP(col))
+/*TODO*///				INCREMENT_DST(-HMODULO)
+/*TODO*///			}
+/*TODO*///			sd4 = (UINT32 *)srcdata;
+/*TODO*///			while (dstdata >= end + 4*HMODULO)
+/*TODO*///			{
+/*TODO*///				int col;
+/*TODO*///				UINT32 col4;
+/*TODO*///
+/*TODO*///				INCREMENT_DST(-4*HMODULO)
+/*TODO*///				col4 = *(sd4++);
+/*TODO*///				col = (col4 >> SHIFT0) & 0xff;
+/*TODO*///				if (PEN_IS_OPAQUE) SETPIXELCOLOR(4*HMODULO,LOOKUP(col))
+/*TODO*///				col = (col4 >> SHIFT1) & 0xff;
+/*TODO*///				if (PEN_IS_OPAQUE) SETPIXELCOLOR(3*HMODULO,LOOKUP(col))
+/*TODO*///				col = (col4 >> SHIFT2) & 0xff;
+/*TODO*///				if (PEN_IS_OPAQUE) SETPIXELCOLOR(2*HMODULO,LOOKUP(col))
+/*TODO*///				col = (col4 >> SHIFT3) & 0xff;
+/*TODO*///				if (PEN_IS_OPAQUE) SETPIXELCOLOR(1*HMODULO,LOOKUP(col))
+/*TODO*///			}
+/*TODO*///			srcdata = (UINT8 *)sd4;
+/*TODO*///			while (dstdata > end)
+/*TODO*///			{
+/*TODO*///				int col;
+/*TODO*///
+/*TODO*///				col = *(srcdata++);
+/*TODO*///				if (PEN_IS_OPAQUE) SETPIXELCOLOR(0,LOOKUP(col))
+/*TODO*///				INCREMENT_DST(-HMODULO)
+/*TODO*///			}
+/*TODO*///
+/*TODO*///			srcdata += srcmodulo;
+/*TODO*///			INCREMENT_DST(ydir*VMODULO + dstwidth*HMODULO)
+/*TODO*///			dstheight--;
+/*TODO*///		}
+	}
+	else
+	{
+		int end;
+		IntPtr sd4;
+
+		while (dstheight != 0)
+		{
+			end = dstdata.offset / 2 + dstwidth;
+			while ((((srcdata.read()) & 3)!=0) && ((dstdata.offset / 2) < end))
+			{
+				int col;
+
+				col = srcdata.readinc();
+				if (PEN_IS_OPAQUE(col, transpen)) 
+                                    dstdata.write(0, (char) paldata.read(srcdata.read(col)));
+				dstdata.inc(2);
+			}
+			sd4 = new IntPtr(srcdata);
+			while (dstdata.offset/2 <= end - 4)
+			{
+				int col;
+				int col4;
+
+				col4 = sd4.read();
+                                sd4.inc();
+				col = (col4 >> SHIFT0) & 0xff;
+				if (PEN_IS_OPAQUE(col, transpen)) 
+                                    dstdata.write(0, (char) paldata.read(srcdata.read(col)));
+				col = (col4 >> SHIFT1) & 0xff;
+				if (PEN_IS_OPAQUE(col, transpen)) 
+                                    dstdata.write(1, (char) paldata.read(srcdata.read(col)));
+				col = (col4 >> SHIFT2) & 0xff;
+				if (PEN_IS_OPAQUE(col, transpen)) 
+                                    dstdata.write(2, (char) paldata.read(srcdata.read(col)));
+				col = (col4 >> SHIFT3) & 0xff;
+				if (PEN_IS_OPAQUE(col, transpen)) 
+                                    dstdata.write(3, (char) paldata.read(srcdata.read(col)));
+				dstdata.inc(4);
+			}
+			srcdata = new UBytePtr(sd4.readCA());
+			while (dstdata.offset/2 < end)
+			{
+				int col;
+
+				col = srcdata.readinc();
+				if (PEN_IS_OPAQUE(col, transpen)) 
+                                    dstdata.write(0, (char) paldata.read(srcdata.read(col)));
+				dstdata.inc();
+			}
+
+			srcdata.inc(srcmodulo);
+			dstdata.inc(ydir*dstmodulo - dstwidth*1);
+			dstheight--;
 		}
 	}
     }
