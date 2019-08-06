@@ -206,7 +206,7 @@ public class hal21
 	
                 rectangle clip = Machine.visible_area;
 	
-		while( source.read()<finish.read() ){
+		while( source.offset<finish.offset ){
 			int attributes = source.read(3); /* YBBX.CCCC */
 			int tile_number = source.read(1);
 			int sy = source.read(0) + ((attributes&0x10)!=0?256:0) - yscroll;
