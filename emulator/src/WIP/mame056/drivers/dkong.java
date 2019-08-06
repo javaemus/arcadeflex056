@@ -167,6 +167,8 @@ Changes:
  */ 
 package WIP.mame056.drivers;
 
+import static WIP.mame056.drivers.cvs.driver_hunchbak;
+import static WIP.mame056.drivers.cvs.driver_huncholy;
 import static arcadeflex056.fucPtr.*;
 import static common.ptr.*;
 
@@ -959,12 +961,12 @@ public class dkong
 				3072000,
 				hunchbkd_readmem,hunchbkd_writemem,herbiedk_readport,hunchbkd_writeport,
 				ignore_interrupt,1
-			),
-	        new MachineCPU(
-				CPU_I8035 | CPU_AUDIO_CPU,
-				6000000/15,	/* 6MHz crystal */
-				readmem_sound,writemem_sound,readport_hunchbkd_sound,writeport_sound,
-				ignore_interrupt,1
+			/*TODO*///),
+                        /*TODO*///new MachineCPU(
+			/*TODO*///	CPU_I8035 | CPU_AUDIO_CPU,
+			/*TODO*///	6000000/15,	/* 6MHz crystal */
+			/*TODO*///	readmem_sound,writemem_sound,readport_hunchbkd_sound,writeport_sound,
+			/*TODO*///	ignore_interrupt,1
 			)
 	    },
 		60, 1000,
@@ -985,12 +987,14 @@ public class dkong
 	
 		/* sound hardware */
 		0,0,0,0,
-		new MachineSound[] {
-			new MachineSound(
-				SOUND_DAC,
-				dkong_dac_interface
-			)
-		}
+		/*TODO*///new MachineSound[] {
+		/*TODO*///	new MachineSound(
+		/*TODO*///		SOUND_DAC,
+		/*TODO*///		dkong_dac_interface
+		/*TODO*///	)
+		/*TODO*///}
+                
+                null
 	);
 	
 	static MachineDriver machine_driver_dkongjr = new MachineDriver
@@ -1370,8 +1374,8 @@ public class dkong
 	public static GameDriver driver_dkong3	   = new GameDriver("1983"	,"dkong3"	,"dkong.java"	,rom_dkong3,null	,machine_driver_dkong3	,input_ports_dkong3	,null	,ROT90	,	"Nintendo of America", "Donkey Kong 3 (US)" );
 	public static GameDriver driver_dkong3j	   = new GameDriver("1983"	,"dkong3j"	,"dkong.java"	,rom_dkong3j,driver_dkong3	,machine_driver_dkong3	,input_ports_dkong3	,null	,ROT90	,	"Nintendo", "Donkey Kong 3 (Japan)" );
 	
-	/*TODO*///public static GameDriver driver_herbiedk	   = new GameDriver("1984"	,"herbiedk"	,"dkong.java"	,rom_herbiedk,driver_huncholy	,machine_driver_herbiedk	,input_ports_herbiedk	,null	,ROT90	,	"Seatongrove Ltd", "Herbie at the Olympics (DK conversion)");
+	public static GameDriver driver_herbiedk	   = new GameDriver("1984"	,"herbiedk"	,"dkong.java"	,rom_herbiedk,driver_huncholy	,machine_driver_herbiedk	,input_ports_herbiedk	,null	,ROT90	,	"Seatongrove Ltd", "Herbie at the Olympics (DK conversion)");
 	
-	/*TODO*///public static GameDriver driver_hunchbkd	   = new GameDriver("1983"	,"hunchbkd"	,"dkong.java"	,rom_hunchbkd,driver_hunchbak	,machine_driver_hunchbkd	,input_ports_hunchbdk	,null	,ROT90	,	"Century Electronics", "Hunchback (DK conversion)", GAME_WRONG_COLORS );
+	public static GameDriver driver_hunchbkd	   = new GameDriver("1983"	,"hunchbkd"	,"dkong.java"	,rom_hunchbkd,driver_hunchbak	,machine_driver_hunchbkd	,input_ports_hunchbdk	,null	,ROT90	,	"Century Electronics", "Hunchback (DK conversion)", GAME_WRONG_COLORS );
 	public static GameDriver driver_herocast	   = new GameDriver("1984"	,"herocast"	,"dkong.java"	,rom_herocast,null	,machine_driver_dkong	,input_ports_dkong	,init_herocast	,ROT90	,	"Seatongrove Ltd (Crown license)", "herocast", GAME_NOT_WORKING );
 }

@@ -250,6 +250,7 @@ import static WIP.mame056.drivers.spcforce.*;
 import static WIP.mame056.drivers.mjsikaku.*;
 import static WIP.mame056.drivers.pastelgl.*;
 import static WIP.mame056.drivers.hyhoo.*;
+import static WIP.mame056.drivers.cvs.*;
 
 public class driver {
 
@@ -494,7 +495,7 @@ public class driver {
         driver_devilfsh, /* (c) 1982 Artic */
         driver_newsin7, /* (c) 1983 ATW USA, Inc. */
         driver_hotshock, /* (c) 1982 E.G. Felaco */
-        /*TODO*///	driver_hunchbks,	/* (c) 1983 Century */
+        driver_hunchbks,	/* (c) 1983 Century */
         driver_cavelon, /* (c) 1983 Jetsoft */
         driver_scobra, /* GX316 (c) 1981 Konami */
         driver_scobras, /* GX316 (c) 1981 Stern */
@@ -940,8 +941,8 @@ public class driver {
         driver_mario, /* (c) 1983 Nintendo of America */
         driver_mariojp, /* (c) 1983 Nintendo */
         driver_masao, /* bootleg */
-        /*TODO*///	driver_hunchbkd,	/* (c) 1983 Century */
-        /*TODO*///	driver_herbiedk,	/* (c) 1984 CVS */
+        driver_hunchbkd,	/* (c) 1983 Century */
+        driver_herbiedk,	/* (c) 1984 CVS */
         /*TODO*///TESTdriver_herocast,
         driver_popeye, /* (c) 1982 */
         driver_popeyeu, /* (c) 1982 */
@@ -1151,10 +1152,10 @@ public class driver {
         /*TODO*///	driver_outline,	/* (c) 1982 Century */
         /*TODO*///	driver_goldbug,	/* (c) 1982 Century */
         /*TODO*///	driver_heartatk,	/* (c) 1983 Century Electronics */
-        /*TODO*///	driver_hunchbak,	/* (c) 1983 Century */
+        driver_hunchbak,	/* (c) 1983 Century */
         /*TODO*///	driver_superbik,	/* (c) 1983 Century */
         /*TODO*///	driver_hero,		/* (c) 1983 Seatongrove (c) 1984 CVS */
-        /*TODO*///	driver_huncholy,	/* (c) 1984 Seatongrove (c) CVS */
+        driver_huncholy,	/* (c) 1984 Seatongrove (c) CVS */
         
         /* Midway "Astrocade" games */
         driver_seawolf2,

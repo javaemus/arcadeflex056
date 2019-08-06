@@ -17,6 +17,7 @@ import static mame056.cpuintrfH.*;
 import static mame056.memory.cpu_readmem16;
 import static mame056.memory.cpu_readport16;
 import static mame056.memory.cpu_setOPbase16;
+import static mame056.memory.cpu_writemem16;
 import static mame056.memoryH.change_pc16;
 import static mame056.memoryH.cpu_readop;
 import static mame056.memoryH.cpu_readop_arg;
@@ -124,12 +125,12 @@ public class s2650 extends cpu_interface {
 
     @Override
     public void set_reg(int regnum, int val) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        s2650_set_reg(regnum,val);
     }
 
     @Override
     public void set_irq_line(int irqline, int linestate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        s2650_set_irq_line(irqline, linestate);
     }
 
     @Override
@@ -149,12 +150,12 @@ public class s2650 extends cpu_interface {
 
     @Override
     public int memory_read(int offset) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return cpu_readmem16(offset);
     }
 
     @Override
     public void memory_write(int offset, int data) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        cpu_writemem16(offset, data);
     }
 
     @Override
@@ -1050,7 +1051,7 @@ public class s2650 extends cpu_interface {
 	        S.psu &= ~FO;
 	}
 	
-	public int s2650_get_flag()
+	public static int s2650_get_flag()
 	{
 	    return (S.psu & FO)!=0 ? 1 : 0;
 	}

@@ -3497,17 +3497,18 @@ public class drawgfx {
 /*TODO*///		}
 /*TODO*///	}
 /*TODO*///}
-/*TODO*///
-/*TODO*///void drawgfxzoom( struct mame_bitmap *dest_bmp,const struct GfxElement *gfx,
-/*TODO*///		unsigned int code,unsigned int color,int flipx,int flipy,int sx,int sy,
-/*TODO*///		const struct rectangle *clip,int transparency,int transparent_color,int scalex, int scaley)
-/*TODO*///{
-/*TODO*///	profiler_mark(PROFILER_DRAWGFX);
-/*TODO*///	common_drawgfxzoom(dest_bmp,gfx,code,color,flipx,flipy,sx,sy,
-/*TODO*///			clip,transparency,transparent_color,scalex,scaley,NULL,0);
-/*TODO*///	profiler_mark(PROFILER_END);
-/*TODO*///}
-/*TODO*///
+
+    public static void drawgfxzoom( mame_bitmap dest_bmp,GfxElement gfx,
+                    int code,int color,int flipx,int flipy,int sx,int sy,
+                    rectangle clip,int transparency,int transparent_color,int scalex, int scaley)
+    {
+        System.out.println("drawgfxzoom not implemented!");
+    /*TODO*///	profiler_mark(PROFILER_DRAWGFX);
+    /*TODO*///	common_drawgfxzoom(dest_bmp,gfx,code,color,flipx,flipy,sx,sy,
+    /*TODO*///			clip,transparency,transparent_color,scalex,scaley,NULL,0);
+    /*TODO*///	profiler_mark(PROFILER_END);
+    }
+
 /*TODO*///void pdrawgfxzoom( struct mame_bitmap *dest_bmp,const struct GfxElement *gfx,
 /*TODO*///		unsigned int code,unsigned int color,int flipx,int flipy,int sx,int sy,
 /*TODO*///		const struct rectangle *clip,int transparency,int transparent_color,int scalex, int scaley,

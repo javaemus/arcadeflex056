@@ -75,12 +75,14 @@ Notes:
  */ 
 package mame056.drivers;
 
+import static WIP.mame056.drivers.cvs.driver_hunchbak;
 import static arcadeflex056.fucPtr.*;
 import static common.ptr.*;
 import static mame056.common.*;
 import static mame056.mame.*;
 
 import static mame056.commonH.*;
+import static mame056.cpu.s2650.s2650H.*;
 import static mame056.cpuexec.*;
 import static mame056.inptportH.*;
 import static mame056.cpuexecH.*;
@@ -425,11 +427,11 @@ public class scramble
 	};
 	
 	
-	/*TODO*///public static IO_ReadPort hunchbks_readport[]={
-	/*TODO*///	new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
-	/*TODO*///    new IO_ReadPort( S2650_SENSE_PORT, S2650_SENSE_PORT, input_port_3_r ),
-	/*TODO*///	new IO_ReadPort(MEMPORT_MARKER, 0)
-	/*TODO*///};
+	public static IO_ReadPort hunchbks_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+	    new IO_ReadPort( S2650_SENSE_PORT, S2650_SENSE_PORT, input_port_3_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -1575,48 +1577,48 @@ public class scramble
 	/*  epoxied in a plastic case labelled Century Playpack   */
 	/**********************************************************/
 	
-	/*TODO*///static MachineDriver machine_driver_hunchbks = new MachineDriver
-	/*TODO*///(
+	static MachineDriver machine_driver_hunchbks = new MachineDriver
+	(
 		/* basic machine hardware */
-	/*TODO*///	new MachineCPU[] {
-	/*TODO*///		new MachineCPU(
-	/*TODO*///			CPU_S2650,
-	/*TODO*///			18432000/6,
-	/*TODO*///			hunchbks_readmem,hunchbks_writemem,hunchbks_readport,0,
-	/*TODO*///			hunchbks_vh_interrupt,1
-	/*TODO*///		),
-	/*TODO*///		new MachineCPU(
-	/*TODO*///			CPU_Z80 | CPU_AUDIO_CPU,
-	/*TODO*///			14318000/8,	/* 1.78975 MHz */
-	/*TODO*///			scobra_sound_readmem,scobra_sound_writemem,scobra_sound_readport,scobra_sound_writeport,
-	/*TODO*///			ignore_interrupt,1
-	/*TODO*///		)
-	/*TODO*///	},
-	/*TODO*///	16000/132/2, 2500,	/* frames per second, vblank duration */
-	/*TODO*///	1,
-	/*TODO*///	scramble_init_machine,
+		new MachineCPU[] {
+			new MachineCPU(
+				CPU_S2650,
+				18432000/6,
+				hunchbks_readmem,hunchbks_writemem,hunchbks_readport,null,
+				hunchbks_vh_interrupt,1
+			),
+			new MachineCPU(
+				CPU_Z80 | CPU_AUDIO_CPU,
+				14318000/8,	/* 1.78975 MHz */
+				scobra_sound_readmem,scobra_sound_writemem,scobra_sound_readport,scobra_sound_writeport,
+				ignore_interrupt,1
+			)
+		},
+		16000/132/2, 2500,	/* frames per second, vblank duration */
+		1,
+		scramble_init_machine,
 	
 		/* video hardware */
-	/*TODO*///	32*8, 32*8, new rectangle( 0*8, 32*8-1, 2*8, 30*8-1 ),
-	/*TODO*///	galaxian_gfxdecodeinfo,
-	/*TODO*///	32+64+2,8*4,	/* 32 for characters, 64 for stars, 2 for bullets */
-	/*TODO*///	galaxian_vh_convert_color_prom,
+		32*8, 32*8, new rectangle( 0*8, 32*8-1, 2*8, 30*8-1 ),
+		galaxian_gfxdecodeinfo,
+		32+64+2,8*4,	/* 32 for characters, 64 for stars, 2 for bullets */
+		galaxian_vh_convert_color_prom,
 	
-	/*TODO*///	VIDEO_TYPE_RASTER,
-	/*TODO*///	null,
-	/*TODO*///	scramble_vh_start,
-	/*TODO*///	null,
-	/*TODO*///	galaxian_vh_screenrefresh,
+		VIDEO_TYPE_RASTER,
+		null,
+		scramble_vh_start,
+		null,
+		galaxian_vh_screenrefresh,
 	
 		/* sound hardware */
-	/*TODO*///	0,0,0,0,
-	/*TODO*///	new MachineSound[] {
-	/*TODO*///		new MachineSound(
-	/*TODO*///			SOUND_AY8910,
-	/*TODO*///			scobra_ay8910_interface
-	/*TODO*///		)
-	/*TODO*///	}
-	/*TODO*///);
+		0,0,0,0,
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_AY8910,
+				scobra_ay8910_interface
+			)
+		}
+	);
 	
 	/***************************************************************************
 	
@@ -2008,7 +2010,7 @@ public class scramble
 		ROM_LOAD( "5h_hb10.bin",  0x0800, 0x0800, 0x3977650e );
 	
 		ROM_REGION( 0x0020, REGION_PROMS, 0 );
-		ROM_LOAD( "6e_prom.bin",  0x0000, 0x0020, 0x01004d3f );
+		ROM_LOAD( "6e_prom.bin",  0x0000, 0x0020, 0x4e3caeab );
 	ROM_END(); }}; 
 	
 	static RomLoadPtr rom_cavelon = new RomLoadPtr(){ public void handler(){ 
@@ -2047,6 +2049,6 @@ public class scramble
 	public static GameDriver driver_devilfsh	   = new GameDriver("1982"	,"devilfsh"	,"scramble.java"	,rom_devilfsh,null	,machine_driver_devilfsh	,input_ports_devilfsh	,init_mars	,ROT90	,	"Artic", "Devil Fish" );
 	public static GameDriver driver_newsin7	   = new GameDriver("1983"	,"newsin7"	,"scramble.java"	,rom_newsin7,null	,machine_driver_newsin7	,input_ports_newsin7	,init_mars	,ROT90	,	"ATW USA, Inc.", "New Sinbad 7", GAME_IMPERFECT_COLORS );
 	public static GameDriver driver_hotshock	   = new GameDriver("1982"	,"hotshock"	,"scramble.java"	,rom_hotshock,null	,machine_driver_hotshock	,input_ports_hotshock	,init_hotshock	,ROT90	,	"E.G. Felaco", "Hot Shocker" );
-	/*TODO*///public static GameDriver driver_hunchbks	   = new GameDriver("1983"	,"hunchbks"	,"scramble.java"	,rom_hunchbks,driver_hunchbak	,machine_driver_hunchbks	,input_ports_hunchbks	,init_scramble_ppi	,ROT90	,	"Century", "Hunchback (Scramble hardware)" );
+	public static GameDriver driver_hunchbks	   = new GameDriver("1983"	,"hunchbks"	,"scramble.java"	,rom_hunchbks,driver_hunchbak	,machine_driver_hunchbks	,input_ports_hunchbks	,init_scramble_ppi	,ROT90	,	"Century", "Hunchback (Scramble hardware)" );
 	public static GameDriver driver_cavelon	   = new GameDriver("1983"	,"cavelon"	,"scramble.java"	,rom_cavelon,null	,machine_driver_cavelon	,input_ports_cavelon	,init_cavelon	,ROT90	,	"Jetsoft", "Cavelon" );
 }
