@@ -46,12 +46,14 @@ public class marineb
 	{
 		int new_palbank = (palbank & ~1) | (data & 1);
 		set_vh_global_attribute(new int[]{palbank}, new_palbank);
+                palbank = new_palbank;
 	} };
 	
 	public static WriteHandlerPtr marineb_palbank1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int new_palbank = (palbank & ~2) | ((data << 1) & 2);
 		set_vh_global_attribute(new int[]{palbank}, new_palbank);
+                palbank = new_palbank;
 	} };
 	
 	public static WriteHandlerPtr marineb_flipscreen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)

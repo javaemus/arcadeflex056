@@ -20,23 +20,17 @@ public class konami {
     static /*unsigned*/ char decodebyte(char/*unsigned char*/ opcode, char address) {
         /*unsigned*/ char xormask;
 
-        xormask = 0;
-        if ((address & 0x02) != 0) {
-            xormask |= 0x80;
-        } else {
-            xormask |= 0x20;
-        }
-        if ((address & 0x08) != 0) {
-            xormask |= 0x08;
-        } else {
-            xormask |= 0x02;
-        }
-
-        return (char) ((opcode ^ xormask) & 0xFF);
+     	xormask = 0;
+		if ((address & 0x02)!=0) xormask |= 0x80;
+		else xormask |= 0x20;
+		if ((address & 0x08)!=0) xormask |= 0x08;
+		else xormask |= 0x02;
+	
+		return (char) (opcode ^ xormask);
     }
 
     static void decode(int cpu) {
-        UBytePtr rom = memory_region(REGION_CPU1 + cpu);
+        UBytePtr rom = new UBytePtr(memory_region(REGION_CPU1 + cpu));
         int diff = memory_region_length(REGION_CPU1 + cpu) / 2;
         int A;
 

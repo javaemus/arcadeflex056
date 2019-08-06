@@ -78,6 +78,7 @@ public class bking2
             public void handler(char[] palette, char[] colortable, UBytePtr color_prom) {
                 int i;
 		int _palette = 0;
+                int r, g, b;
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
@@ -88,17 +89,22 @@ public class bking2
 			bit0 = (color_prom.read() >> 0) & 0x01;
 			bit1 = (color_prom.read() >> 1) & 0x01;
 			bit2 = (color_prom.read() >> 2) & 0x01;
-			palette[_palette++] = (char) (0x92 * bit0 + 0x46 * bit1 + 0x27 * bit2);
+                        r = (0x92 * bit0 + 0x46 * bit1 + 0x27 * bit2);
+			palette[_palette++] = (char) r;
 			/* green component */
 			bit0 = (color_prom.read() >> 3) & 0x01;
 			bit1 = (color_prom.read() >> 4) & 0x01;
 			bit2 = (color_prom.read() >> 5) & 0x01;
-			palette[_palette++] = (char) (0x92 * bit0 + 0x46 * bit1 + 0x27 * bit2);
+                        g = (0x92 * bit0 + 0x46 * bit1 + 0x27 * bit2);
+			palette[_palette++] = (char) g;
 			/* blue component */
 			bit0 = (color_prom.read() >> 6) & 0x01;
 			bit1 = (color_prom.read() >> 7) & 0x01;
 			bit2 = 0;
-			palette[_palette++] = (char) (0x92 * bit0 + 0x46 * bit1 + 0x27 * bit2);
+                        b = (0x92 * bit0 + 0x46 * bit1 + 0x27 * bit2);
+			palette[_palette++] = (char) b;
+                        
+                        palette_set_color(i, r, g, b);
 	
 			color_prom.inc();
 		}
@@ -208,6 +214,7 @@ public class bking2
 		crow_flip = ~data & 0x01;
 	
 		set_vh_global_attribute(new int[]{palette_bank}, (data >> 1) & 0x03);
+                palette_bank = (data >> 1) & 0x03;
 	
 		mixer_sound_enable_global_w(~data & 0x08);
 	} };

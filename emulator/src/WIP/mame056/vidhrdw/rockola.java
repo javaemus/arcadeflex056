@@ -173,6 +173,7 @@ public class rockola
 	
 		/* bit 3 selects char bank */
 		set_vh_global_attribute(new int[]{charbank},(~data & 0x08) >> 3);
+                charbank = (~data & 0x08) >> 3;
 	
 		/* bit 7 flips screen */
 		flip_screen_set(data & 0x80);

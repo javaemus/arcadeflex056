@@ -157,113 +157,82 @@ public class tutankhm
 			The clear works properly.
 	*/
         
-        static UBytePtr blitterdata = new UBytePtr(1024);
-        
-        public static void JUNOBLITPIXEL(UBytePtr JunoBLTRom, int x, long srcaddress, long destaddress){
-		if (JunoBLTRom.read((int) (srcaddress+x)) !=0)
-			tutankhm_videoram_w.handler((int) (destaddress+x),					
-				((JunoBLTRom.read((int) (srcaddress+x)) & 0xf0) >> 4)		
-				| ((JunoBLTRom.read((int) (srcaddress+x)) & 0x0f) << 4));
+        public static void JUNOBLITPIXEL(UBytePtr JunoBLTRom, int srcaddress, int destaddress, int x){
+		if (JunoBLTRom.read(srcaddress+x) != 0)
+			tutankhm_videoram_w.handler(destaddress+x,
+				((JunoBLTRom.read(srcaddress+x) & 0xf0) >> 4)
+				| ((JunoBLTRom.read(srcaddress+x) & 0x0f) << 4));
         }
         
-        public static void JUNOCLEARPIXEL(UBytePtr JunoBLTRom, int x, int srcaddress, int destaddress){
-		if ((JunoBLTRom.read( (srcaddress+x)) & 0xF0) != 0)
-			tutankhm_videoram_w.handler( (destaddress+x),		
-				videoram.read( (destaddress+x)) & 0xF0);	
-		if ((JunoBLTRom.read((int) (srcaddress+x)) & 0x0F) != 0)
-			tutankhm_videoram_w.handler( (destaddress+x),		
-				videoram.read( (destaddress+x)) & 0x0F);
+        public static void JUNOCLEARPIXEL(UBytePtr JunoBLTRom, int srcaddress, int destaddress, int x){
+		if ((JunoBLTRom.read(srcaddress+x) & 0xF0) != 0)
+			tutankhm_videoram_w.handler(destaddress+x,
+				videoram.read(destaddress+x)& 0xF0);
+		if ((JunoBLTRom.read(srcaddress+x) & 0x0F) != 0)
+			tutankhm_videoram_w.handler(destaddress+x,
+				videoram.read(destaddress+x)& 0x0F);
         }
-	
-	public static WriteHandlerPtr junofrst_blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
+        
+        static int[] blitterdata = new int[4];
+        
+        public static WriteHandlerPtr junofrst_blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		
-	
-	
-		blitterdata.write(offset, (char)(data&0xFF));
+		blitterdata[offset] = data;
 	
 		/* Blitter is triggered by $8073 */
 		if (offset==3)
 		{
 			int i;
-			/*unsigned*/ int srcaddress;
-			/*unsigned*/ int destaddress;
-			/*unsigned*/ int srcflag;
-			/*unsigned*/ int destflag;
+			int srcaddress;
+			int destaddress;
+			int srcflag;
+			int destflag;
 			UBytePtr JunoBLTRom = new UBytePtr(memory_region(REGION_GFX1));
 	
-			srcaddress = (blitterdata.read(0x2)<<8) | (blitterdata.read(0x3));
-			srcflag = (srcaddress & 1);
+			srcaddress = (blitterdata[0x2]<<8) | (blitterdata[0x3]);
+			srcflag = srcaddress & 1;
 			srcaddress >>= 1;
 			srcaddress &= 0x7FFE;
-			destaddress = (blitterdata.read(0x0)<<8)  | (blitterdata.read(0x1));
+			destaddress = (blitterdata[0x0]<<8)  | (blitterdata[0x1]);
 	
-			destflag = (destaddress & 1);
+			destflag = destaddress & 1;
 	
 			destaddress >>= 1;
 			destaddress &= 0x7fff;
 	
 			if (srcflag != 0) {
 				for (i=0;i<16;i++) {
-										
-		if (JunoBLTRom.read(srcaddress+0)!=0)							
-			tutankhm_videoram_w.handler(destaddress+0,((JunoBLTRom.read(srcaddress+0) & 0xf0) >> 4)| ((JunoBLTRom.read(srcaddress+0) & 0x0f) << 4));
-		if (JunoBLTRom.read(srcaddress+1)!=0)							
-			tutankhm_videoram_w.handler(destaddress+1,((JunoBLTRom.read(srcaddress+1) & 0xf0) >> 4)| ((JunoBLTRom.read(srcaddress+1) & 0x0f) << 4));
-		if (JunoBLTRom.read(srcaddress+2)!=0)							
-			tutankhm_videoram_w.handler(destaddress+2,((JunoBLTRom.read(srcaddress+2) & 0xf0) >> 4)| ((JunoBLTRom.read(srcaddress+2) & 0x0f) << 4));
-		if (JunoBLTRom.read(srcaddress+3)!=0)							
-			tutankhm_videoram_w.handler(destaddress+3,((JunoBLTRom.read(srcaddress+3) & 0xf0) >> 4)| ((JunoBLTRom.read(srcaddress+3) & 0x0f) << 4));
-		if (JunoBLTRom.read(srcaddress+4)!=0)							
-			tutankhm_videoram_w.handler(destaddress+4,((JunoBLTRom.read(srcaddress+4) & 0xf0) >> 4)| ((JunoBLTRom.read(srcaddress+4) & 0x0f) << 4));
-		if (JunoBLTRom.read(srcaddress+5)!=0)							
-			tutankhm_videoram_w.handler(destaddress+5,((JunoBLTRom.read(srcaddress+5) & 0xf0) >> 4)| ((JunoBLTRom.read(srcaddress+5) & 0x0f) << 4));
-		if (JunoBLTRom.read(srcaddress+6)!=0)							
-			tutankhm_videoram_w.handler(destaddress+6,((JunoBLTRom.read(srcaddress+6) & 0xf0) >> 4)| ((JunoBLTRom.read(srcaddress+6) & 0x0f) << 4));
-		if (JunoBLTRom.read(srcaddress+7)!=0)							
-			tutankhm_videoram_w.handler(destaddress+7,((JunoBLTRom.read(srcaddress+7) & 0xf0) >> 4)| ((JunoBLTRom.read(srcaddress+7) & 0x0f) << 4));							
+	
+	
+	
+					JUNOBLITPIXEL(JunoBLTRom, srcaddress, destaddress, 0);
+					JUNOBLITPIXEL(JunoBLTRom, srcaddress, destaddress, 1);
+					JUNOBLITPIXEL(JunoBLTRom, srcaddress, destaddress, 2);
+					JUNOBLITPIXEL(JunoBLTRom, srcaddress, destaddress, 3);
+					JUNOBLITPIXEL(JunoBLTRom, srcaddress, destaddress, 4);
+					JUNOBLITPIXEL(JunoBLTRom, srcaddress, destaddress, 5);
+					JUNOBLITPIXEL(JunoBLTRom, srcaddress, destaddress, 6);
+					JUNOBLITPIXEL(JunoBLTRom, srcaddress, destaddress, 7);
+	
 					destaddress += 128;
 					srcaddress += 8;
 				}
 			} else {
 				for (i=0;i<16;i++) {
-					
-		if ((JunoBLTRom.read(srcaddress+0) & 0xF0)!=0) 		
-			tutankhm_videoram_w.handler(destaddress+0,videoram.read(destaddress+0) & 0xF0);	
-		if ((JunoBLTRom.read(srcaddress+0) & 0x0F)!=0)		
-			tutankhm_videoram_w.handler(destaddress+0,videoram.read(destaddress+0) & 0x0F);
-		if ((JunoBLTRom.read(srcaddress+1) & 0xF0)!=0) 		
-			tutankhm_videoram_w.handler(destaddress+1,videoram.read(destaddress+1) & 0xF0);	
-		if ((JunoBLTRom.read(srcaddress+1) & 0x0F)!=0)		
-			tutankhm_videoram_w.handler(destaddress+1,videoram.read(destaddress+1) & 0x0F);
-		if ((JunoBLTRom.read(srcaddress+2) & 0xF0)!=0) 		
-			tutankhm_videoram_w.handler(destaddress+2,videoram.read(destaddress+2) & 0xF0);	
-		if ((JunoBLTRom.read(srcaddress+2) & 0x0F)!=0)		
-			tutankhm_videoram_w.handler(destaddress+2,videoram.read(destaddress+2) & 0x0F);
-		if ((JunoBLTRom.read(srcaddress+3) & 0xF0)!=0) 		
-			tutankhm_videoram_w.handler(destaddress+3,videoram.read(destaddress+3) & 0xF0);	
-		if ((JunoBLTRom.read(srcaddress+3) & 0x0F)!=0)		
-			tutankhm_videoram_w.handler(destaddress+3,videoram.read(destaddress+3) & 0x0F);
-		if ((JunoBLTRom.read(srcaddress+4) & 0xF0)!=0) 		
-			tutankhm_videoram_w.handler(destaddress+4,videoram.read(destaddress+4) & 0xF0);	
-		if ((JunoBLTRom.read(srcaddress+4) & 0x0F)!=0)		
-			tutankhm_videoram_w.handler(destaddress+4,videoram.read(destaddress+4) & 0x0F);
-		if ((JunoBLTRom.read(srcaddress+5) & 0xF0)!=0) 		
-			tutankhm_videoram_w.handler(destaddress+5,videoram.read(destaddress+5) & 0xF0);	
-		if ((JunoBLTRom.read(srcaddress+5) & 0x0F)!=0)		
-			tutankhm_videoram_w.handler(destaddress+5,videoram.read(destaddress+5) & 0x0F);
-		if ((JunoBLTRom.read(srcaddress+6) & 0xF0)!=0) 		
-			tutankhm_videoram_w.handler(destaddress+6,videoram.read(destaddress+6) & 0xF0);	
-		if ((JunoBLTRom.read(srcaddress+6) & 0x0F)!=0)		
-			tutankhm_videoram_w.handler(destaddress+6,videoram.read(destaddress+6) & 0x0F);
-		if ((JunoBLTRom.read(srcaddress+7) & 0xF0)!=0) 		
-			tutankhm_videoram_w.handler(destaddress+7,videoram.read(destaddress+7) & 0xF0);	
-		if ((JunoBLTRom.read(srcaddress+7) & 0x0F)!=0)		
-			tutankhm_videoram_w.handler(destaddress+7,videoram.read(destaddress+7) & 0x0F);
+	
+					JUNOCLEARPIXEL(JunoBLTRom, srcaddress, destaddress, 0);
+					JUNOCLEARPIXEL(JunoBLTRom, srcaddress, destaddress, 1);
+					JUNOCLEARPIXEL(JunoBLTRom, srcaddress, destaddress, 2);
+					JUNOCLEARPIXEL(JunoBLTRom, srcaddress, destaddress, 3);
+					JUNOCLEARPIXEL(JunoBLTRom, srcaddress, destaddress, 4);
+					JUNOCLEARPIXEL(JunoBLTRom, srcaddress, destaddress, 5);
+					JUNOCLEARPIXEL(JunoBLTRom, srcaddress, destaddress, 6);
+					JUNOCLEARPIXEL(JunoBLTRom, srcaddress, destaddress, 7);
 					destaddress += 128;
 					srcaddress+= 8;
 				}
 			}
 		}
-        } };
+	} };
 }

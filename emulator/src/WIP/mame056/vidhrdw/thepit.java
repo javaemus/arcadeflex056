@@ -182,6 +182,7 @@ public class thepit
 	public static WriteHandlerPtr intrepid_graphics_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_vh_global_attribute(new int[]{graphics_bank}, data << 1);
+                graphics_bank = data << 1;
 	} };
 	
 	

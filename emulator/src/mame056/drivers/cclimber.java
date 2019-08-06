@@ -1347,7 +1347,7 @@ public class cclimber
 		null,
 	
 		/* video hardware */
-		32*8, 32*8, new rectangle( 0*8, 32*8-1, 2*8, 30*8-1 ),
+		32*8, 31*8, new rectangle( 0*8, 32*8-1, 1*8, 31*8 ),
 		swimmer_gfxdecodeinfo,
 		256+32+2,64*8+4*8,
 		swimmer_vh_convert_color_prom,

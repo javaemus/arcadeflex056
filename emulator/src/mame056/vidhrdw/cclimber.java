@@ -310,12 +310,14 @@ public class cclimber {
     public static WriteHandlerPtr swimmer_palettebank_w = new WriteHandlerPtr() {
         public void handler(int offset, int data) {
             set_vh_global_attribute(palettebank, data & 1);
+            palettebank[0] = data & 1;
         }
     };
 
     public static WriteHandlerPtr swimmer_sidepanel_enable_w = new WriteHandlerPtr() {
         public void handler(int offset, int data) {
             set_vh_global_attribute(sidepanel_enabled, data);
+            sidepanel_enabled[0] = data;
         }
     };
 

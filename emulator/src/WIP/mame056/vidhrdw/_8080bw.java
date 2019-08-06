@@ -312,6 +312,7 @@ public class _8080bw
 	public static void invaders_flip_screen_w(int data)
 	{
 		set_vh_global_attribute(new int[]{color_map_select}, data);
+                color_map_select = data;
 	
 		if ((input_port_3_r.handler(0) & 0x01) != 0)
 		{
@@ -325,6 +326,7 @@ public class _8080bw
 		if (screen_red_enabled != 0)
 		{
 			set_vh_global_attribute(new int[]{screen_red}, data);
+                        screen_red = data;
 		}
 	}
 	

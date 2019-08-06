@@ -64,7 +64,7 @@ public class cosmic
 	 	   7c0d        = high / low nibble */
 	
 		set_vh_global_attribute(new int[]{color_registers[offset]}, data & 0x80);
-	
+                color_registers[offset] = data & 0x80;
 	   	color_base = (color_registers[0] << 2) + (color_registers[2] << 3);
             } 
         };
@@ -73,7 +73,7 @@ public class cosmic
             public void handler(int offset, int data)
             {
 		set_vh_global_attribute(new int[]{color_registers[offset]}, data);
-	
+                color_registers[offset] = data;
 	   	color_base = (color_registers[0] << 8) + (color_registers[1] << 9);
             } 
         };

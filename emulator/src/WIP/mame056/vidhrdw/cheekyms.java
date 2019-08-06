@@ -128,6 +128,7 @@ public class cheekyms
 	
 		/* Bit 6 is palette select (Selects either 0 = PROM M8, 1 = PROM M9) */
 		set_vh_global_attribute(new int[]{char_palette}, (data >> 2) & 0x10);
+                char_palette = (data >> 2) & 0x10;
 	
 		/* Bit 7 is screen flip */
 		flip_screen_set(data & 0x80);
