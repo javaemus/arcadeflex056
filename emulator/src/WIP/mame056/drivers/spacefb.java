@@ -401,12 +401,12 @@ public class spacefb
 	            4000000,    /* 4 MHz? */
 	            readmem,writemem,readport,writeport,
 	            spacefb_interrupt,2 /* two int's per frame */
-	        /*TODO*///),
-		/*TODO*///	new MachineCPU(
-	        /*TODO*///    CPU_I8035 | CPU_AUDIO_CPU,
-	        /*TODO*///    6000000/15,
-		/*TODO*///    readmem_sound,writemem_sound,readport_sound,writeport_sound,
-	        /*TODO*///    ignore_interrupt,0
+	        ),
+			new MachineCPU(
+	            CPU_I8035 | CPU_AUDIO_CPU,
+	            6000000/15,
+		    readmem_sound,writemem_sound,readport_sound,writeport_sound,
+	            ignore_interrupt,0
 	        )
 		},
 		60, DEFAULT_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */

@@ -839,12 +839,12 @@ public class segar
 				3867120,    /* 3.86712 MHz ??? */
 				readmem,writemem,readport,astrob_writeport,
 				segar_interrupt,1
-			/*TODO*///),
-			/*TODO*///new MachineCPU(
-			/*TODO*///	CPU_I8035 | CPU_AUDIO_CPU,
-			/*TODO*///	3120000/15,    /* 3.12MHz crystal ??? */
-			/*TODO*///	speech_readmem,speech_writemem,null,null,
-			/*TODO*///	ignore_interrupt,1
+			),
+			new MachineCPU(
+				CPU_I8035 | CPU_AUDIO_CPU,
+				3120000/15,    /* 3.12MHz crystal ??? */
+				speech_readmem,speech_writemem,null,null,
+				ignore_interrupt,1
 			)
 		},
 		60, DEFAULT_60HZ_VBLANK_DURATION,       /* frames per second, vblank duration */
@@ -998,12 +998,12 @@ public class segar
 				3867120,    /* 3.86712 MHz ??? */
 				readmem,writemem,readport,monsterb_writeport,
 				segar_interrupt,1
-			/*TODO*///),
-			/*TODO*///new MachineCPU(
-			/*TODO*///	CPU_N7751 | CPU_AUDIO_CPU,
-			/*TODO*///	6000000/15,    /* 6MHz crystal */
-			/*TODO*///	monsterb_7751_readmem,monsterb_7751_writemem,monsterb_7751_readport,monsterb_7751_writeport,
-			/*TODO*///	ignore_interrupt,1
+			),
+			new MachineCPU(
+				CPU_N7751 | CPU_AUDIO_CPU,
+				6000000/15,    /* 6MHz crystal */
+				monsterb_7751_readmem,monsterb_7751_writemem,monsterb_7751_readport,monsterb_7751_writeport,
+				ignore_interrupt,1
 			)
 		},
 		60, DEFAULT_60HZ_VBLANK_DURATION,       /* frames per second, vblank duration */

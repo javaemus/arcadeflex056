@@ -199,6 +199,7 @@ import static mame056.inptport.*;
 import static WIP.mame056.vidhrdw.dkong.*;
 import static WIP.mame056.sndhrdw.dkong.*;
 import static mame056.cpu.i8039.i8039H.*;
+import static mame056.cpu.s2650.s2650H.S2650_SENSE_PORT;
 import static mame056.drivers.scramble.*;
 
 import static mame056.sound.nes_apuH.*;
@@ -428,12 +429,12 @@ public class dkong
 	public static IO_ReadPort hunchbkd_readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),	new IO_ReadPort( 0x00, 0x00, hunchbkd_port0_r ),
 		new IO_ReadPort( 0x01, 0x01, hunchbkd_port1_r ),
-                /*TODO*///new IO_ReadPort( S2650_SENSE_PORT, S2650_SENSE_PORT, input_port_4_r ),
+                new IO_ReadPort( S2650_SENSE_PORT, S2650_SENSE_PORT, input_port_4_r ),
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	public static IO_ReadPort herbiedk_readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),	new IO_ReadPort( 0x01, 0x01, herbiedk_port1_r ),
-                /*TODO*///new IO_ReadPort( S2650_SENSE_PORT, S2650_SENSE_PORT, input_port_4_r ),
+                new IO_ReadPort( S2650_SENSE_PORT, S2650_SENSE_PORT, input_port_4_r ),
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	public static Memory_ReadAddress readmem_sound[]={
@@ -819,12 +820,12 @@ public class dkong
 				3072000,	/* 3.072 MHz (?) */
 				readmem,radarscp_writemem,null,null,
 				nmi_interrupt,1
-			/*TODO*///),
-			/*TODO*///new MachineCPU(
-			/*TODO*///	CPU_I8035 | CPU_AUDIO_CPU,
-			/*TODO*///	6000000/15,	/* 6MHz crystal */
-			/*TODO*///	readmem_sound,writemem_sound,readport_sound,writeport_sound,
-			/*TODO*///	ignore_interrupt,1
+			),
+			new MachineCPU(
+				CPU_I8035 | CPU_AUDIO_CPU,
+				6000000/15,	/* 6MHz crystal */
+				readmem_sound,writemem_sound,readport_sound,writeport_sound,
+				ignore_interrupt,1
 			)
 		},
 		60, DEFAULT_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */
@@ -866,12 +867,12 @@ public class dkong
 				3072000,	/* 3.072 MHz (?) */
 				readmem,dkong_writemem,null,null,
 				nmi_interrupt,1
-			/*TODO*///),
-			/*TODO*///new MachineCPU(
-			/*TODO*///	CPU_I8035 | CPU_AUDIO_CPU,
-			/*TODO*///	6000000/15,	/* 6MHz crystal */
-			/*TODO*///	readmem_sound,writemem_sound,readport_sound,writeport_sound,
-			/*TODO*///	ignore_interrupt,1
+			),
+			new MachineCPU(
+				CPU_I8035 | CPU_AUDIO_CPU,
+				6000000/15,	/* 6MHz crystal */
+				readmem_sound,writemem_sound,readport_sound,writeport_sound,
+				ignore_interrupt,1
 			)
 		},
 		60, DEFAULT_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */
@@ -918,14 +919,14 @@ public class dkong
 				3072000,
 				hunchbkd_readmem,hunchbkd_writemem,hunchbkd_readport,hunchbkd_writeport,
 				hunchbkd_interrupt,1
-		/*TODO*///	),
-	        /*TODO*///new MachineCPU(
-		/*TODO*///		CPU_I8035 | CPU_AUDIO_CPU,
-		/*TODO*///		6000000/15,	/* 6MHz crystal */
-		/*TODO*///		readmem_sound,writemem_sound,readport_hunchbkd_sound,writeport_sound,
-		/*TODO*///		ignore_interrupt,1
+			),
+                        new MachineCPU(
+				CPU_I8035 | CPU_AUDIO_CPU,
+				6000000/15,	/* 6MHz crystal */
+				readmem_sound,writemem_sound,readport_hunchbkd_sound,writeport_sound,
+				ignore_interrupt,1
 			)
-	    },
+                },
 		60, DEFAULT_REAL_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */
 		1,	/* 1 CPU slice per frame - interleaving is forced when a sound command is written */
 		null,
@@ -961,12 +962,12 @@ public class dkong
 				3072000,
 				hunchbkd_readmem,hunchbkd_writemem,herbiedk_readport,hunchbkd_writeport,
 				ignore_interrupt,1
-			/*TODO*///),
-                        /*TODO*///new MachineCPU(
-			/*TODO*///	CPU_I8035 | CPU_AUDIO_CPU,
-			/*TODO*///	6000000/15,	/* 6MHz crystal */
-			/*TODO*///	readmem_sound,writemem_sound,readport_hunchbkd_sound,writeport_sound,
-			/*TODO*///	ignore_interrupt,1
+			),
+                        new MachineCPU(
+				CPU_I8035 | CPU_AUDIO_CPU,
+				6000000/15,	/* 6MHz crystal */
+				readmem_sound,writemem_sound,readport_hunchbkd_sound,writeport_sound,
+				ignore_interrupt,1
 			)
 	    },
 		60, 1000,
@@ -987,14 +988,13 @@ public class dkong
 	
 		/* sound hardware */
 		0,0,0,0,
-		/*TODO*///new MachineSound[] {
-		/*TODO*///	new MachineSound(
-		/*TODO*///		SOUND_DAC,
-		/*TODO*///		dkong_dac_interface
-		/*TODO*///	)
-		/*TODO*///}
+		new MachineSound[] {
+			new MachineSound(
+				SOUND_DAC,
+				dkong_dac_interface
+			)
+		}
                 
-                null
 	);
 	
 	static MachineDriver machine_driver_dkongjr = new MachineDriver
@@ -1006,12 +1006,12 @@ public class dkong
 				3072000,	/* 3.072 MHz (?) */
 				readmem,dkongjr_writemem,null,null,
 				nmi_interrupt,1
-			/*TODO*///),
-			/*TODO*///new MachineCPU(
-			/*TODO*///	CPU_I8035 | CPU_AUDIO_CPU,
-			/*TODO*///	6000000/15,	/* 6MHz crystal */
-			/*TODO*///	readmem_sound,writemem_sound,readport_sound,writeport_sound,
-			/*TODO*///	ignore_interrupt,1
+			),
+			new MachineCPU(
+				CPU_I8035 | CPU_AUDIO_CPU,
+				6000000/15,	/* 6MHz crystal */
+				readmem_sound,writemem_sound,readport_sound,writeport_sound,
+				ignore_interrupt,1
 			)
 		},
 		60, DEFAULT_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */
