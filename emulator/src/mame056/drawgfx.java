@@ -5225,7 +5225,7 @@ public class drawgfx {
                     int col;
 
                     col = srcdata.readinc();
-                    if (col != transpen) {
+                    if (((1<<col)&tran_mask) == 0) {
                         dstdata.write(0, (char) paldata.read(col));
                     }
                     dstdata.dec();
@@ -5260,7 +5260,7 @@ public class drawgfx {
                     int col;
 
                     col = srcdata.readinc();
-                    if (col != transpen) {
+                    if (((1<<col)&tran_mask) == 0) {
                         dstdata.write(0, (char) paldata.read(col));
                     }
                     dstdata.dec();
@@ -5283,7 +5283,7 @@ public class drawgfx {
                     int col;
 
                     col = srcdata.readinc();
-                    if (col != transpen) {
+                    if (((1<<col)&tran_mask) == 0) {
                         dstdata.write(0, (char) paldata.read(col));
                     }
                     dstdata.inc();
@@ -5317,7 +5317,7 @@ public class drawgfx {
                     int col;
 
                     col = srcdata.readinc();
-                    if (col != transpen) {
+                    if (((1<<col)&tran_mask) == 0) {
                         dstdata.write(0, (char) paldata.read(col));
                     }
                     dstdata.inc();
@@ -6241,6 +6241,78 @@ public class drawgfx {
 /*TODO*///	}
 /*TODO*///})
 /*TODO*///
+    public static void blockmove_NtoN_blend_noremap(UShortPtr srcdata,int srcwidth,int srcheight,int srcmodulo,
+		UShortPtr dstdata,int dstmodulo,
+		int srcshift){
+	int end;
+
+	srcmodulo -= srcwidth;
+	dstmodulo -= srcwidth;
+
+	while (srcheight != 0)
+	{
+		end = dstdata.offset/2 + srcwidth;
+		while (dstdata.offset/2 <= end - 8)
+		{
+			dstdata.write(0, (char) (dstdata.read(0)| srcdata.read(0) << srcshift));
+			dstdata.write(1, (char) (dstdata.read(1)| srcdata.read(1) << srcshift));
+			dstdata.write(2, (char) (dstdata.read(2)| srcdata.read(2) << srcshift));
+			dstdata.write(3, (char) (dstdata.read(3)| srcdata.read(3) << srcshift));
+			dstdata.write(4, (char) (dstdata.read(4)| srcdata.read(4) << srcshift));
+			dstdata.write(5, (char) (dstdata.read(5)| srcdata.read(5) << srcshift));
+			dstdata.write(6, (char) (dstdata.read(6)| srcdata.read(6) << srcshift));
+			dstdata.write(7, (char) (dstdata.read(7)| srcdata.read(7) << srcshift));
+			dstdata.inc( 8 );
+			srcdata.inc( 8 );
+		}
+		while (dstdata.offset/2 < end){
+			dstdata.write(0, (char) (dstdata.read(0) | (srcdata.read(0) << srcshift)));
+                        dstdata.inc();
+                        srcdata.inc();
+                }
+
+		srcdata.inc( srcmodulo );
+		dstdata.inc( dstmodulo );
+		srcheight--;
+	}        
+    }
+    
+    public static void blockmove_NtoN_blend_noremap_flipx(UShortPtr srcdata,int srcwidth,int srcheight,int srcmodulo,
+		UShortPtr dstdata,int dstmodulo,
+		int srcshift){
+	int end;
+
+	srcmodulo += srcwidth;
+	dstmodulo -= srcwidth;
+	//srcdata += srcwidth-1;
+
+	while (srcheight != 0)
+	{
+		end = dstdata.offset/2 + srcwidth;
+		while (dstdata.offset/2 <= end - 8)
+		{
+			srcdata.dec( 8 );
+			dstdata.write(0, (char) (dstdata.read(0)| srcdata.read(8) << srcshift));
+			dstdata.write(1, (char) (dstdata.read(1)| srcdata.read(7) << srcshift));
+			dstdata.write(2, (char) (dstdata.read(2)| srcdata.read(6) << srcshift));
+			dstdata.write(3, (char) (dstdata.read(3)| srcdata.read(5) << srcshift));
+			dstdata.write(4, (char) (dstdata.read(4)| srcdata.read(4) << srcshift));
+			dstdata.write(5, (char) (dstdata.read(5)| srcdata.read(3) << srcshift));
+			dstdata.write(6, (char) (dstdata.read(6)| srcdata.read(2) << srcshift));
+			dstdata.write(7, (char) (dstdata.read(7)| srcdata.read(1) << srcshift));
+			dstdata.inc( 8 );
+		}
+		while (dstdata.offset/2 < end){
+			dstdata.write(dstdata.offset, (char) (dstdata.read(0) | (srcdata.read(0)) << srcshift));
+                        dstdata.inc();
+                        srcdata.inc();
+                }
+
+		srcdata.inc(srcmodulo);
+		dstdata.inc(dstmodulo);
+		srcheight--;
+	}        
+    }
 /*TODO*///DECLARE(blockmove_NtoN_blend_noremap_flipx,(
 /*TODO*///		const DATA_TYPE *srcdata,int srcwidth,int srcheight,int srcmodulo,
 /*TODO*///		DATA_TYPE *dstdata,int dstmodulo,
@@ -7004,8 +7076,9 @@ public class drawgfx {
                                         
 /*TODO*///						BLOCKMOVERAWPRI(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,pribuf,pri_mask,transparent_color));
                                         } else {
-                                            System.out.println("BLOCKMOVERAW(8toN_transpen");
+                                            //System.out.println("BLOCKMOVERAW(8toN_transpen");
 /*TODO*///						BLOCKMOVERAW(8toN_transpen,(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,color,transparent_color));
+                                            blockmove_8toN_transpen16(sd,sw,sh,sm,ls,ts,flipx,flipy,dd,dw,dh,dm,new IntArray(paldata,color),transparent_color);
                                         }
 				}
 				break;
@@ -7324,8 +7397,8 @@ public class drawgfx {
                 }
                 break;
             case TRANSPARENCY_BLEND_RAW:
-                System.out.println("BLOCKMOVE(NtoN_blend_noremap,flipx");
-            /*TODO*///				BLOCKMOVE(NtoN_blend_noremap,flipx,(sd,sw,sh,sm,dd,dm,transparent_color));
+                //System.out.println("BLOCKMOVE(NtoN_blend_noremap,flipx"); /*TODO*///blockmove_NtoN_blend_noremap,flipx,(sd,sw,sh,sm,dd,dm,transparent_color));
+                blockmove_NtoN_blend_noremap(sd,sw,sh,sm,dd,dm,transparent_color);
 /*TODO*///				break;
 /*TODO*///
             default:
