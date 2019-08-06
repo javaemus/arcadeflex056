@@ -187,11 +187,13 @@ public class dkong
 	public static WriteHandlerPtr dkongjr_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_vh_global_attribute(new int[]{gfx_bank}, data & 1);
+                gfx_bank = data & 1;
 	} };
 	
 	public static WriteHandlerPtr dkong3_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_vh_global_attribute(new int[]{gfx_bank}, ~data & 1);
+                gfx_bank = ~data & 1;
 	} };
 	
 	
@@ -208,6 +210,7 @@ public class dkong
 			newbank &= ~(1 << offset);
 	
 		set_vh_global_attribute(new int[]{palette_bank}, newbank);
+                palette_bank = newbank;
 	} };
 	
 	public static WriteHandlerPtr radarscp_grid_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)

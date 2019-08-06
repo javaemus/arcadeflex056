@@ -938,7 +938,7 @@ public class driver {
         driver_dkngjnrb, /* (c) 1982 Nintendo of America */
         driver_dkong3, /* (c) 1983 Nintendo of America */
         driver_dkong3j, /* (c) 1983 Nintendo */
-        driver_mario, /* (c) 1983 Nintendo of America */
+        driver_mario, /* (ctranspen) 1983 Nintendo of America */
         driver_mariojp, /* (c) 1983 Nintendo */
         driver_masao, /* bootleg */
         driver_hunchbkd,	/* (c) 1983 Century */
