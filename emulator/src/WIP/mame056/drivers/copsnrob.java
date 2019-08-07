@@ -222,10 +222,12 @@ public class copsnrob
 		0x00, 0x01
 	};
 	
-        static VhConvertColorPromPtr init_palette = new VhConvertColorPromPtr() {
-            public void handler(char[] game_palette, char[] game_colortable, UBytePtr color_prom) {
-                memcpy(game_palette,palette,palette.length);
-		memcpy(game_colortable,colortable,colortable.length);
+        public static VhConvertColorPromPtr init_palette = new VhConvertColorPromPtr() {
+            public void handler(char[] game_pal, char[] game_colort, UBytePtr color_prom) {
+                
+                memcpy(game_pal,palette,palette.length);
+		memcpy(game_colort,colortable,colortable.length);
+                
             }
         };
 	
@@ -246,9 +248,9 @@ public class copsnrob
 		null,
 	
 		/* video hardware */
-		32*8, 32*8, new rectangle( 0*8, 32*8-1, 0*8, 26*8-1 ),
+		32*8, 26*8, new rectangle( 0*8, 32*8-1, 0*8, 26*8-1 ),
 		gfxdecodeinfo,
-		2+32768, 2,
+		2, 2,
 		init_palette,
 	
 		VIDEO_TYPE_RASTER,

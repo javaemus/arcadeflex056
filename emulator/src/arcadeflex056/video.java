@@ -1956,6 +1956,8 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
         /*TODO*///TEMPHACK*/
         video_depth = Machine.scrbitmap.depth;
         
+        System.out.println("Total colors="+totalcolors);
+        
 	int i;
 /*TODO*///
 /*TODO*///	if (video_attributes & VIDEO_RGB_DIRECT)
