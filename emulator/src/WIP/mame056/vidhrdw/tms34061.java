@@ -438,6 +438,8 @@ public class tms34061
 			tms34061.latchram.write(pixeloffs, tms34061.latchdata);
 			tms34061.dirty.write(pixeloffs >> tms34061.dirtyshift, 1);
 		}
+                
+                tms34061.regs[TMS34061_XYADDRESS] = pixeloffs;
 	} };
 	
 	
@@ -453,6 +455,8 @@ public class tms34061
 	
 		/* mask to the VRAM size */
 		pixeloffs &= tms34061.vrammask;
+                
+                tms34061.regs[TMS34061_XYADDRESS] = pixeloffs;
 	
 		/* return the result */
 		return tms34061.vram.read(pixeloffs);

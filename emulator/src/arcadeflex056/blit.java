@@ -206,11 +206,11 @@ public class blit {
 
                             int p = (curr<<8) + (pre);
                             if ((pos>=Machine.uixmin) && (pos<=(Machine.uiwidth + Machine.uixmin - 1))
-                                    && (i>=Machine.uiymin)
+                                    && (i>=Machine.uiymin) && (i<=Machine.uiheight+Machine.uiymin -1)
                                 )
                                 back_buffer[pos+(i * Machine.scrbitmap.width)] = (char) p;
-                            //else 
-                            //    back_buffer[pos+(i * Machine.scrbitmap.width)] = 0;
+                            else 
+                                back_buffer[pos+(i * Machine.scrbitmap.width)] = (char) Machine.uifont.colortable.read(0);
                             pos++;
                         }
                     } else if (Machine.color_depth==8){

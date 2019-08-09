@@ -464,7 +464,7 @@ public class video {
     public static /*unsigned int * */ int[] dirtycolor;
     public static int dirtypalette;
     public static int dirty_bright;
-    public static int[] bright_lookup = new int[256];
+    public static int[] bright_lookup = new int[32768];
 
     public static int frameskip,autoframeskip;
     public static final int FRAMESKIP_LEVELS = 12;
@@ -708,7 +708,7 @@ public class video {
     /*TODO*///	}
 
             /* initialise quadring table [useful for *all* doubling modes */
-            for (i = 0; i < 256; i++)
+            for (i = 0; i < screen_colors; i++)
             {
                     doublepixel[i] = i | (i<<8);
                     quadpixel[i] = i | (i<<8) | (i << 16) | (i << 24);
@@ -1987,6 +1987,9 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
                 current_palette.write(3*i+1, 0);
                 current_palette.write(3*i+2, 0);
         }
+        
+        current_palette.offset=0;
+        Machine.uifont.colortable.offset=0;
 
 	// reserve color totalcolors+1 for the user interface text */
 	if (totalcolors < 65535)
@@ -2006,6 +2009,8 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
 		Machine.uifont.colortable.write(2, 65535);
 		Machine.uifont.colortable.write(3, 0);
 	}
+        
+        current_palette.offset=0;
 
 	for (i = 0;i < totalcolors;i++)
 	{
@@ -2013,6 +2018,20 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
 		current_palette.write(3*i+1, palette[3*i+1]);
 		current_palette.write(3*i+2, palette[3*i+2]);
 	}
+        
+        Machine.uifont.colortable.offset = 0;
+        Machine.uifont.colortable.write(0, totalcolors);
+	Machine.uifont.colortable.write(1, totalcolors+1);
+	//	Machine.uifont.colortable.write(2, 65535);
+	//	Machine.uifont.colortable.write(3, 0);
+                
+        current_palette.write((totalcolors)*3+0, 0x00);
+        current_palette.write((totalcolors)*3+1, 0x00);
+        current_palette.write((totalcolors)*3+2, 0x00);
+        
+        current_palette.write((totalcolors+1)*3+0, 0xff);
+        current_palette.write((totalcolors+1)*3+1, 0xff);
+        current_palette.write((totalcolors+1)*3+2, 0xff);
 
 /*TODO*///	if (debug_pens)
 /*TODO*///	{
@@ -2092,6 +2111,9 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
 /*TODO*///	}
 /*TODO*///
 	back_buffer = new char[Machine.scrbitmap.line[0].memory.length];
+        for (int ii = 0 ; ii<back_buffer.length ; ii++)
+            back_buffer[ii] = (char) Machine.uifont.colortable.read(0);
+        
         return 0;
 }
 
@@ -2432,7 +2454,7 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
 			if (dirty_bright!=0)
 			{
 				dirty_bright = 0;
-				for (int i = 0;i < 256;i++)
+				for (int i = 0;i < screen_colors;i++)
 				{
 					float rate = (float) (brightness * brightness_paused_adjust * pow(i / 255.0, 1 / osd_gamma_correction) / 100);
 					//bright_lookup[i] = (int) (63 * rate + 0.5);
@@ -2490,7 +2512,7 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
 			if (dirty_bright!=0)
 			{
 				dirty_bright = 0;
-				for (int i = 0;i < 256;i++)
+				for (int i = 0;i < screen_colors;i++)
 				{
 					float rate = (float) (brightness * brightness_paused_adjust * pow(i / 255.0, 1 / osd_gamma_correction) / 100);
 					bright_lookup[i] = (int) (255 * rate + 0.5);
@@ -2525,11 +2547,11 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
                                                 r = current_palette.read(3 * i + 0);
                                                 g = current_palette.read(3 * i + 1);
                                                 b = current_palette.read(3 * i + 2);
-                                                if (i != Machine.uifont.colortable.read(1)) /* don't adjust the user interface text */ {
-                                                    r = bright_lookup[r];
-                                                    g = bright_lookup[g];
-                                                    b = bright_lookup[b];
-                                                }
+                                                //if (i != Machine.uifont.colortable.read(1) && i != Machine.uifont.colortable.read(0)) /* don't adjust the user interface text */ {
+                                                //    r = bright_lookup[r];
+                                                //    g = bright_lookup[g];
+                                                //    b = bright_lookup[b];
+                                                //}
                                                 palette_16bit_lookup.write(i,  (char)(makecol(r, g, b)));// * 0x10001);
                                                 RGB p = new RGB();
                                                 p.r = r;

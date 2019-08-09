@@ -1111,13 +1111,13 @@ public class palette {
                 palette_set_color(i, r, g, b);
             }
             
-            palette[0]=0x00;
+            /*palette[0]=0x00;
             palette[1]=0x00;
             palette[2]=0x00;
 
             palette[3]=0xFF;
             palette[4]=0xFF;
-            palette[5]=0xFF;
+            palette[5]=0xFF;*/
             //palette_set_color(0, 0, 0, 0);
             //palette_set_color(1, 0xff, 0xff, 0xff);
         }

@@ -83,7 +83,7 @@ public class _6812pia {
 	
 	/******************* static variables *******************/
 	
-	static pia6821 pia[]=new pia6821[MAX_PIA];
+	public static pia6821 pia[]=new pia6821[MAX_PIA];
         
         static {
             for (int i=0 ; i<MAX_PIA ; i++)
