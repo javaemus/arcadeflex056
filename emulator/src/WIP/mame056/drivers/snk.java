@@ -1064,7 +1064,7 @@ public class snk
             /* video hardware */
             384, 240, new rectangle(16, 383, 0, 239 - 16),
             gwar_gfxdecodeinfo,
-            1024, 1024,
+            1024, 0,
             palette_RRRR_GGGG_BBBB_convert_prom,
             VIDEO_TYPE_RASTER,
             null,

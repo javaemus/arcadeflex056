@@ -1957,6 +1957,7 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
         video_depth = Machine.scrbitmap.depth;
         
         System.out.println("Total colors="+totalcolors);
+        System.out.println("Video depth="+video_depth);
         
 	int i;
 /*TODO*///
@@ -2022,9 +2023,9 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
         Machine.uifont.colortable.offset = 0;
         Machine.uifont.colortable.write(0, totalcolors);
 	Machine.uifont.colortable.write(1, totalcolors+1);
-	//	Machine.uifont.colortable.write(2, 65535);
-	//	Machine.uifont.colortable.write(3, 0);
-                
+	Machine.uifont.colortable.write(2, totalcolors+1);
+	Machine.uifont.colortable.write(3, 0);
+        current_palette.offset=0;        
         current_palette.write((totalcolors)*3+0, 0x00);
         current_palette.write((totalcolors)*3+1, 0x00);
         current_palette.write((totalcolors)*3+2, 0x00);

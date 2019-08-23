@@ -7892,7 +7892,7 @@ public class drawgfx {
             /* adjust in case we're oddly oriented */
             ADJUST_FOR_ORIENTATION(Machine.orientation, bitmap, x, y);
             int dy = bitmap.line[1].offset / 2 - bitmap.line[0].offset / 2;
-            UShortPtr dst = new UShortPtr(bitmap.line[0], (y * dy + x) * 2);
+            UShortPtr dst = new UShortPtr(bitmap.line[0], (y * dy + x) );
             int xadv = 1;
             if (Machine.orientation != 0) {
                 int tx = x, ty = y, temp;
