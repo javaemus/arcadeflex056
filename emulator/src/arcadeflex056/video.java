@@ -464,7 +464,7 @@ public class video {
     public static /*unsigned int * */ int[] dirtycolor;
     public static int dirtypalette;
     public static int dirty_bright;
-    public static int[] bright_lookup = new int[32768];
+    public static int[] bright_lookup = new int[128 * 1024];
 
     public static int frameskip,autoframeskip;
     public static final int FRAMESKIP_LEVELS = 12;
