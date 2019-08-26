@@ -252,6 +252,7 @@ import static WIP.mame056.drivers.pastelgl.*;
 import static WIP.mame056.drivers.hyhoo.*;
 import static WIP.mame056.drivers.cvs.*;
 import static WIP.mame056.drivers.circusc.*;
+import static WIP.mame056.drivers.ddrible.*;
 
 public class driver {
 
@@ -2857,7 +2858,7 @@ public class driver {
         driver_topgunr, /* GX631 (c) 1986 (US) */
         driver_jackalj, /* GX631 (c) 1986 (Japan) */
         driver_topgunbl, /* bootleg */
-        /*TODO*///	driver_ddribble,	/* GX690 (c) 1986 */
+        driver_ddribble,	/* GX690 (c) 1986 */
         /*TODO*///	driver_contra,	/* GX633 (c) 1987 */
         /*TODO*///	driver_contrab,	/* bootleg */
         /*TODO*///	driver_contraj,	/* GX633 (c) 1987 (Japan) */

@@ -878,12 +878,13 @@ public class palette {
     };
 
 
-    /*TODO*///WRITE_HANDLER( paletteram_xBBBBBGGGGGRRRRR_swap_w )
-/*TODO*///{
-/*TODO*///	paletteram[offset] = data;
-/*TODO*///	changecolor_xBBBBBGGGGGRRRRR(offset / 2,paletteram[offset | 1] | (paletteram[offset & ~1] << 8));
-/*TODO*///}
-/*TODO*///
+    public static WriteHandlerPtr paletteram_xBBBBBGGGGGRRRRR_swap_w = new WriteHandlerPtr() {
+        public void handler(int offset, int data) {
+            paletteram.write(offset, data);
+            changecolor_xBBBBBGGGGGRRRRR(offset / 2,paletteram.read(offset | 1) | (paletteram.read(offset & ~1) << 8));
+        }
+    };
+
 /*TODO*///WRITE16_HANDLER( paletteram16_xBBBBBGGGGGRRRRR_word_w )
 /*TODO*///{
 /*TODO*///	COMBINE_DATA(&paletteram16[offset]);
