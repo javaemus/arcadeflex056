@@ -36,6 +36,8 @@ import static arcadeflex036.osdepend.logerror;
 public class bublbobl
 {
 	
+	
+	
 	public static UBytePtr bublbobl_sharedram1=new UBytePtr(),bublbobl_sharedram2=new UBytePtr();
 	
 	
@@ -63,7 +65,7 @@ public class bublbobl
 		UBytePtr ROM = new UBytePtr(memory_region(REGION_CPU1));
 	
 		/* bits 0-2 select ROM bank */
-		cpu_setbank(1, new UBytePtr(ROM, 0x10000 + 0x4000 * ((data ^ 4) & 7)));
+		cpu_setbank(1,new UBytePtr(ROM, 0x10000 + 0x4000 * ((data ^ 4) & 7)));
 	
 		/* bit 3 n.c. */
 	
@@ -83,7 +85,7 @@ public class bublbobl
 		UBytePtr ROM = new UBytePtr(memory_region(REGION_CPU1));
 	
 		/* bits 0-2 select ROM bank */
-		cpu_setbank(1, new UBytePtr(ROM, 0x10000 + 0x4000 * (data & 7)));
+		cpu_setbank(1,new UBytePtr(ROM, 0x10000 + 0x4000 * (data & 7)));
 	
 		/* bits 3-7 unknown */
 	} };
@@ -111,7 +113,7 @@ public class bublbobl
 	static int sound_nmi_enable,pending_nmi;
 	
 	static timer_callback nmi_callback = new timer_callback() {
-            public void handler(int i) {
+            public void handler(int param) {
                 if (sound_nmi_enable != 0) cpu_cause_interrupt(2,Z80_NMI_INT);
 		else pending_nmi = 1;
             }
@@ -213,20 +215,20 @@ public class bublbobl
 	{
 	//logerror("%04x: 68705 port B write %02x\n",cpu_get_pc(),data);
 	
-		if (((ddrB & 0x01)!=0) && ((~data & 0x01)!=0) && ((portB_out & 0x01)!=0))
+		if ((ddrB & 0x01)!=0 && (~data & 0x01)!=0 && (portB_out & 0x01)!=0)
 		{
 			portA_in = latch;
 		}
-		if (((ddrB & 0x02)!=0) && ((data & 0x02)!=0) && ((~portB_out & 0x02)!=0)) /* positive edge trigger */
+		if ((ddrB & 0x02)!=0 && (data & 0x02)!=0 && (~portB_out & 0x02)!=0) /* positive edge trigger */
 		{
 			address = (address & 0xff00) | portA_out;
 	//logerror("%04x: 68705 address %02x\n",cpu_get_pc(),portA_out);
 		}
-		if (((ddrB & 0x04)!=0) && ((data & 0x04)!=0) && ((~portB_out & 0x04)!=0)) /* positive edge trigger */
+		if ((ddrB & 0x04)!=0 && (data & 0x04)!=0 && (~portB_out & 0x04)!=0) /* positive edge trigger */
 		{
 			address = (address & 0x00ff) | ((portA_out & 0x0f) << 8);
 		}
-		if (((ddrB & 0x10)!=0) && ((~data & 0x10)!=0) && ((portB_out & 0x10)!=0))
+		if ((ddrB & 0x10)!=0 && (~data & 0x10)!=0 && (portB_out & 0x10)!=0)
 		{
 			if ((data & 0x08)!=0)	/* read */
 			{
@@ -254,7 +256,7 @@ public class bublbobl
 	logerror("%04x: 68705 unknown write to address %04x\n",cpu_get_pc(),address);
 			}
 		}
-		if (((ddrB & 0x20)!=0) && ((~data & 0x20)!=0) && ((portB_out & 0x20)!=0))
+		if ((ddrB & 0x20)!=0 && (~data & 0x20)!=0 && (portB_out & 0x20)!=0)
 		{
 			/* hack to get random EXTEND letters (who is supposed to do this? 68705? PAL?) */
 			bublbobl_sharedram2.write(0x7c, rand()%6);
@@ -262,11 +264,11 @@ public class bublbobl
 			cpu_irq_line_vector_w(0,0,bublbobl_sharedram2.read(0));
 			cpu_set_irq_line(0,0,HOLD_LINE);
 		}
-		if (((ddrB & 0x40)!=0) && ((~data & 0x40)!=0) && ((portB_out & 0x40)!=0))
+		if ((ddrB & 0x40)!=0 && (~data & 0x40)!=0 && (portB_out & 0x40)!=0)
 		{
 	logerror("%04x: 68705 unknown port B bit %02x\n",cpu_get_pc(),data);
 		}
-		if (((ddrB & 0x80)!=0) && ((~data & 0x80)!=0) && ((portB_out & 0x80)!=0))
+		if ((ddrB & 0x80)!=0 && (~data & 0x80)!=0 && (portB_out & 0x80)!=0)
 		{
 	logerror("%04x: 68705 unknown port B bit %02x\n",cpu_get_pc(),data);
 		}

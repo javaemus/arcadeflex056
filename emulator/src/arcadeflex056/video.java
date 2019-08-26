@@ -2020,7 +2020,7 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
 		current_palette.write(3*i+2, palette[3*i+2]);
 	}
         
-        Machine.uifont.colortable.offset = 0;
+        /*Machine.uifont.colortable.offset = 0;
         Machine.uifont.colortable.write(0, totalcolors);
 	Machine.uifont.colortable.write(1, totalcolors+1);
 	Machine.uifont.colortable.write(2, totalcolors+1);
@@ -2032,7 +2032,7 @@ public static int osd_allocate_colors(int totalcolors,char[] palette,int[] rgb_c
         
         current_palette.write((totalcolors+1)*3+0, 0xff);
         current_palette.write((totalcolors+1)*3+1, 0xff);
-        current_palette.write((totalcolors+1)*3+2, 0xff);
+        current_palette.write((totalcolors+1)*3+2, 0xff);*/
 
 /*TODO*///	if (debug_pens)
 /*TODO*///	{

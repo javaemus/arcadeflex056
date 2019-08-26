@@ -224,7 +224,7 @@ public class libc_old {
             return base;
         }
         public int base;
-        char[] memory;
+        public char[] memory;
     }
 
 }

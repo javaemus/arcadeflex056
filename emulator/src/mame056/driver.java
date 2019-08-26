@@ -251,6 +251,7 @@ import static WIP.mame056.drivers.mjsikaku.*;
 import static WIP.mame056.drivers.pastelgl.*;
 import static WIP.mame056.drivers.hyhoo.*;
 import static WIP.mame056.drivers.cvs.*;
+import static WIP.mame056.drivers.circusc.*;
 
 public class driver {
 
@@ -2822,10 +2823,10 @@ public class driver {
         driver_venus, /* bootleg */
         driver_rocnrope, /* GX364 (c) 1983 */
         driver_rocnropk, /* GX364 (c) 1983 + Kosuka */
-        /*TODO*///	driver_circusc,	/* GX380 (c) 1984 */
-        /*TODO*///	driver_circusc2,	/* GX380 (c) 1984 */
-        /*TODO*///	driver_circuscc,	/* GX380 (c) 1984 + Centuri license */
-        /*TODO*///	driver_circusce,	/* GX380 (c) 1984 + Centuri license */
+        driver_circusc,	/* GX380 (c) 1984 */
+        driver_circusc2,	/* GX380 (c) 1984 */
+        driver_circuscc,	/* GX380 (c) 1984 + Centuri license */
+        driver_circusce,	/* GX380 (c) 1984 + Centuri license */
         driver_tp84, /* GX388 (c) 1984 */
         driver_tp84a, /* GX388 (c) 1984 */
         driver_hyperspt, /* GX330 (c) 1984 + Centuri */
